@@ -277,6 +277,29 @@ function renderDetail(r) {
     ? row("Sequence pattern", `<dd class="pre">${escapeHTML(r.pat)}</dd>`, true)
     : "";
 
+  const residueRow = r.rs
+    ? row(`Residue sequence (${r.rs.length} aa)`,
+          `<dd class="pre">${escapeHTML(r.rs)}</dd>`, true)
+    : "";
+
+  const parentHtml = (r.pt || []).length
+    ? `<ul class="xref-list">
+        ${r.pt.map(x => `<li>${curieLink(x)}</li>`).join("")}
+       </ul>`
+    : "";
+  const parentRow = parentHtml
+    ? row("Parent traits", `<dd>${parentHtml}</dd>`, true)
+    : "";
+
+  const examples = r.ex || [];
+  const examplesHtml = examples.length
+    ? `<ul class="ex-list">${examples.map(renderExample).join("")}</ul>`
+    : "";
+  const examplesRow = examplesHtml
+    ? row(`Example proteins (${examples.length})`,
+          `<dd>${examplesHtml}</dd>`, true)
+    : "";
+
   results.innerHTML = `
     <div class="detail">
       <div class="breadcrumb">
@@ -297,6 +320,9 @@ function renderDetail(r) {
         ${row("Source", `<dd>${escapeHTML(r.src   || "")}</dd>`, true)}
         ${row("Status", `<dd>${escapeHTML(r.sta   || "")}</dd>`, true)}
         ${patternRow}
+        ${residueRow}
+        ${parentRow}
+        ${examplesRow}
         ${row("Cross-references", `<dd>${xrefsHtml}</dd>`, true)}
         ${row("Source file", `<dd><a href="${escapeAttr(rawYamlLink)}" target="_blank" rel="noopener"><code>${escapeHTML(r.path)}</code></a></dd>`, true)}
       </dl>
@@ -316,6 +342,143 @@ function renderNotFound(id) {
 function row(dt, ddHtml, always) {
   if (!always && !ddHtml) return "";
   return `<div><dt>${escapeHTML(dt)}</dt>${ddHtml}</div>`;
+}
+
+function renderExample(e) {
+  const badges = [];
+  if (e.rev === true)  badges.push(`<span class="pill sta">reviewed</span>`);
+  if (e.rev === false) badges.push(`<span class="pill">unreviewed</span>`);
+  if (e.asc)           badges.push(`<span class="pill">annotation ${escapeHTML(String(e.asc))}/5</span>`);
+  if (e.len)           badges.push(`<span class="pill">${escapeHTML(String(e.len))} aa</span>`);
+  if (e.src === "UNIPROTKB_API") badges.push(`<span class="pill src">UniProtKB API</span>`);
+  else if (e.src === "CURATOR")  badges.push(`<span class="pill src">curator</span>`);
+
+  const families = (e.fams || []).length
+    ? `<div class="ex-families">${e.fams.map(curieLink).join(" ")}</div>`
+    : "";
+  const idLink = e.id ? curieLink(e.id) : "";
+  const tax = e.tax ? `<div class="ex-tax">${escapeHTML(e.tax)}</div>` : "";
+
+  const sequenceHtml = e.seq
+    ? renderSequenceViewer(e.seq, e.feats || [])
+    : "";
+
+  return `
+    <li class="ex-item">
+      <div class="ex-head">
+        <span class="ex-id">${idLink}</span>
+        <span class="ex-label">${escapeHTML(e.label || "")}</span>
+      </div>
+      ${tax}
+      <div class="ex-badges">${badges.join(" ")}</div>
+      ${families}
+      ${sequenceHtml}
+    </li>`;
+}
+
+/* ------------------------------------------------------------------ */
+/* Sequence viewer with overlap-aware feature colouring               */
+/* ------------------------------------------------------------------ */
+
+// Colour per trait axis. FUNCTION features aren't localised so they
+// don't appear in the per-residue tracks.
+const AXIS_COLORS = {
+  SEQUENCE:            "#2563eb",  // blue
+  STRUCTURE:           "#16a34a",  // green
+  SEQUENCE_STRUCTURE:  "#a855f7",  // purple
+};
+const AXIS_LABELS = {
+  SEQUENCE:            "sequence",
+  STRUCTURE:           "structure",
+  SEQUENCE_STRUCTURE:  "mixed",
+};
+const ROW_LENGTH = 60;
+
+function renderSequenceViewer(seq, feats) {
+  // Normalise feats: [start, end, ft_type, axis, note] tuples.
+  // Filter to spans that intersect the sequence and have a localisable axis.
+  const featObjs = (feats || [])
+    .map(f => ({
+      start: f[0], end: f[1], type: f[2], axis: f[3], note: f[4] || ""
+    }))
+    .filter(f =>
+      f.axis && AXIS_COLORS[f.axis] &&
+      f.start >= 1 && f.end >= f.start && f.start <= seq.length
+    )
+    .map(f => ({ ...f, end: Math.min(f.end, seq.length) }));
+
+  // Assign each unique feature a stable colour + row index. Ordering:
+  // by axis (SEQUENCE, MIXED, STRUCTURE), then by start position.
+  const axisOrder = { SEQUENCE: 0, SEQUENCE_STRUCTURE: 1, STRUCTURE: 2 };
+  featObjs.sort((a, b) => {
+    const da = (axisOrder[a.axis] || 9) - (axisOrder[b.axis] || 9);
+    if (da) return da;
+    return a.start - b.start || a.end - b.end;
+  });
+
+  // Per-residue: which features touch this position?
+  // residueFeats[i] = list of indices into featObjs.
+  const residueFeats = new Array(seq.length);
+  for (let i = 0; i < seq.length; i++) residueFeats[i] = [];
+  featObjs.forEach((f, idx) => {
+    for (let p = f.start; p <= f.end; p++) residueFeats[p - 1].push(idx);
+  });
+
+  const rowsHtml = [];
+  for (let rowStart = 0; rowStart < seq.length; rowStart += ROW_LENGTH) {
+    const rowEnd = Math.min(rowStart + ROW_LENGTH, seq.length);
+    const cells = [];
+    for (let i = rowStart; i < rowEnd; i++) {
+      const idxs = residueFeats[i];
+      let strips = "";
+      if (idxs.length) {
+        const h = (100 / idxs.length).toFixed(2);
+        for (let k = 0; k < idxs.length; k++) {
+          const f = featObjs[idxs[k]];
+          const color = AXIS_COLORS[f.axis];
+          const tip = `${f.type}${f.note ? ": " + f.note : ""} (${f.start}–${f.end})`;
+          strips += `<span class="rstrip" style="background:${color};height:${h}%;" title="${escapeAttr(tip)}"></span>`;
+        }
+      }
+      cells.push(
+        `<span class="rcell"><span class="rletter">${escapeHTML(seq[i])}</span><span class="rstrips">${strips}</span></span>`
+      );
+    }
+    const num = String(rowStart + 1).padStart(4, " ");
+    rowsHtml.push(
+      `<div class="srow"><span class="sn">${num}</span><span class="sr">${cells.join("")}</span></div>`
+    );
+  }
+
+  const legend = renderLegend(featObjs);
+  return `
+    <details class="ex-seq" open>
+      <summary>Sequence &amp; feature map (${seq.length} aa, ${featObjs.length} feature${featObjs.length === 1 ? "" : "s"})</summary>
+      ${legend}
+      <div class="sviewer">${rowsHtml.join("")}</div>
+    </details>`;
+}
+
+function renderLegend(featObjs) {
+  const byAxis = new Map();
+  for (const f of featObjs) {
+    if (!byAxis.has(f.axis)) byAxis.set(f.axis, new Map());
+    const m = byAxis.get(f.axis);
+    m.set(f.type, (m.get(f.type) || 0) + 1);
+  }
+  if (byAxis.size === 0) return "";
+  const chips = [];
+  for (const [axis, typeCounts] of byAxis) {
+    const color = AXIS_COLORS[axis];
+    const types = [...typeCounts.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .map(([t, n]) => `${t}×${n}`)
+      .join(", ");
+    chips.push(
+      `<span class="sleg"><span class="sswatch" style="background:${color}"></span> <b>${AXIS_LABELS[axis]}</b> — ${escapeHTML(types)}</span>`
+    );
+  }
+  return `<div class="slegend">${chips.join("")}</div>`;
 }
 
 /* ------------------------------------------------------------------ */

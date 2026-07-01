@@ -24,7 +24,28 @@ Record shape:
     "src": "PROSITE" | "TED" | "UniProtKB" | "LinkML LSF" | "manual",
     "sta": "SEEDED" | "REVIEWED" | ...,
     "pat": "<sequence_pattern or null>",
+    "rs":  "<residue_sequence or null>",     # concrete residues
+    "pt":  ["<parent_curie>", ...],          # parent_traits CURIEs
     "xr":  ["<xref>", ...],
+    "ex":  [                                 # canonical_examples (lean projection)
+      {
+        "id":    "UniProtKB:P62258",
+        "label": "14-3-3 protein epsilon",
+        "tax":   "Homo sapiens (NCBITaxon:9606)",
+        "len":   255,
+        "rev":   true,
+        "asc":   5,                          # annotation_score
+        "fams":  ["Pfam:PF00244", ...],
+        "src":   "UNIPROTKB_API",
+        "seq":   "MDDREDLVYQAK...",          # full amino-acid sequence
+        "feats": [                           # [start, end, ft_type, axis, note]
+          [1, 255, "CHAIN", "SEQUENCE", "14-3-3 protein epsilon"],
+          [234, 255, "REGION", "SEQUENCE", "Disordered"],
+          [57, 57, "SITE", "STRUCTURE", "Interaction with phosphoserine"],
+          ...
+        ]
+      }, ...
+    ],
     "path": "data/traits/.../slug.yaml"     # for GitHub raw link
   }
 """
@@ -64,6 +85,45 @@ def truncate(text: str, limit: int = DEF_TRUNC) -> str:
     return text[: limit - 1].rstrip() + "…"
 
 
+def _project_example(ex: dict) -> dict:
+    """Lean projection of a CanonicalExample suitable for the browser
+    detail view. Skips empty fields to keep records.json small."""
+    proj: dict = {}
+    if ex.get("protein_id"):
+        proj["id"] = ex["protein_id"]
+    if ex.get("protein_label"):
+        proj["label"] = ex["protein_label"]
+    tax = ex.get("taxon_label") or ""
+    if ex.get("taxon_id"):
+        tax = f"{tax} ({ex['taxon_id']})" if tax else ex["taxon_id"]
+    if tax:
+        proj["tax"] = tax
+    if ex.get("sequence_length"):
+        proj["len"] = ex["sequence_length"]
+    if "reviewed" in ex:
+        proj["rev"] = bool(ex["reviewed"])
+    if ex.get("annotation_score"):
+        proj["asc"] = ex["annotation_score"]
+    if ex.get("family_classifications"):
+        proj["fams"] = list(ex["family_classifications"])
+    if ex.get("source"):
+        proj["src"] = ex["source"]
+    if ex.get("note"):
+        proj["note"] = ex["note"]
+    if ex.get("sequence"):
+        proj["seq"] = ex["sequence"]
+    feats = ex.get("features") or []
+    if feats:
+        # Compact tuple form to keep JSON small — the browser expands
+        # into objects: [start, end, feature_type, trait_axis, note?]
+        proj["feats"] = [
+            [f["start"], f["end"], f["feature_type"],
+             f.get("trait_axis") or "", f.get("note") or ""]
+            for f in feats
+        ]
+    return proj
+
+
 def load_record(path: Path) -> dict[str, Any] | None:
     try:
         with path.open("r", encoding="utf-8") as fh:
@@ -86,7 +146,10 @@ def load_record(path: Path) -> dict[str, Any] | None:
         "src": infer_source(identifier, path),
         "sta": data.get("mapping_status") or "",
         "pat": data.get("sequence_pattern") or None,
+        "rs": data.get("residue_sequence") or None,
+        "pt": list(data.get("parent_traits") or []),
         "xr": list(data.get("xrefs") or []),
+        "ex": [_project_example(e) for e in (data.get("canonical_examples") or [])],
         "path": rel,
     }
 

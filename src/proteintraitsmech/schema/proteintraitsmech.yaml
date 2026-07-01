@@ -2,21 +2,33 @@ id: https://w3id.org/proteintraitsmech
 name: proteintraitsmech
 title: ProteinTraitsMech - Protein Sequence & Structure Trait Schema
 description: |
-  LinkML schema for modeling protein *sequence* and *structure* traits
-  and their mechanisms. Each ProteinTraitRecord is a single trait along
-  one of two axes:
+  LinkML schema for modeling protein *sequence*, *structure*, and
+  *function* traits and their mechanisms. Each ProteinTraitRecord is a
+  single trait along one of four axes:
 
-    - SEQUENCE traits — motifs, signal peptides, transmembrane spans,
-      low-complexity / disordered regions, coiled coils, repeats,
-      compositional biases, cleavage sites, conserved regions, epitopes.
-    - STRUCTURE traits — folds, structural domains, secondary-structure
-      elements, topology classes, quaternary state, subunit interfaces,
-      active / binding / allosteric sites, disulfide bonds, cavities,
-      dynamics, symmetry, structural stability features.
+    - SEQUENCE traits — motifs, signal peptides, propeptides, transit
+      peptides, initiator methionine, mature chain / peptide products,
+      non-standard residues, low-complexity / disordered regions,
+      compositional biases, tandem repeats, conserved regions, epitopes,
+      PTM sites (modified residues, glycosylation, lipidation, crosslinks).
+    - STRUCTURE traits — CATH-style class / architecture / topology /
+      homologous-superfamily / fold hierarchy, structural domains,
+      secondary-structure arrangements, quaternary state, subunit
+      interfaces, active / binding / allosteric / metal sites, disulfide
+      bonds, cavities, dynamics, symmetry, structural stability features.
+    - SEQUENCE_STRUCTURE traits — traits meaningful in both axes:
+      transmembrane spans, coiled coils, structural tandem repeats.
+    - FUNCTION traits — entry-level (non-localised) traits: enzymatic
+      activity, binding capacity, cofactor requirement, subcellular
+      localisation, environmental response, interaction partner.
+      Complements (does not replace) the localised sequence/structure
+      records: an FT BINDING record captures *where* ATP binds; a
+      FUNC_BINDING_CAPACITY record captures *that* the protein binds ATP
+      as a class-level assertion.
 
   Records anchor to authoritative resources — Pfam, InterPro, PROSITE,
-  SMART, MEROPS, CATH, SCOP, PDB, GO, PR, UniProtKB — with evidence-backed
-  causal mechanism graphs where curator-asserted.
+  SMART, MEROPS, CATH, SCOP, PDB, GO, PR, UniProtKB, HAMAP — with
+  evidence-backed causal mechanism graphs where curator-asserted.
 
   Curation model mirrors the sibling Mech repos (dismech, TraitMech,
   CultureMech, MediaIngredientMech): one YAML per trait, evidence-bearing
@@ -56,6 +68,7 @@ prefixes:
   MEROPS: https://www.ebi.ac.uk/merops/cgi-bin/pepsum?id=
   TED: https://ted.cathdb.info/
   AlphaFoldDB: https://alphafold.ebi.ac.uk/entry/
+  HAMAP: https://hamap.expasy.org/signature/
   EC: https://enzyme.expasy.org/EC/
   KEGG: https://www.kegg.jp/entry/
   Reactome: https://reactome.org/content/detail/
@@ -151,8 +164,21 @@ classes:
           pattern string (`N-{P}-[ST]-{P}.`), a regex, or an ELM linear
           motif syntax. Optional; profiles (HMM/PSSM matrices) are usually
           too large to embed here and should be linked via `xrefs` to
-          their source database instead.
+          their source database instead. Use `residue_sequence` for the
+          concrete amino-acid substring of a specific occurrence — this
+          slot is reserved for symbolic patterns.
         range: string
+
+      residue_sequence:
+        description: >-
+          Concrete amino-acid substring covered by this trait, taken
+          verbatim from the source sequence — e.g. the residues of a
+          UniProt FT MOTIF, SIGNAL, DOMAIN, transmembrane span, or PTM
+          site. One-letter IUPAC codes only, no separators. Complements
+          `sequence_pattern`: `sequence_pattern` is the symbolic
+          motif/regex; `residue_sequence` is a single realised instance.
+        range: string
+        pattern: "^[ACDEFGHIKLMNPQRSTVWYUOBZJX*]+$"
 
       canonical_examples:
         description: >-
@@ -257,6 +283,60 @@ classes:
         inlined_as_list: true
         range: CausalGraph
 
+    rules:
+      # Axis/category pairing — the category prefix pins the axis. UPPER
+      # and OTHER are administrative and may appear on any axis; they are
+      # excluded from these rules by construction (their names don't
+      # match any of the four category-prefix patterns below).
+      - title: seq_categories_require_sequence_axis
+        description: >-
+          Categories named `SEQ_*` are SEQUENCE-axis traits by
+          definition; the axis and category must agree.
+        preconditions:
+          slot_conditions:
+            trait_category:
+              pattern: "^SEQ_"
+        postconditions:
+          slot_conditions:
+            trait_axis:
+              equals_string: SEQUENCE
+      - title: struct_categories_require_structure_axis
+        description: >-
+          Categories named `STRUCT_*` are STRUCTURE-axis traits by
+          definition.
+        preconditions:
+          slot_conditions:
+            trait_category:
+              pattern: "^STRUCT_"
+        postconditions:
+          slot_conditions:
+            trait_axis:
+              equals_string: STRUCTURE
+      - title: mixed_categories_require_sequence_structure_axis
+        description: >-
+          Categories named `MIXED_*` are SEQUENCE_STRUCTURE-axis traits by
+          definition.
+        preconditions:
+          slot_conditions:
+            trait_category:
+              pattern: "^MIXED_"
+        postconditions:
+          slot_conditions:
+            trait_axis:
+              equals_string: SEQUENCE_STRUCTURE
+      - title: func_categories_require_function_axis
+        description: >-
+          Categories named `FUNC_*` are FUNCTION-axis traits by
+          definition.
+        preconditions:
+          slot_conditions:
+            trait_category:
+              pattern: "^FUNC_"
+        postconditions:
+          slot_conditions:
+            trait_axis:
+              equals_string: FUNCTION
+
   TraitSynonym:
     description: A synonym entry with its scope.
     attributes:
@@ -284,8 +364,14 @@ classes:
 
   CanonicalExample:
     description: >-
-      A canonical exemplar protein for a trait — a reference sequence that
-      archetypally exhibits the trait.
+      An exemplar protein for a trait — a reference sequence that
+      exhibits it. Two kinds of examples coexist on a record:
+      curator-picked archetypes (`source: CURATOR`) and API-fetched hits
+      (`source: UNIPROTKB_API`) discovered by querying UniProtKB for
+      proteins carrying the anchoring signature. Instance-level fields
+      (`sequence_length`, `reviewed`, `annotation_score`,
+      `family_classifications`) let downstream consumers rank / filter
+      the API-fetched set without re-querying UniProt.
     attributes:
       protein_id:
         description: UniProtKB accession for the exemplar protein (e.g. UniProtKB:P00533).
@@ -303,11 +389,115 @@ classes:
       taxon_label:
         description: Scientific name of the source organism.
         range: string
+      sequence_length:
+        description: Full-length residue count of the exemplar protein.
+        range: integer
+        minimum_value: 1
+      reviewed:
+        description: >-
+          True if the UniProt entry is Swiss-Prot reviewed; false if it is
+          a TrEMBL unreviewed entry.
+        range: boolean
+      annotation_score:
+        description: >-
+          UniProt annotation score (1–5, higher = more evidence). Useful
+          for ranking API-fetched examples when picking a shortlist.
+        range: integer
+        minimum_value: 1
+        maximum_value: 5
+      family_classifications:
+        description: >-
+          Family / domain CURIEs cross-referenced on this specific example
+          entry — Pfam, InterPro, PROSITE, SMART, CATH, HAMAP, etc.
+          Snapshotted from the entry's DR lines at fetch time; gives
+          downstream users a taxonomy-independent classification of what
+          the example protein *is* without needing to re-query UniProt.
+        multivalued: true
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
       note:
-        description: Why this protein is canonical for the trait.
+        description: >-
+          Free-text note — curator picks explain why the protein is
+          archetypal; API-fetched picks may record the UniProt query used.
         range: string
       reference:
         description: IAO:0000119-style citation (PMID:..., DOI:..., URL).
+        range: string
+      source:
+        description: >-
+          Provenance of this example. `CURATOR` = hand-picked archetype;
+          `UNIPROTKB_API` = fetched by `scripts/fetch_uniprot_examples.py`
+          from the UniProt REST search API.
+        range: ExampleSourceEnum
+      fetched_at:
+        description: >-
+          ISO-8601 UTC date the API-fetched example was retrieved. Empty
+          for curator picks.
+        range: string
+        pattern: "^\\d{4}-\\d{2}-\\d{2}$"
+      sequence:
+        description: >-
+          Amino-acid sequence of the exemplar protein (one-letter IUPAC
+          codes, no separators). Optional — populated by
+          `scripts/fetch_uniprot_examples.py` when it uses UniProt's
+          `format=txt` endpoint. Enables the docs browser to render the
+          sequence with trait annotations overlaid.
+        range: string
+        pattern: "^[ACDEFGHIKLMNPQRSTVWYUOBZJX*]+$"
+      features:
+        description: >-
+          UniProt FT-line annotations parsed from the exemplar protein's
+          flat file. One entry per supported feature range; each carries
+          the axis / category routing that would apply if the feature
+          were promoted to its own ProteinTraitRecord. The docs browser
+          uses this list to colour-code the residues shown in `sequence`.
+        multivalued: true
+        inlined_as_list: true
+        range: SequenceFeatureAnnotation
+
+  SequenceFeatureAnnotation:
+    description: >-
+      A single UniProt FT-line annotation on a CanonicalExample protein.
+      Coordinates are 1-indexed, inclusive of both endpoints; a single-
+      residue feature has `start == end`. `feature_type` is the raw
+      UniProt FT keyword (SIGNAL, DOMAIN, ACT_SITE, …); `trait_axis` and
+      `trait_category` mirror the routing used by seed_uniprot.py's
+      FT_TYPE_MAP so downstream renderers can group by axis for
+      colour-coding.
+    attributes:
+      start:
+        description: 1-indexed start residue (inclusive).
+        required: true
+        range: integer
+        minimum_value: 1
+      end:
+        description: 1-indexed end residue (inclusive).
+        required: true
+        range: integer
+        minimum_value: 1
+      feature_type:
+        description: >-
+          Raw UniProt FT keyword — `SIGNAL`, `DOMAIN`, `ACT_SITE`,
+          `BINDING`, `TRANSMEM`, `MOD_RES`, etc.
+        required: true
+        range: string
+      trait_axis:
+        description: >-
+          Mirror of the trait axis that would apply if this feature were
+          seeded as a ProteinTraitRecord (SEQUENCE / STRUCTURE /
+          SEQUENCE_STRUCTURE). Used by the docs browser to colour-code
+          overlays.
+        range: TraitAxisEnum
+      trait_category:
+        description: >-
+          Mirror of the fine-grained trait category (SEQ_MOTIF /
+          STRUCT_DOMAIN / MIXED_TRANSMEMBRANE / etc.).
+        range: ProteinTraitCategoryEnum
+      note:
+        description: >-
+          UniProt `/note=` text from the FT line — for `MOTIF` this is
+          often the motif name ("DEAD box"); for `DOMAIN` the domain
+          label; for `ACT_SITE` the mechanistic role.
         range: string
 
   CausalGraph:
@@ -458,9 +648,27 @@ enums:
           Short sequence motif — PROSITE pattern, ELM linear motif, active-site
           consensus, targeting signal, kinase-recognition sequence, etc.
       SEQ_SIGNAL_PEPTIDE:
-        description: N-terminal secretion / targeting signal peptide.
+        description: N-terminal secretion / targeting signal peptide (UniProt FT SIGNAL).
+      SEQ_TRANSIT_PEPTIDE:
+        description: >-
+          Organelle-targeting transit peptide — mitochondrial, chloroplast,
+          peroxisome, etc. (UniProt FT TRANSIT).
       SEQ_PROPEPTIDE:
-        description: Propeptide or zymogen activation segment.
+        description: Propeptide or zymogen activation segment (UniProt FT PROPEP).
+      SEQ_INITIATOR_METHIONINE:
+        description: >-
+          Initiator methionine that is post-translationally removed
+          (UniProt FT INIT_MET).
+      SEQ_MATURE_CHAIN:
+        description: >-
+          Mature polypeptide product — the chain remaining after signal /
+          transit / propeptide removal, or a discrete released peptide
+          (UniProt FT CHAIN and PEPTIDE).
+      SEQ_NONSTANDARD_RESIDUE:
+        description: >-
+          Non-standard amino acid encoded at a specific position —
+          selenocysteine, pyrrolysine, or curator-annotated modified
+          residues (UniProt FT NON_STD).
       SEQ_CLEAVAGE_SITE:
         description: Endoproteolytic cleavage site (MEROPS-annotated or curator-defined).
       SEQ_LOW_COMPLEXITY:
@@ -477,19 +685,67 @@ enums:
         description: Linear B-cell or T-cell epitope.
       SEQ_PTM_SITE:
         description: >-
-          Sequence-level PTM site — the residue-in-context; the modification
-          identity itself is a CausalNode of type PTM.
+          Generic sequence-level PTM site — kept as an umbrella bucket for
+          PTM records whose specific modification class is unknown or
+          heterogeneous (e.g. PROSITE patterns that flag multiple PTM
+          families at once). Prefer the specific SEQ_MODIFIED_RESIDUE /
+          SEQ_GLYCOSYLATION_SITE / SEQ_LIPIDATION_SITE / SEQ_CROSSLINK_SITE
+          categories when the modification class is known.
+      SEQ_MODIFIED_RESIDUE:
+        description: >-
+          Post-translationally modified residue — phosphorylation,
+          methylation, acetylation, hydroxylation, sulfation, etc.
+          (UniProt FT MOD_RES).
+      SEQ_GLYCOSYLATION_SITE:
+        description: >-
+          Glycosylation site — N-linked, O-linked, C-mannosylation, or
+          GPI anchor attachment (UniProt FT CARBOHYD).
+      SEQ_LIPIDATION_SITE:
+        description: >-
+          Lipidation site — myristoylation, palmitoylation, prenylation,
+          GPI-lipid anchor, N-acylation (UniProt FT LIPID).
+      SEQ_CROSSLINK_SITE:
+        description: >-
+          Inter- or intra-chain cross-link that isn't a disulfide —
+          isopeptide bonds, ubiquitin / SUMO branch points, sortase
+          crosslinks (UniProt FT CROSSLNK).
       SEQ_OTHER:
 
       # ---- STRUCTURE ----
+      #
+      # Hierarchy roughly follows CATH (Class → Architecture → Topology →
+      # Homologous Superfamily → Domain) and SCOP (Class → Fold →
+      # Superfamily → Family). STRUCT_FOLD covers SCOP's "fold" level and
+      # is a synonym of the CATH topology grouping at that level.
+      STRUCT_CLASS:
+        description: >-
+          Top-level structural class — CATH Class (mainly-α, mainly-β,
+          α/β, few secondary structures) or SCOP class (all-α, all-β,
+          α/β, α+β, multi-domain, membrane, small).
+      STRUCT_ARCHITECTURE:
+        description: >-
+          Overall shape of the secondary-structure arrangement, ignoring
+          connectivity — CATH Architecture level (bundle, sandwich,
+          barrel, roll, etc.).
+      STRUCT_TOPOLOGY:
+        description: >-
+          Fold topology / connectivity class (TIM barrel, Ig-like,
+          jellyroll, greek key, etc.) — CATH Topology level.
+      STRUCT_HOMOLOGOUS_SUPERFAMILY:
+        description: >-
+          Structural + evolutionary grouping below topology — CATH
+          Homologous Superfamily / SCOP Superfamily; members share a
+          common ancestor.
       STRUCT_FOLD:
-        description: Overall fold class (CATH topology, SCOP fold).
+        description: >-
+          Overall fold cluster (SCOP fold; also emitted for TED novel or
+          highly-symmetric fold representatives). Sibling of STRUCT_TOPOLOGY;
+          use STRUCT_TOPOLOGY when the record is explicitly the CATH
+          topology-level term.
       STRUCT_DOMAIN:
         description: Structural domain (CATH domain, SCOP domain, InterPro structural entry).
       STRUCT_SECONDARY:
         description: Secondary-structure element or arrangement (helix bundle, beta sheet topology).
-      STRUCT_TOPOLOGY:
-        description: Fold topology class (TIM barrel, Ig-like, jellyroll, greek key, etc.).
       STRUCT_QUATERNARY:
         description: Oligomeric / quaternary state (homodimer, hexameric ring, filament).
       STRUCT_INTERFACE:
@@ -599,6 +855,20 @@ enums:
         description: Curator has signed off on label / definition / parents.
       DEPRECATED:
         description: Superseded by another ProteinTraitRecord.
+
+  ExampleSourceEnum:
+    description: >-
+      Provenance of a CanonicalExample entry — how the example got onto
+      this record.
+    permissible_values:
+      CURATOR:
+        description: Curator-picked archetype (textbook exemplar).
+      UNIPROTKB_API:
+        description: >-
+          Retrieved by querying the UniProtKB REST search API for entries
+          carrying the trait's anchoring signature (PROSITE / Pfam /
+          InterPro / HAMAP xref, or the accession encoded in the trait
+          identifier).
 
   CausalNodeTypeEnum:
     description: Broad categories for nodes in protein-trait causal graphs.

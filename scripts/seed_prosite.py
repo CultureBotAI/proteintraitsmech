@@ -32,34 +32,51 @@ PROSITE_DAT = RAW_DIR / "prosite.dat"
 PRORULE_DAT = RAW_DIR / "prorule.dat"
 RELEASE_TXT = RAW_DIR / "ps_reldt.txt"
 
-# PROSITE /SITE=N,label values that mark this pattern as targeting a PTM
-# rather than a catalytic / structural / binding feature. Kept explicit —
-# the residual (disulfide, active_site, metal, heme, substrate_binding,
-# pyridoxal_phosphate, thiolester, retinal, primer_binding, …) all stay
-# as SEQ_MOTIF.
-PTM_SITE_KEYWORDS = {
-    "phosphorylation",
-    "amidation",
-    "methylation",
-    "acetylation",
-    "hydroxylation",
-    "glycosylation",
-    "carbohydrate",
-    "myristylation",
-    "myristoylation",
-    "palmitoylation",
-    "prenylation",
-    "farnesylation",
-    "geranyl-geranylation",
-    "sulfation",
-    "sulfonation",
-    "ubiquitination",
-    "sumoylation",
-    "uridylation",
-    "adp_ribosylation",
-    "cross-linking",
-    "gamma_carboxyglutamate",
-}
+# PTM keyword → (schema category, subdir). Used by both the PROSITE
+# PATTERN classifier (matches on `/SITE=N,label`) and the ProRule
+# classifier (matches on the Names: field). Everything not matched here
+# stays as SEQ_MOTIF (disulfide is captured by the STRUCT_DISULFIDE
+# pipeline separately; active-site / metal / heme / substrate_binding /
+# pyridoxal_phosphate / thiolester / retinal / primer_binding stay as
+# motifs unless a curator promotes them).
+PTM_KEYWORD_ROUTES: tuple[tuple[str, tuple[str, str]], ...] = (
+    # SEQ_GLYCOSYLATION_SITE
+    ("glycosylation",         ("SEQ_GLYCOSYLATION_SITE", "sequence/glycosylation")),
+    ("carbohydrate",          ("SEQ_GLYCOSYLATION_SITE", "sequence/glycosylation")),
+    # SEQ_LIPIDATION_SITE
+    ("myristylation",         ("SEQ_LIPIDATION_SITE",    "sequence/lipidation")),
+    ("myristoylation",        ("SEQ_LIPIDATION_SITE",    "sequence/lipidation")),
+    ("palmitoylation",        ("SEQ_LIPIDATION_SITE",    "sequence/lipidation")),
+    ("prenylation",           ("SEQ_LIPIDATION_SITE",    "sequence/lipidation")),
+    ("farnesylation",         ("SEQ_LIPIDATION_SITE",    "sequence/lipidation")),
+    ("geranyl-geranylation",  ("SEQ_LIPIDATION_SITE",    "sequence/lipidation")),
+    # SEQ_CROSSLINK_SITE  (isopeptide-linked / covalent branches, not disulfides)
+    ("ubiquitination",        ("SEQ_CROSSLINK_SITE",     "sequence/crosslink")),
+    ("sumoylation",           ("SEQ_CROSSLINK_SITE",     "sequence/crosslink")),
+    ("cross-linking",         ("SEQ_CROSSLINK_SITE",     "sequence/crosslink")),
+    # SEQ_MODIFIED_RESIDUE (fallback bucket for MOD_RES-style modifications)
+    ("phosphorylation",       ("SEQ_MODIFIED_RESIDUE",   "sequence/modified_residue")),
+    ("amidation",             ("SEQ_MODIFIED_RESIDUE",   "sequence/modified_residue")),
+    ("methylation",           ("SEQ_MODIFIED_RESIDUE",   "sequence/modified_residue")),
+    ("acetylation",           ("SEQ_MODIFIED_RESIDUE",   "sequence/modified_residue")),
+    ("hydroxylation",         ("SEQ_MODIFIED_RESIDUE",   "sequence/modified_residue")),
+    ("sulfation",             ("SEQ_MODIFIED_RESIDUE",   "sequence/modified_residue")),
+    ("sulfonation",           ("SEQ_MODIFIED_RESIDUE",   "sequence/modified_residue")),
+    ("uridylation",           ("SEQ_MODIFIED_RESIDUE",   "sequence/modified_residue")),
+    ("adp_ribosylation",      ("SEQ_MODIFIED_RESIDUE",   "sequence/modified_residue")),
+    ("gamma_carboxyglutamate",("SEQ_MODIFIED_RESIDUE",   "sequence/modified_residue")),
+)
+
+
+def classify_ptm(text: str) -> tuple[str, str] | None:
+    """Return (category, subdir) if `text` matches a known PTM keyword,
+    else None. Case-insensitive, substring match — cheap and stable
+    because the keyword vocabulary is a small closed set."""
+    lower = text.lower()
+    for kw, route in PTM_KEYWORD_ROUTES:
+        if kw in lower:
+            return route
+    return None
 
 _SAFE = re.compile(r"[^a-z0-9]+")
 
@@ -111,13 +128,18 @@ def parse_prosite_dat(text: str) -> list[dict]:
                     if "," in site:
                         entry["site_labels"].append(site.split(",", 1)[1].strip())
             elif line.startswith("PR   "):
-                pr = line[5:].rstrip(";").strip()
-                if pr:
-                    entry["prorule_refs"].append(pr)
+                # A single PR line can list several ProRule accessions
+                # separated by `;`, e.g. `PR   PRU00434; PRU01700;`.
+                for pr in line[5:].split(";"):
+                    pr = pr.strip()
+                    if pr:
+                        entry["prorule_refs"].append(pr)
             elif line.startswith("DO   "):
-                do = line[5:].rstrip(";").strip()
-                if do:
-                    entry["doc_refs"].append(do)
+                # Same story for DO — one line, possibly several PDOCs.
+                for do in line[5:].split(";"):
+                    do = do.strip()
+                    if do:
+                        entry["doc_refs"].append(do)
         if entry.get("ac") and entry.get("id"):
             entry["pattern"] = "".join(entry.pop("pattern_parts"))
             entries.append(entry)
@@ -165,9 +187,14 @@ def parse_prorule_dat(text: str) -> list[dict]:
 def categorise_prosite(entry: dict) -> tuple[str, str, str]:
     """Return (trait_axis, trait_category, subdir_relative_to_TRAITS_DIR)."""
     if entry["type"] == "PATTERN":
-        labels = {lbl.lower() for lbl in entry.get("site_labels", [])}
-        if labels & PTM_SITE_KEYWORDS:
-            return ("SEQUENCE", "SEQ_PTM_SITE", "sequence/ptm_site")
+        # `/SITE=N,label` labels can carry a PTM keyword — route to the
+        # specific PTM subtype. Multiple labels: first PTM match wins;
+        # if none match, treat as a generic motif.
+        for lbl in entry.get("site_labels", []):
+            ptm = classify_ptm(lbl)
+            if ptm is not None:
+                cat, subdir = ptm
+                return ("SEQUENCE", cat, subdir)
         return ("SEQUENCE", "SEQ_MOTIF", "sequence/pattern")
     if entry["type"] == "MATRIX":
         return ("SEQUENCE", "SEQ_MOTIF", "sequence/profile")
@@ -178,6 +205,13 @@ def categorise_prosite(entry: dict) -> tuple[str, str, str]:
 def categorise_prorule(entry: dict) -> tuple[str, str, str]:
     if entry.get("dc") == "Domain":
         return ("STRUCTURE", "STRUCT_DOMAIN", "structure/domain")
+    # DC=Site (or other) — check the Names: field for a PTM keyword. If
+    # matched, the rule targets that specific modification; otherwise it
+    # is a generic motif rule.
+    ptm = classify_ptm(entry.get("names", ""))
+    if ptm is not None:
+        cat, subdir = ptm
+        return ("SEQUENCE", cat, subdir)
     return ("SEQUENCE", "SEQ_MOTIF", "sequence/prorule")
 
 
@@ -232,12 +266,22 @@ def build_prosite_yaml(entry: dict, release: str) -> str:
     lines.append("term_kind: CLASS")
     lines.append("mapping_status: SEEDED")
 
+    # PDOC documentation entries are the family-level parents for one or
+    # more PROSITE signatures (multiple ACs can share a single PDOC —
+    # e.g. PS00796 + PS01180 both point at PDOC00633 "14-3-3 proteins").
+    # They are the closest thing to a parent class in PROSITE, so we
+    # promote them from `xrefs` to `parent_traits`.
+    parent_traits = [f"PROSITE:{do}" for do in entry.get("doc_refs", [])]
+    if parent_traits:
+        lines.append("parent_traits:")
+        for p in parent_traits:
+            lines.append(f"  - {p}")
+
     if entry.get("pattern") and entry["type"] == "PATTERN":
         lines.append(f"sequence_pattern: {yaml_escape(entry['pattern'])}")
 
     xrefs: list[str] = [f"PROSITE:{entry['id']}"]  # ID as a searchable alias
     xrefs.extend(f"PROSITE:{pr}" for pr in entry.get("prorule_refs", []))
-    xrefs.extend(f"PROSITE:{do}" for do in entry.get("doc_refs", []))
     # dedupe, preserve order, drop the self-referential AC form (already in identifier)
     seen: set[str] = set()
     out_xrefs: list[str] = []

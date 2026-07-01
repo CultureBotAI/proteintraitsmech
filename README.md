@@ -46,7 +46,8 @@ ProteinTraitsMech/
 │   └── traits/
 │       ├── sequence/<category>/<slug>.yaml
 │       ├── structure/<category>/<slug>.yaml
-│       └── mixed/<category>/<slug>.yaml
+│       ├── mixed/<category>/<slug>.yaml
+│       └── function/<category>/<slug>.yaml
 ├── src/proteintraitsmech/
 │   └── schema/proteintraitsmech.yaml            # LinkML schema
 ├── scripts/                                     # seed / validate / audit tooling
@@ -54,24 +55,131 @@ ProteinTraitsMech/
 └── docs/
 ```
 
+Axis / category pairing is enforced by LinkML `rules` on
+`ProteinTraitRecord`: any `SEQ_*` category requires `trait_axis: SEQUENCE`,
+`STRUCT_*` requires `STRUCTURE`, `MIXED_*` requires `SEQUENCE_STRUCTURE`,
+and `FUNC_*` requires `FUNCTION`. `UPPER` / `OTHER` are administrative
+and may appear on any axis. `just validate-all` will reject a
+mismatched pair.
+
+**FUNCTION vs localised STRUCTURE.** These axes are complementary, not
+exclusive. A UniProt entry with an ATP-binding site emits both a
+`STRUCT_BINDING_SITE` record (localised — *where* ATP binds, residues
+45–52) and a `FUNC_BINDING_CAPACITY` record (entry-level — *that* the
+protein binds ATP). Likewise a catalytic residue emits both
+`STRUCT_ACTIVE_SITE` and `FUNC_ENZYMATIC_ACTIVITY`. Curators should not
+merge these; they answer different questions.
+
 ## Workflow
 
 1. **Seed** — import candidate traits from an authoritative resource (Pfam / InterPro / PROSITE / CATH / SCOP / MEROPS). Seeded records land with `mapping_status: SEEDED` and axis + category inferred from the source.
 2. **Curate** — edit `data/traits/<axis>/<category>/<slug>.yaml` directly; set `mapping_status: REVIEWED`, append a `CurationEvent`, attach `EvidenceItem` blocks with PMID / DOI + verbatim snippet.
 3. **Add causal graphs** — attach `causal_graphs` when the trait has source-backed mechanism structure (e.g. "this active-site residue coordinates the substrate carbonyl"). Every `CausalEdge` must carry edge-level `evidence`; prefer grounded CURIEs for nodes and predicates (RO for predicates; PR / GO / CHEBI / MOD / HP / MONDO for nodes).
-4. **Validate** — `just validate-all` runs closed-mode LinkML validation over every record.
+4. **Validate** — `just validate-all` invokes `linkml-validate` in batches over every record, reporting per-file failures with the reference-CLI diagnostics. Scope to a subset with a path or glob (`just validate-all data/traits/sequence/motif`).
+
+## Enrichment fields
+
+Two slots are populated automatically by the seeders when the source
+supports them, and can also be added by curators:
+
+- **`residue_sequence`** — the concrete amino-acid substring covered by
+  a localised trait (SEQUENCE / STRUCTURE / SEQUENCE_STRUCTURE axes).
+  Emitted by `seed_uniprot.py` for every FT record with a parsable
+  coordinate range, sliced from the entry's `SQ` block (DISULFID is
+  skipped — its coordinates encode a bond, not a substring).
+  Complements `sequence_pattern`, which stays reserved for symbolic
+  motif/regex syntax.
+- **`parent_traits`** — links to broader/parent traits. Populated
+  automatically:
+    - `seed_uniprot.py` scans DR PROSITE / Pfam / InterPro / SMART / CATH
+      / MEROPS / HAMAP lines and attaches the resulting CURIEs to every
+      record emitted for that entry (all four axes).
+    - `seed_prosite.py` promotes each signature's PDOC documentation
+      entry (from the `DO` line) to `parent_traits: [PROSITE:PDOCxxxxx]`
+      — multiple ACs can share a PDOC (e.g. `PS00796` and `PS01180` →
+      `PDOC00633` "14-3-3 proteins"), giving family-level grouping in
+      the docs browser.
+- **Ontology xrefs** — every record's `trait_category` is grounded to
+  an authoritative ontology term (SO for sequence / structure features,
+  MOD for specific PTMs, GO for functional classes) as an `xref` entry
+  by [`scripts/ground_categories.py`](scripts/ground_categories.py)
+  (`just ground-categories`). Mappings are curated in the script and
+  verified against both the
+  [OAK](https://incatools.github.io/ontology-access-kit/) local
+  `sqlite:obo:<onto>` adapter (default, one download per ontology) and
+  the [EBI OLS4 REST API](https://www.ebi.ac.uk/ols4/) — pass
+  `--source ols` to switch backends. `--audit` prints the resolved
+  table without touching files.
+
+    ```bash
+    just ground-categories --audit                   # audit only
+    just ground-categories --apply                   # write xrefs
+    just ground-categories --source ols --audit      # cross-check via OLS
+    ```
+
+    Current mapping table covers 33 of ~40 categories (STRUCT_CAVITY /
+    STRUCT_SYMMETRY / STRUCT_DYNAMICS / STRUCT_STABILITY /
+    STRUCT_SURFACE / STRUCT_ALLOSTERIC_SITE / SEQ_DISORDER /
+    SEQ_EPITOPE / SEQ_NONSTANDARD_RESIDUE / FUNC_COFACTOR_REQUIREMENT
+    are intentionally unmapped — extend `CATEGORY_MAPPINGS` when a
+    non-obsolete term is identified).
+
+- **`canonical_examples`** — reference proteins that exhibit the trait.
+  Two sources coexist on a record:
+    - `source: CURATOR` — hand-picked archetypes. Seeders emit one when
+      the trait itself is anchored to a specific UniProt entry (TED
+      folds, UniProt-seeded FT records).
+    - `source: UNIPROTKB_API` — retrieved by
+      [`scripts/fetch_uniprot_examples.py`](scripts/fetch_uniprot_examples.py)
+      (`just fetch-examples`) by querying UniProtKB REST for entries
+      cross-referenced to the trait's anchoring signature
+      (`xref:prosite-PS00796`, `xref:pfam-PF00244`, etc.). Each hit
+      carries `sequence_length`, `reviewed`, `annotation_score`,
+      `family_classifications` (Pfam / InterPro / HAMAP / SMART / CATH
+      xrefs on that specific entry) and a `fetched_at` date stamp so
+      downstream consumers can rank / filter without re-querying UniProt.
+
+    ```bash
+    # populate 3 reviewed examples on one PROSITE PATTERN record
+    just fetch-examples data/traits/sequence/pattern/1433-1.yaml --limit 3 --apply
+    # or run over an entire subdirectory
+    just fetch-examples data/traits/sequence/pattern --limit 5 --apply
+    ```
+
+    Idempotent: existing accessions are not re-added. `--force` drops
+    prior `UNIPROTKB_API` picks and re-queries. Rate-limited
+    (~4 req/s + exponential backoff on 429/503).
+
+    Each example additionally carries its full amino-acid `sequence`
+    and a `features` list (SequenceFeatureAnnotation records: `start`,
+    `end`, `feature_type`, `trait_axis`, `trait_category`, `note`) —
+    populated in a separate `--refresh-sequences` pass that batch-
+    fetches flat files via `/uniprotkb/accessions?format=txt` and
+    routes each FT line through `seed_uniprot.py`'s `FT_TYPE_MAP`.
+
+    ```bash
+    # fill in sequence + features on already-fetched API examples
+    just fetch-examples data/traits/sequence/pattern --refresh-sequences --apply
+    ```
+
+    The docs browser renders each example's sequence in a 60-aa-per-row
+    monospace viewer with per-residue coloured strips beneath each
+    letter — one strip per feature covering that position, split by
+    equal fractions when multiple features overlap. Colour is by
+    trait axis (SEQUENCE = blue, STRUCTURE = green, SEQUENCE_STRUCTURE
+    = purple). Hover a strip for the raw UniProt FT type + range + note.
 
 ## Seeds
 
 | Source | Records | Bucket |
 | --- | ---: | --- |
 | [LinkML `LocalStructuralFeature`](https://linkml.io/valuesets/elements/LocalStructuralFeature/) | 19 | `data/traits/structure/{secondary,active_site,binding_site,cavity,disulfide,metal_site,dynamics,interface}/` |
-| [PROSITE patterns](https://prosite.expasy.org/) (`prosite.dat`, PATTERN) | 1311 | `data/traits/sequence/pattern/` and `data/traits/sequence/ptm_site/` (31 PTM-flagged) |
+| [PROSITE patterns](https://prosite.expasy.org/) (`prosite.dat`, PATTERN) | 1311 | `data/traits/sequence/pattern/` (1279 generic) + `data/traits/sequence/{modified_residue,glycosylation,crosslink}/` (32 PTM subtypes) |
 | [PROSITE profiles](https://prosite.expasy.org/) (`prosite.dat`, MATRIX) | 1434 | `data/traits/sequence/profile/` |
-| [PROSITE ProRules](https://prosite.expasy.org/) (`prorule.dat`) | 1449 | `data/traits/structure/domain/` (1445) + `data/traits/sequence/prorule/` (4 Site rules) |
+| [PROSITE ProRules](https://prosite.expasy.org/) (`prorule.dat`) | 1449 | `data/traits/structure/domain/` (1445) + `data/traits/sequence/{modified_residue,glycosylation,prorule}/` (2 phospho + 1 N-glyco + 1 attachment motif) |
 | [TED novel folds](https://ted.cathdb.info/) (Zenodo v5, [DOI:10.5281/zenodo.13908086](https://doi.org/10.5281/zenodo.13908086), CC-BY 4.0) | 7427 | `data/traits/structure/fold/novel/` |
 | [TED highly-symmetric folds](https://ted.cathdb.info/) (same Zenodo record) | 6433 | `data/traits/structure/fold/high_symmetry/` |
-| [UniProtKB](https://www.uniprot.org/) FT + CC + GO (per-accession, demo seed) | 29 (2 entries) | `data/traits/{sequence,structure,mixed,function}/…` |
+| [UniProtKB](https://www.uniprot.org/) FT + CC + GO (per-accession, demo seed) | 38 (2 entries) | `data/traits/{sequence,structure,mixed,function}/…` |
 
 Refetch and re-seed:
 
@@ -91,20 +199,28 @@ UniProtKB supported FT types → axis / category:
 | UniProt FT type | Axis | Category | Notes |
 |---|---|---|---|
 | `TRANSMEM`, `INTRAMEM` | SEQUENCE_STRUCTURE | `MIXED_TRANSMEMBRANE` | one record per span |
-| `SIGNAL` / `PROPEP` | SEQUENCE | `SEQ_SIGNAL_PEPTIDE` / `SEQ_PROPEPTIDE` | |
+| `SIGNAL` | SEQUENCE | `SEQ_SIGNAL_PEPTIDE` | |
+| `TRANSIT` | SEQUENCE | `SEQ_TRANSIT_PEPTIDE` | mitochondrial / chloroplast / peroxisome targeting |
+| `PROPEP` | SEQUENCE | `SEQ_PROPEPTIDE` | zymogen activation segment |
+| `INIT_MET` | SEQUENCE | `SEQ_INITIATOR_METHIONINE` | N-terminal Met removed post-translationally |
+| `CHAIN`, `PEPTIDE` | SEQUENCE | `SEQ_MATURE_CHAIN` | mature polypeptide product |
+| `NON_STD` | SEQUENCE | `SEQ_NONSTANDARD_RESIDUE` | selenocysteine, pyrrolysine, curator-annotated |
 | `REGION` /note="Disordered" | SEQUENCE | `SEQ_DISORDER` | other `REGION` free-text is skipped |
 | `COMPBIAS` | SEQUENCE | `SEQ_COMPOSITION` | `/note` carries residue class (Gly-rich, basic, acidic, …) |
 | `MOTIF` | SEQUENCE | `SEQ_MOTIF` | curator-defined; overlaps with PROSITE where cross-referenced |
-| `MOD_RES`, `LIPID`, `CARBOHYD`, `CROSSLNK` | SEQUENCE | `SEQ_PTM_SITE` | |
+| `MOD_RES` | SEQUENCE | `SEQ_MODIFIED_RESIDUE` | phosphorylation, methylation, acetylation, hydroxylation, sulfation, … |
+| `CARBOHYD` | SEQUENCE | `SEQ_GLYCOSYLATION_SITE` | N-/O-linked, C-mannosylation, GPI anchor attachment |
+| `LIPID` | SEQUENCE | `SEQ_LIPIDATION_SITE` | myristoylation, palmitoylation, prenylation, GPI-lipid |
+| `CROSSLNK` | SEQUENCE | `SEQ_CROSSLINK_SITE` | isopeptide, ubiquitin/SUMO branch, sortase — bond not span, so no `residue_sequence` |
 | `DOMAIN` | STRUCTURE | `STRUCT_DOMAIN` | |
 | `ACT_SITE` | STRUCTURE | `STRUCT_ACTIVE_SITE` | |
 | `SITE` | STRUCTURE | `STRUCT_BINDING_SITE` | |
 | `BINDING` (non-metal ligand) | STRUCTURE | `STRUCT_BINDING_SITE` | ligand ChEBI added to `xrefs` |
 | `BINDING` (metal ligand) / `METAL` | STRUCTURE | `STRUCT_METAL_SITE` | metal keyword detection on `/ligand` + `/ligand_note` |
-| `DISULFID` | STRUCTURE | `STRUCT_DISULFIDE` | |
+| `DISULFID` | STRUCTURE | `STRUCT_DISULFIDE` | bond, not span — no `residue_sequence` |
 | `HELIX`, `STRAND`, `TURN` | STRUCTURE | `STRUCT_SECONDARY` | requires an experimental structure in the entry |
 
-Skipped (out-of-scope for this schema): `CHAIN`, `INIT_MET`, `TRANSIT`, `VARIANT`, `VAR_SEQ`, `MUTAGEN`, `CONFLICT`, `UNSURE`, `NON_CONS`, `NON_TER`, `NON_STD`, `PEPTIDE`.
+Skipped (out-of-scope for this schema): `TOPO_DOM`, `VARIANT`, `VAR_SEQ`, `MUTAGEN`, `CONFLICT`, `UNSURE`, `NON_CONS`, `NON_TER`.
 
 UniProtKB **entry-level** blocks (FUNCTION axis) → category:
 

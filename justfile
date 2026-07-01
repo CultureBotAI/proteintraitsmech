@@ -18,13 +18,16 @@ validate file:
     uv run linkml-validate -s src/proteintraitsmech/schema/proteintraitsmech.yaml \
       --target-class ProteinTraitRecord {{file}}
 
-# Validate every YAML under data/traits/
+# Validate every YAML under data/traits/ by invoking the `linkml-validate`
+# CLI. Files are batched (default 200) so 18K records finish in ~1-2 min.
+# Scope to a subset with a path/glob: just validate-all data/traits/sequence/motif
 validate-all *args:
-    @just validate-strict {{args}}
+    uv run python scripts/validate_linkml.py {{args}}
 
-# Strict in-process closed-mode validation
-validate-strict *args:
-    uv run python scripts/validate_strict.py {{args}}
+# Alias — same runner as validate-all; kept for scripts referencing the
+# CLI's name directly.
+validate-linkml *args:
+    uv run python scripts/validate_linkml.py {{args}}
 
 # Programmatic schema-quality probes
 audit-schema:
@@ -75,6 +78,25 @@ seed-ted *args:
 # Dry-run by default; --apply to write. Idempotent.
 seed-uniprot *args:
     python3 scripts/seed_uniprot.py {{args}}
+
+# Ground `trait_category` values to authoritative ontology terms (SO,
+# GO, MOD) via a curated mapping. Uses OAK's sqlite:obo adapter by
+# default (--source oak) or the OLS4 REST API (--source ols) to verify
+# each CURIE. --audit prints the resolved table; --apply adds the
+# resolved CURIEs to each record's xrefs (idempotent).
+#   just ground-categories --audit
+#   just ground-categories --apply
+ground-categories *args:
+    uv run python scripts/ground_categories.py {{args}}
+
+# Populate canonical_examples on trait YAMLs by querying the UniProtKB
+# REST API for entries carrying each trait's anchoring signature
+# (PROSITE / Pfam / InterPro / HAMAP / etc.). Dry-run by default; pass
+# --apply to write. Rate-limited (~4 req/s) with backoff.
+#   just fetch-examples data/traits/sequence/pattern/1433-1.yaml --limit 5 --apply
+#   just fetch-examples data/traits/sequence/motif --limit 3 --apply
+fetch-examples *args:
+    uv run python scripts/fetch_uniprot_examples.py {{args}}
 
 # Regenerate docs/data/records.json + facets.json used by the browse
 # page. Requires PyYAML; walks every data/traits/**/*.yaml.

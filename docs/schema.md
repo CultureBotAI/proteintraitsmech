@@ -45,11 +45,19 @@ One YAML file per record. Required slots: `identifier`, `label`, `trait_axis`. R
 
 ### SEQUENCE
 
-`SEQ_MOTIF`, `SEQ_SIGNAL_PEPTIDE`, `SEQ_PROPEPTIDE`, `SEQ_CLEAVAGE_SITE`, `SEQ_LOW_COMPLEXITY`, `SEQ_DISORDER`, `SEQ_REPEAT`, `SEQ_COMPOSITION`, `SEQ_CONSERVATION`, `SEQ_EPITOPE`, `SEQ_PTM_SITE`, `SEQ_OTHER`.
+Basic segments: `SEQ_MOTIF`, `SEQ_SIGNAL_PEPTIDE`, `SEQ_TRANSIT_PEPTIDE`, `SEQ_PROPEPTIDE`, `SEQ_INITIATOR_METHIONINE`, `SEQ_MATURE_CHAIN`, `SEQ_NONSTANDARD_RESIDUE`, `SEQ_CLEAVAGE_SITE`, `SEQ_LOW_COMPLEXITY`, `SEQ_DISORDER`, `SEQ_REPEAT`, `SEQ_COMPOSITION`, `SEQ_CONSERVATION`, `SEQ_EPITOPE`.
+
+PTM site subtypes (specific — prefer these over the generic bucket): `SEQ_MODIFIED_RESIDUE`, `SEQ_GLYCOSYLATION_SITE`, `SEQ_LIPIDATION_SITE`, `SEQ_CROSSLINK_SITE`.
+
+Generic PTM bucket (use when the modification class is unknown or heterogeneous): `SEQ_PTM_SITE`.
+
+Fallback: `SEQ_OTHER`.
 
 ### STRUCTURE
 
-`STRUCT_FOLD`, `STRUCT_DOMAIN`, `STRUCT_SECONDARY`, `STRUCT_TOPOLOGY`, `STRUCT_QUATERNARY`, `STRUCT_INTERFACE`, `STRUCT_ACTIVE_SITE`, `STRUCT_BINDING_SITE`, `STRUCT_ALLOSTERIC_SITE`, `STRUCT_DISULFIDE`, `STRUCT_METAL_SITE`, `STRUCT_CAVITY`, `STRUCT_SYMMETRY`, `STRUCT_DYNAMICS`, `STRUCT_STABILITY`, `STRUCT_SURFACE`, `STRUCT_OTHER`.
+CATH/SCOP hierarchy (top-down): `STRUCT_CLASS`, `STRUCT_ARCHITECTURE`, `STRUCT_TOPOLOGY`, `STRUCT_HOMOLOGOUS_SUPERFAMILY`, `STRUCT_FOLD`, `STRUCT_DOMAIN`.
+
+Local geometry: `STRUCT_SECONDARY`, `STRUCT_QUATERNARY`, `STRUCT_INTERFACE`, `STRUCT_ACTIVE_SITE`, `STRUCT_BINDING_SITE`, `STRUCT_ALLOSTERIC_SITE`, `STRUCT_DISULFIDE`, `STRUCT_METAL_SITE`, `STRUCT_CAVITY`, `STRUCT_SYMMETRY`, `STRUCT_DYNAMICS`, `STRUCT_STABILITY`, `STRUCT_SURFACE`, `STRUCT_OTHER`.
 
 ### SEQUENCE_STRUCTURE (mixed)
 
@@ -70,6 +78,31 @@ One YAML file per record. Required slots: `identifier`, `label`, `trait_axis`. R
 
 `UPPER` (organisational parent), `OTHER`.
 
+### Axis / category pairing
+
+`ProteinTraitRecord` carries LinkML `rules` that enforce the category
+prefix against the axis:
+
+| Category prefix | Required axis |
+|---|---|
+| `SEQ_*` | `SEQUENCE` |
+| `STRUCT_*` | `STRUCTURE` |
+| `MIXED_*` | `SEQUENCE_STRUCTURE` |
+| `FUNC_*` | `FUNCTION` |
+| `UPPER` / `OTHER` | unconstrained |
+
+`just validate-all` will reject a mismatched pair.
+
+### FUNCTION vs localised STRUCTURE
+
+FUNCTION and STRUCTURE records for the same protein are complementary,
+not duplicative. A UniProt entry with an ATP-binding pocket at residues
+45–52 emits *both* a `STRUCT_BINDING_SITE` record (localised: *where*
+ATP binds) *and* a `FUNC_BINDING_CAPACITY` record (entry-level: *that*
+the protein binds ATP). Likewise, a catalytic residue emits both
+`STRUCT_ACTIVE_SITE` and `FUNC_ENZYMATIC_ACTIVITY`. The two answer
+different questions and are meant to coexist.
+
 ## `CausalGraph` / `CausalNode` / `CausalEdge`
 
 Optional inline mechanism graph attached to a record. Every `CausalEdge` requires ≥1 `EvidenceItem` — mechanism assertions are curator-generated and must cite their support.
@@ -79,7 +112,7 @@ Optional inline mechanism graph attached to a record. Every `CausalEdge` require
 ## Prefixes declared in the schema
 
 Ontologies: `PR`, `GO`, `PATO`, `UBERON`, `CL`, `CHEBI`, `RHEA`, `SO`, `UO`, `IAO`, `RO`, `OBI`, `MOD`, `MONDO`, `HP`, `NCBITaxon`.
-Databases: `UniProtKB`, `Pfam`, `InterPro`, `PROSITE`, `SMART`, `CATH`, `SCOP`, `MEROPS`, `EC`, `KEGG`, `Reactome`, `NCBIGene`, `HGNC`, `TED`, `AlphaFoldDB`, `valuesets`.
+Databases: `UniProtKB`, `Pfam`, `InterPro`, `PROSITE`, `SMART`, `CATH`, `SCOP`, `MEROPS`, `HAMAP`, `EC`, `KEGG`, `Reactome`, `NCBIGene`, `HGNC`, `TED`, `AlphaFoldDB`, `valuesets`.
 Provenance: `PMID`, `DOI`, `dcterms`, `skos`, `biolink`.
 
 [← back to index](./)

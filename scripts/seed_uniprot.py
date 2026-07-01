@@ -8,19 +8,26 @@ SIGNAL, PROPEP, INTRAMEM, HELIX, STRAND, TURN, and REGION when
 
 Emitted layout mirrors the existing seeds:
 
-  data/traits/sequence/composition/     COMPBIAS
-  data/traits/sequence/disorder/        REGION /note=Disordered
-  data/traits/sequence/motif/           MOTIF (UniProt curator-defined; PROSITE lives elsewhere)
-  data/traits/sequence/ptm_site/        MOD_RES + LIPID + CARBOHYD + CROSSLNK
-  data/traits/sequence/signal_peptide/  SIGNAL
-  data/traits/sequence/propeptide/      PROPEP
-  data/traits/structure/active_site/    ACT_SITE
-  data/traits/structure/binding_site/   BINDING (non-metal ligand) + SITE
-  data/traits/structure/metal_site/     BINDING (metal ligand) + METAL
-  data/traits/structure/disulfide/      DISULFID
-  data/traits/structure/domain/         DOMAIN
-  data/traits/structure/secondary/      HELIX + STRAND + TURN
-  data/traits/mixed/transmembrane/      TRANSMEM + INTRAMEM
+  data/traits/sequence/composition/            COMPBIAS
+  data/traits/sequence/disorder/               REGION /note=Disordered
+  data/traits/sequence/motif/                  MOTIF (UniProt curator-defined; PROSITE lives elsewhere)
+  data/traits/sequence/modified_residue/       MOD_RES
+  data/traits/sequence/glycosylation/          CARBOHYD
+  data/traits/sequence/lipidation/             LIPID
+  data/traits/sequence/crosslink/              CROSSLNK
+  data/traits/sequence/signal_peptide/         SIGNAL
+  data/traits/sequence/transit_peptide/        TRANSIT
+  data/traits/sequence/propeptide/             PROPEP
+  data/traits/sequence/initiator_methionine/   INIT_MET
+  data/traits/sequence/mature_chain/           CHAIN + PEPTIDE
+  data/traits/sequence/nonstandard_residue/    NON_STD
+  data/traits/structure/active_site/           ACT_SITE
+  data/traits/structure/binding_site/          BINDING (non-metal ligand) + SITE
+  data/traits/structure/metal_site/            BINDING (metal ligand) + METAL
+  data/traits/structure/disulfide/             DISULFID
+  data/traits/structure/domain/                DOMAIN
+  data/traits/structure/secondary/             HELIX + STRAND + TURN
+  data/traits/mixed/transmembrane/             TRANSMEM + INTRAMEM
 
 Input options:
   --accession B0R5N7 [--accession …]    fetch each accession from UniProt REST
@@ -52,24 +59,30 @@ UNIPROT_TXT_URL = "https://rest.uniprot.org/uniprotkb/{acc}.txt"
 
 FT_TYPE_MAP: dict[str, tuple[str, str, str]] = {
     # ("axis", "category", "subdir under data/traits/")
-    "TRANSMEM":  ("SEQUENCE_STRUCTURE", "MIXED_TRANSMEMBRANE", "mixed/transmembrane"),
-    "INTRAMEM":  ("SEQUENCE_STRUCTURE", "MIXED_TRANSMEMBRANE", "mixed/transmembrane"),
-    "COMPBIAS":  ("SEQUENCE",           "SEQ_COMPOSITION",     "sequence/composition"),
-    "MOTIF":     ("SEQUENCE",           "SEQ_MOTIF",           "sequence/motif"),
-    "DOMAIN":    ("STRUCTURE",          "STRUCT_DOMAIN",       "structure/domain"),
-    "ACT_SITE":  ("STRUCTURE",          "STRUCT_ACTIVE_SITE",  "structure/active_site"),
-    "SITE":      ("STRUCTURE",          "STRUCT_BINDING_SITE", "structure/binding_site"),
-    "METAL":     ("STRUCTURE",          "STRUCT_METAL_SITE",   "structure/metal_site"),
-    "DISULFID":  ("STRUCTURE",          "STRUCT_DISULFIDE",    "structure/disulfide"),
-    "SIGNAL":    ("SEQUENCE",           "SEQ_SIGNAL_PEPTIDE",  "sequence/signal_peptide"),
-    "PROPEP":    ("SEQUENCE",           "SEQ_PROPEPTIDE",      "sequence/propeptide"),
-    "MOD_RES":   ("SEQUENCE",           "SEQ_PTM_SITE",        "sequence/ptm_site"),
-    "LIPID":     ("SEQUENCE",           "SEQ_PTM_SITE",        "sequence/ptm_site"),
-    "CARBOHYD":  ("SEQUENCE",           "SEQ_PTM_SITE",        "sequence/ptm_site"),
-    "CROSSLNK":  ("SEQUENCE",           "SEQ_PTM_SITE",        "sequence/ptm_site"),
-    "HELIX":     ("STRUCTURE",          "STRUCT_SECONDARY",    "structure/secondary"),
-    "STRAND":    ("STRUCTURE",          "STRUCT_SECONDARY",    "structure/secondary"),
-    "TURN":      ("STRUCTURE",          "STRUCT_SECONDARY",    "structure/secondary"),
+    "TRANSMEM":  ("SEQUENCE_STRUCTURE", "MIXED_TRANSMEMBRANE",       "mixed/transmembrane"),
+    "INTRAMEM":  ("SEQUENCE_STRUCTURE", "MIXED_TRANSMEMBRANE",       "mixed/transmembrane"),
+    "COMPBIAS":  ("SEQUENCE",           "SEQ_COMPOSITION",           "sequence/composition"),
+    "MOTIF":     ("SEQUENCE",           "SEQ_MOTIF",                 "sequence/motif"),
+    "DOMAIN":    ("STRUCTURE",          "STRUCT_DOMAIN",             "structure/domain"),
+    "ACT_SITE":  ("STRUCTURE",          "STRUCT_ACTIVE_SITE",        "structure/active_site"),
+    "SITE":      ("STRUCTURE",          "STRUCT_BINDING_SITE",       "structure/binding_site"),
+    "METAL":     ("STRUCTURE",          "STRUCT_METAL_SITE",         "structure/metal_site"),
+    "DISULFID":  ("STRUCTURE",          "STRUCT_DISULFIDE",          "structure/disulfide"),
+    "SIGNAL":    ("SEQUENCE",           "SEQ_SIGNAL_PEPTIDE",        "sequence/signal_peptide"),
+    "TRANSIT":   ("SEQUENCE",           "SEQ_TRANSIT_PEPTIDE",       "sequence/transit_peptide"),
+    "PROPEP":    ("SEQUENCE",           "SEQ_PROPEPTIDE",            "sequence/propeptide"),
+    "INIT_MET":  ("SEQUENCE",           "SEQ_INITIATOR_METHIONINE",  "sequence/initiator_methionine"),
+    "CHAIN":     ("SEQUENCE",           "SEQ_MATURE_CHAIN",          "sequence/mature_chain"),
+    "PEPTIDE":   ("SEQUENCE",           "SEQ_MATURE_CHAIN",          "sequence/mature_chain"),
+    "NON_STD":   ("SEQUENCE",           "SEQ_NONSTANDARD_RESIDUE",   "sequence/nonstandard_residue"),
+    # PTM subtypes — split from the legacy generic SEQ_PTM_SITE bucket.
+    "MOD_RES":   ("SEQUENCE",           "SEQ_MODIFIED_RESIDUE",      "sequence/modified_residue"),
+    "LIPID":     ("SEQUENCE",           "SEQ_LIPIDATION_SITE",       "sequence/lipidation"),
+    "CARBOHYD":  ("SEQUENCE",           "SEQ_GLYCOSYLATION_SITE",    "sequence/glycosylation"),
+    "CROSSLNK":  ("SEQUENCE",           "SEQ_CROSSLINK_SITE",        "sequence/crosslink"),
+    "HELIX":     ("STRUCTURE",          "STRUCT_SECONDARY",          "structure/secondary"),
+    "STRAND":    ("STRUCTURE",          "STRUCT_SECONDARY",          "structure/secondary"),
+    "TURN":      ("STRUCTURE",          "STRUCT_SECONDARY",          "structure/secondary"),
 }
 
 # Contextual routing:
@@ -128,9 +141,13 @@ class UniProtEntry:
         self.uniprot_version = ""
         self.features: list[dict] = []
         self.sequence_length: int | None = None
+        self.sequence: str = ""  # amino-acid residues from the SQ block
         self.cc_blocks: dict[str, list[str]] = {}
         self.go_annotations: list[dict] = []
         self.keywords: list[str] = []
+        # CURIEs derived from DR lines — used to populate `parent_traits`
+        # on every record emitted for this entry.
+        self.family_curies: list[str] = []
 
 
 def parse_flatfile(text: str) -> list[UniProtEntry]:
@@ -148,9 +165,11 @@ def parse_flatfile(text: str) -> list[UniProtEntry]:
 def _parse_entry_body(raw: str, entry: UniProtEntry) -> None:
     lines = raw.splitlines()
     in_ft = False
+    in_sq = False
     ft_buffer: list[str] = []
     cc_lines: list[str] = []
     kw_lines: list[str] = []
+    sq_chunks: list[str] = []
 
     def flush_ft():
         if ft_buffer:
@@ -158,6 +177,15 @@ def _parse_entry_body(raw: str, entry: UniProtEntry) -> None:
             ft_buffer.clear()
 
     for line in lines:
+        # SQ block: `SQ   SEQUENCE  ...` header followed by 5-space-indented
+        # rows of residues. Runs to the end of the entry.
+        if in_sq:
+            if line.startswith("     ") or line.startswith("SQ   "):
+                sq_chunks.append(line)
+                continue
+            # any non-continuation line ends the SQ block
+            in_sq = False
+
         if line.startswith("ID   "):
             parts = line[5:].split()
             entry.entry_name = parts[0] if parts else ""
@@ -188,6 +216,11 @@ def _parse_entry_body(raw: str, entry: UniProtEntry) -> None:
             kw_lines.append(line[5:])
         elif line.startswith("DR   GO;"):
             _parse_go_dr(line, entry)
+        elif line.startswith("DR   "):
+            _parse_family_dr(line, entry)
+        elif line.startswith("SQ   "):
+            in_sq = True
+            sq_chunks.append(line)
         elif line.startswith("FT   "):
             in_ft = True
             ft_buffer.append(line)
@@ -198,6 +231,9 @@ def _parse_entry_body(raw: str, entry: UniProtEntry) -> None:
     flush_ft()
     entry.cc_blocks = _parse_cc_blocks(cc_lines)
     entry.keywords = _parse_keywords(kw_lines)
+    entry.sequence = _parse_sq_block(sq_chunks)
+    # De-duplicate DR-derived family CURIEs while preserving first-seen order.
+    entry.family_curies = list(dict.fromkeys(entry.family_curies))
 
 
 def _parse_cc_blocks(cc_lines: list[str]) -> dict[str, list[str]]:
@@ -255,6 +291,65 @@ def _parse_go_dr(line: str, entry: UniProtEntry) -> None:
 def _strip_evidence(text: str) -> str:
     # Drop `{ECO:…}` trailer, preserving the rest.
     return re.sub(r"\s*\{ECO:[^}]+\}", "", text).strip()
+
+
+def _normalise_curie(curie: str) -> str:
+    """UniProt occasionally writes db-prefixed CURIEs whose accession
+    itself carries the DB prefix (`ChEBI:CHEBI:30616`). The schema's
+    xref pattern only accepts a single `prefix:local` colon, so collapse
+    the redundant prefix. Currently only ChEBI is known to be affected."""
+    if curie.startswith("ChEBI:CHEBI:"):
+        return "CHEBI:" + curie[len("ChEBI:CHEBI:"):]
+    return curie
+
+
+# DR databases that map cleanly to a CURIE prefix declared in the schema.
+# Each entry: UniProt DR key → CURIE prefix. The first `;`-delimited field
+# after the key is treated as the accession.
+_FAMILY_DR_PREFIXES: dict[str, str] = {
+    "PROSITE":  "PROSITE",
+    "Pfam":     "Pfam",
+    "InterPro": "InterPro",
+    "SMART":    "SMART",
+    "CATH":     "CATH",
+    "MEROPS":   "MEROPS",
+    "HAMAP":    "HAMAP",
+}
+
+
+def _parse_family_dr(line: str, entry: UniProtEntry) -> None:
+    """Parse a `DR   <DB>; <acc>; …` line into a CURIE and stash on the
+    entry. Only whitelisted family/domain databases (see
+    _FAMILY_DR_PREFIXES) contribute — DR lines to sequence databases
+    (EMBL, RefSeq, PDB, …) are ignored here."""
+    body = line[len("DR   "):].rstrip().rstrip(".")
+    if ";" not in body:
+        return
+    db, _, rest = body.partition(";")
+    db = db.strip()
+    prefix = _FAMILY_DR_PREFIXES.get(db)
+    if prefix is None:
+        return
+    acc = rest.strip().split(";")[0].strip()
+    if not acc or acc == "-":
+        return
+    entry.family_curies.append(f"{prefix}:{acc}")
+
+
+def _parse_sq_block(sq_lines: list[str]) -> str:
+    """Concatenate the residue rows of an `SQ ...` block into a single
+    uppercase amino-acid string. The header line (`SQ   SEQUENCE ...`)
+    is discarded; every subsequent 5-space-indented row contributes its
+    non-whitespace characters."""
+    residues: list[str] = []
+    for line in sq_lines:
+        if line.startswith("SQ   "):
+            continue
+        residues.append("".join(line.split()))
+    seq = "".join(residues).upper()
+    # Strip any non-letter residue codes defensively; UniProt uses IUPAC
+    # single letters + `*` for stop codons in translated CDS entries.
+    return re.sub(r"[^A-Z*]", "", seq)
 
 
 def _consume_ft_block(lines: list[str], entry: UniProtEntry) -> None:
@@ -456,6 +551,27 @@ def evidence_items(entry: UniProtEntry, ft: dict) -> list[tuple[str, str]]:
     return items
 
 
+def _residue_substring(entry: UniProtEntry, ft: dict) -> str:
+    """Return the amino-acid substring covered by a feature, or empty
+    string if unavailable (missing sequence, unparsable range, or
+    bond-encoding FT types like DISULFID and CROSSLNK, whose two
+    coordinates identify the linked residues rather than a span)."""
+    if not entry.sequence:
+        return ""
+    if ft["ft_type"] in {"DISULFID", "CROSSLNK"}:
+        # These FT types encode a bond between two residues; the two
+        # coordinates are the endpoints, not the range of a contiguous
+        # region. Extracting the intervening residues would misrepresent
+        # the trait.
+        return ""
+    start, end = ft.get("start"), ft.get("end")
+    if start is None or end is None:
+        return ""
+    if start < 1 or end > len(entry.sequence) or start > end:
+        return ""
+    return entry.sequence[start - 1 : end]
+
+
 def build_yaml(entry: UniProtEntry, ft: dict, axis: str, category: str, release: str) -> str:
     lines: list[str] = []
     lines.append(f"identifier: {identifier_for(entry, ft)}")
@@ -468,12 +584,23 @@ def build_yaml(entry: UniProtEntry, ft: dict, axis: str, category: str, release:
     lines.append("term_kind: CLASS")
     lines.append("mapping_status: SEEDED")
 
+    if entry.family_curies:
+        lines.append("parent_traits:")
+        for p in entry.family_curies:
+            lines.append(f"  - {p}")
+
     xrefs = [f"UniProtKB:{entry.accession}"]
     if ft.get("ligand_id"):
-        xrefs.append(ft["ligand_id"])
+        # UniProt FT `/ligand_id` uses `ChEBI:CHEBI:NNNN` form; normalise
+        # to the schema's declared `CHEBI:NNNN` CURIE.
+        xrefs.append(_normalise_curie(ft["ligand_id"]))
     lines.append("xrefs:")
     for x in xrefs:
         lines.append(f"  - {x}")
+
+    residues = _residue_substring(entry, ft)
+    if residues:
+        lines.append(f"residue_sequence: {residues}")
 
     lines.append("canonical_examples:")
     lines.append(f"  - protein_id: UniProtKB:{entry.accession}")
@@ -758,7 +885,7 @@ def _enzymatic_from_reaction(entry: UniProtEntry, rx: dict) -> dict:
     if rx["ec"]:
         xrefs.append(f"EC:{rx['ec']}")
     for chebi in rx["chebis"]:
-        xrefs.append(f"ChEBI:CHEBI:{chebi}")
+        xrefs.append(f"CHEBI:{chebi}")
     return _base_metadata(entry, "FUNC_ENZYMATIC_ACTIVITY", key, label, definition,
                           xrefs, rx["pmids"], ["CC CATALYTIC ACTIVITY"])
 
@@ -772,7 +899,7 @@ def _cofactor_record(entry: UniProtEntry, cf: dict) -> dict:
     )
     xrefs = [f"UniProtKB:{entry.accession}"]
     if cf["chebi"]:
-        xrefs.append(f"ChEBI:CHEBI:{cf['chebi']}")
+        xrefs.append(f"CHEBI:{cf['chebi']}")
     return _base_metadata(entry, "FUNC_COFACTOR_REQUIREMENT", key, label, definition,
                           xrefs, cf["pmids"], ["CC COFACTOR"])
 
@@ -885,6 +1012,11 @@ def build_function_yaml(entry: UniProtEntry, rec: dict, release: str) -> str:
     lines.append(f"trait_category: {rec['category']}")
     lines.append("term_kind: CLASS")
     lines.append("mapping_status: SEEDED")
+
+    if entry.family_curies:
+        lines.append("parent_traits:")
+        for p in entry.family_curies:
+            lines.append(f"  - {p}")
 
     lines.append("xrefs:")
     for x in dict.fromkeys(rec["xrefs"]):
