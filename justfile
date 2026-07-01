@@ -67,3 +67,11 @@ fetch-ted:
 # catalogues. Requires `just fetch-ted` first. Dry-run by default.
 seed-ted *args:
     python3 scripts/seed_ted.py {{args}}
+
+# Seed data/traits/ from UniProtKB FT lines. Accepts flags:
+#   --accession <ACC>     fetch from UniProt REST (repeat for many)
+#   --from-file <path>    one accession per line
+#   --input <path>        local flat file (may hold many entries)
+# Dry-run by default; --apply to write. Idempotent.
+seed-uniprot *args:
+    python3 scripts/seed_uniprot.py {{args}}
