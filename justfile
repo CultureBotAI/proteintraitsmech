@@ -1,4 +1,4 @@
-# ProteinTraits - protein trait knowledge base
+# ProteinTraitsMech - protein sequence & structure trait knowledge base
 
 set dotenv-load := true
 
@@ -11,11 +11,11 @@ install:
 
 # Generate Python dataclasses from LinkML schema
 gen-schema:
-    uv run gen-pydantic src/proteintraits/schema/proteintraits.yaml > src/proteintraits/schema/proteintraits_dataclasses.py
+    uv run gen-pydantic src/proteintraitsmech/schema/proteintraitsmech.yaml > src/proteintraitsmech/schema/proteintraitsmech_dataclasses.py
 
 # Validate a single ProteinTraitRecord YAML against the schema
 validate file:
-    uv run linkml-validate -s src/proteintraits/schema/proteintraits.yaml \
+    uv run linkml-validate -s src/proteintraitsmech/schema/proteintraitsmech.yaml \
       --target-class ProteinTraitRecord {{file}}
 
 # Validate every YAML under data/traits/

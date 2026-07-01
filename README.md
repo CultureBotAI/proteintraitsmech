@@ -1,4 +1,4 @@
-# ProteinTraits
+# ProteinTraitsMech
 
 Knowledge base of protein **sequence** and **structure** traits, curated one YAML per trait with evidence-backed causal graphs.
 
@@ -6,7 +6,7 @@ Sibling to [dismech](https://github.com/monarch-initiative/dismech) (disease mec
 
 ## Scope
 
-ProteinTraits covers traits along two axes:
+ProteinTraitsMech covers traits along two axes:
 
 - **SEQUENCE** — motifs, signal peptides, propeptides, cleavage sites, low-complexity / disordered regions, tandem repeats, compositional biases, conserved regions, epitopes, PTM sites.
 - **STRUCTURE** — folds, structural domains, secondary-structure arrangements, topology classes, quaternary state, subunit interfaces, active / binding / allosteric / metal sites, disulfide bonds, cavities, symmetry, dynamics, structural stability, surface properties.
@@ -24,7 +24,7 @@ just validate-all             # validate every ProteinTraitRecord YAML
 
 ## Schema
 
-`src/proteintraits/schema/proteintraits.yaml` defines:
+`src/proteintraitsmech/schema/proteintraitsmech.yaml` defines:
 
 - **ProteinTraitRecord** — root class, one per YAML file. Carries `identifier` (preferably an existing InterPro / Pfam / PROSITE / CATH / SCOP / MEROPS / PR CURIE), `label`, `definition`, `parent_traits`, `xrefs`, `synonyms`, `trait_axis` (SEQUENCE / STRUCTURE / SEQUENCE_STRUCTURE), `trait_category`, `term_kind`, optional `canonical_examples`, optional `evidence`, optional `curation_history`, and optional inline `causal_graphs`.
 - **CausalGraph / CausalNode / CausalEdge** — evidence-backed causal mechanism graphs. Nodes represent proteins, domains, motifs, residues, PTMs, ligands, pathways, molecular functions, biological processes, phenotypes, or diseases. Every `CausalEdge` must carry at least one `EvidenceItem`.
@@ -39,16 +39,16 @@ just validate-all             # validate every ProteinTraitRecord YAML
 ## Layout
 
 ```
-ProteinTraits/
+ProteinTraitsMech/
 ├── data/
-│   ├── raw/                             # vendored source releases (Pfam, InterPro, CATH, SCOP, MEROPS, …)
+│   ├── raw/                                     # vendored source releases (Pfam, InterPro, CATH, SCOP, MEROPS, …)
 │   └── traits/
 │       ├── sequence/<category>/<slug>.yaml
 │       ├── structure/<category>/<slug>.yaml
 │       └── mixed/<category>/<slug>.yaml
-├── src/proteintraits/
-│   └── schema/proteintraits.yaml        # LinkML schema
-├── scripts/                             # seed / validate / audit tooling
+├── src/proteintraitsmech/
+│   └── schema/proteintraitsmech.yaml            # LinkML schema
+├── scripts/                                     # seed / validate / audit tooling
 ├── tests/
 └── docs/
 ```
