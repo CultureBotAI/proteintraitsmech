@@ -60,9 +60,24 @@ ProteinTraitsMech/
 3. **Add causal graphs** — attach `causal_graphs` when the trait has source-backed mechanism structure (e.g. "this active-site residue coordinates the substrate carbonyl"). Every `CausalEdge` must carry edge-level `evidence`; prefer grounded CURIEs for nodes and predicates (RO for predicates; PR / GO / CHEBI / MOD / HP / MONDO for nodes).
 4. **Validate** — `just validate-all` runs closed-mode LinkML validation over every record.
 
-## Status
+## Seeds
 
-Bootstrap. Schema is drafted; no records seeded yet. Seed source(s) to be selected from Pfam / InterPro / PROSITE / CATH / SCOP / MEROPS depending on axis.
+| Source | Records | Bucket |
+| --- | ---: | --- |
+| [LinkML `LocalStructuralFeature`](https://linkml.io/valuesets/elements/LocalStructuralFeature/) | 19 | `data/traits/structure/{secondary,active_site,binding_site,cavity,disulfide,metal_site,dynamics,interface}/` |
+| [PROSITE patterns](https://prosite.expasy.org/) (`prosite.dat`, PATTERN) | 1311 | `data/traits/sequence/pattern/` and `data/traits/sequence/ptm_site/` (31 PTM-flagged) |
+| [PROSITE profiles](https://prosite.expasy.org/) (`prosite.dat`, MATRIX) | 1434 | `data/traits/sequence/profile/` |
+| [PROSITE ProRules](https://prosite.expasy.org/) (`prorule.dat`) | 1449 | `data/traits/structure/domain/` (1445) + `data/traits/sequence/prorule/` (4 Site rules) |
+
+Refetch and re-seed:
+
+```bash
+just fetch-prosite            # writes data/raw/prosite.dat + prorule.dat (gitignored)
+just seed-lsf --apply         # 19 LinkML LocalStructuralFeature records
+just seed-prosite --apply     # 4194 PROSITE records; idempotent, skips existing
+```
+
+All seeded records land with `mapping_status: SEEDED`; curator review flips them to `REVIEWED` and adds evidence / causal graphs.
 
 ## License
 
