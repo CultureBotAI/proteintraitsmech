@@ -1,0 +1,585 @@
+id: https://w3id.org/proteintraits
+name: proteintraits
+title: ProteinTraits - Protein Sequence & Structure Trait Schema
+description: |
+  LinkML schema for modeling protein *sequence* and *structure* traits
+  and their mechanisms. Each ProteinTraitRecord is a single trait along
+  one of two axes:
+
+    - SEQUENCE traits — motifs, signal peptides, transmembrane spans,
+      low-complexity / disordered regions, coiled coils, repeats,
+      compositional biases, cleavage sites, conserved regions, epitopes.
+    - STRUCTURE traits — folds, structural domains, secondary-structure
+      elements, topology classes, quaternary state, subunit interfaces,
+      active / binding / allosteric sites, disulfide bonds, cavities,
+      dynamics, symmetry, structural stability features.
+
+  Records anchor to authoritative resources — Pfam, InterPro, PROSITE,
+  SMART, MEROPS, CATH, SCOP, PDB, GO, PR, UniProtKB — with evidence-backed
+  causal mechanism graphs where curator-asserted.
+
+  Curation model mirrors the sibling Mech repos (dismech, TraitMech,
+  CultureMech, MediaIngredientMech): one YAML per trait, evidence-bearing
+  audit trail, validation via `just validate-all`.
+
+license: https://creativecommons.org/publicdomain/zero/1.0/
+
+prefixes:
+  linkml: https://w3id.org/linkml/
+  proteintraits: https://w3id.org/proteintraits/
+  biolink: https://w3id.org/biolink/vocab/
+  # Protein-centric ontologies
+  PR: http://purl.obolibrary.org/obo/PR_
+  GO: http://purl.obolibrary.org/obo/GO_
+  PATO: http://purl.obolibrary.org/obo/PATO_
+  UBERON: http://purl.obolibrary.org/obo/UBERON_
+  CL: http://purl.obolibrary.org/obo/CL_
+  CHEBI: http://purl.obolibrary.org/obo/CHEBI_
+  RHEA: http://purl.obolibrary.org/obo/RHEA_
+  SO: http://purl.obolibrary.org/obo/SO_
+  UO: http://purl.obolibrary.org/obo/UO_
+  IAO: http://purl.obolibrary.org/obo/IAO_
+  RO: http://purl.obolibrary.org/obo/RO_
+  OBI: http://purl.obolibrary.org/obo/OBI_
+  MOD: http://purl.obolibrary.org/obo/MOD_
+  MONDO: http://purl.obolibrary.org/obo/MONDO_
+  HP: http://purl.obolibrary.org/obo/HP_
+  # Protein databases (URL prefixes; not OBO)
+  UniProtKB: https://www.uniprot.org/uniprotkb/
+  Pfam: https://www.ebi.ac.uk/interpro/entry/pfam/
+  InterPro: https://www.ebi.ac.uk/interpro/entry/InterPro/
+  PROSITE: https://prosite.expasy.org/
+  SMART: http://smart.embl-heidelberg.de/smart/do_annotation.pl?ACC=
+  CATH: https://www.cathdb.info/version/latest/superfamily/
+  SCOP: http://scop.mrc-lmb.cam.ac.uk/term/
+  MEROPS: https://www.ebi.ac.uk/merops/cgi-bin/pepsum?id=
+  EC: https://enzyme.expasy.org/EC/
+  KEGG: https://www.kegg.jp/entry/
+  Reactome: https://reactome.org/content/detail/
+  NCBIGene: https://www.ncbi.nlm.nih.gov/gene/
+  HGNC: https://www.genenames.org/data/gene-symbol-report/#!/hgnc_id/
+  # Taxonomy
+  NCBITaxon: http://purl.obolibrary.org/obo/NCBITaxon_
+  # Provenance
+  PMID: http://www.ncbi.nlm.nih.gov/pubmed/
+  DOI: https://doi.org/
+  dcterms: http://purl.org/dc/terms/
+  skos: http://www.w3.org/2004/02/skos/core#
+
+default_prefix: proteintraits
+default_range: string
+
+imports:
+  - linkml:types
+
+# ================================================================
+# ROOT CLASS — one YAML file per ProteinTraitRecord
+# ================================================================
+
+classes:
+
+  ProteinTraitRecord:
+    class_uri: proteintraits:ProteinTraitRecord
+    description: >-
+      A single protein *sequence* or *structure* trait with provenance
+      and optional evidence-backed causal mechanism graphs. One YAML per
+      record.
+    attributes:
+      identifier:
+        description: >-
+          Stable CURIE for this trait. Prefer an existing resource CURIE
+          (InterPro: for families/domains, Pfam: for HMM families, PROSITE:
+          for motifs, CATH: / SCOP: for folds, MEROPS: for peptidase
+          clans, PR: for protein-form terms) when the trait corresponds
+          1:1 to an existing entry. Curator-minted records use the
+          `proteintraits:` prefix.
+        identifier: true
+        required: true
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+
+      label:
+        description: Human-readable trait label.
+        required: true
+        range: string
+
+      definition:
+        description: >-
+          Textual definition. For records anchored to an ontology term,
+          seed from the term's IAO:0000115 annotation; curator can extend.
+        range: string
+
+      definition_source:
+        description: >-
+          IAO:0000119 — citation for the definition (PMID:..., DOI:...,
+          or the source ontology CURIE).
+        range: string
+
+      synonyms:
+        description: >-
+          Alternate labels (oboInOwl:hasExactSynonym, hasNarrowSynonym,
+          hasBroadSynonym, hasRelatedSynonym).
+        multivalued: true
+        inlined_as_list: true
+        range: TraitSynonym
+
+      parent_traits:
+        description: >-
+          rdfs:subClassOf parents — CURIEs of broader ontology classes
+          or ProteinTraitRecords. Multivalued because protein traits
+          typically span multiple axes (function + localization + family).
+        multivalued: true
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+
+      xrefs:
+        description: >-
+          oboInOwl:hasDbXref — equivalents in other ontologies or protein
+          databases (PR / GO / EC / Pfam / InterPro / UniProtKB / Reactome).
+          Use for *true* equivalences; record broader/narrower relations
+          as `parent_traits:` instead.
+        multivalued: true
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+
+      canonical_examples:
+        description: >-
+          Canonical exemplar proteins for this trait — the textbook /
+          reference sequences a curator would point to as archetypal.
+          Each example carries a UniProtKB accession, an organism, an
+          optional role note, and an optional citation.
+        multivalued: true
+        inlined_as_list: true
+        range: CanonicalExample
+
+      replaces:
+        description: >-
+          dcterms:replaces — CURIEs of records that this trait supersedes.
+          The replaced record is left in place with
+          `mapping_status: DEPRECATED` so downstream references remain
+          resolvable.
+        multivalued: true
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+        slot_uri: dcterms:replaces
+
+      trait_axis:
+        description: >-
+          Primary axis for this trait — SEQUENCE, STRUCTURE, or
+          SEQUENCE_STRUCTURE (traits that meaningfully live in both,
+          e.g. transmembrane spans, coiled coils).
+        range: TraitAxisEnum
+        required: true
+
+      trait_category:
+        description: >-
+          Fine-grained bucket within the axis — used for filesystem
+          organisation and reporting (data/traits/<axis>/<category>/).
+        range: ProteinTraitCategoryEnum
+        recommended: true
+
+      term_kind:
+        description: >-
+          Whether this entry is an OWL Class (most trait terms) or a
+          DatatypeProperty / ObjectProperty (value-bearing companions
+          like "has kinetic Km").
+        range: TermKindEnum
+
+      domain:
+        description: >-
+          For DatatypeProperty / ObjectProperty entries — the typed subject
+          (typically biolink:Protein or biolink:GeneOrGeneProduct).
+        range: string
+
+      range_:
+        description: >-
+          For DatatypeProperty / ObjectProperty entries — the value range
+          (e.g. xsd:decimal, xsd:string, or a ProteinTraitRecord identifier).
+        range: string
+        slot_uri: proteintraits:property_range
+
+      priority:
+        description: Editorial priority for the curation backlog.
+        range: PriorityEnum
+
+      created_by:
+        description: IAO:0000117 — original term author.
+        range: string
+
+      contributors:
+        description: Additional curators who have edited this record.
+        multivalued: true
+        range: string
+
+      evidence:
+        description: >-
+          Optional citation list — populated when a curator backs the
+          trait with literature support beyond the anchoring ontology's
+          own provenance. Causal-edge evidence is required separately
+          (see CausalEdge.evidence).
+        multivalued: true
+        inlined_as_list: true
+        range: EvidenceItem
+
+      mapping_status:
+        description: >-
+          Lifecycle flag. SEEDED rows came from a source ontology import;
+          PROPOSED rows are literature-sourced candidates; REVIEWED rows
+          have curator sign-off; DEPRECATED rows are retained for
+          traceability but flagged as superseded.
+        range: MappingStatusEnum
+
+      curation_history:
+        description: Append-only audit trail.
+        multivalued: true
+        inlined_as_list: true
+        range: CurationEvent
+
+      causal_graphs:
+        description: >-
+          Optional causal mechanism graphs for this trait. Nodes represent
+          proteins, domains, PTMs, ligands, pathways, molecular functions,
+          biological processes, phenotypes, or diseases. Edges must carry
+          evidence.
+        multivalued: true
+        inlined_as_list: true
+        range: CausalGraph
+
+  TraitSynonym:
+    description: A synonym entry with its scope.
+    attributes:
+      synonym_text:
+        required: true
+        range: string
+      synonym_type:
+        range: SynonymTypeEnum
+      source:
+        description: Where the synonym came from (e.g. "UniProtKB", "PMID:...").
+        range: string
+
+  EvidenceItem:
+    description: A literature or database citation supporting a claim.
+    attributes:
+      reference:
+        description: PMID:..., DOI:..., a database CURIE, or an opaque URL.
+        required: true
+        range: string
+      snippet:
+        description: Verbatim quote from the source supporting the claim.
+        range: string
+      notes:
+        range: string
+
+  CanonicalExample:
+    description: >-
+      A canonical exemplar protein for a trait — a reference sequence that
+      archetypally exhibits the trait.
+    attributes:
+      protein_id:
+        description: UniProtKB accession for the exemplar protein (e.g. UniProtKB:P00533).
+        required: true
+        range: string
+        pattern: "^UniProtKB:[A-Z0-9]+([-][0-9]+)?$"
+      protein_label:
+        description: Recommended name of the exemplar protein.
+        required: true
+        range: string
+      taxon_id:
+        description: NCBITaxon CURIE for the source organism (e.g. NCBITaxon:9606).
+        range: string
+        pattern: "^NCBITaxon:[0-9]+$"
+      taxon_label:
+        description: Scientific name of the source organism.
+        range: string
+      note:
+        description: Why this protein is canonical for the trait.
+        range: string
+      reference:
+        description: IAO:0000119-style citation (PMID:..., DOI:..., URL).
+        range: string
+
+  CausalGraph:
+    description: A directed causal mechanism graph associated with a trait.
+    attributes:
+      graph_id:
+        description: Stable local graph identifier within the ProteinTraitRecord.
+        identifier: true
+        required: true
+        range: string
+      title:
+        description: Human-readable graph title.
+        range: string
+      description:
+        description: Short scope note for the graph.
+        range: string
+      nodes:
+        description: Nodes participating in the causal graph.
+        required: true
+        multivalued: true
+        inlined_as_list: true
+        range: CausalNode
+      edges:
+        description: Evidence-backed directed causal or mechanistic edges.
+        required: true
+        multivalued: true
+        inlined_as_list: true
+        range: CausalEdge
+
+  CausalNode:
+    description: A node in a trait causal graph.
+    attributes:
+      node_id:
+        description: Stable local node identifier used by graph edges.
+        identifier: true
+        required: true
+        range: string
+      label:
+        description: Human-readable node label.
+        required: true
+        range: string
+      node_type:
+        description: Broad semantic category used for rendering and curation.
+        required: true
+        range: CausalNodeTypeEnum
+      grounding:
+        description: >-
+          Preferred ontology or database CURIE for the node when available.
+          Label-only draft nodes are permitted in v1.
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+      xrefs:
+        description: Additional ontology/database CURIEs for this node.
+        multivalued: true
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+      description:
+        description: Optional node-specific scope note.
+        range: string
+
+  CausalEdge:
+    description: An evidence-backed directed relationship in a trait causal graph.
+    attributes:
+      subject:
+        description: Local node_id of the upstream/source node.
+        required: true
+        range: string
+      predicate:
+        description: Human-readable predicate label or relation CURIE.
+        required: true
+        range: string
+      predicate_id:
+        description: Optional ontology CURIE grounding the predicate (e.g. RO:0002211).
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+      object:
+        description: Local node_id of the downstream/target node.
+        required: true
+        range: string
+      description:
+        description: Short explanation of the causal claim.
+        range: string
+      evidence:
+        description: >-
+          Edge-level literature or database support. Required — every
+          curator-asserted mechanism edge must carry at least one citation.
+        required: true
+        multivalued: true
+        inlined_as_list: true
+        range: EvidenceItem
+
+  CurationEvent:
+    description: A timestamped curator action on a ProteinTraitRecord.
+    attributes:
+      timestamp:
+        range: datetime
+        required: true
+      curator:
+        range: string
+      action:
+        range: string
+      changes:
+        range: string
+      llm_assisted:
+        range: boolean
+
+# ================================================================
+# ENUMS
+# ================================================================
+
+enums:
+
+  TraitAxisEnum:
+    description: Primary axis of a ProteinTraitRecord.
+    permissible_values:
+      SEQUENCE:
+        description: Trait defined on the linear amino-acid sequence.
+      STRUCTURE:
+        description: Trait defined on the 3D structure (fold, contact, geometry).
+      SEQUENCE_STRUCTURE:
+        description: >-
+          Trait meaningful in both axes — e.g. transmembrane spans (sequence
+          hydrophobicity + membrane-embedded helix), coiled coils (heptad
+          repeat + supercoiled helical bundle), disulfides (Cys pattern +
+          spatial bond).
+
+  ProteinTraitCategoryEnum:
+    description: >-
+      Fine-grained trait category — used for filesystem layout beneath
+      `data/traits/<axis>/<category>/`. SEQ_* values sit under the
+      SEQUENCE axis, STRUCT_* under STRUCTURE, MIXED_* under
+      SEQUENCE_STRUCTURE.
+    permissible_values:
+      # ---- SEQUENCE ----
+      SEQ_MOTIF:
+        description: >-
+          Short sequence motif — PROSITE pattern, ELM linear motif, active-site
+          consensus, targeting signal, kinase-recognition sequence, etc.
+      SEQ_SIGNAL_PEPTIDE:
+        description: N-terminal secretion / targeting signal peptide.
+      SEQ_PROPEPTIDE:
+        description: Propeptide or zymogen activation segment.
+      SEQ_CLEAVAGE_SITE:
+        description: Endoproteolytic cleavage site (MEROPS-annotated or curator-defined).
+      SEQ_LOW_COMPLEXITY:
+        description: Low-complexity region or compositionally biased segment.
+      SEQ_DISORDER:
+        description: Intrinsically disordered region (predicted or experimentally validated).
+      SEQ_REPEAT:
+        description: Tandem sequence repeat (ankyrin, leucine-rich, WD40 sequence repeat, etc.).
+      SEQ_COMPOSITION:
+        description: Amino-acid composition trait (e.g. Cys-rich, His-tract, GC-tail).
+      SEQ_CONSERVATION:
+        description: Conserved sequence region or ultraconserved element.
+      SEQ_EPITOPE:
+        description: Linear B-cell or T-cell epitope.
+      SEQ_PTM_SITE:
+        description: >-
+          Sequence-level PTM site — the residue-in-context; the modification
+          identity itself is a CausalNode of type PTM.
+      SEQ_OTHER:
+
+      # ---- STRUCTURE ----
+      STRUCT_FOLD:
+        description: Overall fold class (CATH topology, SCOP fold).
+      STRUCT_DOMAIN:
+        description: Structural domain (CATH domain, SCOP domain, InterPro structural entry).
+      STRUCT_SECONDARY:
+        description: Secondary-structure element or arrangement (helix bundle, beta sheet topology).
+      STRUCT_TOPOLOGY:
+        description: Fold topology class (TIM barrel, Ig-like, jellyroll, greek key, etc.).
+      STRUCT_QUATERNARY:
+        description: Oligomeric / quaternary state (homodimer, hexameric ring, filament).
+      STRUCT_INTERFACE:
+        description: Subunit or protein-protein interface with defined geometry.
+      STRUCT_ACTIVE_SITE:
+        description: Catalytic active site with 3D geometry.
+      STRUCT_BINDING_SITE:
+        description: Ligand, cofactor, metal, or nucleic-acid binding site.
+      STRUCT_ALLOSTERIC_SITE:
+        description: Allosteric or regulatory binding site.
+      STRUCT_DISULFIDE:
+        description: Disulfide bond or disulfide-bond pattern.
+      STRUCT_METAL_SITE:
+        description: Metal-coordinating site (Zn finger, Fe-S cluster, Ca site, etc.).
+      STRUCT_CAVITY:
+        description: Cavity, pocket, or channel.
+      STRUCT_SYMMETRY:
+        description: Internal or quaternary symmetry (Cn, Dn, icosahedral).
+      STRUCT_DYNAMICS:
+        description: Flexibility, hinge motion, order-disorder transition.
+      STRUCT_STABILITY:
+        description: Structural stability feature (thermal, mechanical, proteolytic).
+      STRUCT_SURFACE:
+        description: Surface property (electrostatic patch, hydrophobicity, glycosylation shield).
+      STRUCT_OTHER:
+
+      # ---- MIXED (SEQUENCE + STRUCTURE) ----
+      MIXED_TRANSMEMBRANE:
+        description: Transmembrane span — sequence hydrophobicity + membrane-embedded helix / strand.
+      MIXED_COILED_COIL:
+        description: Coiled-coil region — heptad-repeat sequence signature + supercoiled bundle.
+      MIXED_STRUCTURAL_REPEAT:
+        description: Structural tandem repeat with both sequence and 3D periodicity (Ig, LRR, ankyrin).
+      MIXED_OTHER:
+
+      # ---- ADMINISTRATIVE ----
+      UPPER:
+        description: Upper-level classifier used to organise the hierarchy.
+      OTHER:
+
+  TermKindEnum:
+    permissible_values:
+      CLASS:
+      DATATYPE_PROPERTY:
+      OBJECT_PROPERTY:
+      ANNOTATION_PROPERTY:
+
+  SynonymTypeEnum:
+    permissible_values:
+      EXACT_SYNONYM:
+      NARROW_SYNONYM:
+      BROAD_SYNONYM:
+      RELATED_SYNONYM:
+
+  PriorityEnum:
+    permissible_values:
+      CRITICAL:
+      HIGH:
+      MEDIUM:
+      LOW:
+
+  MappingStatusEnum:
+    permissible_values:
+      SEEDED:
+        description: Imported verbatim from a source ontology / database; not yet reviewed.
+      PROPOSED:
+        description: >-
+          Candidate trait proposed from literature research; not yet
+          curator-reviewed. Should carry >= 2 distinct literature citations.
+      REVIEWED:
+        description: Curator has signed off on label / definition / parents.
+      DEPRECATED:
+        description: Superseded by another ProteinTraitRecord.
+
+  CausalNodeTypeEnum:
+    description: Broad categories for nodes in protein-trait causal graphs.
+    permissible_values:
+      PROTEIN:
+        description: A protein, gene product, isoform, or protein complex.
+      DOMAIN:
+        description: A protein domain or region (Pfam / InterPro / CATH / SCOP entry).
+      MOTIF:
+        description: A sequence or structural motif (e.g. PROSITE pattern, active-site loop).
+      RESIDUE:
+        description: A specific residue or residue set (active site, binding site, mutation locus).
+      PTM:
+        description: A post-translational modification (phosphorylation, glycosylation, etc.).
+      LIGAND:
+        description: A small-molecule ligand, cofactor, or substrate.
+      NUCLEIC_ACID:
+        description: A DNA or RNA molecule participating in the mechanism.
+      CHEMICAL:
+        description: A chemical entity (ChEBI) not otherwise classified as ligand or substrate.
+      PATHWAY:
+        description: A metabolic or signaling pathway.
+      MOLECULAR_FUNCTION:
+        description: A GO molecular function.
+      BIOLOGICAL_PROCESS:
+        description: A GO biological process.
+      CELLULAR_LOCALIZATION:
+        description: A GO cellular component or subcellular location.
+      PHENOTYPE:
+        description: A phenotypic outcome (HP or organism-specific phenotype term).
+      DISEASE:
+        description: A disease term (MONDO or equivalent).
+      TRAIT:
+        description: Another ProteinTraitRecord.
+      STATE:
+        description: A biochemical or conformational state (e.g. active, inactive, phosphorylated).
+      QUALITY:
+        description: A measurable attribute (PATO-style) modulating the trait mechanism.
+      ENVIRONMENTAL_FACTOR:
+        description: An environmental exposure or condition.
+      EXPERIMENTAL_FACTOR:
+        description: An assay, perturbation, or experimental condition.
+      OTHER:
