@@ -33,3 +33,8 @@ audit-schema:
 # Structural-integrity audit of causal graphs
 audit-graphs *args:
     uv run python scripts/audit_causal_graphs.py {{args}}
+
+# Seed data/traits/structure/ from the LinkML valuesets LocalStructuralFeature enum.
+# Dry-run by default; re-run with --apply to write. Stdlib-only, no uv required.
+seed-lsf *args:
+    python3 scripts/seed_localstructuralfeature.py {{args}}
