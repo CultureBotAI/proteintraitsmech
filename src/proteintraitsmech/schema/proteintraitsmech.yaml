@@ -433,6 +433,17 @@ enums:
           hydrophobicity + membrane-embedded helix), coiled coils (heptad
           repeat + supercoiled helical bundle), disulfides (Cys pattern +
           spatial bond).
+      FUNCTION:
+        description: >-
+          Entry-level *functional* trait — not localised to a specific
+          residue range. Covers enzymatic activity, binding capacity,
+          cofactor requirement, subcellular localisation, environmental
+          response, and interaction partners. Grounded by GO (F/P/C),
+          EC, Rhea, ChEBI, or UniProt SubCell where available. Complements
+          the localised sequence/structure records rather than replacing
+          them: an FT BINDING record captures *where* ATP binds; a
+          FUNC_BINDING_CAPACITY record captures *that* the protein binds
+          ATP as a class-level assertion.
 
   ProteinTraitCategoryEnum:
     description: >-
@@ -513,6 +524,42 @@ enums:
       MIXED_STRUCTURAL_REPEAT:
         description: Structural tandem repeat with both sequence and 3D periodicity (Ig, LRR, ankyrin).
       MIXED_OTHER:
+
+      # ---- FUNCTION ----
+      FUNC_ENZYMATIC_ACTIVITY:
+        description: >-
+          Catalytic activity — a chemical reaction the protein performs.
+          Grounded by EC, Rhea, GO MF "*activity", and participant ChEBIs.
+      FUNC_BINDING_CAPACITY:
+        description: >-
+          Entry-level ability to bind a class of molecule (ATP-binding,
+          RNA-binding, DNA-binding, etc.). Distinct from
+          STRUCT_BINDING_SITE, which localises the binding to residues.
+          Grounded by GO MF "* binding" or UniProt KW keywords.
+      FUNC_COFACTOR_REQUIREMENT:
+        description: >-
+          Non-substrate small molecule (metal ion, prosthetic group,
+          organic cofactor) required for activity. Grounded by ChEBI +
+          UniProt `CC COFACTOR` block.
+      FUNC_LOCALIZATION:
+        description: >-
+          Subcellular / cellular-component localisation — cytoplasm,
+          plasma membrane, nucleus, extracellular, etc. Grounded by
+          UniProt SubCell and GO CC.
+      FUNC_ENVIRONMENTAL_RESPONSE:
+        description: >-
+          Response to (or requirement for) an environmental condition —
+          temperature (cold, heat), pH, salinity, oxygen availability,
+          osmotic pressure, UV, DNA damage, oxidative stress, starvation.
+          Grounded by GO BP `response_to_*` or the UniProt `CC INDUCTION`
+          block.
+      FUNC_INTERACTION_PARTNER:
+        description: >-
+          A specific protein-, nucleic-acid-, or complex-partner the
+          protein interacts with (entry-level, not necessarily
+          structurally localised). Distinct from STRUCT_INTERFACE, which
+          captures the interface geometry. Grounded by UniProt `CC SUBUNIT`
+          and cross-refs to IntAct / BioGRID / STRING.
 
       # ---- ADMINISTRATIVE ----
       UPPER:

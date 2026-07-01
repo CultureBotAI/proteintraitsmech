@@ -6,11 +6,12 @@ Sibling to [dismech](https://github.com/monarch-initiative/dismech) (disease mec
 
 ## Scope
 
-ProteinTraitsMech covers traits along two axes:
+ProteinTraitsMech covers traits along four axes:
 
 - **SEQUENCE** — motifs, signal peptides, propeptides, cleavage sites, low-complexity / disordered regions, tandem repeats, compositional biases, conserved regions, epitopes, PTM sites.
 - **STRUCTURE** — folds, structural domains, secondary-structure arrangements, topology classes, quaternary state, subunit interfaces, active / binding / allosteric / metal sites, disulfide bonds, cavities, symmetry, dynamics, structural stability, surface properties.
 - **SEQUENCE_STRUCTURE** (mixed) — traits meaningful in both axes: transmembrane spans, coiled coils, structural tandem repeats.
+- **FUNCTION** — entry-level (non-localised) traits: enzymatic activity, binding capacity, cofactor requirement, subcellular localisation, environmental response, interaction partner. Grounded by EC / Rhea / ChEBI / GO / UniProt SubCell. Complements the localised sequence/structure records rather than replacing them.
 
 Records anchor to authoritative resources: Pfam, InterPro, PROSITE, SMART, MEROPS, CATH, SCOP, PDB, GO, PR, UniProtKB.
 
@@ -70,7 +71,7 @@ ProteinTraitsMech/
 | [PROSITE ProRules](https://prosite.expasy.org/) (`prorule.dat`) | 1449 | `data/traits/structure/domain/` (1445) + `data/traits/sequence/prorule/` (4 Site rules) |
 | [TED novel folds](https://ted.cathdb.info/) (Zenodo v5, [DOI:10.5281/zenodo.13908086](https://doi.org/10.5281/zenodo.13908086), CC-BY 4.0) | 7427 | `data/traits/structure/fold/novel/` |
 | [TED highly-symmetric folds](https://ted.cathdb.info/) (same Zenodo record) | 6433 | `data/traits/structure/fold/high_symmetry/` |
-| [UniProtKB](https://www.uniprot.org/) FT lines (per-accession, demo seed) | 18 (2 entries) | `data/traits/{sequence,structure,mixed}/…` per FT type |
+| [UniProtKB](https://www.uniprot.org/) FT + CC + GO (per-accession, demo seed) | 29 (2 entries) | `data/traits/{sequence,structure,mixed,function}/…` |
 
 Refetch and re-seed:
 
@@ -104,6 +105,32 @@ UniProtKB supported FT types → axis / category:
 | `HELIX`, `STRAND`, `TURN` | STRUCTURE | `STRUCT_SECONDARY` | requires an experimental structure in the entry |
 
 Skipped (out-of-scope for this schema): `CHAIN`, `INIT_MET`, `TRANSIT`, `VARIANT`, `VAR_SEQ`, `MUTAGEN`, `CONFLICT`, `UNSURE`, `NON_CONS`, `NON_TER`, `NON_STD`, `PEPTIDE`.
+
+UniProtKB **entry-level** blocks (FUNCTION axis) → category:
+
+| UniProt block or ref | Category | Grounding |
+|---|---|---|
+| `CC CATALYTIC ACTIVITY` (per `Reaction=`) | `FUNC_ENZYMATIC_ACTIVITY` | EC, Rhea, participating ChEBIs |
+| `DR GO; F:…activity` | `FUNC_ENZYMATIC_ACTIVITY` | GO MF |
+| `DR GO; F:…binding` | `FUNC_BINDING_CAPACITY` | GO MF |
+| `CC COFACTOR` (per `Name=`) | `FUNC_COFACTOR_REQUIREMENT` | ChEBI |
+| `CC SUBCELLULAR LOCATION` (per compartment) | `FUNC_LOCALIZATION` | UniProt SubCell |
+| `DR GO; C:…` | `FUNC_LOCALIZATION` | GO CC |
+| `CC INDUCTION` (keyword-matched) | `FUNC_ENVIRONMENTAL_RESPONSE` | keyword vocabulary (cold, heat, oxidative stress, hypoxia, anaerobic/aerobic, osmotic, UV, …) |
+| `DR GO; P:response to …` | `FUNC_ENVIRONMENTAL_RESPONSE` | GO BP |
+| `CC SUBUNIT` (per "Interacts with X") | `FUNC_INTERACTION_PARTNER` | partner name; PMIDs in evidence |
+
+### Worked example — P25888 (ATP-dependent RNA helicase RhlE, *E. coli* K12)
+
+The two demo entries produce 29 records total. P25888 alone contributes **20** — a complete extraction across all four axes:
+
+| Axis | Records | Categories |
+|---|---:|---|
+| SEQUENCE | 6 | 1 SEQ_DISORDER, 3 SEQ_COMPOSITION (Gly / basic+acidic / basic), 2 SEQ_MOTIF (Q motif + DEAD box) |
+| STRUCTURE | 3 | 2 STRUCT_DOMAIN (Helicase ATP-binding + Helicase C-terminal), 1 STRUCT_BINDING_SITE (ATP → CHEBI:30616) |
+| FUNCTION | 11 | 3 FUNC_ENZYMATIC_ACTIVITY (Rhea:13065 ATP hydrolysis, GO:0016887, GO:0003724), 2 FUNC_BINDING_CAPACITY (ATP + RNA), 2 FUNC_LOCALIZATION (Cytoplasm + GO:0005829), 2 FUNC_ENVIRONMENTAL_RESPONSE (cold shock + heat via GO:0009408), 2 FUNC_INTERACTION_PARTNER (PcnB + RNase E) |
+
+Each record carries `identifier` → `proteintraitsmech:UNIPROTKB_<ACC>_<TYPE>_<KEY>`, `canonical_examples` linking to the source entry + NCBITaxon, `xrefs` (GO / EC / Rhea / ChEBI / partner labels), and `evidence` with the source PMIDs where the flat file cites them.
 
 All seeded records land with `mapping_status: SEEDED`; curator review flips them to `REVIEWED` and adds evidence / causal graphs.
 

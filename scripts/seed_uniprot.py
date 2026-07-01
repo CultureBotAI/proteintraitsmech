@@ -128,6 +128,9 @@ class UniProtEntry:
         self.uniprot_version = ""
         self.features: list[dict] = []
         self.sequence_length: int | None = None
+        self.cc_blocks: dict[str, list[str]] = {}
+        self.go_annotations: list[dict] = []
+        self.keywords: list[str] = []
 
 
 def parse_flatfile(text: str) -> list[UniProtEntry]:
@@ -146,6 +149,8 @@ def _parse_entry_body(raw: str, entry: UniProtEntry) -> None:
     lines = raw.splitlines()
     in_ft = False
     ft_buffer: list[str] = []
+    cc_lines: list[str] = []
+    kw_lines: list[str] = []
 
     def flush_ft():
         if ft_buffer:
@@ -156,7 +161,6 @@ def _parse_entry_body(raw: str, entry: UniProtEntry) -> None:
         if line.startswith("ID   "):
             parts = line[5:].split()
             entry.entry_name = parts[0] if parts else ""
-            # sequence length is the second-to-last token (e.g. "454 AA.")
             if len(parts) >= 2 and parts[-1] == "AA.":
                 try:
                     entry.sequence_length = int(parts[-2])
@@ -178,6 +182,12 @@ def _parse_entry_body(raw: str, entry: UniProtEntry) -> None:
         elif line.startswith("OX   NCBI_TaxID="):
             body = line[len("OX   NCBI_TaxID="):]
             entry.taxid = _strip_evidence(body).rstrip("; ").rstrip(";")
+        elif line.startswith("CC   "):
+            cc_lines.append(line[5:])
+        elif line.startswith("KW   "):
+            kw_lines.append(line[5:])
+        elif line.startswith("DR   GO;"):
+            _parse_go_dr(line, entry)
         elif line.startswith("FT   "):
             in_ft = True
             ft_buffer.append(line)
@@ -186,6 +196,60 @@ def _parse_entry_body(raw: str, entry: UniProtEntry) -> None:
                 flush_ft()
                 in_ft = False
     flush_ft()
+    entry.cc_blocks = _parse_cc_blocks(cc_lines)
+    entry.keywords = _parse_keywords(kw_lines)
+
+
+def _parse_cc_blocks(cc_lines: list[str]) -> dict[str, list[str]]:
+    """Join CC lines (with the `CC   ` prefix already stripped) and split
+    them into `-!- KEY: body` blocks."""
+    joined = "\n".join(cc_lines)
+    blocks: dict[str, list[str]] = {}
+    for chunk in joined.split("-!- "):
+        chunk = chunk.strip()
+        if not chunk or ":" not in chunk:
+            continue
+        key, _, body = chunk.partition(":")
+        key = key.strip()
+        # Stop at the license / copyright separator UniProt inserts at end.
+        body = body.split("---------")[0].strip()
+        # Strip evidence tag trailers at the end of any block.
+        body = body.rstrip(".").rstrip()
+        if key:
+            blocks.setdefault(key, []).append(body)
+    return blocks
+
+
+def _parse_keywords(kw_lines: list[str]) -> list[str]:
+    joined = " ".join(kw_lines)
+    joined = joined.replace(".", ";")
+    out = []
+    for kw in joined.split(";"):
+        kw = kw.strip()
+        if kw:
+            out.append(kw)
+    return out
+
+
+def _parse_go_dr(line: str, entry: UniProtEntry) -> None:
+    """Parse `DR   GO; GO:0009408; P:response to heat; IMP:EcoCyc.`"""
+    body = line[len("DR   GO; "):].rstrip(".").strip()
+    parts = [p.strip() for p in body.split(";")]
+    if len(parts) < 2:
+        return
+    go_id = parts[0]
+    aspect_label = parts[1]
+    if ":" in aspect_label:
+        aspect, _, label = aspect_label.partition(":")
+    else:
+        aspect, label = "?", aspect_label
+    evidence_source = parts[2] if len(parts) >= 3 else ""
+    entry.go_annotations.append({
+        "go_id": go_id,
+        "aspect": aspect.strip(),
+        "label": label.strip(),
+        "evidence_source": evidence_source.strip(),
+    })
 
 
 def _strip_evidence(text: str) -> str:
@@ -432,6 +496,422 @@ def build_yaml(entry: UniProtEntry, ft: dict, axis: str, category: str, release:
 
 
 # ---------------------------------------------------------------------------
+# FUNCTION-axis parsing + emission
+# ---------------------------------------------------------------------------
+
+FUNC_SUBDIRS = {
+    "FUNC_ENZYMATIC_ACTIVITY":     "function/enzymatic",
+    "FUNC_BINDING_CAPACITY":       "function/binding",
+    "FUNC_COFACTOR_REQUIREMENT":   "function/cofactor",
+    "FUNC_LOCALIZATION":           "function/localization",
+    "FUNC_ENVIRONMENTAL_RESPONSE": "function/environmental",
+    "FUNC_INTERACTION_PARTNER":    "function/interaction",
+}
+
+# Environmental cue keywords surfaced in CC INDUCTION and GO BP `response to *`
+# terms. Values are kebab slugs used in identifiers/paths.
+ENV_KEYWORDS: list[tuple[str, str]] = [
+    ("cold shock",        "cold-shock"),
+    ("cold",              "cold"),
+    ("heat shock",        "heat-shock"),
+    ("response to heat",  "heat"),
+    ("heat",              "heat"),
+    ("oxidative stress",  "oxidative-stress"),
+    ("hypoxia",           "hypoxia"),
+    ("anaerobic",         "anaerobic"),
+    ("aerobic",           "aerobic"),
+    ("acid stress",       "acid-stress"),
+    ("alkaline",          "alkaline"),
+    ("osmotic",           "osmotic-stress"),
+    ("salt stress",       "salt-stress"),
+    ("starvation",        "starvation"),
+    ("uv",                "uv"),
+    ("dna damage",        "dna-damage"),
+    ("cold",              "cold"),
+]
+
+# GO F: term suffixes → category
+_GO_MF_ACTIVITY_SUFFIX = re.compile(r"\bactivity\b", re.IGNORECASE)
+_GO_MF_BINDING_SUFFIX = re.compile(r"\bbinding\b", re.IGNORECASE)
+
+_INTERACTS_RE = re.compile(
+    r"[Ii]nteracts?\s+(?:in\s+vitro\s+)?with\s+([A-Za-z0-9][A-Za-z0-9/\- ]{0,30})",
+)
+_PUBMED_RE = re.compile(r"PubMed:(\d+)")
+_CHEBI_RE = re.compile(r"ChEBI:CHEBI:(\d+)")
+_RHEA_RE = re.compile(r"Rhea:RHEA:(\d+)")
+_EC_RE = re.compile(r"EC=([\d.]+)")
+
+
+def _pmids_in(text: str) -> list[str]:
+    return list(dict.fromkeys(_PUBMED_RE.findall(text)))
+
+
+def _slugify_partner(name: str) -> str:
+    name = name.strip().rstrip(".").rstrip(",")
+    # Trim trailing noise like "in the presence of" — cheap heuristic
+    for stop in (" and ", " through ", " during ", " via ", " to form "):
+        if stop in name:
+            name = name.split(stop)[0]
+    return re.sub(r"[^A-Za-z0-9]+", "-", name.strip().lower()).strip("-")[:40] or "partner"
+
+
+def parse_catalytic_activity(block: str) -> list[dict]:
+    out: list[dict] = []
+    # Each Reaction=... clause is a separate activity.
+    chunks = re.split(r"(?=Reaction=)", block)
+    for chunk in chunks:
+        chunk = chunk.strip()
+        if not chunk.startswith("Reaction="):
+            continue
+        reaction = chunk[len("Reaction="):].split(";", 1)[0].strip()
+        out.append({
+            "reaction": reaction,
+            "rhea": (_RHEA_RE.search(chunk).group(1) if _RHEA_RE.search(chunk) else None),
+            "ec": (_EC_RE.search(chunk).group(1) if _EC_RE.search(chunk) else None),
+            "chebis": list(dict.fromkeys(_CHEBI_RE.findall(chunk))),
+            "pmids": _pmids_in(chunk),
+        })
+    return out
+
+
+def parse_cofactor(block: str) -> list[dict]:
+    out: list[dict] = []
+    for chunk in re.split(r"(?=Name=)", block):
+        chunk = chunk.strip()
+        if not chunk.startswith("Name="):
+            continue
+        name_m = re.match(r"Name=([^;]+)", chunk)
+        chebi_m = _CHEBI_RE.search(chunk)
+        out.append({
+            "name": (_strip_evidence(name_m.group(1)) if name_m else "").strip(),
+            "chebi": chebi_m.group(1) if chebi_m else None,
+            "pmids": _pmids_in(chunk),
+        })
+    return out
+
+
+def parse_subcellular_location(block: str) -> list[dict]:
+    """Return locations from a CC SUBCELLULAR LOCATION block.
+
+    UniProt syntax: primary compartments separated by `.`; `; qualifier`
+    tacks a topology descriptor onto the previous location; `Note=` is
+    a free-text tail we surface as a note.
+    """
+    if "Note=" in block:
+        main, _, note_body = block.partition("Note=")
+    else:
+        main, note_body = block, ""
+    note = _strip_evidence(note_body).strip().rstrip(".")
+
+    main = _strip_evidence(main)
+    out: list[dict] = []
+    for seg in main.split("."):
+        seg = seg.strip()
+        if not seg:
+            continue
+        parts = [p.strip() for p in seg.split(";") if p.strip()]
+        if not parts:
+            continue
+        location = parts[0]
+        qualifiers = "; ".join(parts[1:]) if len(parts) > 1 else ""
+        out.append({
+            "location": location,
+            "qualifiers": qualifiers,
+            "note": note if not out else "",
+            "pmids": _pmids_in(block),
+        })
+    return out
+
+
+def parse_induction(block: str) -> list[dict]:
+    """Keyword-scan an INDUCTION block for environmental cues.
+
+    Longest keyword wins on overlap — matching "cold shock" suppresses a
+    later match on plain "cold" over the same character range.
+    """
+    lower = block.lower()
+    hits: list[dict] = []
+    seen_slugs: set[str] = set()
+    covered: list[tuple[int, int]] = []
+    kw_sorted = sorted(ENV_KEYWORDS, key=lambda kv: -len(kv[0]))
+    for kw, slug in kw_sorted:
+        idx = lower.find(kw)
+        while idx != -1:
+            hi = idx + len(kw)
+            if any(idx < c_hi and hi > c_lo for (c_lo, c_hi) in covered):
+                idx = lower.find(kw, hi)
+                continue
+            if slug not in seen_slugs:
+                seen_slugs.add(slug)
+                hits.append({
+                    "cue": kw,
+                    "slug": slug,
+                    "pmids": _pmids_in(block),
+                    "context": _strip_evidence(block).strip(),
+                })
+            covered.append((idx, hi))
+            idx = lower.find(kw, hi)
+    return hits
+
+
+def parse_subunit(block: str) -> list[dict]:
+    """Extract 'Interacts with X' clauses from a SUBUNIT block."""
+    out: list[dict] = []
+    seen: set[str] = set()
+    for m in _INTERACTS_RE.finditer(block):
+        partner_raw = m.group(1).strip().rstrip(".").rstrip(",")
+        # Trim at conjunctions the regex was greedy enough to swallow.
+        for stop in (" and ", " via ", " through ", " during "):
+            if stop in partner_raw:
+                partner_raw = partner_raw.split(stop)[0]
+        partner = partner_raw.strip()
+        if not partner or partner.lower() in seen:
+            continue
+        seen.add(partner.lower())
+        # Grab the containing sentence for context + PMIDs
+        start = max(0, m.start() - 40)
+        end = min(len(block), m.end() + 120)
+        context = _strip_evidence(block[start:end]).strip()
+        out.append({
+            "partner": partner,
+            "context": context,
+            "pmids": _pmids_in(context) or _pmids_in(block),
+        })
+    return out
+
+
+def function_records(entry: UniProtEntry) -> list[dict]:
+    """Return a list of function-record dicts ready to emit as YAMLs."""
+    records: list[dict] = []
+
+    for block in entry.cc_blocks.get("CATALYTIC ACTIVITY", []):
+        for rx in parse_catalytic_activity(block):
+            records.append(_enzymatic_from_reaction(entry, rx))
+    for block in entry.cc_blocks.get("COFACTOR", []):
+        for cf in parse_cofactor(block):
+            records.append(_cofactor_record(entry, cf))
+    for block in entry.cc_blocks.get("SUBCELLULAR LOCATION", []):
+        for loc in parse_subcellular_location(block):
+            records.append(_localization_record(entry, loc))
+    for block in entry.cc_blocks.get("INDUCTION", []):
+        for env in parse_induction(block):
+            records.append(_environmental_record(entry, env, source="INDUCTION"))
+    for block in entry.cc_blocks.get("SUBUNIT", []):
+        for partner in parse_subunit(block):
+            records.append(_interaction_record(entry, partner))
+
+    # GO cross-refs — one record per relevant GO term.
+    for go in entry.go_annotations:
+        rec = _record_from_go(entry, go)
+        if rec is not None:
+            records.append(rec)
+
+    return records
+
+
+def _base_metadata(entry: UniProtEntry, category: str, key: str, label: str, definition: str,
+                   xrefs: list[str], pmids: list[str], sources: list[str]) -> dict:
+    """Bundle every field the YAML emitter needs."""
+    axis = "FUNCTION"
+    subdir = FUNC_SUBDIRS[category]
+    identifier = f"proteintraitsmech:UNIPROTKB_{entry.accession}_{key}"
+    slug = f"{entry.accession.lower()}_{re.sub(r'[^a-z0-9]+', '_', key.lower()).strip('_')}"
+    return {
+        "axis": axis,
+        "category": category,
+        "subdir": subdir,
+        "identifier": identifier,
+        "slug": slug,
+        "label": label,
+        "definition": definition,
+        "xrefs": xrefs,
+        "pmids": pmids,
+        "sources": sources,
+    }
+
+
+def _enzymatic_from_reaction(entry: UniProtEntry, rx: dict) -> dict:
+    key_bits = []
+    if rx["rhea"]:
+        key_bits.append(f"RHEA_{rx['rhea']}")
+    elif rx["ec"]:
+        key_bits.append("EC_" + rx["ec"].replace(".", "_"))
+    else:
+        key_bits.append("REACTION_" + re.sub(r"[^A-Za-z0-9]+", "_", rx["reaction"])[:30].strip("_"))
+    key = f"ACTIVITY_{key_bits[0]}"
+    label = f"Enzymatic activity — {rx['reaction']}"
+    if rx["ec"]:
+        label += f" (EC {rx['ec']})"
+    label += f" [{entry.accession}]"
+    definition = (
+        f"Catalytic activity of UniProtKB:{entry.accession} "
+        f"({entry.protein_name or entry.entry_name}): {rx['reaction']}."
+    )
+    if rx["ec"]:
+        definition += f" EC {rx['ec']}."
+    if rx["rhea"]:
+        definition += f" Rhea:{rx['rhea']}."
+    xrefs = [f"UniProtKB:{entry.accession}"]
+    if rx["rhea"]:
+        xrefs.append(f"RHEA:{rx['rhea']}")
+    if rx["ec"]:
+        xrefs.append(f"EC:{rx['ec']}")
+    for chebi in rx["chebis"]:
+        xrefs.append(f"ChEBI:CHEBI:{chebi}")
+    return _base_metadata(entry, "FUNC_ENZYMATIC_ACTIVITY", key, label, definition,
+                          xrefs, rx["pmids"], ["CC CATALYTIC ACTIVITY"])
+
+
+def _cofactor_record(entry: UniProtEntry, cf: dict) -> dict:
+    key_slug = cf["chebi"] or re.sub(r"[^A-Za-z0-9]+", "_", cf["name"])[:20]
+    key = f"COFACTOR_{key_slug}"
+    label = f"Cofactor requirement — {cf['name']} [{entry.accession}]"
+    definition = (
+        f"UniProtKB:{entry.accession} requires {cf['name']} as a cofactor."
+    )
+    xrefs = [f"UniProtKB:{entry.accession}"]
+    if cf["chebi"]:
+        xrefs.append(f"ChEBI:CHEBI:{cf['chebi']}")
+    return _base_metadata(entry, "FUNC_COFACTOR_REQUIREMENT", key, label, definition,
+                          xrefs, cf["pmids"], ["CC COFACTOR"])
+
+
+def _localization_record(entry: UniProtEntry, loc: dict) -> dict:
+    loc_slug = re.sub(r"[^A-Za-z0-9]+", "_", loc["location"]).strip("_").upper()
+    key = f"LOCALIZATION_{loc_slug}"
+    label = f"Localised to {loc['location']} [{entry.accession}]"
+    definition = (
+        f"UniProtKB:{entry.accession} ({entry.protein_name or entry.entry_name}) "
+        f"is localised to {loc['location']}"
+    )
+    if loc["qualifiers"]:
+        definition += f" ({loc['qualifiers']})"
+    definition += "."
+    if loc["note"]:
+        definition += f" Note: {loc['note']}."
+    xrefs = [f"UniProtKB:{entry.accession}"]
+    return _base_metadata(entry, "FUNC_LOCALIZATION", key, label, definition,
+                          xrefs, loc["pmids"], ["CC SUBCELLULAR LOCATION"])
+
+
+def _environmental_record(entry: UniProtEntry, env: dict, source: str) -> dict:
+    key = f"ENV_{env['slug'].replace('-', '_').upper()}"
+    label = f"Response to {env['cue']} [{entry.accession}]"
+    definition = (
+        f"UniProtKB:{entry.accession} shows a response to {env['cue']}. "
+        f"Source: {source}. Context: \"{env['context'][:200]}\"."
+    )
+    xrefs = [f"UniProtKB:{entry.accession}"]
+    return _base_metadata(entry, "FUNC_ENVIRONMENTAL_RESPONSE", key, label, definition,
+                          xrefs, env["pmids"], [f"CC {source}"])
+
+
+def _interaction_record(entry: UniProtEntry, partner: dict) -> dict:
+    key = f"INTERACTS_{_slugify_partner(partner['partner']).upper()}"
+    label = f"Interacts with {partner['partner']} [{entry.accession}]"
+    definition = (
+        f"UniProtKB:{entry.accession} ({entry.protein_name or entry.entry_name}) "
+        f"interacts with {partner['partner']}. Context: \"{partner['context'][:200]}\"."
+    )
+    xrefs = [f"UniProtKB:{entry.accession}"]
+    return _base_metadata(entry, "FUNC_INTERACTION_PARTNER", key, label, definition,
+                          xrefs, partner["pmids"], ["CC SUBUNIT"])
+
+
+def _record_from_go(entry: UniProtEntry, go: dict) -> dict | None:
+    """Map a DR GO annotation to a FUNC_* record, or None to skip."""
+    go_id = go["go_id"]
+    label_text = go["label"]
+    aspect = go["aspect"]
+
+    if aspect == "F":
+        if _GO_MF_BINDING_SUFFIX.search(label_text):
+            key = f"BINDING_GO_{go_id.split(':', 1)[1]}"
+            label = f"{label_text} ({go_id}) [{entry.accession}]"
+            definition = (
+                f"UniProtKB:{entry.accession} exhibits {label_text} "
+                f"({go_id}, aspect F)."
+            )
+            xrefs = [f"UniProtKB:{entry.accession}", go_id]
+            return _base_metadata(entry, "FUNC_BINDING_CAPACITY", key, label,
+                                  definition, xrefs, [], [f"DR GO {go['evidence_source']}"])
+        if _GO_MF_ACTIVITY_SUFFIX.search(label_text):
+            key = f"ACTIVITY_GO_{go_id.split(':', 1)[1]}"
+            label = f"{label_text} ({go_id}) [{entry.accession}]"
+            definition = (
+                f"UniProtKB:{entry.accession} exhibits {label_text} "
+                f"({go_id}, aspect F)."
+            )
+            xrefs = [f"UniProtKB:{entry.accession}", go_id]
+            return _base_metadata(entry, "FUNC_ENZYMATIC_ACTIVITY", key, label,
+                                  definition, xrefs, [], [f"DR GO {go['evidence_source']}"])
+    elif aspect == "C":
+        key = f"LOCALIZATION_GO_{go_id.split(':', 1)[1]}"
+        label = f"Localised to {label_text} ({go_id}) [{entry.accession}]"
+        definition = (
+            f"UniProtKB:{entry.accession} is localised to {label_text} "
+            f"({go_id}, aspect C)."
+        )
+        xrefs = [f"UniProtKB:{entry.accession}", go_id]
+        return _base_metadata(entry, "FUNC_LOCALIZATION", key, label,
+                              definition, xrefs, [], [f"DR GO {go['evidence_source']}"])
+    elif aspect == "P":
+        # BP records — only surface as ENVIRONMENTAL_RESPONSE when the GO term
+        # is a `response to *` term (matches the user's environmental-trait scope).
+        if label_text.lower().startswith("response to "):
+            cue = label_text[len("response to "):].strip().rstrip(".")
+            slug = re.sub(r"[^A-Za-z0-9]+", "-", cue.lower()).strip("-") or "unknown"
+            key = f"ENV_{slug.replace('-', '_').upper()}_GO_{go_id.split(':', 1)[1]}"
+            label = f"Response to {cue} ({go_id}) [{entry.accession}]"
+            definition = (
+                f"UniProtKB:{entry.accession} shows a response to {cue} "
+                f"({go_id}, aspect P)."
+            )
+            xrefs = [f"UniProtKB:{entry.accession}", go_id]
+            return _base_metadata(entry, "FUNC_ENVIRONMENTAL_RESPONSE", key, label,
+                                  definition, xrefs, [], [f"DR GO {go['evidence_source']}"])
+    return None
+
+
+def build_function_yaml(entry: UniProtEntry, rec: dict, release: str) -> str:
+    lines: list[str] = []
+    lines.append(f"identifier: {rec['identifier']}")
+    lines.append(f"label: {yaml_scalar(rec['label'])}")
+    lines.append("definition: >-")
+    lines.extend(yaml_folded_body("", rec["definition"]))
+    lines.append(f"definition_source: {yaml_scalar(release)}")
+    lines.append(f"trait_axis: {rec['axis']}")
+    lines.append(f"trait_category: {rec['category']}")
+    lines.append("term_kind: CLASS")
+    lines.append("mapping_status: SEEDED")
+
+    lines.append("xrefs:")
+    for x in dict.fromkeys(rec["xrefs"]):
+        lines.append(f"  - {x}")
+
+    lines.append("canonical_examples:")
+    lines.append(f"  - protein_id: UniProtKB:{entry.accession}")
+    lines.append(f"    protein_label: {yaml_scalar(entry.protein_name or entry.entry_name)}")
+    if entry.taxid:
+        lines.append(f"    taxon_id: NCBITaxon:{entry.taxid}")
+    if entry.organism:
+        lines.append(f"    taxon_label: {yaml_scalar(entry.organism)}")
+    lines.append(f"    note: {yaml_scalar('Source: ' + ', '.join(rec['sources']))}")
+
+    lines.append("evidence:")
+    if rec["pmids"]:
+        for pmid in dict.fromkeys(rec["pmids"]):
+            lines.append(f"  - reference: PMID:{pmid}")
+            lines.append(f"    notes: {yaml_scalar('Cited in: ' + ', '.join(rec['sources']))}")
+    else:
+        lines.append(f"  - reference: UniProtKB:{entry.accession}")
+        lines.append(f"    notes: {yaml_scalar('Source: ' + ', '.join(rec['sources']))}")
+
+    return "\n".join(lines) + "\n"
+
+
+# ---------------------------------------------------------------------------
 # I/O helpers
 # ---------------------------------------------------------------------------
 
@@ -490,6 +970,7 @@ def main() -> int:
         if not entry.accession:
             continue
         release = f"UniProtKB entry {entry.accession} ({entry.uniprot_version or 'unversioned'})"
+        # 1. Per-region FT records
         for ft in entry.features:
             routed = route_feature(ft)
             if routed is None:
@@ -513,6 +994,20 @@ def main() -> int:
             if args.apply:
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_text(build_yaml(entry, ft, axis, category, release))
+                stats["written"] += 1
+
+        # 2. Function-axis records from CC / DR GO
+        for rec in function_records(entry):
+            path = TRAITS_DIR / rec["subdir"] / f"{rec['slug']}.yaml"
+            key = str(path.parent.relative_to(TRAITS_DIR))
+            stats["by_dir"][key] = stats["by_dir"].get(key, 0) + 1
+            if path.exists() and not args.force:
+                stats["skipped"] += 1
+                continue
+            stats["planned"] += 1
+            if args.apply:
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(build_function_yaml(entry, rec, release))
                 stats["written"] += 1
 
     print()
