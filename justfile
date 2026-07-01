@@ -75,3 +75,8 @@ seed-ted *args:
 # Dry-run by default; --apply to write. Idempotent.
 seed-uniprot *args:
     python3 scripts/seed_uniprot.py {{args}}
+
+# Regenerate docs/data/records.json + facets.json used by the browse
+# page. Requires PyYAML; walks every data/traits/**/*.yaml.
+build-docs:
+    python3 scripts/build_docs_index.py

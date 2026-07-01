@@ -7,6 +7,11 @@ title: ProteinTraitsMech
 
 Knowledge base of **protein sequence, structure, and function traits** — one YAML per trait, LinkML-validated, evidence-backed. Sibling to [dismech](https://github.com/monarch-initiative/dismech) (disease mechanisms) and TraitMech (microbial ecophysiological traits).
 
+<a href="browse.html" style="display:block;padding:1rem 1.25rem;margin:1rem 0 1.5rem;border:1px solid #159957;border-radius:8px;background:linear-gradient(120deg,#159957,#155799);color:#fff;text-decoration:none;box-shadow:0 2px 8px rgba(15,23,42,.10)">
+  <strong style="font-size:1.05rem">🔎 Browse the corpus</strong><br>
+  <span style="opacity:.9">Faceted search over 18,102 ProteinTraitRecords — filter by axis / category / source, then open any record for a rendered detail view.</span>
+</a>
+
 - **Repository** — [github.com/CultureBotAI/proteintraitsmech](https://github.com/CultureBotAI/proteintraitsmech)
 - **Schema** — [`src/proteintraitsmech/schema/proteintraitsmech.yaml`](https://github.com/CultureBotAI/proteintraitsmech/blob/main/src/proteintraitsmech/schema/proteintraitsmech.yaml) · overview on [Schema page](schema.html)
 - **Worked example** — [P25888 corpus (20 records across all four axes)](example.html)
