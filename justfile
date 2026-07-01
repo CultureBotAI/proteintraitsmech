@@ -52,3 +52,18 @@ fetch-prosite:
 # Requires `just fetch-prosite` first. Dry-run by default; --apply to write.
 seed-prosite *args:
     python3 scripts/seed_prosite.py {{args}}
+
+# Download the TED (Encyclopedia of Domains) novel + high-symmetry fold
+# catalogues from Zenodo (DOI:10.5281/zenodo.13908086, CC-BY 4.0).
+fetch-ted:
+    mkdir -p data/raw
+    curl -sSLf --max-time 300 -o data/raw/ted_novel_folds.tsv.gz \
+      https://zenodo.org/records/13908086/files/novel_folds_set.domain_summary.tsv.gz
+    curl -sSLf --max-time 300 -o data/raw/ted_high_symmetry_folds.tsv.gz \
+      https://zenodo.org/records/13908086/files/high_symmetry_folds_set.domain_summary.tsv.gz
+    @ls -la data/raw/ted_*.tsv.gz
+
+# Seed data/traits/structure/fold/ from the TED novel + high-symmetry fold
+# catalogues. Requires `just fetch-ted` first. Dry-run by default.
+seed-ted *args:
+    python3 scripts/seed_ted.py {{args}}

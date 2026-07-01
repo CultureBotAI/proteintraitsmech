@@ -68,13 +68,17 @@ ProteinTraitsMech/
 | [PROSITE patterns](https://prosite.expasy.org/) (`prosite.dat`, PATTERN) | 1311 | `data/traits/sequence/pattern/` and `data/traits/sequence/ptm_site/` (31 PTM-flagged) |
 | [PROSITE profiles](https://prosite.expasy.org/) (`prosite.dat`, MATRIX) | 1434 | `data/traits/sequence/profile/` |
 | [PROSITE ProRules](https://prosite.expasy.org/) (`prorule.dat`) | 1449 | `data/traits/structure/domain/` (1445) + `data/traits/sequence/prorule/` (4 Site rules) |
+| [TED novel folds](https://ted.cathdb.info/) (Zenodo v5, [DOI:10.5281/zenodo.13908086](https://doi.org/10.5281/zenodo.13908086), CC-BY 4.0) | 7427 | `data/traits/structure/fold/novel/` |
+| [TED highly-symmetric folds](https://ted.cathdb.info/) (same Zenodo record) | 6433 | `data/traits/structure/fold/high_symmetry/` |
 
 Refetch and re-seed:
 
 ```bash
 just fetch-prosite            # writes data/raw/prosite.dat + prorule.dat (gitignored)
+just fetch-ted                # writes data/raw/ted_*.tsv.gz (gitignored)
 just seed-lsf --apply         # 19 LinkML LocalStructuralFeature records
 just seed-prosite --apply     # 4194 PROSITE records; idempotent, skips existing
+just seed-ted --apply         # 13860 TED fold records; idempotent
 ```
 
 All seeded records land with `mapping_status: SEEDED`; curator review flips them to `REVIEWED` and adds evidence / causal graphs.
