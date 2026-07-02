@@ -303,18 +303,51 @@
 # Pfam/DRAM domains → STRUCT_DOMAIN, resistance/BGC as FUNC_*).
 -
   url: https://github.com/enigma-org/trait-onto-map
+  local_name: traitontomap/trait_catalog.tsv
   name: ENIGMA trait-onto-map (genome-annotation trait catalog)
   source: trait_onto_map
-  license: see repo LICENSE
-  status: candidate
+  license: MIT (ENIGMA trait-onto-map)
+  status: seeded
   tag: internal-collab
   hierarchy: partial (tool:database provenance; LinkML TraitAssociation model)
-  trait_categories: [FUNC_ENZYMATIC_ACTIVITY, STRUCT_DOMAIN, FUNC_ENVIRONMENTAL_RESPONSE]
+  trait_categories: [FUNC_ENZYMATIC_ACTIVITY]
+  seeder: seed_traitontomap.py
   note: >-
-    Local repo /Users/marcin/Documents/VIMSS/ontology/ENIGMA/trait-onto-map.
-    ~7.4M annotations (DRAM 5.9M, MicroTraits 788k, BacAnt 570k, GapMind 82k,
-    …). Plan: ingest the protein-level, sequence/structure-definable subset
-    (enzyme/EC/Rhea activities, Pfam domains) — not per-genome instances.
+    Local repo /Users/marcin/Documents/VIMSS/ontology/ENIGMA/trait-onto-map
+    (data/catalog/trait_catalog.tsv). ~738k unique traits; mostly per-genome,
+    gene-level, or off-axis (mobile_element, viral, QC). INGESTED: the 577
+    EC-numbered enzyme activities → FUNC_ENZYMATIC_ACTIVITY (EC-anchored,
+    GO-grounded via ec2go, KEGG xrefs). Pfam skipped (covered by InterPro).
+    Future: RGI/ARO resistance, antiSMASH BGCs, GapMind pathways once
+    categories exist.
+
+# --------------- cross-reference mapping files (for grounding) --------------
+-
+  url: https://current.geneontology.org/ontology/external2go/ec2go
+  local_name: mappings/ec2go
+  name: EC → GO mapping (ec2go)
+  source: mappings
+  license: CC-BY 4.0 (GO)
+  status: seeded
+  seeder: seed_traitontomap.py
+  note: grounds EC-anchored enzyme-activity records with GO (514/577 matched).
+-
+  url: https://ftp.expasy.org/databases/rhea/tsv/rhea2ec.tsv
+  local_name: mappings/rhea2ec.tsv
+  name: Rhea → EC mapping (rhea2ec)
+  source: mappings
+  license: CC-BY 4.0 (Rhea)
+  status: candidate
+  note: bridge to ChEBI — Rhea reactions link EC to their ChEBI participants (for the chemistry-integration work).
+-
+  # interpro2ec is NOT published as a standalone file (unlike interpro2go);
+  # InterPro→EC comes via member-DB signatures inside interpro.xml.gz / the API.
+  url: https://www.ebi.ac.uk/interpro/api/entry/interpro/
+  name: InterPro → EC (via API / member DBs; no bulk interpro2ec file)
+  source: interpro
+  status: deferred
+  tag: api
+  note: interpro2ec has no FTP file; derive EC from member-DB xrefs in interpro.xml if needed.
 
 # ========================================================== DEFERRED =========
 

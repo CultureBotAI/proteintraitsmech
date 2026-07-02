@@ -190,6 +190,7 @@ supports them, and can also be added by curators:
 | [PATO](https://github.com/pato-ontology/pato) (Phenotype And Trait Ontology, CC-BY-4.0) | 28 | `data/traits/structure/{stability,dynamics,surface}/pato/` (curated physicochemical quality whitelist) |
 | Curated stability taxonomy (`seed_stability.py`, CC0-1.0) | 33 | `data/traits/structure/stability/conditions/` (11 stressors × {base, increased, decreased}, parented to PATO stability) |
 | Curated evolutionary / pangenome taxonomy (`seed_evolution.py`, CC0-1.0) | 9 | `data/traits/evolution/{conservation,pangenome}/` (EVOLUTION axis: conserved / clade-specific / variable + pangenome core/soft-core/shell/cloud/persistent/singleton) |
+| [ENIGMA trait-onto-map](https://github.com/enigma-org/trait-onto-map) EC-numbered enzyme activities (`seed_traitontomap.py`, MIT) | 577 | `data/traits/function/enzymatic_activity/traitontomap/` (EC-anchored; GO-grounded via ec2go, KEGG xrefs; Pfam skipped — covered by InterPro) |
 
 The last three are ingested by the generic **`seed_obo.py`** importer, which reads any OBO ontology and imports only the **branch-scoped** subset declared in its `SOURCES` config (a term is kept iff it is an `is_a` descendant of a configured root, and it inherits that root's axis/category). This is deliberately narrower than a whole-ontology dump — PSI-MI is mostly experimental methods, PATO qualities are generic modifiers, and METPO is organismal, so only the terms with genuine protein-trait analogues are seeded.
 

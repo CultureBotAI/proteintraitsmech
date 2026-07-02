@@ -166,6 +166,19 @@ fetch-obo:
 seed-obo *args:
     python3 scripts/seed_obo.py {{args}}
 
+# Copy the ENIGMA trait-onto-map catalogue into data/raw/ (gitignored). The
+# source is a local sibling repo — adjust the path for your machine.
+fetch-traitontomap:
+    mkdir -p data/raw/traitontomap
+    cp /Users/marcin/Documents/VIMSS/ontology/ENIGMA/trait-onto-map/data/catalog/trait_catalog.tsv data/raw/traitontomap/
+    @ls -la data/raw/traitontomap/
+
+# Seed data/traits/function/enzymatic_activity/traitontomap/ from the ENIGMA
+# trait-onto-map catalogue — EC-grounded enzyme activities only. Requires
+# `just fetch-traitontomap`. Dry-run by default; --apply.
+seed-traitontomap *args:
+    python3 scripts/seed_traitontomap.py {{args}}
+
 # Seed data/traits/evolution/ with evolutionary / pangenome traits
 # (conserved, clade-specific, variable; pangenome core/soft-core/shell/
 # cloud/persistent/singleton). Curator-minted. Dry-run by default; --apply.
