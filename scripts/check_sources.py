@@ -1,79 +1,86 @@
 #!/usr/bin/env python3
-"""Validate data/sources.yaml and cross-check it against the seeders.
+"""Validate download.yaml (kghub-downloader manifest + source catalogue) and
+cross-check it against the seeders.
+
+download.yaml is a flat YAML list of blocks. Each block needs a `url`; blocks
+that describe a source (not just a secondary file) also carry `name`, `source`,
+`license`, `status`, and — when seeded — `seeder`.
 
 Checks:
-  - required fields present, `status` in the allowed set, keys unique;
-  - every `status: seeded` source names a `seeder:` whose script exists;
-  - every scripts/seed_*.py is referenced by at least one registry entry
-    (orphan seeders → warning);
-  - `license` present for every source (and NC/ND/login licences flagged).
+  - every block has a `url`;
+  - any `status` is in the allowed set;
+  - every distinct `source` marked seeded names a `seeder:` whose script exists;
+  - every scripts/seed_*.py is referenced by some block (orphans → warning);
+  - restrictive (NC/ND/login) licences are flagged.
 
-Exit non-zero on any error (warnings don't fail). Stdlib + PyYAML.
+Exit non-zero on error; warnings don't fail. Stdlib + PyYAML.
 """
 
 from __future__ import annotations
 
-import re
 import sys
 from pathlib import Path
 
 import yaml
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-REGISTRY = REPO_ROOT / "data" / "sources.yaml"
+MANIFEST = REPO_ROOT / "download.yaml"
 SCRIPTS = REPO_ROOT / "scripts"
 
-REQUIRED = ("key", "name", "status", "description", "homepage", "download", "license")
 STATUSES = {"seeded", "candidate", "deferred", "rejected"}
-RESTRICTIVE = ("noncommercial", "non-commercial", "-nc", "noderiv", "-nd", "login", "registration")
+RESTRICTIVE = ("noncommercial", "non-commercial", "-nc", "byncnd", "by-nc",
+               "noderiv", "-nd", "login", "registration", "flagged")
 
 
 def main() -> int:
-    if not REGISTRY.exists():
-        print(f"ERROR: {REGISTRY.relative_to(REPO_ROOT)} not found", file=sys.stderr)
+    if not MANIFEST.exists():
+        print(f"ERROR: {MANIFEST.name} not found", file=sys.stderr)
         return 2
-    doc = yaml.safe_load(REGISTRY.read_text(encoding="utf-8")) or {}
-    sources = doc.get("sources") or []
+    blocks = yaml.safe_load(MANIFEST.read_text(encoding="utf-8")) or []
+    if not isinstance(blocks, list):
+        print("ERROR: download.yaml must be a YAML list", file=sys.stderr)
+        return 2
+
     errors: list[str] = []
     warnings: list[str] = []
+    referenced: set[str] = set()
+    source_status: dict[str, str] = {}
+    source_seeder: dict[str, str] = {}
 
-    seen_keys: set[str] = set()
-    referenced_scripts: set[str] = set()
-    for s in sources:
-        key = s.get("key", "<no key>")
-        for f in REQUIRED:
-            if not s.get(f):
-                errors.append(f"[{key}] missing required field: {f}")
-        if s.get("status") not in STATUSES:
-            errors.append(f"[{key}] invalid status {s.get('status')!r} (allowed: {sorted(STATUSES)})")
-        if key in seen_keys:
-            errors.append(f"duplicate key: {key}")
-        seen_keys.add(key)
-
-        lic = str(s.get("license", "")).lower()
-        if any(t in lic for t in RESTRICTIVE):
-            warnings.append(f"[{key}] restrictive licence for a CC0 KB: {s.get('license')}")
-
-        seeder = s.get("seeder")
-        if seeder:
-            script = seeder.split()[0]  # strip "(psimi)" style args
-            referenced_scripts.add(script)
+    for i, b in enumerate(blocks):
+        tag = b.get("name") or b.get("source") or f"block[{i}]"
+        if not b.get("url"):
+            errors.append(f"[{tag}] missing required field: url")
+        st = b.get("status")
+        if st is not None and st not in STATUSES:
+            errors.append(f"[{tag}] invalid status {st!r}")
+        src = b.get("source")
+        if src and st:
+            source_status[src] = st
+        if src and b.get("seeder"):
+            source_seeder[src] = b["seeder"].split()[0]
+        if b.get("seeder"):
+            script = b["seeder"].split()[0]
+            referenced.add(script)
             if not (SCRIPTS / script).exists():
-                errors.append(f"[{key}] seeder script not found: scripts/{script}")
-        elif s.get("status") == "seeded":
-            errors.append(f"[{key}] status=seeded but no seeder: field")
+                errors.append(f"[{tag}] seeder script not found: scripts/{script}")
+        lic = str(b.get("license", "")).lower()
+        if any(t in lic for t in RESTRICTIVE):
+            warnings.append(f"[{tag}] restrictive licence for a CC0 KB: {b.get('license')}")
 
-    # Orphan seeders: seed_*.py with no registry reference.
+    for src, st in source_status.items():
+        if st == "seeded" and src not in source_seeder:
+            errors.append(f"source '{src}' is seeded but no block names its seeder:")
+
     for script in sorted(SCRIPTS.glob("seed_*.py")):
-        if script.name not in referenced_scripts:
-            warnings.append(f"seeder scripts/{script.name} is not referenced by any source in the registry")
+        if script.name not in referenced:
+            warnings.append(f"seeder scripts/{script.name} is not referenced in download.yaml")
 
-    seeded = sum(1 for s in sources if s.get("status") == "seeded")
-    cand = sum(1 for s in sources if s.get("status") == "candidate")
-    print(f"data/sources.yaml: {len(sources)} sources "
-          f"({seeded} seeded, {cand} candidate, "
-          f"{sum(1 for s in sources if s.get('status')=='deferred')} deferred, "
-          f"{sum(1 for s in sources if s.get('status')=='rejected')} rejected)")
+    by_status: dict[str, int] = {}
+    for st in source_status.values():
+        by_status[st] = by_status.get(st, 0) + 1
+    print(f"download.yaml: {len(blocks)} blocks, {len(source_status)} sources "
+          f"({', '.join(f'{n} {s}' for s, n in sorted(by_status.items()))})")
     for w in warnings:
         print(f"  WARN: {w}")
     for e in errors:

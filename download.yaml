@@ -1,0 +1,350 @@
+# ProteinTraitsMech — data source download manifest
+#
+# kghub-downloader format (as used by KG-Microbe): a YAML list of blocks, each
+# with a required `url` and optional `local_name`. Extra keys (name, source,
+# license, status, trait_categories, hierarchy, note) are metadata the
+# downloader ignores but our tooling + the `data-sources` skill use. This file
+# replaces the old data/sources.yaml registry — it is BOTH the download manifest
+# and the source catalogue.
+#
+# tags: `status` (seeded | candidate | deferred | rejected) drives selective
+# download; e.g. fetch only what is seeded, or a single source by its key.
+#
+# Validate with `just sources-check`. Keep in sync with scripts/seed_*.py, the
+# README seeds table, and research/protein-trait-sources-round*.md.
+---
+
+# ============================================================ SEEDED =========
+
+# LinkML LocalStructuralFeature valueset — STRUCT_* local features
+-
+  url: https://raw.githubusercontent.com/linkml/valuesets/main/src/valuesets/schema/valuesets.yaml
+  local_name: linkml_valuesets.yaml
+  name: LinkML LocalStructuralFeature valueset
+  source: linkml_lsf
+  license: MIT / CC0
+  status: seeded
+  hierarchy: false
+  trait_categories: [STRUCT_SECONDARY, STRUCT_ACTIVE_SITE, STRUCT_BINDING_SITE, STRUCT_CAVITY, STRUCT_DISULFIDE, STRUCT_METAL_SITE, STRUCT_DYNAMICS, STRUCT_INTERFACE]
+  seeder: seed_localstructuralfeature.py
+
+# PROSITE — sequence patterns / profiles / ProRules
+-
+  url: ftp://ftp.expasy.org/databases/prosite/prosite.dat
+  name: PROSITE (patterns + profiles)
+  source: prosite
+  license: CC BY-NC-ND 4.0 (SIB) — commercial fee; NonCommercial + NoDerivatives — FLAGGED
+  license_url: https://prosite.expasy.org/prosite_license.html
+  status: seeded
+  hierarchy: partial
+  trait_categories: [SEQ_MOTIF, SEQ_MODIFIED_RESIDUE, SEQ_GLYCOSYLATION_SITE, SEQ_CROSSLINK_SITE, STRUCT_DOMAIN]
+  seeder: seed_prosite.py
+-
+  url: ftp://ftp.expasy.org/databases/prosite/prorule.dat
+  source: prosite
+  status: seeded
+
+# TED (The Encyclopedia of Domains) — STRUCT_FOLD
+-
+  url: https://zenodo.org/records/13908086/files/novel_folds_set.domain_summary.tsv.gz
+  local_name: ted_novel_folds.tsv.gz
+  name: TED novel folds
+  source: ted
+  license: CC-BY 4.0
+  status: seeded
+  hierarchy: true
+  trait_categories: [STRUCT_FOLD]
+  seeder: seed_ted.py
+-
+  url: https://zenodo.org/records/13908086/files/high_symmetry_folds_set.domain_summary.tsv.gz
+  local_name: ted_high_symmetry_folds.tsv.gz
+  source: ted
+  status: seeded
+
+# UniProtKB — per-accession FT/CC/GO (demo seed; REST API, no bulk file)
+-
+  url: https://rest.uniprot.org/uniprotkb/P25888.txt
+  name: UniProtKB (FT + CC + GO, demo seed)
+  source: uniprotkb
+  license: CC-BY 4.0
+  status: seeded
+  tag: api
+  note: per-accession via REST; TRANSMEM/INTRAMEM deliberately skipped.
+  seeder: seed_uniprot.py
+
+# PSI-MOD — protein modification CV
+-
+  url: https://raw.githubusercontent.com/HUPO-PSI/psi-mod-CV/master/PSI-MOD.obo
+  local_name: PSI-MOD.obo
+  name: PSI-MOD
+  source: psi_mod
+  license: CC-BY 4.0
+  status: seeded
+  hierarchy: true
+  trait_categories: [SEQ_MODIFIED_RESIDUE, SEQ_GLYCOSYLATION_SITE, SEQ_LIPIDATION_SITE, SEQ_CROSSLINK_SITE, SEQ_PTM_SITE]
+  seeder: seed_psi_mod.py
+
+# ECOD — A/X/H/T/F structural-domain hierarchy
+-
+  url: http://prodata.swmed.edu/ecod/distributions/ecod.latest.domains.txt
+  local_name: ecod.latest.domains.txt
+  name: ECOD
+  source: ecod
+  license: free / academic (unstated — verify)
+  status: seeded
+  hierarchy: true
+  trait_categories: [STRUCT_ARCHITECTURE, STRUCT_HOMOLOGOUS_SUPERFAMILY, STRUCT_TOPOLOGY, STRUCT_FOLD]
+  seeder: seed_ecod.py
+
+# InterPro — integrative family/domain/site classification (entries + mappings)
+-
+  url: https://ftp.ebi.ac.uk/pub/databases/interpro/current_release/interpro.xml.gz
+  local_name: interpro/interpro.xml.gz
+  name: InterPro entries (definitions + types)
+  source: interpro
+  license: public domain
+  license_url: https://www.ebi.ac.uk/licencing/
+  status: seeded
+  hierarchy: true
+  trait_categories: [STRUCT_DOMAIN, STRUCT_HOMOLOGOUS_SUPERFAMILY, SEQ_REPEAT, SEQ_CONSERVATION, STRUCT_ACTIVE_SITE, STRUCT_BINDING_SITE, SEQ_PTM_SITE]
+  seeder: seed_interpro.py
+-
+  url: https://ftp.ebi.ac.uk/pub/databases/interpro/current_release/ParentChildTreeFile.txt
+  local_name: interpro/ParentChildTreeFile.txt
+  name: InterPro parent/child hierarchy
+  source: interpro
+  status: seeded
+-
+  url: https://ftp.ebi.ac.uk/pub/databases/interpro/current_release/entry.list
+  local_name: interpro/entry.list
+  name: InterPro entry list (accession/type/name)
+  source: interpro
+  status: seeded
+-
+  url: https://ftp.ebi.ac.uk/pub/databases/interpro/current_release/interpro2go
+  local_name: interpro/interpro2go
+  name: InterPro → GO mapping (interpro2go)
+  source: interpro
+  status: seeded
+  note: attaches GO xrefs to InterPro records. Other InterPro mappings (member-DB signatures, PDBe/AlphaFold) live inside interpro.xml.gz; match_complete.xml.gz / protein2ipr.dat.gz / sites.xml.gz (52G+) are NOT used.
+
+# M-CSA — catalytic sites (JSON API)
+-
+  url: https://www.ebi.ac.uk/thornton-srv/m-csa/api/entries/
+  name: M-CSA (Mechanism & Catalytic Site Atlas)
+  source: mcsa
+  license: CC-BY 4.0
+  status: seeded
+  tag: api
+  trait_categories: [STRUCT_ACTIVE_SITE]
+  seeder: seed_mcsa.py
+
+# DisProt — intrinsic disorder (JSON API)
+-
+  url: https://disprot.org/api/search?release=current&format=json
+  name: DisProt
+  source: disprot
+  license: CC-BY 4.0
+  status: seeded
+  tag: api
+  trait_categories: [SEQ_DISORDER]
+  seeder: seed_disprot.py
+
+# PSI-MI — molecular-interaction CV (interaction-type branch)
+-
+  url: https://raw.githubusercontent.com/HUPO-PSI/psi-mi-CV/master/psi-mi.obo
+  local_name: PSI-MI.obo
+  name: PSI-MI (interaction type)
+  source: psi_mi
+  license: CC-BY 4.0
+  status: seeded
+  hierarchy: true
+  trait_categories: [FUNC_INTERACTION_PARTNER]
+  seeder: seed_obo.py
+
+# PATO — physicochemical quality whitelist
+-
+  url: https://raw.githubusercontent.com/pato-ontology/pato/master/pato.obo
+  local_name: PATO.obo
+  name: PATO
+  source: pato
+  license: CC-BY 4.0
+  status: seeded
+  hierarchy: true
+  trait_categories: [STRUCT_STABILITY, STRUCT_DYNAMICS, STRUCT_SURFACE]
+  seeder: seed_obo.py
+
+# METPO — microbial ecophysiological traits
+-
+  url: https://raw.githubusercontent.com/berkeleybop/metpo/main/metpo.obo
+  local_name: METPO.obo
+  name: METPO
+  source: metpo
+  license: CC-BY 4.0
+  status: seeded
+  hierarchy: true
+  trait_categories: [FUNC_ENVIRONMENTAL_RESPONSE, FUNC_ENZYMATIC_ACTIVITY]
+  seeder: seed_obo.py
+
+# Curated stability taxonomy — internal generator (no download)
+-
+  url: https://github.com/CultureBotAI/proteintraitsmech/blob/main/scripts/seed_stability.py
+  name: Curated structural-stability taxonomy
+  source: curated_stability
+  license: CC0-1.0
+  status: seeded
+  tag: internal
+  hierarchy: true
+  trait_categories: [STRUCT_STABILITY]
+  seeder: seed_stability.py
+
+# ========================================================= CANDIDATE =========
+
+-
+  url: https://www.cathdb.info/download/all
+  name: CATH-Gene3D
+  source: cath_gene3d
+  license: CC-BY 4.0
+  status: candidate
+  priority: 3
+  hierarchy: true
+  trait_categories: [STRUCT_CLASS, STRUCT_ARCHITECTURE, STRUCT_TOPOLOGY, STRUCT_HOMOLOGOUS_SUPERFAMILY, STRUCT_DOMAIN]
+-
+  url: https://repeatsdb.org/api/
+  name: RepeatsDB (structural tandem repeats)
+  source: repeatsdb
+  license: CC-BY
+  status: candidate
+  priority: 2
+  hierarchy: true
+  trait_categories: [MIXED_STRUCTURAL_REPEAT, STRUCT_FOLD]
+  note: fills MIXED_STRUCTURAL_REPEAT with repeats that HAVE demonstrated 3D periodicity (unlike InterPro Repeat → SEQ_REPEAT).
+-
+  url: https://ftp.ebi.ac.uk/pub/databases/merops/current_release/
+  name: MEROPS (peptidase clan/family)
+  source: merops
+  license: LGPL (data) / EBI terms
+  status: candidate
+  hierarchy: true
+  trait_categories: [FUNC_ENZYMATIC_ACTIVITY, STRUCT_ACTIVE_SITE]
+-
+  url: https://scop.berkeley.edu/downloads/
+  name: SCOP2 / SCOPe
+  source: scop2
+  license: CC-BY
+  status: candidate
+  hierarchy: true
+  note: Berkeley host blocks bots — use the Zenodo SCOPe archive.
+  seeder: seed_scope.py
+  trait_categories: [STRUCT_CLASS, STRUCT_FOLD, STRUCT_HOMOLOGOUS_SUPERFAMILY, STRUCT_DOMAIN]
+-
+  url: https://mobidb.org/api/download
+  name: MobiDB (consensus disorder)
+  source: mobidb
+  license: CC-BY
+  status: candidate
+  tag: api
+  trait_categories: [SEQ_DISORDER]
+-
+  url: https://biomics.lab.nycu.edu.tw/dbPTM/download.php
+  name: dbPTM
+  source: dbptm
+  license: free (academic)
+  status: candidate
+  trait_categories: [SEQ_MODIFIED_RESIDUE, SEQ_GLYCOSYLATION_SITE, SEQ_CROSSLINK_SITE]
+-
+  url: http://sfld.rbvi.ucsf.edu/archive/django/download/index.html
+  name: SFLD (enzyme superfamilies)
+  source: sfld
+  license: free (UCSF)
+  status: candidate
+  hierarchy: true
+  trait_categories: [FUNC_ENZYMATIC_ACTIVITY]
+-
+  url: https://zhanggroup.org/BioLiP/download/
+  name: BioLiP2 (ligand-binding sites)
+  source: biolip2
+  license: free
+  status: candidate
+  trait_categories: [STRUCT_BINDING_SITE]
+-
+  url: https://metalpdb.cerm.unifi.it/
+  name: MetalPDB (metal sites)
+  source: metalpdb
+  license: free (CERM)
+  status: candidate
+  trait_categories: [STRUCT_METAL_SITE]
+-
+  url: https://bcb.unl.edu/dbCAN_seq/download/
+  name: CAZy / dbCAN-seq (carbohydrate-active enzymes)
+  source: cazy
+  license: dbCAN-seq CC-BY (non-commercial re-use — FLAGGED)
+  status: candidate
+  hierarchy: true
+  trait_categories: [FUNC_ENZYMATIC_ACTIVITY]
+
+# --- ENIGMA trait-onto-map: generated traits from genome-annotation tools ---
+# Large catalogue of trait annotations parsed from DRAM, GTDB-Tk, GapMind,
+# antiSMASH, RGI, CheckM/CheckM2, Bakta, VirSorter2, Barrnap, BacAnt,
+# MicroTraits and mapped to GO/KEGG/NCBITaxon/ARO. Mostly FUNCTION-axis
+# (metabolic/enzymatic/resistance/secondary-metabolite) and gene-level; ingest
+# the protein-relevant subset (enzyme activities → FUNC_ENZYMATIC_ACTIVITY,
+# Pfam/DRAM domains → STRUCT_DOMAIN, resistance/BGC as FUNC_*).
+-
+  url: https://github.com/enigma-org/trait-onto-map
+  name: ENIGMA trait-onto-map (genome-annotation trait catalog)
+  source: trait_onto_map
+  license: see repo LICENSE
+  status: candidate
+  tag: internal-collab
+  hierarchy: partial (tool:database provenance; LinkML TraitAssociation model)
+  trait_categories: [FUNC_ENZYMATIC_ACTIVITY, STRUCT_DOMAIN, FUNC_ENVIRONMENTAL_RESPONSE]
+  note: >-
+    Local repo /Users/marcin/Documents/VIMSS/ontology/ENIGMA/trait-onto-map.
+    ~7.4M annotations (DRAM 5.9M, MicroTraits 788k, BacAnt 570k, GapMind 82k,
+    …). Plan: ingest the protein-level, sequence/structure-definable subset
+    (enzyme/EC/Rhea activities, Pfam domains) — not per-genome instances.
+
+# ========================================================== DEFERRED =========
+
+-
+  url: https://ftp.ncbi.nlm.nih.gov/hmm/current/
+  name: NCBIfam (ex-TIGRFAMs)
+  source: ncbifam
+  license: US Government public domain
+  status: deferred
+  note: also an InterPro member DB.
+  trait_categories: [STRUCT_DOMAIN, SEQ_MOTIF]
+-
+  url: https://ftp.ncbi.nlm.nih.gov/pub/mmdb/cdd/
+  name: CDD (Conserved Domain Database)
+  source: cdd
+  license: US Government public domain
+  status: deferred
+  hierarchy: true
+  note: also an InterPro member DB.
+  trait_categories: [STRUCT_DOMAIN]
+-
+  url: https://www.ideal-db.org/download.php
+  name: IDEAL
+  source: ideal
+  license: CC-BY 4.0
+  status: deferred
+  trait_categories: [SEQ_DISORDER]
+
+# ========================================================== REJECTED =========
+
+-
+  url: http://purl.obolibrary.org/obo/pr.obo
+  name: PRO (Protein Ontology)
+  source: pro
+  license: CC-BY 4.0
+  status: rejected
+  note: entity ontology (families/complexes), not a trait source; >1 GB reasoned.
+-
+  url: http://elm.eu.org/downloads.html
+  name: ELM (Eukaryotic Linear Motif)
+  source: elm
+  license: NonCommercial (ELM Software License Agreement) — FLAGGED
+  status: rejected
+  note: non-commercial licence incompatible with CC0 redistribution; link/reference only.

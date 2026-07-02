@@ -1,72 +1,71 @@
 ---
 name: data-sources
-description: Use this skill to create, review, maintain, and update the data-source registry at data/sources.yaml — the single authoritative list of every external resource ProteinTraitsMech seeds from, is considering, or has rejected (name, description, download link, licence, status, target trait_categories, hierarchy). Trigger when adding/evaluating a data source, recording a seeder's provenance, auditing licences, promoting a candidate to seeded, or keeping the registry in sync with the seeders, README, and the edison-deep-research rounds.
+description: Use this skill to create, review, maintain, and update download.yaml — the single authoritative download manifest + source catalogue for ProteinTraitsMech (kghub-downloader format, as in KG-Microbe). Each block records the download URL plus name, description, licence, status, target trait_categories, hierarchy, and seeder. Trigger when adding/evaluating a data source, recording a seeder's provenance, auditing licences, promoting a candidate to seeded, adding mapping files (e.g. interpro2go), or keeping the manifest in sync with the seeders, README, and the edison-deep-research rounds.
+
 ---
 
-# Data Sources Registry
+# Data Sources — download.yaml
 
-`data/sources.yaml` is the one place that answers "where did our data come from,
-can we redistribute it, and what's next." Keep it accurate — the whole corpus is
-CC0, so a mislabelled licence is a real problem.
+`download.yaml` (repo root) is both the **download manifest** (kghub-downloader
+format, `run.py download`-compatible, as in KG-Microbe) and the **source
+catalogue**. It answers "where did our data come from, can we redistribute it,
+and what's next." The whole corpus is CC0, so a mislabelled licence is a real
+problem. (It replaced the older `data/sources.yaml` registry.)
 
-## The file
+## Format
 
-A top-level `sources:` list. Each entry:
+A flat YAML list of blocks. `url` is the only field kghub-downloader requires;
+everything else is metadata our tooling uses. One block per downloadable FILE
+(a source with several files — e.g. InterPro's xml + tree + entry.list +
+interpro2go — gets several blocks sharing `source:`).
 
-| field | req | notes |
-|-------|-----|-------|
-| `key` | ✓ | short unique slug (matches CURIE prefix lowercased where sensible) |
-| `name` | ✓ | display name |
-| `prefix` | | CURIE prefix used in identifiers (e.g. `PROSITE`, `MOD`) |
-| `status` | ✓ | `seeded` \| `candidate` \| `deferred` \| `rejected` |
-| `description` | ✓ | one line: what traits it supplies |
-| `homepage` | ✓ | canonical site |
-| `download` | ✓ | exact bulk-download URL/endpoint (+ the specific files in a comment) |
-| `license` | ✓ | precise enough to judge CC0-redistribution; flag NC/ND/login |
-| `license_url` | | link to the licence terms |
-| `hierarchy` | | `true` / `false` / short description of the levels |
-| `trait_categories` | | list of target `trait_category` values |
-| `added_round` | | which edison-deep-research round surfaced it |
-| `priority` | | for candidates: seed order |
-| `seeder` | | `scripts/seed_*.py` (required when `status: seeded`) |
-| `notes` | | caveats, scoping decisions, redundancy warnings |
+| field | notes |
+|-------|-------|
+| `url` | **required** — the exact bulk-download URL/endpoint |
+| `local_name` | optional download filename (avoid collisions; may include a subdir) |
+| `name` | display name (on the source's primary block) |
+| `source` | short key grouping a source's blocks (e.g. `interpro`) |
+| `license` / `license_url` | precise enough to judge CC0 compat; append ` — FLAGGED` for NC/ND/login |
+| `status` | `seeded` \| `candidate` \| `deferred` \| `rejected` (on the primary block) |
+| `hierarchy` | `true` / `false` / short description |
+| `trait_categories` | list of target `trait_category` values |
+| `seeder` | `scripts/seed_*.py` — required for a seeded source |
+| `tag` | e.g. `api`, `internal` — selective-download hint |
+| `note` | caveats, scoping decisions, redundancy warnings |
+
+Sections are comment-delimited by status (SEEDED / CANDIDATE / DEFERRED /
+REJECTED).
 
 ## Operations
 
-**Create** (add a source) — usually from an `edison-deep-research` round. Fill
-every required field; put the exact download files in a comment on `download`;
-set `status: candidate` (or `rejected` with a `notes` reason). Verify the
-licence from the source's own terms page, not a search snippet.
+**Create** (add a source) — usually from an `edison-deep-research` round. Add a
+block with the exact download `url`; fill `name`/`source`/`license`/`status` and,
+for multi-file sources, one block per file sharing `source`. Verify the licence
+from the source's own terms page, not a search snippet.
 
-**Review** (audit) — run `just sources-check`. It enforces required fields,
-the `status` enum, unique keys, that every `seeded` source has an existing
-seeder script, flags orphan seeders (a `seed_*.py` with no registry entry), and
-warns on NC/ND/login licences. Also periodically re-verify download URLs still
-resolve and licences haven't changed.
+**Review** (audit) — `just sources-check` (scripts/check_sources.py): every
+block has a `url`, `status` values are valid, every seeded source names an
+existing `seeder`, orphan seeders are flagged, and NC/ND/login licences warn.
+Periodically re-verify URLs still resolve and licences haven't changed.
 
-**Maintain** (keep in sync) — the registry must agree with three things:
-1. the **seeders** — every `scripts/seed_*.py` has an entry; `seeder:` points to
-   the real file (checked by `just sources-check`);
-2. the **README seeds table** — same sources, same counts direction;
-3. the **research rounds** — anything adopted/deferred/rejected there is
-   reflected here with the matching `added_round`.
+**Maintain** (sync) — the manifest must agree with:
+1. the **seeders** — every `scripts/seed_*.py` is referenced by a `seeder:`;
+2. the **README seeds table** — same sources;
+3. the **research rounds** — adopted/deferred/rejected there reflected here.
 
-**Update** (status transitions) — when a candidate gets seeded: flip
-`status: candidate → seeded`, add `seeder:`, drop `priority`, and add the entry
-to the README seeds table. When re-evaluating: move to `deferred`/`rejected`
-with a dated `notes` rationale. Never delete a `rejected` entry — the reason it
-was rejected is the value.
+**Update** (transitions) — when a candidate is seeded: flip its `status` to
+`seeded`, add `seeder:`, and add its file blocks + a README row. When
+re-evaluating: move to `deferred`/`rejected` with a dated `note`. Never delete a
+`rejected` entry — the reason is the value.
 
 ## Rules
 
-- **Licence honesty first.** If a source is NonCommercial / NoDerivatives /
-  login-walled, it stays flagged even if already seeded (see `prosite`:
-  CC BY-NC-ND). Surface it; don't silently redistribute.
-- **One row per source of truth.** Member/aggregated DBs (e.g. NCBIfam, CDD are
-  InterPro members) get their own row but note the relationship.
-- **Download link must be the bulk endpoint**, not the homepage — with the
-  specific file names in a comment (the seeder needs them).
-- After any edit, run `just sources-check` and fix errors before committing.
+- **Licence honesty first.** NonCommercial / NoDerivatives / login-walled stays
+  ` — FLAGGED` even if already seeded (e.g. PROSITE is CC BY-NC-ND). Surface it.
+- **`url` = the bulk endpoint**, not the homepage. API-only sources get `tag: api`.
+- **Member/aggregated DBs** (NCBIfam, CDD are InterPro members) get their own
+  blocks but note the relationship.
+- After any edit, `just sources-check` and fix errors before committing.
 
 ## Related
 
