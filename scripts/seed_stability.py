@@ -43,41 +43,43 @@ PATO_STABILITY = "PATO:0015026"
 PATO_INCREASED = "PATO:0015027"
 PATO_DECREASED = "PATO:0015028"
 
-# (key, adjective used in the label, condition phrase for the definition,
-#  [synonyms]). Extend this list to add conditions — the "etc".
-CONDITIONS: tuple[tuple[str, str, str, tuple[str, ...]], ...] = (
+# (key, adjective for the file slug, condition phrase for the definition,
+#  condition label for the "stable under <…>" trait name, [synonyms]).
+# Labels read "stable under <condition label>"; the old "<adj> stability"
+# form is preserved as a synonym. Extend this list to add conditions.
+CONDITIONS: tuple[tuple[str, str, str, str, tuple[str, ...]], ...] = (
     ("THERMAL", "thermal",
-     "elevated or reduced temperature (heat or cold)",
+     "elevated or reduced temperature (heat or cold)", "thermal conditions",
      ("thermostability", "heat stability", "thermal resistance", "thermotolerance")),
     ("OXIDATIVE", "oxidative",
-     "oxidative conditions or reactive oxygen species",
+     "oxidative conditions or reactive oxygen species", "oxidative conditions",
      ("oxidation stability", "redox stability", "resistance to oxidation")),
     ("SALINE", "saline",
-     "high ionic strength / elevated salt concentration",
+     "high ionic strength / elevated salt concentration", "saline (high-salt) conditions",
      ("halostability", "salt stability", "salt resistance", "haloadaptation")),
     ("ACIDIC", "acid",
-     "low pH (acidic conditions)",
+     "low pH (acidic conditions)", "acidic conditions",
      ("acid stability", "acidostability", "acid resistance")),
     ("ALKALINE", "alkaline",
-     "high pH (alkaline conditions)",
+     "high pH (alkaline conditions)", "alkaline conditions",
      ("alkaline stability", "base stability", "alkali resistance")),
     ("OSMOTIC", "osmotic",
-     "osmotic stress",
+     "osmotic stress", "osmotic stress",
      ("osmostability", "osmotic resistance")),
     ("PRESSURE", "high-pressure",
-     "elevated hydrostatic pressure",
+     "elevated hydrostatic pressure", "high hydrostatic pressure",
      ("barostability", "piezostability", "pressure stability", "pressure resistance")),
     ("DESICCATION", "desiccation",
-     "desiccation / dehydration (water loss)",
+     "desiccation / dehydration (water loss)", "desiccating conditions",
      ("xerostability", "dehydration stability", "desiccation resistance", "anhydrobiotic stability")),
     ("CHEMICAL", "chemical-denaturant",
-     "chemical denaturants such as urea, guanidinium chloride, or detergents",
+     "chemical denaturants such as urea, guanidinium chloride, or detergents", "chemical-denaturant conditions",
      ("denaturant stability", "chemical resistance", "resistance to chemical denaturation")),
     ("PROTEOLYTIC", "proteolytic",
-     "proteolytic degradation by peptidases",
+     "proteolytic degradation by peptidases", "proteolytic conditions",
      ("protease resistance", "proteolytic stability", "resistance to proteolysis")),
     ("MECHANICAL", "mechanical",
-     "mechanical force / applied load (mechanical unfolding)",
+     "mechanical force / applied load (mechanical unfolding)", "mechanical stress",
      ("mechanostability", "mechanical stability", "force resistance")),
 )
 
@@ -113,9 +115,11 @@ def record(identifier: str, label: str, definition: str,
     if parents:
         lines.append("parent_traits:")
         lines.extend(f"  - {p}" for p in parents)
-    if synonyms:
+    seen: set[str] = set()
+    uniq = [s for s in synonyms if s != label and not (s in seen or seen.add(s))]
+    if uniq:
         lines.append("synonyms:")
-        for s in synonyms:
+        for s in uniq:
             lines.append(f"  - synonym_text: {yaml_escape(s)}")
             lines.append("    synonym_type: EXACT_SYNONYM")
     lines.append(f"license: {LICENSE}")
@@ -125,29 +129,31 @@ def record(identifier: str, label: str, definition: str,
 def build_records() -> list[tuple[str, str]]:
     """Return [(filename, yaml_text), …] for every condition × direction."""
     out: list[tuple[str, str]] = []
-    for key, adj, phrase, syns in CONDITIONS:
+    for key, adj, phrase, clabel, syns in CONDITIONS:
         base_id = f"proteintraitsmech:STABILITY_{key}"
-        base_label = f"{adj} stability"
+        # "stable under <clabel>"; keep the old "<adj> stability" as a synonym.
+        base_syns = (f"{adj} stability",) + syns
         base_def = (f"Structural stability of a protein under {phrase} — the "
                     f"capacity to retain its folded, functional conformation "
                     f"when exposed to this condition.")
         out.append((f"{adj}-stability.yaml",
-                    record(base_id, base_label, base_def, [PATO_STABILITY], syns)))
+                    record(base_id, f"stable under {clabel}", base_def,
+                           [PATO_STABILITY], base_syns)))
 
-        inc_syns = tuple(f"increased {s}" for s in syns[:2])
+        inc_syns = (f"increased {adj} stability",) + tuple(f"increased {s}" for s in syns[:2])
         out.append((f"increased-{adj}-stability.yaml",
                     record(f"{base_id}_INCREASED",
-                           f"increased {adj} stability",
+                           f"increased stability under {clabel}",
                            f"Greater-than-reference structural stability under "
                            f"{phrase} (e.g. an extremophile or engineered "
                            f"variant that resists this stressor better than its "
                            f"mesophilic or wild-type counterpart).",
                            [base_id, PATO_INCREASED], inc_syns)))
 
-        dec_syns = tuple(f"decreased {s}" for s in syns[:2])
+        dec_syns = (f"decreased {adj} stability",) + tuple(f"decreased {s}" for s in syns[:2])
         out.append((f"decreased-{adj}-stability.yaml",
                     record(f"{base_id}_DECREASED",
-                           f"decreased {adj} stability",
+                           f"decreased stability under {clabel}",
                            f"Lower-than-reference structural stability under "
                            f"{phrase} (e.g. a destabilising mutation or a "
                            f"condition-sensitive variant that unfolds or is "
