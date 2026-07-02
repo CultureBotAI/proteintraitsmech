@@ -382,20 +382,35 @@ function renderDetail(r) {
   if (lazyPending) loadSequences(r);
 }
 
-// Lazy-load the heavy per-record sequence sidecar, merge it into the
-// record's examples, and re-render the example list in place if the user
-// is still viewing this record. Failures degrade gracefully — the example
-// metadata is already shown; only the sequence viewer is missing.
+// Sequence sidecars are bucketed: r.sf is a bucket path (e.g. "seq/023.json")
+// holding {record_id: sidecar} for many records. Cache each bucket's fetch so
+// opening several records in the same bucket costs one request.
+const SEQ_BUCKETS = new Map();
+function fetchSeqBucket(file) {
+  if (!SEQ_BUCKETS.has(file)) {
+    SEQ_BUCKETS.set(file,
+      fetch("data/" + file)
+        .then(res => (res.ok ? res.json() : {}))
+        .catch(() => ({})));
+  }
+  return SEQ_BUCKETS.get(file);
+}
+
+// Lazy-load a record's sequences from its bucket, merge them into the
+// examples, and re-render the example list in place if the user is still
+// viewing this record. Failures degrade gracefully — the example metadata is
+// already shown; only the sequence viewer is missing.
 async function loadSequences(r) {
   if (r._seqLoaded || !r.sf) return;
   try {
-    const res = await fetch("data/seq/" + r.sf);
-    if (!res.ok) return;
-    const side = await res.json();
-    (r.ex || []).forEach((e, i) => {
-      const s = side[i];
-      if (s) { e.seq = s.seq; e.feats = s.feats || []; }
-    });
+    const bucket = await fetchSeqBucket(r.sf);
+    const side = bucket[r.id];
+    if (side) {
+      (r.ex || []).forEach((e, i) => {
+        const s = side[i];
+        if (s) { e.seq = s.seq; e.feats = s.feats || []; }
+      });
+    }
     r._seqLoaded = true;
   } catch (_) {
     return;

@@ -15,16 +15,19 @@ Output:
                                   per axis; the browser fetches them in
                                   parallel and merges). Keeps any single
                                   file well under the 100 MB git limit.
-  docs/data/seq/<slug>.json     — per-record sidecar holding the heavy
-                                  example sequences + feature tracks,
-                                  lazy-fetched by the browser only when a
-                                  record detail view is opened. The record
-                                  stores its sidecar filename in `"sf"`
-                                  (a URL-and-filesystem-safe slug, assigned
-                                  by the build with collision handling — so
-                                  the browser never has to guess it), and
-                                  each example that has a sequence in the
-                                  sidecar is flagged `"sq": 1`.
+  docs/data/seq/NNN.json        — bucketed sidecars holding the heavy example
+                                  sequences + feature tracks, lazy-fetched by
+                                  the browser only when a record detail view is
+                                  opened. Records are hashed into a small,
+                                  fixed number of bucket files (see
+                                  SEQ_BUCKETS) — one file per record would be
+                                  thousands of files and blows past the GitHub
+                                  Pages Jekyll build's ~10-minute file-copy
+                                  timeout. Each bucket is `{record_id: sidecar}`;
+                                  the record stores its bucket path in `"sf"`
+                                  (e.g. "seq/023.json") so the browser fetches
+                                  it directly, and each example that has a
+                                  sequence is flagged `"sq": 1`.
   docs/data/facets.json         — pre-computed facet counts + a `shards`
                                   manifest listing the per-axis files.
 
@@ -66,6 +69,7 @@ Record shape:
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import sys
@@ -73,6 +77,12 @@ from pathlib import Path
 from typing import Any
 
 import yaml
+
+# Number of sequence-sidecar bucket files. Keep this small: GitHub Pages'
+# Jekyll builder copies every file in docs/ and times out around 10 min, so
+# thousands of one-record files fail the build. ~4.5k seq records / 64 buckets
+# ≈ 70 records (~200 KB) per bucket — one small fetch per detail view, cached.
+SEQ_BUCKETS = 64
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TRAITS_DIR = REPO_ROOT / "data" / "traits"
@@ -187,8 +197,6 @@ def load_record(path: Path) -> dict[str, Any] | None:
 # an "OTHER" shard so nothing is silently dropped.
 AXIS_ORDER = ["STRUCTURE", "SEQUENCE", "SEQUENCE_STRUCTURE", "FUNCTION"]
 
-_SLUG_RE = re.compile(r"[^A-Za-z0-9._-]+")
-
 
 def split_sequences(records: list[dict]) -> list[tuple[dict, list]]:
     """Move heavy per-example `seq`/`feats` out of each record into a
@@ -214,33 +222,32 @@ def split_sequences(records: list[dict]) -> list[tuple[dict, list]]:
     return pairs
 
 
-def write_sequences(pairs: list[tuple[dict, list]]) -> tuple[int, float]:
-    """Write per-record sequence sidecars under docs/data/seq/, clearing
-    any stale files first. Assigns each record a URL-and-filesystem-safe
-    sidecar filename in `rec["sf"]` (deduplicated on collision) so the
-    browser fetches it by name rather than re-deriving it from the id.
-    Returns (file_count, total_MB)."""
+def write_sequences(pairs: list[tuple[dict, list]]) -> tuple[int, int, float]:
+    """Write bucketed sequence sidecars under docs/data/seq/, clearing any
+    stale files first. Each record is hashed (stable md5 of its identifier)
+    into one of SEQ_BUCKETS files; the record stores its bucket path in
+    `rec["sf"]` (e.g. "seq/023.json") and each bucket file is a JSON object
+    `{record_id: sidecar}`. Returns (record_count, file_count, total_MB)."""
     seq_dir = OUT_DIR / "seq"
     if seq_dir.exists():
         for old in seq_dir.glob("*.json"):
             old.unlink()
     seq_dir.mkdir(parents=True, exist_ok=True)
-    used: set[str] = set()
-    total = 0
+
+    buckets: dict[str, dict[str, list]] = {}
     for rec, side in pairs:
-        base = _SLUG_RE.sub("_", rec["id"]).strip("_") or "record"
-        name = f"{base}.json"
-        n = 2
-        while name in used:
-            name = f"{base}-{n}.json"
-            n += 1
-        used.add(name)
+        h = int(hashlib.md5(rec["id"].encode("utf-8")).hexdigest(), 16)
+        name = f"seq/{h % SEQ_BUCKETS:03d}.json"
         rec["sf"] = name
-        path = seq_dir / name
+        buckets.setdefault(name, {})[rec["id"]] = side
+
+    total = 0
+    for name, obj in buckets.items():
+        path = OUT_DIR / name
         with path.open("w", encoding="utf-8") as fh:
-            json.dump(side, fh, separators=(",", ":"), ensure_ascii=False)
+            json.dump(obj, fh, separators=(",", ":"), ensure_ascii=False)
         total += path.stat().st_size
-    return len(pairs), total / (1024 * 1024)
+    return len(pairs), len(buckets), total / (1024 * 1024)
 
 
 def write_shards(records: list[dict]) -> list[dict]:
@@ -305,7 +312,7 @@ def main() -> int:
     }
 
     pairs = split_sequences(records)
-    seq_count, seq_mb = write_sequences(pairs)
+    seq_count, seq_files, seq_mb = write_sequences(pairs)
     shards = write_shards(records)
 
     facets_path = OUT_DIR / "facets.json"
@@ -324,7 +331,8 @@ def main() -> int:
     print(f"Wrote {len(records)} records across {len(shards)} axis shard(s):")
     for s in shards:
         print(f"  {s['file']:34s} {s['count']:>7,}  ({s['bytes'] / (1024 * 1024):.2f} MB)")
-    print(f"Wrote {seq_count:,} sequence sidecars → docs/data/seq/ ({seq_mb:.2f} MB total)")
+    print(f"Wrote {seq_count:,} sequences into {seq_files} bucket file(s) → "
+          f"docs/data/seq/ ({seq_mb:.2f} MB total)")
     print(f"Wrote facet index → {facets_path.relative_to(REPO_ROOT)}")
     if skipped:
         print(f"Skipped {skipped} unparseable files")
