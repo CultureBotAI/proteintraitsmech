@@ -75,6 +75,12 @@ IDENTITY_NAMESPACES = {
 # Status precedence for choosing a merge target (higher = preferred).
 STATUS_RANK = {"REVIEWED": 3, "PROPOSED": 2, "SEEDED": 1, "DEPRECATED": 0, "": 0}
 
+# Generic "umbrella" categories. When a cross-category R1 merge picks a target,
+# a specific category (e.g. SEQ_GLYCOSYLATION_SITE) beats an umbrella one — a
+# ProRule/pattern is a sequence signature, not itself a specific trait.
+GENERIC_CATS = {"SEQ_MOTIF", "SEQ_PTM_SITE", "SEQ_OTHER", "STRUCT_OTHER",
+                "MIXED_OTHER", "UPPER", "OTHER"}
+
 
 # ---------------------------------------------------------------------------
 # Load
@@ -266,15 +272,18 @@ def richness(r: dict) -> int:
 
 def choose_target(members: list[dict]) -> dict:
     """Deterministic target: highest status, then source-anchored over
-    curator-minted, then richest, then lexicographically smallest id then
-    path (so the choice is fully reproducible)."""
+    curator-minted, then specific category over generic umbrella, then
+    richest, then lexicographically smallest id then path (fully
+    reproducible)."""
     def key(r: dict):
         anchored = 0 if r["id"].startswith("proteintraitsmech:") else 1
-        # Sort DESC on the first three, ASC on id/path — invert id/path so a
+        specific = 0 if (r.get("cat") or "") in GENERIC_CATS else 1
+        # Sort DESC on the first four, ASC on id/path — invert id/path so a
         # single max() call yields the smallest id/path among equals.
         return (
             STATUS_RANK.get(r.get("sta", ""), 0),
             anchored,
+            specific,
             richness(r),
             tuple(-ord(c) for c in r["id"]),
             tuple(-ord(c) for c in (r.get("path") or "")),

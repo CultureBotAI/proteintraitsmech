@@ -6,15 +6,25 @@ look like strong equivalence signals. In *this* corpus they are dominated by
 false positives, so they are demoted to REVIEW. Only exact identity qualifies
 for MERGE.
 
-## The NEVER guards (applied to every rule)
+## The NEVER guards
 
-A candidate pair is discarded outright if:
+Applied to **R2 and every review rule** (C1–C3), a candidate pair is discarded
+outright if:
 
 - the two records have a **different `trait_axis`**, or
 - a **different `trait_category`**, or
 - they carry **different values in the same identity namespace** (e.g. two
   distinct `EC:` numbers, two distinct `MOD:` ids) — a positive identity
   mismatch, not just "not equal".
+
+**R1 (EXACT_ID) is deliberately exempt from the axis/category guard.** An
+identical `identifier` is definitional identity: a source-anchored CURIE names
+exactly one entity, so two records carrying it are the same entity regardless of
+which directory/category the seeder placed them in. A cross-category R1 hit is a
+*mis-categorization to be fixed*, not two distinct traits — and the merge fixes
+it by keeping the more specific categorization. (The identity-namespace mismatch
+guard still holds trivially: two records with the same identifier cannot carry
+different values of that same identifier.)
 
 These guards are what make the surviving MERGE statements safe.
 

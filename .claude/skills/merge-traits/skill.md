@@ -32,15 +32,23 @@ what is actually unequivocal here.
 
 ## The rules
 
-Every rule is guarded by the **NEVER** conditions: a different `trait_axis` or
-`trait_category`, or two different values in the same identity namespace, are
-never equated.
+The **NEVER** guards — different `trait_axis`, different `trait_category`, or two
+different values in the same identity namespace — apply to **R2 and the review
+rules**. **R1 is exempt**: an identical `identifier` is *definitional* identity
+(a source CURIE names exactly one entity), which outranks categorization. A same-
+identifier hit that spans two categories is not two traits — it is one entity
+mis-routed into two directories, and the merge consolidates it into the more
+specific category (e.g. the PROSITE ProRule `PRU00498` existed as both a generic
+`SEQ_MOTIF` in `prorule/` and a `SEQ_GLYCOSYLATION_SITE`; the glycosylation
+record is kept, the generic copy folded in). A ProRule/pattern is a sequence
+*signature*, not itself a specific trait, so the specific categorization is the
+one worth keeping.
 
 ### MERGE — deterministic, emitted as "X = Y"
 
 | Rule | Condition | Why it is unequivocal |
 |------|-----------|-----------------------|
-| **R1 EXACT_ID** | Two records carry the identical `identifier`. | Same source term seeded to two paths / imported twice — literally one trait. |
+| **R1 EXACT_ID** | Two records carry the identical `identifier`. | Same source term seeded to two paths / imported twice — literally one entity. Exempt from the category guard (see above). |
 | **R2 EXACT_PATTERN** | Byte-identical non-empty `sequence_pattern` AND identical `(axis, category)`. | The same sequence signature expressed twice. |
 
 ### REVIEW — related, NOT auto-merged
@@ -72,9 +80,11 @@ The dry run writes `data/analysis/trait_merge_plan.yaml` — one entry per merge
 group (statement, rules, evidence, chosen target, members) and the full review
 list. **Always read the plan before `--apply`.**
 
-Current catalog (2026-07): **4 MERGE groups** (all R1 — PROSITE ProRules routed
-into both a PTM-subtype dir and `prorule/`, plus `PS00654` in two dirs) and
-**675 review candidates** (6 C1 + 669 C2).
+Catalog status (2026-07): the initial **4 MERGE groups** (all R1 — PROSITE
+ProRules routed into both a PTM-subtype dir and `prorule/`, plus `PS00654` in
+two dirs) have been **applied** (corpus 69,684 → 69,680), so a fresh run now
+reports 0 MERGE groups. **675 review candidates** (6 C1 + 669 C2) remain, by
+design untouched.
 
 ---
 
