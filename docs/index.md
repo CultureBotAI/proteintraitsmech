@@ -15,16 +15,12 @@ title: ProteinTraitsMech
     <div style="font-size:.85rem;color:#57606a">STRUCTURE</div>
   </a>
   <a href="browse.html#axis=SEQUENCE" style="flex:1 1 130px;padding:.9rem 1rem;border:1px solid #d0d7de;border-left:4px solid #2563eb;border-radius:8px;background:#fff;color:inherit;text-decoration:none">
-    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#2563eb">7,931</div>
+    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#2563eb">9,109</div>
     <div style="font-size:.85rem;color:#57606a">SEQUENCE</div>
   </a>
   <a href="browse.html#axis=FUNCTION" style="flex:1 1 130px;padding:.9rem 1rem;border:1px solid #d0d7de;border-left:4px solid #d97706;border-radius:8px;background:#fff;color:inherit;text-decoration:none">
     <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#d97706">282</div>
     <div style="font-size:.85rem;color:#57606a">FUNCTION</div>
-  </a>
-  <a href="browse.html#axis=SEQUENCE_STRUCTURE" style="flex:1 1 130px;padding:.9rem 1rem;border:1px solid #d0d7de;border-left:4px solid #a855f7;border-radius:8px;background:#fff;color:inherit;text-decoration:none">
-    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#a855f7">390</div>
-    <div style="font-size:.85rem;color:#57606a">SEQUENCE_STRUCTURE</div>
   </a>
 </div>
 
@@ -57,7 +53,7 @@ Record counts link into the [browser](browse.html) filtered by `source`. PROSITE
 | UniProtKB FT + CC + GO (demo: B0R5N7, P25888) | [29](browse.html#src=UniProtKB) | `data/traits/{sequence,structure,function}/…` |
 | PSI-MOD (CC-BY-4.0) | [1,971](browse.html#src=PSI-MOD) | `data/traits/sequence/{modified_residue,glycosylation,lipidation,crosslink,ptm_ontology}/` |
 | ECOD v295 (A/X/H/T/F hierarchy) | [45,113](browse.html#src=ECOD) | `data/traits/structure/{architecture,homologous_superfamily,topology,fold/ecod}/` |
-| InterPro entries — Domain / Homologous-superfamily / Repeat / Conserved-/Active-/Binding-site / PTM (public domain) | [26,264](browse.html#src=InterPro) | `data/traits/{structure,sequence,mixed}/…/interpro/` |
+| InterPro entries — Domain / Homologous-superfamily / Repeat / Conserved-/Active-/Binding-site / PTM (public domain; GO-grounded via interpro2go) | [26,264](browse.html#src=InterPro) | `data/traits/{structure,sequence}/…/interpro/` |
 | M-CSA (CC-BY-4.0) | [1,003](browse.html#src=M-CSA) | `data/traits/structure/active_site/mcsa/` |
 | DisProt (CC-BY-4.0) | [3,199](browse.html#src=DisProt) | `data/traits/sequence/disorder/` |
 | PSI-MI interaction types (CC-BY-4.0) | [146](browse.html#src=PSI-MI) | `data/traits/function/interaction_partner/psi_mi/` |
@@ -84,7 +80,7 @@ Every record carries a fine-grained `trait_category`. Counts link into the [brow
 | `STRUCT_ACTIVE_SITE` | STRUCTURE | [1,137](browse.html#cat=STRUCT_ACTIVE_SITE) |
 | `SEQ_CONSERVATION` | SEQUENCE | [775](browse.html#cat=SEQ_CONSERVATION) |
 | `SEQ_MODIFIED_RESIDUE` | SEQUENCE | [618](browse.html#cat=SEQ_MODIFIED_RESIDUE) |
-| `MIXED_STRUCTURAL_REPEAT` | SEQUENCE_STRUCTURE | [390](browse.html#cat=MIXED_STRUCTURAL_REPEAT) |
+| `SEQ_REPEAT` | SEQUENCE | [390](browse.html#cat=SEQ_REPEAT) |
 | `FUNC_INTERACTION_PARTNER` | FUNCTION | [148](browse.html#cat=FUNC_INTERACTION_PARTNER) |
 | `SEQ_GLYCOSYLATION_SITE` | SEQUENCE | [85](browse.html#cat=SEQ_GLYCOSYLATION_SITE) |
 | `STRUCT_BINDING_SITE` | STRUCTURE | [84](browse.html#cat=STRUCT_BINDING_SITE) |
@@ -111,7 +107,7 @@ Every record carries a fine-grained `trait_category`. Counts link into the [brow
 
 - **SEQUENCE** — motifs, signal peptides, propeptides, cleavage sites, low-complexity / disordered regions, tandem repeats, compositional biases, conserved regions, epitopes, PTM sites.
 - **STRUCTURE** — folds, structural domains, secondary-structure arrangements, topology classes, quaternary state, subunit interfaces, active / binding / allosteric / metal sites, disulfide bonds, cavities, symmetry, dynamics, structural stability.
-- **SEQUENCE_STRUCTURE** — structural tandem repeats (InterPro Repeat families), coiled coils, transmembrane spans. *(Per-protein transmembrane spans are not seeded — too specific, covered by the general transmembrane trait; the populated records here are repeat-family classes with both a sequence signature and a 3D periodicity.)*
+- **SEQUENCE_STRUCTURE** — traits with both a sequence signature and 3D periodicity (coiled coils; structural tandem repeats with demonstrated periodicity, e.g. from RepeatsDB). *(Currently unpopulated: InterPro Repeat entries are sequence signatures without asserted 3D periodicity, so they are seeded as `SEQ_REPEAT`; per-protein transmembrane spans are not seeded.)*
 - **FUNCTION** — enzymatic activity, binding capacity, cofactor requirement, subcellular localisation, environmental response, interaction partner. Grounded by EC / Rhea / ChEBI / GO / UniProt SubCell.
 
 ## Quick start

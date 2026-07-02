@@ -9,13 +9,21 @@ We seed the **entries** (not the multi-terabyte match files), and only the
 entry types that localise to a sequence/structure element — each carries a real
 definition (the InterPro abstract) and a type-specific parent/child hierarchy:
 
-  Domain                 → STRUCTURE          / STRUCT_DOMAIN
-  Homologous_superfamily → STRUCTURE          / STRUCT_HOMOLOGOUS_SUPERFAMILY
-  Repeat                 → SEQUENCE_STRUCTURE  / MIXED_STRUCTURAL_REPEAT
-  Conserved_site         → SEQUENCE           / SEQ_CONSERVATION
-  Active_site            → STRUCTURE          / STRUCT_ACTIVE_SITE
-  Binding_site           → STRUCTURE          / STRUCT_BINDING_SITE
-  PTM                    → SEQUENCE           / SEQ_PTM_SITE
+  Domain                 → STRUCTURE   / STRUCT_DOMAIN
+  Homologous_superfamily → STRUCTURE   / STRUCT_HOMOLOGOUS_SUPERFAMILY
+  Repeat                 → SEQUENCE    / SEQ_REPEAT
+  Conserved_site         → SEQUENCE    / SEQ_CONSERVATION
+  Active_site            → STRUCTURE   / STRUCT_ACTIVE_SITE
+  Binding_site           → STRUCTURE   / STRUCT_BINDING_SITE
+  PTM                    → SEQUENCE    / SEQ_PTM_SITE
+
+An InterPro `Repeat` is a *sequence* signature (a repeated region detected by an
+HMM); many correspond to structural repeats (Armadillo, LRR, WD40 solenoids) but
+InterPro does not assert 3D periodicity per entry, so we default to the sequence
+axis (SEQ_REPEAT) rather than the mixed MIXED_STRUCTURAL_REPEAT — the latter is
+reserved for repeats with demonstrated structural periodicity (e.g. RepeatsDB).
+
+GO groundings are added to `xrefs` from interpro2go when present.
 
 `Family` (whole-protein homology groups) is **excluded by default** — it does
 not localise to a sequence/structure element and has no matching trait_category.
@@ -46,6 +54,7 @@ TRAITS_DIR = REPO_ROOT / "data" / "traits"
 
 XML_GZ = RAW_DIR / "interpro.xml.gz"
 TREE = RAW_DIR / "ParentChildTreeFile.txt"
+INTERPRO2GO = RAW_DIR / "interpro2go"
 
 LICENSE = "public domain"
 DEF_CAP = 1800
@@ -54,7 +63,7 @@ DEF_CAP = 1800
 TYPE_MAP: dict[str, tuple[str, str, str]] = {
     "Domain":                 ("STRUCTURE",          "STRUCT_DOMAIN",                 "structure/domain/interpro"),
     "Homologous_superfamily": ("STRUCTURE",          "STRUCT_HOMOLOGOUS_SUPERFAMILY", "structure/homologous_superfamily/interpro"),
-    "Repeat":                 ("SEQUENCE_STRUCTURE", "MIXED_STRUCTURAL_REPEAT",       "mixed/structural_repeat/interpro"),
+    "Repeat":                 ("SEQUENCE",           "SEQ_REPEAT",                    "sequence/repeat/interpro"),
     "Conserved_site":         ("SEQUENCE",           "SEQ_CONSERVATION",              "sequence/conservation/interpro"),
     "Active_site":            ("STRUCTURE",          "STRUCT_ACTIVE_SITE",            "structure/active_site/interpro"),
     "Binding_site":           ("STRUCTURE",          "STRUCT_BINDING_SITE",           "structure/binding_site/interpro"),
@@ -86,6 +95,28 @@ def parse_tree() -> dict[str, str]:
     return parent_of
 
 
+_GO_RE = re.compile(r";\s*(GO:\d{7})\s*$")
+
+
+def parse_interpro2go() -> dict[str, list[str]]:
+    """IPR accession → [GO CURIEs], from the interpro2go mapping file.
+    Lines: 'InterPro:IPRnnnnnn name > GO:go_name ; GO:nnnnnnn'."""
+    out: dict[str, list[str]] = {}
+    if not INTERPRO2GO.exists():
+        return out
+    for line in INTERPRO2GO.read_text(encoding="utf-8", errors="replace").splitlines():
+        if line.startswith("!") or not line.startswith("InterPro:"):
+            continue
+        m = _GO_RE.search(line)
+        if not m:
+            continue
+        ipr = line.split(None, 1)[0].split(":", 1)[1]
+        out.setdefault(ipr, [])
+        if m.group(1) not in out[ipr]:
+            out[ipr].append(m.group(1))
+    return out
+
+
 def clean_abstract(el) -> str:
     if el is None:
         return ""
@@ -114,7 +145,7 @@ def folded(text: str) -> list[str]:
 
 
 def build_yaml(ipr: str, name: str, definition: str, axis: str, category: str,
-               parent: str | None) -> str:
+               parent: str | None, go_xrefs: list[str]) -> str:
     lines = [f"identifier: InterPro:{ipr}", f"label: {yaml_escape(name)}"]
     f = folded(definition or name)
     lines.append(f"definition: {f[0]}")
@@ -127,6 +158,9 @@ def build_yaml(ipr: str, name: str, definition: str, axis: str, category: str,
     if parent:
         lines.append("parent_traits:")
         lines.append(f"  - InterPro:{parent}")
+    if go_xrefs:
+        lines.append("xrefs:")
+        lines.extend(f"  - {g}" for g in go_xrefs)
     lines.append(f"license: {LICENSE}")
     return "\n".join(lines) + "\n"
 
@@ -161,7 +195,8 @@ def main() -> int:
         type_map["Family"] = ("STRUCTURE", "STRUCT_DOMAIN", "structure/domain/interpro")
 
     parent_of = parse_tree()
-    stats = {"written": 0, "skipped": 0, "planned": 0, "by_cat": {}}
+    ipr2go = parse_interpro2go()
+    stats = {"written": 0, "skipped": 0, "planned": 0, "by_cat": {}, "with_go": 0}
     processed = 0
 
     with gzip.open(XML_GZ, "rt", encoding="utf-8", errors="replace") as fh:
@@ -181,6 +216,9 @@ def main() -> int:
             name = (name_el.text or "").strip() if name_el is not None else el.get("short_name", ipr)
             definition = clean_abstract(el.find("abstract"))
             parent = parent_of.get(ipr)
+            go_xrefs = ipr2go.get(ipr, [])
+            if go_xrefs:
+                stats["with_go"] += 1
 
             path = TRAITS_DIR / subdir / f"{slugify(name)}-{ipr.lower()}.yaml"
             stats["by_cat"][category] = stats["by_cat"].get(category, 0) + 1
@@ -192,8 +230,9 @@ def main() -> int:
             stats["planned"] += 1
             if args.apply:
                 path.parent.mkdir(parents=True, exist_ok=True)
-                path.write_text(build_yaml(ipr, name, definition, axis, category, parent),
-                                encoding="utf-8")
+                path.write_text(
+                    build_yaml(ipr, name, definition, axis, category, parent, go_xrefs),
+                    encoding="utf-8")
                 stats["written"] += 1
 
     print("Per-category totals (all in-scope entries):")
@@ -201,6 +240,7 @@ def main() -> int:
         print(f"  {c:34s} {n:>6,}")
     total = sum(stats["by_cat"].values())
     print(f"  {'TOTAL':34s} {total:>6,}")
+    print(f"  ({stats['with_go']:,} carry GO xrefs from interpro2go)")
     if args.apply:
         print(f"\nWrote {stats['written']:,}; skipped {stats['skipped']:,} existing.")
     else:
