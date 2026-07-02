@@ -180,18 +180,30 @@ supports them, and can also be added by curators:
 | [TED novel folds](https://ted.cathdb.info/) (Zenodo v5, [DOI:10.5281/zenodo.13908086](https://doi.org/10.5281/zenodo.13908086), CC-BY 4.0) | 7427 | `data/traits/structure/fold/novel/` |
 | [TED highly-symmetric folds](https://ted.cathdb.info/) (same Zenodo record) | 6433 | `data/traits/structure/fold/high_symmetry/` |
 | [UniProtKB](https://www.uniprot.org/) FT + CC + GO (per-accession, demo seed) | 38 (2 entries) | `data/traits/{sequence,structure,mixed,function}/…` |
+| [PSI-MOD](https://github.com/HUPO-PSI/psi-mod-CV) (HUPO-PSI protein modification CV, CC-BY-4.0) | 1971 | `data/traits/sequence/{modified_residue,glycosylation,lipidation,crosslink,ptm_ontology}/` |
+| [ECOD](http://prodata.swmed.edu/ecod/) (Evolutionary Classification Of protein Domains, v295) | 45113 | `data/traits/structure/{architecture,homologous_superfamily,topology,fold/ecod}/` (21 + 6,178 + 3,955 + 34,959) |
 
 Refetch and re-seed:
 
 ```bash
 just fetch-prosite            # writes data/raw/prosite.dat + prorule.dat (gitignored)
 just fetch-ted                # writes data/raw/ted_*.tsv.gz (gitignored)
+just fetch-psimod             # PSI-MOD.obo from HUPO-PSI GitHub (CC-BY-4.0)
+just fetch-ecod               # ECOD domain list (~689 MB, weekly PDB-synced)
 just seed-lsf --apply         # 19 LinkML LocalStructuralFeature records
 just seed-prosite --apply     # 4194 PROSITE records; idempotent, skips existing
 just seed-ted --apply         # 13860 TED fold records; idempotent
+just seed-psimod --apply      # 1971 PSI-MOD PTM records; tags each CC-BY-4.0
+just seed-ecod --apply        # 45113 ECOD hierarchy nodes (A/X/H/T/F)
 
 # UniProtKB FT-line seed — pass accessions or a local flat file
 just seed-uniprot --accession B0R5N7 --accession P25888 --apply
+
+# SCOPe seeder is written but Berkeley's server is behind an anti-bot
+# challenge — download dir.des.scope.*.txt and dir.hie.scope.*.txt
+# manually from https://scop.berkeley.edu/downloads/ into
+# data/raw/scope/, then run:
+just seed-scope --apply
 ```
 
 UniProtKB supported FT types → axis / category:

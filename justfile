@@ -71,6 +71,45 @@ fetch-ted:
 seed-ted *args:
     python3 scripts/seed_ted.py {{args}}
 
+# Seed data/traits/structure/{class,fold,homologous_superfamily,domain}/
+# from SCOPe (Berkeley SCOP extension). The berkeley.edu server is
+# behind an anti-bot challenge that rejects plain HTTP clients — the
+# `fetch-scope` recipe will fail; download the files manually from
+# https://scop.berkeley.edu/downloads/ (dir.des.scope.*.txt and
+# dir.hie.scope.*.txt) and drop them into data/raw/scope/.
+seed-scope *args:
+    python3 scripts/seed_scope.py {{args}}
+
+# Download the current ECOD domain list (~689 MB) from UT Southwestern.
+# The archive is regenerated weekly on PDB sync; every fetch pulls the
+# then-current version. Not gitignored yet; add to .gitignore if it
+# grows past 1 GB.
+fetch-ecod:
+    mkdir -p data/raw
+    curl -sSLf --max-time 1800 -o data/raw/ecod.latest.domains.txt \
+      http://prodata.swmed.edu/ecod/distributions/ecod.latest.domains.txt
+    @ls -la data/raw/ecod.latest.domains.txt
+
+# Seed data/traits/structure/{architecture,homologous_superfamily,
+# topology,fold/ecod}/ from the ECOD hierarchy. Emits one record per
+# distinct A/X/H/T/F node (~20-30K total) with parent_traits chaining
+# through the levels. Requires `just fetch-ecod`.
+seed-ecod *args:
+    python3 scripts/seed_ecod.py {{args}}
+
+# Download the current PSI-MOD OBO release (HUPO-PSI/psi-mod-CV, CC-BY-4.0).
+fetch-psimod:
+    mkdir -p data/raw
+    curl -sSLf --max-time 120 -o data/raw/PSI-MOD.obo \
+      https://raw.githubusercontent.com/HUPO-PSI/psi-mod-CV/master/PSI-MOD.obo
+    @ls -la data/raw/PSI-MOD.obo
+
+# Seed data/traits/sequence/{modified_residue,glycosylation,lipidation,
+# crosslink,ptm_ontology}/ from PSI-MOD. Requires `just fetch-psimod`.
+# Dry-run by default; --apply to write. Idempotent.
+seed-psimod *args:
+    python3 scripts/seed_psi_mod.py {{args}}
+
 # Seed data/traits/ from UniProtKB FT lines. Accepts flags:
 #   --accession <ACC>     fetch from UniProt REST (repeat for many)
 #   --from-file <path>    one accession per line
