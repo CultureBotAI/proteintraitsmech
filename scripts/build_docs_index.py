@@ -111,6 +111,8 @@ def infer_source(identifier: str, path: Path) -> str:
         return "M-CSA"
     if identifier.startswith("proteintraitsmech:UNIPROTKB_"):
         return "UniProtKB"
+    if identifier.startswith("proteintraitsmech:STABILITY_"):
+        return "curated"
     if identifier.startswith("proteintraitsmech:"):
         # LSF seed used bare TERM names; UniProt uses UNIPROTKB_ prefix.
         return "LinkML LSF"

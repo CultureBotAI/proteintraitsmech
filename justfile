@@ -143,6 +143,13 @@ fetch-obo:
 seed-obo *args:
     python3 scripts/seed_obo.py {{args}}
 
+# Seed data/traits/structure/stability/conditions/ with condition-specific
+# structural-stability traits (thermal/oxidative/saline/pH/osmotic/pressure/
+# desiccation/chemical/proteolytic/mechanical × increased/decreased). Curator-
+# minted, parented to the PATO stability terms. Dry-run by default; --apply.
+seed-stability *args:
+    python3 scripts/seed_stability.py {{args}}
+
 # Seed data/traits/ from UniProtKB FT lines. Accepts flags:
 #   --accession <ACC>     fetch from UniProt REST (repeat for many)
 #   --from-file <path>    one accession per line
