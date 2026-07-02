@@ -653,6 +653,14 @@ enums:
           them: an FT BINDING record captures *where* ATP binds; a
           FUNC_BINDING_CAPACITY record captures *that* the protein binds
           ATP as a class-level assertion.
+      EVOLUTION:
+        description: >-
+          Comparative-genomics / phylogenomic trait describing a protein's
+          conservation or distribution across taxa, rather than its own
+          sequence, structure, or molecular function — e.g. conserved,
+          clade-specific, variable, or a pangenome partition (core / soft-core
+          / shell / cloud / persistent / singleton). Taxon scope, when
+          relevant, is given by an NCBITaxon xref.
 
   ProteinTraitCategoryEnum:
     description: >-
@@ -835,6 +843,34 @@ enums:
           structurally localised). Distinct from STRUCT_INTERFACE, which
           captures the interface geometry. Grounded by UniProt `CC SUBUNIT`
           and cross-refs to IntAct / BioGRID / STRING.
+
+      # ---- EVOLUTION ----
+      EVO_CONSERVED:
+        description: >-
+          Evolutionarily conserved protein or region — orthologues retained
+          across multiple taxa (optionally scoped to a clade by an NCBITaxon
+          xref, i.e. "conserved at taxon rank").
+      EVO_CLADE_SPECIFIC:
+        description: >-
+          Lineage- / clade-specific or taxonomically restricted protein (TRG /
+          orphan) — present only within a particular taxon; the NCBITaxon xref
+          gives the clade.
+      EVO_VARIABLE:
+        description: >-
+          Variable / hypervariable / fast-evolving protein or region (low
+          cross-taxon conservation).
+      EVO_PANGENOME_CORE:
+        description: Core-genome protein — present in (nearly) all genomes of a species/clade pangenome.
+      EVO_PANGENOME_SOFTCORE:
+        description: Soft-core protein — present in most (e.g. >= 95%) genomes of the pangenome.
+      EVO_PANGENOME_SHELL:
+        description: Shell / accessory (dispensable) protein — present in a subset of pangenome genomes.
+      EVO_PANGENOME_CLOUD:
+        description: Cloud protein — present in only a few genomes of the pangenome (rare accessory).
+      EVO_PANGENOME_PERSISTENT:
+        description: Persistent-genome protein — the near-core partition in the PPanGGOLiN model.
+      EVO_PANGENOME_SINGLETON:
+        description: Singleton / strain-specific protein — present in a single genome of the pangenome.
 
       # ---- ADMINISTRATIVE ----
       UPPER:

@@ -166,6 +166,12 @@ fetch-obo:
 seed-obo *args:
     python3 scripts/seed_obo.py {{args}}
 
+# Seed data/traits/evolution/ with evolutionary / pangenome traits
+# (conserved, clade-specific, variable; pangenome core/soft-core/shell/
+# cloud/persistent/singleton). Curator-minted. Dry-run by default; --apply.
+seed-evolution *args:
+    python3 scripts/seed_evolution.py {{args}}
+
 # Seed data/traits/structure/stability/conditions/ with condition-specific
 # structural-stability traits (thermal/oxidative/saline/pH/osmotic/pressure/
 # desiccation/chemical/proteolytic/mechanical × increased/decreased). Curator-

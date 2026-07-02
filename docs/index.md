@@ -7,7 +7,7 @@ title: ProteinTraitsMech
 
 <div style="display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0 1.5rem">
   <a href="browse.html" style="flex:1 1 130px;padding:.9rem 1rem;border:1px solid #d0d7de;border-left:4px solid #155799;border-radius:8px;background:#fff;color:inherit;text-decoration:none">
-    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#155799">95,977</div>
+    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#155799">95,986</div>
     <div style="font-size:.85rem;color:#57606a">Total records</div>
   </a>
   <a href="browse.html#axis=STRUCTURE" style="flex:1 1 130px;padding:.9rem 1rem;border:1px solid #d0d7de;border-left:4px solid #16a34a;border-radius:8px;background:#fff;color:inherit;text-decoration:none">
@@ -22,13 +22,17 @@ title: ProteinTraitsMech
     <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#d97706">282</div>
     <div style="font-size:.85rem;color:#57606a">FUNCTION</div>
   </a>
+  <a href="browse.html#axis=EVOLUTION" style="flex:1 1 130px;padding:.9rem 1rem;border:1px solid #d0d7de;border-left:4px solid #0d9488;border-radius:8px;background:#fff;color:inherit;text-decoration:none">
+    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#0d9488">9</div>
+    <div style="font-size:.85rem;color:#57606a">EVOLUTION</div>
+  </a>
 </div>
 
 Knowledge base of **protein sequence, structure, and function traits** — one YAML per trait, LinkML-validated, evidence-backed. Part of the [CultureBotAI](https://culturebotai.github.io/) family; sibling to [dismech](https://github.com/monarch-initiative/dismech) (disease mechanisms) and TraitMech (microbial ecophysiological traits).
 
 <a href="browse.html" style="display:block;padding:1rem 1.25rem;margin:1rem 0 1.5rem;border:1px solid #159957;border-radius:8px;background:linear-gradient(120deg,#159957,#155799);color:#fff;text-decoration:none;box-shadow:0 2px 8px rgba(15,23,42,.10)">
   <strong style="font-size:1.05rem">🔎 Browse the corpus</strong><br>
-  <span style="opacity:.9">Faceted search over 95,977 ProteinTraitRecords — filter by axis / category / source, then open any record for a rendered detail view.</span>
+  <span style="opacity:.9">Faceted search over 95,986 ProteinTraitRecords — filter by axis / category / source, then open any record for a rendered detail view.</span>
 </a>
 
 - **CultureBotAI** — [culturebotai.github.io](https://culturebotai.github.io/)
@@ -60,7 +64,8 @@ Record counts link into the [browser](browse.html) filtered by `source`. PROSITE
 | METPO ecophysiological traits (growth preferences, tolerances, metabolism; CC-BY-4.0) | [118](browse.html#src=METPO) | `data/traits/function/{environmental_response,enzymatic_activity}/metpo/` |
 | PATO physicochemical qualities (CC-BY-4.0) | [28](browse.html#src=PATO) | `data/traits/structure/{stability,dynamics,surface}/pato/` |
 | Curated stability taxonomy — per-condition (thermal, oxidative, saline, pH, osmotic, pressure, desiccation, chemical, proteolytic, mechanical) × increased/decreased (CC0-1.0) | [33](browse.html#src=curated) | `data/traits/structure/stability/conditions/` |
-| **Total** | **[95,977](browse.html)** | |
+| Curated evolutionary / pangenome traits — conserved, clade-specific, variable; pangenome core/soft-core/shell/cloud/persistent/singleton (CC0-1.0) | [9](browse.html#src=curated) | `data/traits/evolution/{conservation,pangenome}/` |
+| **Total** | **[95,986](browse.html)** | |
 
 *Bucket counts are seeding-time figures. Four duplicate PROSITE records (a ProRule / pattern copy that was routed to two directories) have since been consolidated via the [`merge-traits`](https://github.com/CultureBotAI/proteintraitsmech/tree/main/.claude/skills/merge-traits) skill, so per-bucket rows may slightly exceed the live total.*
 
@@ -102,6 +107,15 @@ Every record carries a fine-grained `trait_category`. Counts link into the [brow
 | `STRUCT_DISULFIDE` | STRUCTURE | [1](browse.html#cat=STRUCT_DISULFIDE) |
 | `STRUCT_INTERFACE` | STRUCTURE | [1](browse.html#cat=STRUCT_INTERFACE) |
 | `STRUCT_METAL_SITE` | STRUCTURE | [1](browse.html#cat=STRUCT_METAL_SITE) |
+| `EVO_CONSERVED` | EVOLUTION | [1](browse.html#cat=EVO_CONSERVED) |
+| `EVO_CLADE_SPECIFIC` | EVOLUTION | [1](browse.html#cat=EVO_CLADE_SPECIFIC) |
+| `EVO_VARIABLE` | EVOLUTION | [1](browse.html#cat=EVO_VARIABLE) |
+| `EVO_PANGENOME_CORE` | EVOLUTION | [1](browse.html#cat=EVO_PANGENOME_CORE) |
+| `EVO_PANGENOME_SOFTCORE` | EVOLUTION | [1](browse.html#cat=EVO_PANGENOME_SOFTCORE) |
+| `EVO_PANGENOME_SHELL` | EVOLUTION | [1](browse.html#cat=EVO_PANGENOME_SHELL) |
+| `EVO_PANGENOME_CLOUD` | EVOLUTION | [1](browse.html#cat=EVO_PANGENOME_CLOUD) |
+| `EVO_PANGENOME_PERSISTENT` | EVOLUTION | [1](browse.html#cat=EVO_PANGENOME_PERSISTENT) |
+| `EVO_PANGENOME_SINGLETON` | EVOLUTION | [1](browse.html#cat=EVO_PANGENOME_SINGLETON) |
 
 ## Trait axes
 
@@ -109,6 +123,7 @@ Every record carries a fine-grained `trait_category`. Counts link into the [brow
 - **STRUCTURE** — folds, structural domains, secondary-structure arrangements, topology classes, quaternary state, subunit interfaces, active / binding / allosteric / metal sites, disulfide bonds, cavities, symmetry, dynamics, structural stability.
 - **SEQUENCE_STRUCTURE** — traits with both a sequence signature and 3D periodicity (coiled coils; structural tandem repeats with demonstrated periodicity, e.g. from RepeatsDB). *(Currently unpopulated: InterPro Repeat entries are sequence signatures without asserted 3D periodicity, so they are seeded as `SEQ_REPEAT`; per-protein transmembrane spans are not seeded.)*
 - **FUNCTION** — enzymatic activity, binding capacity, cofactor requirement, subcellular localisation, environmental response, interaction partner. Grounded by EC / Rhea / ChEBI / GO / UniProt SubCell.
+- **EVOLUTION** — comparative-genomics / phylogenomic traits: a protein's conservation and distribution across taxa (conserved, clade-specific, variable) and pangenome partition (core, soft-core, shell, cloud, persistent, singleton). Taxon scope, when relevant, via an NCBITaxon xref.
 
 ## Quick start
 
