@@ -71,6 +71,19 @@ fetch-ted:
 seed-ted *args:
     python3 scripts/seed_ted.py {{args}}
 
+# Seed data/traits/sequence/disorder/ from DisProt (Tosatto lab).
+# CC-BY-4.0. First run fetches the full search JSON and caches to
+# data/raw/disprot.entries.json; subsequent runs replay the cache.
+seed-disprot *args:
+    python3 scripts/seed_disprot.py {{args}}
+
+# Seed data/traits/structure/active_site/mcsa/ from M-CSA (Thornton lab,
+# EBI). CC-BY-4.0. First run fetches the paginated JSON API and caches
+# to data/raw/mcsa.entries.jsonl; subsequent runs replay the cache.
+# Dry-run by default; --apply to write.
+seed-mcsa *args:
+    python3 scripts/seed_mcsa.py {{args}}
+
 # Seed data/traits/structure/{class,fold,homologous_superfamily,domain}/
 # from SCOPe (Berkeley SCOP extension). The berkeley.edu server is
 # behind an anti-bot challenge that rejects plain HTTP clients — the

@@ -182,6 +182,8 @@ supports them, and can also be added by curators:
 | [UniProtKB](https://www.uniprot.org/) FT + CC + GO (per-accession, demo seed) | 38 (2 entries) | `data/traits/{sequence,structure,mixed,function}/…` |
 | [PSI-MOD](https://github.com/HUPO-PSI/psi-mod-CV) (HUPO-PSI protein modification CV, CC-BY-4.0) | 1971 | `data/traits/sequence/{modified_residue,glycosylation,lipidation,crosslink,ptm_ontology}/` |
 | [ECOD](http://prodata.swmed.edu/ecod/) (Evolutionary Classification Of protein Domains, v295) | 45113 | `data/traits/structure/{architecture,homologous_superfamily,topology,fold/ecod}/` (21 + 6,178 + 3,955 + 34,959) |
+| [M-CSA](https://www.ebi.ac.uk/thornton-srv/m-csa/) (Mechanism & Catalytic Site Atlas, CC-BY-4.0) | 1003 | `data/traits/structure/active_site/mcsa/` |
+| [DisProt](https://disprot.org/) (curated intrinsically disordered proteins, CC-BY-4.0) | 3199 | `data/traits/sequence/disorder/` (each entry carries full sequence + FT-shaped disorder regions with IDPO term IDs) |
 
 Refetch and re-seed:
 
@@ -195,6 +197,8 @@ just seed-prosite --apply     # 4194 PROSITE records; idempotent, skips existing
 just seed-ted --apply         # 13860 TED fold records; idempotent
 just seed-psimod --apply      # 1971 PSI-MOD PTM records; tags each CC-BY-4.0
 just seed-ecod --apply        # 45113 ECOD hierarchy nodes (A/X/H/T/F)
+just seed-mcsa --apply        # 1003 M-CSA catalytic mechanisms
+just seed-disprot --apply     # 3199 DisProt IDP profiles with regions
 
 # UniProtKB FT-line seed — pass accessions or a local flat file
 just seed-uniprot --accession B0R5N7 --accession P25888 --apply
