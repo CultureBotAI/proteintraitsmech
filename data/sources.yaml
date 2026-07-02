@@ -179,17 +179,17 @@ sources:
   - key: interpro
     name: InterPro
     prefix: InterPro
-    status: candidate
+    status: seeded
     description: Integrative classification of protein families, domains and sites combining Pfam, PROSITE, SMART, PRINTS, PANTHER, PIRSF, SFLD, CDD, HAMAP, NCBIfam, CATH-Gene3D and SUPERFAMILY (~85k entries). Type-specific parent/child hierarchy; GO/PDBe/AlphaFold mappings.
     homepage: https://www.ebi.ac.uk/interpro/
     download: https://ftp.ebi.ac.uk/pub/databases/interpro/current_release/  # entry.list (2.8M) + ParentChildTreeFile.txt (645K) + interpro.xml.gz (40M)
     license: public domain
     license_url: https://www.ebi.ac.uk/licencing/
     hierarchy: true (type-specific; ParentChildTreeFile.txt)
-    trait_categories: [STRUCT_DOMAIN, STRUCT_HOMOLOGOUS_SUPERFAMILY, SEQ_MOTIF, MIXED_STRUCTURAL_REPEAT, STRUCT_ACTIVE_SITE, STRUCT_BINDING_SITE, SEQ_MODIFIED_RESIDUE]
+    trait_categories: [STRUCT_DOMAIN, STRUCT_HOMOLOGOUS_SUPERFAMILY, SEQ_CONSERVATION, MIXED_STRUCTURAL_REPEAT, STRUCT_ACTIVE_SITE, STRUCT_BINDING_SITE, SEQ_PTM_SITE]
     added_round: 2
-    priority: 1
-    notes: Top pick. Seed ENTRIES (not the 52G+ match files). Scale/redundancy vs existing PROSITE/domain records needs a scoping decision (which entry types; dedup).
+    seeder: seed_interpro.py
+    notes: Seeds ENTRIES (not the 52G+ match files), localized types only — Family (28k) excluded (no matching category; --include-families to override). 26,264 records; repopulated MIXED_STRUCTURAL_REPEAT (390).
 
   - key: cath_gene3d
     name: CATH-Gene3D

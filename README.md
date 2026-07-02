@@ -182,6 +182,7 @@ supports them, and can also be added by curators:
 | [UniProtKB](https://www.uniprot.org/) FT + CC + GO (per-accession, demo seed) | 29 (2 entries) | `data/traits/{sequence,structure,function}/…` |
 | [PSI-MOD](https://github.com/HUPO-PSI/psi-mod-CV) (HUPO-PSI protein modification CV, CC-BY-4.0) | 1971 | `data/traits/sequence/{modified_residue,glycosylation,lipidation,crosslink,ptm_ontology}/` |
 | [ECOD](http://prodata.swmed.edu/ecod/) (Evolutionary Classification Of protein Domains, v295) | 45113 | `data/traits/structure/{architecture,homologous_superfamily,topology,fold/ecod}/` (21 + 6,178 + 3,955 + 34,959) |
+| [InterPro](https://www.ebi.ac.uk/interpro/) entries (integrative; public domain) | 26264 | `data/traits/{structure/domain,structure/homologous_superfamily,mixed/structural_repeat,sequence/conservation,structure/active_site,structure/binding_site,sequence/ptm_ontology}/interpro/` (Domain/superfamily/Repeat/Conserved-/Active-/Binding-site/PTM; `Family` excluded) |
 | [M-CSA](https://www.ebi.ac.uk/thornton-srv/m-csa/) (Mechanism & Catalytic Site Atlas, CC-BY-4.0) | 1003 | `data/traits/structure/active_site/mcsa/` |
 | [DisProt](https://disprot.org/) (curated intrinsically disordered proteins, CC-BY-4.0) | 3199 | `data/traits/sequence/disorder/` (each entry carries full sequence + FT-shaped disorder regions with IDPO term IDs) |
 | [PSI-MI](https://github.com/HUPO-PSI/psi-mi-CV) (HUPO-PSI molecular-interaction CV, CC-BY-4.0) | 146 | `data/traits/function/interaction_partner/psi_mi/` (only the `interaction type` branch, MI:0190) |

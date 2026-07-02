@@ -115,6 +115,24 @@ fetch-ecod:
 seed-ecod *args:
     python3 scripts/seed_ecod.py {{args}}
 
+# Download InterPro entries + hierarchy (public domain). Only the small
+# entry/abstract/hierarchy files — NOT the multi-TB match files.
+fetch-interpro:
+    mkdir -p data/raw/interpro
+    curl -sSLf --max-time 120 -o data/raw/interpro/entry.list \
+      https://ftp.ebi.ac.uk/pub/databases/interpro/current_release/entry.list
+    curl -sSLf --max-time 120 -o data/raw/interpro/ParentChildTreeFile.txt \
+      https://ftp.ebi.ac.uk/pub/databases/interpro/current_release/ParentChildTreeFile.txt
+    curl -sSLf --max-time 600 -o data/raw/interpro/interpro.xml.gz \
+      https://ftp.ebi.ac.uk/pub/databases/interpro/current_release/interpro.xml.gz
+    @ls -la data/raw/interpro/
+
+# Seed data/traits/ from InterPro entries (Domain, Homologous_superfamily,
+# Repeat, Conserved_site, Active/Binding_site, PTM; Family excluded by
+# default). Requires `just fetch-interpro`. Dry-run by default; --apply.
+seed-interpro *args:
+    python3 scripts/seed_interpro.py {{args}}
+
 # Download the current PSI-MOD OBO release (HUPO-PSI/psi-mod-CV, CC-BY-4.0).
 fetch-psimod:
     mkdir -p data/raw

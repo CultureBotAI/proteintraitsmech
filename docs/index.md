@@ -7,11 +7,11 @@ title: ProteinTraitsMech
 
 <div style="display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0 1.5rem">
   <a href="browse.html" style="flex:1 1 130px;padding:.9rem 1rem;border:1px solid #d0d7de;border-left:4px solid #155799;border-radius:8px;background:#fff;color:inherit;text-decoration:none">
-    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#155799">69,713</div>
+    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#155799">95,977</div>
     <div style="font-size:.85rem;color:#57606a">Total records</div>
   </a>
   <a href="browse.html#axis=STRUCTURE" style="flex:1 1 130px;padding:.9rem 1rem;border:1px solid #d0d7de;border-left:4px solid #16a34a;border-radius:8px;background:#fff;color:inherit;text-decoration:none">
-    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#16a34a">61,504</div>
+    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#16a34a">86,586</div>
     <div style="font-size:.85rem;color:#57606a">STRUCTURE</div>
   </a>
   <a href="browse.html#axis=SEQUENCE" style="flex:1 1 130px;padding:.9rem 1rem;border:1px solid #d0d7de;border-left:4px solid #2563eb;border-radius:8px;background:#fff;color:inherit;text-decoration:none">
@@ -22,13 +22,17 @@ title: ProteinTraitsMech
     <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#d97706">282</div>
     <div style="font-size:.85rem;color:#57606a">FUNCTION</div>
   </a>
+  <a href="browse.html#axis=SEQUENCE_STRUCTURE" style="flex:1 1 130px;padding:.9rem 1rem;border:1px solid #d0d7de;border-left:4px solid #a855f7;border-radius:8px;background:#fff;color:inherit;text-decoration:none">
+    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#a855f7">390</div>
+    <div style="font-size:.85rem;color:#57606a">SEQUENCE_STRUCTURE</div>
+  </a>
 </div>
 
 Knowledge base of **protein sequence, structure, and function traits** — one YAML per trait, LinkML-validated, evidence-backed. Part of the [CultureBotAI](https://culturebotai.github.io/) family; sibling to [dismech](https://github.com/monarch-initiative/dismech) (disease mechanisms) and TraitMech (microbial ecophysiological traits).
 
 <a href="browse.html" style="display:block;padding:1rem 1.25rem;margin:1rem 0 1.5rem;border:1px solid #159957;border-radius:8px;background:linear-gradient(120deg,#159957,#155799);color:#fff;text-decoration:none;box-shadow:0 2px 8px rgba(15,23,42,.10)">
   <strong style="font-size:1.05rem">🔎 Browse the corpus</strong><br>
-  <span style="opacity:.9">Faceted search over 69,713 ProteinTraitRecords — filter by axis / category / source, then open any record for a rendered detail view.</span>
+  <span style="opacity:.9">Faceted search over 95,977 ProteinTraitRecords — filter by axis / category / source, then open any record for a rendered detail view.</span>
 </a>
 
 - **CultureBotAI** — [culturebotai.github.io](https://culturebotai.github.io/)
@@ -53,13 +57,14 @@ Record counts link into the [browser](browse.html) filtered by `source`. PROSITE
 | UniProtKB FT + CC + GO (demo: B0R5N7, P25888) | [29](browse.html#src=UniProtKB) | `data/traits/{sequence,structure,function}/…` |
 | PSI-MOD (CC-BY-4.0) | [1,971](browse.html#src=PSI-MOD) | `data/traits/sequence/{modified_residue,glycosylation,lipidation,crosslink,ptm_ontology}/` |
 | ECOD v295 (A/X/H/T/F hierarchy) | [45,113](browse.html#src=ECOD) | `data/traits/structure/{architecture,homologous_superfamily,topology,fold/ecod}/` |
+| InterPro entries — Domain / Homologous-superfamily / Repeat / Conserved-/Active-/Binding-site / PTM (public domain) | [26,264](browse.html#src=InterPro) | `data/traits/{structure,sequence,mixed}/…/interpro/` |
 | M-CSA (CC-BY-4.0) | [1,003](browse.html#src=M-CSA) | `data/traits/structure/active_site/mcsa/` |
 | DisProt (CC-BY-4.0) | [3,199](browse.html#src=DisProt) | `data/traits/sequence/disorder/` |
 | PSI-MI interaction types (CC-BY-4.0) | [146](browse.html#src=PSI-MI) | `data/traits/function/interaction_partner/psi_mi/` |
 | METPO ecophysiological traits (growth preferences, tolerances, metabolism; CC-BY-4.0) | [118](browse.html#src=METPO) | `data/traits/function/{environmental_response,enzymatic_activity}/metpo/` |
 | PATO physicochemical qualities (CC-BY-4.0) | [28](browse.html#src=PATO) | `data/traits/structure/{stability,dynamics,surface}/pato/` |
 | Curated stability taxonomy — per-condition (thermal, oxidative, saline, pH, osmotic, pressure, desiccation, chemical, proteolytic, mechanical) × increased/decreased (CC0-1.0) | [33](browse.html#src=curated) | `data/traits/structure/stability/conditions/` |
-| **Total** | **[69,713](browse.html)** | |
+| **Total** | **[95,977](browse.html)** | |
 
 *Bucket counts are seeding-time figures. Four duplicate PROSITE records (a ProRule / pattern copy that was routed to two directories) have since been consolidated via the [`merge-traits`](https://github.com/CultureBotAI/proteintraitsmech/tree/main/.claude/skills/merge-traits) skill, so per-bucket rows may slightly exceed the live total.*
 
@@ -70,16 +75,19 @@ Every record carries a fine-grained `trait_category`. Counts link into the [brow
 | Category | Axis | Records |
 |---|---|---:|
 | `STRUCT_FOLD` | STRUCTURE | [48,819](browse.html#cat=STRUCT_FOLD) |
-| `STRUCT_HOMOLOGOUS_SUPERFAMILY` | STRUCTURE | [6,178](browse.html#cat=STRUCT_HOMOLOGOUS_SUPERFAMILY) |
+| `STRUCT_DOMAIN` | STRUCTURE | [22,804](browse.html#cat=STRUCT_DOMAIN) |
+| `STRUCT_HOMOLOGOUS_SUPERFAMILY` | STRUCTURE | [9,688](browse.html#cat=STRUCT_HOMOLOGOUS_SUPERFAMILY) |
 | `STRUCT_TOPOLOGY` | STRUCTURE | [3,955](browse.html#cat=STRUCT_TOPOLOGY) |
 | `SEQ_DISORDER` | SEQUENCE | [3,200](browse.html#cat=SEQ_DISORDER) |
 | `SEQ_MOTIF` | SEQUENCE | [2,716](browse.html#cat=SEQ_MOTIF) |
-| `STRUCT_DOMAIN` | STRUCTURE | [1,447](browse.html#cat=STRUCT_DOMAIN) |
-| `SEQ_PTM_SITE` | SEQUENCE | [1,194](browse.html#cat=SEQ_PTM_SITE) |
-| `STRUCT_ACTIVE_SITE` | STRUCTURE | [1,004](browse.html#cat=STRUCT_ACTIVE_SITE) |
+| `SEQ_PTM_SITE` | SEQUENCE | [1,211](browse.html#cat=SEQ_PTM_SITE) |
+| `STRUCT_ACTIVE_SITE` | STRUCTURE | [1,137](browse.html#cat=STRUCT_ACTIVE_SITE) |
+| `SEQ_CONSERVATION` | SEQUENCE | [775](browse.html#cat=SEQ_CONSERVATION) |
 | `SEQ_MODIFIED_RESIDUE` | SEQUENCE | [618](browse.html#cat=SEQ_MODIFIED_RESIDUE) |
+| `MIXED_STRUCTURAL_REPEAT` | SEQUENCE_STRUCTURE | [390](browse.html#cat=MIXED_STRUCTURAL_REPEAT) |
 | `FUNC_INTERACTION_PARTNER` | FUNCTION | [148](browse.html#cat=FUNC_INTERACTION_PARTNER) |
 | `SEQ_GLYCOSYLATION_SITE` | SEQUENCE | [85](browse.html#cat=SEQ_GLYCOSYLATION_SITE) |
+| `STRUCT_BINDING_SITE` | STRUCTURE | [84](browse.html#cat=STRUCT_BINDING_SITE) |
 | `FUNC_ENZYMATIC_ACTIVITY` | FUNCTION | [76](browse.html#cat=FUNC_ENZYMATIC_ACTIVITY) |
 | `SEQ_CROSSLINK_SITE` | SEQUENCE | [69](browse.html#cat=SEQ_CROSSLINK_SITE) |
 | `FUNC_ENVIRONMENTAL_RESPONSE` | FUNCTION | [50](browse.html#cat=FUNC_ENVIRONMENTAL_RESPONSE) |
@@ -94,7 +102,6 @@ Every record carries a fine-grained `trait_category`. Counts link into the [brow
 | `FUNC_BINDING_CAPACITY` | FUNCTION | [3](browse.html#cat=FUNC_BINDING_CAPACITY) |
 | `SEQ_COMPOSITION` | SEQUENCE | [3](browse.html#cat=SEQ_COMPOSITION) |
 | `SEQ_MATURE_CHAIN` | SEQUENCE | [2](browse.html#cat=SEQ_MATURE_CHAIN) |
-| `STRUCT_BINDING_SITE` | STRUCTURE | [2](browse.html#cat=STRUCT_BINDING_SITE) |
 | `FUNC_COFACTOR_REQUIREMENT` | FUNCTION | [1](browse.html#cat=FUNC_COFACTOR_REQUIREMENT) |
 | `STRUCT_DISULFIDE` | STRUCTURE | [1](browse.html#cat=STRUCT_DISULFIDE) |
 | `STRUCT_INTERFACE` | STRUCTURE | [1](browse.html#cat=STRUCT_INTERFACE) |
@@ -104,7 +111,7 @@ Every record carries a fine-grained `trait_category`. Counts link into the [brow
 
 - **SEQUENCE** — motifs, signal peptides, propeptides, cleavage sites, low-complexity / disordered regions, tandem repeats, compositional biases, conserved regions, epitopes, PTM sites.
 - **STRUCTURE** — folds, structural domains, secondary-structure arrangements, topology classes, quaternary state, subunit interfaces, active / binding / allosteric / metal sites, disulfide bonds, cavities, symmetry, dynamics, structural stability.
-- **SEQUENCE_STRUCTURE** — transmembrane spans, coiled coils, structural tandem repeats. *(Schema axis retained but currently unpopulated: per-protein membrane spans are too specific and are covered by the general transmembrane trait, so they are no longer seeded.)*
+- **SEQUENCE_STRUCTURE** — structural tandem repeats (InterPro Repeat families), coiled coils, transmembrane spans. *(Per-protein transmembrane spans are not seeded — too specific, covered by the general transmembrane trait; the populated records here are repeat-family classes with both a sequence signature and a 3D periodicity.)*
 - **FUNCTION** — enzymatic activity, binding capacity, cofactor requirement, subcellular localisation, environmental response, interaction partner. Grounded by EC / Rhea / ChEBI / GO / UniProt SubCell.
 
 ## Quick start
