@@ -1,0 +1,58 @@
+name: Build & deploy docs to GitHub Pages
+
+# Generates docs/data/ (records shards + facets + sequence buckets) from
+# data/traits/ at build time, then builds the Jekyll site and deploys. The
+# generated docs/data/ is gitignored — it is NOT committed, which keeps the
+# git history from bloating by ~66 MB on every seeding run.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "data/traits/**"
+      - "docs/**"
+      - "scripts/build_docs_index.py"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deploy; don't cancel an in-progress one.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Generate docs/data index (shards + facets + seq buckets)
+        run: |
+          python -m pip install --quiet pyyaml
+          python scripts/build_docs_index.py
+      - uses: actions/configure-pages@v5
+      - name: Build Jekyll site
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./docs
+          destination: ./_site
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./_site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
