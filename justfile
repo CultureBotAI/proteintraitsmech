@@ -33,6 +33,11 @@ validate-linkml *args:
 audit-schema:
     uv run python scripts/audit_schema.py
 
+# Validate the data-source registry (data/sources.yaml) and cross-check it
+# against the seeders. Warns on restrictive (NC/ND) licences + orphan seeders.
+sources-check:
+    python3 scripts/check_sources.py
+
 # Structural-integrity audit of causal graphs
 audit-graphs *args:
     uv run python scripts/audit_causal_graphs.py {{args}}
