@@ -199,7 +199,11 @@ def load_record(path: Path) -> dict[str, Any] | None:
 
 # Axis display/shard order. Records with an unknown/empty axis fall into
 # an "OTHER" shard so nothing is silently dropped.
-AXIS_ORDER = ["STRUCTURE", "SEQUENCE", "SEQUENCE_STRUCTURE", "FUNCTION"]
+AXIS_ORDER = ["STRUCTURE", "SEQUENCE", "SEQUENCE_STRUCTURE", "FUNCTION", "EVOLUTION"]
+
+# Max records per shard file. Keeps each records.<AXIS>[.NN].json well under
+# the git 50 MB warning (at ~0.5-1 KB/record in the lean projection).
+MAX_SHARD_RECORDS = 25000
 
 
 def split_sequences(records: list[dict]) -> list[tuple[dict, list]]:
@@ -274,18 +278,25 @@ def write_shards(records: list[dict]) -> list[dict]:
     written: set[str] = set()
     for axis in sorted(by_axis, key=axis_key):
         recs = sorted(by_axis[axis], key=lambda r: r["id"])
-        fname = f"records.{axis}.json"
-        path = OUT_DIR / fname
-        with path.open("w", encoding="utf-8") as fh:
-            json.dump(recs, fh, separators=(",", ":"), ensure_ascii=False)
-        written.add(fname)
-        manifest.append({
-            "file": fname,
-            "axis": axis,
-            "count": len(recs),
-            "bytes": path.stat().st_size,
-        })
-    # Drop stale shards from a prior build whose axis is now empty.
+        # Chunk large axes so no single shard approaches the 50 MB git
+        # warning / 100 MB hard limit (STRUCTURE alone is ~90k records).
+        chunks = [recs[i:i + MAX_SHARD_RECORDS]
+                  for i in range(0, len(recs), MAX_SHARD_RECORDS)] or [[]]
+        for idx, chunk in enumerate(chunks):
+            fname = (f"records.{axis}.json" if len(chunks) == 1
+                     else f"records.{axis}.{idx:02d}.json")
+            path = OUT_DIR / fname
+            with path.open("w", encoding="utf-8") as fh:
+                json.dump(chunk, fh, separators=(",", ":"), ensure_ascii=False)
+            written.add(fname)
+            manifest.append({
+                "file": fname,
+                "axis": axis,
+                "count": len(chunk),
+                "bytes": path.stat().st_size,
+            })
+    # Drop stale shards from a prior build (empty axis, or a re-chunk that
+    # changed the shard count).
     for old in OUT_DIR.glob("records.*.json"):
         if old.name not in written:
             old.unlink()
