@@ -11,8 +11,22 @@ Run:
   python3 scripts/build_docs_index.py
 
 Output:
-  docs/data/records.json      — array of record objects (see below)
-  docs/data/facets.json       — pre-computed facet counts
+  docs/data/records.<AXIS>.json — records sharded by trait_axis (one file
+                                  per axis; the browser fetches them in
+                                  parallel and merges). Keeps any single
+                                  file well under the 100 MB git limit.
+  docs/data/seq/<slug>.json     — per-record sidecar holding the heavy
+                                  example sequences + feature tracks,
+                                  lazy-fetched by the browser only when a
+                                  record detail view is opened. The record
+                                  stores its sidecar filename in `"sf"`
+                                  (a URL-and-filesystem-safe slug, assigned
+                                  by the build with collision handling — so
+                                  the browser never has to guess it), and
+                                  each example that has a sequence in the
+                                  sidecar is flagged `"sq": 1`.
+  docs/data/facets.json         — pre-computed facet counts + a `shards`
+                                  manifest listing the per-axis files.
 
 Record shape:
   {
@@ -53,6 +67,7 @@ Record shape:
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -78,6 +93,12 @@ def infer_source(identifier: str, path: Path) -> str:
         return "PATO"
     if identifier.startswith("METPO:"):
         return "METPO"
+    if identifier.startswith("ECOD:"):
+        return "ECOD"
+    if identifier.startswith("DisProt:"):
+        return "DisProt"
+    if identifier.startswith("MCSA:"):
+        return "M-CSA"
     if identifier.startswith("proteintraitsmech:UNIPROTKB_"):
         return "UniProtKB"
     if identifier.startswith("proteintraitsmech:"):
@@ -162,6 +183,104 @@ def load_record(path: Path) -> dict[str, Any] | None:
     }
 
 
+# Axis display/shard order. Records with an unknown/empty axis fall into
+# an "OTHER" shard so nothing is silently dropped.
+AXIS_ORDER = ["STRUCTURE", "SEQUENCE", "SEQUENCE_STRUCTURE", "FUNCTION"]
+
+_SLUG_RE = re.compile(r"[^A-Za-z0-9._-]+")
+
+
+def split_sequences(records: list[dict]) -> list[tuple[dict, list]]:
+    """Move heavy per-example `seq`/`feats` out of each record into a
+    sidecar list aligned to that record's `ex` array. Mutates records in
+    place: pops seq/feats and flags each sequence-bearing example (`sq=1`).
+    Returns [(record, sidecar), …] for records that had any sequence."""
+    pairs: list[tuple[dict, list]] = []
+    for rec in records:
+        exs = rec.get("ex") or []
+        side: list = []
+        has = False
+        for e in exs:
+            if e.get("seq"):
+                side.append({"seq": e.pop("seq"), "feats": e.pop("feats", [])})
+                e["sq"] = 1
+                has = True
+            else:
+                # feats are meaningless without a sequence to render on.
+                e.pop("feats", None)
+                side.append(None)
+        if has:
+            pairs.append((rec, side))
+    return pairs
+
+
+def write_sequences(pairs: list[tuple[dict, list]]) -> tuple[int, float]:
+    """Write per-record sequence sidecars under docs/data/seq/, clearing
+    any stale files first. Assigns each record a URL-and-filesystem-safe
+    sidecar filename in `rec["sf"]` (deduplicated on collision) so the
+    browser fetches it by name rather than re-deriving it from the id.
+    Returns (file_count, total_MB)."""
+    seq_dir = OUT_DIR / "seq"
+    if seq_dir.exists():
+        for old in seq_dir.glob("*.json"):
+            old.unlink()
+    seq_dir.mkdir(parents=True, exist_ok=True)
+    used: set[str] = set()
+    total = 0
+    for rec, side in pairs:
+        base = _SLUG_RE.sub("_", rec["id"]).strip("_") or "record"
+        name = f"{base}.json"
+        n = 2
+        while name in used:
+            name = f"{base}-{n}.json"
+            n += 1
+        used.add(name)
+        rec["sf"] = name
+        path = seq_dir / name
+        with path.open("w", encoding="utf-8") as fh:
+            json.dump(side, fh, separators=(",", ":"), ensure_ascii=False)
+        total += path.stat().st_size
+    return len(pairs), total / (1024 * 1024)
+
+
+def write_shards(records: list[dict]) -> list[dict]:
+    """Write records.<AXIS>.json (one file per trait_axis) and return the
+    shard manifest. Also clears the legacy monolithic records.json and any
+    stale records.*.json shard for an axis that no longer has records, so
+    the build is self-correcting."""
+    legacy = OUT_DIR / "records.json"
+    if legacy.exists():
+        legacy.unlink()
+
+    by_axis: dict[str, list[dict]] = {}
+    for rec in records:
+        by_axis.setdefault(rec.get("axis") or "OTHER", []).append(rec)
+
+    def axis_key(a: str) -> tuple[int, str]:
+        return (AXIS_ORDER.index(a) if a in AXIS_ORDER else 99, a)
+
+    manifest: list[dict] = []
+    written: set[str] = set()
+    for axis in sorted(by_axis, key=axis_key):
+        recs = sorted(by_axis[axis], key=lambda r: r["id"])
+        fname = f"records.{axis}.json"
+        path = OUT_DIR / fname
+        with path.open("w", encoding="utf-8") as fh:
+            json.dump(recs, fh, separators=(",", ":"), ensure_ascii=False)
+        written.add(fname)
+        manifest.append({
+            "file": fname,
+            "axis": axis,
+            "count": len(recs),
+            "bytes": path.stat().st_size,
+        })
+    # Drop stale shards from a prior build whose axis is now empty.
+    for old in OUT_DIR.glob("records.*.json"):
+        if old.name not in written:
+            old.unlink()
+    return manifest
+
+
 def main() -> int:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     records: list[dict] = []
@@ -176,6 +295,8 @@ def main() -> int:
     # Stable sort by identifier so JSON diffs stay small.
     records.sort(key=lambda r: r["id"])
 
+    # Facets are computed before the seq split (which only removes example
+    # payload, not any faceted field).
     facets = {
         "axis": _tally(records, "axis"),
         "cat": _tally(records, "cat"),
@@ -183,22 +304,27 @@ def main() -> int:
         "sta": _tally(records, "sta"),
     }
 
-    records_path = OUT_DIR / "records.json"
+    pairs = split_sequences(records)
+    seq_count, seq_mb = write_sequences(pairs)
+    shards = write_shards(records)
+
     facets_path = OUT_DIR / "facets.json"
-    with records_path.open("w", encoding="utf-8") as fh:
-        json.dump(records, fh, separators=(",", ":"), ensure_ascii=False)
     with facets_path.open("w", encoding="utf-8") as fh:
         json.dump(
             {
                 "total": len(records),
                 "counts": facets,
+                "shards": shards,
+                "seqDir": "seq",
             },
             fh,
             indent=2,
         )
 
-    size_mb = records_path.stat().st_size / (1024 * 1024)
-    print(f"Wrote {len(records)} records ({size_mb:.2f} MB) → {records_path.relative_to(REPO_ROOT)}")
+    print(f"Wrote {len(records)} records across {len(shards)} axis shard(s):")
+    for s in shards:
+        print(f"  {s['file']:34s} {s['count']:>7,}  ({s['bytes'] / (1024 * 1024):.2f} MB)")
+    print(f"Wrote {seq_count:,} sequence sidecars → docs/data/seq/ ({seq_mb:.2f} MB total)")
     print(f"Wrote facet index → {facets_path.relative_to(REPO_ROOT)}")
     if skipped:
         print(f"Skipped {skipped} unparseable files")

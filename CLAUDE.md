@@ -43,7 +43,7 @@ Testing: `tests/` is a stub (`.gitkeep` only). There is no pytest suite yet — 
 - is idempotent (skips existing files by identifier/path),
 - supports `--apply` to write (default is dry-run).
 
-`seed_uniprot.py` is the most involved: it demultiplexes a single UniProtKB flat file into up to four axes' worth of records — see the FT-type-to-category table in `README.md` for the mapping (e.g. `TRANSMEM` → `SEQUENCE_STRUCTURE / MIXED_TRANSMEMBRANE`, `BINDING` (metal) → `STRUCT_METAL_SITE`, `CC CATALYTIC ACTIVITY` per `Reaction=` → `FUNC_ENZYMATIC_ACTIVITY`).
+`seed_uniprot.py` is the most involved: it demultiplexes a single UniProtKB flat file into up to four axes' worth of records — see the FT-type-to-category table in `README.md` for the mapping (e.g. `BINDING` (metal) → `STRUCT_METAL_SITE`, `CC CATALYTIC ACTIVITY` per `Reaction=` → `FUNC_ENZYMATIC_ACTIVITY`). Membrane spans (`TRANSMEM`/`INTRAMEM`) are deliberately skipped — a per-protein TM span is redundant with the general transmembrane trait — so the `SEQUENCE_STRUCTURE` axis is currently unpopulated.
 
 **Identifiers.** Prefer source-anchored CURIEs when possible (`PROSITE:PS00001`, `TED:AF-…-TED03`, `UniProtKB:P25888`). Curator-minted or seeder-generated records use the `proteintraitsmech:` prefix — for UniProt-seeded records the convention is `proteintraitsmech:UNIPROTKB_<ACC>_<TYPE>_<KEY>`.
 

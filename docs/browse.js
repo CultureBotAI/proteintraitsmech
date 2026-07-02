@@ -75,14 +75,23 @@ let FILTERED_CACHE = null;
 async function boot() {
   const results = document.getElementById("results");
   try {
-    const [recRes, facRes] = await Promise.all([
-      fetch("data/records.json"),
-      fetch("data/facets.json"),
-    ]);
-    if (!recRes.ok) throw new Error("records.json " + recRes.status);
-    if (!facRes.ok) throw new Error("facets.json "  + facRes.status);
-    RECORDS = await recRes.json();
+    const facRes = await fetch("data/facets.json");
+    if (!facRes.ok) throw new Error("facets.json " + facRes.status);
     FACETS = await facRes.json();
+    // Records are sharded by axis (records.<AXIS>.json) to keep any one
+    // file under the git/Pages size limits. Fetch every shard in
+    // parallel and merge into a single in-memory array — global search
+    // and facets still operate over the full corpus.
+    const shards = (FACETS.shards && FACETS.shards.length)
+      ? FACETS.shards.map(s => s.file)
+      : ["records.json"]; // fallback for a legacy single-file build
+    const parts = await Promise.all(shards.map(async file => {
+      const r = await fetch("data/" + file);
+      if (!r.ok) throw new Error(file + " " + r.status);
+      return r.json();
+    }));
+    RECORDS = parts.flat();
+    RECORDS.sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
   } catch (e) {
     results.innerHTML = `<div class="empty">Failed to load records: ${e.message}</div>`;
     return;
@@ -330,8 +339,12 @@ function renderDetail(r) {
     : "";
 
   const examples = r.ex || [];
+  // Sequences live in a lazy-loaded sidecar (data/seq/<id>.json). If this
+  // record has one and it isn't loaded yet, render placeholders now and
+  // fetch it after paint.
+  const lazyPending = !!r.sf && !r._seqLoaded;
   const examplesHtml = examples.length
-    ? `<ul class="ex-list">${examples.map(renderExample).join("")}</ul>`
+    ? `<ul class="ex-list" id="ex-list">${examples.map(e => renderExample(e, lazyPending)).join("")}</ul>`
     : "";
   const examplesRow = examplesHtml
     ? row(`Example proteins (${examples.length})`,
@@ -366,6 +379,31 @@ function renderDetail(r) {
       </dl>
     </div>`;
   document.title = r.label + " — ProteinTraitsMech";
+  if (lazyPending) loadSequences(r);
+}
+
+// Lazy-load the heavy per-record sequence sidecar, merge it into the
+// record's examples, and re-render the example list in place if the user
+// is still viewing this record. Failures degrade gracefully — the example
+// metadata is already shown; only the sequence viewer is missing.
+async function loadSequences(r) {
+  if (r._seqLoaded || !r.sf) return;
+  try {
+    const res = await fetch("data/seq/" + r.sf);
+    if (!res.ok) return;
+    const side = await res.json();
+    (r.ex || []).forEach((e, i) => {
+      const s = side[i];
+      if (s) { e.seq = s.seq; e.feats = s.feats || []; }
+    });
+    r._seqLoaded = true;
+  } catch (_) {
+    return;
+  }
+  if (window.location.hash === "#record=" + encodeURIComponent(r.id)) {
+    const ul = document.getElementById("ex-list");
+    if (ul) ul.innerHTML = (r.ex || []).map(e => renderExample(e, false)).join("");
+  }
 }
 
 function renderNotFound(id) {
@@ -382,7 +420,7 @@ function row(dt, ddHtml, always) {
   return `<div><dt>${escapeHTML(dt)}</dt>${ddHtml}</div>`;
 }
 
-function renderExample(e) {
+function renderExample(e, lazyPending) {
   const badges = [];
   if (e.rev === true)  badges.push(`<span class="pill sta">reviewed</span>`);
   if (e.rev === false) badges.push(`<span class="pill">unreviewed</span>`);
@@ -399,7 +437,7 @@ function renderExample(e) {
 
   const sequenceHtml = e.seq
     ? renderSequenceViewer(e.seq, e.feats || [])
-    : "";
+    : (lazyPending && e.sq ? `<div class="ex-seq-loading">Loading sequence…</div>` : "");
 
   return `
     <li class="ex-item">

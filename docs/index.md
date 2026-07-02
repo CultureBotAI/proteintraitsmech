@@ -5,16 +5,9 @@ title: ProteinTraitsMech
 
 # ProteinTraitsMech
 
-Knowledge base of **protein sequence, structure, and function traits** — one YAML per trait, LinkML-validated, evidence-backed. Part of the [CultureBotAI](https://culturebotai.github.io/) family; sibling to [dismech](https://github.com/monarch-initiative/dismech) (disease mechanisms) and TraitMech (microbial ecophysiological traits).
-
-<a href="browse.html" style="display:block;padding:1rem 1.25rem;margin:1rem 0 1.5rem;border:1px solid #159957;border-radius:8px;background:linear-gradient(120deg,#159957,#155799);color:#fff;text-decoration:none;box-shadow:0 2px 8px rgba(15,23,42,.10)">
-  <strong style="font-size:1.05rem">🔎 Browse the corpus</strong><br>
-  <span style="opacity:.9">Faceted search over 69,693 ProteinTraitRecords — filter by axis / category / source, then open any record for a rendered detail view.</span>
-</a>
-
-<div style="display:flex;flex-wrap:wrap;gap:.75rem;margin:0 0 1.5rem">
+<div style="display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0 1.5rem">
   <a href="browse.html" style="flex:1 1 130px;padding:.9rem 1rem;border:1px solid #d0d7de;border-left:4px solid #155799;border-radius:8px;background:#fff;color:inherit;text-decoration:none">
-    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#155799">69,693</div>
+    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#155799">69,684</div>
     <div style="font-size:.85rem;color:#57606a">Total records</div>
   </a>
   <a href="browse.html#axis=STRUCTURE" style="flex:1 1 130px;padding:.9rem 1rem;border:1px solid #d0d7de;border-left:4px solid #16a34a;border-radius:8px;background:#fff;color:inherit;text-decoration:none">
@@ -29,11 +22,14 @@ Knowledge base of **protein sequence, structure, and function traits** — one Y
     <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#d97706">282</div>
     <div style="font-size:.85rem;color:#57606a">FUNCTION</div>
   </a>
-  <a href="browse.html#axis=SEQUENCE_STRUCTURE" style="flex:1 1 130px;padding:.9rem 1rem;border:1px solid #d0d7de;border-left:4px solid #a855f7;border-radius:8px;background:#fff;color:inherit;text-decoration:none">
-    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#a855f7">9</div>
-    <div style="font-size:.85rem;color:#57606a">SEQUENCE_STRUCTURE</div>
-  </a>
 </div>
+
+Knowledge base of **protein sequence, structure, and function traits** — one YAML per trait, LinkML-validated, evidence-backed. Part of the [CultureBotAI](https://culturebotai.github.io/) family; sibling to [dismech](https://github.com/monarch-initiative/dismech) (disease mechanisms) and TraitMech (microbial ecophysiological traits).
+
+<a href="browse.html" style="display:block;padding:1rem 1.25rem;margin:1rem 0 1.5rem;border:1px solid #159957;border-radius:8px;background:linear-gradient(120deg,#159957,#155799);color:#fff;text-decoration:none;box-shadow:0 2px 8px rgba(15,23,42,.10)">
+  <strong style="font-size:1.05rem">🔎 Browse the corpus</strong><br>
+  <span style="opacity:.9">Faceted search over 69,684 ProteinTraitRecords — filter by axis / category / source, then open any record for a rendered detail view.</span>
+</a>
 
 - **CultureBotAI** — [culturebotai.github.io](https://culturebotai.github.io/)
 - **Repository** — [github.com/CultureBotAI/proteintraitsmech](https://github.com/CultureBotAI/proteintraitsmech)
@@ -42,25 +38,27 @@ Knowledge base of **protein sequence, structure, and function traits** — one Y
 
 ## Corpus at a glance
 
+Record counts link into the [browser](browse.html) filtered by `source`. PROSITE and TED are broken into buckets by row, but each links to its full source set (the browser facets by source, not by bucket).
+
 | Source | Records | Directory |
 |---|---:|---|
-| LinkML `LocalStructuralFeature` valueset | 19 | `data/traits/structure/{secondary,active_site,binding_site,cavity,disulfide,metal_site,dynamics,interface}/` |
-| PROSITE PATTERN (generic) | 1,279 | `data/traits/sequence/pattern/` |
-| PROSITE PATTERN routed to PTM subtypes | 32 | `data/traits/sequence/{modified_residue,glycosylation,crosslink}/` |
-| PROSITE MATRIX (profile) | 1,434 | `data/traits/sequence/profile/` |
-| PROSITE ProRule (`DC=Domain`) | 1,445 | `data/traits/structure/domain/` |
-| PROSITE ProRule (`DC=Site`, keyword-routed) | 4 | `data/traits/sequence/{modified_residue,glycosylation,prorule}/` |
-| TED novel folds (Zenodo v5) | 7,427 | `data/traits/structure/fold/novel/` |
-| TED highly-symmetric folds | 6,433 | `data/traits/structure/fold/high_symmetry/` |
-| UniProtKB FT + CC + GO (demo: B0R5N7, P25888) | 38 | `data/traits/{sequence,structure,mixed,function}/…` |
-| PSI-MOD (CC-BY-4.0) | 1,971 | `data/traits/sequence/{modified_residue,glycosylation,lipidation,crosslink,ptm_ontology}/` |
-| ECOD v295 (A/X/H/T/F hierarchy) | 45,113 | `data/traits/structure/{architecture,homologous_superfamily,topology,fold/ecod}/` |
-| M-CSA (CC-BY-4.0) | 1,003 | `data/traits/structure/active_site/mcsa/` |
-| DisProt (CC-BY-4.0) | 3,199 | `data/traits/sequence/disorder/` |
-| PSI-MI interaction types (CC-BY-4.0) | 146 | `data/traits/function/interaction_partner/psi_mi/` |
-| METPO growth/metabolism traits (CC-BY-4.0) | 118 | `data/traits/function/{environmental_response,enzymatic_activity}/metpo/` |
-| PATO physicochemical qualities (CC-BY-4.0) | 28 | `data/traits/structure/{stability,dynamics,surface}/pato/` |
-| **Total** | **69,693** | |
+| LinkML `LocalStructuralFeature` valueset | [19](browse.html#src=LinkML%20LSF) | `data/traits/structure/{secondary,active_site,binding_site,cavity,disulfide,metal_site,dynamics,interface}/` |
+| PROSITE PATTERN (generic) | [1,279](browse.html#src=PROSITE) | `data/traits/sequence/pattern/` |
+| PROSITE PATTERN routed to PTM subtypes | [32](browse.html#src=PROSITE) | `data/traits/sequence/{modified_residue,glycosylation,crosslink}/` |
+| PROSITE MATRIX (profile) | [1,434](browse.html#src=PROSITE) | `data/traits/sequence/profile/` |
+| PROSITE ProRule (`DC=Domain`) | [1,445](browse.html#src=PROSITE) | `data/traits/structure/domain/` |
+| PROSITE ProRule (`DC=Site`, keyword-routed) | [4](browse.html#src=PROSITE) | `data/traits/sequence/{modified_residue,glycosylation,prorule}/` |
+| TED novel folds (Zenodo v5) | [7,427](browse.html#src=TED) | `data/traits/structure/fold/novel/` |
+| TED highly-symmetric folds | [6,433](browse.html#src=TED) | `data/traits/structure/fold/high_symmetry/` |
+| UniProtKB FT + CC + GO (demo: B0R5N7, P25888) | [29](browse.html#src=UniProtKB) | `data/traits/{sequence,structure,function}/…` |
+| PSI-MOD (CC-BY-4.0) | [1,971](browse.html#src=PSI-MOD) | `data/traits/sequence/{modified_residue,glycosylation,lipidation,crosslink,ptm_ontology}/` |
+| ECOD v295 (A/X/H/T/F hierarchy) | [45,113](browse.html#src=ECOD) | `data/traits/structure/{architecture,homologous_superfamily,topology,fold/ecod}/` |
+| M-CSA (CC-BY-4.0) | [1,003](browse.html#src=M-CSA) | `data/traits/structure/active_site/mcsa/` |
+| DisProt (CC-BY-4.0) | [3,199](browse.html#src=DisProt) | `data/traits/sequence/disorder/` |
+| PSI-MI interaction types (CC-BY-4.0) | [146](browse.html#src=PSI-MI) | `data/traits/function/interaction_partner/psi_mi/` |
+| METPO growth/metabolism traits (CC-BY-4.0) | [118](browse.html#src=METPO) | `data/traits/function/{environmental_response,enzymatic_activity}/metpo/` |
+| PATO physicochemical qualities (CC-BY-4.0) | [28](browse.html#src=PATO) | `data/traits/structure/{stability,dynamics,surface}/pato/` |
+| **Total** | **[69,684](browse.html)** | |
 
 ## Trait categories
 
@@ -86,7 +84,6 @@ Every record carries a fine-grained `trait_category`. Counts link into the [brow
 | `STRUCT_ARCHITECTURE` | STRUCTURE | [21](browse.html#cat=STRUCT_ARCHITECTURE) |
 | `STRUCT_DYNAMICS` | STRUCTURE | [13](browse.html#cat=STRUCT_DYNAMICS) |
 | `STRUCT_SURFACE` | STRUCTURE | [13](browse.html#cat=STRUCT_SURFACE) |
-| `MIXED_TRANSMEMBRANE` | SEQUENCE_STRUCTURE | [9](browse.html#cat=MIXED_TRANSMEMBRANE) |
 | `STRUCT_SECONDARY` | STRUCTURE | [8](browse.html#cat=STRUCT_SECONDARY) |
 | `STRUCT_CAVITY` | STRUCTURE | [5](browse.html#cat=STRUCT_CAVITY) |
 | `FUNC_LOCALIZATION` | FUNCTION | [4](browse.html#cat=FUNC_LOCALIZATION) |
@@ -104,7 +101,7 @@ Every record carries a fine-grained `trait_category`. Counts link into the [brow
 
 - **SEQUENCE** — motifs, signal peptides, propeptides, cleavage sites, low-complexity / disordered regions, tandem repeats, compositional biases, conserved regions, epitopes, PTM sites.
 - **STRUCTURE** — folds, structural domains, secondary-structure arrangements, topology classes, quaternary state, subunit interfaces, active / binding / allosteric / metal sites, disulfide bonds, cavities, symmetry, dynamics, structural stability.
-- **SEQUENCE_STRUCTURE** — transmembrane spans, coiled coils, structural tandem repeats.
+- **SEQUENCE_STRUCTURE** — transmembrane spans, coiled coils, structural tandem repeats. *(Schema axis retained but currently unpopulated: per-protein membrane spans are too specific and are covered by the general transmembrane trait, so they are no longer seeded.)*
 - **FUNCTION** — enzymatic activity, binding capacity, cofactor requirement, subcellular localisation, environmental response, interaction partner. Grounded by EC / Rhea / ChEBI / GO / UniProt SubCell.
 
 ## Quick start

@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
 """Seed ProteinTraitRecord YAMLs from UniProtKB flat-file `FT` lines.
 
-Each supported FT feature (TRANSMEM, DOMAIN, MOTIF, COMPBIAS, BINDING,
-ACT_SITE, SITE, DISULFID, METAL, MOD_RES, LIPID, CARBOHYD, CROSSLNK,
-SIGNAL, PROPEP, INTRAMEM, HELIX, STRAND, TURN, and REGION when
-/note="Disordered") becomes one ProteinTraitRecord.
+Each supported FT feature (DOMAIN, MOTIF, COMPBIAS, BINDING, ACT_SITE,
+SITE, DISULFID, METAL, MOD_RES, LIPID, CARBOHYD, CROSSLNK, SIGNAL,
+PROPEP, HELIX, STRAND, TURN, and REGION when /note="Disordered")
+becomes one ProteinTraitRecord.
+
+Membrane-span features (TRANSMEM, INTRAMEM) are deliberately NOT seeded:
+a per-protein membrane span is too specific — it is covered by the more
+general transmembrane trait — so demultiplexing every entry's TM helices
+into standalone records just adds redundant, protein-bound noise.
 
 Emitted layout mirrors the existing seeds:
 
@@ -27,7 +32,6 @@ Emitted layout mirrors the existing seeds:
   data/traits/structure/disulfide/             DISULFID
   data/traits/structure/domain/                DOMAIN
   data/traits/structure/secondary/             HELIX + STRAND + TURN
-  data/traits/mixed/transmembrane/             TRANSMEM + INTRAMEM
 
 Input options:
   --accession B0R5N7 [--accession …]    fetch each accession from UniProt REST
@@ -59,8 +63,9 @@ UNIPROT_TXT_URL = "https://rest.uniprot.org/uniprotkb/{acc}.txt"
 
 FT_TYPE_MAP: dict[str, tuple[str, str, str]] = {
     # ("axis", "category", "subdir under data/traits/")
-    "TRANSMEM":  ("SEQUENCE_STRUCTURE", "MIXED_TRANSMEMBRANE",       "mixed/transmembrane"),
-    "INTRAMEM":  ("SEQUENCE_STRUCTURE", "MIXED_TRANSMEMBRANE",       "mixed/transmembrane"),
+    # NOTE: TRANSMEM / INTRAMEM are intentionally absent — per-protein
+    # membrane spans are redundant with the general transmembrane trait,
+    # so they fall through to "unsupported" and are skipped.
     "COMPBIAS":  ("SEQUENCE",           "SEQ_COMPOSITION",           "sequence/composition"),
     "MOTIF":     ("SEQUENCE",           "SEQ_MOTIF",                 "sequence/motif"),
     "DOMAIN":    ("STRUCTURE",          "STRUCT_DOMAIN",             "structure/domain"),

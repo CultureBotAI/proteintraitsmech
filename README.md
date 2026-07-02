@@ -179,7 +179,7 @@ supports them, and can also be added by curators:
 | [PROSITE ProRules](https://prosite.expasy.org/) (`prorule.dat`) | 1449 | `data/traits/structure/domain/` (1445) + `data/traits/sequence/{modified_residue,glycosylation,prorule}/` (2 phospho + 1 N-glyco + 1 attachment motif) |
 | [TED novel folds](https://ted.cathdb.info/) (Zenodo v5, [DOI:10.5281/zenodo.13908086](https://doi.org/10.5281/zenodo.13908086), CC-BY 4.0) | 7427 | `data/traits/structure/fold/novel/` |
 | [TED highly-symmetric folds](https://ted.cathdb.info/) (same Zenodo record) | 6433 | `data/traits/structure/fold/high_symmetry/` |
-| [UniProtKB](https://www.uniprot.org/) FT + CC + GO (per-accession, demo seed) | 38 (2 entries) | `data/traits/{sequence,structure,mixed,function}/…` |
+| [UniProtKB](https://www.uniprot.org/) FT + CC + GO (per-accession, demo seed) | 29 (2 entries) | `data/traits/{sequence,structure,function}/…` |
 | [PSI-MOD](https://github.com/HUPO-PSI/psi-mod-CV) (HUPO-PSI protein modification CV, CC-BY-4.0) | 1971 | `data/traits/sequence/{modified_residue,glycosylation,lipidation,crosslink,ptm_ontology}/` |
 | [ECOD](http://prodata.swmed.edu/ecod/) (Evolutionary Classification Of protein Domains, v295) | 45113 | `data/traits/structure/{architecture,homologous_superfamily,topology,fold/ecod}/` (21 + 6,178 + 3,955 + 34,959) |
 | [M-CSA](https://www.ebi.ac.uk/thornton-srv/m-csa/) (Mechanism & Catalytic Site Atlas, CC-BY-4.0) | 1003 | `data/traits/structure/active_site/mcsa/` |
@@ -221,7 +221,7 @@ UniProtKB supported FT types → axis / category:
 
 | UniProt FT type | Axis | Category | Notes |
 |---|---|---|---|
-| `TRANSMEM`, `INTRAMEM` | SEQUENCE_STRUCTURE | `MIXED_TRANSMEMBRANE` | one record per span |
+| `TRANSMEM`, `INTRAMEM` | — | — | **skipped** — per-protein membrane spans are redundant with the general transmembrane trait |
 | `SIGNAL` | SEQUENCE | `SEQ_SIGNAL_PEPTIDE` | |
 | `TRANSIT` | SEQUENCE | `SEQ_TRANSIT_PEPTIDE` | mitochondrial / chloroplast / peroxisome targeting |
 | `PROPEP` | SEQUENCE | `SEQ_PROPEPTIDE` | zymogen activation segment |
