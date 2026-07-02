@@ -6,12 +6,13 @@ Sibling to [dismech](https://github.com/monarch-initiative/dismech) (disease mec
 
 ## Scope
 
-ProteinTraitsMech covers traits along four axes:
+ProteinTraitsMech covers traits along five axes:
 
 - **SEQUENCE** — motifs, signal peptides, propeptides, cleavage sites, low-complexity / disordered regions, tandem repeats, compositional biases, conserved regions, epitopes, PTM sites.
 - **STRUCTURE** — folds, structural domains, secondary-structure arrangements, topology classes, quaternary state, subunit interfaces, active / binding / allosteric / metal sites, disulfide bonds, cavities, symmetry, dynamics, structural stability, surface properties.
 - **SEQUENCE_STRUCTURE** (mixed) — traits meaningful in both axes: transmembrane spans, coiled coils, structural tandem repeats.
 - **FUNCTION** — entry-level (non-localised) traits: enzymatic activity, binding capacity, cofactor requirement, subcellular localisation, environmental response, interaction partner. Grounded by EC / Rhea / ChEBI / GO / UniProt SubCell. Complements the localised sequence/structure records rather than replacing them.
+- **EVOLUTION** — comparative-genomics traits: conservation and distribution across taxa (conserved / clade-specific / variable) and pangenome partition (core / soft-core / shell / cloud / persistent / singleton).
 
 Records anchor to authoritative resources: Pfam, InterPro, PROSITE, SMART, MEROPS, CATH, SCOP, PDB, GO, PR, UniProtKB.
 
@@ -27,11 +28,11 @@ just validate-all             # validate every ProteinTraitRecord YAML
 
 `src/proteintraitsmech/schema/proteintraitsmech.yaml` defines:
 
-- **ProteinTraitRecord** — root class, one per YAML file. Carries `identifier` (preferably an existing InterPro / Pfam / PROSITE / CATH / SCOP / MEROPS / PR CURIE), `label`, `definition`, `parent_traits`, `xrefs`, `synonyms`, `trait_axis` (SEQUENCE / STRUCTURE / SEQUENCE_STRUCTURE), `trait_category`, `term_kind`, optional `canonical_examples`, optional `evidence`, optional `curation_history`, and optional inline `causal_graphs`.
+- **ProteinTraitRecord** — root class, one per YAML file. Carries `identifier` (preferably an existing InterPro / Pfam / PROSITE / CATH / SCOP / MEROPS / PR CURIE), `label`, `definition`, `parent_traits`, `xrefs`, `synonyms`, `trait_axis` (SEQUENCE / STRUCTURE / SEQUENCE_STRUCTURE / FUNCTION / EVOLUTION), `trait_category`, `term_kind`, optional `canonical_examples`, optional `evidence`, optional `curation_history`, and optional inline `causal_graphs`.
 - **CausalGraph / CausalNode / CausalEdge** — evidence-backed causal mechanism graphs. Nodes represent proteins, domains, motifs, residues, PTMs, ligands, pathways, molecular functions, biological processes, phenotypes, or diseases. Every `CausalEdge` must carry at least one `EvidenceItem`.
 - **CanonicalExample** — reference exemplar proteins (UniProtKB accession + taxon) that archetypally exhibit the trait.
 - **TraitSynonym / EvidenceItem / CurationEvent** — ancillary classes.
-- **TraitAxisEnum** — `SEQUENCE` / `STRUCTURE` / `SEQUENCE_STRUCTURE`.
+- **TraitAxisEnum** — `SEQUENCE` / `STRUCTURE` / `SEQUENCE_STRUCTURE` / `FUNCTION` / `EVOLUTION`.
 - **ProteinTraitCategoryEnum** — `SEQ_*`, `STRUCT_*`, `MIXED_*` fine-grained buckets (see schema for the full list).
 - **TermKindEnum** — `CLASS` / `DATATYPE_PROPERTY` / `OBJECT_PROPERTY` / `ANNOTATION_PROPERTY`.
 - **MappingStatusEnum** — `SEEDED` / `PROPOSED` / `REVIEWED` / `DEPRECATED`.
@@ -183,6 +184,7 @@ supports them, and can also be added by curators:
 | [PSI-MOD](https://github.com/HUPO-PSI/psi-mod-CV) (HUPO-PSI protein modification CV, CC-BY-4.0) | 1971 | `data/traits/sequence/{modified_residue,glycosylation,lipidation,crosslink,ptm_ontology}/` |
 | [ECOD](http://prodata.swmed.edu/ecod/) (Evolutionary Classification Of protein Domains, v295) | 45113 | `data/traits/structure/{architecture,homologous_superfamily,topology,fold/ecod}/` (21 + 6,178 + 3,955 + 34,959) |
 | [InterPro](https://www.ebi.ac.uk/interpro/) entries (integrative; public domain; GO-grounded via interpro2go) | 26264 | `data/traits/{structure/domain,structure/homologous_superfamily,sequence/repeat,sequence/conservation,structure/active_site,structure/binding_site,sequence/ptm_ontology}/interpro/` (Domain→STRUCT_DOMAIN, superfamily, Repeat→SEQ_REPEAT, Conserved-/Active-/Binding-site, PTM; `Family` excluded) |
+| [Pfam-A](https://www.ebi.ac.uk/interpro/) families (`seed_pfam.py`, public domain) | 30134 | `data/traits/{structure/domain,sequence/repeat,mixed/coiled_coil,sequence/disorder,sequence/motif}/pfam/` (routed by family type; GO- + InterPro-grounded; Pfam-B discontinued) |
 | [M-CSA](https://www.ebi.ac.uk/thornton-srv/m-csa/) (Mechanism & Catalytic Site Atlas, CC-BY-4.0) | 1003 | `data/traits/structure/active_site/mcsa/` |
 | [DisProt](https://disprot.org/) (curated intrinsically disordered proteins, CC-BY-4.0) | 3199 | `data/traits/sequence/disorder/` (each entry carries full sequence + FT-shaped disorder regions with IDPO term IDs) |
 | [PSI-MI](https://github.com/HUPO-PSI/psi-mi-CV) (HUPO-PSI molecular-interaction CV, CC-BY-4.0) | 146 | `data/traits/function/interaction_partner/psi_mi/` (only the `interaction type` branch, MI:0190) |

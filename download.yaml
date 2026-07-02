@@ -128,6 +128,45 @@
   status: seeded
   note: attaches GO xrefs to InterPro records. Other InterPro mappings (member-DB signatures, PDBe/AlphaFold) live inside interpro.xml.gz; match_complete.xml.gz / protein2ipr.dat.gz / sites.xml.gz (52G+) are NOT used.
 
+# Pfam-A families (public domain; Pfam ⊂ InterPro, each linked via InterPro xref)
+-
+  url: https://ftp.ebi.ac.uk/pub/databases/Pfam/current_release/Pfam-A.clans.tsv.gz
+  local_name: pfam/Pfam-A.clans.tsv.gz
+  name: Pfam-A families (accession/clan/id/description)
+  source: pfam
+  license: public domain (Pfam / InterPro)
+  status: seeded
+  hierarchy: true (family → clan)
+  trait_categories: [STRUCT_DOMAIN, SEQ_REPEAT, MIXED_COILED_COIL, SEQ_DISORDER, SEQ_MOTIF]
+  seeder: seed_pfam.py
+  note: >-
+    30,134 Pfam-A families routed by family type. Pfam-B DISCONTINUED at Pfam
+    28.0 (2015) — not in the current release, not ingestable. GO-grounded via
+    pfam2go; InterPro xref via pfam2interpro (derived from interpro.xml).
+-
+  url: https://ftp.ebi.ac.uk/pub/databases/Pfam/current_release/Pfam-A.hmm.dat.gz
+  local_name: pfam/Pfam-A.hmm.dat.gz
+  name: Pfam-A HMM metadata (family types)
+  source: pfam
+  status: seeded
+-
+  url: https://current.geneontology.org/ontology/external2go/pfam2go
+  local_name: mappings/pfam2go
+  name: Pfam → GO mapping (pfam2go)
+  source: mappings
+  license: CC-BY 4.0 (GO)
+  status: seeded
+  seeder: seed_pfam.py
+-
+  # pfam2interpro is derived from interpro.xml.gz (PFAM member db_xref);
+  # pfam2ec has no bulk file (EC comes via InterPro member DBs / the API).
+  url: https://ftp.ebi.ac.uk/pub/databases/interpro/current_release/interpro.xml.gz
+  local_name: mappings/pfam2interpro.tsv
+  name: Pfam → InterPro mapping (derived from interpro.xml)
+  source: mappings
+  status: seeded
+  seeder: seed_pfam.py
+
 # M-CSA — catalytic sites (JSON API)
 -
   url: https://www.ebi.ac.uk/thornton-srv/m-csa/api/entries/

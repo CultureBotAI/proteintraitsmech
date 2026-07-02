@@ -105,6 +105,8 @@ def infer_source(identifier: str, path: Path) -> str:
         return "METPO"
     if identifier.startswith("InterPro:"):
         return "InterPro"
+    if identifier.startswith("Pfam:"):
+        return "Pfam"
     if identifier.startswith("ECOD:"):
         return "ECOD"
     if identifier.startswith("DisProt:"):

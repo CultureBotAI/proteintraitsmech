@@ -166,6 +166,20 @@ fetch-obo:
 seed-obo *args:
     python3 scripts/seed_obo.py {{args}}
 
+# Download Pfam-A + mappings (public domain). Pfam-B is discontinued (Pfam 28).
+fetch-pfam:
+    mkdir -p data/raw/pfam data/raw/mappings
+    curl -sSLf --max-time 300 -o data/raw/pfam/Pfam-A.clans.tsv.gz https://ftp.ebi.ac.uk/pub/databases/Pfam/current_release/Pfam-A.clans.tsv.gz
+    curl -sSLf --max-time 300 -o data/raw/pfam/Pfam-A.hmm.dat.gz  https://ftp.ebi.ac.uk/pub/databases/Pfam/current_release/Pfam-A.hmm.dat.gz
+    gzcat data/raw/pfam/Pfam-A.hmm.dat.gz | awk '/^#=GF AC/{ac=$3; sub(/\\..*/,"",ac)} /^#=GF TP/{print ac"\\t"$3}' > data/raw/pfam/pfam_types.tsv
+    curl -sSLf --max-time 120 -o data/raw/mappings/pfam2go https://current.geneontology.org/ontology/external2go/pfam2go
+    @echo 'pfam2interpro.tsv is derived from data/raw/interpro/interpro.xml.gz (run fetch-interpro)'
+
+# Seed Pfam-A families (Domain/Family/Repeat/Coiled-coil/Disordered/Motif),
+# GO- + InterPro-grounded. Requires `just fetch-pfam`. Dry-run by default.
+seed-pfam *args:
+    python3 scripts/seed_pfam.py {{args}}
+
 # Copy the ENIGMA trait-onto-map catalogue into data/raw/ (gitignored). The
 # source is a local sibling repo — adjust the path for your machine.
 fetch-traitontomap:
