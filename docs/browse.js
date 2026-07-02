@@ -39,6 +39,12 @@ const PREFIXES = {
   CATH:          "https://www.cathdb.info/version/latest/superfamily/",
   SCOP:          "http://scop.mrc-lmb.cam.ac.uk/term/",
   MEROPS:        "https://www.ebi.ac.uk/merops/cgi-bin/pepsum?id=",
+  MOD:           "https://www.ebi.ac.uk/ols4/ontologies/mod/classes/http%253A%252F%252Fpurl.obolibrary.org%252Fobo%252FMOD_",
+  MI:            "https://www.ebi.ac.uk/ols4/ontologies/mi/classes/http%253A%252F%252Fpurl.obolibrary.org%252Fobo%252FMI_",
+  PATO:          "https://www.ebi.ac.uk/ols4/ontologies/pato/classes/http%253A%252F%252Fpurl.obolibrary.org%252Fobo%252FPATO_",
+  METPO:         "https://www.ebi.ac.uk/ols4/ontologies/metpo/classes/https%253A%252F%252Fw3id.org%252Fmetpo%252F",
+  OMP:           "https://www.ebi.ac.uk/ols4/ontologies/omp/classes/http%253A%252F%252Fpurl.obolibrary.org%252Fobo%252FOMP_",
+  ECOCORE:       "https://www.ebi.ac.uk/ols4/ontologies/ecocore/classes/http%253A%252F%252Fpurl.obolibrary.org%252Fobo%252FECOCORE_",
   valuesets:     "https://linkml.io/valuesets/elements/",
   proteintraitsmech: null, // internal — no external resolver
 };
@@ -103,7 +109,39 @@ function route() {
     if (rec) return renderDetail(rec);
     return renderNotFound(id);
   }
+  // Facet deep-links (e.g. "#cat=STRUCT_FOLD", "#axis=SEQUENCE&src=PROSITE").
+  // Only applied when the hash actually carries facet params, so returning
+  // from a detail view to an empty hash preserves in-memory selections.
+  const params = parseHashParams(h);
+  if (Object.values(params).some(a => a.length)) applyHashFacets(params);
   renderList();
+}
+
+// Parse a facet deep-link hash into per-group value lists. Repeated keys
+// accumulate, e.g. "#cat=A&cat=B" → { cat: ["A", "B"], … }.
+function parseHashParams(h) {
+  const out = { axis: [], src: [], cat: [], sta: [] };
+  const body = (h || "").replace(/^#/, "");
+  if (!body) return out;
+  for (const pair of body.split("&")) {
+    const eq = pair.indexOf("=");
+    if (eq < 0) continue;
+    const k = pair.slice(0, eq);
+    if (!(k in out)) continue;
+    out[k].push(decodeURIComponent(pair.slice(eq + 1)));
+  }
+  return out;
+}
+
+// Apply parsed facet params to SELECTED and sync the sidebar checkboxes.
+function applyHashFacets(params) {
+  for (const k of Object.keys(SELECTED)) SELECTED[k] = new Set(params[k]);
+  document.querySelectorAll("#facet-scroll input[type=checkbox]").forEach(el => {
+    el.checked = SELECTED[el.dataset.facet] && SELECTED[el.dataset.facet].has(el.value);
+  });
+  FILTERED_CACHE = null;
+  PAGE = 0;
+  updateActiveCount();
 }
 
 /* ------------------------------------------------------------------ */

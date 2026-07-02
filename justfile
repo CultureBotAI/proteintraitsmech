@@ -123,6 +123,26 @@ fetch-psimod:
 seed-psimod *args:
     python3 scripts/seed_psi_mod.py {{args}}
 
+# Download the OBO ontologies consumed by seed-obo (PSI-MI, PATO, METPO;
+# all CC-BY-4.0). Files land gitignored in data/raw/.
+fetch-obo:
+    mkdir -p data/raw
+    curl -sSLf --max-time 120 -o data/raw/PSI-MI.obo \
+      https://raw.githubusercontent.com/HUPO-PSI/psi-mi-CV/master/psi-mi.obo
+    curl -sSLf --max-time 120 -o data/raw/PATO.obo \
+      https://raw.githubusercontent.com/pato-ontology/pato/master/pato.obo
+    curl -sSLf --max-time 120 -o data/raw/METPO.obo \
+      https://raw.githubusercontent.com/berkeleybop/metpo/main/metpo.obo
+    @ls -la data/raw/PSI-MI.obo data/raw/PATO.obo data/raw/METPO.obo
+
+# Seed ProteinTraitRecords from branch-scoped OBO ontologies. Requires
+# `just fetch-obo`. Pass a source (psimi | pato | metpo | all). Dry-run
+# by default; --apply to write. Idempotent.
+#   just seed-obo psimi
+#   just seed-obo all --apply
+seed-obo *args:
+    python3 scripts/seed_obo.py {{args}}
+
 # Seed data/traits/ from UniProtKB FT lines. Accepts flags:
 #   --accession <ACC>     fetch from UniProt REST (repeat for many)
 #   --from-file <path>    one accession per line

@@ -70,6 +70,14 @@ def infer_source(identifier: str, path: Path) -> str:
         return "PROSITE"
     if identifier.startswith("TED:"):
         return "TED"
+    if identifier.startswith("MOD:"):
+        return "PSI-MOD"
+    if identifier.startswith("MI:"):
+        return "PSI-MI"
+    if identifier.startswith("PATO:"):
+        return "PATO"
+    if identifier.startswith("METPO:"):
+        return "METPO"
     if identifier.startswith("proteintraitsmech:UNIPROTKB_"):
         return "UniProtKB"
     if identifier.startswith("proteintraitsmech:"):

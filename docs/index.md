@@ -9,8 +9,31 @@ Knowledge base of **protein sequence, structure, and function traits** — one Y
 
 <a href="browse.html" style="display:block;padding:1rem 1.25rem;margin:1rem 0 1.5rem;border:1px solid #159957;border-radius:8px;background:linear-gradient(120deg,#159957,#155799);color:#fff;text-decoration:none;box-shadow:0 2px 8px rgba(15,23,42,.10)">
   <strong style="font-size:1.05rem">🔎 Browse the corpus</strong><br>
-  <span style="opacity:.9">Faceted search over 69,401 ProteinTraitRecords — filter by axis / category / source, then open any record for a rendered detail view.</span>
+  <span style="opacity:.9">Faceted search over 69,693 ProteinTraitRecords — filter by axis / category / source, then open any record for a rendered detail view.</span>
 </a>
+
+<div style="display:flex;flex-wrap:wrap;gap:.75rem;margin:0 0 1.5rem">
+  <a href="browse.html" style="flex:1 1 130px;padding:.9rem 1rem;border:1px solid #d0d7de;border-left:4px solid #155799;border-radius:8px;background:#fff;color:inherit;text-decoration:none">
+    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#155799">69,693</div>
+    <div style="font-size:.85rem;color:#57606a">Total records</div>
+  </a>
+  <a href="browse.html#axis=STRUCTURE" style="flex:1 1 130px;padding:.9rem 1rem;border:1px solid #d0d7de;border-left:4px solid #16a34a;border-radius:8px;background:#fff;color:inherit;text-decoration:none">
+    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#16a34a">61,471</div>
+    <div style="font-size:.85rem;color:#57606a">STRUCTURE</div>
+  </a>
+  <a href="browse.html#axis=SEQUENCE" style="flex:1 1 130px;padding:.9rem 1rem;border:1px solid #d0d7de;border-left:4px solid #2563eb;border-radius:8px;background:#fff;color:inherit;text-decoration:none">
+    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#2563eb">7,931</div>
+    <div style="font-size:.85rem;color:#57606a">SEQUENCE</div>
+  </a>
+  <a href="browse.html#axis=FUNCTION" style="flex:1 1 130px;padding:.9rem 1rem;border:1px solid #d0d7de;border-left:4px solid #d97706;border-radius:8px;background:#fff;color:inherit;text-decoration:none">
+    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#d97706">282</div>
+    <div style="font-size:.85rem;color:#57606a">FUNCTION</div>
+  </a>
+  <a href="browse.html#axis=SEQUENCE_STRUCTURE" style="flex:1 1 130px;padding:.9rem 1rem;border:1px solid #d0d7de;border-left:4px solid #a855f7;border-radius:8px;background:#fff;color:inherit;text-decoration:none">
+    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#a855f7">9</div>
+    <div style="font-size:.85rem;color:#57606a">SEQUENCE_STRUCTURE</div>
+  </a>
+</div>
 
 - **CultureBotAI** — [culturebotai.github.io](https://culturebotai.github.io/)
 - **Repository** — [github.com/CultureBotAI/proteintraitsmech](https://github.com/CultureBotAI/proteintraitsmech)
@@ -34,7 +57,48 @@ Knowledge base of **protein sequence, structure, and function traits** — one Y
 | ECOD v295 (A/X/H/T/F hierarchy) | 45,113 | `data/traits/structure/{architecture,homologous_superfamily,topology,fold/ecod}/` |
 | M-CSA (CC-BY-4.0) | 1,003 | `data/traits/structure/active_site/mcsa/` |
 | DisProt (CC-BY-4.0) | 3,199 | `data/traits/sequence/disorder/` |
-| **Total** | **69,401** | |
+| PSI-MI interaction types (CC-BY-4.0) | 146 | `data/traits/function/interaction_partner/psi_mi/` |
+| METPO growth/metabolism traits (CC-BY-4.0) | 118 | `data/traits/function/{environmental_response,enzymatic_activity}/metpo/` |
+| PATO physicochemical qualities (CC-BY-4.0) | 28 | `data/traits/structure/{stability,dynamics,surface}/pato/` |
+| **Total** | **69,693** | |
+
+## Trait categories
+
+Every record carries a fine-grained `trait_category`. Counts link into the [browser](browse.html) pre-filtered to that subset.
+
+| Category | Axis | Records |
+|---|---|---:|
+| `STRUCT_FOLD` | STRUCTURE | [48,819](browse.html#cat=STRUCT_FOLD) |
+| `STRUCT_HOMOLOGOUS_SUPERFAMILY` | STRUCTURE | [6,178](browse.html#cat=STRUCT_HOMOLOGOUS_SUPERFAMILY) |
+| `STRUCT_TOPOLOGY` | STRUCTURE | [3,955](browse.html#cat=STRUCT_TOPOLOGY) |
+| `SEQ_DISORDER` | SEQUENCE | [3,200](browse.html#cat=SEQ_DISORDER) |
+| `SEQ_MOTIF` | SEQUENCE | [2,720](browse.html#cat=SEQ_MOTIF) |
+| `STRUCT_DOMAIN` | STRUCTURE | [1,447](browse.html#cat=STRUCT_DOMAIN) |
+| `SEQ_PTM_SITE` | SEQUENCE | [1,194](browse.html#cat=SEQ_PTM_SITE) |
+| `STRUCT_ACTIVE_SITE` | STRUCTURE | [1,004](browse.html#cat=STRUCT_ACTIVE_SITE) |
+| `SEQ_MODIFIED_RESIDUE` | SEQUENCE | [618](browse.html#cat=SEQ_MODIFIED_RESIDUE) |
+| `FUNC_INTERACTION_PARTNER` | FUNCTION | [148](browse.html#cat=FUNC_INTERACTION_PARTNER) |
+| `SEQ_GLYCOSYLATION_SITE` | SEQUENCE | [85](browse.html#cat=SEQ_GLYCOSYLATION_SITE) |
+| `FUNC_ENZYMATIC_ACTIVITY` | FUNCTION | [76](browse.html#cat=FUNC_ENZYMATIC_ACTIVITY) |
+| `SEQ_CROSSLINK_SITE` | SEQUENCE | [69](browse.html#cat=SEQ_CROSSLINK_SITE) |
+| `FUNC_ENVIRONMENTAL_RESPONSE` | FUNCTION | [50](browse.html#cat=FUNC_ENVIRONMENTAL_RESPONSE) |
+| `SEQ_LIPIDATION_SITE` | SEQUENCE | [40](browse.html#cat=SEQ_LIPIDATION_SITE) |
+| `STRUCT_ARCHITECTURE` | STRUCTURE | [21](browse.html#cat=STRUCT_ARCHITECTURE) |
+| `STRUCT_DYNAMICS` | STRUCTURE | [13](browse.html#cat=STRUCT_DYNAMICS) |
+| `STRUCT_SURFACE` | STRUCTURE | [13](browse.html#cat=STRUCT_SURFACE) |
+| `MIXED_TRANSMEMBRANE` | SEQUENCE_STRUCTURE | [9](browse.html#cat=MIXED_TRANSMEMBRANE) |
+| `STRUCT_SECONDARY` | STRUCTURE | [8](browse.html#cat=STRUCT_SECONDARY) |
+| `STRUCT_CAVITY` | STRUCTURE | [5](browse.html#cat=STRUCT_CAVITY) |
+| `FUNC_LOCALIZATION` | FUNCTION | [4](browse.html#cat=FUNC_LOCALIZATION) |
+| `FUNC_BINDING_CAPACITY` | FUNCTION | [3](browse.html#cat=FUNC_BINDING_CAPACITY) |
+| `SEQ_COMPOSITION` | SEQUENCE | [3](browse.html#cat=SEQ_COMPOSITION) |
+| `STRUCT_STABILITY` | STRUCTURE | [3](browse.html#cat=STRUCT_STABILITY) |
+| `SEQ_MATURE_CHAIN` | SEQUENCE | [2](browse.html#cat=SEQ_MATURE_CHAIN) |
+| `STRUCT_BINDING_SITE` | STRUCTURE | [2](browse.html#cat=STRUCT_BINDING_SITE) |
+| `FUNC_COFACTOR_REQUIREMENT` | FUNCTION | [1](browse.html#cat=FUNC_COFACTOR_REQUIREMENT) |
+| `STRUCT_DISULFIDE` | STRUCTURE | [1](browse.html#cat=STRUCT_DISULFIDE) |
+| `STRUCT_INTERFACE` | STRUCTURE | [1](browse.html#cat=STRUCT_INTERFACE) |
+| `STRUCT_METAL_SITE` | STRUCTURE | [1](browse.html#cat=STRUCT_METAL_SITE) |
 
 ## Trait axes
 

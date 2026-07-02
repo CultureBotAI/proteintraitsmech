@@ -184,6 +184,11 @@ supports them, and can also be added by curators:
 | [ECOD](http://prodata.swmed.edu/ecod/) (Evolutionary Classification Of protein Domains, v295) | 45113 | `data/traits/structure/{architecture,homologous_superfamily,topology,fold/ecod}/` (21 + 6,178 + 3,955 + 34,959) |
 | [M-CSA](https://www.ebi.ac.uk/thornton-srv/m-csa/) (Mechanism & Catalytic Site Atlas, CC-BY-4.0) | 1003 | `data/traits/structure/active_site/mcsa/` |
 | [DisProt](https://disprot.org/) (curated intrinsically disordered proteins, CC-BY-4.0) | 3199 | `data/traits/sequence/disorder/` (each entry carries full sequence + FT-shaped disorder regions with IDPO term IDs) |
+| [PSI-MI](https://github.com/HUPO-PSI/psi-mi-CV) (HUPO-PSI molecular-interaction CV, CC-BY-4.0) | 146 | `data/traits/function/interaction_partner/psi_mi/` (only the `interaction type` branch, MI:0190) |
+| [METPO](https://github.com/berkeleybop/metpo) (Microbial Ecophysiological Trait & Phenotype Ontology, CC-BY-4.0) | 118 | `data/traits/function/{environmental_response,enzymatic_activity}/metpo/` (growth-preference / tolerance + metabolism / enzyme-test branches) |
+| [PATO](https://github.com/pato-ontology/pato) (Phenotype And Trait Ontology, CC-BY-4.0) | 28 | `data/traits/structure/{stability,dynamics,surface}/pato/` (curated physicochemical quality whitelist) |
+
+The last three are ingested by the generic **`seed_obo.py`** importer, which reads any OBO ontology and imports only the **branch-scoped** subset declared in its `SOURCES` config (a term is kept iff it is an `is_a` descendant of a configured root, and it inherits that root's axis/category). This is deliberately narrower than a whole-ontology dump — PSI-MI is mostly experimental methods, PATO qualities are generic modifiers, and METPO is organismal, so only the terms with genuine protein-trait analogues are seeded.
 
 Refetch and re-seed:
 
@@ -191,6 +196,7 @@ Refetch and re-seed:
 just fetch-prosite            # writes data/raw/prosite.dat + prorule.dat (gitignored)
 just fetch-ted                # writes data/raw/ted_*.tsv.gz (gitignored)
 just fetch-psimod             # PSI-MOD.obo from HUPO-PSI GitHub (CC-BY-4.0)
+just fetch-obo                # PSI-MI / PATO / METPO .obo files (all CC-BY-4.0)
 just fetch-ecod               # ECOD domain list (~689 MB, weekly PDB-synced)
 just seed-lsf --apply         # 19 LinkML LocalStructuralFeature records
 just seed-prosite --apply     # 4194 PROSITE records; idempotent, skips existing
@@ -199,6 +205,7 @@ just seed-psimod --apply      # 1971 PSI-MOD PTM records; tags each CC-BY-4.0
 just seed-ecod --apply        # 45113 ECOD hierarchy nodes (A/X/H/T/F)
 just seed-mcsa --apply        # 1003 M-CSA catalytic mechanisms
 just seed-disprot --apply     # 3199 DisProt IDP profiles with regions
+just seed-obo all --apply     # 292 OBO records (PSI-MI 146 + METPO 118 + PATO 28)
 
 # UniProtKB FT-line seed — pass accessions or a local flat file
 just seed-uniprot --accession B0R5N7 --accession P25888 --apply
