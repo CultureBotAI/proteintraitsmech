@@ -100,14 +100,44 @@ code, .mono {
   overflow-y: auto;
   padding-right: .3rem;
 }
-.facet-group { margin-bottom: 1rem; }
-.facet-group h3 {
+.facet-group { margin-bottom: .9rem; }
+.facet-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
   font-size: .78rem;
   text-transform: uppercase;
   letter-spacing: .05em;
   color: var(--muted);
   margin: 0 0 .35rem 0;
+  cursor: pointer;
+  user-select: none;
 }
+.facet-head:hover { color: #111827; }
+.facet-head > span::before {
+  content: "▸";
+  display: inline-block;
+  margin-right: .35rem;
+  font-size: .7em;
+  transition: transform .12s ease;
+}
+.facet-group.expanded .facet-head > span::before { transform: rotate(90deg); }
+.facet-toggle {
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 1px 7px;
+  font-size: .68rem;
+  color: var(--muted);
+  cursor: pointer;
+  white-space: nowrap;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.facet-toggle:hover { background: #f3f4f6; color: #111827; }
+/* Collapsed by default: hide every non-selected value; selected ones stay. */
+.facet-group:not(.expanded) .facet-item:not(.is-selected) { display: none; }
 .facet-item {
   display: flex;
   align-items: center;
@@ -118,6 +148,7 @@ code, .mono {
   cursor: pointer;
 }
 .facet-item:hover { background: #f3f4f6; }
+.facet-item.is-selected { background: #eaf5ee; }
 .facet-item input { margin: 0; }
 .facet-item .name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .facet-item .count {
@@ -474,13 +505,15 @@ code, .mono {
 .page-footer a { color: var(--brand-2); }
 
 /* --- responsive --- */
-@media (max-width: 900px) {
+/* Keep facets in a left column down to true-mobile widths; only stack them
+   above the results on narrow phones. */
+@media (max-width: 560px) {
   .app { grid-template-columns: 1fr; }
   .sidebar {
     position: static;
     max-height: none;
   }
   .facet-scroll {
-    max-height: 260px;
+    max-height: 320px;
   }
 }

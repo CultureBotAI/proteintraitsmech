@@ -145,8 +145,12 @@ function parseHashParams(h) {
 // Apply parsed facet params to SELECTED and sync the sidebar checkboxes.
 function applyHashFacets(params) {
   for (const k of Object.keys(SELECTED)) SELECTED[k] = new Set(params[k]);
-  document.querySelectorAll("#facet-scroll input[type=checkbox]").forEach(el => {
-    el.checked = SELECTED[el.dataset.facet] && SELECTED[el.dataset.facet].has(el.value);
+  document.querySelectorAll("#facet-scroll .facet-item").forEach(item => {
+    const el = item.querySelector("input[type=checkbox]");
+    if (!el) return;
+    const on = SELECTED[el.dataset.facet] && SELECTED[el.dataset.facet].has(el.value);
+    el.checked = on;
+    item.classList.toggle("is-selected", !!on);  // stays visible while collapsed
   });
   FILTERED_CACHE = null;
   PAGE = 0;
@@ -162,16 +166,24 @@ function renderFacetSidebar() {
   const parts = [];
   for (const grp of FACET_GROUPS) {
     const counts = FACETS.counts[grp.key] || {};
-    const rows = Object.entries(counts).map(([val, n]) => `
-      <label class="facet-item">
-        <input type="checkbox" data-facet="${grp.key}" value="${escapeAttr(val)}" />
+    const entries = Object.entries(counts);
+    const rows = entries.map(([val, n]) => {
+      const sel = SELECTED[grp.key] && SELECTED[grp.key].has(val);
+      return `
+      <label class="facet-item${sel ? " is-selected" : ""}">
+        <input type="checkbox" data-facet="${grp.key}" value="${escapeAttr(val)}" ${sel ? "checked" : ""}/>
         <span class="name" title="${escapeAttr(val)}">${escapeHTML(val)}</span>
         <span class="count">${n.toLocaleString()}</span>
-      </label>`).join("");
+      </label>`;
+    }).join("");
+    // Groups start collapsed: only selected values show until "Show all".
     parts.push(`
-      <div class="facet-group">
-        <h3>${escapeHTML(grp.label)}</h3>
-        ${rows}
+      <div class="facet-group" data-key="${grp.key}">
+        <h3 class="facet-head" role="button" tabindex="0" aria-expanded="false">
+          <span>${escapeHTML(grp.label)}</span>
+          <button class="facet-toggle" type="button" tabindex="-1">Show all (${entries.length})</button>
+        </h3>
+        <div class="facet-items">${rows}</div>
       </div>`);
   }
   parts.push(`
@@ -184,23 +196,43 @@ function renderFacetSidebar() {
   scroll.querySelectorAll("input[type=checkbox]").forEach(el => {
     el.addEventListener("change", () => {
       const facet = el.dataset.facet;
-      if (el.checked) SELECTED[facet].add(el.value);
-      else            SELECTED[facet].delete(el.value);
+      const item = el.closest(".facet-item");
+      if (el.checked) { SELECTED[facet].add(el.value); item.classList.add("is-selected"); }
+      else            { SELECTED[facet].delete(el.value); item.classList.remove("is-selected"); }
       FILTERED_CACHE = null;
       PAGE = 0;
       updateActiveCount();
       renderList();
     });
   });
+  scroll.querySelectorAll(".facet-head").forEach(h => {
+    const toggle = () => setGroupExpanded(h.closest(".facet-group"),
+                                          !h.closest(".facet-group").classList.contains("expanded"));
+    h.addEventListener("click", e => { if (e.target.tagName !== "INPUT") toggle(); });
+    h.addEventListener("keydown", e => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }
+    });
+  });
   document.getElementById("clear-facets").addEventListener("click", () => {
     for (const k of Object.keys(SELECTED)) SELECTED[k].clear();
-    document.querySelectorAll("#facet-scroll input[type=checkbox]").forEach(el => (el.checked = false));
+    scroll.querySelectorAll(".facet-item").forEach(i => i.classList.remove("is-selected"));
+    scroll.querySelectorAll("input[type=checkbox]").forEach(el => (el.checked = false));
+    scroll.querySelectorAll(".facet-group").forEach(g => setGroupExpanded(g, false));
     FILTERED_CACHE = null;
     PAGE = 0;
     updateActiveCount();
     renderList();
   });
   updateActiveCount();
+}
+
+// Expand/collapse a facet group and sync its toggle button label.
+function setGroupExpanded(group, open) {
+  group.classList.toggle("expanded", open);
+  const head = group.querySelector(".facet-head");
+  const btn = group.querySelector(".facet-toggle");
+  if (head) head.setAttribute("aria-expanded", open ? "true" : "false");
+  if (btn) btn.textContent = open ? "Show less" : `Show all (${group.querySelectorAll(".facet-item").length})`;
 }
 
 function updateActiveCount() {
