@@ -174,3 +174,13 @@ fetch-examples *args:
 # page. Requires PyYAML; walks every data/traits/**/*.yaml.
 build-docs:
     python3 scripts/build_docs_index.py
+
+# Analyze the catalog for equivalent, mergeable traits. Emits unequivocal
+# "Trait X = Trait Y" statements (deterministic) plus a separate review
+# list. Reads docs/data shards, so run `just build-docs` first. Dry-run by
+# default; --apply executes the MERGE groups (never the review candidates).
+#   just analyze-merges                 # dry-run + write plan
+#   just analyze-merges --show-review   # also list review candidates
+#   just analyze-merges --apply         # execute merges
+analyze-merges *args:
+    python3 scripts/analyze_trait_equivalence.py {{args}}
