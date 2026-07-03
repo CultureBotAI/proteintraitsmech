@@ -147,6 +147,14 @@ fetch-rhea:
 seed-rhea *args:
     python3 scripts/seed_rhea.py {{args}}
 
+fetch-ec:
+    mkdir -p data/raw/ec
+    curl -sSLf --max-time 120 -o data/raw/ec/enzyme.dat https://ftp.expasy.org/databases/enzyme/enzyme.dat
+    curl -sSLf --max-time 60 -o data/raw/ec/enzclass.txt https://ftp.expasy.org/databases/enzyme/enzclass.txt
+
+seed-ec *args:
+    python3 scripts/seed_ec.py {{args}}
+
 # ARO (Antibiotic Resistance Ontology, CC-BY) -> FUNC_RESISTANCE (seed-obo aro).
 fetch-aro:
     mkdir -p data/raw/aro

@@ -346,19 +346,31 @@
   name: ENIGMA trait-onto-map (genome-annotation trait catalog)
   source: trait_onto_map
   license: MIT (ENIGMA trait-onto-map)
-  status: seeded
+  status: superseded
   tag: internal-collab
   hierarchy: partial (tool:database provenance; LinkML TraitAssociation model)
   trait_categories: [FUNC_ENZYMATIC_ACTIVITY]
   seeder: seed_traitontomap.py
   note: >-
-    Local repo /Users/marcin/Documents/VIMSS/ontology/ENIGMA/trait-onto-map
-    (data/catalog/trait_catalog.tsv). ~738k unique traits; mostly per-genome,
-    gene-level, or off-axis (mobile_element, viral, QC). INGESTED: the 577
-    EC-numbered enzyme activities → FUNC_ENZYMATIC_ACTIVITY (EC-anchored,
-    GO-grounded via ec2go, KEGG xrefs). Pfam skipped (covered by InterPro).
-    Future: RGI/ARO resistance, antiSMASH BGCs, GapMind pathways once
-    categories exist.
+    SUPERSEDED by ExPASy ENZYME (seed_ec.py): the 577 EC enzyme activities are
+    now a subset of the complete 7,375-record EC hierarchy, which folded in
+    their KEGG links. seed_traitontomap.py retained for provenance. Future
+    non-EC slices (RGI/ARO resistance, antiSMASH BGCs, GapMind pathways) can
+    still be drawn from the local catalogue when categories exist.
+-
+  url: https://ftp.expasy.org/databases/enzyme/enzyme.dat
+  name: ExPASy ENZYME (complete EC hierarchy)
+  source: ec
+  license: CC-BY 4.0
+  status: seeded
+  seeder: seed_ec.py
+  hierarchy: true (class → subclass → sub-subclass → enzyme leaf)
+  trait_categories: [FUNC_ENZYMATIC_ACTIVITY]
+  note: >-
+    6,965 enzyme leaves + 410 classification nodes. DE=label, AN=synonyms,
+    CA=reaction. GO via ec2go + RHEA via rhea2ec → mapped_xrefs; KEGG folded
+    from trait-onto-map (direct xref); up to 3 Swiss-Prot DR accessions →
+    canonical_examples.
 
 # --------------- cross-reference mapping files (for grounding) --------------
 -

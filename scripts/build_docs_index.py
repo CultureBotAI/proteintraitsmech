@@ -119,7 +119,7 @@ def infer_source(identifier: str, path: Path) -> str:
     if identifier.startswith("MCSA:"):
         return "M-CSA"
     if identifier.startswith("EC:"):
-        return "trait-onto-map"
+        return "ExPASy ENZYME"
     if identifier.startswith("Reactome:"):
         return "Reactome"
     if identifier.startswith("ARO:"):
