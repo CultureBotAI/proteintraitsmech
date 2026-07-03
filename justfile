@@ -42,6 +42,10 @@ sources-check:
 audit-graphs *args:
     uv run python scripts/audit_causal_graphs.py {{args}}
 
+# Review the trait categories each source contributes + flag mis-modelled records
+review-categories *args:
+    python3 scripts/review_source_categories.py {{args}}
+
 # Seed data/traits/structure/ from the LinkML valuesets LocalStructuralFeature enum.
 # Dry-run by default; re-run with --apply to write. Stdlib-only, no uv required.
 seed-lsf *args:
