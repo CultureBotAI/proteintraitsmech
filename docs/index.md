@@ -7,15 +7,15 @@ title: ProteinTraitsMech
 
 <div style="display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0 1.5rem">
   <a href="browse.html" style="flex:1 1 130px;padding:.9rem 1rem;border:1px solid #d0d7de;border-left:4px solid #155799;border-radius:8px;background:#fff;color:inherit;text-decoration:none">
-    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#155799">274,078</div>
+    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#155799">277,302</div>
     <div style="font-size:.85rem;color:#57606a">Total records</div>
   </a>
   <a href="browse.html#axis=STRUCTURE" style="flex:1 1 130px;padding:.9rem 1rem;border:1px solid #d0d7de;border-left:4px solid #16a34a;border-radius:8px;background:#fff;color:inherit;text-decoration:none">
-    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#16a34a">217,169</div>
+    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#16a34a">218,060</div>
     <div style="font-size:.85rem;color:#57606a">STRUCTURE</div>
   </a>
   <a href="browse.html#axis=SEQUENCE" style="flex:1 1 130px;padding:.9rem 1rem;border:1px solid #d0d7de;border-left:4px solid #2563eb;border-radius:8px;background:#fff;color:inherit;text-decoration:none">
-    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#2563eb">7,920</div>
+    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#2563eb">10,253</div>
     <div style="font-size:.85rem;color:#57606a">SEQUENCE</div>
   </a>
   <a href="browse.html#axis=SEQUENCE_STRUCTURE" style="flex:1 1 130px;padding:.9rem 1rem;border:1px solid #d0d7de;border-left:4px solid #a855f7;border-radius:8px;background:#fff;color:inherit;text-decoration:none">
@@ -36,7 +36,7 @@ Knowledge base of **protein sequence, structure, and function traits** — one Y
 
 <a href="browse.html" style="display:block;padding:1rem 1.25rem;margin:1rem 0 1.5rem;border:1px solid #159957;border-radius:8px;background:linear-gradient(120deg,#159957,#155799);color:#fff;text-decoration:none;box-shadow:0 2px 8px rgba(15,23,42,.10)">
   <strong style="font-size:1.05rem">🔎 Browse the corpus</strong><br>
-  <span style="opacity:.9">Faceted search over 274,078 ProteinTraitRecords — filter by axis / category / source, then open any record for a rendered detail view.</span>
+  <span style="opacity:.9">Faceted search over 277,302 ProteinTraitRecords — filter by axis / category / source, then open any record for a rendered detail view.</span>
 </a>
 
 - **CultureBotAI** — [culturebotai.github.io](https://culturebotai.github.io/)
@@ -53,15 +53,16 @@ Every record carries a fine-grained `trait_category`. Counts link into the [brow
 | `STRUCT_DOMAIN` | STRUCTURE | [134,674](browse.html#cat=STRUCT_DOMAIN) |
 | `STRUCT_FOLD` | STRUCTURE | [55,735](browse.html#cat=STRUCT_FOLD) |
 | `FUNC_ENZYMATIC_ACTIVITY` | FUNCTION | [26,003](browse.html#cat=FUNC_ENZYMATIC_ACTIVITY) |
-| `STRUCT_HOMOLOGOUS_SUPERFAMILY` | STRUCTURE | [19,954](browse.html#cat=STRUCT_HOMOLOGOUS_SUPERFAMILY) |
+| `STRUCT_HOMOLOGOUS_SUPERFAMILY` | STRUCTURE | [20,845](browse.html#cat=STRUCT_HOMOLOGOUS_SUPERFAMILY) |
 | `FUNC_ORTHOLOG_GROUP` | FUNCTION | [9,728](browse.html#cat=FUNC_ORTHOLOG_GROUP) |
 | `FUNC_RESISTANCE` | FUNCTION | [7,451](browse.html#cat=FUNC_RESISTANCE) |
 | `STRUCT_TOPOLOGY` | STRUCTURE | [5,427](browse.html#cat=STRUCT_TOPOLOGY) |
+| `SEQ_MOTIF` | SEQUENCE | [3,121](browse.html#cat=SEQ_MOTIF) |
 | `FUNC_PATHWAY` | FUNCTION | [2,883](browse.html#cat=FUNC_PATHWAY) |
-| `SEQ_MOTIF` | SEQUENCE | [2,847](browse.html#cat=SEQ_MOTIF) |
 | `FUNC_TRANSPORT` | FUNCTION | [2,285](browse.html#cat=FUNC_TRANSPORT) |
 | `SEQ_REPEAT` | SEQUENCE | [2,073](browse.html#cat=SEQ_REPEAT) |
-| `SEQ_PTM_SITE` | SEQUENCE | [1,211](browse.html#cat=SEQ_PTM_SITE) |
+| `UPPER` | SEQUENCE | [1,980](browse.html#cat=UPPER) |
+| `SEQ_PTM_SITE` | SEQUENCE | [1,251](browse.html#cat=SEQ_PTM_SITE) |
 | `STRUCT_ACTIVE_SITE` | STRUCTURE | [1,137](browse.html#cat=STRUCT_ACTIVE_SITE) |
 | `SEQ_CONSERVATION` | SEQUENCE | [775](browse.html#cat=SEQ_CONSERVATION) |
 | `SEQ_MODIFIED_RESIDUE` | SEQUENCE | [618](browse.html#cat=SEQ_MODIFIED_RESIDUE) |
@@ -76,9 +77,11 @@ Every record carries a fine-grained `trait_category`. Counts link into the [brow
 | `FUNC_ENVIRONMENTAL_RESPONSE` | FUNCTION | [48](browse.html#cat=FUNC_ENVIRONMENTAL_RESPONSE) |
 | `SEQ_LIPIDATION_SITE` | SEQUENCE | [40](browse.html#cat=SEQ_LIPIDATION_SITE) |
 | `STRUCT_STABILITY` | STRUCTURE | [36](browse.html#cat=STRUCT_STABILITY) |
+| `SEQ_TARGETING_SIGNAL` | SEQUENCE | [28](browse.html#cat=SEQ_TARGETING_SIGNAL) |
 | `STRUCT_CLASS` | STRUCTURE | [17](browse.html#cat=STRUCT_CLASS) |
 | `STRUCT_DYNAMICS` | STRUCTURE | [13](browse.html#cat=STRUCT_DYNAMICS) |
 | `STRUCT_SURFACE` | STRUCTURE | [13](browse.html#cat=STRUCT_SURFACE) |
+| `SEQ_CLEAVAGE_SITE` | SEQUENCE | [11](browse.html#cat=SEQ_CLEAVAGE_SITE) |
 | `STRUCT_SECONDARY` | STRUCTURE | [8](browse.html#cat=STRUCT_SECONDARY) |
 | `EVO_PANGENOME` | EVOLUTION | [6](browse.html#cat=EVO_PANGENOME) |
 | `STRUCT_CAVITY` | STRUCTURE | [5](browse.html#cat=STRUCT_CAVITY) |
@@ -125,7 +128,8 @@ Sources are listed **in order of integration** (earliest first, top to bottom). 
 | NCBIfam (ex-TIGRFAMs) — prokaryotic family HMMs (US-gov public domain) | [38,394](browse.html#src=NCBIfam) | `data/traits/structure/domain/ncbifam/` |
 | CDD — NCBI-curated conserved domains + PRK clusters + KOG ortholog groups (US-gov public domain) | [38,218](browse.html#src=CDD) | `data/traits/{structure/domain,function/ortholog_group}/cdd/` |
 | IDEAL — ProS (protean segment) trait; 1,448 IDPs as examples (CC-BY 4.0) | [1](browse.html#src=IDEAL) | `data/traits/sequence/disorder/` |
-| **Total** | **[274,078](browse.html)** | |
+| ELM (Eukaryotic Linear Motif) — targeting/cleavage/motif classes (⚠ non-commercial) | [353](browse.html#src=ELM) | `data/traits/sequence/{targeting_signal,cleavage_site,ptm_site,motif}/elm/` |
+| **Total** | **[277,302](browse.html)** | |
 
 *Bucket counts are seeding-time figures. Four duplicate PROSITE records (a ProRule / pattern copy that was routed to two directories) have since been consolidated via the [`merge-traits`](https://github.com/CultureBotAI/proteintraitsmech/tree/main/.claude/skills/merge-traits) skill, so per-bucket rows may slightly exceed the live total.*
 
