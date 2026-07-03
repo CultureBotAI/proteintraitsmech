@@ -429,9 +429,17 @@ window._go = function (delta) {
 /* Detail view                                                        */
 /* ------------------------------------------------------------------ */
 
-function renderDetail(r) {
+async function renderDetail(r) {
   const results = document.getElementById("results");
-  const rawYamlLink = REPO_RAW + r.path;
+  // Detail-only fields (full definition, path, parents, xrefs, mapped assocs,
+  // chemistry, examples + sequences, pattern) live in a lazy per-record detail
+  // sidecar to keep the upfront list/facet payload small. Fetch + merge before
+  // rendering; bail if the user navigated away meanwhile.
+  if (!r._dl) {
+    await loadDetail(r);
+    if (window.location.hash !== "#record=" + encodeURIComponent(r.id)) return;
+  }
+  const rawYamlLink = REPO_RAW + (r.path || "");
   const xrefsHtml = (r.xr || []).length
     ? `<ul class="xref-list">
         ${r.xr.map(x => `<li>${curieLink(x)}</li>`).join("")}
@@ -466,12 +474,10 @@ function renderDetail(r) {
     : "";
 
   const examples = r.ex || [];
-  // Sequences live in a lazy-loaded sidecar (data/seq/<id>.json). If this
-  // record has one and it isn't loaded yet, render placeholders now and
-  // fetch it after paint.
-  const lazyPending = !!r.sf && !r._seqLoaded;
+  // Sequences ride inside each example in the detail sidecar (already loaded
+  // above), so examples render fully in one pass — no second lazy fetch.
   const examplesHtml = examples.length
-    ? `<ul class="ex-list" id="ex-list">${examples.map(e => renderExample(e, lazyPending)).join("")}</ul>`
+    ? `<ul class="ex-list" id="ex-list">${examples.map(e => renderExample(e, false)).join("")}</ul>`
     : "";
   const examplesRow = examplesHtml
     ? row(`Example proteins (${examples.length})`,
@@ -512,7 +518,6 @@ function renderDetail(r) {
       </dl>
     </div>`;
   document.title = r.label + " — ProteinTraitsMech";
-  if (lazyPending) loadSequences(r);
   // Enrich the chemistry row with names/formulae/InChIKeys once the ChEBI
   // sidecar loads (the row already shows linked ChEBI ids + roles).
   if ((r.cp || []).length && !CHEBI) {
@@ -566,43 +571,35 @@ function chemistryHtml(r) {
    </ul>`;
 }
 
-// Sequence sidecars are bucketed: r.sf is a bucket path (e.g. "seq/023.json")
-// holding {record_id: sidecar} for many records. Cache each bucket's fetch so
-// opening several records in the same bucket costs one request.
-const SEQ_BUCKETS = new Map();
-function fetchSeqBucket(file) {
-  if (!SEQ_BUCKETS.has(file)) {
-    SEQ_BUCKETS.set(file,
+// Detail sidecars are bucketed: r.df is a bucket path (e.g. "detail/023.json")
+// holding {record_id: detail} for ~780 records. Everything the list/facet views
+// don't need (full definition, path, parents, xrefs, mapped assocs, chemistry,
+// examples + their sequences, pattern) lives here so the upfront payload stays
+// lean. Cache each bucket's fetch so opening several records in the same bucket
+// costs one request.
+const DETAIL_CACHE = new Map();
+function fetchDetailBucket(file) {
+  if (!DETAIL_CACHE.has(file)) {
+    DETAIL_CACHE.set(file,
       fetch("data/" + file)
         .then(res => (res.ok ? res.json() : {}))
         .catch(() => ({})));
   }
-  return SEQ_BUCKETS.get(file);
+  return DETAIL_CACHE.get(file);
 }
 
-// Lazy-load a record's sequences from its bucket, merge them into the
-// examples, and re-render the example list in place if the user is still
-// viewing this record. Failures degrade gracefully — the example metadata is
-// already shown; only the sequence viewer is missing.
-async function loadSequences(r) {
-  if (r._seqLoaded || !r.sf) return;
+// Merge a record's detail sidecar into the record object (once). Degrades
+// gracefully: on any failure the lean fields (label, short def, pills) still
+// render.
+async function loadDetail(r) {
+  if (r._dl) return;
+  if (!r.df) { r._dl = true; return; }
   try {
-    const bucket = await fetchSeqBucket(r.sf);
-    const side = bucket[r.id];
-    if (side) {
-      (r.ex || []).forEach((e, i) => {
-        const s = side[i];
-        if (s) { e.seq = s.seq; e.feats = s.feats || []; }
-      });
-    }
-    r._seqLoaded = true;
-  } catch (_) {
-    return;
-  }
-  if (window.location.hash === "#record=" + encodeURIComponent(r.id)) {
-    const ul = document.getElementById("ex-list");
-    if (ul) ul.innerHTML = (r.ex || []).map(e => renderExample(e, false)).join("");
-  }
+    const bucket = await fetchDetailBucket(r.df);
+    const d = bucket[r.id];
+    if (d) Object.assign(r, d);   // full def, path, pt, xr, mx, cp, ex, rs, pat
+  } catch (_) { /* keep lean fields */ }
+  r._dl = true;
 }
 
 function renderNotFound(id) {
@@ -636,7 +633,7 @@ function renderExample(e, lazyPending) {
 
   const sequenceHtml = e.seq
     ? renderSequenceViewer(e.seq, e.feats || [])
-    : (lazyPending && e.sq ? `<div class="ex-seq-loading">Loading sequence…</div>` : "");
+    : "";
 
   return `
     <li class="ex-item">

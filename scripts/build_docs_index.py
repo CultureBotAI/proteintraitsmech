@@ -15,19 +15,22 @@ Output:
                                   per axis; the browser fetches them in
                                   parallel and merges). Keeps any single
                                   file well under the 100 MB git limit.
-  docs/data/seq/NNN.json        — bucketed sidecars holding the heavy example
-                                  sequences + feature tracks, lazy-fetched by
-                                  the browser only when a record detail view is
-                                  opened. Records are hashed into a small,
-                                  fixed number of bucket files (see
-                                  SEQ_BUCKETS) — one file per record would be
-                                  thousands of files and blows past the GitHub
-                                  Pages Jekyll build's ~10-minute file-copy
-                                  timeout. Each bucket is `{record_id: sidecar}`;
-                                  the record stores its bucket path in `"sf"`
-                                  (e.g. "seq/023.json") so the browser fetches
-                                  it directly, and each example that has a
-                                  sequence is flagged `"sq": 1`.
+  docs/data/detail/NNN.json     — bucketed sidecars holding every field the
+                                  list + facet views don't need: the full
+                                  definition, path, parent_traits, xrefs,
+                                  mapped_xrefs, chemical_participants, example
+                                  proteins (with their heavy sequences + feature
+                                  tracks), residue_sequence, and pattern. The
+                                  browser fetches a record's bucket only when its
+                                  detail view is opened. Records are hashed into
+                                  DETAIL_BUCKETS files (one file per record would
+                                  be 200k files and blow past the GitHub Pages
+                                  Jekyll build's ~10-min file-copy timeout). Each
+                                  bucket is `{record_id: detail}`; the record
+                                  stores its bucket path in `"df"` (e.g.
+                                  "detail/023.json"). This keeps the upfront
+                                  list/facet payload ~5× smaller than inlining
+                                  everything.
   docs/data/facets.json         — pre-computed facet counts + a `shards`
                                   manifest listing the per-axis files.
 
@@ -80,11 +83,12 @@ from typing import Any
 
 import yaml
 
-# Number of sequence-sidecar bucket files. Keep this small: GitHub Pages'
-# Jekyll builder copies every file in docs/ and times out around 10 min, so
-# thousands of one-record files fail the build. ~4.5k seq records / 64 buckets
-# ≈ 70 records (~200 KB) per bucket — one small fetch per detail view, cached.
-SEQ_BUCKETS = 64
+# Number of detail-sidecar bucket files. Kept moderate: GitHub Pages' Jekyll
+# builder copies every file in docs/ and times out around 10 min, so thousands
+# of one-record files fail the build; but too few makes each bucket a large
+# per-detail-view fetch. 200k records / 256 buckets ≈ 780 records per bucket
+# (~350 KB, one cached fetch per detail view).
+DETAIL_BUCKETS = 256
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TRAITS_DIR = REPO_ROOT / "data" / "traits"
@@ -236,48 +240,53 @@ AXIS_ORDER = ["STRUCTURE", "SEQUENCE", "SEQUENCE_STRUCTURE", "FUNCTION", "EVOLUT
 MAX_SHARD_RECORDS = 25000
 
 
-def split_sequences(records: list[dict]) -> list[tuple[dict, list]]:
-    """Move heavy per-example `seq`/`feats` out of each record into a
-    sidecar list aligned to that record's `ex` array. Mutates records in
-    place: pops seq/feats and flags each sequence-bearing example (`sq=1`).
-    Returns [(record, sidecar), …] for records that had any sequence."""
-    pairs: list[tuple[dict, list]] = []
+# Fields the list + facet views never touch — they exist only in the record
+# detail view, so they move to a lazy per-record detail sidecar to keep the
+# upfront payload small (~200k records × everything = ~108 MB → ~21 MB lean).
+# `def` is special-cased: the list keeps a short snippet (card preview +
+# search); the full text goes to the sidecar.
+DETAIL_ONLY = ("path", "pt", "xr", "mx", "cp", "ex", "rs", "pat")
+LIST_DEF = 140
+
+
+def split_detail(records: list[dict]) -> list[tuple[dict, dict]]:
+    """Move detail-only fields (and the full definition, keeping a short
+    snippet inline) out of each record into a sidecar dict. Mutates records
+    in place. Returns [(record, detail), …] for every record."""
+    pairs: list[tuple[dict, dict]] = []
     for rec in records:
-        exs = rec.get("ex") or []
-        side: list = []
-        has = False
-        for e in exs:
-            if e.get("seq"):
-                side.append({"seq": e.pop("seq"), "feats": e.pop("feats", [])})
-                e["sq"] = 1
-                has = True
-            else:
-                # feats are meaningless without a sequence to render on.
-                e.pop("feats", None)
-                side.append(None)
-        if has:
-            pairs.append((rec, side))
+        detail: dict = {}
+        full = rec.get("def") or ""
+        if full:
+            detail["def"] = full                 # full text → sidecar
+            rec["def"] = truncate(full, LIST_DEF)  # short snippet stays inline
+        for k in DETAIL_ONLY:
+            v = rec.pop(k, None)
+            if v not in (None, [], "", 0):
+                detail[k] = v
+        pairs.append((rec, detail))
     return pairs
 
 
-def write_sequences(pairs: list[tuple[dict, list]]) -> tuple[int, int, float]:
-    """Write bucketed sequence sidecars under docs/data/seq/, clearing any
-    stale files first. Each record is hashed (stable md5 of its identifier)
-    into one of SEQ_BUCKETS files; the record stores its bucket path in
-    `rec["sf"]` (e.g. "seq/023.json") and each bucket file is a JSON object
-    `{record_id: sidecar}`. Returns (record_count, file_count, total_MB)."""
-    seq_dir = OUT_DIR / "seq"
-    if seq_dir.exists():
-        for old in seq_dir.glob("*.json"):
+def write_detail(pairs: list[tuple[dict, dict]]) -> tuple[int, int, float]:
+    """Write bucketed detail sidecars under docs/data/detail/, clearing stale
+    files first. Each record is hashed (stable md5 of its identifier) into one
+    of DETAIL_BUCKETS files; the record stores its bucket path in `rec["df"]`
+    (e.g. "detail/023.json") and each bucket is `{record_id: detail}`. Heavy
+    example sequences ride along inside each detail's `ex`, so a detail view is
+    a single lazy fetch. Returns (record_count, file_count, total_MB)."""
+    det_dir = OUT_DIR / "detail"
+    if det_dir.exists():
+        for old in det_dir.glob("*.json"):
             old.unlink()
-    seq_dir.mkdir(parents=True, exist_ok=True)
+    det_dir.mkdir(parents=True, exist_ok=True)
 
-    buckets: dict[str, dict[str, list]] = {}
-    for rec, side in pairs:
+    buckets: dict[str, dict[str, dict]] = {}
+    for rec, detail in pairs:
         h = int(hashlib.md5(rec["id"].encode("utf-8")).hexdigest(), 16)
-        name = f"seq/{h % SEQ_BUCKETS:03d}.json"
-        rec["sf"] = name
-        buckets.setdefault(name, {})[rec["id"]] = side
+        name = f"detail/{h % DETAIL_BUCKETS:03d}.json"
+        rec["df"] = name
+        buckets.setdefault(name, {})[rec["id"]] = detail
 
     total = 0
     for name, obj in buckets.items():
@@ -356,8 +365,8 @@ def main() -> int:
         "sta": _tally(records, "sta"),
     }
 
-    pairs = split_sequences(records)
-    seq_count, seq_files, seq_mb = write_sequences(pairs)
+    pairs = split_detail(records)
+    det_count, det_files, det_mb = write_detail(pairs)
     shards = write_shards(records)
 
     facets_path = OUT_DIR / "facets.json"
@@ -367,7 +376,7 @@ def main() -> int:
                 "total": len(records),
                 "counts": facets,
                 "shards": shards,
-                "seqDir": "seq",
+                "detailDir": "detail",
             },
             fh,
             indent=2,
@@ -376,8 +385,8 @@ def main() -> int:
     print(f"Wrote {len(records)} records across {len(shards)} axis shard(s):")
     for s in shards:
         print(f"  {s['file']:34s} {s['count']:>7,}  ({s['bytes'] / (1024 * 1024):.2f} MB)")
-    print(f"Wrote {seq_count:,} sequences into {seq_files} bucket file(s) → "
-          f"docs/data/seq/ ({seq_mb:.2f} MB total)")
+    print(f"Wrote {det_count:,} detail sidecars into {det_files} bucket file(s) → "
+          f"docs/data/detail/ ({det_mb:.2f} MB total)")
     print(f"Wrote facet index → {facets_path.relative_to(REPO_ROOT)}")
     if skipped:
         print(f"Skipped {skipped} unparseable files")
