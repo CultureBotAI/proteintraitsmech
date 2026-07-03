@@ -611,6 +611,10 @@ def main(argv: list[str]) -> int:
                         help=("fill in `sequence` + `features` on existing "
                               "UNIPROTKB_API examples via a batch flat-file "
                               "fetch; does not add new examples"))
+    parser.add_argument("--skip-with-examples", action="store_true",
+                        help=("skip any record that already has a "
+                              "canonical_example — fast resume for a large "
+                              "search run that was interrupted"))
     args = parser.parse_args(argv)
 
     targets = collect_targets(args.paths)
@@ -645,6 +649,8 @@ def main(argv: list[str]) -> int:
             record = read_trait(path)
         except Exception as exc:
             print(f"WARN {rel}: cannot parse ({exc})", file=sys.stderr)
+            continue
+        if args.skip_with_examples and record.get("canonical_examples"):
             continue
         candidates = build_queries(record)
         if not candidates:
