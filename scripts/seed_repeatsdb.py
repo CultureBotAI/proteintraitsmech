@@ -84,8 +84,8 @@ def main() -> int:
     data = json.loads(RAW.read_text(encoding="utf-8", errors="replace"))
     written = skipped = 0
     for rid, node in sorted(data.items(), key=lambda kv: (kv[0].count("."), kv[0])):
-        if not isinstance(node, dict):
-            continue
+        if not rid or not isinstance(node, dict):
+            continue  # skip the empty-id umbrella root ("Tandem Repeat proteins")
         name = (node.get("name") or "").strip() or f"RepeatsDB {rid}"
         desc = (node.get("description") or "").strip()
         parent = rid.rsplit(".", 1)[0] if "." in rid else ""
