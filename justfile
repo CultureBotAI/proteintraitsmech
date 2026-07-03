@@ -212,6 +212,17 @@ fetch-elm:
 seed-elm *args:
     python3 scripts/seed_elm.py {{args}}
 
+fetch-merops:
+    mkdir -p data/raw/merops
+    curl -sSLf --max-time 300 -o data/raw/merops/pepunit.lib https://ftp.ebi.ac.uk/pub/databases/merops/current_release/pepunit.lib
+
+seed-merops *args:
+    python3 scripts/seed_merops.py {{args}}
+
+# Curated RiPP leader-peptide classes (no fetch)
+seed-ripp *args:
+    python3 scripts/seed_ripp.py {{args}}
+
 # ARO (Antibiotic Resistance Ontology, CC-BY) -> FUNC_RESISTANCE (seed-obo aro).
 fetch-aro:
     mkdir -p data/raw/aro
