@@ -65,6 +65,13 @@ fetch-prosite:
 seed-prosite *args:
     python3 scripts/seed_prosite.py {{args}}
 
+# Materialize Pfam clan + PROSITE PDOC grouping nodes (fix dangling parents)
+seed-pfam-clans *args:
+    python3 scripts/seed_pfam_clans.py {{args}}
+
+seed-prosite-pdoc *args:
+    python3 scripts/seed_prosite_pdoc.py {{args}}
+
 # Download the TED (Encyclopedia of Domains) novel + high-symmetry fold
 # catalogues from Zenodo (DOI:10.5281/zenodo.13908086, CC-BY 4.0).
 fetch-ted:
