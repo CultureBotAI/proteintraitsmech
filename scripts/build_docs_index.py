@@ -123,6 +123,8 @@ def infer_source(identifier: str, path: Path) -> str:
         return "Reactome"
     if identifier.startswith("ARO:"):
         return "CARD/ARO"
+    if identifier.startswith("TCDB:"):
+        return "TCDB"
     if identifier.startswith("proteintraitsmech:UNIPROTKB_"):
         return "UniProtKB"
     if identifier.startswith(("proteintraitsmech:STABILITY_", "proteintraitsmech:EVO_")):

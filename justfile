@@ -124,6 +124,14 @@ fetch-reactome:
 seed-reactome *args:
     python3 scripts/seed_reactome.py {{args}}
 
+fetch-tcdb:
+    mkdir -p data/raw/tcdb
+    curl -sSLf --max-time 120 -o data/raw/tcdb/families.tsv https://www.tcdb.org/cgi-bin/projectv/public/families.py
+    curl -sSLf --max-time 120 -o data/raw/tcdb/substrates.tsv https://www.tcdb.org/cgi-bin/substrates/getSubstrates.py
+
+seed-tcdb *args:
+    python3 scripts/seed_tcdb.py {{args}}
+
 # ARO (Antibiotic Resistance Ontology, CC-BY) -> FUNC_RESISTANCE (seed-obo aro).
 fetch-aro:
     mkdir -p data/raw/aro
