@@ -137,6 +137,10 @@ def infer_source(identifier: str, path: Path) -> str:
         return "RepeatsDB"
     if identifier.startswith("COG:") or identifier.startswith("proteintraitsmech:COG_CATEGORY_"):
         return "COG"
+    if identifier.startswith("NCBIfam:"):
+        return "NCBIfam"
+    if identifier.startswith("CDD:"):
+        return "CDD"
     if identifier.startswith("proteintraitsmech:UNIPROTKB_"):
         return "UniProtKB"
     if identifier.startswith(("proteintraitsmech:STABILITY_", "proteintraitsmech:EVO_")):

@@ -176,6 +176,21 @@ fetch-repeatsdb:
 seed-repeatsdb *args:
     python3 scripts/seed_repeatsdb.py {{args}}
 
+fetch-ncbifam:
+    mkdir -p data/raw/ncbifam
+    curl -sSLf --max-time 120 -o data/raw/ncbifam/hmm_PGAP.tsv https://ftp.ncbi.nlm.nih.gov/hmm/current/hmm_PGAP.tsv
+
+seed-ncbifam *args:
+    python3 scripts/seed_ncbifam.py {{args}}
+
+fetch-cdd:
+    mkdir -p data/raw/cdd
+    curl -sSLf --max-time 120 -o data/raw/cdd/cddid_all.tbl.gz https://ftp.ncbi.nlm.nih.gov/pub/mmdb/cdd/cddid_all.tbl.gz
+    curl -sSLf --max-time 60 -o data/raw/cdd/family_superfamily_links https://ftp.ncbi.nlm.nih.gov/pub/mmdb/cdd/family_superfamily_links
+
+seed-cdd *args:
+    python3 scripts/seed_cdd.py {{args}}
+
 # ARO (Antibiotic Resistance Ontology, CC-BY) -> FUNC_RESISTANCE (seed-obo aro).
 fetch-aro:
     mkdir -p data/raw/aro

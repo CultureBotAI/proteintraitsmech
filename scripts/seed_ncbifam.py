@@ -1,0 +1,132 @@
+#!/usr/bin/env python3
+"""Seed protein-family traits from NCBIfam (ex-TIGRFAMs, US Gov public domain)
+→ STRUCTURE / STRUCT_DOMAIN (repeats → SEQUENCE / SEQ_REPEAT).
+
+NCBIfam is NCBI's curated library of ~38k prokaryotic protein-family HMMs (the
+PGAP set, which absorbed TIGRFAMs). Each HMM defines a family/domain — a trait
+class, like Pfam. EC / GO assignments are NCBIfam-curated (source-direct → xrefs).
+
+Input (fetch via `just fetch-ncbifam`, gitignored):
+  data/raw/ncbifam/hmm_PGAP.tsv  — tab table, columns include:
+    ncbi_accession, source_identifier, label, …, family_type, …, product_name,
+    gene_symbol, gene_synonyms, ec_numbers, go_terms, …
+
+Idempotent; dry-run unless --apply. Stdlib-only.
+"""
+
+from __future__ import annotations
+
+import argparse
+import re
+import sys
+from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parent.parent
+RAW = REPO_ROOT / "data" / "raw" / "ncbifam" / "hmm_PGAP.tsv"
+OUT_DIR = REPO_ROOT / "data" / "traits"
+LICENSE = "US Government public domain"
+_SLUG_RE = re.compile(r"[^A-Za-z0-9]+")
+
+
+def slugify(t): return (_SLUG_RE.sub("-", t.lower()).strip("-")[:70]) or "ncbifam"
+
+
+def yaml_escape(text: str) -> str:
+    if not text:
+        return '""'
+    unsafe = set(': #{}[],&*!|>%@`\\"\'')
+    if (any(c in unsafe for c in text) or text[:1] in ("-", "?")
+            or text.lower() in {"null", "true", "false", "yes", "no", "on", "off"}):
+        return '"' + text.replace("\\", "\\\\").replace('"', '\\"') + '"'
+    return text
+
+
+def folded(text):
+    text = " ".join((text or "").split())
+    return [">-", f"  {text}"] if text else [">-", '  ""']
+
+
+# family_type → (axis, category, subdir)
+def route(family_type: str):
+    ft = (family_type or "").lower()
+    if "repeat" in ft:
+        return "SEQUENCE", "SEQ_REPEAT", "sequence/repeat/ncbifam"
+    return "STRUCTURE", "STRUCT_DOMAIN", "structure/domain/ncbifam"
+
+
+def build_yaml(acc, label, definition, axis, category, ecs, gos, gene, family_type):
+    lines = [f"identifier: NCBIfam:{acc}", f"label: {yaml_escape(label)}"]
+    f = folded(definition)
+    lines += [f"definition: {f[0]}", *f[1:]]
+    lines += ["definition_source: NCBIfam (NCBI PGAP HMM library)",
+              f"trait_axis: {axis}", f"trait_category: {category}",
+              "term_kind: CLASS", "mapping_status: SEEDED"]
+    if gene:
+        lines += ["synonyms:",
+                  f"  - synonym_text: {yaml_escape(gene)}",
+                  "    synonym_type: EXACT_SYNONYM", "    source: NCBIfam"]
+    # EC + GO are NCBIfam-curated assignments on the family → source-direct xrefs.
+    xrefs = [f"EC:{e}" for e in ecs] + list(gos)
+    if xrefs:
+        lines += ["xrefs:"] + [f"  - {x}" for x in xrefs]
+    lines.append(f"license: {LICENSE}")
+    return "\n".join(lines) + "\n"
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--apply", action="store_true")
+    ap.add_argument("--force", action="store_true")
+    args = ap.parse_args()
+    if not RAW.exists():
+        print("missing data/raw/ncbifam/hmm_PGAP.tsv; run `just fetch-ncbifam`",
+              file=sys.stderr)
+        return 2
+
+    lines_in = RAW.read_text(encoding="utf-8", errors="replace").splitlines()
+    header = lines_in[0].lstrip("#").split("\t")
+    idx = {c: i for i, c in enumerate(header)}
+    written = skipped = total = 0
+    for line in lines_in[1:]:
+        cols = line.split("\t")
+        if len(cols) < len(header):
+            cols += [""] * (len(header) - len(cols))
+
+        def g(k): return cols[idx[k]].strip() if k in idx and idx[k] < len(cols) else ""
+        acc = g("ncbi_accession").split(".")[0]
+        if not acc:
+            continue
+        label = g("label") or g("product_name")
+        if not label:
+            continue
+        family_type = g("family_type")
+        product = g("product_name")
+        gene = g("gene_symbol")
+        ecs = [e.strip() for e in re.split(r"[;, ]+", g("ec_numbers")) if e.strip()]
+        gos = [x.strip() for x in re.split(r"[;, ]+", g("go_terms")) if x.strip().startswith("GO:")]
+        axis, category, subdir = route(family_type)
+        definition = (f"{product or label} — an NCBIfam protein family "
+                      f"({acc}, {family_type or 'family'}); members share this "
+                      f"conserved family signature.")
+        total += 1
+        path = OUT_DIR / subdir / f"{slugify(label)}-{acc.lower()}.yaml"
+        if path.exists() and not args.force:
+            skipped += 1
+            continue
+        if args.apply:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(build_yaml(acc, label, definition, axis, category,
+                                       ecs, gos, gene, family_type),
+                            encoding="utf-8")
+            written += 1
+
+    print(f"{total} NCBIfam families → STRUCT_DOMAIN / SEQ_REPEAT.")
+    if args.apply:
+        print(f"Wrote {written}; skipped {skipped} existing.")
+    else:
+        print(f"Dry-run — would write {total - skipped}; {skipped} exist.")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
