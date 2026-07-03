@@ -52,7 +52,7 @@ def yaml_escape(text: str) -> str:
 def folded(text): return [">-", f"  {' '.join((text or '').split())}"]
 
 
-def build_yaml(rid, equation, ecs):
+def build_yaml(rid, equation, ecs, chebis):
     definition = (f"Enzymatic reaction ({rid}): {equation}. A specific curated "
                   f"biochemical reaction; a protein with this activity catalyses it.")
     lines = [f"identifier: {rid}", f"label: {yaml_escape(equation)}"]
@@ -66,6 +66,12 @@ def build_yaml(rid, equation, ecs):
         for ec in ecs:
             lines.append(f"  - object: {ec}")
             lines.append("    mapping_source: rhea2ec")
+    if chebis:
+        # Direction is not fixed on the master reaction → SUBSTRATE_OR_PRODUCT.
+        lines.append("chemical_participants:")
+        for c in chebis:
+            lines.append(f"  - chebi: {c}")
+            lines.append("    role: SUBSTRATE_OR_PRODUCT")
     lines.append(f"license: {LICENSE}")
     return "\n".join(lines) + "\n"
 
@@ -89,6 +95,9 @@ def main() -> int:
             continue
         rid = cols[0].strip()
         equation = cols[1].strip()
+        chebi_field = cols[2].strip() if len(cols) > 2 else ""
+        chebis = [c.strip() for c in chebi_field.split(";") if c.strip().startswith("CHEBI:")]
+        chebis = list(dict.fromkeys(chebis))  # de-dup, keep order
         ec_field = cols[3].strip() if len(cols) > 3 else ""
         ecs = [e.strip() for e in ec_field.split(";") if e.strip().startswith("EC:")]
         if not equation:
@@ -103,7 +112,7 @@ def main() -> int:
             continue
         if args.apply:
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(build_yaml(rid, equation, ecs), encoding="utf-8")
+            path.write_text(build_yaml(rid, equation, ecs, chebis), encoding="utf-8")
             written += 1
 
     print(f"{total} Rhea master reactions → FUNC_ENZYMATIC_ACTIVITY "

@@ -446,11 +446,63 @@ function renderDetail(r) {
           : ""}
         ${row("Cross-references", `<dd>${xrefsHtml}</dd>`, true)}
         ${mappedHtml ? row("Mapped associations", `<dd>${mappedHtml}</dd>`, true) : ""}
+        ${(r.cp || []).length ? row("Chemistry", `<dd id="chem-list">${chemistryHtml(r)}</dd>`, true) : ""}
         ${row("Source file", `<dd><a href="${escapeAttr(rawYamlLink)}" target="_blank" rel="noopener"><code>${escapeHTML(r.path)}</code></a></dd>`, true)}
       </dl>
     </div>`;
   document.title = r.label + " — ProteinTraitsMech";
   if (lazyPending) loadSequences(r);
+  // Enrich the chemistry row with names/formulae/InChIKeys once the ChEBI
+  // sidecar loads (the row already shows linked ChEBI ids + roles).
+  if ((r.cp || []).length && !CHEBI) {
+    loadChebi().then(() => {
+      if (window.location.hash === "#record=" + encodeURIComponent(r.id)) {
+        const dd = document.getElementById("chem-list");
+        if (dd) dd.innerHTML = chemistryHtml(r);
+      }
+    });
+  }
+}
+
+// ChEBI sidecar (data/chebi.json): CHEBI id → {name, formula, inchikey}. One
+// small (~2 MB) file, fetched once on first chemistry view and cached, so
+// formula / InChIKey / canonical name aren't duplicated onto every record.
+let CHEBI = null;
+let CHEBI_PROMISE = null;
+function loadChebi() {
+  if (!CHEBI_PROMISE) {
+    CHEBI_PROMISE = fetch("data/chebi.json")
+      .then(res => (res.ok ? res.json() : {}))
+      .then(j => { CHEBI = j; return j; })
+      .catch(() => { CHEBI = {}; return {}; });
+  }
+  return CHEBI_PROMISE;
+}
+
+const ROLE_LABEL = {
+  SUBSTRATE: "substrate", PRODUCT: "product",
+  SUBSTRATE_OR_PRODUCT: "substrate/product", COFACTOR: "cofactor",
+  TRANSPORTED: "transported", INHIBITOR: "inhibitor",
+};
+
+// One chemistry participant row. Uses the ChEBI sidecar when loaded (name +
+// formula + InChIKey); degrades to just the linked ChEBI id + role otherwise.
+function chemistryHtml(r) {
+  const cps = r.cp || [];
+  if (!cps.length) return "";
+  return `<ul class="xref-list">
+    ${cps.map(([id, role]) => {
+      const info = (CHEBI && CHEBI[id]) || null;
+      const name = info && info.name ? ` ${escapeHTML(info.name)}` : "";
+      const formula = info && info.formula
+        ? ` <span class="map-src">${escapeHTML(info.formula)}</span>` : "";
+      const ik = info && info.inchikey
+        ? ` <span class="map-src">${escapeHTML(info.inchikey)}</span>` : "";
+      const rl = ROLE_LABEL[role] || (role || "").toLowerCase();
+      return `<li>${curieLink(id)}${name}${formula}${ik}` +
+             `${rl ? ` <span class="map-src">— ${escapeHTML(rl)}</span>` : ""}</li>`;
+    }).join("")}
+   </ul>`;
 }
 
 // Sequence sidecars are bucketed: r.sf is a bucket path (e.g. "seq/023.json")

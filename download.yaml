@@ -448,12 +448,19 @@
   trait_categories: [FUNC_TRANSPORT]
   note: 2,225 TC families + 52 subclasses + 8 classes; 946 families ChEBI-grounded via getSubstrates.py.
 -
-  url: http://purl.obolibrary.org/obo/chebi.obo.gz
+  url: https://ftp.ebi.ac.uk/pub/databases/chebi/flat_files/
   name: ChEBI (Chemical Entities of Biological Interest)
   source: chebi
   license: CC-BY 4.0
-  status: candidate
-  note: source of record for chemistry — InChI/InChIKey/formula/SMILES/CAS. Model TBD by chemistry deep-research (slots vs CHEMISTRY axis).
+  status: enrichment
+  seeder: build_chebi_sidecar.py
+  files: [compounds.tsv.gz, chemical_data.tsv.gz, structures.tsv.gz]
+  note: >-
+    Chemistry hub. Per research/chemistry-integration-round1.md: chemistry is a
+    per-trait attribute (chemical_participants: chebi + role), NOT a new axis.
+    Formula/InChIKey/name resolve from the ChEBI id via a compact committed
+    sidecar docs/data/chebi.json (15,037 entries: 14,736 formula, 12,105
+    InChIKey), built for only the ~15.7k ChEBI ids the corpus references.
 -
   url: https://ftp.ebi.ac.uk/pub/databases/Pfam/current_release/Pfam-A.dead.gz
   name: eggNOG / NOGs

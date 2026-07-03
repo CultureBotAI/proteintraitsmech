@@ -155,6 +155,16 @@ fetch-ec:
 seed-ec *args:
     python3 scripts/seed_ec.py {{args}}
 
+fetch-chebi:
+    mkdir -p data/raw/chebi
+    curl -sSLf --max-time 300 -o data/raw/chebi/compounds.tsv.gz https://ftp.ebi.ac.uk/pub/databases/chebi/flat_files/compounds.tsv.gz
+    curl -sSLf --max-time 300 -o data/raw/chebi/chemical_data.tsv.gz https://ftp.ebi.ac.uk/pub/databases/chebi/flat_files/chemical_data.tsv.gz
+    curl -sSLf --max-time 600 -o data/raw/chebi/structures.tsv.gz https://ftp.ebi.ac.uk/pub/databases/chebi/flat_files/structures.tsv.gz
+
+# Build docs/data/chebi.json (name/formula/InChIKey for referenced ChEBI ids)
+build-chebi:
+    python3 scripts/build_chebi_sidecar.py
+
 # ARO (Antibiotic Resistance Ontology, CC-BY) -> FUNC_RESISTANCE (seed-obo aro).
 fetch-aro:
     mkdir -p data/raw/aro

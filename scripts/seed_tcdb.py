@@ -113,7 +113,11 @@ def build_yaml(tc, name, kind, parent, chebi):
     if parent:
         lines += ["parent_traits:", f"  - TCDB:{parent}"]
     if chebi:
-        lines += ["xrefs:"] + [f"  - {c}" for c in chebi]
+        # Transported substrates are chemistry the trait acts on, not
+        # equivalences → chemical_participants (role TRANSPORTED), not xrefs.
+        lines += ["chemical_participants:"]
+        for c in chebi:
+            lines += [f"  - chebi: {c}", "    role: TRANSPORTED"]
     lines.append(f"license: {LICENSE}")
     return "\n".join(lines) + "\n"
 

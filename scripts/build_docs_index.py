@@ -45,6 +45,7 @@ Record shape:
     "pt":  ["<parent_curie>", ...],          # parent_traits CURIEs
     "xr":  ["<xref>", ...],                  # source-direct cross-references
     "mx":  [["<object>", "<mapping_source>"], ...],  # mapping-derived xrefs
+    "cp":  [["<chebi>", "<role>"], ...],     # chemical_participants (ChEBI+role)
     "ex":  [                                 # canonical_examples (lean projection)
       {
         "id":    "UniProtKB:P62258",
@@ -213,6 +214,10 @@ def load_record(path: Path) -> dict[str, Any] | None:
         # the browser can render them distinctly from source-direct xrefs.
         "mx": [[m.get("object"), m.get("mapping_source")]
                for m in (data.get("mapped_xrefs") or []) if m.get("object")],
+        # Chemistry the trait acts on, as [chebi, role] pairs; formula/InChIKey
+        # resolve from docs/data/chebi.json in the browser.
+        "cp": [[c.get("chebi"), c.get("role")]
+               for c in (data.get("chemical_participants") or []) if c.get("chebi")],
         "ex": [_project_example(e) for e in (data.get("canonical_examples") or [])],
         "path": rel,
     }

@@ -178,6 +178,19 @@ classes:
         inlined_as_list: true
         range: MappedXref
 
+      chemical_participants:
+        description: >-
+          Chemical entities a FUNCTION trait acts on — reaction
+          substrates/products, transported substrates, cofactors — each
+          grounded in ChEBI and semantically typed by `role`. A substrate is
+          an attribute of the activity, not an equivalence, so it lives here
+          rather than in `xrefs`. Molecular formula / InChIKey / mass / CAS
+          are NOT copied per-record; they resolve from the ChEBI id via the
+          shared `docs/data/chebi.json` sidecar. See `ChemicalParticipant`.
+        multivalued: true
+        inlined_as_list: true
+        range: ChemicalParticipant
+
       sequence_pattern:
         description: >-
           Raw sequence pattern for SEQUENCE-axis traits — e.g. a PROSITE
@@ -647,6 +660,28 @@ classes:
         range: string
         pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
 
+  ChemicalParticipant:
+    description: >-
+      A chemical entity a FUNCTION trait acts on, grounded in ChEBI and typed
+      by its role (substrate, product, transported substrate, cofactor, …).
+      Molecular formula / InChIKey / mass / CAS are resolved from `chebi` via
+      the shared ChEBI sidecar, not stored here.
+    attributes:
+      chebi:
+        description: ChEBI CURIE of the chemical entity (e.g. CHEBI:29033).
+        required: true
+        range: string
+        pattern: "^CHEBI:[0-9]+$"
+      role:
+        description: Role of this entity relative to the trait's activity.
+        required: true
+        range: ChemicalRoleEnum
+      name:
+        description: >-
+          Source-provided label for the entity (the ChEBI canonical name is
+          resolved in the sidecar). Optional.
+        range: string
+
   CurationEvent:
     description: A timestamped curator action on a ProteinTraitRecord.
     attributes:
@@ -953,6 +988,24 @@ enums:
       NARROW_SYNONYM:
       BROAD_SYNONYM:
       RELATED_SYNONYM:
+
+  ChemicalRoleEnum:
+    description: Role of a ChemicalParticipant relative to a trait's activity.
+    permissible_values:
+      SUBSTRATE:
+        description: Consumed by the activity.
+      PRODUCT:
+        description: Produced by the activity.
+      SUBSTRATE_OR_PRODUCT:
+        description: >-
+          A participant of a reaction whose direction is not fixed (e.g. a
+          Rhea master reaction) — on one side or the other.
+      COFACTOR:
+        description: Required cofactor / prosthetic group / metal.
+      TRANSPORTED:
+        description: Substrate moved across a membrane (transport activity).
+      INHIBITOR:
+        description: Inhibits the activity.
 
   PriorityEnum:
     permissible_values:
