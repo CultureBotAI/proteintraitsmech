@@ -132,6 +132,21 @@ fetch-tcdb:
 seed-tcdb *args:
     python3 scripts/seed_tcdb.py {{args}}
 
+fetch-cog:
+    mkdir -p data/raw/cog
+    curl -sSLf --max-time 120 -o data/raw/cog/cog-20.def.tab https://ftp.ncbi.nlm.nih.gov/pub/COG/COG2020/data/cog-20.def.tab
+    curl -sSLf --max-time 60 -o data/raw/cog/fun-20.tab https://ftp.ncbi.nlm.nih.gov/pub/COG/COG2020/data/fun-20.tab
+
+seed-cog *args:
+    python3 scripts/seed_cog.py {{args}}
+
+fetch-rhea:
+    mkdir -p data/raw/rhea
+    curl -sSLf --max-time 300 -o data/raw/rhea/rhea-reactions.tsv "https://www.rhea-db.org/rhea?query=&columns=rhea-id,equation,chebi-id,ec&format=tsv"
+
+seed-rhea *args:
+    python3 scripts/seed_rhea.py {{args}}
+
 # ARO (Antibiotic Resistance Ontology, CC-BY) -> FUNC_RESISTANCE (seed-obo aro).
 fetch-aro:
     mkdir -p data/raw/aro
