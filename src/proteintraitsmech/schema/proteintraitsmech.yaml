@@ -157,13 +157,26 @@ classes:
 
       xrefs:
         description: >-
-          oboInOwl:hasDbXref — equivalents in other ontologies or protein
-          databases (PR / GO / EC / Pfam / InterPro / UniProtKB / Reactome).
-          Use for *true* equivalences; record broader/narrower relations
-          as `parent_traits:` instead.
+          oboInOwl:hasDbXref — equivalents asserted by the trait's **own
+          source record** (PR / GO / EC / Pfam / InterPro / UniProtKB /
+          Reactome / ChEBI). Use for *true*, source-direct equivalences;
+          record broader/narrower relations as `parent_traits:` instead, and
+          associations asserted by an *external mapping product* (ec2go,
+          interpro2go, pfam2go, …) in `mapped_xrefs:` — not here.
         multivalued: true
         range: string
         pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+
+      mapped_xrefs:
+        description: >-
+          Cross-references asserted not by the trait's own source but by an
+          external **mapping product** (e.g. ec2go, interpro2go, pfam2go,
+          pfam2interpro, interpro2ec, rhea2ec). Kept separate from `xrefs`
+          so the provenance and trust of a mapping-derived association is
+          explicit and auditable. See `MappedXref`.
+        multivalued: true
+        inlined_as_list: true
+        range: MappedXref
 
       sequence_pattern:
         description: >-
@@ -608,6 +621,32 @@ classes:
         inlined_as_list: true
         range: EvidenceItem
 
+  MappedXref:
+    description: >-
+      A cross-reference asserted by an external **mapping product** rather
+      than by the trait's own source record. Distinguished from a direct
+      `xrefs` entry so that the provenance of a mapping-derived association
+      (which curated mapping asserts it, and under what relation) is explicit
+      and auditable.
+    attributes:
+      object:
+        description: CURIE of the mapped ontology/database term (e.g. GO:0004672).
+        required: true
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+      mapping_source:
+        description: >-
+          The mapping product that asserts this association — e.g. ec2go,
+          interpro2go, pfam2go, pfam2interpro, interpro2ec, rhea2ec.
+        required: true
+        range: string
+      predicate:
+        description: >-
+          Optional relation CURIE qualifying the association (e.g. RO / skos).
+          Absent means an unspecified, mapping-defined relatedness.
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+
   CurationEvent:
     description: A timestamped curator action on a ProteinTraitRecord.
     attributes:
@@ -860,6 +899,13 @@ enums:
           entry-level assertion that the protein participates in a named
           pathway. Grounded by KEGG (pathway / module / KO), MetaCyc,
           UniPathway, Reactome, or GO biological-process.
+      FUNC_ORTHOLOG_GROUP:
+        description: >-
+          Membership in a cluster of orthologous genes / functional
+          category — the protein belongs to a named orthologous group whose
+          members share a conserved function across taxa. Grounded by COG
+          (NCBI Clusters of Orthologous Genes) and its 26 functional
+          categories, or eggNOG / KEGG Orthology.
 
       # ---- EVOLUTION ----
       EVO_CONSERVED:

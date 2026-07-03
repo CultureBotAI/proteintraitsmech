@@ -126,10 +126,17 @@ def build_yaml(ec: str, names: set[str], kegg: set[str], go: list[str]) -> str:
     lines.append("trait_category: FUNC_ENZYMATIC_ACTIVITY")
     lines.append("term_kind: CLASS")
     lines.append("mapping_status: SEEDED")
-    xrefs = list(go) + [f"KEGG:{k}" for k in sorted(kegg)]
-    if xrefs:
+    # KEGG is asserted by the trait-onto-map catalog itself (direct → xrefs);
+    # GO comes from the ec2go mapping product (→ mapped_xrefs with provenance).
+    kegg_xrefs = [f"KEGG:{k}" for k in sorted(kegg)]
+    if kegg_xrefs:
         lines.append("xrefs:")
-        lines.extend(f"  - {x}" for x in xrefs)
+        lines.extend(f"  - {x}" for x in kegg_xrefs)
+    if go:
+        lines.append("mapped_xrefs:")
+        for g in go:
+            lines.append(f"  - object: {g}")
+            lines.append("    mapping_source: ec2go")
     if synonyms:
         lines.append("synonyms:")
         for s in synonyms:

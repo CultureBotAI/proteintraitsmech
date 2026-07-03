@@ -126,10 +126,16 @@ def build_yaml(pf, pid, desc, clan, typ, axis, category, go, ipr) -> str:
     if clan:
         lines.append("parent_traits:")
         lines.append(f"  - Pfam:{clan}")
-    xrefs = list(go) + ([f"InterPro:{ipr}"] if ipr else [])
-    if xrefs:
-        lines.append("xrefs:")
-        lines.extend(f"  - {x}" for x in xrefs)
+    # GO (pfam2go) and InterPro (pfam2interpro) are both mapping-product
+    # assertions, not Pfam-direct → mapped_xrefs with provenance.
+    mapped = [(g, "pfam2go") for g in go]
+    if ipr:
+        mapped.append((f"InterPro:{ipr}", "pfam2interpro"))
+    if mapped:
+        lines.append("mapped_xrefs:")
+        for obj, src in mapped:
+            lines.append(f"  - object: {obj}")
+            lines.append(f"    mapping_source: {src}")
     if pid and pid != label:
         lines.append("synonyms:")
         lines.append(f"  - synonym_text: {yaml_escape(pid)}")

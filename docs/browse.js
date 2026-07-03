@@ -376,6 +376,15 @@ function renderDetail(r) {
         ${r.xr.map(x => `<li>${curieLink(x)}</li>`).join("")}
        </ul>`
     : "<em>none</em>";
+  // Mapping-derived cross-references: [object, mapping_source] pairs, shown
+  // with their provenance so they read distinctly from source-direct xrefs.
+  const mappedHtml = (r.mx || []).length
+    ? `<ul class="xref-list">
+        ${r.mx.map(([obj, src]) =>
+          `<li>${curieLink(obj)} <span class="map-src">via ${escapeHTML(src || "mapping")}</span></li>`
+        ).join("")}
+       </ul>`
+    : "";
 
   const patternRow = r.pat
     ? row("Sequence pattern", `<dd class="pre">${escapeHTML(r.pat)}</dd>`, true)
@@ -436,6 +445,7 @@ function renderDetail(r) {
                 `<dd><a href="${escapeAttr(uniprotMembersUrl(r.id))}" target="_blank" rel="noopener">all proteins carrying ${escapeHTML(r.id)} ↗</a></dd>`, true)
           : ""}
         ${row("Cross-references", `<dd>${xrefsHtml}</dd>`, true)}
+        ${mappedHtml ? row("Mapped associations", `<dd>${mappedHtml}</dd>`, true) : ""}
         ${row("Source file", `<dd><a href="${escapeAttr(rawYamlLink)}" target="_blank" rel="noopener"><code>${escapeHTML(r.path)}</code></a></dd>`, true)}
       </dl>
     </div>`;

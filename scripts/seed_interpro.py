@@ -159,8 +159,12 @@ def build_yaml(ipr: str, name: str, definition: str, axis: str, category: str,
         lines.append("parent_traits:")
         lines.append(f"  - InterPro:{parent}")
     if go_xrefs:
-        lines.append("xrefs:")
-        lines.extend(f"  - {g}" for g in go_xrefs)
+        # GO here is asserted by the interpro2go mapping product, not by the
+        # InterPro entry itself → mapped_xrefs with provenance, not xrefs.
+        lines.append("mapped_xrefs:")
+        for g in go_xrefs:
+            lines.append(f"  - object: {g}")
+            lines.append("    mapping_source: interpro2go")
     lines.append(f"license: {LICENSE}")
     return "\n".join(lines) + "\n"
 

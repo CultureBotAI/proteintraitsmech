@@ -43,7 +43,8 @@ Record shape:
     "pat": "<sequence_pattern or null>",
     "rs":  "<residue_sequence or null>",     # concrete residues
     "pt":  ["<parent_curie>", ...],          # parent_traits CURIEs
-    "xr":  ["<xref>", ...],
+    "xr":  ["<xref>", ...],                  # source-direct cross-references
+    "mx":  [["<object>", "<mapping_source>"], ...],  # mapping-derived xrefs
     "ex":  [                                 # canonical_examples (lean projection)
       {
         "id":    "UniProtKB:P62258",
@@ -206,6 +207,10 @@ def load_record(path: Path) -> dict[str, Any] | None:
         "rs": data.get("residue_sequence") or None,
         "pt": list(data.get("parent_traits") or []),
         "xr": list(data.get("xrefs") or []),
+        # Mapping-derived xrefs, projected as [object, mapping_source] pairs so
+        # the browser can render them distinctly from source-direct xrefs.
+        "mx": [[m.get("object"), m.get("mapping_source")]
+               for m in (data.get("mapped_xrefs") or []) if m.get("object")],
         "ex": [_project_example(e) for e in (data.get("canonical_examples") or [])],
         "path": rel,
     }
