@@ -477,18 +477,34 @@ def collect_targets(paths: list[str]) -> list[Path]:
     return files
 
 
+# How many accessions to pack into one `/accessions` request. The endpoint
+# accepts up to 100; 90 leaves headroom. Batching across records is what
+# makes a large category (e.g. ~14k TED folds, ~1 accession each) fetch in
+# minutes rather than hours — one request per record would be ~14k round
+# trips; one request per 90 records is ~150.
+ACCESSION_BATCH = 90
+
+
 def refresh_sequences(
     targets: list[Path],
     apply_: bool,
     stop_on_error: bool,
 ) -> tuple[int, int, int, int]:
-    """For each record with UNIPROTKB_API examples that lack `sequence`,
-    batch-fetch flat files by accession and fill in `sequence` +
-    `features`. Preserves every other example field (annotation_score,
-    family_classifications, etc.).
+    """For every example anchored to a real UniProtKB accession that lacks a
+    `sequence`, fill in `sequence` + `features`. Preserves every other
+    example field (annotation_score, family_classifications, etc.).
+
+    Accessions are pooled across *all* target records and fetched in batches
+    of ACCESSION_BATCH via the `/accessions` endpoint, so a large category is
+    ~N/90 round trips instead of one per record.
 
     Returns (records_touched, examples_enriched, records_skipped, errored)."""
     touched = enriched = skipped = errored = 0
+
+    # ---- Pass 1: parse every record, collect the accessions it needs. ----
+    pending: list[tuple[Path, dict]] = []  # records with at least one need
+    all_accs: list[str] = []
+    seen_acc: set[str] = set()
     for path in targets:
         rel = path.relative_to(REPO_ROOT)
         try:
@@ -496,40 +512,54 @@ def refresh_sequences(
         except Exception as exc:
             print(f"WARN {rel}: cannot parse ({exc})", file=sys.stderr)
             continue
-        examples = list(record.get("canonical_examples") or [])
-        # Which accessions need enrichment on this record? Any example that
-        # points at a real UniProtKB accession and lacks a sequence — this
-        # covers both API-fetched examples and the examples written by the
-        # TED / M-CSA seeders (source: CURATOR / unset) whose protein_id is
-        # a genuine UniProt accession we can fetch and mark up.
         need = [
-            e for e in examples
+            e for e in (record.get("canonical_examples") or [])
             if (e.get("protein_id") or "").startswith("UniProtKB:")
             and not e.get("sequence")
         ]
         if not need:
             skipped += 1
             continue
-        acc_list = [e["protein_id"].split(":", 1)[1] for e in need]
+        pending.append((path, record))
+        for e in need:
+            acc = e["protein_id"].split(":", 1)[1]
+            if acc not in seen_acc:
+                seen_acc.add(acc)
+                all_accs.append(acc)
+
+    if not pending:
+        return (touched, enriched, skipped, errored)
+
+    # ---- Pass 2: batch-fetch the pooled accessions into one lookup. ----
+    by_acc: dict = {}
+    n_batches = (len(all_accs) + ACCESSION_BATCH - 1) // ACCESSION_BATCH
+    for i in range(0, len(all_accs), ACCESSION_BATCH):
+        chunk = all_accs[i:i + ACCESSION_BATCH]
         try:
-            entries = fetch_flat_entries(acc_list)
+            entries = fetch_flat_entries(chunk)
         except (urllib.error.HTTPError, urllib.error.URLError) as exc:
             errored += 1
-            print(f"WARN {rel}: batch fetch failed ({exc})", file=sys.stderr)
+            print(f"WARN batch {i // ACCESSION_BATCH + 1}/{n_batches} "
+                  f"failed ({exc})", file=sys.stderr)
             if stop_on_error:
                 return (touched, enriched, skipped, errored)
             continue
-        by_acc = {e.accession: e for e in entries if e.accession}
+        for e in entries:
+            if e.accession:
+                by_acc[e.accession] = e
+        print(f"  fetched batch {i // ACCESSION_BATCH + 1}/{n_batches} "
+              f"({len(by_acc)}/{len(all_accs)} accessions resolved)")
+
+    # ---- Pass 3: fill sequences + features from the lookup, write. ----
+    for path, record in pending:
+        rel = path.relative_to(REPO_ROOT)
         record_enriched = 0
-        for ex in examples:
+        for ex in record.get("canonical_examples") or []:
             pid = ex.get("protein_id") or ""
-            if ":" not in pid:
+            if ":" not in pid or ex.get("sequence"):
                 continue
-            acc = pid.split(":", 1)[1]
-            src_entry = by_acc.get(acc)
+            src_entry = by_acc.get(pid.split(":", 1)[1])
             if src_entry is None or not src_entry.sequence:
-                continue
-            if ex.get("sequence"):
                 continue
             ex["sequence"] = src_entry.sequence
             feats = flat_features_for_example(src_entry)
@@ -539,7 +569,6 @@ def refresh_sequences(
         if record_enriched:
             touched += 1
             enriched += record_enriched
-            print(f"  {rel}: enriched {record_enriched} example(s)")
             if apply_:
                 write_trait(path, record)
     return (touched, enriched, skipped, errored)
