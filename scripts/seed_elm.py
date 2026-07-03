@@ -30,8 +30,10 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 RAW = REPO_ROOT / "data" / "raw" / "elm" / "elm_classes.tsv"
+INSTANCES = REPO_ROOT / "data" / "raw" / "elm" / "elm_instances.tsv"
 OUT_BASE = REPO_ROOT / "data" / "traits" / "sequence"
 LICENSE = "ELM Software License (non-commercial)"
+EXAMPLES_CAP = 15
 _SLUG_RE = re.compile(r"[^A-Za-z0-9]+")
 
 ROUTE = {
@@ -63,7 +65,35 @@ def folded(text):
     return [">-", f"  {text}"] if text else [">-", '  ""']
 
 
-def build_yaml(acc, elm_id, site_name, desc, regex, category):
+def load_instances() -> dict:
+    """ELMIdentifier → capped list of true-positive protein instances."""
+    if not INSTANCES.exists():
+        return {}
+    out: dict = {}
+    rows = [ln for ln in INSTANCES.read_text(encoding="utf-8", errors="replace").splitlines()
+            if not ln.startswith("#")]
+    reader = csv.reader(rows, delimiter="\t")
+    header = next(reader, None)
+    if not header:
+        return {}
+    idx = {c: i for i, c in enumerate(header)}
+    for row in reader:
+        def g(k): return row[idx[k]].strip() if k in idx and idx[k] < len(row) else ""
+        if g("InstanceLogic") != "true positive":
+            continue
+        elm_id, acc = g("ELMIdentifier"), g("Primary_Acc")
+        if not elm_id or not acc:
+            continue
+        try:
+            s, e = int(g("Start")), int(g("End"))
+        except ValueError:
+            continue
+        out.setdefault(elm_id, []).append(
+            {"acc": acc, "name": g("ProteinName"), "org": g("Organism"), "s": s, "e": e})
+    return out
+
+
+def build_yaml(acc, elm_id, site_name, desc, regex, category, examples):
     label = elm_id
     definition = f"{site_name or elm_id} — {desc}" if desc else (site_name or elm_id)
     lines = [f"identifier: ELM:{acc}", f"label: {yaml_escape(label)}"]
@@ -78,6 +108,21 @@ def build_yaml(acc, elm_id, site_name, desc, regex, category):
                   "    synonym_type: EXACT_SYNONYM", "    source: ELM"]
     if regex:
         lines.append(f"sequence_pattern: {yaml_escape(regex)}")
+    if examples:
+        lines.append("canonical_examples:")
+        for ex in examples[:EXAMPLES_CAP]:
+            lines.append(f"  - protein_id: UniProtKB:{ex['acc']}")
+            lines.append(f"    protein_label: {yaml_escape(ex['name'] or ex['acc'])}")
+            if ex.get("org"):
+                lines.append(f"    taxon_label: {yaml_escape(ex['org'])}")
+            lines.append(f"    note: {yaml_escape('ELM true-positive instance')}")
+            lines.append("    source: CURATOR")
+            lines.append("    features:")
+            lines.append(f"      - start: {ex['s']}")
+            lines.append(f"        end: {ex['e']}")
+            lines.append("        feature_type: MOTIF")
+            lines.append("        trait_axis: SEQUENCE")
+            lines.append(f"        trait_category: {category}")
     lines.append(f"license: {LICENSE}")
     return "\n".join(lines) + "\n"
 
@@ -91,12 +136,13 @@ def main() -> int:
         print("missing data/raw/elm/elm_classes.tsv; run `just fetch-elm`", file=sys.stderr)
         return 2
 
+    instances = load_instances()
     rows = [ln for ln in RAW.read_text(encoding="utf-8", errors="replace").splitlines()
             if not ln.startswith("#")]
     reader = csv.reader(rows, delimiter="\t")
     header = next(reader)
     idx = {c: i for i, c in enumerate(header)}
-    written = skipped = total = 0
+    written = skipped = total = n_ex = 0
     by_cat: dict[str, int] = {}
     for row in reader:
         if len(row) < len(header):
@@ -114,8 +160,10 @@ def main() -> int:
         category, subdir = route
         by_cat[category] = by_cat.get(category, 0) + 1
         total += 1
+        exs = instances.get(elm_id, [])
+        n_ex += min(len(exs), EXAMPLES_CAP)
         text = build_yaml(acc, elm_id, g("FunctionalSiteName"), g("Description"),
-                          g("Regex"), category)
+                          g("Regex"), category, exs)
         path = OUT_BASE / subdir / "elm" / f"{slugify(elm_id)}-{acc.lower()}.yaml"
         if path.exists() and not args.force:
             skipped += 1
@@ -125,7 +173,7 @@ def main() -> int:
             path.write_text(text, encoding="utf-8")
             written += 1
 
-    print(f"{total} ELM motif classes → SEQUENCE ({by_cat}).")
+    print(f"{total} ELM motif classes → SEQUENCE ({by_cat}); {n_ex} protein examples attached.")
     if args.apply:
         print(f"Wrote {written}; skipped {skipped} existing.")
     else:

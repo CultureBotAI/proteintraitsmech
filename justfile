@@ -208,6 +208,7 @@ seed-ideal *args:
 fetch-elm:
     mkdir -p data/raw/elm
     curl -sSLf --max-time 60 -o data/raw/elm/elm_classes.tsv http://elm.eu.org/elms/elms_index.tsv
+    curl -sSLf --max-time 90 -o data/raw/elm/elm_instances.tsv "http://elm.eu.org/instances.tsv?q=*"
 
 seed-elm *args:
     python3 scripts/seed_elm.py {{args}}
