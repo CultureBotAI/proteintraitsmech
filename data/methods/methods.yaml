@@ -1,0 +1,258 @@
+# ProteinTraitsMech — detection-method catalogue
+#
+# "How is a trait detected / predicted / computed on a real protein?" Method is
+# largely a function of either the DATA SOURCE (how that source's signatures are
+# scanned) or the TRAIT CATEGORY (the common-parent feature — e.g. every
+# SEQ_DISORDER trait is found by disorder predictors, regardless of source).
+# So this catalogue is keyed both ways; the browser resolves a record's methods
+# as by_source[src] + by_category[cat] (source first).
+#
+# Each method is grounded: `edam` = EDAM operation (what it does), `tool` =
+# bio.tools id or URL (which software), `ref` = PMID/DOI, `eco` = Evidence &
+# Conclusion Ontology code (evidence kind), `recipe` = a runnable command
+# template ({input}/{db}/{output} placeholders). This KB *describes* methods —
+# it does not run them; recipes are documentation, not a workflow engine.
+# See research/methods-recipes-tools-round1.md.
+
+meta:
+  edam: http://edamontology.org/
+  biotools: https://bio.tools/
+  eco: https://www.evidenceontology.org/
+  note: >-
+    method_type values map to ECO: SEQUENCE_PATTERN/HMM_PROFILE/PROFILE_MATRIX →
+    ECO:0000203 (sequence-analysis evidence); ML_PREDICTOR → ECO:0007653
+    (computational combinatorial evidence); STRUCTURAL_ALGORITHM → ECO:0000041
+    (similarity/structure evidence); HOMOLOGY_TRANSFER → ECO:0000250;
+    EXPERIMENTAL → ECO:0000269.
+
+# ---------------------------------------------------------------- by SOURCE ---
+by_source:
+  PROSITE:
+    - name: ps_scan / ScanProsite
+      method_type: SEQUENCE_PATTERN
+      edam: EDAM:operation_0361        # sequence annotation
+      tool: biotools:ps_scan
+      ref: PMID:16845026
+      eco: ECO:0000203
+      recipe: "ps_scan.pl -d prosite.dat {input.fasta}   # or web ScanProsite"
+  Pfam:
+    - name: hmmsearch / hmmscan (Pfam-A)
+      method_type: HMM_PROFILE
+      edam: EDAM:operation_0347        # sequence database search (HMM)
+      tool: biotools:hmmer
+      ref: PMID:22039361
+      eco: ECO:0000203
+      recipe: "hmmsearch --cut_ga Pfam-A.hmm {input.fasta}"
+  InterPro:
+    - name: InterProScan
+      method_type: HMM_PROFILE
+      edam: EDAM:operation_0361
+      tool: biotools:interproscan
+      ref: PMID:24451626
+      eco: ECO:0000203
+      recipe: "interproscan.sh -i {input.fasta} -appl Pfam,PROSITE,SMART,Gene3D -f TSV"
+  NCBIfam:
+    - name: hmmsearch (NCBIfam) / AMRFinderPlus
+      method_type: HMM_PROFILE
+      edam: EDAM:operation_0347
+      tool: biotools:amrfinderplus
+      ref: PMID:34135355
+      eco: ECO:0000203
+      recipe: "hmmsearch hmm_PGAP.HMM {input.fasta}   # or amrfinder -p {input.fasta}"
+  CDD:
+    - name: RPS-BLAST / CD-Search
+      method_type: PROFILE_MATRIX
+      edam: EDAM:operation_0347
+      tool: biotools:cd-search
+      ref: PMID:25414356
+      eco: ECO:0000203
+      recipe: "rpsblast -query {input.fasta} -db Cdd -evalue 0.01 -outfmt 6"
+  ELM:
+    - name: SLiMSearch / ELM regex scan
+      method_type: SEQUENCE_PATTERN
+      edam: EDAM:operation_0239        # sequence motif recognition
+      tool: biotools:slimsearch
+      ref: PMID:26908899
+      eco: ECO:0000203
+      recipe: "grep -oP '<Regex>' {input.fasta}   # or ELM/SLiMSearch web with disorder+conservation filters"
+  MEROPS:
+    - name: MEROPS Batch BLAST / hmmscan
+      method_type: HMM_PROFILE
+      edam: EDAM:operation_0347
+      tool: https://www.ebi.ac.uk/merops/
+      ref: PMID:29145643
+      eco: ECO:0000203
+      recipe: "hmmscan merops_scan.lib {input.fasta}   # or MEROPS Batch BLAST"
+  CATH:
+    - name: Gene3D (CATH-assign, HMMER)
+      method_type: HMM_PROFILE
+      edam: EDAM:operation_0303        # fold recognition / structure prediction
+      tool: biotools:gene3d
+      ref: PMID:33021670
+      eco: ECO:0000203
+      recipe: "cath-genomescan.pl -i {input.fasta} -l cath-funfam-hmm3.lib"
+  SCOPe:
+    - name: SUPERFAMILY (SCOP HMMs)
+      method_type: HMM_PROFILE
+      edam: EDAM:operation_0303
+      tool: biotools:superfamily
+      ref: PMID:21062764
+      eco: ECO:0000203
+      recipe: "hmmscan supfam.hmm {input.fasta}"
+  TED:
+    - name: Merizo / Chainsaw (domain chopping) + Foldseek
+      method_type: STRUCTURAL_ALGORITHM
+      edam: EDAM:operation_3899        # protein-domain assignment / structure comparison
+      tool: biotools:foldseek
+      ref: PMID:38538027
+      eco: ECO:0000041
+      recipe: "merizo predict {input.pdb}; foldseek easy-search {input.pdb} tedDB res tmp"
+  RepeatsDB:
+    - name: ReUPred / structural repeat detection
+      method_type: STRUCTURAL_ALGORITHM
+      edam: EDAM:operation_2488        # protein secondary/structure feature
+      tool: https://repeatsdb.org/
+      ref: PMID:36629399
+      eco: ECO:0000041
+      recipe: "# ReUPred on {input.pdb}; or map via RepeatsDB annotations"
+  TCDB:
+    - name: BLAST vs TCDB (TCDB-BLAST)
+      method_type: HOMOLOGY_TRANSFER
+      edam: EDAM:operation_0346        # sequence similarity search
+      tool: https://tcdb.org/
+      ref: PMID:33170213
+      eco: ECO:0000250
+      recipe: "blastp -query {input.fasta} -db tcdb -evalue 1e-5   # TCDB-BLAST"
+  COG:
+    - name: eggNOG-mapper / COGclassifier / RPS-BLAST(COG)
+      method_type: HOMOLOGY_TRANSFER
+      edam: EDAM:operation_0324        # phylogenetic/ortholog inference
+      tool: biotools:eggnog-mapper
+      ref: PMID:34597405
+      eco: ECO:0000250
+      recipe: "emapper.py -i {input.fasta} -o out   # COG in the annotations"
+  ExPASy ENZYME:
+    - name: EC-number prediction (DeepEC / CLEAN) or InterPro2GO transfer
+      method_type: ML_PREDICTOR
+      edam: EDAM:operation_3778        # text/EC annotation; enzyme prediction
+      tool: biotools:deepec
+      ref: PMID:36219571
+      eco: ECO:0007653
+      recipe: "CLEAN --fasta {input.fasta}   # predict EC; or transfer from InterPro/UniRule"
+  Rhea:
+    - name: reaction assignment via EC / UniProt annotation
+      method_type: HOMOLOGY_TRANSFER
+      edam: EDAM:operation_3803
+      tool: https://www.rhea-db.org/
+      ref: PMID:34755880
+      eco: ECO:0000250
+      recipe: "# Rhea follows from the assigned EC / UniProt catalytic-activity annotation"
+  CARD/ARO:
+    - name: RGI (Resistance Gene Identifier)
+      method_type: HOMOLOGY_TRANSFER
+      edam: EDAM:operation_3482        # antimicrobial resistance prediction
+      tool: biotools:rgi
+      ref: PMID:36263822
+      eco: ECO:0000250
+      recipe: "rgi main -i {input.fasta} -t protein -o rgi_out"
+  M-CSA:
+    - name: catalytic-site transfer (homology to M-CSA templates)
+      method_type: HOMOLOGY_TRANSFER
+      edam: EDAM:operation_0420        # catalytic residue prediction
+      tool: https://www.ebi.ac.uk/thornton-srv/m-csa/
+      ref: PMID:29140459
+      eco: ECO:0000250
+      recipe: "# transfer catalytic residues from the aligned M-CSA reference structure"
+  DisProt:
+    - name: (curated experimental; see SEQ_DISORDER predictors)
+      method_type: EXPERIMENTAL
+      edam: EDAM:operation_0472
+      tool: https://disprot.org/
+      ref: PMID:34850135
+      eco: ECO:0000269
+      recipe: "# DisProt regions are curated from experiment; predict with by_category SEQ_DISORDER tools"
+
+# -------------------------------------------------------------- by CATEGORY ---
+by_category:
+  SEQ_DISORDER:
+    - {name: MobiDB-lite, method_type: ML_PREDICTOR, edam: EDAM:operation_0472, tool: biotools:mobidb-lite, ref: PMID:28453701, eco: ECO:0007653, recipe: "mobidb_lite.py {input.fasta} -o {output.json}"}
+    - {name: IUPred3, method_type: ML_PREDICTOR, edam: EDAM:operation_0472, tool: biotools:iupred, ref: PMID:34048569, eco: ECO:0007653, recipe: "iupred3 {input.fasta} long"}
+    - {name: AlphaFold pLDDT (< 50 → disorder), method_type: STRUCTURAL_ALGORITHM, edam: EDAM:operation_0472, tool: biotools:alphafold, ref: PMID:34265844, eco: ECO:0000041, recipe: "# per-residue pLDDT from the AlphaFold model"}
+  SEQ_SIGNAL_PEPTIDE:
+    - {name: SignalP 6.0, method_type: ML_PREDICTOR, edam: EDAM:operation_0418, tool: biotools:signalp, ref: PMID:34980915, eco: ECO:0007653, recipe: "signalp6 --fastafile {input.fasta} --organism other"}
+  SEQ_TRANSIT_PEPTIDE:
+    - {name: TargetP 2.0, method_type: ML_PREDICTOR, edam: EDAM:operation_0418, tool: biotools:targetp, ref: PMID:31570514, eco: ECO:0007653, recipe: "targetp2 -fasta {input.fasta} -org non-pl"}
+  SEQ_TARGETING_SIGNAL:
+    - {name: ELM regex / cNLS Mapper (NLS), method_type: SEQUENCE_PATTERN, edam: EDAM:operation_0239, tool: biotools:slimsearch, ref: PMID:26908899, eco: ECO:0000203, recipe: "# match the ELM TRG regex; cNLS Mapper for NLS"}
+  SEQ_LEADER_PEPTIDE:
+    - {name: antiSMASH / BAGEL4 / RODEO (RiPP), method_type: HMM_PROFILE, edam: EDAM:operation_0436, tool: biotools:antismash, ref: PMID:37140036, eco: ECO:0000203, recipe: "antismash {input.gbk}   # or BAGEL4 web"}
+  SEQ_CLEAVAGE_SITE:
+    - {name: ProP / SignalP (cleavage) / MEROPS, method_type: ML_PREDICTOR, edam: EDAM:operation_0422, tool: biotools:prop, ref: PMID:15115854, eco: ECO:0007653, recipe: "prop {input.fasta}"}
+  SEQ_PROPEPTIDE:
+    - {name: ProP (proprotein-convertase sites), method_type: ML_PREDICTOR, edam: EDAM:operation_0422, tool: biotools:prop, ref: PMID:15115854, eco: ECO:0007653, recipe: "prop -c {input.fasta}"}
+  SEQ_PTM_SITE:
+    - {name: MusiteDeep, method_type: ML_PREDICTOR, edam: EDAM:operation_0417, tool: biotools:musitedeep, ref: PMID:32406920, eco: ECO:0007653, recipe: "musitedeep predict -input {input.fasta}"}
+  SEQ_MODIFIED_RESIDUE:
+    - {name: MusiteDeep / NetPhos, method_type: ML_PREDICTOR, edam: EDAM:operation_0417, tool: biotools:netphos, ref: PMID:10600390, eco: ECO:0007653, recipe: "netphos {input.fasta}"}
+  SEQ_GLYCOSYLATION_SITE:
+    - {name: NetNGlyc / NetOGlyc, method_type: ML_PREDICTOR, edam: EDAM:operation_0417, tool: biotools:netnglyc, ref: PMID:32853469, eco: ECO:0007653, recipe: "netNglyc {input.fasta}"}
+  SEQ_LIPIDATION_SITE:
+    - {name: GPS-Lipid / Myristoylator, method_type: ML_PREDICTOR, edam: EDAM:operation_0417, tool: biotools:gps-lipid, ref: PMID:27087650, eco: ECO:0007653, recipe: "# GPS-Lipid web on {input.fasta}"}
+  SEQ_MOTIF:
+    - {name: ps_scan / SLiMSearch, method_type: SEQUENCE_PATTERN, edam: EDAM:operation_0239, tool: biotools:ps_scan, ref: PMID:16845026, eco: ECO:0000203, recipe: "ps_scan.pl {input.fasta}"}
+  SEQ_REPEAT:
+    - {name: RADAR / HHrepID / T-REKS, method_type: SEQUENCE_PATTERN, edam: EDAM:operation_0237, tool: biotools:t-reks, ref: PMID:19399238, eco: ECO:0000203, recipe: "t-reks -infile {input.fasta}"}
+  SEQ_COMPOSITION:
+    - {name: SEG / fLPS, method_type: SEQUENCE_PATTERN, edam: EDAM:operation_0429, tool: biotools:flps, ref: PMID:28109103, eco: ECO:0000203, recipe: "fLPS {input.fasta}"}
+  SEQ_CONSERVATION:
+    - {name: ConSurf / Rate4Site, method_type: ML_PREDICTOR, edam: EDAM:operation_0448, tool: biotools:consurf, ref: PMID:27166375, eco: ECO:0007653, recipe: "rate4site -s {input.aln} -t {input.tree}"}
+  SEQ_EPITOPE:
+    - {name: BepiPred 3.0 / IEDB, method_type: ML_PREDICTOR, edam: EDAM:operation_0252, tool: biotools:bepipred, ref: PMID:35714009, eco: ECO:0007653, recipe: "bepipred3 {input.fasta}"}
+  STRUCT_SECONDARY:
+    - {name: DSSP, method_type: STRUCTURAL_ALGORITHM, edam: EDAM:operation_0320, tool: biotools:dssp, ref: PMID:6667333, eco: ECO:0000041, recipe: "mkdssp {input.pdb} {output.dssp}"}
+  STRUCT_FOLD:
+    - {name: Foldseek / DALI, method_type: STRUCTURAL_ALGORITHM, edam: EDAM:operation_2487, tool: biotools:foldseek, ref: PMID:37156916, eco: ECO:0000041, recipe: "foldseek easy-search {input.pdb} pdb res tmp"}
+  STRUCT_DOMAIN:
+    - {name: InterProScan / Merizo (structural domain chopping), method_type: HMM_PROFILE, edam: EDAM:operation_3899, tool: biotools:interproscan, ref: PMID:24451626, eco: ECO:0000203, recipe: "interproscan.sh -i {input.fasta}"}
+  STRUCT_HOMOLOGOUS_SUPERFAMILY:
+    - {name: Gene3D / SUPERFAMILY, method_type: HMM_PROFILE, edam: EDAM:operation_0303, tool: biotools:gene3d, ref: PMID:33021670, eco: ECO:0000203, recipe: "cath-genomescan.pl -i {input.fasta}"}
+  STRUCT_ACTIVE_SITE:
+    - {name: M-CSA transfer / CSA-3D, method_type: HOMOLOGY_TRANSFER, edam: EDAM:operation_0420, tool: https://www.ebi.ac.uk/thornton-srv/m-csa/, ref: PMID:29140459, eco: ECO:0000250, recipe: "# transfer from aligned M-CSA template"}
+  STRUCT_BINDING_SITE:
+    - {name: fpocket / P2Rank, method_type: STRUCTURAL_ALGORITHM, edam: EDAM:operation_3897, tool: biotools:p2rank, ref: PMID:30109435, eco: ECO:0000041, recipe: "prank predict -f {input.pdb}"}
+  STRUCT_CAVITY:
+    - {name: fpocket, method_type: STRUCTURAL_ALGORITHM, edam: EDAM:operation_3897, tool: biotools:fpocket, ref: PMID:19961576, eco: ECO:0000041, recipe: "fpocket -f {input.pdb}"}
+  STRUCT_METAL_SITE:
+    - {name: MetalPDB / BioMetAll, method_type: STRUCTURAL_ALGORITHM, edam: EDAM:operation_3899, tool: https://metalpdb.cerm.unifi.it/, ref: PMID:29846656, eco: ECO:0000041, recipe: "# BioMetAll on {input.pdb}"}
+  STRUCT_DISULFIDE:
+    - {name: DiANNA / DISULFIND, method_type: ML_PREDICTOR, edam: EDAM:operation_0418, tool: biotools:disulfind, ref: PMID:16844986, eco: ECO:0007653, recipe: "disulfind {input.fasta}"}
+  STRUCT_STABILITY:
+    - {name: FoldX / DDGun (ΔΔG); nano-DSF (experimental), method_type: STRUCTURAL_ALGORITHM, edam: EDAM:operation_0331, tool: biotools:foldx, ref: PMID:15980494, eco: ECO:0000041, recipe: "foldx --command=Stability --pdb={input.pdb}"}
+  STRUCT_DYNAMICS:
+    - {name: normal-mode analysis / MD (B-factor proxy), method_type: STRUCTURAL_ALGORITHM, edam: EDAM:operation_0387, tool: biotools:prody, ref: PMID:33822884, eco: ECO:0000041, recipe: "prody anm {input.pdb}"}
+  STRUCT_SURFACE:
+    - {name: FreeSASA / NACCESS (SASA), method_type: STRUCTURAL_ALGORITHM, edam: EDAM:operation_0387, tool: biotools:freesasa, ref: PMID:26973785, eco: ECO:0000041, recipe: "freesasa {input.pdb}"}
+  FUNC_ENZYMATIC_ACTIVITY:
+    - {name: DeepEC / CLEAN (EC prediction), method_type: ML_PREDICTOR, edam: EDAM:operation_3778, tool: biotools:clean-ec, ref: PMID:36219571, eco: ECO:0007653, recipe: "CLEAN --fasta {input.fasta}"}
+  FUNC_BINDING_CAPACITY:
+    - {name: DeepGO / NetGO 3 (GO MF), method_type: ML_PREDICTOR, edam: EDAM:operation_1777, tool: biotools:deepgo, ref: PMID:32976559, eco: ECO:0007653, recipe: "deepgo predict {input.fasta}"}
+  FUNC_TRANSPORT:
+    - {name: TCDB-BLAST / TransportTP, method_type: HOMOLOGY_TRANSFER, edam: EDAM:operation_0346, tool: https://tcdb.org/, ref: PMID:33170213, eco: ECO:0000250, recipe: "blastp -query {input.fasta} -db tcdb"}
+  FUNC_PATHWAY:
+    - {name: KofamScan / GhostKOALA (KEGG); GO BP, method_type: HMM_PROFILE, edam: EDAM:operation_3660, tool: biotools:kofamscan, ref: PMID:31742321, eco: ECO:0000203, recipe: "exec_annotation -f mapper {input.fasta}"}
+  FUNC_ORTHOLOG_GROUP:
+    - {name: eggNOG-mapper, method_type: HOMOLOGY_TRANSFER, edam: EDAM:operation_0324, tool: biotools:eggnog-mapper, ref: PMID:34597405, eco: ECO:0000250, recipe: "emapper.py -i {input.fasta} -o out"}
+  FUNC_RESISTANCE:
+    - {name: RGI (CARD) / AMRFinderPlus, method_type: HOMOLOGY_TRANSFER, edam: EDAM:operation_3482, tool: biotools:rgi, ref: PMID:36263822, eco: ECO:0000250, recipe: "rgi main -i {input.fasta} -t protein"}
+  FUNC_LOCALIZATION:
+    - {name: DeepLoc 2.0 / WoLF PSORT, method_type: ML_PREDICTOR, edam: EDAM:operation_2489, tool: biotools:deeploc, ref: PMID:35648435, eco: ECO:0007653, recipe: "deeploc2 -f {input.fasta}"}
+  FUNC_INTERACTION_PARTNER:
+    - {name: STRING / IntAct, method_type: HOMOLOGY_TRANSFER, edam: EDAM:operation_2464, tool: biotools:string, ref: PMID:36370105, eco: ECO:0000250, recipe: "# query STRING/IntAct for the accession"}
+  FUNC_COFACTOR_REQUIREMENT:
+    - {name: UniRule / homology (cofactor annotation), method_type: HOMOLOGY_TRANSFER, edam: EDAM:operation_1777, tool: https://www.uniprot.org/, ref: PMID:36408920, eco: ECO:0000250, recipe: "# transfer CC COFACTOR from a characterised homolog"}
+  FUNC_ENVIRONMENTAL_RESPONSE:
+    - {name: GO BP response prediction (DeepGO), method_type: ML_PREDICTOR, edam: EDAM:operation_1777, tool: biotools:deepgo, ref: PMID:32976559, eco: ECO:0007653, recipe: "deepgo predict {input.fasta}"}
+  EVO_CONSERVATION:
+    - {name: OrthoFinder / ConSurf, method_type: ML_PREDICTOR, edam: EDAM:operation_0324, tool: biotools:orthofinder, ref: PMID:31727128, eco: ECO:0007653, recipe: "orthofinder -f {input.proteomes}/"}
+  EVO_PANGENOME:
+    - {name: PPanGGOLiN / Roary / panaroo, method_type: ML_PREDICTOR, edam: EDAM:operation_0324, tool: biotools:ppanggolin, ref: PMID:32191703, eco: ECO:0007653, recipe: "ppanggolin workflow --anno {input.gff_list}"}

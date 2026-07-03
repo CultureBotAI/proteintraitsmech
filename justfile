@@ -176,6 +176,10 @@ fetch-chebi:
 build-chebi:
     python3 scripts/build_chebi_sidecar.py
 
+# Validate data/methods/methods.yaml + build docs/data/methods.json (detection methods)
+build-methods:
+    python3 scripts/build_methods.py
+
 fetch-repeatsdb:
     mkdir -p data/raw/repeatsdb
     curl -sSLf --max-time 60 -o data/raw/repeatsdb/classification.json https://repeatsdb.org/api/production/classification

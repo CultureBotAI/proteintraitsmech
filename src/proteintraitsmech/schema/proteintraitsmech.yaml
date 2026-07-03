@@ -204,6 +204,17 @@ classes:
         inlined_as_list: true
         range: TraitRelation
 
+      detection_methods:
+        description: >-
+          Record-specific methods/tools/recipes for detecting this trait on a
+          real protein — an override of the by-source / by-category catalogue in
+          `data/methods/methods.yaml` (which the docs browser resolves and shows
+          for every record). Grounded in EDAM (operation), bio.tools (tool),
+          ECO (evidence). See `DetectionMethod`.
+        multivalued: true
+        inlined_as_list: true
+        range: DetectionMethod
+
       sequence_pattern:
         description: >-
           Raw sequence pattern for SEQUENCE-axis traits — e.g. a PROSITE
@@ -730,6 +741,36 @@ classes:
         description: Where the relation comes from (source name, mapping, or "derived").
         range: string
 
+  DetectionMethod:
+    description: >-
+      A method/tool/recipe for detecting, predicting, or computing a trait on a
+      protein. Grounded in EDAM (operation), bio.tools (tool identity) and ECO
+      (evidence kind); `recipe` is a runnable command template — documentation,
+      not an executed workflow.
+    attributes:
+      name:
+        description: Human name of the method/tool (e.g. "MobiDB-lite", "hmmsearch").
+        required: true
+        range: string
+      method_type:
+        description: Broad method kind (maps to ECO).
+        range: MethodTypeEnum
+      edam_operation:
+        description: EDAM operation CURIE for what the method does (e.g. EDAM:operation_0472).
+        range: string
+      tool:
+        description: bio.tools CURIE (biotools:<id>) or tool URL.
+        range: string
+      reference:
+        description: PMID / DOI CURIE for the method.
+        range: string
+      evidence_code:
+        description: ECO CURIE for the kind of evidence the method yields.
+        range: string
+      recipe:
+        description: A runnable command template ({input}/{db}/{output} placeholders).
+        range: string
+
   CurationEvent:
     description: A timestamped curator action on a ProteinTraitRecord.
     attributes:
@@ -1036,6 +1077,24 @@ enums:
       NARROW_SYNONYM:
       BROAD_SYNONYM:
       RELATED_SYNONYM:
+
+  MethodTypeEnum:
+    description: Broad kind of a DetectionMethod (aligns to ECO evidence classes).
+    permissible_values:
+      SEQUENCE_PATTERN:
+        description: Regex / PROSITE-style pattern scan (→ ECO:0000203).
+      HMM_PROFILE:
+        description: Profile-HMM search, e.g. hmmsearch/hmmscan (→ ECO:0000203).
+      PROFILE_MATRIX:
+        description: PSSM / position-specific matrix search, e.g. RPS-BLAST (→ ECO:0000203).
+      STRUCTURAL_ALGORITHM:
+        description: Structure-based computation (DSSP, Foldseek, fpocket) (→ ECO:0000041).
+      ML_PREDICTOR:
+        description: Machine-learning predictor (→ ECO:0007653).
+      HOMOLOGY_TRANSFER:
+        description: Annotation transferred from a characterised homolog (→ ECO:0000250).
+      EXPERIMENTAL:
+        description: Experimentally determined (→ ECO:0000269).
 
   ChemicalRoleEnum:
     description: Role of a ChemicalParticipant relative to a trait's activity.

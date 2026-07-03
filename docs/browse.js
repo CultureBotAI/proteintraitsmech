@@ -597,6 +597,7 @@ async function renderDetail(r) {
         ${row("Cross-references", `<dd>${xrefsHtml}</dd>`, true)}
         ${mappedHtml ? row("Mapped associations", `<dd>${mappedHtml}</dd>`, true) : ""}
         ${(r.cp || []).length ? row("Chemistry", `<dd id="chem-list">${chemistryHtml(r)}</dd>`, true) : ""}
+        ${row("Detection methods", `<dd id="method-list">${METHODS ? (methodsHtml(r) || "<em>—</em>") : "<em>loading…</em>"}</dd>`, true)}
         ${row("Source file", `<dd><a href="${escapeAttr(rawYamlLink)}" target="_blank" rel="noopener"><code>${escapeHTML(r.path)}</code></a></dd>`, true)}
       </dl>
     </div>`;
@@ -611,6 +612,57 @@ async function renderDetail(r) {
       }
     });
   }
+  // Fill the detection-methods row once the (small) methods catalogue loads —
+  // resolved from the record's source + category, not stored per-record.
+  loadMethods().then(() => {
+    if (window.location.hash === "#record=" + encodeURIComponent(r.id)) {
+      const dd = document.getElementById("method-list");
+      if (dd) dd.innerHTML = methodsHtml(r) || "<em>— (no catalogued method for this source/category)</em>";
+    }
+  });
+}
+
+// Methods catalogue (data/methods.json): how a trait is detected/predicted,
+// keyed by_source + by_category. Loaded once on first detail view, cached.
+let METHODS = null;
+let METHODS_PROMISE = null;
+function loadMethods() {
+  if (!METHODS_PROMISE) {
+    METHODS_PROMISE = fetch("data/methods.json")
+      .then(res => (res.ok ? res.json() : {}))
+      .then(j => { METHODS = j; return j; })
+      .catch(() => { METHODS = {}; return {}; });
+  }
+  return METHODS_PROMISE;
+}
+
+// A record's detection methods = source-specific ∪ category-generic (the
+// common-parent feature), source first, de-duplicated by name.
+function methodsHtml(r) {
+  if (!METHODS) return "";
+  const bs = (METHODS.by_source || {})[r.src] || [];
+  const bc = (METHODS.by_category || {})[r.cat] || [];
+  const seen = new Set();
+  const items = [];
+  for (const [group, list] of [["source", bs], ["category", bc]]) {
+    for (const m of list) {
+      if (!m || seen.has(m.name)) continue;
+      seen.add(m.name);
+      const toolLink = m.tool && m.tool.startsWith("biotools:")
+        ? `<a href="https://bio.tools/${m.tool.slice(9)}" target="_blank" rel="noopener">${escapeHTML(m.tool.slice(9))}</a>`
+        : (m.tool ? `<a href="${escapeAttr(m.tool)}" target="_blank" rel="noopener">tool</a>` : "");
+      const grounding = [m.edam, m.eco].filter(Boolean).map(escapeHTML).join(" · ");
+      items.push(`<li>
+        <strong>${escapeHTML(m.name)}</strong>
+        <span class="map-src">${escapeHTML((m.method_type || "").toLowerCase().replace(/_/g, " "))} · ${group}</span>
+        ${toolLink ? " · " + toolLink : ""}
+        ${m.ref ? " · " + curieLink(m.ref) : ""}
+        ${m.recipe ? `<div class="pre" style="margin:.25rem 0 0">${escapeHTML(m.recipe)}</div>` : ""}
+        ${grounding ? `<div class="map-src">${grounding}</div>` : ""}
+      </li>`);
+    }
+  }
+  return items.length ? `<ul class="xref-list">${items.join("")}</ul>` : "";
 }
 
 // ChEBI sidecar (data/chebi.json): CHEBI id → {name, formula, inchikey}. One
