@@ -49,6 +49,31 @@ const PREFIXES = {
   proteintraitsmech: null, // internal — no external resolver
 };
 
+// Trait identifier prefix → UniProt search query for "all proteins carrying
+// this family id". The query is a pure function of the id, so the members link
+// is derived (no per-record data). CATH is exposed in UniProt as Gene3D; SCOP
+// via SUPERFAMILY (needs an sccs→SSF map, so omitted here).
+const MEMBER_QUERY = {
+  Pfam:        id => `xref:pfam-${id}`,
+  InterPro:    id => `xref:interpro-${id}`,
+  CATH:        id => `xref:gene3d-${id}`,
+  SUPERFAMILY: id => `xref:supfam-${id}`,
+  PROSITE:     id => `xref:prosite-${id}`,
+  SMART:       id => `xref:smart-${id}`,
+  HAMAP:       id => `xref:hamap-${id}`,
+  PANTHER:     id => `xref:panther-${id}`,
+};
+
+// Return the UniProtKB "all family members" search URL for a record id, or null.
+function uniprotMembersUrl(curie) {
+  const i = (curie || "").indexOf(":");
+  if (i < 0) return null;
+  const fn = MEMBER_QUERY[curie.slice(0, i)];
+  if (!fn) return null;
+  return "https://www.uniprot.org/uniprotkb?query=" +
+         encodeURIComponent(fn(curie.slice(i + 1)));
+}
+
 const FACET_GROUPS = [
   { key: "axis", label: "Axis" },
   { key: "src",  label: "Source" },
@@ -406,6 +431,10 @@ function renderDetail(r) {
         ${residueRow}
         ${parentRow}
         ${examplesRow}
+        ${uniprotMembersUrl(r.id)
+          ? row("UniProt members",
+                `<dd><a href="${escapeAttr(uniprotMembersUrl(r.id))}" target="_blank" rel="noopener">all proteins carrying ${escapeHTML(r.id)} ↗</a></dd>`, true)
+          : ""}
         ${row("Cross-references", `<dd>${xrefsHtml}</dd>`, true)}
         ${row("Source file", `<dd><a href="${escapeAttr(rawYamlLink)}" target="_blank" rel="noopener"><code>${escapeHTML(r.path)}</code></a></dd>`, true)}
       </dl>
