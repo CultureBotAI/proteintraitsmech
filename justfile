@@ -180,6 +180,12 @@ build-chebi:
 build-methods:
     python3 scripts/build_methods.py
 
+# Build data/equivalence/cross_source.tsv — biolink:close_match edges from the
+# InterPro member-DB integration (Phase 1 of research/entry-merge-methods-round1).
+# Reads docs/data/records.*.json (run `just build-docs` first) + interpro.xml.gz.
+build-equivalence:
+    python3 scripts/build_equivalence.py
+
 fetch-repeatsdb:
     mkdir -p data/raw/repeatsdb
     curl -sSLf --max-time 60 -o data/raw/repeatsdb/classification.json https://repeatsdb.org/api/production/classification

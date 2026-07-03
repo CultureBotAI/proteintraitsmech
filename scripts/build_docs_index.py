@@ -188,6 +188,28 @@ def mx_predicate(mapping_source: str) -> str:
     return _MX_PRED.get(mapping_source, "biolink:related_to")
 
 
+# Cross-source equivalence overlay (data/equivalence/cross_source.tsv) — Biolink
+# close_match edges from the merge-methods work (scripts/build_equivalence.py),
+# loaded bidirectionally so both ends of each edge show the equivalence.
+EQUIV: dict[str, list] = {}
+
+
+def load_equivalence() -> None:
+    path = REPO_ROOT / "data" / "equivalence" / "cross_source.tsv"
+    if not path.exists():
+        return
+    for i, line in enumerate(path.read_text(encoding="utf-8").splitlines()):
+        if i == 0 or not line.strip():
+            continue
+        c = line.split("\t")
+        if len(c) < 4:
+            continue
+        subj, pred, obj, src = c[0], c[1], c[2], c[3]
+        EQUIV.setdefault(subj, []).append([obj, pred, src])
+        EQUIV.setdefault(obj, []).append([subj, pred, src])
+    print(f"equivalence overlay: {len(EQUIV):,} records with close_match edges")
+
+
 def truncate(text: str, limit: int = DEF_TRUNC) -> str:
     text = " ".join((text or "").split())
     if len(text) <= limit:
@@ -273,6 +295,9 @@ def load_record(path: Path) -> dict[str, Any] | None:
         "cp": [[c.get("chebi"), c.get("role")]
                for c in (data.get("chemical_participants") or []) if c.get("chebi")],
         "ex": [_project_example(e) for e in (data.get("canonical_examples") or [])],
+        # Cross-source equivalence [object, predicate, relation_source] from the
+        # overlay (not stored on the YAML). Empty for most records.
+        "eq": EQUIV.get(identifier, []),
         "path": rel,
     }
 
@@ -291,7 +316,7 @@ MAX_SHARD_RECORDS = 25000
 # upfront payload small (~200k records × everything = ~108 MB → ~21 MB lean).
 # `def` is special-cased: the list keeps a short snippet (card preview +
 # search); the full text goes to the sidecar.
-DETAIL_ONLY = ("path", "pt", "xr", "mx", "cp", "ex", "rs", "pat")
+DETAIL_ONLY = ("path", "pt", "xr", "mx", "cp", "ex", "eq", "rs", "pat")
 LIST_DEF = 140
 
 
@@ -390,6 +415,7 @@ def write_shards(records: list[dict]) -> list[dict]:
 
 def main() -> int:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
+    load_equivalence()
     records: list[dict] = []
     skipped = 0
     for path in sorted(TRAITS_DIR.rglob("*.yaml")):

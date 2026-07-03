@@ -533,6 +533,17 @@ async function renderDetail(r) {
        </ul>`
     : "";
 
+  // Cross-source equivalence (biolink:close_match) from the InterPro member-DB
+  // integration overlay — [object, predicate, relation_source] triples, linked
+  // both ways (an InterPro entry lists its member signatures and vice-versa).
+  const eqHtml = (r.eq || []).length
+    ? `<ul class="xref-list">
+        ${r.eq.map(([obj, pred, src]) =>
+          `<li>${curieLink(obj)} <span class="map-src">${escapeHTML((pred || "biolink:close_match").replace("biolink:", ""))} · via ${escapeHTML(src || "mapping")}</span></li>`
+        ).join("")}
+       </ul>`
+    : "";
+
   const patternRow = r.pat
     ? row("Sequence pattern", `<dd class="pre">${escapeHTML(r.pat)}</dd>`, true)
     : "";
@@ -596,6 +607,7 @@ async function renderDetail(r) {
           : ""}
         ${row("Cross-references", `<dd>${xrefsHtml}</dd>`, true)}
         ${mappedHtml ? row("Mapped associations", `<dd>${mappedHtml}</dd>`, true) : ""}
+        ${eqHtml ? row("Equivalent entries", `<dd>${eqHtml}</dd>`, true) : ""}
         ${(r.cp || []).length ? row("Chemistry", `<dd id="chem-list">${chemistryHtml(r)}</dd>`, true) : ""}
         ${row("Detection methods", `<dd id="method-list">${METHODS ? (methodsHtml(r) || "<em>—</em>") : "<em>loading…</em>"}</dd>`, true)}
         ${row("Source file", `<dd><a href="${escapeAttr(rawYamlLink)}" target="_blank" rel="noopener"><code>${escapeHTML(r.path)}</code></a></dd>`, true)}
