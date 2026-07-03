@@ -1,6 +1,16 @@
 #!/usr/bin/env python3
 """Seed ProteinTraitRecord YAMLs from UniProtKB flat-file `FT` lines.
 
+NOTE (2026-07): records emitted here are **per-protein annotations**, which is
+instance-level, not the trait-*class* model the rest of the corpus follows. The
+original B0R5N7 / P25888 demo records were retired for this reason. The
+canonical way to connect real proteins to the KB is `fetch_uniprot_examples.py`,
+which attaches a UniProt entry as a `canonical_example` on the relevant
+class-level trait. This seeder is kept as a demonstration of the FT-type →
+trait-category demultiplexing (see the README table); if re-run, family/domain
+signatures go in `xrefs` (associative), never `parent_traits`.
+
+
 Each supported FT feature (DOMAIN, MOTIF, COMPBIAS, BINDING, ACT_SITE,
 SITE, DISULFID, METAL, MOD_RES, LIPID, CARBOHYD, CROSSLNK, SIGNAL,
 PROPEP, HELIX, STRAND, TURN, and REGION when /note="Disordered")
@@ -589,16 +599,16 @@ def build_yaml(entry: UniProtEntry, ft: dict, axis: str, category: str, release:
     lines.append("term_kind: CLASS")
     lines.append("mapping_status: SEEDED")
 
-    if entry.family_curies:
-        lines.append("parent_traits:")
-        for p in entry.family_curies:
-            lines.append(f"  - {p}")
-
     xrefs = [f"UniProtKB:{entry.accession}"]
     if ft.get("ligand_id"):
         # UniProt FT `/ligand_id` uses `ChEBI:CHEBI:NNNN` form; normalise
         # to the schema's declared `CHEBI:NNNN` CURIE.
         xrefs.append(_normalise_curie(ft["ligand_id"]))
+    # The entry's family/domain signatures (Pfam/InterPro/HAMAP/…) are the
+    # PROTEIN's memberships — associative cross-references, NOT broader classes
+    # of this specific feature-trait, so they go in xrefs, never parent_traits
+    # (see review-source-categories FAMILY_AS_PARENT).
+    xrefs.extend(entry.family_curies)
     lines.append("xrefs:")
     for x in xrefs:
         lines.append(f"  - {x}")
@@ -1018,13 +1028,12 @@ def build_function_yaml(entry: UniProtEntry, rec: dict, release: str) -> str:
     lines.append("term_kind: CLASS")
     lines.append("mapping_status: SEEDED")
 
-    if entry.family_curies:
-        lines.append("parent_traits:")
-        for p in entry.family_curies:
-            lines.append(f"  - {p}")
-
+    # The entry's family/domain signatures (Pfam/InterPro/HAMAP/…) are the
+    # PROTEIN's memberships — associative cross-references, NOT broader classes
+    # of this specific feature-trait, so they join xrefs, never parent_traits
+    # (see review-source-categories FAMILY_AS_PARENT).
     lines.append("xrefs:")
-    for x in dict.fromkeys(rec["xrefs"]):
+    for x in dict.fromkeys(list(rec["xrefs"]) + entry.family_curies):
         lines.append(f"  - {x}")
 
     lines.append("canonical_examples:")

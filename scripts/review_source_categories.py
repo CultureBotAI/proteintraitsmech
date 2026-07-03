@@ -136,8 +136,16 @@ def main() -> int:
                 and up_subj[0].split(":")[1] in ident):
             s["flags"]["INSTANCE_LEVEL"].append(f"{rel}  ({ident})")
 
+        # Family signatures as parents are only a problem when they are
+        # CROSS-namespace associations (e.g. a UniProt-derived record parented
+        # to Pfam/InterPro/HAMAP signatures). A source's own native hierarchy —
+        # PROSITE pattern → PROSITE PDOC, Pfam family → Pfam clan — is a
+        # legitimate broader grouping, so don't flag same-namespace parents.
         parents = [str(p) for p in (d.get("parent_traits") or [])]
-        fam_parents = [p for p in parents if p.split(":")[0] in FAMILY_PREFIXES]
+        id_ns = ident.split(":")[0] if ":" in ident else ""
+        fam_parents = [p for p in parents
+                       if p.split(":")[0] in FAMILY_PREFIXES
+                       and p.split(":")[0] != id_ns]
         if fam_parents and cat not in FAMILY_CATEGORIES:
             s["flags"]["FAMILY_AS_PARENT"].append(
                 f"{rel}  (cat {cat}; parents {', '.join(fam_parents)})")

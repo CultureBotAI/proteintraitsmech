@@ -3,9 +3,18 @@ layout: default
 title: Worked example — P25888
 ---
 
-# Worked example — P25888 (ATP-dependent RNA helicase RhlE, *Escherichia coli* K12)
+# Worked example — how one UniProtKB entry demultiplexes across the four axes
 
-Full extraction from a single UniProtKB entry. 20 ProteinTraitRecords across all four axes.
+Using P25888 (ATP-dependent RNA helicase RhlE, *Escherichia coli* K12) to
+illustrate how a single UniProtKB entry's `FT`/`CC` annotations map onto the
+trait **axes** and **categories**.
+
+> **Note.** This is an *illustration of the demultiplexing model*, not a set of
+> live records. Per-protein records like these are instance-level annotations,
+> not reusable trait *classes*, so they are **not** seeded standalone; instead a
+> real protein is attached as a `canonical_example` on the relevant class-level
+> trait (via `fetch_uniprot_examples.py`). The mapping below — FT type → axis /
+> category — is what the seeders and the README table encode.
 
 [← back to index](./) · [source entry](https://www.uniprot.org/uniprotkb/P25888/entry)
 

@@ -92,9 +92,11 @@ supports them, and can also be added by curators:
   motif/regex syntax.
 - **`parent_traits`** — links to broader/parent traits. Populated
   automatically:
-    - `seed_uniprot.py` scans DR PROSITE / Pfam / InterPro / SMART / CATH
-      / MEROPS / HAMAP lines and attaches the resulting CURIEs to every
-      record emitted for that entry (all four axes).
+    - **Not** from `seed_uniprot.py`: a UniProt entry's DR family/domain
+      signatures (PROSITE/Pfam/InterPro/SMART/CATH/HAMAP) are the *protein's*
+      memberships, so they are emitted as `xrefs`, not `parent_traits` — a
+      family signature is not a broader class of a specific feature-trait
+      (caught by the `review-source-categories` skill's `FAMILY_AS_PARENT`).
     - `seed_prosite.py` promotes each signature's PDOC documentation
       entry (from the `DO` line) to `parent_traits: [PROSITE:PDOCxxxxx]`
       — multiple ACs can share a PDOC (e.g. `PS00796` and `PS01180` →
@@ -180,7 +182,7 @@ supports them, and can also be added by curators:
 | [PROSITE ProRules](https://prosite.expasy.org/) (`prorule.dat`) | 1449 | `data/traits/structure/domain/` (1445) + `data/traits/sequence/{modified_residue,glycosylation,prorule}/` (2 phospho + 1 N-glyco + 1 attachment motif) |
 | [TED novel folds](https://ted.cathdb.info/) (Zenodo v5, [DOI:10.5281/zenodo.13908086](https://doi.org/10.5281/zenodo.13908086), CC-BY 4.0) | 7427 | `data/traits/structure/fold/novel/` |
 | [TED highly-symmetric folds](https://ted.cathdb.info/) (same Zenodo record) | 6433 | `data/traits/structure/fold/high_symmetry/` |
-| [UniProtKB](https://www.uniprot.org/) FT + CC + GO (per-accession, demo seed) | 29 (2 entries) | `data/traits/{sequence,structure,function}/…` |
+| [UniProtKB](https://www.uniprot.org/) FT/CC/GO demultiplexer (`seed_uniprot.py`) | 0 (demo retired) | per-protein records are instance-level, not trait classes — retired; real entries attach as `canonical_examples` on class traits via `fetch_uniprot_examples.py` |
 | [PSI-MOD](https://github.com/HUPO-PSI/psi-mod-CV) (HUPO-PSI protein modification CV, CC-BY-4.0) | 1971 | `data/traits/sequence/{modified_residue,glycosylation,lipidation,crosslink,ptm_ontology}/` |
 | [ECOD](http://prodata.swmed.edu/ecod/) (Evolutionary Classification Of protein Domains, v295) | 45113 | `data/traits/structure/{architecture,homologous_superfamily,topology,fold/ecod}/` (21 + 6,178 + 3,955 + 34,959) |
 | [CATH-Gene3D](https://www.cathdb.info/) hierarchy (`seed_cath.py`, CC-BY 4.0) | 8151 | `data/traits/structure/{class,architecture,topology,homologous_superfamily}/cath/` (unnamed nodes kept, labelled by CATH id + rep-domain xref) |
@@ -273,9 +275,13 @@ UniProtKB **entry-level** blocks (FUNCTION axis) → category:
 | `DR GO; P:response to …` | `FUNC_ENVIRONMENTAL_RESPONSE` | GO BP |
 | `CC SUBUNIT` (per "Interacts with X") | `FUNC_INTERACTION_PARTNER` | partner name; PMIDs in evidence |
 
-### Worked example — P25888 (ATP-dependent RNA helicase RhlE, *E. coli* K12)
+### Worked example — how one UniProtKB entry demultiplexes across the axes
 
-The two demo entries produce 29 records total. P25888 alone contributes **20** — a complete extraction across all four axes:
+Illustrated with P25888 (ATP-dependent RNA helicase RhlE, *E. coli* K12). This
+shows the FT/CC → axis / category mapping the seeder encodes; the per-protein
+records themselves are **not** seeded standalone (they are instance-level, not
+trait classes — see the note in `docs/example.md`). A real protein is instead
+attached as a `canonical_example` on the relevant class-level trait:
 
 | Axis | Records | Categories |
 |---|---:|---|
