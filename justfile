@@ -115,6 +115,25 @@ fetch-ecod:
 seed-ecod *args:
     python3 scripts/seed_ecod.py {{args}}
 
+# Download the CATH classification names (C/A/T/H hierarchy nodes; CC-BY 4.0).
+fetch-cath:
+    mkdir -p data/raw/cath
+    curl -sSLf --max-time 120 -o data/raw/cath/cath-names.txt ftp://orengoftp.biochem.ucl.ac.uk/cath/releases/latest-release/cath-classification-data/cath-names.txt
+    @wc -l data/raw/cath/cath-names.txt
+
+# Seed the CATH structural hierarchy (Class/Architecture/Topology/Homologous
+# superfamily). Requires `just fetch-cath`. Dry-run by default; --apply.
+seed-cath *args:
+    python3 scripts/seed_cath.py {{args}}
+
+# Download the SCOPe parseable files (des + hie; the berkeley host serves
+# these fine over https now). Then `just seed-scope --apply`.
+fetch-scope-parse:
+    mkdir -p data/raw/scope
+    curl -sSLf --max-time 120 -o data/raw/scope/dir.des.scope.2.08-stable.txt https://scop.berkeley.edu/downloads/parse/dir.des.scope.2.08-stable.txt
+    curl -sSLf --max-time 120 -o data/raw/scope/dir.hie.scope.2.08-stable.txt https://scop.berkeley.edu/downloads/parse/dir.hie.scope.2.08-stable.txt
+    @ls -la data/raw/scope/
+
 # Download InterPro entries + hierarchy (public domain). Only the small
 # entry/abstract/hierarchy files — NOT the multi-TB match files.
 fetch-interpro:
