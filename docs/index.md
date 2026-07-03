@@ -7,23 +7,23 @@ title: ProteinTraitsMech
 
 <div style="display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0 1.5rem">
   <a href="browse.html" style="flex:1 1 130px;padding:.9rem 1rem;border:1px solid #d0d7de;border-left:4px solid #155799;border-radius:8px;background:#fff;color:inherit;text-decoration:none">
-    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#155799">200,629</div>
+    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#155799">274,078</div>
     <div style="font-size:.85rem;color:#57606a">Total records</div>
   </a>
   <a href="browse.html#axis=STRUCTURE" style="flex:1 1 130px;padding:.9rem 1rem;border:1px solid #d0d7de;border-left:4px solid #16a34a;border-radius:8px;background:#fff;color:inherit;text-decoration:none">
-    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#16a34a">145,508</div>
+    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#16a34a">217,169</div>
     <div style="font-size:.85rem;color:#57606a">STRUCTURE</div>
   </a>
   <a href="browse.html#axis=SEQUENCE" style="flex:1 1 130px;padding:.9rem 1rem;border:1px solid #d0d7de;border-left:4px solid #2563eb;border-radius:8px;background:#fff;color:inherit;text-decoration:none">
-    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#2563eb">10,968</div>
+    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#2563eb">7,920</div>
     <div style="font-size:.85rem;color:#57606a">SEQUENCE</div>
   </a>
   <a href="browse.html#axis=SEQUENCE_STRUCTURE" style="flex:1 1 130px;padding:.9rem 1rem;border:1px solid #d0d7de;border-left:4px solid #a855f7;border-radius:8px;background:#fff;color:inherit;text-decoration:none">
-    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#a855f7">314</div>
+    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#a855f7">436</div>
     <div style="font-size:.85rem;color:#57606a">SEQUENCE_STRUCTURE</div>
   </a>
   <a href="browse.html#axis=FUNCTION" style="flex:1 1 130px;padding:.9rem 1rem;border:1px solid #d0d7de;border-left:4px solid #d97706;border-radius:8px;background:#fff;color:inherit;text-decoration:none">
-    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#d97706">43,719</div>
+    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#d97706">48,544</div>
     <div style="font-size:.85rem;color:#57606a">FUNCTION</div>
   </a>
   <a href="browse.html#axis=EVOLUTION" style="flex:1 1 130px;padding:.9rem 1rem;border:1px solid #d0d7de;border-left:4px solid #0d9488;border-radius:8px;background:#fff;color:inherit;text-decoration:none">
@@ -36,7 +36,7 @@ Knowledge base of **protein sequence, structure, and function traits** — one Y
 
 <a href="browse.html" style="display:block;padding:1rem 1.25rem;margin:1rem 0 1.5rem;border:1px solid #159957;border-radius:8px;background:linear-gradient(120deg,#159957,#155799);color:#fff;text-decoration:none;box-shadow:0 2px 8px rgba(15,23,42,.10)">
   <strong style="font-size:1.05rem">🔎 Browse the corpus</strong><br>
-  <span style="opacity:.9">Faceted search over 200,629 ProteinTraitRecords — filter by axis / category / source, then open any record for a rendered detail view.</span>
+  <span style="opacity:.9">Faceted search over 274,078 ProteinTraitRecords — filter by axis / category / source, then open any record for a rendered detail view.</span>
 </a>
 
 - **CultureBotAI** — [culturebotai.github.io](https://culturebotai.github.io/)
@@ -50,23 +50,23 @@ Every record carries a fine-grained `trait_category`. Counts link into the [brow
 
 | Category | Axis | Records |
 |---|---|---:|
-| `STRUCT_DOMAIN` | STRUCTURE | [64,277](browse.html#cat=STRUCT_DOMAIN) |
+| `STRUCT_DOMAIN` | STRUCTURE | [134,674](browse.html#cat=STRUCT_DOMAIN) |
 | `STRUCT_FOLD` | STRUCTURE | [55,735](browse.html#cat=STRUCT_FOLD) |
 | `FUNC_ENZYMATIC_ACTIVITY` | FUNCTION | [26,003](browse.html#cat=FUNC_ENZYMATIC_ACTIVITY) |
-| `STRUCT_HOMOLOGOUS_SUPERFAMILY` | STRUCTURE | [18,687](browse.html#cat=STRUCT_HOMOLOGOUS_SUPERFAMILY) |
+| `STRUCT_HOMOLOGOUS_SUPERFAMILY` | STRUCTURE | [19,954](browse.html#cat=STRUCT_HOMOLOGOUS_SUPERFAMILY) |
+| `FUNC_ORTHOLOG_GROUP` | FUNCTION | [9,728](browse.html#cat=FUNC_ORTHOLOG_GROUP) |
 | `FUNC_RESISTANCE` | FUNCTION | [7,451](browse.html#cat=FUNC_RESISTANCE) |
 | `STRUCT_TOPOLOGY` | STRUCTURE | [5,427](browse.html#cat=STRUCT_TOPOLOGY) |
-| `FUNC_ORTHOLOG_GROUP` | FUNCTION | [4,903](browse.html#cat=FUNC_ORTHOLOG_GROUP) |
-| `SEQ_DISORDER` | SEQUENCE | [3,365](browse.html#cat=SEQ_DISORDER) |
 | `FUNC_PATHWAY` | FUNCTION | [2,883](browse.html#cat=FUNC_PATHWAY) |
 | `SEQ_MOTIF` | SEQUENCE | [2,847](browse.html#cat=SEQ_MOTIF) |
 | `FUNC_TRANSPORT` | FUNCTION | [2,285](browse.html#cat=FUNC_TRANSPORT) |
-| `SEQ_REPEAT` | SEQUENCE | [1,950](browse.html#cat=SEQ_REPEAT) |
+| `SEQ_REPEAT` | SEQUENCE | [2,073](browse.html#cat=SEQ_REPEAT) |
 | `SEQ_PTM_SITE` | SEQUENCE | [1,211](browse.html#cat=SEQ_PTM_SITE) |
 | `STRUCT_ACTIVE_SITE` | STRUCTURE | [1,137](browse.html#cat=STRUCT_ACTIVE_SITE) |
 | `SEQ_CONSERVATION` | SEQUENCE | [775](browse.html#cat=SEQ_CONSERVATION) |
 | `SEQ_MODIFIED_RESIDUE` | SEQUENCE | [618](browse.html#cat=SEQ_MODIFIED_RESIDUE) |
 | `MIXED_COILED_COIL` | SEQUENCE_STRUCTURE | [314](browse.html#cat=MIXED_COILED_COIL) |
+| `SEQ_DISORDER` | SEQUENCE | [202](browse.html#cat=SEQ_DISORDER) |
 | `FUNC_INTERACTION_PARTNER` | FUNCTION | [146](browse.html#cat=FUNC_INTERACTION_PARTNER) |
 | `MIXED_STRUCTURAL_REPEAT` | SEQUENCE_STRUCTURE | [122](browse.html#cat=MIXED_STRUCTURAL_REPEAT) |
 | `SEQ_GLYCOSYLATION_SITE` | SEQUENCE | [85](browse.html#cat=SEQ_GLYCOSYLATION_SITE) |
@@ -106,7 +106,7 @@ Sources are listed **in order of integration** (earliest first, top to bottom). 
 | ECOD v295 (A/X/H/T/F hierarchy) | [45,113](browse.html#src=ECOD) | `data/traits/structure/{architecture,homologous_superfamily,topology,fold/ecod}/` |
 | SCOPe 2.08 — Class/Fold/Superfamily/Family/Domain (Berkeley; instances px/sp excluded) | [22,810](browse.html#src=SCOPe) | `data/traits/structure/{class,fold,homologous_superfamily,domain}/scope/` |
 | M-CSA (CC-BY-4.0) | [1,003](browse.html#src=M-CSA) | `data/traits/structure/active_site/mcsa/` |
-| DisProt (CC-BY-4.0) | [3,199](browse.html#src=DisProt) | `data/traits/sequence/disorder/` |
+| DisProt — 32 IDPO disorder classes (structural state/transition/function; proteins as examples) (CC-BY-4.0) | [35](browse.html#src=DisProt) | `data/traits/sequence/disorder/` |
 | PSI-MI interaction types (CC-BY-4.0) | [146](browse.html#src=PSI-MI) | `data/traits/function/interaction_partner/psi_mi/` |
 | METPO ecophysiological traits (growth preferences, tolerances, metabolism; CC-BY-4.0) | [118](browse.html#src=METPO) | `data/traits/function/{environmental_response,enzymatic_activity}/metpo/` |
 | PATO physicochemical qualities (CC-BY-4.0) | [28](browse.html#src=PATO) | `data/traits/structure/{stability,dynamics,surface}/pato/` |
@@ -122,7 +122,10 @@ Sources are listed **in order of integration** (earliest first, top to bottom). 
 | Rhea reactions — enzymatic reactions + ChEBI participants (CC-BY 4.0; EC via rhea2ec) | [18,558](browse.html#src=Rhea) | `data/traits/function/enzymatic_activity/rhea/` |
 | ExPASy ENZYME — complete EC hierarchy (CC-BY 4.0; GO/RHEA mapped, KEGG direct, DR examples) | [7,375](browse.html#src=ExPASy%20ENZYME) | `data/traits/function/enzymatic_activity/ec/` |
 | RepeatsDB — structural tandem-repeat Class/Topology/Fold/Clan (CC-BY 4.0) | [122](browse.html#src=RepeatsDB) | `data/traits/sequence_structure/structural_repeat/repeatsdb/` |
-| **Total** | **[200,629](browse.html)** | |
+| NCBIfam (ex-TIGRFAMs) — prokaryotic family HMMs (US-gov public domain) | [38,394](browse.html#src=NCBIfam) | `data/traits/structure/domain/ncbifam/` |
+| CDD — NCBI-curated conserved domains + PRK clusters + KOG ortholog groups (US-gov public domain) | [38,218](browse.html#src=CDD) | `data/traits/{structure/domain,function/ortholog_group}/cdd/` |
+| IDEAL — ProS (protean segment) trait; 1,448 IDPs as examples (CC-BY 4.0) | [1](browse.html#src=IDEAL) | `data/traits/sequence/disorder/` |
+| **Total** | **[274,078](browse.html)** | |
 
 *Bucket counts are seeding-time figures. Four duplicate PROSITE records (a ProRule / pattern copy that was routed to two directories) have since been consolidated via the [`merge-traits`](https://github.com/CultureBotAI/proteintraitsmech/tree/main/.claude/skills/merge-traits) skill, so per-bucket rows may slightly exceed the live total.*
 
