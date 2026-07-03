@@ -180,6 +180,19 @@ SOURCES: dict[str, Source] = {
                   "function/enzymatic_activity/metpo"),  # coagulase activity
         ),
     ),
+    "aro": Source(
+        key="aro",
+        obo_file="aro/aro.obo",
+        id_prefix="ARO:",
+        release_prefix="ARO",
+        license="CC-BY 4.0",
+        routes=(
+            # determinant of antibiotic resistance (resistance genes/proteins)
+            Route("ARO:3000000", "FUNCTION", "FUNC_RESISTANCE", "function/resistance/aro"),
+            # mechanism of antibiotic resistance (efflux, inactivation, …)
+            Route("ARO:1000002", "FUNCTION", "FUNC_RESISTANCE", "function/resistance/aro"),
+        ),
+    ),
 }
 
 

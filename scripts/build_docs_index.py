@@ -119,6 +119,10 @@ def infer_source(identifier: str, path: Path) -> str:
         return "M-CSA"
     if identifier.startswith("EC:"):
         return "trait-onto-map"
+    if identifier.startswith("Reactome:"):
+        return "Reactome"
+    if identifier.startswith("ARO:"):
+        return "CARD/ARO"
     if identifier.startswith("proteintraitsmech:UNIPROTKB_"):
         return "UniProtKB"
     if identifier.startswith(("proteintraitsmech:STABILITY_", "proteintraitsmech:EVO_")):

@@ -115,6 +115,20 @@ fetch-ecod:
 seed-ecod *args:
     python3 scripts/seed_ecod.py {{args}}
 
+# Reactome pathways (CC0) -> FUNC_PATHWAY.
+fetch-reactome:
+    mkdir -p data/raw/reactome
+    curl -sSLf --max-time 120 -o data/raw/reactome/ReactomePathways.txt https://reactome.org/download/current/ReactomePathways.txt
+    curl -sSLf --max-time 120 -o data/raw/reactome/ReactomePathwaysRelation.txt https://reactome.org/download/current/ReactomePathwaysRelation.txt
+
+seed-reactome *args:
+    python3 scripts/seed_reactome.py {{args}}
+
+# ARO (Antibiotic Resistance Ontology, CC-BY) -> FUNC_RESISTANCE (seed-obo aro).
+fetch-aro:
+    mkdir -p data/raw/aro
+    curl -sSLf --max-time 120 -o data/raw/aro/aro.obo https://raw.githubusercontent.com/arpcard/aro/master/src/ontology/aro.obo
+
 # Download the CATH classification names (C/A/T/H hierarchy nodes; CC-BY 4.0).
 fetch-cath:
     mkdir -p data/raw/cath

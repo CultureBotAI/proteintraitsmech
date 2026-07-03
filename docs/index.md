@@ -7,7 +7,7 @@ title: ProteinTraitsMech
 
 <div style="display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0 1.5rem">
   <a href="browse.html" style="flex:1 1 130px;padding:.9rem 1rem;border:1px solid #d0d7de;border-left:4px solid #155799;border-radius:8px;background:#fff;color:inherit;text-decoration:none">
-    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#155799">157,658</div>
+    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#155799">167,992</div>
     <div style="font-size:.85rem;color:#57606a">Total records</div>
   </a>
   <a href="browse.html#axis=STRUCTURE" style="flex:1 1 130px;padding:.9rem 1rem;border:1px solid #d0d7de;border-left:4px solid #16a34a;border-radius:8px;background:#fff;color:inherit;text-decoration:none">
@@ -23,7 +23,7 @@ title: ProteinTraitsMech
     <div style="font-size:.85rem;color:#57606a">SEQUENCE_STRUCTURE</div>
   </a>
   <a href="browse.html#axis=FUNCTION" style="flex:1 1 130px;padding:.9rem 1rem;border:1px solid #d0d7de;border-left:4px solid #d97706;border-radius:8px;background:#fff;color:inherit;text-decoration:none">
-    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#d97706">859</div>
+    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#d97706">11,193</div>
     <div style="font-size:.85rem;color:#57606a">FUNCTION</div>
   </a>
   <a href="browse.html#axis=EVOLUTION" style="flex:1 1 130px;padding:.9rem 1rem;border:1px solid #d0d7de;border-left:4px solid #0d9488;border-radius:8px;background:#fff;color:inherit;text-decoration:none">
@@ -36,7 +36,7 @@ Knowledge base of **protein sequence, structure, and function traits** — one Y
 
 <a href="browse.html" style="display:block;padding:1rem 1.25rem;margin:1rem 0 1.5rem;border:1px solid #159957;border-radius:8px;background:linear-gradient(120deg,#159957,#155799);color:#fff;text-decoration:none;box-shadow:0 2px 8px rgba(15,23,42,.10)">
   <strong style="font-size:1.05rem">🔎 Browse the corpus</strong><br>
-  <span style="opacity:.9">Faceted search over 157,658 ProteinTraitRecords — filter by axis / category / source, then open any record for a rendered detail view.</span>
+  <span style="opacity:.9">Faceted search over 167,992 ProteinTraitRecords — filter by axis / category / source, then open any record for a rendered detail view.</span>
 </a>
 
 - **CultureBotAI** — [culturebotai.github.io](https://culturebotai.github.io/)
@@ -63,6 +63,8 @@ Record counts link into the [browser](browse.html) filtered by `source`. PROSITE
 | ECOD v295 (A/X/H/T/F hierarchy) | [45,113](browse.html#src=ECOD) | `data/traits/structure/{architecture,homologous_superfamily,topology,fold/ecod}/` |
 | CATH-Gene3D hierarchy — Class/Architecture/Topology/Homologous-superfamily (CC-BY 4.0) | [8,151](browse.html#src=CATH) | `data/traits/structure/{class,architecture,topology,homologous_superfamily}/cath/` |
 | SCOPe 2.08 — Class/Fold/Superfamily/Family/Domain (Berkeley; instances px/sp excluded) | [22,810](browse.html#src=SCOPe) | `data/traits/structure/{class,fold,homologous_superfamily,domain}/scope/` |
+| Reactome pathways — Homo sapiens reference set (CC0) | [2,883](browse.html#src=Reactome) | `data/traits/function/pathway/reactome/` |
+| CARD/ARO — antibiotic-resistance determinants + mechanisms (CC-BY 4.0) | [7,451](browse.html#src=CARD/ARO) | `data/traits/function/resistance/aro/` |
 | InterPro entries — Domain / Homologous-superfamily / Repeat / Conserved-/Active-/Binding-site / PTM (public domain; GO-grounded via interpro2go) | [26,264](browse.html#src=InterPro) | `data/traits/{structure,sequence}/…/interpro/` |
 | Pfam-A families — Domain/Family→domain, Repeat, Coiled-coil, Disordered, Motif (public domain; GO- + InterPro-linked) | [30,134](browse.html#src=Pfam) | `data/traits/{structure/domain,sequence/repeat,mixed/coiled_coil,sequence/disorder,sequence/motif}/pfam/` |
 | M-CSA (CC-BY-4.0) | [1,003](browse.html#src=M-CSA) | `data/traits/structure/active_site/mcsa/` |
@@ -73,7 +75,7 @@ Record counts link into the [browser](browse.html) filtered by `source`. PROSITE
 | Curated stability taxonomy — per-condition (thermal, oxidative, saline, pH, osmotic, pressure, desiccation, chemical, proteolytic, mechanical) × increased/decreased (CC0-1.0) | [33](browse.html#src=curated) | `data/traits/structure/stability/conditions/` |
 | Curated evolutionary / pangenome traits — conserved, clade-specific, variable; pangenome core/soft-core/shell/cloud/persistent/singleton (CC0-1.0) | [9](browse.html#src=curated) | `data/traits/evolution/{conservation,pangenome}/` |
 | ENIGMA trait-onto-map — EC-numbered enzyme activities (MIT; GO-grounded via ec2go, KEGG xrefs) | [577](browse.html#src=trait-onto-map) | `data/traits/function/enzymatic_activity/traitontomap/` |
-| **Total** | **[157,658](browse.html)** | |
+| **Total** | **[167,992](browse.html)** | |
 
 *Bucket counts are seeding-time figures. Four duplicate PROSITE records (a ProRule / pattern copy that was routed to two directories) have since been consolidated via the [`merge-traits`](https://github.com/CultureBotAI/proteintraitsmech/tree/main/.claude/skills/merge-traits) skill, so per-bucket rows may slightly exceed the live total.*
 
@@ -86,8 +88,10 @@ Every record carries a fine-grained `trait_category`. Counts link into the [brow
 | `STRUCT_DOMAIN` | STRUCTURE | [64,279](browse.html#cat=STRUCT_DOMAIN) |
 | `STRUCT_FOLD` | STRUCTURE | [55,735](browse.html#cat=STRUCT_FOLD) |
 | `STRUCT_HOMOLOGOUS_SUPERFAMILY` | STRUCTURE | [18,687](browse.html#cat=STRUCT_HOMOLOGOUS_SUPERFAMILY) |
+| `FUNC_RESISTANCE` | FUNCTION | [7,451](browse.html#cat=FUNC_RESISTANCE) |
 | `STRUCT_TOPOLOGY` | STRUCTURE | [5,427](browse.html#cat=STRUCT_TOPOLOGY) |
 | `SEQ_DISORDER` | SEQUENCE | [3,366](browse.html#cat=SEQ_DISORDER) |
+| `FUNC_PATHWAY` | FUNCTION | [2,883](browse.html#cat=FUNC_PATHWAY) |
 | `SEQ_MOTIF` | SEQUENCE | [2,849](browse.html#cat=SEQ_MOTIF) |
 | `SEQ_REPEAT` | SEQUENCE | [1,950](browse.html#cat=SEQ_REPEAT) |
 | `SEQ_PTM_SITE` | SEQUENCE | [1,211](browse.html#cat=SEQ_PTM_SITE) |
