@@ -207,6 +207,8 @@ supports them, and can also be added by curators:
 | [CDD](https://www.ncbi.nlm.nih.gov/cdd) NCBI-curated (`seed_cdd.py`, US-gov PD) | 38218 | `data/traits/{structure/domain,function/ortholog_group}/cdd/` (cd/PRK/… → STRUCT_DOMAIN; KOG → FUNC_ORTHOLOG_GROUP; pfam/COG/TIGR skipped) |
 | [IDEAL](https://www.ideal-db.org/) protean segments (`seed_ideal.py`, CC-BY 4.0) — **pivoted** | 1 | `data/traits/sequence/disorder/` (ProS trait; 1,448 IDPs as examples) |
 | [ELM](http://elm.eu.org/) linear-motif classes (`seed_elm.py`, ⚠ non-commercial) | 353 | `data/traits/sequence/{targeting_signal,cleavage_site,ptm_site,motif}/elm/` (TRG→SEQ_TARGETING_SIGNAL, CLV→SEQ_CLEAVAGE_SITE, …; regex→sequence_pattern) |
+| [MEROPS](https://www.ebi.ac.uk/merops/) peptidase families (`seed_merops.py`, academic) | 370 | `data/traits/structure/domain/merops/` (S01→chymotrypsin, …; catalytic type) |
+| Curated RiPP leader classes (`seed_ripp.py`, CC0) | 20 | `data/traits/sequence/leader_peptide/` (lanthipeptide/lasso/… → SEQ_LEADER_PEPTIDE) |
 
 The last three are ingested by the generic **`seed_obo.py`** importer, which reads any OBO ontology and imports only the **branch-scoped** subset declared in its `SOURCES` config (a term is kept iff it is an `is_a` descendant of a configured root, and it inherits that root's axis/category). This is deliberately narrower than a whole-ontology dump — PSI-MI is mostly experimental methods, PATO qualities are generic modifiers, and METPO is organismal, so only the terms with genuine protein-trait analogues are seeded.
 
