@@ -121,6 +121,10 @@ def infer_source(identifier: str, path: Path) -> str:
         return "ECOD"
     if identifier.startswith("DisProt:"):
         return "DisProt"
+    if identifier.startswith("IDEAL:") or identifier == "proteintraitsmech:IDEAL_PROS":
+        return "IDEAL"
+    if identifier.startswith("IDPO:") or identifier.startswith("proteintraitsmech:IDPO_"):
+        return "DisProt"
     if identifier.startswith("MCSA:"):
         return "M-CSA"
     if identifier.startswith("EC:"):

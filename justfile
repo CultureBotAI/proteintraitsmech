@@ -191,6 +191,13 @@ fetch-cdd:
 seed-cdd *args:
     python3 scripts/seed_cdd.py {{args}}
 
+fetch-ideal:
+    mkdir -p data/raw/ideal
+    curl -sSLf --max-time 90 -o data/raw/ideal/IDEAL.xml.gz https://www.ideal-db.org/IDEAL.xml.gz
+
+seed-ideal *args:
+    python3 scripts/seed_ideal.py {{args}}
+
 # ARO (Antibiotic Resistance Ontology, CC-BY) -> FUNC_RESISTANCE (seed-obo aro).
 fetch-aro:
     mkdir -p data/raw/aro

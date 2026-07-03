@@ -1,28 +1,20 @@
 #!/usr/bin/env python3
-"""Seed ProteinTraitRecord YAMLs from DisProt — the curated database
-of intrinsically disordered proteins (Tosatto lab, U. Padova).
+"""Seed intrinsic-disorder traits from DisProt (Tosatto lab, CC-BY 4.0)
+→ SEQUENCE / SEQ_DISORDER.
 
-Source: https://disprot.org/api/search  (CC-BY-4.0, release 9.8+)
+PIVOTED model (2026-07): DisProt entries are per-protein disorder profiles —
+instance-level, not trait classes. Instead of one record per protein, we seed
+the **IDPO disorder classes** each region is annotated with (structural state,
+structural transition, disorder function — 32 terms), and attach the annotated
+proteins as `canonical_examples` on the relevant class. Three namespace-group
+nodes are materialized as parents so the hierarchy has no dangling parents.
 
-Each DisProt entry is one experimentally characterised IDP, carrying a
-list of curator-annotated `regions` with start/end coordinates,
-IDPO-ontology term IDs, and evidence references. This seeder emits one
-ProteinTraitRecord per entry under `data/traits/sequence/disorder/`
-with the protein as a canonical_example. The individual regions are
-projected into that example's `features` list (SequenceFeatureAnnotation)
-so the docs browser can colour them the same way UniProt FT features
-are coloured.
+The 367 GO annotations (function / process / localisation of disordered
+proteins) are out of scope here — they belong to the FUNCTION axis.
 
-Emitted record shape:
-    identifier         DisProt:<disprot_id>
-    label              "disorder profile — <protein name>"
-    definition         Auto-composed from region terms + statement
-    trait_axis         SEQUENCE
-    trait_category     SEQ_DISORDER
-    xrefs              UniProtKB:<acc>, unique IDPO terms across regions
-    canonical_examples 1 entry (the protein), sequence + features
-    evidence           PMIDs from region references
-    license            CC-BY-4.0
+Input (fetched on first run; cached): data/raw/disprot.entries.json
+Each protein appears (capped) as an example on every IDPO class it carries.
+Idempotent; dry-run unless --apply. Stdlib-only.
 """
 
 from __future__ import annotations
@@ -31,288 +23,181 @@ import argparse
 import json
 import re
 import sys
-import urllib.error
 import urllib.request
+from collections import defaultdict
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-TRAITS_DIR = REPO_ROOT / "data" / "traits"
 RAW_DIR = REPO_ROOT / "data" / "raw"
-
-API_URL = ("https://disprot.org/api/search"
-           "?release=current&size=20000"
-           "&show_ambiguous=true&show_obsolete=false")
-USER_AGENT = "proteintraitsmech-disprot-seeder/0.1"
-LICENSE_TAG = "CC-BY-4.0"
 CACHE_PATH = RAW_DIR / "disprot.entries.json"
-
-
-def fetch_all() -> list[dict]:
-    RAW_DIR.mkdir(parents=True, exist_ok=True)
-    req = urllib.request.Request(API_URL, headers={
-        "User-Agent": USER_AGENT, "Accept": "application/json",
-    })
-    with urllib.request.urlopen(req, timeout=120) as resp:
-        payload = json.loads(resp.read().decode("utf-8"))
-    return list(payload.get("data") or [])
-
-
-def load_cached() -> list[dict] | None:
-    if not CACHE_PATH.exists():
-        return None
-    with CACHE_PATH.open("r", encoding="utf-8") as fh:
-        return json.load(fh)
-
-
-def save_cache(entries: list[dict]) -> None:
-    with CACHE_PATH.open("w", encoding="utf-8") as fh:
-        json.dump(entries, fh, ensure_ascii=False)
-
-
-# ---------------------------------------------------------------------------
-# YAML emission
-# ---------------------------------------------------------------------------
-
-
+OUT_DIR = REPO_ROOT / "data" / "traits" / "sequence" / "disorder"
+API = "https://disprot.org/api/search?release=current&format=json&namespace=all&get_consensus=false"
+LICENSE = "CC-BY-4.0"
+DEF_SOURCE = "DisProt (Tosatto lab, U. Padova; IDPO-classed, proteins as examples)"
+EXAMPLES_CAP = 30
 _SLUG_RE = re.compile(r"[^A-Za-z0-9]+")
-_CURIE_RE = re.compile(r"^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$")
+
+# The three IDPO namespaces → a materialized grouping trait (no dangling parent).
+NAMESPACE_GROUP = {
+    "Structural state": ("proteintraitsmech:IDPO_STRUCTURAL_STATE",
+                         "disorder structural state",
+                         "A structural state of an intrinsically disordered region "
+                         "(disorder, order, molten globule, pre-molten globule)."),
+    "Structural transition": ("proteintraitsmech:IDPO_STRUCTURAL_TRANSITION",
+                              "disorder structural transition",
+                              "A conformational transition of a disordered region "
+                              "(e.g. disorder-to-order upon binding)."),
+    "Disorder function": ("proteintraitsmech:IDPO_DISORDER_FUNCTION",
+                          "disorder-based function",
+                          "A function performed by an intrinsically disordered region "
+                          "(flexible linker/tail, PTM display site, self-regulation, "
+                          "molecular recognition, assembly)."),
+}
 
 
-def slugify(text: str) -> str:
-    s = _SLUG_RE.sub("-", (text or "").lower()).strip("-")
-    return s[:80] or "entry"
+def slugify(t): return (_SLUG_RE.sub("-", (t or "").lower()).strip("-")[:70]) or "idpo"
 
 
-def yaml_escape(text: str) -> str:
-    if text is None or text == "":
+def yaml_escape(text) -> str:
+    text = str(text)
+    if not text:
         return '""'
     unsafe = set(': #{}[],&*!|>%@`\\"\'')
-    if (any(c in unsafe for c in text) or text[0] in "-?"
+    if (any(c in unsafe for c in text) or text[:1] in ("-", "?")
             or text.lower() in {"null", "true", "false", "yes", "no", "on", "off"}):
         return '"' + text.replace("\\", "\\\\").replace('"', '\\"') + '"'
     return text
 
 
-def yaml_folded(indent: str, text: str) -> list[str]:
+def folded(text):
     text = " ".join((text or "").split())
-    if not text:
-        return [">-", f"{indent}  \"\""]
-    return [">-", f"{indent}  {text}"]
+    return [">-", f"  {text}"] if text else [">-", '  ""']
 
 
-def regions_to_features(regions: list[dict], seq_len: int) -> list[dict]:
-    """Convert DisProt regions into SequenceFeatureAnnotation shape."""
-    feats: list[dict] = []
-    for r in regions or []:
-        start = r.get("start")
-        end = r.get("end")
-        if not isinstance(start, int) or not isinstance(end, int):
-            continue
-        if start < 1 or end < start or start > seq_len:
-            continue
-        end = min(end, seq_len)
-        term_id = r.get("term_id") or ""
-        term_name = r.get("term_name") or ""
-        namespace = r.get("term_namespace") or ""
-        feat = {
-            "start": start,
-            "end": end,
-            "feature_type": "DISORDER",
-            "trait_axis": "SEQUENCE",
-            "trait_category": "SEQ_DISORDER",
-        }
-        note_parts = [term_name] if term_name else []
-        if namespace:
-            note_parts.append(f"[{namespace}]")
-        if term_id:
-            note_parts.append(f"({term_id})")
-        note = " ".join(note_parts).strip()
-        if note:
-            feat["note"] = note
-        feats.append(feat)
-    return feats
+def load_entries():
+    if CACHE_PATH.exists():
+        return json.loads(CACHE_PATH.read_text(encoding="utf-8"))
+    print("fetching DisProt (first run)…", file=sys.stderr)
+    with urllib.request.urlopen(API, timeout=120) as r:
+        payload = json.loads(r.read().decode("utf-8"))
+    CACHE_PATH.parent.mkdir(parents=True, exist_ok=True)
+    CACHE_PATH.write_text(json.dumps(payload), encoding="utf-8")
+    return payload
 
 
-def extract_pmids(regions: list[dict]) -> list[str]:
-    pmids: set[str] = set()
-    for r in regions or []:
-        ref = r.get("reference_id") or ""
-        source = (r.get("reference_source") or "").lower()
-        if not ref:
-            continue
-        if source == "pubmed" or (ref.isdigit() and len(ref) >= 5):
-            pmids.add(ref.strip())
-    return sorted(pmids)
-
-
-def extract_ontology_terms(regions: list[dict]) -> list[str]:
-    curies: set[str] = set()
-    for r in regions or []:
-        term = r.get("term_id") or ""
-        if term and _CURIE_RE.match(term):
-            curies.add(term)
-    return sorted(curies)
-
-
-def build_yaml(entry: dict, release: str) -> str | None:
-    disprot_id = entry.get("disprot_id")
-    if not disprot_id:
-        return None
-    acc = entry.get("acc") or ""
-    name = entry.get("name") or f"DisProt entry {disprot_id}"
-    seq = entry.get("sequence") or ""
-    seq_len = int(entry.get("length") or len(seq))
-    organism = entry.get("organism") or ""
-    taxon_id = entry.get("ncbi_taxon_id")
-    regions = entry.get("regions") or []
-    disorder_content = entry.get("disorder_content")
-
-    ident = f"DisProt:{disprot_id}"
-    label = f"intrinsic disorder profile — {name}"
-    definition_bits = [
-        f"DisProt-curated intrinsically disordered profile for "
-        f"UniProtKB:{acc} ({name})."
-    ]
-    if organism:
-        definition_bits.append(f"Organism: {organism}.")
-    if isinstance(disorder_content, (int, float)):
-        definition_bits.append(f"Disorder content: {disorder_content:.2f}.")
-    if regions:
-        definition_bits.append(f"{len(regions)} curator-annotated region(s).")
-    definition = " ".join(definition_bits)
-
-    xrefs: list[str] = []
-    if acc:
-        xrefs.append(f"UniProtKB:{acc}")
-    xrefs.extend(extract_ontology_terms(regions))
-    # dedupe
-    seen: set[str] = set()
-    xrefs = [x for x in xrefs
-             if _CURIE_RE.match(x) and not (x in seen or seen.add(x))]
-
-    lines: list[str] = []
-    lines.append(f"identifier: {ident}")
-    lines.append(f"label: {yaml_escape(label)}")
-    folded = yaml_folded("", definition)
-    lines.append(f"definition: {folded[0]}")
-    lines.extend(folded[1:])
-    lines.append(f"definition_source: {yaml_escape(release)}")
-    lines.append("trait_axis: SEQUENCE")
-    lines.append("trait_category: SEQ_DISORDER")
-    lines.append("term_kind: CLASS")
-    lines.append("mapping_status: SEEDED")
-
-    if xrefs:
-        lines.append("xrefs:")
-        for x in xrefs:
-            lines.append(f"  - {x}")
-
-    if acc:
-        lines.append("canonical_examples:")
-        lines.append(f"  - protein_id: UniProtKB:{acc}")
-        lines.append(f"    protein_label: {yaml_escape(name)}")
-        if taxon_id:
-            lines.append(f"    taxon_id: NCBITaxon:{taxon_id}")
-        if organism:
-            lines.append(f"    taxon_label: {yaml_escape(organism)}")
-        if seq_len:
-            lines.append(f"    sequence_length: {seq_len}")
-        lines.append(f"    note: {yaml_escape('DisProt entry ' + disprot_id)}")
-        lines.append("    source: CURATOR")
-        if seq and re.match(r"^[ACDEFGHIKLMNPQRSTVWYUOBZJX*]+$", seq):
-            lines.append(f"    sequence: {seq}")
-        feats = regions_to_features(regions, len(seq) if seq else seq_len)
-        if feats:
-            lines.append("    features:")
-            for f in feats:
-                lines.append(f"      - start: {f['start']}")
-                lines.append(f"        end: {f['end']}")
-                lines.append(f"        feature_type: {f['feature_type']}")
-                lines.append(f"        trait_axis: {f['trait_axis']}")
-                lines.append(f"        trait_category: {f['trait_category']}")
-                if f.get("note"):
-                    lines.append(f"        note: {yaml_escape(f['note'])}")
-
-    pmids = extract_pmids(regions)
-    if pmids:
-        lines.append("evidence:")
-        for pmid in pmids[:20]:
-            lines.append(f"  - reference: PMID:{pmid}")
-            lines.append(f"    notes: {yaml_escape('DisProt region evidence')}")
-
-    lines.append(f"license: {LICENSE_TAG}")
+def group_node_yaml(ident, label, definition):
+    lines = [f"identifier: {ident}", f"label: {yaml_escape(label)}"]
+    f = folded(definition)
+    lines += [f"definition: {f[0]}", *f[1:]]
+    lines += [f"definition_source: {yaml_escape(DEF_SOURCE)}",
+              "trait_axis: SEQUENCE", "trait_category: SEQ_DISORDER",
+              "term_kind: CLASS", "mapping_status: SEEDED",
+              f"license: {LICENSE}"]
     return "\n".join(lines) + "\n"
 
 
-def target_path(entry: dict) -> Path:
-    disprot_id = entry.get("disprot_id") or "unknown"
-    name = entry.get("name") or disprot_id
-    slug = slugify(name)
-    return TRAITS_DIR / "sequence" / "disorder" / f"{slug}-{disprot_id.lower()}.yaml"
-
-
-# ---------------------------------------------------------------------------
-# Driver
-# ---------------------------------------------------------------------------
+def term_yaml(tid, name, namespace, n_prot, examples):
+    grp = NAMESPACE_GROUP[namespace][0]
+    definition = (f"{name} — an IDPO disorder class ({namespace}, {tid}); a "
+                  f"protein region with this intrinsic-disorder property. "
+                  f"{n_prot} DisProt protein(s) annotated (examples below capped).")
+    lines = [f"identifier: {tid}", f"label: {yaml_escape(name)}"]
+    f = folded(definition)
+    lines += [f"definition: {f[0]}", *f[1:]]
+    lines += [f"definition_source: {yaml_escape(DEF_SOURCE)}",
+              "trait_axis: SEQUENCE", "trait_category: SEQ_DISORDER",
+              "term_kind: CLASS", "mapping_status: SEEDED",
+              "parent_traits:", f"  - {grp}"]
+    if examples:
+        lines.append("canonical_examples:")
+        for ex in examples:
+            lines.append(f"  - protein_id: UniProtKB:{ex['acc']}")
+            lines.append(f"    protein_label: {yaml_escape(ex['name'])}")
+            if ex.get("taxon_id"):
+                lines.append(f"    taxon_id: NCBITaxon:{ex['taxon_id']}")
+            if ex.get("organism"):
+                lines.append(f"    taxon_label: {yaml_escape(ex['organism'])}")
+            if ex.get("seq"):
+                lines.append(f"    sequence_length: {len(ex['seq'])}")
+            lines.append(f"    note: {yaml_escape('DisProt entry ' + ex['dp'])}")
+            lines.append("    source: CURATOR")
+            if ex.get("seq"):
+                lines.append(f"    sequence: {ex['seq']}")
+            if ex.get("feats"):
+                lines.append("    features:")
+                for s, e in ex["feats"]:
+                    lines.append(f"      - start: {s}")
+                    lines.append(f"        end: {e}")
+                    lines.append("        feature_type: DISORDER")
+                    lines.append("        trait_axis: SEQUENCE")
+                    lines.append("        trait_category: SEQ_DISORDER")
+    lines.append(f"license: {LICENSE}")
+    return "\n".join(lines) + "\n"
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--apply", action="store_true",
-                        help="write YAMLs (default: dry-run)")
-    parser.add_argument("--force", action="store_true",
-                        help="overwrite existing files")
-    parser.add_argument("--refetch", action="store_true",
-                        help="ignore the local cache and re-hit the API")
-    parser.add_argument("--limit", type=int, default=0,
-                        help="cap number of records processed (0 = all)")
-    args = parser.parse_args()
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--apply", action="store_true")
+    ap.add_argument("--force", action="store_true")
+    args = ap.parse_args()
 
-    entries = None if args.refetch else load_cached()
-    if entries:
-        print(f"Loaded {len(entries)} entries from cache "
-              f"({CACHE_PATH.relative_to(REPO_ROOT)}).")
-    else:
-        print("Fetching DisProt search page…")
-        entries = fetch_all()
-        save_cache(entries)
-        print(f"Cached {len(entries)} entries to "
-              f"{CACHE_PATH.relative_to(REPO_ROOT)}.")
+    data = load_entries()
+    entries = data if isinstance(data, list) else data.get("data", [])
 
-    release = "DisProt (Tosatto lab, U. Padova; fetched via REST API)"
-    stats = {"written": 0, "skipped": 0, "planned": 0, "errors": 0}
-    processed = 0
-    for entry in entries:
-        if args.limit and processed >= args.limit:
-            break
-        try:
-            yaml_body = build_yaml(entry, release)
-        except Exception as exc:  # noqa: BLE001
-            stats["errors"] += 1
-            print(f"error on disprot_id={entry.get('disprot_id')}: {exc}",
-                  file=sys.stderr)
+    terms: dict[str, dict] = {}
+    hits: dict[str, dict] = defaultdict(dict)
+    for e in entries:
+        acc = e.get("acc")
+        if not acc:
             continue
-        if yaml_body is None:
-            continue
-        path = target_path(entry)
-        processed += 1
+        base = {"acc": acc, "name": e.get("name") or acc,
+                "taxon_id": e.get("ncbi_taxon_id"), "organism": e.get("organism"),
+                "dp": e.get("disprot_id") or "", "seq": e.get("sequence") or ""}
+        for r in (e.get("regions") or []):
+            if r.get("term_ontology") != "IDPO":
+                continue
+            tid, name, ns = r.get("term_id"), r.get("term_name"), r.get("term_namespace")
+            if not tid or ns not in NAMESPACE_GROUP:
+                continue
+            terms[tid] = {"name": name, "namespace": ns}
+            ex = hits[tid].setdefault(acc, {**base, "feats": []})
+            try:
+                ex["feats"].append((int(r["start"]), int(r["end"])))
+            except (KeyError, TypeError, ValueError):
+                pass
+
+    written = skipped = 0
+
+    def emit(path: Path, text: str):
+        nonlocal written, skipped
         if path.exists() and not args.force:
-            stats["skipped"] += 1
-            continue
-        stats["planned"] += 1
+            skipped += 1
+            return
         if args.apply:
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(yaml_body, encoding="utf-8")
-            stats["written"] += 1
+            path.write_text(text, encoding="utf-8")
+            written += 1
 
-    print()
+    for ns, (ident, label, defn) in NAMESPACE_GROUP.items():
+        emit(OUT_DIR / f"{slugify(label)}.yaml", group_node_yaml(ident, label, defn))
+
+    for tid, meta in sorted(terms.items()):
+        prots = list(hits[tid].values())
+        prots.sort(key=lambda p: (-len(p["feats"]), p["acc"]))
+        text = term_yaml(tid, meta["name"], meta["namespace"], len(prots),
+                         prots[:EXAMPLES_CAP])
+        emit(OUT_DIR / f"{slugify(meta['name'])}-{tid.replace(':', '-').lower()}.yaml", text)
+
+    print(f"DisProt pivot: {len(NAMESPACE_GROUP)} namespace groups + {len(terms)} "
+          f"IDPO disorder classes; {sum(len(h) for h in hits.values())} protein "
+          f"annotations over {len(entries)} DisProt proteins (examples capped at "
+          f"{EXAMPLES_CAP}/class).")
     if args.apply:
-        print(f"Wrote {stats['written']} file(s); skipped {stats['skipped']} "
-              f"existing; {stats['errors']} error(s).")
+        print(f"Wrote {written}; skipped {skipped} existing → "
+              f"{OUT_DIR.relative_to(REPO_ROOT)}/")
     else:
-        print(f"Dry-run — would write {stats['planned']} file(s); "
-              f"{stats['skipped']} already exist.")
-        print("Re-run with --apply to write.")
+        print(f"Dry-run — would write {len(terms) + len(NAMESPACE_GROUP) - skipped}; "
+              f"{skipped} exist.")
     return 0
 
 
