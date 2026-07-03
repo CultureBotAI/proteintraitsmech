@@ -24,11 +24,12 @@
         padding:64px 24px 52px;text-align:center;border-bottom:1px solid var(--line)}
   .hero h1{margin:0 0 .2em;font-size:2.7rem;letter-spacing:-.02em}
   .hero .tagline{margin:0 auto;max-width:680px;font-size:1.15rem}
-  .stats{display:flex;flex-wrap:wrap;gap:24px;justify-content:center;margin-top:30px}
+  .stats{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin-top:30px}
   .stat{background:rgba(255,255,255,.6);border:1px solid var(--line);border-radius:12px;
-        padding:12px 22px;min-width:120px}
-  .stat b{display:block;font-size:1.7rem;line-height:1.1}
-  .stat span{font-size:.74rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+        padding:12px 20px;min-width:110px;text-decoration:none;color:inherit}
+  a.stat:hover{background:rgba(255,255,255,.85);text-decoration:none}
+  .stat b{display:block;font-size:1.6rem;line-height:1.1}
+  .stat span{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
   .wrap{max-width:980px;margin:0 auto;padding:48px 24px}
   .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px}
   .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px;
@@ -41,8 +42,20 @@
   .btn{display:inline-block;background:var(--accent);color:#fff;padding:.5em 1.15em;
        border-radius:999px;font-size:.9rem;font-weight:600}
   .btn:hover{filter:brightness(.93);text-decoration:none}
+  section.block{margin-top:52px}
+  section.block > h2{font-size:1.5rem;margin:0 0 .3em;padding-bottom:.25em;border-bottom:2px solid var(--accent);display:inline-block}
+  section.block > p{color:var(--muted);max-width:760px}
+  .tbl-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--card);margin-top:1em}
+  table{border-collapse:collapse;width:100%;font-size:.9rem}
+  th,td{text-align:left;padding:.5em .8em;border-bottom:1px solid var(--line);vertical-align:top}
+  thead th{position:sticky;top:0;background:var(--pastel-a);font-weight:700}
+  td:last-child,th:last-child{color:var(--muted)}
+  table code{background:rgba(0,0,0,.05);padding:.05em .35em;border-radius:4px;font-size:.85em}
+  tbody tr:hover{background:rgba(183,228,220,.18)}
+  .axes li{margin:.4em 0}
+  details.tblwrap > summary{cursor:pointer;font-weight:600;color:var(--accent);margin-top:.6em}
   footer{border-top:1px solid var(--line);background:rgba(255,255,255,.45);
-         padding:30px 24px;text-align:center;font-size:.9rem;color:var(--muted)}
+         padding:30px 24px;text-align:center;font-size:.9rem;color:var(--muted);margin-top:56px}
   footer .fam{margin:.2em 0}
   footer .fam a{margin:0 .45em;white-space:nowrap}
   footer strong{color:var(--ink)}
@@ -51,11 +64,15 @@
 <body>
   <header class="hero">
     <h1>ProteinTraitsMech</h1>
-    <p class="tagline">Knowledge base of protein <strong>sequence</strong> and <strong>structure</strong> traits — one YAML per trait, LinkML-validated, with evidence-backed causal graphs.</p>
-    <div class="stats">
-      <div class="stat"><b>277,697</b><span>trait records</span></div>
-      <div class="stat"><b>5</b><span>trait axes</span></div>
-      <div class="stat"><b>Pfam &middot; InterPro &middot; CATH</b><span>anchored to</span></div>
+    <p class="tagline">Knowledge base of protein <strong>sequence</strong>, <strong>structure</strong>, and <strong>function</strong> traits — one YAML per trait, LinkML-validated, with evidence-backed causal graphs.</p>
+    <div class="stats" id="stats">
+      <a class="stat" href="browse.html"><b data-count="total">277,697</b><span>trait records</span></a>
+      <a class="stat" href="browse.html#axis=STRUCTURE"><b data-count="STRUCTURE">218,430</b><span>Structure</span></a>
+      <a class="stat" href="browse.html#axis=SEQUENCE"><b data-count="SEQUENCE">10,278</b><span>Sequence</span></a>
+      <a class="stat" href="browse.html#axis=SEQUENCE_STRUCTURE"><b data-count="SEQUENCE_STRUCTURE">436</b><span>Seq+Struct</span></a>
+      <a class="stat" href="browse.html#axis=FUNCTION"><b data-count="FUNCTION">48,544</b><span>Function</span></a>
+      <a class="stat" href="browse.html#axis=EVOLUTION"><b data-count="EVOLUTION">9</b><span>Evolution</span></a>
+      <a class="stat" href="#sources"><b data-count="sources">28</b><span>sources</span></a>
     </div>
   </header>
   <main class="wrap">
@@ -79,14 +96,136 @@
         <p>Source YAML records, schema, build scripts, and the curation workflow.</p>
       </div>
     </div>
+
+    <section class="block" id="axes">
+      <h2>Trait axes</h2>
+      <ul class="axes">
+        <li><strong>SEQUENCE</strong> — motifs, signal/leader peptides, propeptides, cleavage sites, low-complexity / disordered regions, tandem repeats, compositional biases, conserved regions, epitopes, PTM sites.</li>
+        <li><strong>STRUCTURE</strong> — folds, structural domains, secondary-structure arrangements, topology classes, quaternary state, subunit interfaces, active / binding / allosteric / metal sites, disulfide bonds, cavities, symmetry, dynamics, structural stability.</li>
+        <li><strong>SEQUENCE_STRUCTURE</strong> — traits with both a sequence signature and 3D periodicity: coiled coils, and structural tandem repeats with demonstrated periodicity (RepeatsDB &rarr; <code>MIXED_STRUCTURAL_REPEAT</code>).</li>
+        <li><strong>FUNCTION</strong> — enzymatic activity, binding capacity, cofactor requirement, subcellular localisation, environmental response, interaction partner. Grounded by EC / Rhea / ChEBI / GO / UniProt SubCell.</li>
+        <li><strong>EVOLUTION</strong> — comparative-genomics traits: a protein&#39;s conservation across taxa (conserved, clade-specific, variable) and pangenome partition (core, soft-core, shell, cloud, persistent, singleton).</li>
+      </ul>
+    </section>
+
+    <section class="block" id="categories">
+      <h2>Trait categories</h2>
+      <p>Every record carries a fine-grained <code>trait_category</code>. Counts link into the browser pre-filtered to that subset.</p>
+      <div class="tbl-scroll"><table id="cat-table"><tr><th>Category</th><th>Axis</th><th>Records</th></tr>
+<tr><td><code>STRUCT_DOMAIN</code></td><td>STRUCTURE</td><td><a href="browse.html#cat=STRUCT_DOMAIN">135,044</a></td></tr>
+<tr><td><code>STRUCT_FOLD</code></td><td>STRUCTURE</td><td><a href="browse.html#cat=STRUCT_FOLD">55,735</a></td></tr>
+<tr><td><code>FUNC_ENZYMATIC_ACTIVITY</code></td><td>FUNCTION</td><td><a href="browse.html#cat=FUNC_ENZYMATIC_ACTIVITY">26,003</a></td></tr>
+<tr><td><code>STRUCT_HOMOLOGOUS_SUPERFAMILY</code></td><td>STRUCTURE</td><td><a href="browse.html#cat=STRUCT_HOMOLOGOUS_SUPERFAMILY">20,845</a></td></tr>
+<tr><td><code>FUNC_ORTHOLOG_GROUP</code></td><td>FUNCTION</td><td><a href="browse.html#cat=FUNC_ORTHOLOG_GROUP">9,728</a></td></tr>
+<tr><td><code>FUNC_RESISTANCE</code></td><td>FUNCTION</td><td><a href="browse.html#cat=FUNC_RESISTANCE">7,451</a></td></tr>
+<tr><td><code>STRUCT_TOPOLOGY</code></td><td>STRUCTURE</td><td><a href="browse.html#cat=STRUCT_TOPOLOGY">5,427</a></td></tr>
+<tr><td><code>SEQ_MOTIF</code></td><td>SEQUENCE</td><td><a href="browse.html#cat=SEQ_MOTIF">3,121</a></td></tr>
+<tr><td><code>FUNC_PATHWAY</code></td><td>FUNCTION</td><td><a href="browse.html#cat=FUNC_PATHWAY">2,883</a></td></tr>
+<tr><td><code>FUNC_TRANSPORT</code></td><td>FUNCTION</td><td><a href="browse.html#cat=FUNC_TRANSPORT">2,285</a></td></tr>
+<tr><td><code>SEQ_REPEAT</code></td><td>SEQUENCE</td><td><a href="browse.html#cat=SEQ_REPEAT">2,073</a></td></tr>
+<tr><td><code>UPPER</code></td><td>SEQUENCE</td><td><a href="browse.html#cat=UPPER">1,980</a></td></tr>
+<tr><td><code>SEQ_PTM_SITE</code></td><td>SEQUENCE</td><td><a href="browse.html#cat=SEQ_PTM_SITE">1,251</a></td></tr>
+<tr><td><code>STRUCT_ACTIVE_SITE</code></td><td>STRUCTURE</td><td><a href="browse.html#cat=STRUCT_ACTIVE_SITE">1,137</a></td></tr>
+<tr><td><code>SEQ_CONSERVATION</code></td><td>SEQUENCE</td><td><a href="browse.html#cat=SEQ_CONSERVATION">775</a></td></tr>
+<tr><td><code>SEQ_MODIFIED_RESIDUE</code></td><td>SEQUENCE</td><td><a href="browse.html#cat=SEQ_MODIFIED_RESIDUE">618</a></td></tr>
+<tr><td><code>MIXED_COILED_COIL</code></td><td>SEQUENCE_STRUCTURE</td><td><a href="browse.html#cat=MIXED_COILED_COIL">314</a></td></tr>
+<tr><td><code>SEQ_DISORDER</code></td><td>SEQUENCE</td><td><a href="browse.html#cat=SEQ_DISORDER">202</a></td></tr>
+<tr><td><code>FUNC_INTERACTION_PARTNER</code></td><td>FUNCTION</td><td><a href="browse.html#cat=FUNC_INTERACTION_PARTNER">146</a></td></tr>
+<tr><td><code>MIXED_STRUCTURAL_REPEAT</code></td><td>SEQUENCE_STRUCTURE</td><td><a href="browse.html#cat=MIXED_STRUCTURAL_REPEAT">122</a></td></tr>
+<tr><td><code>SEQ_GLYCOSYLATION_SITE</code></td><td>SEQUENCE</td><td><a href="browse.html#cat=SEQ_GLYCOSYLATION_SITE">85</a></td></tr>
+<tr><td><code>STRUCT_BINDING_SITE</code></td><td>STRUCTURE</td><td><a href="browse.html#cat=STRUCT_BINDING_SITE">83</a></td></tr>
+<tr><td><code>SEQ_CROSSLINK_SITE</code></td><td>SEQUENCE</td><td><a href="browse.html#cat=SEQ_CROSSLINK_SITE">69</a></td></tr>
+<tr><td><code>STRUCT_ARCHITECTURE</code></td><td>STRUCTURE</td><td><a href="browse.html#cat=STRUCT_ARCHITECTURE">64</a></td></tr>
+<tr><td><code>FUNC_ENVIRONMENTAL_RESPONSE</code></td><td>FUNCTION</td><td><a href="browse.html#cat=FUNC_ENVIRONMENTAL_RESPONSE">48</a></td></tr>
+<tr><td><code>SEQ_LIPIDATION_SITE</code></td><td>SEQUENCE</td><td><a href="browse.html#cat=SEQ_LIPIDATION_SITE">40</a></td></tr>
+<tr><td><code>STRUCT_STABILITY</code></td><td>STRUCTURE</td><td><a href="browse.html#cat=STRUCT_STABILITY">36</a></td></tr>
+<tr><td><code>SEQ_TARGETING_SIGNAL</code></td><td>SEQUENCE</td><td><a href="browse.html#cat=SEQ_TARGETING_SIGNAL">28</a></td></tr>
+<tr><td><code>SEQ_LEADER_PEPTIDE</code></td><td>SEQUENCE</td><td><a href="browse.html#cat=SEQ_LEADER_PEPTIDE">20</a></td></tr>
+<tr><td><code>STRUCT_CLASS</code></td><td>STRUCTURE</td><td><a href="browse.html#cat=STRUCT_CLASS">17</a></td></tr>
+<tr><td><code>STRUCT_DYNAMICS</code></td><td>STRUCTURE</td><td><a href="browse.html#cat=STRUCT_DYNAMICS">13</a></td></tr>
+<tr><td><code>STRUCT_SURFACE</code></td><td>STRUCTURE</td><td><a href="browse.html#cat=STRUCT_SURFACE">13</a></td></tr>
+<tr><td><code>SEQ_CLEAVAGE_SITE</code></td><td>SEQUENCE</td><td><a href="browse.html#cat=SEQ_CLEAVAGE_SITE">11</a></td></tr>
+<tr><td><code>STRUCT_SECONDARY</code></td><td>STRUCTURE</td><td><a href="browse.html#cat=STRUCT_SECONDARY">8</a></td></tr>
+<tr><td><code>EVO_PANGENOME</code></td><td>EVOLUTION</td><td><a href="browse.html#cat=EVO_PANGENOME">6</a></td></tr>
+<tr><td><code>STRUCT_CAVITY</code></td><td>STRUCTURE</td><td><a href="browse.html#cat=STRUCT_CAVITY">5</a></td></tr>
+<tr><td><code>EVO_CONSERVATION</code></td><td>EVOLUTION</td><td><a href="browse.html#cat=EVO_CONSERVATION">3</a></td></tr>
+<tr><td><code>SEQ_INITIATOR_METHIONINE</code></td><td>SEQUENCE</td><td><a href="browse.html#cat=SEQ_INITIATOR_METHIONINE">1</a></td></tr>
+<tr><td><code>SEQ_MATURE_CHAIN</code></td><td>SEQUENCE</td><td><a href="browse.html#cat=SEQ_MATURE_CHAIN">1</a></td></tr>
+<tr><td><code>SEQ_PROPEPTIDE</code></td><td>SEQUENCE</td><td><a href="browse.html#cat=SEQ_PROPEPTIDE">1</a></td></tr>
+<tr><td><code>SEQ_SIGNAL_PEPTIDE</code></td><td>SEQUENCE</td><td><a href="browse.html#cat=SEQ_SIGNAL_PEPTIDE">1</a></td></tr>
+<tr><td><code>SEQ_TRANSIT_PEPTIDE</code></td><td>SEQUENCE</td><td><a href="browse.html#cat=SEQ_TRANSIT_PEPTIDE">1</a></td></tr>
+<tr><td><code>STRUCT_DISULFIDE</code></td><td>STRUCTURE</td><td><a href="browse.html#cat=STRUCT_DISULFIDE">1</a></td></tr>
+<tr><td><code>STRUCT_INTERFACE</code></td><td>STRUCTURE</td><td><a href="browse.html#cat=STRUCT_INTERFACE">1</a></td></tr>
+<tr><td><code>STRUCT_METAL_SITE</code></td><td>STRUCTURE</td><td><a href="browse.html#cat=STRUCT_METAL_SITE">1</a></td></tr></table></div>
+    </section>
+
+    <section class="block" id="sources">
+      <h2>Corpus at a glance &mdash; sources</h2>
+      <p>Sources listed <strong>in order of integration</strong> (earliest first). Record counts link into the browser filtered by <code>source</code>. Bucket counts are seeding-time figures; per-bucket rows may slightly exceed the live total after merges.</p>
+      <div class="tbl-scroll"><table id="src-table"><tr><th>Source</th><th>Records</th><th>Directory</th></tr>
+<tr><td>LinkML <code>LocalStructuralFeature</code> valueset</td><td><a href="browse.html#src=LinkML%20LSF">19</a></td><td><code>data/traits/structure/{secondary,active_site,binding_site,cavity,disulfide,metal_site,dynamics,interface}/</code></td></tr>
+<tr><td>PROSITE PATTERN (generic)</td><td><a href="browse.html#src=PROSITE">1,279</a></td><td><code>data/traits/sequence/pattern/</code></td></tr>
+<tr><td>PROSITE PATTERN routed to PTM subtypes</td><td><a href="browse.html#src=PROSITE">32</a></td><td><code>data/traits/sequence/{modified_residue,glycosylation,crosslink}/</code></td></tr>
+<tr><td>PROSITE MATRIX (profile)</td><td><a href="browse.html#src=PROSITE">1,434</a></td><td><code>data/traits/sequence/profile/</code></td></tr>
+<tr><td>PROSITE ProRule (<code>DC=Domain</code>)</td><td><a href="browse.html#src=PROSITE">1,445</a></td><td><code>data/traits/structure/domain/</code></td></tr>
+<tr><td>PROSITE ProRule (<code>DC=Site</code>, keyword-routed)</td><td><a href="browse.html#src=PROSITE">4</a></td><td><code>data/traits/sequence/{modified_residue,glycosylation,prorule}/</code></td></tr>
+<tr><td>TED novel folds (Zenodo v5)</td><td><a href="browse.html#src=TED">7,427</a></td><td><code>data/traits/structure/fold/novel/</code></td></tr>
+<tr><td>TED highly-symmetric folds</td><td><a href="browse.html#src=TED">6,433</a></td><td><code>data/traits/structure/fold/high_symmetry/</code></td></tr>
+<tr><td>UniProtKB FT/CC/GO demultiplexer (<code>seed_uniprot.py</code>) — demo retired; real entries now attach as <code>canonical_examples</code> on class traits via <code>fetch_uniprot_examples.py</code></td><td>0</td><td>—</td></tr>
+<tr><td>PSI-MOD (CC-BY-4.0)</td><td><a href="browse.html#src=PSI-MOD">1,971</a></td><td><code>data/traits/sequence/{modified_residue,glycosylation,lipidation,crosslink,ptm_ontology}/</code></td></tr>
+<tr><td>ECOD v295 (A/X/H/T/F hierarchy)</td><td><a href="browse.html#src=ECOD">45,113</a></td><td><code>data/traits/structure/{architecture,homologous_superfamily,topology,fold/ecod}/</code></td></tr>
+<tr><td>SCOPe 2.08 — Class/Fold/Superfamily/Family/Domain (Berkeley; instances px/sp excluded)</td><td><a href="browse.html#src=SCOPe">22,810</a></td><td><code>data/traits/structure/{class,fold,homologous_superfamily,domain}/scope/</code></td></tr>
+<tr><td>M-CSA (CC-BY-4.0)</td><td><a href="browse.html#src=M-CSA">1,003</a></td><td><code>data/traits/structure/active_site/mcsa/</code></td></tr>
+<tr><td>DisProt — 32 IDPO disorder classes (structural state/transition/function; proteins as examples) (CC-BY-4.0)</td><td><a href="browse.html#src=DisProt">35</a></td><td><code>data/traits/sequence/disorder/</code></td></tr>
+<tr><td>PSI-MI interaction types (CC-BY-4.0)</td><td><a href="browse.html#src=PSI-MI">146</a></td><td><code>data/traits/function/interaction_partner/psi_mi/</code></td></tr>
+<tr><td>METPO ecophysiological traits (growth preferences, tolerances, metabolism; CC-BY-4.0)</td><td><a href="browse.html#src=METPO">118</a></td><td><code>data/traits/function/{environmental_response,enzymatic_activity}/metpo/</code></td></tr>
+<tr><td>PATO physicochemical qualities (CC-BY-4.0)</td><td><a href="browse.html#src=PATO">28</a></td><td><code>data/traits/structure/{stability,dynamics,surface}/pato/</code></td></tr>
+<tr><td>Curated stability taxonomy — per-condition (thermal, oxidative, saline, pH, osmotic, pressure, desiccation, chemical, proteolytic, mechanical) × increased/decreased (CC0-1.0)</td><td><a href="browse.html#src=curated">33</a></td><td><code>data/traits/structure/stability/conditions/</code></td></tr>
+<tr><td>InterPro entries — Domain / Homologous-superfamily / Repeat / Conserved-/Active-/Binding-site / PTM (public domain; GO via interpro2go → mapped_xrefs)</td><td><a href="browse.html#src=InterPro">26,264</a></td><td><code>data/traits/{structure,sequence}/…/interpro/</code></td></tr>
+<tr><td>Curated evolutionary / pangenome traits — conserved, clade-specific, variable; pangenome core/soft-core/shell/cloud/persistent/singleton (CC0-1.0)</td><td><a href="browse.html#src=curated">9</a></td><td><code>data/traits/evolution/{conservation,pangenome}/</code></td></tr>
+<tr><td>Pfam-A families — Domain/Family→domain, Repeat, Coiled-coil, Disordered, Motif (public domain; GO+InterPro via pfam2go/pfam2interpro → mapped_xrefs)</td><td><a href="browse.html#src=Pfam">30,134</a></td><td><code>data/traits/{structure/domain,sequence/repeat,mixed/coiled_coil,sequence/disorder,sequence/motif}/pfam/</code></td></tr>
+<tr><td>CATH-Gene3D hierarchy — Class/Architecture/Topology/Homologous-superfamily (CC-BY 4.0)</td><td><a href="browse.html#src=CATH">8,151</a></td><td><code>data/traits/structure/{class,architecture,topology,homologous_superfamily}/cath/</code></td></tr>
+<tr><td>Reactome pathways — Homo sapiens reference set (CC0)</td><td><a href="browse.html#src=Reactome">2,883</a></td><td><code>data/traits/function/pathway/reactome/</code></td></tr>
+<tr><td>CARD/ARO — antibiotic-resistance determinants + mechanisms (CC-BY 4.0)</td><td><a href="browse.html#src=CARD/ARO">7,451</a></td><td><code>data/traits/function/resistance/aro/</code></td></tr>
+<tr><td>TCDB transport classification — Class/Subclass/Family (CC-BY-SA 3.0; 946 families ChEBI-grounded)</td><td><a href="browse.html#src=TCDB">2,285</a></td><td><code>data/traits/function/transport/tcdb/</code></td></tr>
+<tr><td>COG 2020 orthologous groups + 26 functional categories (US Gov public domain)</td><td><a href="browse.html#src=COG">4,903</a></td><td><code>data/traits/function/ortholog_group/cog/</code></td></tr>
+<tr><td>Rhea reactions — enzymatic reactions + ChEBI participants (CC-BY 4.0; EC via rhea2ec)</td><td><a href="browse.html#src=Rhea">18,558</a></td><td><code>data/traits/function/enzymatic_activity/rhea/</code></td></tr>
+<tr><td>ExPASy ENZYME — complete EC hierarchy (CC-BY 4.0; GO/RHEA mapped, KEGG direct, DR examples)</td><td><a href="browse.html#src=ExPASy%20ENZYME">7,375</a></td><td><code>data/traits/function/enzymatic_activity/ec/</code></td></tr>
+<tr><td>RepeatsDB — structural tandem-repeat Class/Topology/Fold/Clan (CC-BY 4.0)</td><td><a href="browse.html#src=RepeatsDB">122</a></td><td><code>data/traits/sequence_structure/structural_repeat/repeatsdb/</code></td></tr>
+<tr><td>NCBIfam (ex-TIGRFAMs) — prokaryotic family HMMs (US-gov public domain)</td><td><a href="browse.html#src=NCBIfam">38,394</a></td><td><code>data/traits/structure/domain/ncbifam/</code></td></tr>
+<tr><td>CDD — NCBI-curated conserved domains + PRK clusters + KOG ortholog groups (US-gov public domain)</td><td><a href="browse.html#src=CDD">38,218</a></td><td><code>data/traits/{structure/domain,function/ortholog_group}/cdd/</code></td></tr>
+<tr><td>IDEAL — ProS (protean segment) trait; 1,448 IDPs as examples (CC-BY 4.0)</td><td><a href="browse.html#src=IDEAL">1</a></td><td><code>data/traits/sequence/disorder/</code></td></tr>
+<tr><td>ELM (Eukaryotic Linear Motif) — targeting/cleavage/motif classes (⚠ non-commercial)</td><td><a href="browse.html#src=ELM">353</a></td><td><code>data/traits/sequence/{targeting_signal,cleavage_site,ptm_site,motif}/elm/</code></td></tr>
+<tr><td>MEROPS peptidase families — S/C/A/M/… catalytic classes (EBI; academic)</td><td><a href="browse.html#src=MEROPS">370</a></td><td><code>data/traits/structure/domain/merops/</code></td></tr>
+<tr><td>Curated RiPP leader-peptide classes — lanthipeptide/lasso/sactipeptide/… (CC0)</td><td><a href="browse.html#src=curated">20</a></td><td><code>data/traits/sequence/leader_peptide/</code></td></tr>
+<tr><td><strong>Total</strong></td><td><strong><a href="browse.html">277,697</a></strong></td><td></td></tr></table></div>
+    </section>
+
+    <section class="block" id="curation">
+      <h2>Curation model</h2>
+      <p>Every record is a stand-alone YAML with an <code>identifier</code> (source-anchored CURIE when possible), <code>label</code> + <code>definition</code> with provenance, <code>trait_axis</code> + <code>trait_category</code>, <code>parent_traits</code> / <code>xrefs</code> / <code>synonyms</code>, an optional <code>sequence_pattern</code>, optional <code>canonical_examples</code> (UniProtKB exemplars), optional evidence-backed <code>causal_graphs</code> (every edge cites &ge;1 reference), and an append-only <code>curation_history</code>. Seeded records land as <code>SEEDED</code>; curator review flips them to <code>REVIEWED</code>.</p>
+    </section>
   </main>
   <footer>
     <div class="fam"><strong>KG-Microbe Mechs:</strong>
       <a href="https://culturebotai.github.io/CultureMech/">CultureMech</a>&middot;<a href="https://culturebotai.github.io/MediaIngredientMech/">MediaIngredientMech</a>&middot;<a href="https://culturebotai.github.io/CommunityMech/">CommunityMech</a>&middot;<a href="https://culturebotai.github.io/TraitMech/">TraitMech</a>&middot;<a href="https://culturebotai.github.io/proteintraitsmech/">ProteinTraitsMech</a>
     </div>
     <div class="fam">
-      <a href="https://github.com/Knowledge-Graph-Hub/kg-microbe">kg-microbe</a>&middot;<a href="https://bioportal.bioontology.org/ontologies/METPO">METPO</a>
+      <a href="https://github.com/Knowledge-Graph-Hub/kg-microbe">kg-microbe</a>&middot;<a href="https://bioportal.bioontology.org/ontologies/METPO">METPO</a>&middot;CC0-1.0
     </div>
   </footer>
+  <script>
+  // Progressive enhancement: refresh the headline counts from the live facet
+  // index so the landing never goes stale relative to the corpus. Static
+  // numbers above are the fallback if the fetch fails.
+  fetch("data/facets.json").then(r=>r.json()).then(f=>{
+    const fmt=n=>Number(n).toLocaleString("en-US");
+    const c=f.counts||{}, ax=c.axis||{};
+    const set=(k,v)=>{const el=document.querySelector(`[data-count="${k}"]`);if(el&&v!=null)el.textContent=(typeof v==="number")?fmt(v):v;};
+    set("total", f.total!=null?+f.total:Object.values(ax).reduce((a,b)=>a+(+b||0),0));
+    ["STRUCTURE","SEQUENCE","SEQUENCE_STRUCTURE","FUNCTION","EVOLUTION"].forEach(a=>{if(ax[a]!=null)set(a,+ax[a]);});
+    const nsrc=Object.keys(c.src||{}).length; if(nsrc) set("sources",nsrc);
+  }).catch(()=>{});
+  </script>
 </body>
 </html>
