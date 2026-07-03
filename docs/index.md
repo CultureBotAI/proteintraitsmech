@@ -7,7 +7,7 @@ title: ProteinTraitsMech
 
 <div style="display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0 1.5rem">
   <a href="browse.html" style="flex:1 1 130px;padding:.9rem 1rem;border:1px solid #d0d7de;border-left:4px solid #155799;border-radius:8px;background:#fff;color:inherit;text-decoration:none">
-    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#155799">277,692</div>
+    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#155799">277,697</div>
     <div style="font-size:.85rem;color:#57606a">Total records</div>
   </a>
   <a href="browse.html#axis=STRUCTURE" style="flex:1 1 130px;padding:.9rem 1rem;border:1px solid #d0d7de;border-left:4px solid #16a34a;border-radius:8px;background:#fff;color:inherit;text-decoration:none">
@@ -15,7 +15,7 @@ title: ProteinTraitsMech
     <div style="font-size:.85rem;color:#57606a">STRUCTURE</div>
   </a>
   <a href="browse.html#axis=SEQUENCE" style="flex:1 1 130px;padding:.9rem 1rem;border:1px solid #d0d7de;border-left:4px solid #2563eb;border-radius:8px;background:#fff;color:inherit;text-decoration:none">
-    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#2563eb">10,273</div>
+    <div style="font-size:1.7rem;font-weight:700;line-height:1.1;color:#2563eb">10,278</div>
     <div style="font-size:.85rem;color:#57606a">SEQUENCE</div>
   </a>
   <a href="browse.html#axis=SEQUENCE_STRUCTURE" style="flex:1 1 130px;padding:.9rem 1rem;border:1px solid #d0d7de;border-left:4px solid #a855f7;border-radius:8px;background:#fff;color:inherit;text-decoration:none">
@@ -36,7 +36,7 @@ Knowledge base of **protein sequence, structure, and function traits** — one Y
 
 <a href="browse.html" style="display:block;padding:1rem 1.25rem;margin:1rem 0 1.5rem;border:1px solid #159957;border-radius:8px;background:linear-gradient(120deg,#159957,#155799);color:#fff;text-decoration:none;box-shadow:0 2px 8px rgba(15,23,42,.10)">
   <strong style="font-size:1.05rem">🔎 Browse the corpus</strong><br>
-  <span style="opacity:.9">Faceted search over 277,692 ProteinTraitRecords — filter by axis / category / source, then open any record for a rendered detail view.</span>
+  <span style="opacity:.9">Faceted search over 277,697 ProteinTraitRecords — filter by axis / category / source, then open any record for a rendered detail view.</span>
 </a>
 
 - **CultureBotAI** — [culturebotai.github.io](https://culturebotai.github.io/)
@@ -87,6 +87,11 @@ Every record carries a fine-grained `trait_category`. Counts link into the [brow
 | `EVO_PANGENOME` | EVOLUTION | [6](browse.html#cat=EVO_PANGENOME) |
 | `STRUCT_CAVITY` | STRUCTURE | [5](browse.html#cat=STRUCT_CAVITY) |
 | `EVO_CONSERVATION` | EVOLUTION | [3](browse.html#cat=EVO_CONSERVATION) |
+| `SEQ_INITIATOR_METHIONINE` | SEQUENCE | [1](browse.html#cat=SEQ_INITIATOR_METHIONINE) |
+| `SEQ_MATURE_CHAIN` | SEQUENCE | [1](browse.html#cat=SEQ_MATURE_CHAIN) |
+| `SEQ_PROPEPTIDE` | SEQUENCE | [1](browse.html#cat=SEQ_PROPEPTIDE) |
+| `SEQ_SIGNAL_PEPTIDE` | SEQUENCE | [1](browse.html#cat=SEQ_SIGNAL_PEPTIDE) |
+| `SEQ_TRANSIT_PEPTIDE` | SEQUENCE | [1](browse.html#cat=SEQ_TRANSIT_PEPTIDE) |
 | `STRUCT_DISULFIDE` | STRUCTURE | [1](browse.html#cat=STRUCT_DISULFIDE) |
 | `STRUCT_INTERFACE` | STRUCTURE | [1](browse.html#cat=STRUCT_INTERFACE) |
 | `STRUCT_METAL_SITE` | STRUCTURE | [1](browse.html#cat=STRUCT_METAL_SITE) |
@@ -132,7 +137,7 @@ Sources are listed **in order of integration** (earliest first, top to bottom). 
 | ELM (Eukaryotic Linear Motif) — targeting/cleavage/motif classes (⚠ non-commercial) | [353](browse.html#src=ELM) | `data/traits/sequence/{targeting_signal,cleavage_site,ptm_site,motif}/elm/` |
 | MEROPS peptidase families — S/C/A/M/… catalytic classes (EBI; academic) | [370](browse.html#src=MEROPS) | `data/traits/structure/domain/merops/` |
 | Curated RiPP leader-peptide classes — lanthipeptide/lasso/sactipeptide/… (CC0) | [20](browse.html#src=curated) | `data/traits/sequence/leader_peptide/` |
-| **Total** | **[277,692](browse.html)** | |
+| **Total** | **[277,697](browse.html)** | |
 
 *Bucket counts are seeding-time figures. Four duplicate PROSITE records (a ProRule / pattern copy that was routed to two directories) have since been consolidated via the [`merge-traits`](https://github.com/CultureBotAI/proteintraitsmech/tree/main/.claude/skills/merge-traits) skill, so per-bucket rows may slightly exceed the live total.*
 
