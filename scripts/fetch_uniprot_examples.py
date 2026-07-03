@@ -262,6 +262,17 @@ def _fetch_json(url: str) -> dict:
                 time.sleep(backoff)
                 continue
             raise
+        except (urllib.error.URLError, TimeoutError, OSError) as exc:
+            # Socket read timeouts / transient network errors surface as
+            # URLError or a bare TimeoutError — retry rather than crash a
+            # long batch run.
+            if attempt < 4:
+                backoff = min(30.0, 2 ** attempt)
+                print(f"    network error ({exc}) — retrying in {backoff:.0f}s",
+                      file=sys.stderr)
+                time.sleep(backoff)
+                continue
+            raise
     raise RuntimeError(f"Repeated failure fetching {url}")
 
 
@@ -298,6 +309,14 @@ def _fetch_text(url: str) -> str:
             if exc.code in (429, 502, 503, 504) and attempt < 4:
                 backoff = min(30.0, 2 ** attempt)
                 print(f"    HTTP {exc.code} — retrying in {backoff:.0f}s",
+                      file=sys.stderr)
+                time.sleep(backoff)
+                continue
+            raise
+        except (urllib.error.URLError, TimeoutError, OSError) as exc:
+            if attempt < 4:
+                backoff = min(30.0, 2 ** attempt)
+                print(f"    network error ({exc}) — retrying in {backoff:.0f}s",
                       file=sys.stderr)
                 time.sleep(backoff)
                 continue
