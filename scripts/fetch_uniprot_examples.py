@@ -497,11 +497,14 @@ def refresh_sequences(
             print(f"WARN {rel}: cannot parse ({exc})", file=sys.stderr)
             continue
         examples = list(record.get("canonical_examples") or [])
-        # Which accessions need enrichment on this record?
+        # Which accessions need enrichment on this record? Any example that
+        # points at a real UniProtKB accession and lacks a sequence — this
+        # covers both API-fetched examples and the examples written by the
+        # TED / M-CSA seeders (source: CURATOR / unset) whose protein_id is
+        # a genuine UniProt accession we can fetch and mark up.
         need = [
             e for e in examples
-            if e.get("source") == "UNIPROTKB_API"
-            and e.get("protein_id")
+            if (e.get("protein_id") or "").startswith("UniProtKB:")
             and not e.get("sequence")
         ]
         if not need:
