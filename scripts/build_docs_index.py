@@ -45,9 +45,9 @@ Record shape:
     "sta": "SEEDED" | "REVIEWED" | ...,
     "pat": "<sequence_pattern or null>",
     "rs":  "<residue_sequence or null>",     # concrete residues
-    "pt":  ["<parent_curie>", ...],          # parent_traits CURIEs
+    "pt":  [["<parent_curie>", "biolink:predicate"], ...],  # typed parent edges
     "xr":  ["<xref>", ...],                  # source-direct cross-references
-    "mx":  [["<object>", "<mapping_source>"], ...],  # mapping-derived xrefs
+    "mx":  [["<object>", "<mapping_source>", "biolink:predicate"], ...],
     "cp":  [["<chebi>", "<role>"], ...],     # chemical_participants (ChEBI+role)
     "ex":  [                                 # canonical_examples (lean projection)
       {
@@ -125,6 +125,8 @@ def infer_source(identifier: str, path: Path) -> str:
         return "IDEAL"
     if identifier.startswith("IDPO:") or identifier.startswith("proteintraitsmech:IDPO_"):
         return "DisProt"
+    if identifier.startswith("ELM:"):
+        return "ELM"
     if identifier.startswith("MCSA:"):
         return "M-CSA"
     if identifier.startswith("EC:"):
@@ -153,6 +155,35 @@ def infer_source(identifier: str, path: Path) -> str:
         # LSF seed used bare TERM names; UniProt uses UNIPROTKB_ prefix.
         return "LinkML LSF"
     return "manual"
+
+
+# Biolink-first edge typing (per research/schema-hierarchy-review-1.md). Most
+# parent_traits edges are subclass_of, but a few source patterns are really
+# membership — derived here so the browser/KG can type them correctly without
+# re-seeding 276k records.
+def parent_predicate(rec_id: str, parent: str) -> str:
+    rp = rec_id.split(":", 1)[0]
+    pp = parent.split(":", 1)[0]
+    if rp == "Pfam" and parent.startswith("Pfam:CL"):
+        return "biolink:member_of"          # family → clan
+    if rec_id.startswith("COG:") and parent.startswith("proteintraitsmech:COG_CATEGORY_"):
+        return "biolink:member_of"          # ortholog group → functional category
+    if rp == "PROSITE" and parent.startswith("PROSITE:PDOC"):
+        return "biolink:member_of"          # signature → documentation group
+    return "biolink:subclass_of"
+
+
+_MX_PRED = {
+    "pfam2interpro": "biolink:close_match",
+    "rhea2ec": "biolink:close_match",
+    "interpro2go": "biolink:related_to",
+    "pfam2go": "biolink:related_to",
+    "ec2go": "biolink:related_to",
+}
+
+
+def mx_predicate(mapping_source: str) -> str:
+    return _MX_PRED.get(mapping_source, "biolink:related_to")
 
 
 def truncate(text: str, limit: int = DEF_TRUNC) -> str:
@@ -224,11 +255,16 @@ def load_record(path: Path) -> dict[str, Any] | None:
         "sta": data.get("mapping_status") or "",
         "pat": data.get("sequence_pattern") or None,
         "rs": data.get("residue_sequence") or None,
-        "pt": list(data.get("parent_traits") or []),
+        # Parent edges as [curie, biolink_predicate] pairs (subclass_of by
+        # default; member_of for family→clan / COG→category / signature→PDOC).
+        # Explicit trait_relations are appended with their own predicate.
+        "pt": ([[p, parent_predicate(identifier, p)]
+                for p in (data.get("parent_traits") or [])]
+               + [[r.get("object"), r.get("predicate")]
+                  for r in (data.get("trait_relations") or []) if r.get("object")]),
         "xr": list(data.get("xrefs") or []),
-        # Mapping-derived xrefs, projected as [object, mapping_source] pairs so
-        # the browser can render them distinctly from source-direct xrefs.
-        "mx": [[m.get("object"), m.get("mapping_source")]
+        # Mapping-derived xrefs as [object, mapping_source, biolink_predicate].
+        "mx": [[m.get("object"), m.get("mapping_source"), mx_predicate(m.get("mapping_source"))]
                for m in (data.get("mapped_xrefs") or []) if m.get("object")],
         # Chemistry the trait acts on, as [chebi, role] pairs; formula/InChIKey
         # resolve from docs/data/chebi.json in the browser.

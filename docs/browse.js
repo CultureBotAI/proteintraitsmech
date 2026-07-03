@@ -527,8 +527,8 @@ async function renderDetail(r) {
   // with their provenance so they read distinctly from source-direct xrefs.
   const mappedHtml = (r.mx || []).length
     ? `<ul class="xref-list">
-        ${r.mx.map(([obj, src]) =>
-          `<li>${curieLink(obj)} <span class="map-src">via ${escapeHTML(src || "mapping")}</span></li>`
+        ${r.mx.map(([obj, src, pred]) =>
+          `<li>${curieLink(obj)} <span class="map-src">${pred ? escapeHTML(pred.replace("biolink:", "")) + " · " : ""}via ${escapeHTML(src || "mapping")}</span></li>`
         ).join("")}
        </ul>`
     : "";
@@ -544,7 +544,12 @@ async function renderDetail(r) {
 
   const parentHtml = (r.pt || []).length
     ? `<ul class="xref-list">
-        ${r.pt.map(x => `<li>${curieLink(x)}</li>`).join("")}
+        ${r.pt.map(x => {
+          const [cur, pred] = Array.isArray(x) ? x : [x, null];
+          const rel = pred && pred !== "biolink:subclass_of"
+            ? ` <span class="map-src">${escapeHTML(pred.replace("biolink:", ""))}</span>` : "";
+          return `<li>${curieLink(cur)}${rel}</li>`;
+        }).join("")}
        </ul>`
     : "";
   const parentRow = parentHtml

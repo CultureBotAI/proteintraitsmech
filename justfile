@@ -205,6 +205,13 @@ fetch-ideal:
 seed-ideal *args:
     python3 scripts/seed_ideal.py {{args}}
 
+fetch-elm:
+    mkdir -p data/raw/elm
+    curl -sSLf --max-time 60 -o data/raw/elm/elm_classes.tsv http://elm.eu.org/elms/elms_index.tsv
+
+seed-elm *args:
+    python3 scripts/seed_elm.py {{args}}
+
 # ARO (Antibiotic Resistance Ontology, CC-BY) -> FUNC_RESISTANCE (seed-obo aro).
 fetch-aro:
     mkdir -p data/raw/aro

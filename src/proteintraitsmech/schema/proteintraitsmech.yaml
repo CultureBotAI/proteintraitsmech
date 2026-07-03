@@ -191,6 +191,19 @@ classes:
         inlined_as_list: true
         range: ChemicalParticipant
 
+      trait_relations:
+        description: >-
+          Typed trait↔trait / trait↔entity relationships, each carrying an
+          explicit **Biolink Model predicate** (RO only where Biolink lacks a
+          slot) — e.g. `biolink:member_of` (Pfam family → clan, COG → category),
+          `biolink:part_of`, `biolink:has_participant`. Complements
+          `parent_traits`, which stays the backward-compatible
+          `biolink:subclass_of` path. Most edges are derived at docs-build time
+          from source + parent namespace; this slot is for explicit curation.
+        multivalued: true
+        inlined_as_list: true
+        range: TraitRelation
+
       sequence_pattern:
         description: >-
           Raw sequence pattern for SEQUENCE-axis traits — e.g. a PROSITE
@@ -694,6 +707,29 @@ classes:
           resolved in the sidecar). Optional.
         range: string
 
+  TraitRelation:
+    description: >-
+      A typed relationship from this trait to another trait or entity, carrying
+      an explicit Biolink Model predicate (RO fallback allowed). Edge-typing is
+      Biolink-first, mirroring KG-Microbe.
+    attributes:
+      predicate:
+        description: >-
+          Biolink predicate CURIE (e.g. biolink:member_of, biolink:part_of,
+          biolink:has_participant, biolink:subclass_of); an RO CURIE only where
+          Biolink has no suitable slot.
+        required: true
+        range: string
+        pattern: "^(biolink|RO):[A-Za-z0-9_]+$"
+      object:
+        description: CURIE of the related trait / entity.
+        required: true
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+      relation_source:
+        description: Where the relation comes from (source name, mapping, or "derived").
+        range: string
+
   CurationEvent:
     description: A timestamped curator action on a ProteinTraitRecord.
     attributes:
@@ -784,6 +820,17 @@ enums:
           residues (UniProt FT NON_STD).
       SEQ_CLEAVAGE_SITE:
         description: Endoproteolytic cleavage site (MEROPS-annotated or curator-defined).
+      SEQ_TARGETING_SIGNAL:
+        description: >-
+          Short linear targeting / localization signal — nuclear
+          localization/export (NLS/NES), peroxisomal (PTS1/PTS2), ER retention
+          (KDEL), cell-wall sorting (LPXTG), etc. Grounded by ELM TRG classes.
+      SEQ_LEADER_PEPTIDE:
+        description: >-
+          N-terminal leader peptide of a ribosomally synthesized precursor
+          (RiPP / bacteriocin leader, lanthipeptide/lasso/sactipeptide leader)
+          that is cleaved to release the mature peptide. Grounded by MIBiG /
+          BAGEL4 / antiSMASH RiPP families.
       SEQ_LOW_COMPLEXITY:
         description: Low-complexity region or compositionally biased segment.
       SEQ_DISORDER:
