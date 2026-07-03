@@ -373,6 +373,19 @@ def main() -> int:
         "sta": _tally(records, "sta"),
     }
 
+    # Which axes each source / category / status appears in — lets the browser
+    # lazily load only the axis shards a filter actually needs (a source or
+    # category rarely spans all axes), instead of the whole corpus upfront.
+    def _axes_by(field: str) -> dict[str, list[str]]:
+        m: dict[str, set[str]] = {}
+        for r in records:
+            key, ax = r.get(field), r.get("axis")
+            if key and ax:
+                m.setdefault(key, set()).add(ax)
+        return {k: sorted(v) for k, v in m.items()}
+
+    axes_by = {"src": _axes_by("src"), "cat": _axes_by("cat"), "sta": _axes_by("sta")}
+
     pairs = split_detail(records)
     det_count, det_files, det_mb = write_detail(pairs)
     shards = write_shards(records)
@@ -383,6 +396,7 @@ def main() -> int:
             {
                 "total": len(records),
                 "counts": facets,
+                "axesBy": axes_by,
                 "shards": shards,
                 "detailDir": "detail",
             },
