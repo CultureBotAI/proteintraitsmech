@@ -165,6 +165,13 @@ fetch-chebi:
 build-chebi:
     python3 scripts/build_chebi_sidecar.py
 
+fetch-repeatsdb:
+    mkdir -p data/raw/repeatsdb
+    curl -sSLf --max-time 60 -o data/raw/repeatsdb/classification.json https://repeatsdb.org/api/production/classification
+
+seed-repeatsdb *args:
+    python3 scripts/seed_repeatsdb.py {{args}}
+
 # ARO (Antibiotic Resistance Ontology, CC-BY) -> FUNC_RESISTANCE (seed-obo aro).
 fetch-aro:
     mkdir -p data/raw/aro

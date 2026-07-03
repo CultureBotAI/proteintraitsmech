@@ -129,6 +129,8 @@ def infer_source(identifier: str, path: Path) -> str:
         return "TCDB"
     if identifier.startswith("RHEA:"):
         return "Rhea"
+    if identifier.startswith("RepeatsDB:"):
+        return "RepeatsDB"
     if identifier.startswith("proteintraitsmech:UNIPROTKB_"):
         return "UniProtKB"
     if identifier.startswith(("proteintraitsmech:STABILITY_", "proteintraitsmech:EVO_")):
