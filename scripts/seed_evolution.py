@@ -32,7 +32,11 @@ OUT_DIR = REPO_ROOT / "data" / "traits" / "evolution"
 DEFINITION_SOURCE = "ProteinTraitsMech curated evolutionary/pangenome taxonomy"
 LICENSE = "CC0-1.0"
 
-# (category, subdir, label, definition, [synonyms])
+# (id_suffix, subdir, label, definition, [synonyms])
+# trait_category is the COARSE category derived from subdir (conservation →
+# EVO_CONSERVATION, pangenome → EVO_PANGENOME); the id_suffix keeps each term's
+# distinct identity as a record within that category.
+CATEGORY_BY_SUBDIR = {"conservation": "EVO_CONSERVATION", "pangenome": "EVO_PANGENOME"}
 TERMS: tuple[tuple[str, str, str, str, tuple[str, ...]], ...] = (
     ("EVO_CONSERVED", "conservation", "conserved protein",
      "A protein that is evolutionarily conserved — orthologues are retained "
@@ -89,14 +93,15 @@ def folded(text: str) -> list[str]:
     return [">-", f"  {text}"]
 
 
-def record(cat: str, label: str, definition: str, synonyms: tuple[str, ...]) -> str:
-    lines = [f"identifier: proteintraitsmech:{cat}", f"label: {yaml_escape(label)}"]
+def record(id_suffix: str, category: str, label: str, definition: str,
+           synonyms: tuple[str, ...]) -> str:
+    lines = [f"identifier: proteintraitsmech:{id_suffix}", f"label: {yaml_escape(label)}"]
     f = folded(definition)
     lines.append(f"definition: {f[0]}")
     lines.extend(f[1:])
     lines.append(f"definition_source: {yaml_escape(DEFINITION_SOURCE)}")
     lines.append("trait_axis: EVOLUTION")
-    lines.append(f"trait_category: {cat}")
+    lines.append(f"trait_category: {category}")
     lines.append("term_kind: CLASS")
     lines.append("mapping_status: SEEDED")
     if synonyms:
@@ -115,14 +120,16 @@ def main() -> int:
     args = ap.parse_args()
 
     written = skipped = 0
-    for cat, subdir, label, definition, syns in TERMS:
+    for id_suffix, subdir, label, definition, syns in TERMS:
+        category = CATEGORY_BY_SUBDIR[subdir]
         path = OUT_DIR / subdir / f"{label.replace(' ', '-')}.yaml"
         if path.exists() and not args.force:
             skipped += 1
             continue
         if args.apply:
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(record(cat, label, definition, syns), encoding="utf-8")
+            path.write_text(record(id_suffix, category, label, definition, syns),
+                            encoding="utf-8")
             written += 1
 
     print(f"{len(TERMS)} EVOLUTION records.")

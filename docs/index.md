@@ -44,45 +44,6 @@ Knowledge base of **protein sequence, structure, and function traits** — one Y
 - **Schema** — [`src/proteintraitsmech/schema/proteintraitsmech.yaml`](https://github.com/CultureBotAI/proteintraitsmech/blob/main/src/proteintraitsmech/schema/proteintraitsmech.yaml) · overview on [Schema page](schema.html)
 - **Worked example** — [P25888 corpus (20 records across all four axes)](example.html)
 
-## Corpus at a glance
-
-Record counts link into the [browser](browse.html) filtered by `source`. PROSITE and TED are broken into buckets by row, but each links to its full source set (the browser facets by source, not by bucket).
-
-| Source | Records | Directory |
-|---|---:|---|
-| LinkML `LocalStructuralFeature` valueset | [19](browse.html#src=LinkML%20LSF) | `data/traits/structure/{secondary,active_site,binding_site,cavity,disulfide,metal_site,dynamics,interface}/` |
-| PROSITE PATTERN (generic) | [1,279](browse.html#src=PROSITE) | `data/traits/sequence/pattern/` |
-| PROSITE PATTERN routed to PTM subtypes | [32](browse.html#src=PROSITE) | `data/traits/sequence/{modified_residue,glycosylation,crosslink}/` |
-| PROSITE MATRIX (profile) | [1,434](browse.html#src=PROSITE) | `data/traits/sequence/profile/` |
-| PROSITE ProRule (`DC=Domain`) | [1,445](browse.html#src=PROSITE) | `data/traits/structure/domain/` |
-| PROSITE ProRule (`DC=Site`, keyword-routed) | [4](browse.html#src=PROSITE) | `data/traits/sequence/{modified_residue,glycosylation,prorule}/` |
-| TED novel folds (Zenodo v5) | [7,427](browse.html#src=TED) | `data/traits/structure/fold/novel/` |
-| TED highly-symmetric folds | [6,433](browse.html#src=TED) | `data/traits/structure/fold/high_symmetry/` |
-| UniProtKB FT + CC + GO (demo: B0R5N7, P25888) | [29](browse.html#src=UniProtKB) | `data/traits/{sequence,structure,function}/…` |
-| PSI-MOD (CC-BY-4.0) | [1,971](browse.html#src=PSI-MOD) | `data/traits/sequence/{modified_residue,glycosylation,lipidation,crosslink,ptm_ontology}/` |
-| ECOD v295 (A/X/H/T/F hierarchy) | [45,113](browse.html#src=ECOD) | `data/traits/structure/{architecture,homologous_superfamily,topology,fold/ecod}/` |
-| CATH-Gene3D hierarchy — Class/Architecture/Topology/Homologous-superfamily (CC-BY 4.0) | [8,151](browse.html#src=CATH) | `data/traits/structure/{class,architecture,topology,homologous_superfamily}/cath/` |
-| SCOPe 2.08 — Class/Fold/Superfamily/Family/Domain (Berkeley; instances px/sp excluded) | [22,810](browse.html#src=SCOPe) | `data/traits/structure/{class,fold,homologous_superfamily,domain}/scope/` |
-| Reactome pathways — Homo sapiens reference set (CC0) | [2,883](browse.html#src=Reactome) | `data/traits/function/pathway/reactome/` |
-| CARD/ARO — antibiotic-resistance determinants + mechanisms (CC-BY 4.0) | [7,451](browse.html#src=CARD/ARO) | `data/traits/function/resistance/aro/` |
-| InterPro entries — Domain / Homologous-superfamily / Repeat / Conserved-/Active-/Binding-site / PTM (public domain; GO via interpro2go → mapped_xrefs) | [26,264](browse.html#src=InterPro) | `data/traits/{structure,sequence}/…/interpro/` |
-| Pfam-A families — Domain/Family→domain, Repeat, Coiled-coil, Disordered, Motif (public domain; GO+InterPro via pfam2go/pfam2interpro → mapped_xrefs) | [30,134](browse.html#src=Pfam) | `data/traits/{structure/domain,sequence/repeat,mixed/coiled_coil,sequence/disorder,sequence/motif}/pfam/` |
-| M-CSA (CC-BY-4.0) | [1,003](browse.html#src=M-CSA) | `data/traits/structure/active_site/mcsa/` |
-| DisProt (CC-BY-4.0) | [3,199](browse.html#src=DisProt) | `data/traits/sequence/disorder/` |
-| PSI-MI interaction types (CC-BY-4.0) | [146](browse.html#src=PSI-MI) | `data/traits/function/interaction_partner/psi_mi/` |
-| METPO ecophysiological traits (growth preferences, tolerances, metabolism; CC-BY-4.0) | [118](browse.html#src=METPO) | `data/traits/function/{environmental_response,enzymatic_activity}/metpo/` |
-| PATO physicochemical qualities (CC-BY-4.0) | [28](browse.html#src=PATO) | `data/traits/structure/{stability,dynamics,surface}/pato/` |
-| Curated stability taxonomy — per-condition (thermal, oxidative, saline, pH, osmotic, pressure, desiccation, chemical, proteolytic, mechanical) × increased/decreased (CC0-1.0) | [33](browse.html#src=curated) | `data/traits/structure/stability/conditions/` |
-| Curated evolutionary / pangenome traits — conserved, clade-specific, variable; pangenome core/soft-core/shell/cloud/persistent/singleton (CC0-1.0) | [9](browse.html#src=curated) | `data/traits/evolution/{conservation,pangenome}/` |
-| TCDB transport classification — Class/Subclass/Family (CC-BY-SA 3.0; 946 families ChEBI-grounded) | [2,285](browse.html#src=TCDB) | `data/traits/function/transport/tcdb/` |
-| COG 2020 orthologous groups + 26 functional categories (US Gov public domain) | [4,903](browse.html#src=COG) | `data/traits/function/ortholog_group/cog/` |
-| Rhea reactions — enzymatic reactions + ChEBI participants (CC-BY 4.0; EC via rhea2ec) | [18,558](browse.html#src=Rhea) | `data/traits/function/enzymatic_activity/rhea/` |
-| ExPASy ENZYME — complete EC hierarchy (CC-BY 4.0; GO/RHEA mapped, KEGG direct, DR examples) | [7,375](browse.html#src=ExPASy%20ENZYME) | `data/traits/function/enzymatic_activity/ec/` |
-| RepeatsDB — structural tandem-repeat Class/Topology/Fold/Clan (CC-BY 4.0) | [122](browse.html#src=RepeatsDB) | `data/traits/sequence_structure/structural_repeat/repeatsdb/` |
-| **Total** | **[200,658](browse.html)** | |
-
-*Bucket counts are seeding-time figures. Four duplicate PROSITE records (a ProRule / pattern copy that was routed to two directories) have since been consolidated via the [`merge-traits`](https://github.com/CultureBotAI/proteintraitsmech/tree/main/.claude/skills/merge-traits) skill, so per-bucket rows may slightly exceed the live total.*
-
 ## Trait categories
 
 Every record carries a fine-grained `trait_category`. Counts link into the [browser](browse.html) pre-filtered to that subset.
@@ -119,24 +80,56 @@ Every record carries a fine-grained `trait_category`. Counts link into the [brow
 | `STRUCT_DYNAMICS` | STRUCTURE | [13](browse.html#cat=STRUCT_DYNAMICS) |
 | `STRUCT_SURFACE` | STRUCTURE | [13](browse.html#cat=STRUCT_SURFACE) |
 | `STRUCT_SECONDARY` | STRUCTURE | [8](browse.html#cat=STRUCT_SECONDARY) |
+| `EVO_PANGENOME` | EVOLUTION | [6](browse.html#cat=EVO_PANGENOME) |
 | `STRUCT_CAVITY` | STRUCTURE | [5](browse.html#cat=STRUCT_CAVITY) |
 | `FUNC_LOCALIZATION` | FUNCTION | [4](browse.html#cat=FUNC_LOCALIZATION) |
+| `EVO_CONSERVATION` | EVOLUTION | [3](browse.html#cat=EVO_CONSERVATION) |
 | `FUNC_BINDING_CAPACITY` | FUNCTION | [3](browse.html#cat=FUNC_BINDING_CAPACITY) |
 | `SEQ_COMPOSITION` | SEQUENCE | [3](browse.html#cat=SEQ_COMPOSITION) |
 | `SEQ_MATURE_CHAIN` | SEQUENCE | [2](browse.html#cat=SEQ_MATURE_CHAIN) |
-| `EVO_CLADE_SPECIFIC` | EVOLUTION | [1](browse.html#cat=EVO_CLADE_SPECIFIC) |
-| `EVO_CONSERVED` | EVOLUTION | [1](browse.html#cat=EVO_CONSERVED) |
-| `EVO_PANGENOME_CLOUD` | EVOLUTION | [1](browse.html#cat=EVO_PANGENOME_CLOUD) |
-| `EVO_PANGENOME_CORE` | EVOLUTION | [1](browse.html#cat=EVO_PANGENOME_CORE) |
-| `EVO_PANGENOME_PERSISTENT` | EVOLUTION | [1](browse.html#cat=EVO_PANGENOME_PERSISTENT) |
-| `EVO_PANGENOME_SHELL` | EVOLUTION | [1](browse.html#cat=EVO_PANGENOME_SHELL) |
-| `EVO_PANGENOME_SINGLETON` | EVOLUTION | [1](browse.html#cat=EVO_PANGENOME_SINGLETON) |
-| `EVO_PANGENOME_SOFTCORE` | EVOLUTION | [1](browse.html#cat=EVO_PANGENOME_SOFTCORE) |
-| `EVO_VARIABLE` | EVOLUTION | [1](browse.html#cat=EVO_VARIABLE) |
 | `FUNC_COFACTOR_REQUIREMENT` | FUNCTION | [1](browse.html#cat=FUNC_COFACTOR_REQUIREMENT) |
 | `STRUCT_DISULFIDE` | STRUCTURE | [1](browse.html#cat=STRUCT_DISULFIDE) |
 | `STRUCT_INTERFACE` | STRUCTURE | [1](browse.html#cat=STRUCT_INTERFACE) |
 | `STRUCT_METAL_SITE` | STRUCTURE | [1](browse.html#cat=STRUCT_METAL_SITE) |
+
+## Corpus at a glance
+
+Sources are listed **in order of integration** (earliest first, top to bottom). Record counts link into the [browser](browse.html) filtered by `source`. PROSITE and TED are broken into buckets by row, but each links to its full source set (the browser facets by source, not by bucket).
+
+| Source | Records | Directory |
+|---|---:|---|
+| LinkML `LocalStructuralFeature` valueset | [19](browse.html#src=LinkML%20LSF) | `data/traits/structure/{secondary,active_site,binding_site,cavity,disulfide,metal_site,dynamics,interface}/` |
+| PROSITE PATTERN (generic) | [1,279](browse.html#src=PROSITE) | `data/traits/sequence/pattern/` |
+| PROSITE PATTERN routed to PTM subtypes | [32](browse.html#src=PROSITE) | `data/traits/sequence/{modified_residue,glycosylation,crosslink}/` |
+| PROSITE MATRIX (profile) | [1,434](browse.html#src=PROSITE) | `data/traits/sequence/profile/` |
+| PROSITE ProRule (`DC=Domain`) | [1,445](browse.html#src=PROSITE) | `data/traits/structure/domain/` |
+| PROSITE ProRule (`DC=Site`, keyword-routed) | [4](browse.html#src=PROSITE) | `data/traits/sequence/{modified_residue,glycosylation,prorule}/` |
+| TED novel folds (Zenodo v5) | [7,427](browse.html#src=TED) | `data/traits/structure/fold/novel/` |
+| TED highly-symmetric folds | [6,433](browse.html#src=TED) | `data/traits/structure/fold/high_symmetry/` |
+| UniProtKB FT + CC + GO (demo: B0R5N7, P25888) | [29](browse.html#src=UniProtKB) | `data/traits/{sequence,structure,function}/…` |
+| PSI-MOD (CC-BY-4.0) | [1,971](browse.html#src=PSI-MOD) | `data/traits/sequence/{modified_residue,glycosylation,lipidation,crosslink,ptm_ontology}/` |
+| ECOD v295 (A/X/H/T/F hierarchy) | [45,113](browse.html#src=ECOD) | `data/traits/structure/{architecture,homologous_superfamily,topology,fold/ecod}/` |
+| SCOPe 2.08 — Class/Fold/Superfamily/Family/Domain (Berkeley; instances px/sp excluded) | [22,810](browse.html#src=SCOPe) | `data/traits/structure/{class,fold,homologous_superfamily,domain}/scope/` |
+| M-CSA (CC-BY-4.0) | [1,003](browse.html#src=M-CSA) | `data/traits/structure/active_site/mcsa/` |
+| DisProt (CC-BY-4.0) | [3,199](browse.html#src=DisProt) | `data/traits/sequence/disorder/` |
+| PSI-MI interaction types (CC-BY-4.0) | [146](browse.html#src=PSI-MI) | `data/traits/function/interaction_partner/psi_mi/` |
+| METPO ecophysiological traits (growth preferences, tolerances, metabolism; CC-BY-4.0) | [118](browse.html#src=METPO) | `data/traits/function/{environmental_response,enzymatic_activity}/metpo/` |
+| PATO physicochemical qualities (CC-BY-4.0) | [28](browse.html#src=PATO) | `data/traits/structure/{stability,dynamics,surface}/pato/` |
+| Curated stability taxonomy — per-condition (thermal, oxidative, saline, pH, osmotic, pressure, desiccation, chemical, proteolytic, mechanical) × increased/decreased (CC0-1.0) | [33](browse.html#src=curated) | `data/traits/structure/stability/conditions/` |
+| InterPro entries — Domain / Homologous-superfamily / Repeat / Conserved-/Active-/Binding-site / PTM (public domain; GO via interpro2go → mapped_xrefs) | [26,264](browse.html#src=InterPro) | `data/traits/{structure,sequence}/…/interpro/` |
+| Curated evolutionary / pangenome traits — conserved, clade-specific, variable; pangenome core/soft-core/shell/cloud/persistent/singleton (CC0-1.0) | [9](browse.html#src=curated) | `data/traits/evolution/{conservation,pangenome}/` |
+| Pfam-A families — Domain/Family→domain, Repeat, Coiled-coil, Disordered, Motif (public domain; GO+InterPro via pfam2go/pfam2interpro → mapped_xrefs) | [30,134](browse.html#src=Pfam) | `data/traits/{structure/domain,sequence/repeat,mixed/coiled_coil,sequence/disorder,sequence/motif}/pfam/` |
+| CATH-Gene3D hierarchy — Class/Architecture/Topology/Homologous-superfamily (CC-BY 4.0) | [8,151](browse.html#src=CATH) | `data/traits/structure/{class,architecture,topology,homologous_superfamily}/cath/` |
+| Reactome pathways — Homo sapiens reference set (CC0) | [2,883](browse.html#src=Reactome) | `data/traits/function/pathway/reactome/` |
+| CARD/ARO — antibiotic-resistance determinants + mechanisms (CC-BY 4.0) | [7,451](browse.html#src=CARD/ARO) | `data/traits/function/resistance/aro/` |
+| TCDB transport classification — Class/Subclass/Family (CC-BY-SA 3.0; 946 families ChEBI-grounded) | [2,285](browse.html#src=TCDB) | `data/traits/function/transport/tcdb/` |
+| COG 2020 orthologous groups + 26 functional categories (US Gov public domain) | [4,903](browse.html#src=COG) | `data/traits/function/ortholog_group/cog/` |
+| Rhea reactions — enzymatic reactions + ChEBI participants (CC-BY 4.0; EC via rhea2ec) | [18,558](browse.html#src=Rhea) | `data/traits/function/enzymatic_activity/rhea/` |
+| ExPASy ENZYME — complete EC hierarchy (CC-BY 4.0; GO/RHEA mapped, KEGG direct, DR examples) | [7,375](browse.html#src=ExPASy%20ENZYME) | `data/traits/function/enzymatic_activity/ec/` |
+| RepeatsDB — structural tandem-repeat Class/Topology/Fold/Clan (CC-BY 4.0) | [122](browse.html#src=RepeatsDB) | `data/traits/sequence_structure/structural_repeat/repeatsdb/` |
+| **Total** | **[200,658](browse.html)** | |
+
+*Bucket counts are seeding-time figures. Four duplicate PROSITE records (a ProRule / pattern copy that was routed to two directories) have since been consolidated via the [`merge-traits`](https://github.com/CultureBotAI/proteintraitsmech/tree/main/.claude/skills/merge-traits) skill, so per-bucket rows may slightly exceed the live total.*
 
 ## Trait axes
 

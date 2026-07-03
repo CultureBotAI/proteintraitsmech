@@ -180,6 +180,7 @@ function applyHashFacets(params) {
   FILTERED_CACHE = null;
   PAGE = 0;
   updateActiveCount();
+  refreshFacetCounts();
 }
 
 /* ------------------------------------------------------------------ */
@@ -227,6 +228,7 @@ function renderFacetSidebar() {
       FILTERED_CACHE = null;
       PAGE = 0;
       updateActiveCount();
+      refreshFacetCounts();
       renderList();
     });
   });
@@ -246,9 +248,11 @@ function renderFacetSidebar() {
     FILTERED_CACHE = null;
     PAGE = 0;
     updateActiveCount();
+    refreshFacetCounts();
     renderList();
   });
   updateActiveCount();
+  refreshFacetCounts();
 }
 
 // Expand/collapse a facet group and sync its toggle button label.
@@ -266,6 +270,62 @@ function updateActiveCount() {
   el.textContent = n ? `${n} active` : "";
 }
 
+// Facet counts for the CURRENT filtered subset. For each group we count values
+// across records that match all the OTHER active groups (and the search query)
+// — standard faceted-search semantics, so each number is "how many records you
+// get if you also pick this value". Values with 0 in the subset are returned as
+// absent and hidden by refreshFacetCounts(). With no filters this equals the
+// global counts. O(records × groups²) ≈ a few M ops — recomputed on each change.
+function computeFacetCounts() {
+  const groups = FACET_GROUPS.map(g => g.key);   // axis, src, cat, sta
+  const counts = {};
+  groups.forEach(k => (counts[k] = Object.create(null)));
+  const qs = QUERY;
+  for (const r of RECORDS) {
+    if (qs && !(
+      (r.id && r.id.toLowerCase().includes(qs)) ||
+      (r.label && r.label.toLowerCase().includes(qs)) ||
+      (r.def && r.def.toLowerCase().includes(qs)))) continue;
+    for (const k of groups) {
+      let ok = true;
+      for (const k2 of groups) {
+        if (k2 === k) continue;
+        const sel = SELECTED[k2];
+        if (sel.size && !sel.has(r[k2])) { ok = false; break; }
+      }
+      if (!ok) continue;
+      const v = r[k];
+      if (v != null && v !== "") counts[k][v] = (counts[k][v] || 0) + 1;
+    }
+  }
+  return counts;
+}
+
+// Push subset counts into the sidebar DOM and hide values absent from the
+// subset (kept only if currently selected, so they can still be turned off).
+function refreshFacetCounts() {
+  const counts = computeFacetCounts();
+  document.querySelectorAll("#facet-scroll .facet-group").forEach(group => {
+    const key = group.dataset.key;
+    const c = counts[key] || {};
+    let visible = 0;
+    group.querySelectorAll(".facet-item").forEach(item => {
+      const el = item.querySelector("input[type=checkbox]");
+      if (!el) return;
+      const n = c[el.value] || 0;
+      const cnt = item.querySelector(".count");
+      if (cnt) cnt.textContent = n.toLocaleString();
+      const selected = SELECTED[key] && SELECTED[key].has(el.value);
+      const empty = n === 0 && !selected;
+      item.classList.toggle("is-empty", empty);
+      if (!empty) visible++;
+    });
+    const btn = group.querySelector(".facet-toggle");
+    if (btn && !group.classList.contains("expanded"))
+      btn.textContent = `Show all (${visible})`;
+  });
+}
+
 /* ------------------------------------------------------------------ */
 /* Inputs                                                             */
 /* ------------------------------------------------------------------ */
@@ -279,6 +339,7 @@ function wireInputs() {
       QUERY = q.value.trim().toLowerCase();
       FILTERED_CACHE = null;
       PAGE = 0;
+      refreshFacetCounts();
       renderList();
     }, 120);
   });
