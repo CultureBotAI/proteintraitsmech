@@ -276,6 +276,12 @@ def build_prosite_yaml(entry: dict, release: str) -> str:
         lines.append("parent_traits:")
         for p in parent_traits:
             lines.append(f"  - {p}")
+        # A signature is a MEMBER of its PDOC documentation group, not a subclass.
+        lines.append("trait_relations:")
+        for p in parent_traits:
+            lines += ["  - predicate: biolink:member_of",
+                      f"    object: {p}",
+                      "    relation_source: PROSITE documentation"]
 
     if entry.get("pattern") and entry["type"] == "PATTERN":
         lines.append(f"sequence_pattern: {yaml_escape(entry['pattern'])}")

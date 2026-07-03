@@ -84,6 +84,12 @@ def build_cog_yaml(cog, name, cats, gene, pathway):
     if cats:
         lines += ["parent_traits:"]
         lines += [f"  - proteintraitsmech:COG_CATEGORY_{c}" for c in cats]
+        # A COG is a MEMBER of its functional category (not a subclass).
+        lines += ["trait_relations:"]
+        for c in cats:
+            lines += ["  - predicate: biolink:member_of",
+                      f"    object: proteintraitsmech:COG_CATEGORY_{c}",
+                      "    relation_source: COG functional category"]
     lines.append(f"license: {LICENSE}")
     return "\n".join(lines) + "\n"
 

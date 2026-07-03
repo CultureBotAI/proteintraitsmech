@@ -126,6 +126,11 @@ def build_yaml(pf, pid, desc, clan, typ, axis, category, go, ipr) -> str:
     if clan:
         lines.append("parent_traits:")
         lines.append(f"  - Pfam:{clan}")
+        # A family is a MEMBER of its clan (not a subclass) — Biolink typed.
+        lines += ["trait_relations:",
+                  "  - predicate: biolink:member_of",
+                  f"    object: Pfam:{clan}",
+                  "    relation_source: Pfam clan"]
     # GO (pfam2go) and InterPro (pfam2interpro) are both mapping-product
     # assertions, not Pfam-direct → mapped_xrefs with provenance.
     mapped = [(g, "pfam2go") for g in go]

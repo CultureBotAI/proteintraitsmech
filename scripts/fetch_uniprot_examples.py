@@ -581,9 +581,13 @@ def refresh_sequences(
             if src_entry is None or not src_entry.sequence:
                 continue
             ex["sequence"] = src_entry.sequence
-            feats = flat_features_for_example(src_entry)
-            if feats:
-                ex["features"] = feats
+            # Only add UniProt FT features when the example has none of its own —
+            # curated features (ELM motif region, DisProt/UniProt-class region)
+            # are the point and must not be clobbered by the whole entry's FTs.
+            if not ex.get("features"):
+                feats = flat_features_for_example(src_entry)
+                if feats:
+                    ex["features"] = feats
             record_enriched += 1
         if record_enriched:
             touched += 1
