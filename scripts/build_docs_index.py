@@ -149,7 +149,7 @@ def infer_source(identifier: str, path: Path) -> str:
         return "CDD"
     if identifier.startswith("MEROPS:"):
         return "MEROPS"
-    if identifier.startswith("proteintraitsmech:UNIPROTKB_"):
+    if identifier.startswith(("proteintraitsmech:UNIPROTKB_", "proteintraitsmech:UNIPROT_FT_")):
         return "UniProtKB"
     if identifier.startswith(("proteintraitsmech:STABILITY_", "proteintraitsmech:EVO_", "proteintraitsmech:RIPP_LEADER_")):
         return "curated"
