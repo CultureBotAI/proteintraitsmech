@@ -4,11 +4,16 @@ really **membership**, not subclass — so the typed edge lives in the source
 data for KG export (not only derived at docs-build time).
 
 Adds, alongside the existing `parent_traits` (kept as the backward-compatible
-biolink:subclass_of path), a `trait_relations` entry with
-`predicate: biolink:member_of` for:
-  Pfam family  → Pfam:CL…      (family is a member of a clan)
-  COG          → COG_CATEGORY  (ortholog group ∈ functional category)
-  PROSITE:PS   → PROSITE:PDOC  (signature ∈ documentation group)
+biolink:subclass_of path), a typed `trait_relations` entry for parent edges that
+are really **membership** or **partonomy**, not subclass:
+  biolink:member_of
+    Pfam family  → Pfam:CL…      (family is a member of a clan)
+    COG          → COG_CATEGORY  (ortholog group ∈ functional category)
+    PROSITE:PS   → PROSITE:PDOC  (signature ∈ documentation group)
+    CDD domain   → CDD:cl…       (conserved domain ∈ superfamily)
+  biolink:part_of
+    Reactome     → Reactome      (sub-pathway/reaction is part of its pathway;
+                                  Reactome's hierarchy is event partonomy)
 
 Minimal-diff: the `trait_relations:` block is inserted textually right after
 the record's `parent_traits:` block; the rest of the file is untouched.
@@ -27,16 +32,22 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 TRAITS = REPO_ROOT / "data" / "traits"
 
 
-def member_parents(identifier: str, parents: list[str]) -> list[str]:
-    """Return the subset of parents that are member_of (not subclass) edges."""
+def typed_parents(identifier: str, parents: list[str]) -> list[tuple[str, str]]:
+    """Return (predicate, parent) for parent edges that are NOT subclass —
+    membership or partonomy — so they can be typed. Subclass edges stay implicit
+    in parent_traits."""
     out = []
     for p in parents:
         if identifier.startswith("Pfam:") and p.startswith("Pfam:CL"):
-            out.append(p)
+            out.append(("biolink:member_of", p))
         elif identifier.startswith("COG:") and p.startswith("proteintraitsmech:COG_CATEGORY_"):
-            out.append(p)
+            out.append(("biolink:member_of", p))
         elif identifier.startswith("PROSITE:PS") and p.startswith("PROSITE:PDOC"):
-            out.append(p)
+            out.append(("biolink:member_of", p))
+        elif identifier.startswith("CDD:") and p.startswith("CDD:cl"):
+            out.append(("biolink:member_of", p))
+        elif identifier.startswith("Reactome:") and p.startswith("Reactome:"):
+            out.append(("biolink:part_of", p))
     return out
 
 
@@ -71,22 +82,22 @@ def main() -> int:
             indent = m.group(1)          # match the file's list-item indent
             parents.append(m.group(2))
             end += 1
-        mem = member_parents(ident, parents)
-        if not mem:
+        typed = typed_parents(ident, parents)
+        if not typed:
             continue
         cont = indent + "  "             # continuation indent for mapping fields
         block = ["trait_relations:"]
-        for p in mem:
-            block += [f"{indent}- predicate: biolink:member_of",
+        for predicate, p in typed:
+            block += [f"{indent}- predicate: {predicate}",
                       f"{cont}object: {p}",
                       f"{cont}relation_source: derived"]
         new_lines = lines[:end] + block + lines[end:]
         touched += 1
-        added += len(mem)
+        added += len(typed)
         if args.apply:
             path.write_text("\n".join(new_lines) + "\n", encoding="utf-8")
 
-    print(f"{'APPLIED' if args.apply else 'DRY-RUN'}: {added} member_of "
+    print(f"{'APPLIED' if args.apply else 'DRY-RUN'}: {added} typed "
           f"trait_relations across {touched} records.")
     if not args.apply:
         print("Re-run with --apply to write.")
