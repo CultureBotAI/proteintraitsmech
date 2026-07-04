@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Corpus map — ProteinTraitsMech</title>
+<style>
+  :root{--pastel-a:#B7E4DC;--pastel-b:#FCE3B0;--accent:#2E8B84;--ink:#1a1a1a;--muted:#555;--line:rgba(0,0,0,.12)}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--pastel-b)}
+  header{background:linear-gradient(135deg,var(--pastel-a),var(--pastel-b));padding:20px 24px;border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 .15em;font-size:1.5rem}
+  header p{margin:0;color:var(--muted);font-size:.9rem}
+  header a{color:var(--accent)}
+  .wrap{max-width:1100px;margin:0 auto;padding:18px 24px}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;margin:.4rem 0 1rem}
+  .legend span{display:inline-flex;align-items:center;gap:.4em;font-size:.85rem}
+  .sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+  #stage{position:relative;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  canvas{display:block;width:100%;height:auto;cursor:crosshair}
+  #tip{position:absolute;pointer-events:none;background:#111;color:#fff;font-size:.78rem;padding:.3em .5em;border-radius:5px;opacity:0;transform:translate(-50%,-140%);white-space:nowrap;max-width:280px;overflow:hidden;text-overflow:ellipsis}
+  .hint{color:var(--muted);font-size:.82rem;margin-top:.5rem}
+</style>
+</head>
+<body>
+  <header>
+    <h1>Corpus map</h1>
+    <p>PCA projection of every record's text embedding · <a href="index.html">home</a> · <a href="browse.html">browse</a></p>
+  </header>
+  <main class="wrap">
+    <div class="legend" id="legend"></div>
+    <div id="stage"><canvas id="cv" width="1040" height="660"></canvas><div id="tip"></div></div>
+    <p class="hint" id="hint">Loading corpus map…</p>
+  </main>
+  <script>
+  // Axis palette (matches the landing stat-card hues).
+  const COLORS = {STRUCTURE:"#16a34a",SEQUENCE:"#2563eb",SEQUENCE_STRUCTURE:"#a855f7",FUNCTION:"#d97706",EVOLUTION:"#0d9488",OTHER:"#888"};
+  const cv=document.getElementById("cv"), ctx=cv.getContext("2d");
+  const W=cv.width, H=cv.height, PAD=14;
+  let DATA=null;
+
+  fetch("data/corpus_map.json").then(r=>r.json()).then(d=>{
+    DATA=d;
+    document.getElementById("hint").textContent =
+      `${d.n_shown.toLocaleString()} records · ${d.method.toUpperCase()} projection`
+      + (d.explained ? ` (PC1 ${(d.explained[0]*100).toFixed(1)}%, PC2 ${(d.explained[1]*100).toFixed(1)}% variance)` : "")
+      + " · hover to identify, click to open.";
+    const leg=document.getElementById("legend");
+    d.axes.forEach(a=>{
+      const s=document.createElement("span");
+      s.innerHTML=`<span class="sw" style="background:${COLORS[a]||"#888"}"></span>${a}`;
+      leg.appendChild(s);
+    });
+    draw();
+  }).catch(()=>{document.getElementById("hint").textContent="Corpus map not built yet (run `just embed-map`).";});
+
+  function px(p){return [PAD + p[0]*(W-2*PAD), PAD + (1-p[1])*(H-2*PAD)];}
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(const p of DATA.points){
+      const [x,y]=px(p);
+      ctx.fillStyle=COLORS[DATA.axes[p[2]]]||"#888";
+      ctx.globalAlpha=.55; ctx.fillRect(x,y,1.4,1.4);
+    }
+    ctx.globalAlpha=1;
+  }
+  // Nearest-point hover/click (linear scan — fine for one interaction).
+  const tip=document.getElementById("tip");
+  function nearest(mx,my){
+    let best=null, bd=64;
+    for(const p of DATA.points){const [x,y]=px(p); const dd=(x-mx)**2+(y-my)**2; if(dd<bd){bd=dd; best=p;}}
+    return best;
+  }
+  cv.addEventListener("mousemove",e=>{
+    if(!DATA) return;
+    const r=cv.getBoundingClientRect(), sx=cv.width/r.width, sy=cv.height/r.height;
+    const mx=(e.clientX-r.left)*sx, my=(e.clientY-r.top)*sy;
+    const p=nearest(mx,my);
+    if(p){tip.textContent=p[3]+"  ·  "+DATA.axes[p[2]]; tip.style.left=(mx/sx)+"px"; tip.style.top=(my/sy)+"px"; tip.style.opacity=1;}
+    else tip.style.opacity=0;
+  });
+  cv.addEventListener("click",e=>{
+    if(!DATA) return;
+    const r=cv.getBoundingClientRect(), sx=cv.width/r.width, sy=cv.height/r.height;
+    const p=nearest((e.clientX-r.left)*sx,(e.clientY-r.top)*sy);
+    if(p) location.href="browse.html#record="+encodeURIComponent(p[3]);
+  });
+  </script>
+</body>
+</html>
