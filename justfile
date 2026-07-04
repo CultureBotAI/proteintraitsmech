@@ -199,6 +199,21 @@ build-member-overlap *args:
 build-structural-equivalence *args:
     python3 scripts/build_structural_equivalence.py {{args}}
 
+# Text-embed every record into a 1024-d vector with a local model (needs the
+# `embed` extra: uv sync --extra embed). Reads the docs shards → writes
+# data/embeddings/ (gitignored). ~10 min for the full corpus on Apple-Silicon.
+embed *args:
+    python3 scripts/embed_records.py {{args}}
+
+# Nearest-neighbor "related traits" from the embeddings → docs/data/neighbors.*
+# (browser) + Tier-5 semantic merge candidates. Run `just embed` first.
+embed-neighbors *args:
+    python3 scripts/embed_neighbors.py {{args}}
+
+# UMAP 2-D corpus map + clusters from the embeddings → docs/data/corpus_map.json.
+embed-map *args:
+    python3 scripts/embed_map.py {{args}}
+
 fetch-repeatsdb:
     mkdir -p data/raw/repeatsdb
     curl -sSLf --max-time 60 -o data/raw/repeatsdb/classification.json https://repeatsdb.org/api/production/classification

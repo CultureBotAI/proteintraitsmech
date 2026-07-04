@@ -517,6 +517,16 @@ async function renderDetail(r) {
     await loadDetail(r);
     if (window.location.hash !== "#record=" + encodeURIComponent(r.id)) return;
   }
+  await loadNeighbors(r);
+  if (window.location.hash !== "#record=" + encodeURIComponent(r.id)) return;
+  // Semantic neighbors: [neighbor_id, cosine] → internal record links.
+  const relatedHtml = (r._nb || []).length
+    ? `<ul class="xref-list">
+        ${r._nb.map(([nid, sc]) =>
+          `<li><a href="#record=${encodeURIComponent(nid)}">${escapeHTML(nid)}</a>`
+          + ` <span class="map-src">${(sc).toFixed(2)}</span></li>`).join("")}
+       </ul>`
+    : "";
   const rawYamlLink = REPO_RAW + (r.path || "");
   const xrefsHtml = (r.xr || []).length
     ? `<ul class="xref-list">
@@ -608,6 +618,7 @@ async function renderDetail(r) {
         ${row("Cross-references", `<dd>${xrefsHtml}</dd>`, true)}
         ${mappedHtml ? row("Mapped associations", `<dd>${mappedHtml}</dd>`, true) : ""}
         ${eqHtml ? row("Equivalent entries", `<dd>${eqHtml}</dd>`, true) : ""}
+        ${relatedHtml ? row("Related traits (semantic)", `<dd>${relatedHtml}</dd>`, true) : ""}
         ${(r.cp || []).length ? row("Chemistry", `<dd id="chem-list">${chemistryHtml(r)}</dd>`, true) : ""}
         ${row("Detection methods", `<dd id="method-list">${METHODS ? (methodsHtml(r) || "<em>—</em>") : "<em>loading…</em>"}</dd>`, true)}
         ${row("Source file", `<dd><a href="${escapeAttr(rawYamlLink)}" target="_blank" rel="noopener"><code>${escapeHTML(r.path)}</code></a></dd>`, true)}
@@ -747,6 +758,20 @@ async function loadDetail(r) {
     if (d) Object.assign(r, d);   // full def, path, pt, xr, mx, cp, ex, rs, pat
   } catch (_) { /* keep lean fields */ }
   r._dl = true;
+}
+
+// Semantic "related traits" — precomputed nearest neighbors (scripts/
+// embed_neighbors.py) live in neighbors/NNN.json, sharded by the SAME bucket
+// number as the detail sidecar (r.df = "detail/NNN.json"). Lazy-loaded per
+// record; absent (feature not built) → the row simply doesn't render.
+async function loadNeighbors(r) {
+  if (r._nb !== undefined) return;
+  r._nb = null;
+  if (!r.df) return;
+  try {
+    const bucket = await fetchDetailBucket(r.df.replace("detail/", "neighbors/"));
+    if (bucket[r.id]) r._nb = bucket[r.id];   // [[neighbor_id, cosine], …]
+  } catch (_) { /* no neighbors */ }
 }
 
 function renderNotFound(id) {
