@@ -37,7 +37,7 @@
   license_url: https://prosite.expasy.org/prosite_license.html
   status: seeded
   hierarchy: partial
-  trait_categories: [SEQ_MOTIF, SEQ_MODIFIED_RESIDUE, SEQ_GLYCOSYLATION_SITE, SEQ_CROSSLINK_SITE, STRUCT_DOMAIN]
+  trait_categories: [SEQ_MOTIF, SEQ_MODIFIED_RESIDUE, SEQ_GLYCOSYLATION_SITE, SEQ_CROSSLINK_SITE, SEQ_DOMAIN, SEQ_FAMILY]
   seeder: seed_prosite.py
 -
   url: ftp://ftp.expasy.org/databases/prosite/prorule.dat
@@ -115,7 +115,7 @@
   license_url: https://www.ebi.ac.uk/licencing/
   status: seeded
   hierarchy: true
-  trait_categories: [STRUCT_DOMAIN, STRUCT_HOMOLOGOUS_SUPERFAMILY, SEQ_REPEAT, SEQ_CONSERVATION, STRUCT_ACTIVE_SITE, STRUCT_BINDING_SITE, SEQ_PTM_SITE]
+  trait_categories: [SEQ_DOMAIN, SEQ_HOMOLOGOUS_SUPERFAMILY, SEQ_REPEAT, SEQ_CONSERVATION, STRUCT_ACTIVE_SITE, STRUCT_BINDING_SITE, SEQ_PTM_SITE]
   seeder: seed_interpro.py
 -
   url: https://ftp.ebi.ac.uk/pub/databases/interpro/current_release/ParentChildTreeFile.txt
@@ -146,7 +146,7 @@
   license: public domain (Pfam / InterPro)
   status: seeded
   hierarchy: true (family → clan)
-  trait_categories: [STRUCT_DOMAIN, SEQ_REPEAT, MIXED_COILED_COIL, SEQ_DISORDER, SEQ_MOTIF]
+  trait_categories: [SEQ_DOMAIN, SEQ_FAMILY, SEQ_HOMOLOGOUS_SUPERFAMILY, SEQ_REPEAT, MIXED_COILED_COIL, SEQ_DISORDER, SEQ_MOTIF]
   seeder: seed_pfam.py
   note: >-
     30,134 Pfam-A families routed by family type. Pfam-B DISCONTINUED at Pfam
@@ -294,7 +294,7 @@
   license: LGPL (data) / EBI terms
   status: candidate
   hierarchy: true
-  trait_categories: [FUNC_ENZYMATIC_ACTIVITY, STRUCT_ACTIVE_SITE]
+  trait_categories: [SEQ_FAMILY]
 -
   url: https://scop.berkeley.edu/downloads/
   name: SCOP2 / SCOPe
@@ -513,9 +513,8 @@
   license: US Government public domain
   status: seeded
   seeder: seed_ncbifam.py
-  trait_categories: [STRUCT_DOMAIN, SEQ_REPEAT]
-  note: 38,394 prokaryotic protein-family HMMs (PGAP set; absorbed TIGRFAMs). EC/GO curator-assigned → xrefs.
-  trait_categories: [STRUCT_DOMAIN, SEQ_MOTIF]
+  trait_categories: [SEQ_DOMAIN, SEQ_HOMOLOGOUS_SUPERFAMILY, SEQ_REPEAT, FUNC_PROTEIN_FAMILY]
+  note: 38,394 prokaryotic protein-family HMMs (PGAP set; absorbed TIGRFAMs). Routed by TIGRFAM isology (domain/*_domain/signature→SEQ_DOMAIN, superfamily→SEQ_HOMOLOGOUS_SUPERFAMILY, equivalog/subfamily/exception/paralog→FUNC_PROTEIN_FAMILY, repeat→SEQ_REPEAT). EC/GO curator-assigned → xrefs.
 -
   url: https://ftp.ncbi.nlm.nih.gov/pub/mmdb/cdd/
   name: CDD (Conserved Domain Database)
@@ -524,10 +523,8 @@
   status: seeded
   hierarchy: true
   seeder: seed_cdd.py
-  trait_categories: [STRUCT_DOMAIN, STRUCT_HOMOLOGOUS_SUPERFAMILY, FUNC_ORTHOLOG_GROUP]
-  note: NCBI-curated only (cd/PRK/PLN/PHA/PTZ/MTH/CHL/sd → STRUCT_DOMAIN; KOG → FUNC_ORTHOLOG_GROUP; cl superfamilies). pfam/COG/TIGR/NF/smart SKIPPED (already covered by Pfam/COG/NCBIfam).
-  note: also an InterPro member DB.
-  trait_categories: [STRUCT_DOMAIN]
+  trait_categories: [SEQ_DOMAIN, SEQ_HOMOLOGOUS_SUPERFAMILY, FUNC_ORTHOLOG_GROUP]
+  note: NCBI-curated only (cd/PRK/PLN/PHA/PTZ/MTH/CHL/sd → SEQ_DOMAIN; cl superfamilies → SEQ_HOMOLOGOUS_SUPERFAMILY; KOG → FUNC_ORTHOLOG_GROUP). pfam/COG/TIGR/NF/smart SKIPPED (already covered by Pfam/COG/NCBIfam). Also an InterPro member DB.
 -
   url: https://www.ideal-db.org/download.php
   name: IDEAL
