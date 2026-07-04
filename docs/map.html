@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Corpus map — ProteinTraitsMech</title>
 <style>
-  :root{--pastel-a:#B7E4DC;--pastel-b:#FCE3B0;--accent:#2E8B84;--ink:#1a1a1a;--muted:#555;--line:rgba(0,0,0,.12)}
+  :root{--pastel-a:#B7E4DC;--pastel-b:#FCE3B0;--accent:#2E8B84;--ink:#1a1a1a;--muted:#555;--line:rgba(0,0,0,.12);--stage-bg:#fff}
   *{box-sizing:border-box}
   body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--pastel-b)}
   header{background:linear-gradient(135deg,var(--pastel-a),var(--pastel-b));padding:20px 24px;border-bottom:1px solid var(--line)}
@@ -16,10 +16,38 @@
   .legend{display:flex;flex-wrap:wrap;gap:14px;margin:.4rem 0 1rem}
   .legend span{display:inline-flex;align-items:center;gap:.4em;font-size:.85rem}
   .sw{width:12px;height:12px;border-radius:3px;display:inline-block}
-  #stage{position:relative;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  #stage{position:relative;background:var(--stage-bg);border:1px solid var(--line);border-radius:12px;overflow:hidden}
   canvas{display:block;width:100%;height:auto;cursor:crosshair}
   #tip{position:absolute;pointer-events:none;background:#111;color:#fff;font-size:.78rem;padding:.3em .5em;border-radius:5px;opacity:0;transform:translate(-50%,-140%);white-space:nowrap;max-width:280px;overflow:hidden;text-overflow:ellipsis}
   .hint{color:var(--muted);font-size:.82rem;margin-top:.5rem}
+
+  /* ---- Dark theme (OS default; superseded by the toggle) ---- */
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --pastel-a:#14231f;      /* heroA gradient tint */
+      --pastel-b:#0f1615;      /* page background */
+      --accent:#48c2b8;
+      --ink:#e8efec;
+      --muted:#9bb0aa;
+      --line:#253230;
+      --stage-bg:#17201e;      /* canvas plot surface (canvas is transparent; #stage shows through) */
+    }
+  }
+  :root[data-theme="dark"]{
+    --pastel-a:#14231f;
+    --pastel-b:#0f1615;
+    --accent:#48c2b8;
+    --ink:#e8efec;
+    --muted:#9bb0aa;
+    --line:#253230;
+    --stage-bg:#17201e;
+  }
+
+  /* ---- Reduced-motion guard ---- */
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;
+      transition-duration:.01ms!important;scroll-behavior:auto!important;}
+  }
 </style>
 </head>
 <body>
@@ -86,5 +114,6 @@
     if(p) location.href="browse.html#record="+encodeURIComponent(p[3]);
   });
   </script>
+  <script src="theme-toggle.js"></script>
 </body>
 </html>
