@@ -88,6 +88,7 @@ def main() -> int:
     ap.add_argument("--batch", type=int, default=256)
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--device", default=None, help="mps|cpu|cuda (auto if unset)")
+    ap.add_argument("--fresh", action="store_true", help="ignore any checkpoint")
     args = ap.parse_args()
 
     import numpy as np
@@ -102,26 +103,37 @@ def main() -> int:
     print(f"{len(ids):,} records → embedding with {args.model} on {device}")
 
     model = SentenceTransformer(args.model, device=device)
-    # Chunked encode with PLAIN progress prints (no tqdm — it blocks when stderr
-    # is a full background pipe) and periodic partial saves so a long run is
-    # observable and crash-resilient.
+    dim = model.get_sentence_embedding_dimension()
     OUT.mkdir(parents=True, exist_ok=True)
+    vpath = OUT / "vectors.f16.npy"
     import time
+
+    # Resume: docs are in a stable id-sorted order, so a partial vectors file
+    # covers the first R docs — pick up at R. (`--fresh` ignores it.)
+    parts, start = [], 0
+    if not args.fresh and vpath.exists():
+        try:
+            prev = np.load(vpath)
+            if prev.ndim == 2 and 0 < prev.shape[0] < len(docs) and prev.shape[1] == dim:
+                parts, start = [prev], prev.shape[0]
+                print(f"resuming from checkpoint: {start:,} already embedded")
+        except Exception:  # noqa: BLE001
+            pass
+
     chunk = max(args.batch * 20, 5000)
-    parts = []
     t0 = time.time()
-    n_chunks = (len(docs) + chunk - 1) // chunk
-    for ci, s in enumerate(range(0, len(docs), chunk), 1):
+    for ci, s in enumerate(range(start, len(docs), chunk), 1):
         part = model.encode(docs[s:s + chunk], batch_size=args.batch,
                             normalize_embeddings=True, show_progress_bar=False,
                             convert_to_numpy=True).astype(np.float16)
         parts.append(part)
+        if device == "mps":
+            torch.mps.empty_cache()   # MPS stalls without freeing between chunks
         done = min(s + chunk, len(docs))
-        rate = done / max(time.time() - t0, 1e-6)
+        rate = (done - start) / max(time.time() - t0, 1e-6)
         print(f"  {done:,}/{len(docs):,}  ({rate:.0f} docs/s, "
               f"eta {(len(docs)-done)/max(rate,1e-6)/60:.1f} min)", flush=True)
-        if ci % 10 == 0 and ci != n_chunks:
-            np.save(OUT / "vectors.f16.npy", np.vstack(parts))  # periodic checkpoint
+        np.save(vpath, np.vstack(parts))   # checkpoint every chunk (resumable)
     vecs = np.vstack(parts)
 
     OUT.mkdir(parents=True, exist_ok=True)

@@ -93,6 +93,9 @@ def main() -> int:
         vals, inds = torch.topk(sims, min(kq + 8, N), dim=1)  # a few extra for filtering
         vals = vals.float().cpu().numpy()
         inds = inds.cpu().numpy()
+        del sims
+        if dev == "mps":
+            torch.mps.empty_cache()   # keep MPS memory bounded (avoids stalls)
         for r in range(q.shape[0]):
             i = start + r
             rid = ids[i]
