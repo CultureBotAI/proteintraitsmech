@@ -185,8 +185,13 @@ that co-occur in nuclear receptors, not one trait. This confirms §2 Tier-2:
 member overlap alone must **not** assert equivalence for localized categories
 (domains/sites/motifs/repeats). So Phase 2 defaults to a **review-candidates
 file**; browser edges are emitted (`--emit-edges`) only for *non-localized*
-pairs. Implementing Tier-2 (reciprocal region overlap on shared members, from
-UniProt feature coordinates) is the next step to auto-clear localized candidates.
+pairs. **Tier-2 is now implemented** (`verify_region_overlap.py`): it pulls each
+signature's InterPro match coordinates on the shared proteins and requires
+reciprocal residue overlap. On the 10-candidate sample it **rejected 8** as
+co-occurring/disjoint (the LBD/DBD case: PF00105 at 558-626 vs IPR000536 at
+669-900) and **confirmed 2** genuine same-region equivalences (PAN domain
+IPR000177↔PF00024; IPR000381↔PF00019), which become real browser edges. Tier-2
+is what turns Phase-2 candidates into assertable equivalence.
 
 **Phase-3 note.** The representative manifest is auto-derived from TED records
 (each encodes an AlphaFold model + domain chopping). Executing the Foldseek
