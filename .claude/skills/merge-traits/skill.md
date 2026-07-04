@@ -19,6 +19,13 @@ trait and can be merged into one?** It draws a hard line between two tiers:
 - **MERGE (unequivocal).** Emitted as `Trait X = Trait Y`. Safe to auto-merge.
 - **REVIEW (candidate).** Related, but NOT asserted equal. A curator decides.
 
+> **Axis-specific candidates:** the universal R1/R2 identity rules here
+> under-cover, because "same trait" differs per axis (fold TM-score vs EC/Rhea
+> anchor vs same-region overlap). To generate axis-appropriate candidate edges —
+> STRUCTURE folds, FUNCTION anchors, SEQUENCE member/region — use the companion
+> **`merge-within-axis`** skill, then bring its MERGE-tier edges back to the
+> procedure below.
+
 **Key principle — in this corpus, `xrefs` are associative, not identity
 assertions.** A PROSITE ProRule cross-references the PATTERN it is built on; an
 N-glycosylation pattern cross-references the `MOD:` term it flags; ~2,700 motif
