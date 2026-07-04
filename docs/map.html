@@ -44,8 +44,10 @@
     const coverage = (d.n_total && d.n_shown < d.n_total)
       ? `${d.n_shown.toLocaleString()} of ${d.n_total.toLocaleString()} records (stratified sample)`
       : `${d.n_shown.toLocaleString()} records`;
+    const METHOD_LABEL = { pacmap: "PaCMAP", umap: "UMAP", pca: "PCA" };
+    const methodLabel = METHOD_LABEL[d.method] || d.method.toUpperCase();
     document.getElementById("hint").textContent =
-      `${coverage} · ${d.method.toUpperCase()} projection`
+      `${coverage} · ${methodLabel} projection`
       + (d.explained ? ` (PC1 ${(d.explained[0]*100).toFixed(1)}%, PC2 ${(d.explained[1]*100).toFixed(1)}% variance)` : "")
       + " · hover to identify, click to open.";
     const leg=document.getElementById("legend");
