@@ -186,6 +186,19 @@ build-methods:
 build-equivalence:
     python3 scripts/build_equivalence.py
 
+# Phase 2 — member-set (Jaccard) overlap between un-integrated signatures.
+# Fetches Swiss-Prot member sets from UniProt (cached), blocks on shared
+# members, emits data/equivalence/member_overlap.tsv + MERGE candidates.
+# Bound a run with --category / --limit; whole-corpus is a long batched job.
+build-member-overlap *args:
+    python3 scripts/build_member_overlap.py {{args}}
+
+# Phase 3 — structural (Foldseek TM-score) equivalence across CATH/SCOPe/ECOD/
+# TED. `--derive-ted` builds the representative manifest with no external tools;
+# the default run needs `foldseek` on PATH + AlphaFold model downloads.
+build-structural-equivalence *args:
+    python3 scripts/build_structural_equivalence.py {{args}}
+
 fetch-repeatsdb:
     mkdir -p data/raw/repeatsdb
     curl -sSLf --max-time 60 -o data/raw/repeatsdb/classification.json https://repeatsdb.org/api/production/classification

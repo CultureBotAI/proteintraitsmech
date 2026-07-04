@@ -170,6 +170,31 @@ engine for "are two traits the same" — comparing recipe outputs per entry.
   false-positive guard).
 - Do **not** treat `xrefs`/`mapped_xrefs` as identity assertions.
 
+## 8. Round-1 implementation status (2026-07)
+
+| Phase | Script / recipe | Output | Status |
+|---|---|---|---|
+| **1** InterPro member integration | `build_equivalence.py` · `just build-equivalence` | `data/equivalence/cross_source.tsv` — **24,299** `close_match` edges (Pfam 17,970 / CDD 3,749 / PROSITE 2,334 / NCBIfam 246 → InterPro) | **done, in browser** (bidirectional `eq` field) |
+| **2** Member-set overlap | `build_member_overlap.py` · `just build-member-overlap` | `data/analysis/member_overlap_candidates.yaml` (review) + optional `member_overlap.tsv` (`--emit-edges`) | **tooling done; ran STRUCT_DOMAIN ×500 sample** |
+| **3** Structural (Foldseek) | `build_structural_equivalence.py` · `just build-structural-equivalence` | `structural_reps.tsv` (**13,860** TED reps derived) → `structural.tsv` | **pipeline done; needs `foldseek` + AF downloads to execute** |
+
+**Phase-2 finding — the localized-feature trap is real.** The top member-overlap
+candidate was `IPR000536` *(nuclear-receptor ligand-binding domain)* vs `PF00105`
+*(C4 zinc finger / DNA-binding domain)* at **J = 0.94** — two *distinct* domains
+that co-occur in nuclear receptors, not one trait. This confirms §2 Tier-2:
+member overlap alone must **not** assert equivalence for localized categories
+(domains/sites/motifs/repeats). So Phase 2 defaults to a **review-candidates
+file**; browser edges are emitted (`--emit-edges`) only for *non-localized*
+pairs. Implementing Tier-2 (reciprocal region overlap on shared members, from
+UniProt feature coordinates) is the next step to auto-clear localized candidates.
+
+**Phase-3 note.** The representative manifest is auto-derived from TED records
+(each encodes an AlphaFold model + domain chopping). Executing the Foldseek
+all-vs-all needs `foldseek` on PATH plus AlphaFold model downloads (heavy); the
+driver detects a missing `foldseek` and prints run instructions. Cross-source
+structural links (CATH↔SCOPe↔ECOD↔TED) additionally need those sources' domain
+representatives dropped into the same manifest.
+
 ## Sources
 - [InterPro: 20 years on (NAR 2021)](https://academic.oup.com/nar/article/49/D1/D344/5958491) · [member databases](https://interpro-documentation.readthedocs.io/en/latest/databases.html) · [homologous-superfamily entry type](https://proteinswebteam.github.io/interpro-blog/2017/10/03/Homologous-superfamily/)
 - [Foldseek (structure search, TM-score)](https://www.nature.com/articles/s41587-023-01773-0) · Rhea↔EC (rhea2ec) · MEROPS↔InterPro

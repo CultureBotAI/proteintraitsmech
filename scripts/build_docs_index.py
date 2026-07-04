@@ -188,26 +188,39 @@ def mx_predicate(mapping_source: str) -> str:
     return _MX_PRED.get(mapping_source, "biolink:related_to")
 
 
-# Cross-source equivalence overlay (data/equivalence/cross_source.tsv) — Biolink
-# close_match edges from the merge-methods work (scripts/build_equivalence.py),
-# loaded bidirectionally so both ends of each edge show the equivalence.
+# Cross-source equivalence overlays (data/equivalence/*.tsv) — Biolink
+# close_match / narrow_match edges from the merge-methods work (Phase 1
+# scripts/build_equivalence.py, Phase 2 build_member_overlap.py, Phase 3
+# build_structural_equivalence.py). All *.tsv files share the schema
+# `subject<TAB>predicate<TAB>object<TAB>relation_source` and are loaded
+# bidirectionally so both ends of each edge show the equivalence.
 EQUIV: dict[str, list] = {}
 
 
 def load_equivalence() -> None:
-    path = REPO_ROOT / "data" / "equivalence" / "cross_source.tsv"
-    if not path.exists():
+    eq_dir = REPO_ROOT / "data" / "equivalence"
+    if not eq_dir.is_dir():
         return
-    for i, line in enumerate(path.read_text(encoding="utf-8").splitlines()):
-        if i == 0 or not line.strip():
-            continue
-        c = line.split("\t")
-        if len(c) < 4:
-            continue
-        subj, pred, obj, src = c[0], c[1], c[2], c[3]
-        EQUIV.setdefault(subj, []).append([obj, pred, src])
-        EQUIV.setdefault(obj, []).append([subj, pred, src])
-    print(f"equivalence overlay: {len(EQUIV):,} records with close_match edges")
+    seen: set = set()  # (subj, obj, pred) — dedup across overlays
+    n_edges = 0
+    for path in sorted(eq_dir.glob("*.tsv")):
+        for i, line in enumerate(path.read_text(encoding="utf-8").splitlines()):
+            if i == 0 or not line.strip():
+                continue
+            c = line.split("\t")
+            if len(c) < 4 or not c[1].startswith("biolink:"):
+                continue  # skip non-edge tsvs (e.g. structural_reps manifest)
+            subj, pred, obj, src = c[0], c[1], c[2], c[3]
+            for a, b in ((subj, obj), (obj, subj)):
+                key = (a, b, pred)
+                if key in seen:
+                    continue
+                seen.add(key)
+                EQUIV.setdefault(a, []).append([b, pred, src])
+                n_edges += 1
+    if EQUIV:
+        print(f"equivalence overlays: {len(EQUIV):,} records, "
+              f"{n_edges:,} directed edges")
 
 
 def truncate(text: str, limit: int = DEF_TRUNC) -> str:
