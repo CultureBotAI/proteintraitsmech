@@ -9,8 +9,8 @@ We seed the **entries** (not the multi-terabyte match files), and only the
 entry types that localise to a sequence/structure element — each carries a real
 definition (the InterPro abstract) and a type-specific parent/child hierarchy:
 
-  Domain                 → STRUCTURE   / STRUCT_DOMAIN
-  Homologous_superfamily → STRUCTURE   / STRUCT_HOMOLOGOUS_SUPERFAMILY
+  Domain                 → SEQUENCE    / SEQ_DOMAIN
+  Homologous_superfamily → SEQUENCE    / SEQ_HOMOLOGOUS_SUPERFAMILY
   Repeat                 → SEQUENCE    / SEQ_REPEAT
   Conserved_site         → SEQUENCE    / SEQ_CONSERVATION
   Active_site            → STRUCTURE   / STRUCT_ACTIVE_SITE
@@ -27,7 +27,7 @@ GO groundings are added to `xrefs` from interpro2go when present.
 
 `Family` (whole-protein homology groups) is **excluded by default** — it does
 not localise to a sequence/structure element and has no matching trait_category.
-Pass --include-families to emit them as STRUCT_DOMAIN anyway (not recommended).
+Pass --include-families to emit them as SEQ_FAMILY anyway (not recommended).
 
 Inputs (fetch with `just fetch-interpro`, gitignored):
   data/raw/interpro/interpro.xml.gz          — entries + abstracts + types
@@ -61,8 +61,8 @@ DEF_CAP = 1800
 
 # InterPro entry type → (axis, category, subdir).
 TYPE_MAP: dict[str, tuple[str, str, str]] = {
-    "Domain":                 ("STRUCTURE",          "STRUCT_DOMAIN",                 "structure/domain/interpro"),
-    "Homologous_superfamily": ("STRUCTURE",          "STRUCT_HOMOLOGOUS_SUPERFAMILY", "structure/homologous_superfamily/interpro"),
+    "Domain":                 ("SEQUENCE",           "SEQ_DOMAIN",                    "sequence/domain/interpro"),
+    "Homologous_superfamily": ("SEQUENCE",           "SEQ_HOMOLOGOUS_SUPERFAMILY",    "sequence/homologous_superfamily/interpro"),
     "Repeat":                 ("SEQUENCE",           "SEQ_REPEAT",                    "sequence/repeat/interpro"),
     "Conserved_site":         ("SEQUENCE",           "SEQ_CONSERVATION",              "sequence/conservation/interpro"),
     "Active_site":            ("STRUCTURE",          "STRUCT_ACTIVE_SITE",            "structure/active_site/interpro"),
@@ -186,7 +186,7 @@ def main() -> int:
     ap.add_argument("--apply", action="store_true", help="write YAMLs (default: dry-run)")
     ap.add_argument("--force", action="store_true", help="overwrite existing files")
     ap.add_argument("--include-families", action="store_true",
-                    help="also emit Family entries as STRUCT_DOMAIN (not recommended)")
+                    help="also emit Family entries as SEQ_FAMILY (not recommended)")
     ap.add_argument("--limit", type=int, default=0, help="cap records (0 = all)")
     args = ap.parse_args()
 
@@ -196,7 +196,7 @@ def main() -> int:
 
     type_map = dict(TYPE_MAP)
     if args.include_families:
-        type_map["Family"] = ("STRUCTURE", "STRUCT_DOMAIN", "structure/domain/interpro")
+        type_map["Family"] = ("SEQUENCE", "SEQ_FAMILY", "sequence/family/interpro")
 
     parent_of = parse_tree()
     ipr2go = parse_interpro2go()

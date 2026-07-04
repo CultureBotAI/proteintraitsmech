@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """Seed peptidase-family traits from MEROPS (Rawlings et al., EBI)
-→ STRUCTURE / STRUCT_DOMAIN.
+→ SEQUENCE / SEQ_FAMILY.
 
 MEROPS classifies proteolytic enzymes into families (S01, C14, A01, M10 …)
 grouped by catalytic type (the family's leading letter) and clan. We seed the
-~370 **families** — a family is a group of homologous peptidases, i.e. a
-family/domain classification, complementing SEQ_CLEAVAGE_SITE. Each family is
+~370 **families** — a family is a group of homologous peptidases defined by
+sequence homology to a type peptidase, i.e. a sequence-signature family (axis
+follows the representation), complementing SEQ_CLEAVAGE_SITE. Each family is
 labelled by its type peptidase (the `.001` member).
 
 Input (fetch via `just fetch-merops`, gitignored):
@@ -25,7 +26,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 RAW = REPO_ROOT / "data" / "raw" / "merops" / "pepunit.lib"
-OUT_DIR = REPO_ROOT / "data" / "traits" / "structure" / "domain" / "merops"
+OUT_DIR = REPO_ROOT / "data" / "traits" / "sequence" / "family" / "merops"
 LICENSE = "MEROPS (EBI; free for academic use)"
 _SLUG_RE = re.compile(r"[^A-Za-z0-9]+")
 _HDR = re.compile(r"\[([A-Z])(\d+)\.(\d+)\]#([A-Z0-9]+)#")
@@ -67,8 +68,8 @@ def build_yaml(fam, letter, type_name, n_pep):
     lines = [f"identifier: MEROPS:{fam}", f"label: {yaml_escape(label)}"]
     f = folded(definition)
     lines += [f"definition: {f[0]}", *f[1:]]
-    lines += ["definition_source: MEROPS", "trait_axis: STRUCTURE",
-              "trait_category: STRUCT_DOMAIN", "term_kind: CLASS",
+    lines += ["definition_source: MEROPS", "trait_axis: SEQUENCE",
+              "trait_category: SEQ_FAMILY", "term_kind: CLASS",
               "mapping_status: SEEDED"]
     if type_name:
         lines += ["synonyms:",

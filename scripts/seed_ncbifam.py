@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Seed protein-family traits from NCBIfam (ex-TIGRFAMs, US Gov public domain)
-→ STRUCTURE / STRUCT_DOMAIN (repeats → SEQUENCE / SEQ_REPEAT).
+→ SEQUENCE (SEQ_DOMAIN / SEQ_FAMILY-superfamily / SEQ_REPEAT) or FUNCTION
+(FUNC_PROTEIN_FAMILY for equivalog/subfamily) — routed by TIGRFAM isology type;
+see route().
 
 NCBIfam is NCBI's curated library of ~38k prokaryotic protein-family HMMs (the
 PGAP set, which absorbed TIGRFAMs). Each HMM defines a family/domain — a trait
@@ -46,12 +48,31 @@ def folded(text):
     return [">-", f"  {text}"] if text else [">-", '  ""']
 
 
+# NCBIfam/TIGRFAM models are sequence-profile HMMs, so their trait axis follows
+# the *representation* (sequence space), not the biology:
+#   repeat                                   → SEQUENCE / SEQ_REPEAT
+#   *_domain, domain, signature              → SEQUENCE / SEQ_DOMAIN
+#   superfamily                              → SEQUENCE / SEQ_HOMOLOGOUS_SUPERFAMILY
+#   equivalog, subfamily, exception, paralog → FUNCTION / FUNC_PROTEIN_FAMILY
+#     (whole-protein families whose defining property is a conserved function)
+# The TIGRFAM "isology type" distinguishes these; `*_domain` variants (e.g.
+# equivalog_domain) are domain-level and stay on SEQ_DOMAIN.
+_FUNC_FAMILY_TYPES = {"equivalog", "subfamily", "exception", "hypoth_equivalog", "paralog"}
+
+
 # family_type → (axis, category, subdir)
 def route(family_type: str):
     ft = (family_type or "").lower()
     if "repeat" in ft:
         return "SEQUENCE", "SEQ_REPEAT", "sequence/repeat/ncbifam"
-    return "STRUCTURE", "STRUCT_DOMAIN", "structure/domain/ncbifam"
+    if ft.endswith("_domain") or ft in ("domain", "signature"):
+        return "SEQUENCE", "SEQ_DOMAIN", "sequence/domain/ncbifam"
+    if ft == "superfamily":
+        return "SEQUENCE", "SEQ_HOMOLOGOUS_SUPERFAMILY", "sequence/homologous_superfamily/ncbifam"
+    if ft in _FUNC_FAMILY_TYPES:
+        return "FUNCTION", "FUNC_PROTEIN_FAMILY", "function/protein_family/ncbifam"
+    # unknown / blank isology → default to sequence-signature domain
+    return "SEQUENCE", "SEQ_DOMAIN", "sequence/domain/ncbifam"
 
 
 def build_yaml(acc, label, definition, axis, category, ecs, gos, gene, family_type):
@@ -120,7 +141,8 @@ def main() -> int:
                             encoding="utf-8")
             written += 1
 
-    print(f"{total} NCBIfam families → STRUCT_DOMAIN / SEQ_REPEAT.")
+    print(f"{total} NCBIfam families → SEQ_DOMAIN / SEQ_HOMOLOGOUS_SUPERFAMILY / "
+          f"SEQ_REPEAT / FUNC_PROTEIN_FAMILY (by isology type).")
     if args.apply:
         print(f"Wrote {written}; skipped {skipped} existing.")
     else:

@@ -10,7 +10,7 @@ Emits YAMLs to:
   data/traits/sequence/pattern/<slug>.yaml   — PROSITE PATTERN entries (non-PTM)
   data/traits/sequence/ptm_site/<slug>.yaml  — PROSITE PATTERN entries flagged as a PTM
   data/traits/sequence/profile/<slug>.yaml   — PROSITE MATRIX (profile) entries
-  data/traits/structure/domain/<slug>.yaml   — ProRule entries with DC=Domain
+  data/traits/sequence/domain/prosite/<slug>.yaml — ProRule entries with DC=Domain (SEQ_DOMAIN)
   data/traits/sequence/prorule/<slug>.yaml   — ProRule entries with DC=Site (non-Domain)
 
 Idempotent: skips existing YAMLs by default; pass --force to overwrite.
@@ -204,7 +204,10 @@ def categorise_prosite(entry: dict) -> tuple[str, str, str]:
 
 def categorise_prorule(entry: dict) -> tuple[str, str, str]:
     if entry.get("dc") == "Domain":
-        return ("STRUCTURE", "STRUCT_DOMAIN", "structure/domain")
+        # ProRule domain profiles are sequence signatures — the trait axis
+        # follows the representation (sequence space), so SEQ_DOMAIN, not
+        # STRUCT_DOMAIN (which is reserved for structure-derived domains).
+        return ("SEQUENCE", "SEQ_DOMAIN", "sequence/domain/prosite")
     # DC=Site (or other) — check the Names: field for a PTM keyword. If
     # matched, the rule targets that specific modification; otherwise it
     # is a generic motif rule.

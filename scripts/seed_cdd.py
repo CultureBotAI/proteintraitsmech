@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
 """Seed conserved-domain traits from NCBI CDD (US Gov public domain)
-→ STRUCTURE / STRUCT_DOMAIN (+ superfamilies), and KOG → FUNCTION /
+→ SEQUENCE / SEQ_DOMAIN (+ SEQ_HOMOLOGOUS_SUPERFAMILY), and KOG → FUNCTION /
 FUNC_ORTHOLOG_GROUP.
+
+CDD models are sequence-space PSSMs/profile alignments, so their domain and
+superfamily records live on the SEQUENCE axis (the axis follows the
+representation, not the biology).
 
 CDD mirrors several external models. We seed only the NCBI-curated content that
 is NOT already in the corpus and SKIP the true mirrors:
   SKIP  pfam (Pfam ✓), COG (COG ✓), TIGR + NF (NCBIfam ✓), smart, LOAD_*
-  → STRUCT_DOMAIN   cd (curated domains), PRK (protein clusters), PLN, PHA,
+  → SEQ_DOMAIN      cd (curated domains), PRK (protein clusters), PLN, PHA,
                     PTZ, MTH, CHL, sd — parented to their `cl` superfamilies
   → FUNC_ORTHOLOG_GROUP  KOG (euKaryotic Orthologous Groups, like COG)
 The domain → superfamily link comes from family_superfamily_links.
@@ -54,13 +58,13 @@ def folded(text):
 
 
 KIND = {
-    "STRUCT_DOMAIN": "conserved domain",
-    "STRUCT_HOMOLOGOUS_SUPERFAMILY": "domain superfamily",
+    "SEQ_DOMAIN": "conserved domain",
+    "SEQ_HOMOLOGOUS_SUPERFAMILY": "domain superfamily",
     "FUNC_ORTHOLOG_GROUP": "orthologous group",
 }
 AXIS = {
-    "STRUCT_DOMAIN": "STRUCTURE",
-    "STRUCT_HOMOLOGOUS_SUPERFAMILY": "STRUCTURE",
+    "SEQ_DOMAIN": "SEQUENCE",
+    "SEQ_HOMOLOGOUS_SUPERFAMILY": "SEQUENCE",
     "FUNC_ORTHOLOG_GROUP": "FUNCTION",
 }
 
@@ -118,12 +122,12 @@ def main() -> int:
         if acc.startswith("KOG"):
             return "FUNC_ORTHOLOG_GROUP", "function/ortholog_group"
         if any(acc.startswith(p) for p in DOMAIN_PREFIXES):
-            return "STRUCT_DOMAIN", "structure/domain"
+            return "SEQ_DOMAIN", "sequence/domain"
         return None  # pfam/COG/TIGR/NF/smart/cl/LOAD_* → skipped (covered/handled)
 
     seedable = {a: route(a) for a in info}
     seedable = {a: r for a, r in seedable.items() if r}
-    domains = [a for a, (cat, _) in seedable.items() if cat == "STRUCT_DOMAIN"]
+    domains = [a for a, (cat, _) in seedable.items() if cat == "SEQ_DOMAIN"]
     # Superfamilies that are parents of a seeded domain (emit as parent nodes).
     sfs = sorted({parent_of[a] for a in domains if a in parent_of and parent_of[a] in info})
 
@@ -143,14 +147,14 @@ def main() -> int:
             written += 1
 
     for sf in sfs:
-        emit(sf, "STRUCT_HOMOLOGOUS_SUPERFAMILY", "structure/homologous_superfamily", "")
+        emit(sf, "SEQ_HOMOLOGOUS_SUPERFAMILY", "sequence/homologous_superfamily", "")
     for acc, (cat, subdir) in sorted(seedable.items()):
-        parent = parent_of.get(acc) if cat == "STRUCT_DOMAIN" else ""
+        parent = parent_of.get(acc) if cat == "SEQ_DOMAIN" else ""
         emit(acc, cat, subdir, parent if parent in info else "")
 
     n_kog = sum(1 for _, (c, _) in seedable.items() if c == "FUNC_ORTHOLOG_GROUP")
     print(f"CDD: {len(domains)} curated domains + {len(sfs)} superfamilies "
-          f"(STRUCT) + {n_kog} KOG orthologous groups (FUNC_ORTHOLOG_GROUP); "
+          f"(SEQ) + {n_kog} KOG orthologous groups (FUNC_ORTHOLOG_GROUP); "
           f"pfam/COG/TIGR/NF/smart skipped (covered).")
     if args.apply:
         print(f"Wrote {written}; skipped {skipped} existing.")

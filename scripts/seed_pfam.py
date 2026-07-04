@@ -6,7 +6,8 @@ sequences into families and domains via HMMs. We seed every Pfam-A family,
 routed by its family type, and cross-referenced to GO (pfam2go), InterPro
 (pfam2interpro, derived from interpro.xml) and its Pfam clan:
 
-  Domain / Family → STRUCTURE          / STRUCT_DOMAIN
+  Domain          → SEQUENCE           / SEQ_DOMAIN
+  Family          → SEQUENCE           / SEQ_FAMILY
   Repeat          → SEQUENCE           / SEQ_REPEAT
   Coiled-coil     → SEQUENCE_STRUCTURE / MIXED_COILED_COIL
   Disordered      → SEQUENCE           / SEQ_DISORDER
@@ -47,8 +48,8 @@ TRAITS_DIR = REPO_ROOT / "data" / "traits"
 LICENSE = "public domain (Pfam / InterPro)"
 
 TYPE_MAP: dict[str, tuple[str, str, str]] = {
-    "Domain":      ("STRUCTURE",          "STRUCT_DOMAIN",     "structure/domain/pfam"),
-    "Family":      ("STRUCTURE",          "STRUCT_DOMAIN",     "structure/domain/pfam"),
+    "Domain":      ("SEQUENCE",           "SEQ_DOMAIN",        "sequence/domain/pfam"),
+    "Family":      ("SEQUENCE",           "SEQ_FAMILY",        "sequence/family/pfam"),
     "Repeat":      ("SEQUENCE",           "SEQ_REPEAT",        "sequence/repeat/pfam"),
     "Coiled-coil": ("SEQUENCE_STRUCTURE", "MIXED_COILED_COIL", "mixed/coiled_coil/pfam"),
     "Disordered":  ("SEQUENCE",           "SEQ_DISORDER",      "sequence/disorder/pfam"),

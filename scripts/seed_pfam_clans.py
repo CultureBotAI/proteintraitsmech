@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """Materialize Pfam **clan** records (public domain)
-→ STRUCTURE / STRUCT_HOMOLOGOUS_SUPERFAMILY.
+→ SEQUENCE / SEQ_HOMOLOGOUS_SUPERFAMILY.
 
 Pfam families carry `parent_traits: [Pfam:CL…]` (their clan), but the clans
 themselves were never seeded — the single biggest source of dangling parents
 in the corpus (~13.9k edges; see research/schema-hierarchy-review-1.md). This
 seeds one record per clan so those parents resolve. A clan is a superfamily-
-grouping of evolutionarily related families, so STRUCT_HOMOLOGOUS_SUPERFAMILY
-is its natural home.
+grouping of evolutionarily related families defined by sequence signatures, so
+SEQ_HOMOLOGOUS_SUPERFAMILY is its natural home.
 
 Input (from `just fetch-pfam`): data/raw/pfam/Pfam-A.clans.tsv.gz
   columns: pfamA_acc, clan_acc, clan_id, pfamA_id, pfamA_description
@@ -24,7 +24,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 RAW = REPO_ROOT / "data" / "raw" / "pfam" / "Pfam-A.clans.tsv.gz"
-OUT_DIR = REPO_ROOT / "data" / "traits" / "structure" / "homologous_superfamily" / "pfam"
+OUT_DIR = REPO_ROOT / "data" / "traits" / "sequence" / "homologous_superfamily" / "pfam"
 LICENSE = "public domain (Pfam / InterPro)"
 _SLUG_RE = re.compile(r"[^A-Za-z0-9]+")
 
@@ -50,8 +50,8 @@ def build_yaml(clan_acc, clan_id):
                   f"families sharing structure/function.")
     lines = [f"identifier: Pfam:{clan_acc}", f"label: {yaml_escape(label)}",
              f"definition: >-", f"  {definition}",
-             "definition_source: Pfam (clan)", "trait_axis: STRUCTURE",
-             "trait_category: STRUCT_HOMOLOGOUS_SUPERFAMILY",
+             "definition_source: Pfam (clan)", "trait_axis: SEQUENCE",
+             "trait_category: SEQ_HOMOLOGOUS_SUPERFAMILY",
              "term_kind: CLASS", "mapping_status: SEEDED",
              f"license: {LICENSE}"]
     return "\n".join(lines) + "\n"

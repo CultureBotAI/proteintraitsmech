@@ -970,6 +970,28 @@ enums:
         description: Intrinsically disordered region (predicted or experimentally validated).
       SEQ_REPEAT:
         description: Tandem sequence repeat (ankyrin, leucine-rich, WD40 sequence repeat, etc.).
+      SEQ_DOMAIN:
+        description: >-
+          Domain family defined by a sequence signature — a profile HMM,
+          PSSM, or pattern (Pfam / InterPro / CDD / NCBIfam domain models,
+          MEROPS). The trait's *representation is in sequence space*, so it
+          lives on the SEQUENCE axis even though a domain is a structural
+          unit. Structure-derived domain classifications (CATH / SCOP / ECOD /
+          TED) instead use STRUCT_DOMAIN.
+      SEQ_FAMILY:
+        description: >-
+          Protein family defined by a sequence signature (Pfam `Family`-type
+          entries, MEROPS peptidase families). Whole-protein grouping by
+          sequence homology rather than a single domain; representation is a
+          sequence profile. Whole-protein families whose defining property is
+          a conserved *function* (NCBIfam/TIGRFAM equivalog, subfamily) use
+          FUNC_PROTEIN_FAMILY instead.
+      SEQ_HOMOLOGOUS_SUPERFAMILY:
+        description: >-
+          Homologous superfamily defined by a sequence signature — Pfam clan,
+          InterPro homologous superfamily, CDD superfamily (cl*). Sequence-space
+          analog of STRUCT_HOMOLOGOUS_SUPERFAMILY (CATH/SCOP), which is reserved
+          for structure-derived superfamilies.
       SEQ_COMPOSITION:
         description: Amino-acid composition trait (e.g. Cys-rich, His-tract, GC-tail).
       SEQ_CONSERVATION:
@@ -1028,7 +1050,9 @@ enums:
         description: >-
           Structural + evolutionary grouping below topology — CATH
           Homologous Superfamily / SCOP Superfamily; members share a
-          common ancestor.
+          common ancestor. Structure-derived only; sequence-signature
+          superfamilies (Pfam clans, InterPro/CDD superfamilies) use
+          SEQ_HOMOLOGOUS_SUPERFAMILY.
       STRUCT_FOLD:
         description: >-
           Overall fold cluster (SCOP fold; also emitted for TED novel or
@@ -1036,7 +1060,11 @@ enums:
           use STRUCT_TOPOLOGY when the record is explicitly the CATH
           topology-level term.
       STRUCT_DOMAIN:
-        description: Structural domain (CATH domain, SCOP domain, InterPro structural entry).
+        description: >-
+          Structure-derived domain classification (CATH domain, SCOP/ECOD
+          domain, TED domain). Domain families defined by a *sequence* signature
+          (Pfam / InterPro / CDD / NCBIfam) use SEQ_DOMAIN instead — the axis
+          follows the representation, not the biology.
       STRUCT_SECONDARY:
         description: Secondary-structure element or arrangement (helix bundle, beta sheet topology).
       STRUCT_QUATERNARY:
@@ -1133,6 +1161,14 @@ enums:
           members share a conserved function across taxa. Grounded by COG
           (NCBI Clusters of Orthologous Genes) and its 26 functional
           categories, or eggNOG / KEGG Orthology.
+      FUNC_PROTEIN_FAMILY:
+        description: >-
+          Whole-protein family whose defining property is a conserved specific
+          *function* — NCBIfam / TIGRFAM `equivalog`, `subfamily`, `exception`,
+          `paralog` models and equivalent full-length functional families.
+          Distinct from FUNC_ORTHOLOG_GROUP (taxon-spanning ortholog cluster)
+          and from SEQ_DOMAIN / SEQ_FAMILY (sequence-signature domain/family
+          whose defining property is the signature, not the function).
 
       # ---- EVOLUTION ----
       # Coarse categories; the specific evolutionary states (conserved,
