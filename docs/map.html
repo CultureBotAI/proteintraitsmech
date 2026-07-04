@@ -20,6 +20,12 @@
   canvas{display:block;width:100%;height:auto;cursor:crosshair}
   #tip{position:absolute;pointer-events:none;background:#111;color:#fff;font-size:.78rem;padding:.3em .5em;border-radius:5px;opacity:0;transform:translate(-50%,-140%);white-space:nowrap;max-width:280px;overflow:hidden;text-overflow:ellipsis}
   .hint{color:var(--muted);font-size:.82rem;margin-top:.5rem}
+  .dataview{margin-top:1rem;display:flex;flex-wrap:wrap;align-items:center;gap:.6rem}
+  .dlbtn{display:inline-block;background:var(--accent);color:#fff;padding:.45em 1em;border-radius:999px;
+         font-size:.85rem;font-weight:600;text-decoration:none;cursor:pointer}
+  .dlbtn:hover{filter:brightness(.93)}
+  .dlbtn[aria-disabled="true"]{opacity:.55;pointer-events:none}
+  .dataview .hint{margin-top:0}
 
   /* ---- Dark theme (OS default; superseded by the toggle) ---- */
   @media (prefers-color-scheme: dark){
@@ -33,6 +39,9 @@
       --stage-bg:#17201e;      /* canvas plot surface (canvas is transparent; #stage shows through) */
     }
   }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]) .dlbtn{color:#0f1615}
+  }
   :root[data-theme="dark"]{
     --pastel-a:#14231f;
     --pastel-b:#0f1615;
@@ -42,6 +51,7 @@
     --line:#253230;
     --stage-bg:#17201e;
   }
+  :root[data-theme="dark"] .dlbtn{color:#0f1615}
 
   /* ---- Reduced-motion guard ---- */
   @media (prefers-reduced-motion: reduce){
@@ -53,24 +63,32 @@
 <body>
   <header>
     <h1>Corpus map</h1>
-    <p>PCA projection of every record's text embedding · <a href="index.html">home</a> · <a href="browse.html">browse</a></p>
+    <p><span id="method">PaCMAP</span> projection of every record's text embedding · <a href="index.html">home</a> · <a href="browse.html">browse</a></p>
   </header>
   <main class="wrap">
     <div class="legend" id="legend"></div>
     <div id="stage"><canvas id="cv" width="1040" height="660"></canvas><div id="tip"></div></div>
     <p class="hint" id="hint">Loading corpus map…</p>
+    <div class="dataview">
+      <a id="csv-dl" class="dlbtn" download="corpus_map.csv" aria-disabled="true">Download data (CSV)</a>
+      <span class="hint" id="dl-note">Full data table omitted — this is a dense scatter of tens of thousands of points. The CSV lists every plotted point (label / CURIE, trait axis, x, y).</span>
+    </div>
   </main>
   <script>
   // Axis palette (matches the landing stat-card hues).
   const COLORS = {STRUCTURE:"#16a34a",SEQUENCE:"#2563eb",SEQUENCE_STRUCTURE:"#a855f7",FUNCTION:"#d97706",EVOLUTION:"#0d9488",OTHER:"#888"};
+  // Pretty-print the projection method (drives header + hint from the data's `method`).
+  const METHOD_LABELS = {pacmap:"PaCMAP", umap:"UMAP", pca:"PCA", tsne:"t-SNE"};
   const cv=document.getElementById("cv"), ctx=cv.getContext("2d");
   const W=cv.width, H=cv.height, PAD=14;
   let DATA=null;
 
   fetch("data/corpus_map.json").then(r=>r.json()).then(d=>{
     DATA=d;
+    const methodLabel = METHOD_LABELS[d.method] || (d.method||"").toUpperCase();
+    document.getElementById("method").textContent = methodLabel;
     document.getElementById("hint").textContent =
-      `${d.n_shown.toLocaleString()} records · ${d.method.toUpperCase()} projection`
+      `${d.n_shown.toLocaleString()} records · ${methodLabel} projection`
       + (d.explained ? ` (PC1 ${(d.explained[0]*100).toFixed(1)}%, PC2 ${(d.explained[1]*100).toFixed(1)}% variance)` : "")
       + " · hover to identify, click to open.";
     const leg=document.getElementById("legend");
@@ -80,7 +98,20 @@
       leg.appendChild(s);
     });
     draw();
+    buildCsv();
   }).catch(()=>{document.getElementById("hint").textContent="Corpus map not built yet (run `just embed-map`).";});
+
+  // Data-table fallback for this dense canvas scatter: an accessible CSV download
+  // built from the SAME points the plot renders (label/CURIE, trait axis, x, y).
+  function buildCsv(){
+    const esc=v=>{const s=String(v);return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;};
+    const lines=["label,trait_axis,x,y"];
+    for(const p of DATA.points){ lines.push([p[3], DATA.axes[p[2]], p[0], p[1]].map(esc).join(",")); }
+    const blob=new Blob([lines.join("\n")],{type:"text/csv"});
+    const dl=document.getElementById("csv-dl");
+    dl.href=URL.createObjectURL(blob);
+    dl.removeAttribute("aria-disabled");
+  }
 
   function px(p){return [PAD + p[0]*(W-2*PAD), PAD + (1-p[1])*(H-2*PAD)];}
   function draw(){
