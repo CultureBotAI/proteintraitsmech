@@ -570,8 +570,21 @@ equivalence.
 3. Canonicalize source-derived coiled coils under `MIXED_COILED_COIL`; treat
    the existing `STRUCT_SECONDARY` coiled-coil record as a legacy/generic bridge
    until a migration can resolve it.
+   **DONE (2026-07-04):** `proteintraitsmech:COILED_COIL` remapped to
+   `MIXED_COILED_COIL` / `SEQUENCE_STRUCTURE` and moved to
+   `data/traits/mixed/coiled_coil/coiled-coil.yaml` as the generic umbrella
+   class (cross-axis `POLYPEPTIDE_STRUCTURAL_MOTIF` parent dropped; no records
+   referenced it). No new coiled-coil records under `STRUCT_SECONDARY`.
 4. Add `build_secondary_structure_equivalence.py` to emit
    `data/equivalence/secondary_structure.tsv` using topology-string and
    SS-string operators.
 5. Extend `build_structural_equivalence.py` by populating CATH/SCOPe/ECOD
    representatives alongside TED and then emitting `structural.tsv`.
+   **DONE (2026-07-04):** `--derive` now emits a cross-source
+   `data/analysis/structural_reps.tsv` (37,078 reps: TED 13,860 AlphaFold +
+   CATH 8,102 & ECOD 15,116 PDB-domain reps from their domain xrefs; SCOPe
+   skipped — seeded nodes carry no px/domain sid). The Foldseek stage now
+   fetches AlphaFold *or* RCSB PDB structures (chain-filtered) and emits
+   `data/equivalence/structural.tsv` with
+   `relation_source=foldseek-tm<score>-{fold,superfamily}`. `--derive-ted`
+   retained for the legacy TED-only manifest.
