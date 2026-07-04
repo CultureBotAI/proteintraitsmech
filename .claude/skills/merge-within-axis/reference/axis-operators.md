@@ -18,6 +18,7 @@ bidirectionally.
 | `build_secondary_structure_equivalence.py` | `secondary_structure.tsv` | `STRUCT_SECONDARY` | `close_match`, `narrow_match` | Topology-string / SS-string operators. |
 | `build_structural_equivalence.py` | `structural.tsv` (+ `structural_reps.tsv` manifest) | STRUCTURE folds | `close_match` (`foldseek-tm<score>-{fold,superfamily}`) | Phase 3 — Foldseek TM-score over TED/CATH/ECOD representative domains. Needs `foldseek` on PATH. |
 | `build_function_anchor_equivalence.py` | `function.tsv` | FUNCTION | `close_match` | Same-category, cross-source shared ontology anchor (EC leaf / RHEA / ARO / TCDB / MI). |
+| `build_pathway_overlap_equivalence.py` | `pathway.tsv` | `FUNC_PATHWAY` | `close_match` (GO-BP), `overlaps` (EC) | SEED↔Reactome via shared GO biological-process CURIE (generic BP capped) ∥ constituent EC-set Jaccard. Needs GO-BP/EC grounding on the records first. |
 | `embed_records.py` / `embed_neighbors.py` | embeddings + neighbors | all | — | Tier 5 — semantic neighbors for *candidate generation only*, never identity. |
 | `analyze_trait_equivalence.py` | `trait_merge_plan.yaml` | all (axis-agnostic) | R1/R2 + C1/C2/C3 | Universal identity (see [[merge-traits]]). |
 
@@ -54,7 +55,7 @@ bidirectionally.
 | `FUNC_TRANSPORT` | same TC family | same TCDB family id | `close_match` (single-source today) |
 | `FUNC_RESISTANCE` | same determinant/mechanism | same ARO id | `close_match` (single-source today) |
 | `FUNC_ORTHOLOG_GROUP` | same cluster | membership → `member_of` (not merge) | `member_of` |
-| `FUNC_PATHWAY` | same pathway | **no anchor today** (see gaps) | — |
+| `FUNC_PATHWAY` | same pathway | shared **GO biological-process** anchor; constituent **EC-set Jaccard** | `close_match` (GO-BP) / `overlaps` (EC) |
 
 ### EVOLUTION
 | Category | "Same trait" is… | Operator | Status |
@@ -81,16 +82,16 @@ bidirectionally.
 
 ## Open gaps
 
-- **FUNCTION pathway equivalence (SEED ↔ Reactome):** no shared anchor exists —
-  Reactome records carry only `Reactome:` xrefs, SEED subsystems only `EC:`
-  mapped_xrefs; `IDENTITY_NAMESPACES` in `analyze_trait_equivalence.py` has no
-  pathway namespace. A proper capability needs a **pathway-identity anchor**:
-  enrich Reactome pathways with their constituent EC set and score SEED/Reactome
-  pairs by shared-EC **Jaccard → `biolink:overlaps`** (a proposed
-  `build_pathway_overlap_equivalence.py`), reserving `close_match` for very high
-  overlap + agreeing labels. Grounding both to GO biological process is the
-  alternative anchor. Until then, pathway↔pathway equivalence is out of scope —
-  do not force it through the generic C3 same-label heuristic.
+- **FUNCTION pathway equivalence (SEED ↔ Reactome):** addressed by
+  `build_pathway_overlap_equivalence.py` (`pathway.tsv`) using two parallel
+  signals — a shared **GO biological-process** anchor (`close_match`; Reactome
+  GO-BP is grounded from ContentService `goBiologicalProcess`, SEED from exact
+  name→GO-BP match; generic BP terms capped by `--max-group`) and constituent
+  **EC-set Jaccard** (`overlaps`; `close_match` only at ≥0.8 Jaccard + agreeing
+  label). Coverage is bounded by grounding: Reactome GO-BP is partial (granular
+  sub-pathways lack it), SEED GO-BP is sparse (exact-name only), and Reactome EC
+  is not yet populated (so the EC-Jaccard signal is dormant until it is). Do NOT
+  force pathway equivalence through the generic C3 same-label heuristic.
 - **STRUCTURE fold overlay** requires `foldseek` + AlphaFold/PDB downloads; the
   `structural_reps.tsv` manifest (TED + CATH + ECOD) is the runnable input, the
   TM-score pass is the heavy gated step.

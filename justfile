@@ -200,6 +200,13 @@ build-equivalence:
 build-function-equivalence:
     python3 scripts/build_function_anchor_equivalence.py
 
+# Build data/equivalence/pathway.tsv — SEED↔Reactome FUNC_PATHWAY equivalence
+# from two parallel signals: shared GO biological-process anchor (close_match)
+# and constituent EC-set Jaccard (overlaps / close_match). Requires the pathway
+# records to be GO-BP / EC grounded first.
+build-pathway-equivalence:
+    python3 scripts/build_pathway_overlap_equivalence.py
+
 # Seed the secondary-structure (2°) trait taxonomy — elements / arrangements /
 # turns / local + super-secondary motifs — with topology-string representations
 # (research/cross-source-comparison-review-1.md). Dry-run by default.

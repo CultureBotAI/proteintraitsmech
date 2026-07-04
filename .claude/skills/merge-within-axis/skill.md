@@ -107,14 +107,16 @@ secondary structure (`STRUCT_SECONDARY`), and local features
 - **Operator:** shared **ontology anchor**, not embedding similarity. Same Rhea
   reaction id → `same_as`; same EC leaf (+ agreeing Rhea/participant set) →
   `close_match`; ARO/TCDB/PSI-MI specific type → `close_match`.
-- **Builder:** `build_function_anchor_equivalence.py → function.tsv` (same-category,
-  cross-source, anchors: EC leaf / RHEA / ARO / TCDB / MI; GO and ChEBI excluded).
+- **Builders:** `build_function_anchor_equivalence.py → function.tsv` (enzymatic:
+  EC leaf / RHEA / ARO / TCDB / MI; GO and ChEBI excluded);
+  `build_pathway_overlap_equivalence.py → pathway.tsv` (`FUNC_PATHWAY`: shared
+  GO biological-process anchor ∥ constituent EC-set Jaccard).
 - **Trap — the generic-anchor trap:** a broad GO term or a shared ChEBI
   participant is **not** identity (ChEBI is `has_participant`). And **pathways
   are not enzymes:** a `FUNC_PATHWAY` sharing one EC with a `FUNC_ENZYMATIC_ACTIVITY`
   is not equivalent, and two pathways sharing enzymes are `overlaps`, never
-  `close_match`. Pathway↔pathway equivalence (SEED ↔ Reactome) has **no anchor
-  today** — see the gap note in the reference file.
+  `close_match`. SEED↔Reactome pathway equivalence is anchored on shared GO-BP
+  (with a cap on generic BP terms), not on EC alone.
 
 ### EVOLUTION
 `EVO_CONSERVATION`, `EVO_PANGENOME`.
