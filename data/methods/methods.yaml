@@ -256,3 +256,19 @@ by_category:
     - {name: OrthoFinder / ConSurf, method_type: ML_PREDICTOR, edam: EDAM:operation_0324, tool: biotools:orthofinder, ref: PMID:31727128, eco: ECO:0007653, recipe: "orthofinder -f {input.proteomes}/"}
   EVO_PANGENOME:
     - {name: PPanGGOLiN / Roary / panaroo, method_type: ML_PREDICTOR, edam: EDAM:operation_0324, tool: biotools:ppanggolin, ref: PMID:32191703, eco: ECO:0007653, recipe: "ppanggolin workflow --anno {input.gff_list}"}
+  MIXED_COILED_COIL:
+    - {name: DeepCoil, method_type: ML_PREDICTOR, edam: EDAM:operation_0267, tool: biotools:deepcoil, ref: PMID:30601942, eco: ECO:0007653, recipe: "deepcoil -i {input.fasta}"}
+    - {name: Marcoil, method_type: HMM_PROFILE, edam: EDAM:operation_0267, tool: biotools:marcoil, ref: PMID:11743200, eco: ECO:0000203, recipe: "marcoil {input.fasta}"}
+    - {name: COILS / PairCoil2, method_type: SEQUENCE_PATTERN, edam: EDAM:operation_0267, tool: biotools:paircoil2, ref: PMID:16371459, eco: ECO:0000203, recipe: "ncoils {input.fasta}   # or PairCoil2"}
+  MIXED_STRUCTURAL_REPEAT:
+    - {name: ReUPred / RepeatsDB, method_type: STRUCTURAL_ALGORITHM, edam: EDAM:operation_0303, tool: biotools:repeatsdb, ref: PMID:29112722, eco: ECO:0000041, recipe: "# ReUPred on {input.pdb}; or map via RepeatsDB annotations"}
+  SEQ_CROSSLINK_SITE:
+    - {name: DISULFIND (disulfide bonds), method_type: ML_PREDICTOR, edam: EDAM:operation_0267, tool: biotools:disulfind, ref: PMID:16844990, eco: ECO:0007653, recipe: "# DISULFIND {input.fasta} for disulfide bonds"}
+    - {name: UniProt CROSSLNK feature, method_type: HOMOLOGY_TRANSFER, edam: EDAM:operation_0361, tool: biotools:uniprot, ref: PMID:36408920, eco: ECO:0000250, recipe: "# transfer isopeptide/thioester CROSSLNK sites from the UniProt FT table"}
+  STRUCT_INTERFACE:
+    - {name: PDBe PISA, method_type: STRUCTURAL_ALGORITHM, edam: EDAM:operation_0272, tool: biotools:pisa, ref: PMID:17681537, eco: ECO:0000041, recipe: "# PISA on {input.pdb} - subunit interfaces from the assembly"}
+    - {name: PRODIGY, method_type: STRUCTURAL_ALGORITHM, edam: EDAM:operation_0272, tool: biotools:prodigy, ref: PMID:27503228, eco: ECO:0000041, recipe: "prodigy {input.pdb}"}
+  SEQ_MATURE_CHAIN:
+    - {name: UniProt CHAIN feature, method_type: HOMOLOGY_TRANSFER, edam: EDAM:operation_0361, tool: biotools:uniprot, ref: PMID:36408920, eco: ECO:0000250, recipe: "# UniProt FT CHAIN; mature chain = sequence after signal/propeptide removal (see SEQ_SIGNAL_PEPTIDE)"}
+  SEQ_INITIATOR_METHIONINE:
+    - {name: UniProt INIT_MET / N-terminal Met excision, method_type: HOMOLOGY_TRANSFER, edam: EDAM:operation_0361, tool: biotools:uniprot, ref: PMID:16963783, eco: ECO:0000250, recipe: "# transfer INIT_MET from UniProt FT; N-terminal Met excision follows the penultimate-residue rule"}
