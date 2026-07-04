@@ -41,8 +41,11 @@
 
   fetch("data/corpus_map.json").then(r=>r.json()).then(d=>{
     DATA=d;
+    const coverage = (d.n_total && d.n_shown < d.n_total)
+      ? `${d.n_shown.toLocaleString()} of ${d.n_total.toLocaleString()} records (stratified sample)`
+      : `${d.n_shown.toLocaleString()} records`;
     document.getElementById("hint").textContent =
-      `${d.n_shown.toLocaleString()} records · ${d.method.toUpperCase()} projection`
+      `${coverage} · ${d.method.toUpperCase()} projection`
       + (d.explained ? ` (PC1 ${(d.explained[0]*100).toFixed(1)}%, PC2 ${(d.explained[1]*100).toFixed(1)}% variance)` : "")
       + " · hover to identify, click to open.";
     const leg=document.getElementById("legend");

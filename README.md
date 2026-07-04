@@ -63,6 +63,17 @@ and `FUNC_*` requires `FUNCTION`. `UPPER` / `OTHER` are administrative
 and may appear on any axis. `just validate-all` will reject a
 mismatched pair.
 
+**The axis follows the representation, not the biology.** Domain/family
+classifications defined by a *sequence signature* — profile HMMs / PSSMs /
+patterns (Pfam, InterPro, CDD, NCBIfam, MEROPS, PROSITE ProRule) — live on the
+**SEQUENCE** axis (`SEQ_DOMAIN`, `SEQ_FAMILY`, `SEQ_HOMOLOGOUS_SUPERFAMILY`),
+because a domain *detected by a sequence model* is a sequence trait even though
+a domain is a structural unit. Only *structure-derived* classifications (CATH,
+SCOPe, ECOD, TED — grouped from 3D coordinates) use `STRUCT_DOMAIN` /
+`STRUCT_HOMOLOGOUS_SUPERFAMILY`. Whole-protein families whose defining property
+is a conserved *function* (NCBIfam/TIGRFAM equivalog, subfamily) are
+`FUNC_PROTEIN_FAMILY` on the FUNCTION axis.
+
 **FUNCTION vs localised STRUCTURE.** These axes are complementary, not
 exclusive. A UniProt entry with an ATP-binding site emits both a
 `STRUCT_BINDING_SITE` record (localised — *where* ATP binds, residues
@@ -179,7 +190,8 @@ supports them, and can also be added by curators:
 | [LinkML `LocalStructuralFeature`](https://linkml.io/valuesets/elements/LocalStructuralFeature/) | 19 | `data/traits/structure/{secondary,active_site,binding_site,cavity,disulfide,metal_site,dynamics,interface}/` |
 | [PROSITE patterns](https://prosite.expasy.org/) (`prosite.dat`, PATTERN) | 1311 | `data/traits/sequence/pattern/` (1279 generic) + `data/traits/sequence/{modified_residue,glycosylation,crosslink}/` (32 PTM subtypes) |
 | [PROSITE profiles](https://prosite.expasy.org/) (`prosite.dat`, MATRIX) | 1434 | `data/traits/sequence/profile/` |
-| [PROSITE ProRules](https://prosite.expasy.org/) (`prorule.dat`) | 1449 | `data/traits/structure/domain/` (1445) + `data/traits/sequence/{modified_residue,glycosylation,prorule}/` (2 phospho + 1 N-glyco + 1 attachment motif) |
+| [PROSITE ProRules](https://prosite.expasy.org/) (`prorule.dat`) | 1449 | `data/traits/sequence/domain/prosite/` (1445 DC=Domain → SEQ_DOMAIN) + `data/traits/sequence/{modified_residue,glycosylation,prorule}/` (2 phospho + 1 N-glyco + 1 attachment motif) |
+| [PROSITE PDOC documentation groups](https://prosite.expasy.org/) (`seed_prosite_pdoc.py`) | 1980 | `data/traits/sequence/family/prosite/` (family-level parent of the PROSITE signature records → SEQ_FAMILY) |
 | [TED novel folds](https://ted.cathdb.info/) (Zenodo v5, [DOI:10.5281/zenodo.13908086](https://doi.org/10.5281/zenodo.13908086), CC-BY 4.0) | 7427 | `data/traits/structure/fold/novel/` |
 | [TED highly-symmetric folds](https://ted.cathdb.info/) (same Zenodo record) | 6433 | `data/traits/structure/fold/high_symmetry/` |
 | [UniProtKB](https://www.uniprot.org/) FT/CC/GO demultiplexer (`seed_uniprot.py`) | 0 (demo retired) | per-protein records are instance-level, not trait classes — retired; real entries attach as `canonical_examples` on class traits via `fetch_uniprot_examples.py` |
@@ -189,8 +201,8 @@ supports them, and can also be added by curators:
 | [SCOPe 2.08](https://scop.berkeley.edu/) (`seed_scope.py`) | 22810 | `data/traits/structure/{class,fold,homologous_superfamily,domain}/scope/` (px/sp instances excluded — occurrences, not trait classes) |
 | [Reactome](https://reactome.org/) pathways (`seed_reactome.py`, CC0) | 2883 | `data/traits/function/pathway/reactome/` (Homo sapiens reference set → FUNC_PATHWAY) |
 | [CARD/ARO](https://card.mcmaster.ca/) resistance ontology (`seed_obo.py aro`, CC-BY 4.0) | 7451 | `data/traits/function/resistance/aro/` (determinants + mechanisms → FUNC_RESISTANCE) |
-| [InterPro](https://www.ebi.ac.uk/interpro/) entries (integrative; public domain; GO-grounded via interpro2go) | 26264 | `data/traits/{structure/domain,structure/homologous_superfamily,sequence/repeat,sequence/conservation,structure/active_site,structure/binding_site,sequence/ptm_ontology}/interpro/` (Domain→STRUCT_DOMAIN, superfamily, Repeat→SEQ_REPEAT, Conserved-/Active-/Binding-site, PTM; `Family` excluded) |
-| [Pfam-A](https://www.ebi.ac.uk/interpro/) families (`seed_pfam.py`, public domain) | 30134 | `data/traits/{structure/domain,sequence/repeat,mixed/coiled_coil,sequence/disorder,sequence/motif}/pfam/` (routed by family type; GO- + InterPro-grounded; Pfam-B discontinued) |
+| [InterPro](https://www.ebi.ac.uk/interpro/) entries (integrative; public domain; GO-grounded via interpro2go) | 26264 | `data/traits/{sequence/domain,sequence/homologous_superfamily,sequence/repeat,sequence/conservation,structure/active_site,structure/binding_site,sequence/ptm_ontology}/interpro/` (Domain→SEQ_DOMAIN, superfamily→SEQ_HOMOLOGOUS_SUPERFAMILY, Repeat→SEQ_REPEAT, Conserved-site→SEQ_CONSERVATION, Active-/Binding-site stay STRUCT_*, PTM; `Family` excluded) |
+| [Pfam-A](https://www.ebi.ac.uk/interpro/) families (`seed_pfam.py` + clans `seed_pfam_clans.py`, public domain) | 30134 | `data/traits/{sequence/domain,sequence/family,sequence/homologous_superfamily,sequence/repeat,mixed/coiled_coil,sequence/disorder,sequence/motif}/pfam/` (routed by family type: Domain→SEQ_DOMAIN, Family→SEQ_FAMILY, clans→SEQ_HOMOLOGOUS_SUPERFAMILY; GO- + InterPro-grounded; Pfam-B discontinued) |
 | [M-CSA](https://www.ebi.ac.uk/thornton-srv/m-csa/) (Mechanism & Catalytic Site Atlas, CC-BY-4.0) | 1003 | `data/traits/structure/active_site/mcsa/` |
 | [DisProt](https://disprot.org/) intrinsic disorder (`seed_disprot.py`, CC-BY 4.0) — **pivoted** | 35 | `data/traits/sequence/disorder/` (32 IDPO disorder classes + 3 groups; 3,199 proteins as capped examples) |
 | [PSI-MI](https://github.com/HUPO-PSI/psi-mi-CV) (HUPO-PSI molecular-interaction CV, CC-BY-4.0) | 146 | `data/traits/function/interaction_partner/psi_mi/` (only the `interaction type` branch, MI:0190) |
@@ -203,11 +215,11 @@ supports them, and can also be added by curators:
 | [Rhea](https://www.rhea-db.org/) reactions (`seed_rhea.py`, CC-BY 4.0) | 18558 | `data/traits/function/enzymatic_activity/rhea/` (master reactions → FUNC_ENZYMATIC_ACTIVITY; ChEBI participants; EC via rhea2ec) |
 | [ExPASy ENZYME](https://enzyme.expasy.org/) complete EC hierarchy (`seed_ec.py`, CC-BY 4.0) | 7375 | `data/traits/function/enzymatic_activity/ec/` (6,965 leaves + 410 nodes; GO/RHEA mapped, KEGG direct, DR examples — supersedes trait-onto-map EC) |
 | [RepeatsDB](https://repeatsdb.org/) structural tandem repeats (`seed_repeatsdb.py`, CC-BY 4.0) | 122 | `data/traits/sequence_structure/structural_repeat/repeatsdb/` (Class/Topology/Fold/Clan → MIXED_STRUCTURAL_REPEAT) |
-| [NCBIfam](https://www.ncbi.nlm.nih.gov/genome/annotation_prok/) ex-TIGRFAMs (`seed_ncbifam.py`, US-gov PD) | 38394 | `data/traits/structure/domain/ncbifam/` (prokaryotic family HMMs → STRUCT_DOMAIN; EC/GO xrefs) |
-| [CDD](https://www.ncbi.nlm.nih.gov/cdd) NCBI-curated (`seed_cdd.py`, US-gov PD) | 38218 | `data/traits/{structure/domain,function/ortholog_group}/cdd/` (cd/PRK/… → STRUCT_DOMAIN; KOG → FUNC_ORTHOLOG_GROUP; pfam/COG/TIGR skipped) |
+| [NCBIfam](https://www.ncbi.nlm.nih.gov/genome/annotation_prok/) ex-TIGRFAMs (`seed_ncbifam.py`, US-gov PD) | 38394 | `data/traits/{sequence/domain,sequence/homologous_superfamily,sequence/repeat}/ncbifam/` + `data/traits/function/protein_family/ncbifam/` (prokaryotic family HMMs routed by TIGRFAM isology: domain/*_domain/signature→SEQ_DOMAIN, superfamily→SEQ_HOMOLOGOUS_SUPERFAMILY, equivalog/subfamily/exception/paralog→FUNC_PROTEIN_FAMILY; EC/GO xrefs) |
+| [CDD](https://www.ncbi.nlm.nih.gov/cdd) NCBI-curated (`seed_cdd.py`, US-gov PD) | 38218 | `data/traits/{sequence/domain,sequence/homologous_superfamily,function/ortholog_group}/cdd/` (cd/PRK/… → SEQ_DOMAIN; cl superfamilies → SEQ_HOMOLOGOUS_SUPERFAMILY; KOG → FUNC_ORTHOLOG_GROUP; pfam/COG/TIGR skipped) |
 | [IDEAL](https://www.ideal-db.org/) protean segments (`seed_ideal.py`, CC-BY 4.0) — **pivoted** | 1 | `data/traits/sequence/disorder/` (ProS trait; 1,448 IDPs as examples) |
 | [ELM](http://elm.eu.org/) linear-motif classes (`seed_elm.py`, ⚠ non-commercial) | 353 | `data/traits/sequence/{targeting_signal,cleavage_site,ptm_site,motif}/elm/` (TRG→SEQ_TARGETING_SIGNAL, CLV→SEQ_CLEAVAGE_SITE, …; regex→sequence_pattern) |
-| [MEROPS](https://www.ebi.ac.uk/merops/) peptidase families (`seed_merops.py`, academic) | 370 | `data/traits/structure/domain/merops/` (S01→chymotrypsin, …; catalytic type) |
+| [MEROPS](https://www.ebi.ac.uk/merops/) peptidase families (`seed_merops.py`, academic) | 370 | `data/traits/sequence/family/merops/` (S01→chymotrypsin, …; catalytic type → SEQ_FAMILY) |
 | Curated RiPP leader classes (`seed_ripp.py`, CC0) | 20 | `data/traits/sequence/leader_peptide/` (lanthipeptide/lasso/… → SEQ_LEADER_PEPTIDE) |
 
 The last three are ingested by the generic **`seed_obo.py`** importer, which reads any OBO ontology and imports only the **branch-scoped** subset declared in its `SOURCES` config (a term is kept iff it is an `is_a` descendant of a configured root, and it inherits that root's axis/category). This is deliberately narrower than a whole-ontology dump — PSI-MI is mostly experimental methods, PATO qualities are generic modifiers, and METPO is organismal, so only the terms with genuine protein-trait analogues are seeded.

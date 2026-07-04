@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 """Materialize PROSITE **PDOC** documentation-group records
-→ SEQUENCE / UPPER (administrative grouping).
+→ SEQUENCE / SEQ_FAMILY.
 
 PROSITE signatures carry `parent_traits: [PROSITE:PDOC…]` (the documentation
 entry that groups related patterns/profiles for a family), but the PDOC nodes
 themselves were never seeded — ~2.7k dangling parent edges (see
-research/schema-hierarchy-review-1.md). This seeds one grouping record per
-referenced PDOC so those parents resolve. A PDOC groups signatures of one
-family; it is an upper-level classifier, so `trait_category: UPPER` on the
-SEQUENCE axis (every record that parents to a PDOC is SEQUENCE).
+research/schema-hierarchy-review-1.md). This seeds one record per referenced
+PDOC so those parents resolve. A PDOC groups the signatures of a single protein
+family and is the parent of those SEQ_DOMAIN/SEQ_MOTIF signature records, so it
+is a sequence-signature family — `trait_category: SEQ_FAMILY` on the SEQUENCE
+axis.
 
 Input (from `just fetch-prosite`): data/raw/prosite.dat
   entries carry `AC  PS…;`, `DE  <description>.`, `DO  PDOC…;`
@@ -26,7 +27,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent
 RAW = REPO_ROOT / "data" / "raw" / "prosite.dat"
 TRAITS = REPO_ROOT / "data" / "traits"
-OUT_DIR = REPO_ROOT / "data" / "traits" / "sequence" / "prosite_doc"
+OUT_DIR = REPO_ROOT / "data" / "traits" / "sequence" / "family" / "prosite"
 LICENSE = "CC BY-NC-ND 4.0 (SIB)"
 _SLUG_RE = re.compile(r"[^A-Za-z0-9]+")
 _GENERIC = re.compile(r"\b(signature|profile|domain profile|pattern|domain)\b\.?$", re.I)
@@ -105,7 +106,7 @@ def main() -> int:
         lines = [f"identifier: PROSITE:{pdoc}", f"label: {yaml_escape(label)}",
                  "definition: >-", f"  {definition}",
                  "definition_source: PROSITE (documentation)",
-                 "trait_axis: SEQUENCE", "trait_category: UPPER",
+                 "trait_axis: SEQUENCE", "trait_category: SEQ_FAMILY",
                  "term_kind: CLASS", "mapping_status: SEEDED",
                  f"license: {LICENSE}"]
         path = OUT_DIR / f"{slugify(label)}-{pdoc.lower()}.yaml"
@@ -117,7 +118,7 @@ def main() -> int:
             path.write_text("\n".join(lines) + "\n", encoding="utf-8")
             written += 1
 
-    print(f"{len(referenced)} referenced PROSITE PDOC groups → SEQUENCE/UPPER.")
+    print(f"{len(referenced)} referenced PROSITE PDOC groups → SEQUENCE/SEQ_FAMILY.")
     if args.apply:
         print(f"Wrote {written}; skipped {skipped} existing → "
               f"{OUT_DIR.relative_to(REPO_ROOT)}/")
