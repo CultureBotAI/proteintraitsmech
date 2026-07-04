@@ -487,18 +487,26 @@ async function renderList() {
     return;
   }
 
+  // Each pill is its own facet-filter link (#axis=/#cat=/#src=/#sta=), NOT a
+  // span inside the card's record anchor — so clicking a badge filters by it
+  // instead of all four just opening the record.
+  const facetPill = (key, val, cls) => val
+    ? `<a class="pill${cls ? " " + cls : ""}" href="#${key}=${encodeURIComponent(val)}" title="filter: ${escapeAttr(val)}">${escapeHTML(val)}</a>`
+    : "";
   const cards = slice.map(r => `
-    <a class="card" href="#record=${encodeURIComponent(r.id)}">
-      <div class="cid">${escapeHTML(r.id)}</div>
-      <h3>${escapeHTML(r.label)}</h3>
-      <p>${escapeHTML(r.def || "")}</p>
+    <div class="card">
+      <a class="card-main" href="#record=${encodeURIComponent(r.id)}">
+        <div class="cid">${escapeHTML(r.id)}</div>
+        <h3>${escapeHTML(r.label)}</h3>
+        <p>${escapeHTML(r.def || "")}</p>
+      </a>
       <div class="pills">
-        ${r.axis ? `<span class="pill axis">${escapeHTML(r.axis)}</span>` : ""}
-        ${r.cat  ? `<span class="pill">${escapeHTML(r.cat)}</span>`      : ""}
-        ${r.src  ? `<span class="pill src">${escapeHTML(r.src)}</span>`  : ""}
-        ${r.sta  ? `<span class="pill sta">${escapeHTML(r.sta)}</span>`  : ""}
+        ${facetPill("axis", r.axis, "axis")}
+        ${facetPill("cat", r.cat, "")}
+        ${facetPill("src", r.src, "src")}
+        ${facetPill("sta", r.sta, "sta")}
       </div>
-    </a>`).join("");
+    </div>`).join("");
 
   results.innerHTML = header + `<div class="grid">${cards}</div>` + header;
 }
