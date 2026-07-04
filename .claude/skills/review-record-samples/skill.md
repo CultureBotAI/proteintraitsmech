@@ -23,31 +23,40 @@ seen across the five is fixed **at the seeder**, not by hand-editing YAMLs.
 ## Sample (reproducible)
 
 Fixed seed → the same sample every run, so findings are reproducible and re-checkable.
+Set `PER` — records per **(trait_axis, trait_category) cell**:
+
+- **`PER = 1`** — one random record per axis-category cell (~48 records): a
+  taxonomy-wide **snapshot**. Part A per record + Part B applied *across* cells
+  (coherence of the whole taxonomy, category granularity, systemic patterns).
+  The quick default sweep.
+- **`PER = 5`** — five per cell (~240 records): enables the within-category
+  **set** review (Part B per five). Use for a deep pass on flagged categories.
 
 ```bash
 python3 - <<'PY'
 import os, re, random, collections
-random.seed(20260704)                       # change only to draw a fresh sample
+PER = 1                                       # 1 = one-per-cell snapshot; 5 = deep set review
+random.seed(20260704)                         # change only to draw a fresh sample
 CAT = re.compile(r'^trait_category:\s*(\S+)', re.M)
-by_cat = collections.defaultdict(list)
+AX  = re.compile(r'^trait_axis:\s*(\S+)', re.M)
+by_cell = collections.defaultdict(list)
 for root, _, files in os.walk('data/traits'):
     for fn in files:
         if fn.endswith('.yaml'):
-            p = os.path.join(root, fn)
-            m = CAT.search(open(p, encoding='utf-8').read())
-            if m: by_cat[m.group(1)].append(p)
-for cat in sorted(by_cat):
-    picks = random.sample(sorted(by_cat[cat]), min(5, len(by_cat[cat])))
-    print(f"\n### {cat}  ({len(by_cat[cat])} records)")
+            p = os.path.join(root, fn); t = open(p, encoding='utf-8').read()
+            mc, ma = CAT.search(t), AX.search(t)
+            if mc and ma: by_cell[(ma.group(1), mc.group(1))].append(p)
+for (ax, cat) in sorted(by_cell):
+    picks = random.sample(sorted(by_cell[(ax, cat)]), min(PER, len(by_cell[(ax, cat)])))
+    print(f"\n### {ax} / {cat}  ({len(by_cell[(ax, cat)])} records)")
     for p in picks: print("  " + p)
 PY
 ```
 
-~40 categories × 5 ≈ 200 records. Scope when needed: filter the `by_cat` keys to
-one axis prefix (`SEQ_`/`STRUCT_`/`MIXED_`/`FUNC_`/`EVO_`) or a single category.
-For a full sweep, **fan out one subagent per category** (or per axis) so every
-five-record set gets focused reading — don't skim 200 records in one pass. Then
-`Read` each sampled file in full before judging it.
+Scope when needed: filter `by_cell` keys to one axis. For `PER = 5` fan out **one
+subagent per axis** (or per category) so every set gets focused reading; for
+`PER = 1` a single reviewer over the ~48 cells is enough. Always `Read` each
+sampled file in full before judging it.
 
 ---
 
