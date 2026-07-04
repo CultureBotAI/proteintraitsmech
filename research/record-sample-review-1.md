@@ -15,7 +15,7 @@ against Part A (per-record) / Part B (per-set):
 - **Deep pass** — five per category (206 records), fanned out per axis.
 
 Both agree; the snapshot table is below, the deep-pass detail is in
-[`record-sample-review/`](record-sample-review/). **No blockers in either
+the `record-sample-review-1-appendix-*.md` files. **No blockers in either
 sample** — every record validates, identifiers/axis/category are sound, and the
 class-vs-instance split is clean (per-protein data stays in `canonical_examples`).
 
@@ -124,4 +124,4 @@ disulfide) — correct class-not-instance modelling with per-protein hits in
 `review-record-samples` skill, seed `20260704`. Snapshot = one random record per
 (axis, category) cell; deep pass = five per category, one reviewer per axis. Each
 record read in full; Part A (A1–A9) + Part B. Detail per axis:
-[`record-sample-review/`](record-sample-review/).
+the `record-sample-review-1-appendix-*.md` files.
