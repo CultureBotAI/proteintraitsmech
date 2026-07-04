@@ -200,10 +200,17 @@ build-member-overlap *args:
     python3 scripts/build_member_overlap.py {{args}}
 
 # Phase 3 — structural (Foldseek TM-score) equivalence across CATH/SCOPe/ECOD/
-# TED. `--derive-ted` builds the representative manifest with no external tools;
-# the default run needs `foldseek` on PATH + AlphaFold model downloads.
+# TED. `--enrich-ted --apply` writes structural_geometry_representations onto TED
+# records (no tools); `--derive-ted` builds the representative manifest; the
+# default run needs `foldseek` on PATH + AlphaFold model downloads.
 build-structural-equivalence *args:
     python3 scripts/build_structural_equivalence.py {{args}}
+
+# Secondary-structure (2°) equivalence — compares STRUCT_SECONDARY entries by
+# their topology_string / DSSP-string representation → data/equivalence/
+# secondary_structure.tsv. Cross-source by default; --allow-same-source explores.
+build-secondary-structure-equivalence *args:
+    python3 scripts/build_secondary_structure_equivalence.py {{args}}
 
 # Text-embed every record into a 1024-d vector with a local model (needs the
 # `embed` extra: uv sync --extra embed). Reads the docs shards → writes

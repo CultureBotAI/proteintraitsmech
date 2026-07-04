@@ -91,6 +91,48 @@ def derive_ted_manifest(limit: int) -> int:
     return 0
 
 
+def enrich_ted(apply: bool) -> int:
+    """Populate `structural_geometry_representations` on TED records — the
+    AlphaFold representative + domain range are encoded in the identifier and
+    definition, so this needs no compute. Makes each fold record carry an
+    on-record 3D-geometry anchor (Foldseek/TM-score input). Idempotent."""
+    traits = REPO_ROOT / "data" / "traits"
+    enriched = skipped = 0
+    for sub in TED_DIRS:
+        for path in (traits / sub).rglob("*.yaml"):
+            text = path.read_text(encoding="utf-8")
+            mid = re.search(r"^identifier:\s*(TED:\S+)", text, re.M)
+            if not mid or "structural_geometry_representations:" in text:
+                skipped += 1
+                continue
+            m = TED_RE.search(mid.group(1))
+            if not m:
+                skipped += 1
+                continue
+            acc = m.group(1)
+            cm = CHOP_RE.search(text)
+            block = ["structural_geometry_representations:",
+                     f"- structure_ref: AlphaFoldDB:{acc}",
+                     "  structure_source: TED"]
+            if cm:
+                block.append(f"  residue_range: {cm.group(1)}")
+            block.append("  evidence_source: TED (Encyclopedia of Domains) v5")
+            block_text = "\n".join(block) + "\n"
+            # insert before canonical_examples (present on every TED record);
+            # else append at end.
+            if "\ncanonical_examples:" in text:
+                text = text.replace("\ncanonical_examples:", "\n" + block_text + "canonical_examples:", 1)
+            else:
+                text = text.rstrip("\n") + "\n" + block_text
+            if apply:
+                path.write_text(text, encoding="utf-8")
+            enriched += 1
+    verb = "enriched" if apply else "would enrich"
+    print(f"{verb} {enriched:,} TED records with structural_geometry_representations "
+          f"({skipped:,} skipped). " + ("" if apply else "Pass --apply to write."))
+    return 0
+
+
 # --------------------------------------------------------------- foldseek stage
 def parse_range(rng: str) -> list[tuple[int, int]]:
     """'2-139' or '2-80_100-139' -> [(2,139)] / [(2,80),(100,139)]."""
@@ -212,11 +254,16 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--derive-ted", action="store_true",
                     help="build the representative manifest from TED records (no tools/network)")
+    ap.add_argument("--enrich-ted", action="store_true",
+                    help="write structural_geometry_representations onto TED records")
+    ap.add_argument("--apply", action="store_true", help="with --enrich-ted: write the YAMLs")
     ap.add_argument("--manifest", type=Path, default=MANIFEST)
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--tm-fold", type=float, default=0.5)
     ap.add_argument("--tm-super", type=float, default=0.7)
     args = ap.parse_args()
+    if args.enrich_ted:
+        return enrich_ted(args.apply)
     if args.derive_ted:
         return derive_ted_manifest(args.limit)
     return run_foldseek(args.manifest, args.limit, args.tm_fold, args.tm_super)
