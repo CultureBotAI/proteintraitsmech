@@ -335,6 +335,7 @@ def build_prorule_yaml(entry: dict, release: str) -> str:
         for x in xrefs:
             lines.append(f"  - {x}")
 
+    lines.append("license: CC BY-NC-ND 4.0 (SIB)")   # PROSITE terms (tighter than CC0)
     return "\n".join(lines) + "\n"
 
 

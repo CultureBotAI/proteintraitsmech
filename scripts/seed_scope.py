@@ -34,7 +34,7 @@ Each emitted record carries:
     label: description
     parent_traits: [SCOP:<parent_sunid>] via dir.hie
     xrefs: [SCOP:<sccs>]  (the dotted classification string)
-    license: (unset — SCOPe is free-to-use; no SPDX identifier)
+    license: CC-BY 4.0  (SCOPe terms; tighter than the CC0 corpus default)
     mapping_status: SEEDED
 
 Dry-run by default; --apply to write. Stream-parses each file.
@@ -174,6 +174,7 @@ def build_yaml(sunid: str, node: dict, parents: dict[str, str], release: str) ->
         for x in xrefs:
             lines.append(f"  - {x}")
 
+    lines.append("license: CC-BY 4.0")   # SCOPe is CC-BY (tighter than the CC0 corpus default)
     return "\n".join(lines) + "\n"
 
 
