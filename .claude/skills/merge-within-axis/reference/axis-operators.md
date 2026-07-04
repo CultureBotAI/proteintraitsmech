@@ -35,8 +35,8 @@ bidirectionally.
 ### STRUCTURE
 | Category | "Same trait" is… | Operator | Predicate |
 |----------|------------------|----------|-----------|
-| `STRUCT_FOLD` / `STRUCT_TOPOLOGY` | same fold/topology | Foldseek TM-score ≥ 0.5 | `close_match` (`-fold`) |
-| `STRUCT_HOMOLOGOUS_SUPERFAMILY` / `STRUCT_DOMAIN` | same superfamily/domain | Foldseek TM-score ≥ 0.7 | `close_match` (`-superfamily`) |
+| `STRUCT_FOLD` / `STRUCT_TOPOLOGY` | same fold/topology | Foldseek TM-score ≥ 0.5 (⚠ posterior only 13–37% at 0.5 → REVIEW, not merge; see equivalence-cutoffs.md) | `close_match` (`-fold`) |
+| `STRUCT_HOMOLOGOUS_SUPERFAMILY` / `STRUCT_DOMAIN` | same superfamily/domain | Foldseek TM-score ≥ 0.7 (⚠ **heuristic — unverified**; superfamily is homology, TM is geometry) | `close_match` (`-superfamily`) |
 | `STRUCT_SECONDARY` | same SS element/arrangement/topology | topology-string / SS-string | `close_match` / `narrow_match` |
 | `STRUCT_ACTIVE_SITE` / `STRUCT_BINDING_SITE` / `STRUCT_METAL_SITE` | same catalytic/ligand residues | same-region overlap (Phase 2 + Tier 2); mechanism/ontology anchor for M-CSA | `close_match`; `has_part` for residues |
 

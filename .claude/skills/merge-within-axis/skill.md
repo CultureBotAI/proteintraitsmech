@@ -50,6 +50,16 @@ Rule of thumb: **only `same_as` and R1/R2 auto-merge. `close_match` is a review
 candidate that the axis operator must confirm.** Everything narrower is a
 relation, not an identity.
 
+**Containment is the second output — a relationship, not a merge.** A merge run
+does not only ask "are these the same?"; it also surfaces **"is one contained in
+the other?"** — EC `1.1.1.1` ⊂ `1.1.1.-`, a specific GO-BP ⊂ a broad one, a
+superfamily ⊂ a fold, a repeat unit ⊂ a repeat region, a reaction *part of* a
+pathway, a stricter pangenome band ⊂ a looser one. These become typed
+`trait_relations` edges (`subclass_of`/`narrow_match`, `part_of`/`has_part`,
+`member_of`, `overlaps`), **never** a record collapse. The verified cutoffs and
+the full containment→predicate matrix are in
+[`reference/equivalence-cutoffs.md`](reference/equivalence-cutoffs.md).
+
 ---
 
 ## Per-axis operators
@@ -181,6 +191,7 @@ just build-docs                 # REQUIRED — overlays/analyzer read the shards
 | File | Contents |
 |------|----------|
 | [`reference/axis-operators.md`](reference/axis-operators.md) | The full per-category operator matrix (from cross-source-comparison-review-1 §1/§4), every overlay builder and its output/predicate, the trap catalogue, and the open gaps (FUNCTION pathway overlap, EVOLUTION taxon scope). |
+| [`reference/equivalence-cutoffs.md`](reference/equivalence-cutoffs.md) | **Primary-source-verified cutoffs** per axis (TM-score, Rost twilight zone, Pfam GA, Rhea/EC, Roary bands…), the **containment→predicate matrix**, the **do-not-hard-code / UNVERIFIED** list (e.g. the TM 0.7 superfamily heuristic), and implied code follow-ups. Synthesised from the five `research/equivalence-cutoffs-*.md` reports. |
 
 Related: the universal identity rules and the merge *procedure* live in the
 [[merge-traits]] skill; this skill only adds the per-axis candidate operators.
