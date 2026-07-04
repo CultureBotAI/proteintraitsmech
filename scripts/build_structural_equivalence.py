@@ -6,9 +6,17 @@ sequence member-overlap (Phase 2) is weak across these because homologs can
 diverge past detectable sequence identity while keeping the fold. The decisive
 signal is structure comparison of each entry's representative domain:
 
-    Foldseek TM-score >= --tm-fold  (0.5) -> same fold        -> biolink:close_match
-                       >= --tm-super (0.7) -> same superfamily -> biolink:close_match
-                                                                 (level noted in relation_source)
+    Foldseek TM-score >= --tm-fold  (0.5) -> fold-level geometry match
+                       >= --tm-super (0.7) -> stronger geometry match
+    Both emit biolink:close_match as REVIEW candidates, NOT auto-merges. Why
+    (research/equivalence-cutoffs-structure.md, Xu & Zhang 2010): TM >= 0.5 is
+    the statistical fold-onset (P = 5.5e-7; random ~0.17), but the same-fold
+    *posterior* at 0.5 is only 13% (SCOP) / 37% (CATH), rising to 80-90% at 0.6.
+    And the 0.7 "superfamily" boundary is a HEURISTIC, not a published cutoff:
+    superfamily is an evolutionary/homology claim while TM-score proves only
+    geometry, so it needs a second (sequence/family) signal before it can be
+    called a superfamily. relation_source encodes the score and the
+    -fold / -superfamily-heuristic tier so a curator can weigh them.
 
 Pipeline (two stages, so the runnable part works even without Foldseek):
 
@@ -340,7 +348,9 @@ def run_foldseek(manifest: Path, limit: int, tm_fold: float, tm_super: float) ->
         except ValueError:
             continue
         if score >= tm_fold:
-            level = "superfamily" if score >= tm_super else "fold"
+            # close_match is a REVIEW candidate, not an auto-merge; the -superfamily
+            # tier is a heuristic (TM proves geometry, not homology) — see docstring.
+            level = "superfamily-heuristic" if score >= tm_super else "fold"
             edges.append((cq, "biolink:close_match", ct, f"foldseek-tm{score:.2f}-{level}"))
 
     seen, uniq = set(), []
