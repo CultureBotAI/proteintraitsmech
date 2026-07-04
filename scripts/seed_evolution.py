@@ -78,6 +78,32 @@ TERMS: tuple[tuple[str, str, str, str, tuple[str, ...]], ...] = (
 )
 
 
+# id_suffix -> evolutionary_scope fields (the defining band/method/metric for the
+# generic class term; taxon_scope/orthology_basis stay empty until scoped to a
+# real pangenome). Bands per research/equivalence-cutoffs-evolution.md.
+SCOPE: dict[str, dict[str, object]] = {
+    "EVO_CONSERVED": {"conservation_metric": "presence-breadth (cross-taxon ortholog retention)"},
+    "EVO_CLADE_SPECIFIC": {"conservation_metric": "presence-breadth (restricted to one clade)"},
+    "EVO_VARIABLE": {"conservation_metric": "presence-breadth (low cross-taxon retention)"},
+    "EVO_PANGENOME_CORE": {"min_prevalence": 0.99, "max_prevalence": 1.0,
+                           "definition_method": "Roary-style frequency band (core; Roary -cd 99%)",
+                           "conservation_metric": "presence-breadth"},
+    "EVO_PANGENOME_SOFTCORE": {"min_prevalence": 0.95, "max_prevalence": 0.99,
+                               "definition_method": "Roary-style frequency band (soft-core 95-99%)",
+                               "conservation_metric": "presence-breadth"},
+    "EVO_PANGENOME_SHELL": {"min_prevalence": 0.15, "max_prevalence": 0.95,
+                            "definition_method": "Roary-style frequency band (shell 15-95%)",
+                            "conservation_metric": "presence-breadth"},
+    "EVO_PANGENOME_CLOUD": {"min_prevalence": 0.0, "max_prevalence": 0.15,
+                            "definition_method": "Roary-style frequency band (cloud <15%)",
+                            "conservation_metric": "presence-breadth"},
+    "EVO_PANGENOME_PERSISTENT": {"definition_method": "PPanGGOLiN (statistical partition; near-core persistent)",
+                                 "conservation_metric": "presence-breadth"},
+    "EVO_PANGENOME_SINGLETON": {"definition_method": "singleton (present in exactly 1 genome)",
+                                "conservation_metric": "presence-breadth"},
+}
+
+
 def yaml_escape(text: str) -> str:
     if not text:
         return '""'
@@ -109,6 +135,15 @@ def record(id_suffix: str, category: str, label: str, definition: str,
         for s in synonyms:
             lines.append(f"  - synonym_text: {yaml_escape(s)}")
             lines.append("    synonym_type: EXACT_SYNONYM")
+    scope = SCOPE.get(id_suffix)
+    if scope:
+        lines.append("evolutionary_scope:")
+        for key in ("taxon_scope", "taxon_rank", "min_prevalence", "max_prevalence",
+                    "definition_method", "conservation_metric", "orthology_basis"):
+            if key in scope:
+                val = scope[key]
+                val = val if isinstance(val, (int, float)) else yaml_escape(str(val))
+                lines.append(f"  {key}: {val}")
     lines.append(f"license: {LICENSE}")
     return "\n".join(lines) + "\n"
 

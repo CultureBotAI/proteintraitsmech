@@ -240,6 +240,18 @@ classes:
         inlined_as_list: true
         range: StructuralGeometryRepresentation
 
+      evolutionary_scope:
+        description: >-
+          The taxon scope + distribution threshold + method that DEFINE an
+          EVOLUTION-axis trait (EVO_CONSERVATION / EVO_PANGENOME). Two evolution
+          traits are only equivalent when their scope, threshold and method all
+          match; nested thresholds/taxa are containment, not identity (see
+          research/equivalence-cutoffs-evolution.md). Without this a pangenome /
+          conservation class is undecidable for equivalence. See
+          `EvolutionaryScope`.
+        range: EvolutionaryScope
+        inlined: true
+
       sequence_pattern:
         description: >-
           Raw sequence pattern for SEQUENCE-axis traits — e.g. a PROSITE
@@ -861,6 +873,56 @@ classes:
         range: string
       evidence_source:
         description: CURIE, URL, or source file for the representative selection.
+        range: string
+
+  EvolutionaryScope:
+    description: >-
+      The scope + threshold + method that make an EVOLUTION-axis trait
+      (conservation / pangenome partition) computable for equivalence. Per
+      research/equivalence-cutoffs-evolution.md, two evolution traits are the
+      same only if taxon scope AND the distribution threshold AND the method all
+      match; a stricter prevalence band or a narrower taxon is *contained in*
+      (narrow_match), not equal to, a looser one.
+    attributes:
+      taxon_scope:
+        description: >-
+          The taxon / genome set the distribution is measured over — an
+          NCBITaxon CURIE or clade name (e.g. `NCBITaxon:561`, "genus Escherichia").
+          Empty on a generic band-definition class; set when scoped to a real pangenome.
+        range: string
+      taxon_rank:
+        description: NCBI rank of the scope (e.g. species, genus, family, phylum).
+        range: string
+      min_prevalence:
+        description: >-
+          Lower bound of the presence-frequency band, as a fraction of genomes
+          in scope (0-1). E.g. core = 0.99, shell = 0.15. The numeric
+          distribution threshold — not just a label.
+        range: float
+        minimum_value: 0.0
+        maximum_value: 1.0
+      max_prevalence:
+        description: Upper bound of the presence-frequency band, fraction of genomes in scope (0-1).
+        range: float
+        minimum_value: 0.0
+        maximum_value: 1.0
+      definition_method:
+        description: >-
+          The tool / algorithm that defines the partition — e.g. "Roary -cd 99%
+          frequency band", "PPanGGOLiN (statistical partition)", "BUSCO",
+          "dN/dS". PPanGGOLiN partitions are NOT interchangeable with fixed-%
+          Roary bands even at the same taxon.
+        range: string
+      conservation_metric:
+        description: >-
+          What "conserved/variable" is measured by — `presence-breadth`
+          (ortholog presence across the taxon set) or `dN/dS` (selection);
+          these are distinct definitions and must not be merged.
+        range: string
+      orthology_basis:
+        description: >-
+          The orthology method used to call presence/absence (e.g. OrthoFinder,
+          eggNOG, reciprocal best hits, Roary BLASTp identity cutoff).
         range: string
 
   CurationEvent:
