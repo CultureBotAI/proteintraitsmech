@@ -554,6 +554,15 @@ async function renderDetail(r) {
        </ul>`
     : "";
 
+  const ssRow = (r.ss || []).length
+    ? row("Secondary structure (topology)",
+          `<dd class="pre">${escapeHTML(r.ss.filter(Boolean).join("  ·  "))}</dd>`, true)
+    : "";
+  const geoRow = (r.geo || []).length
+    ? row("Structure representative",
+          `<dd>${r.geo.map(g => curieLink(g)).join(", ")}</dd>`, true)
+    : "";
+
   const patternRow = r.pat
     ? row("Sequence pattern", `<dd class="pre">${escapeHTML(r.pat)}</dd>`, true)
     : "";
@@ -607,6 +616,8 @@ async function renderDetail(r) {
         ${row("Category", `<dd>${escapeHTML(r.cat  || "")}</dd>`, true)}
         ${row("Source", `<dd>${escapeHTML(r.src   || "")}</dd>`, true)}
         ${row("Status", `<dd>${escapeHTML(r.sta   || "")}</dd>`, true)}
+        ${ssRow}
+        ${geoRow}
         ${patternRow}
         ${residueRow}
         ${parentRow}

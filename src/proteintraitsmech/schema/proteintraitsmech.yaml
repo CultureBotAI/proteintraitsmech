@@ -215,6 +215,31 @@ classes:
         inlined_as_list: true
         range: DetectionMethod
 
+      secondary_structure_representations:
+        description: >-
+          Comparable **secondary-structure** representation for STRUCT_SECONDARY
+          and related local structural motifs — the 2D analogue of
+          `sequence_pattern`. Holds DSSP/STRIDE 3- or 8-state strings, a
+          normalised SS-element topology string (e.g. `E-turn-E` for a beta
+          hairpin, `H-loop-H` for helix-loop-helix), or a local structural
+          alphabet (Foldseek 3Di). Lets cross-source comparison operate in
+          SS-string / topology space. See `SecondaryStructureRepresentation`.
+        multivalued: true
+        inlined_as_list: true
+        range: SecondaryStructureRepresentation
+
+      structural_geometry_representations:
+        description: >-
+          Comparable **3D-geometry** representation for STRUCTURE-axis traits
+          (fold / topology / domain / site) — a representative structure
+          reference (PDB / AlphaFold / TED / CATH domain), an optional Foldseek
+          3Di descriptor, or a contact-map reference — so structural comparison
+          (Foldseek / TM-score) has something on-record to compare. See
+          `StructuralGeometryRepresentation`.
+        multivalued: true
+        inlined_as_list: true
+        range: StructuralGeometryRepresentation
+
       sequence_pattern:
         description: >-
           Raw sequence pattern for SEQUENCE-axis traits — e.g. a PROSITE
@@ -769,6 +794,73 @@ classes:
         range: string
       recipe:
         description: A runnable command template ({input}/{db}/{output} placeholders).
+        range: string
+
+  SecondaryStructureRepresentation:
+    description: >-
+      A comparable secondary-structure representation of a trait — DSSP/STRIDE
+      state string, normalised SS-element topology string, or a local structural
+      alphabet — used to compare STRUCT_SECONDARY entries across sources.
+    attributes:
+      method:
+        description: Assignment method / source (e.g. DSSP, STRIDE, PDBsum/PROMOTIF, curated).
+        required: true
+        range: string
+      state_alphabet:
+        description: >-
+          Representation alphabet — one of DSSP_8, DSSP_3, STRIDE_8, STRIDE_3,
+          TOPOLOGY (element grammar), FOLDSEEK_3DI.
+        required: true
+        range: string
+      ss_string:
+        description: Per-residue secondary-structure string, when available.
+        range: string
+      topology_string:
+        description: >-
+          Normalised SS-element grammar, e.g. `E-turn-E`, `H-loop-H`,
+          `E-H-E` (beta-alpha-beta). The canonical comparable token for a motif.
+        range: string
+      residue_start:
+        description: 1-indexed start residue of the assignment (inclusive), if localised.
+        range: integer
+        minimum_value: 1
+      residue_end:
+        description: 1-indexed end residue of the assignment (inclusive), if localised.
+        range: integer
+        minimum_value: 1
+      structure_ref:
+        description: PDB / AlphaFold / TED / CATH domain reference used for the assignment.
+        range: string
+      evidence_source:
+        description: CURIE, URL, or source file for the assignment.
+        range: string
+
+  StructuralGeometryRepresentation:
+    description: >-
+      A comparable 3D-geometry representation of a STRUCTURE-axis trait — a
+      representative structure plus optional structural-alphabet / contact
+      descriptors — so Foldseek / TM-score comparison has an on-record anchor.
+    attributes:
+      structure_ref:
+        description: >-
+          Representative structure reference — a PDB id, AlphaFoldDB accession,
+          TED domain id, or CATH/SCOPe/ECOD representative domain identifier.
+        required: true
+        range: string
+      structure_source:
+        description: Provenance of the representative (e.g. PDB, AlphaFoldDB, TED, CATH, SCOPe, ECOD).
+        range: string
+      residue_range:
+        description: Domain chopping / residue range within the structure (e.g. `2-139`).
+        range: string
+      foldseek_3di:
+        description: Foldseek 3Di structural-alphabet descriptor of the representative, if computed.
+        range: string
+      contact_map_ref:
+        description: Reference (URL / file / CURIE) to a contact map or distance matrix, if available.
+        range: string
+      evidence_source:
+        description: CURIE, URL, or source file for the representative selection.
         range: string
 
   CurationEvent:

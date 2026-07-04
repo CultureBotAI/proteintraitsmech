@@ -186,6 +186,12 @@ build-methods:
 build-equivalence:
     python3 scripts/build_equivalence.py
 
+# Seed the secondary-structure (2°) trait taxonomy — elements / arrangements /
+# turns / local + super-secondary motifs — with topology-string representations
+# (research/cross-source-comparison-review-1.md). Dry-run by default.
+seed-secondary-structure *args:
+    python3 scripts/seed_secondary_structure.py {{args}}
+
 # Phase 2 — member-set (Jaccard) overlap between un-integrated signatures.
 # Fetches Swiss-Prot member sets from UniProt (cached), blocks on shared
 # members, emits data/equivalence/member_overlap.tsv + MERGE candidates.

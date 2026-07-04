@@ -311,6 +311,13 @@ def load_record(path: Path) -> dict[str, Any] | None:
         # Cross-source equivalence [object, predicate, relation_source] from the
         # overlay (not stored on the YAML). Empty for most records.
         "eq": EQUIV.get(identifier, []),
+        # Comparable representations: secondary-structure topology/state strings
+        # and 3D-geometry representative refs (mostly empty).
+        "ss": [s.get("topology_string") or s.get("ss_string") or s.get("state_alphabet")
+               for s in (data.get("secondary_structure_representations") or [])
+               if isinstance(s, dict)],
+        "geo": [g.get("structure_ref") for g in (data.get("structural_geometry_representations") or [])
+                if isinstance(g, dict) and g.get("structure_ref")],
         "path": rel,
     }
 
@@ -329,7 +336,7 @@ MAX_SHARD_RECORDS = 25000
 # upfront payload small (~200k records × everything = ~108 MB → ~21 MB lean).
 # `def` is special-cased: the list keeps a short snippet (card preview +
 # search); the full text goes to the sidecar.
-DETAIL_ONLY = ("path", "pt", "xr", "mx", "cp", "ex", "eq", "rs", "pat")
+DETAIL_ONLY = ("path", "pt", "xr", "mx", "cp", "ex", "eq", "ss", "geo", "rs", "pat")
 LIST_DEF = 140
 
 
