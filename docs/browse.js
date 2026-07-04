@@ -137,9 +137,16 @@ const loadAllAxes = () => loadAxes(Object.keys(AXIS_SHARDS));
 // nothing); a bare text query with no narrowing filter = the whole corpus.
 function neededAxes() {
   const need = new Set();
-  SELECTED.axis.forEach(a => need.add(a));
-  SELECTED.cat.forEach(c => { const a = CAT_AXIS[c.split("_")[0]]; if (a) need.add(a); });
   const axesBy = FACETS.axesBy || { src: {}, cat: {}, sta: {} };
+  SELECTED.axis.forEach(a => need.add(a));
+  // Prefer the precomputed cat→axis map (handles prefix-less categories like
+  // UPPER); fall back to the category-prefix heuristic.
+  SELECTED.cat.forEach(c => {
+    const mapped = axesBy.cat[c];
+    if (mapped && mapped.length) { mapped.forEach(a => need.add(a)); return; }
+    const a = CAT_AXIS[c.split("_")[0]];
+    if (a) need.add(a);
+  });
   SELECTED.src.forEach(s => (axesBy.src[s] || []).forEach(a => need.add(a)));
   SELECTED.sta.forEach(s => (axesBy.sta[s] || []).forEach(a => need.add(a)));
   if (QUERY && need.size === 0) return new Set(Object.keys(AXIS_SHARDS));
