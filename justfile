@@ -194,6 +194,12 @@ build-methods:
 build-equivalence:
     python3 scripts/build_equivalence.py
 
+# Build data/equivalence/function.tsv — cross-source biolink:close_match edges
+# for FUNCTION records sharing an ontology anchor (EC leaf / RHEA / ARO / TCDB /
+# MI), same-category + cross-source only (cross-source-comparison-review-1 §4).
+build-function-equivalence:
+    python3 scripts/build_function_anchor_equivalence.py
+
 # Seed the secondary-structure (2°) trait taxonomy — elements / arrangements /
 # turns / local + super-secondary motifs — with topology-string representations
 # (research/cross-source-comparison-review-1.md). Dry-run by default.
