@@ -151,6 +151,14 @@ fetch-cog:
 seed-cog *args:
     python3 scripts/seed_cog.py {{args}}
 
+# SEED subsystems via BV-BRC subsystem_ref (US Gov public domain) -> FUNC_PATHWAY.
+fetch-seed-subsystems:
+    mkdir -p data/raw/seed_subsystems
+    curl -sSLf --max-time 300 -H "Accept: application/json" -o data/raw/seed_subsystems/subsystem_ref.json "https://www.bv-brc.org/api/subsystem_ref/?limit(25000)&http_accept=application/json"
+
+seed-seed-subsystems *args:
+    python3 scripts/seed_seed_subsystems.py {{args}}
+
 fetch-rhea:
     mkdir -p data/raw/rhea
     curl -sSLf --max-time 300 -o data/raw/rhea/rhea-reactions.tsv "https://www.rhea-db.org/rhea?query=&columns=rhea-id,equation,chebi-id,ec&format=tsv"
