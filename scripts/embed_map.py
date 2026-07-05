@@ -63,10 +63,11 @@ def main() -> int:
 
     ids = json.loads((EMB / "ids.json").read_text())
     vecs = np.load(EMB / "vectors.f16.npy").astype(np.float32)
-    axis_of = {}
+    axis_of, cat_of = {}, {}
     for f in glob.glob(str(SHARDS / "records.*.json")):
         for r in json.load(open(f)):
             axis_of[r["id"]] = r.get("axis") or "OTHER"
+            cat_of[r["id"]] = r.get("cat") or "OTHER"
 
     idx = np.arange(len(ids))
     # PCA runs over everything; PaCMAP/UMAP sample for speed unless --sample 0.
@@ -105,11 +106,17 @@ def main() -> int:
 
     axes = sorted({axis_of.get(ids[i], "OTHER") for i in idx})
     ax_idx = {a: k for k, a in enumerate(axes)}
+    cats = sorted({cat_of.get(ids[i], "OTHER") for i in idx})
+    cat_idx = {c: k for k, c in enumerate(cats)}
+    # point = [x, y, axisIdx, id, catIdx] — catIdx lets the viewer facet/filter
+    # by trait_category (analog of TraitMech's category facet) without labels
+    # (which would bloat the ~10 MB file for 278 k points).
     points = [[round(float(xy[j, 0]), 4), round(float(xy[j, 1]), 4),
-               ax_idx[axis_of.get(ids[i], "OTHER")], ids[i]]
+               ax_idx[axis_of.get(ids[i], "OTHER")], ids[i],
+               cat_idx[cat_of.get(ids[i], "OTHER")]]
               for j, i in enumerate(idx)]
 
-    out = {"method": args.method, "axes": axes, "n_total": len(ids),
+    out = {"method": args.method, "axes": axes, "cats": cats, "n_total": len(ids),
            "n_shown": len(points), "points": points}
     if explained:
         out["explained"] = [round(e, 4) for e in explained]
