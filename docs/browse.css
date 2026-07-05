@@ -9,6 +9,32 @@
   --pill-bg: #e5edf5;
   --pill-text: #155799;
   --card-shadow: 0 1px 2px rgba(15, 23, 42, .06);
+
+  /* Semantic surface tokens (light values identical to the originals below;
+     redefined by role in the dark block at the end of this file). */
+  --page-bg: #fafafa;
+  --fg: #111827;
+  --surface: #ffffff;
+  --hover-bg: #f3f4f6;
+  --subtle-bg: #f6f8fa;
+  --sel-bg: #eaf5ee;
+  --input-bg: #ffffff;
+  --strong-fg: #111827;
+  --header-grad-a: #159957;
+  --header-grad-b: #155799;
+  --strong-2: #155799;
+  --axis-accent: #159957;
+  --axis-border: #d0d7de;
+  --axis-span: #57606a;
+  --landing-fg: #374151;
+  --info-bg: #f6f8fa;
+  --info-border: #eaecef;
+  --info-color: #57606a;
+  --info-icon: #0969da;
+  --ex-bg: #fafbfd;
+  --pill-axis-bg: #e6fffa; --pill-axis-text: #087f5b;
+  --pill-src-bg: #fef3c7;  --pill-src-text: #92400e;
+  --pill-sta-bg: #ede9fe;  --pill-sta-text: #5b21b6;
 }
 
 * { box-sizing: border-box; }
@@ -556,5 +582,116 @@ a.pill:hover {
   }
   .facet-scroll {
     max-height: 320px;
+  }
+}
+
+/* ============================================================
+   Dark theme + reduced-motion (additive; light stays identical)
+   ============================================================ */
+
+/* Route the hardcoded light surfaces through the semantic tokens above.
+   In light these resolve to the SAME values as the original rules; the dark
+   block only re-points the tokens, so the light appearance is unchanged. */
+body { background: var(--page-bg); color: var(--fg); }
+.page-header { background: linear-gradient(120deg, var(--header-grad-a), var(--header-grad-b)); }
+.sidebar { background: var(--surface); }
+.card { background: var(--surface); }
+.detail { background: var(--surface); }
+.axis-card { background: var(--surface); border-color: var(--axis-border); border-left-color: var(--axis-accent); }
+.axis-card:hover { background: var(--subtle-bg); }
+.axis-card strong { color: var(--strong-2); }
+.axis-card span { color: var(--axis-span); }
+.landing { color: var(--landing-fg); }
+.facet-head:hover { color: var(--strong-fg); }
+.facet-toggle:hover { background: var(--hover-bg); color: var(--strong-fg); }
+.facet-item:hover { background: var(--hover-bg); }
+.facet-item.is-selected { background: var(--sel-bg); }
+.facet-toolbar button:hover { background: var(--hover-bg); color: var(--strong-fg); }
+.search-box input { background: var(--input-bg); }
+.results-header .paging button { background: var(--surface); }
+.facet-info { background: var(--info-bg); border-color: var(--info-border); color: var(--info-color); }
+.facet-info-icon { color: var(--info-icon); }
+.ex-item { background: var(--ex-bg); }
+.pill.axis { background: var(--pill-axis-bg); color: var(--pill-axis-text); }
+.pill.src  { background: var(--pill-src-bg);  color: var(--pill-src-text); }
+.pill.sta  { background: var(--pill-sta-bg);  color: var(--pill-sta-text); }
+
+/* ---- Dark theme (OS default; superseded by the toggle) ---- */
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --line: #253230;
+    --muted: #9bb0aa;
+    --code-bg: #17201e;
+    --pill-bg: #223042;
+    --pill-text: #9cc4ec;
+    --brand-2: #7fb0e8;          /* legible link/id blue on dark (header uses its own tokens) */
+    --card-shadow: 0 1px 2px rgba(0, 0, 0, .5);
+    --page-bg: #0f1615;
+    --fg: #e8efec;
+    --surface: #17201e;
+    --hover-bg: rgba(255, 255, 255, .06);
+    --subtle-bg: #1b2523;
+    --sel-bg: rgba(72, 194, 184, .16);
+    --input-bg: #0f1615;
+    --strong-fg: #e8efec;
+    --header-grad-a: #123d2f;
+    --header-grad-b: #123047;
+    --strong-2: #9cc4ec;
+    --axis-accent: #48c2b8;
+    --axis-border: #253230;
+    --axis-span: #9bb0aa;
+    --landing-fg: #c3d0cb;
+    --info-bg: #1b2523;
+    --info-border: #253230;
+    --info-color: #9bb0aa;
+    --info-icon: #7fb0e8;
+    --ex-bg: #1b2523;
+    --pill-axis-bg: rgba(72, 194, 184, .16); --pill-axis-text: #6fd6c8;
+    --pill-src-bg: rgba(251, 191, 36, .16);  --pill-src-text: #fbbf24;
+    --pill-sta-bg: rgba(180, 153, 240, .18); --pill-sta-text: #c4b0f5;
+  }
+  :root:not([data-theme="light"]) .search-box input { color: var(--fg); }
+}
+:root[data-theme="dark"]{
+  --line: #253230;
+  --muted: #9bb0aa;
+  --code-bg: #17201e;
+  --pill-bg: #223042;
+  --pill-text: #9cc4ec;
+  --brand-2: #7fb0e8;
+  --card-shadow: 0 1px 2px rgba(0, 0, 0, .5);
+  --page-bg: #0f1615;
+  --fg: #e8efec;
+  --surface: #17201e;
+  --hover-bg: rgba(255, 255, 255, .06);
+  --subtle-bg: #1b2523;
+  --sel-bg: rgba(72, 194, 184, .16);
+  --input-bg: #0f1615;
+  --strong-fg: #e8efec;
+  --header-grad-a: #123d2f;
+  --header-grad-b: #123047;
+  --strong-2: #9cc4ec;
+  --axis-accent: #48c2b8;
+  --axis-border: #253230;
+  --axis-span: #9bb0aa;
+  --landing-fg: #c3d0cb;
+  --info-bg: #1b2523;
+  --info-border: #253230;
+  --info-color: #9bb0aa;
+  --info-icon: #7fb0e8;
+  --ex-bg: #1b2523;
+  --pill-axis-bg: rgba(72, 194, 184, .16); --pill-axis-text: #6fd6c8;
+  --pill-src-bg: rgba(251, 191, 36, .16);  --pill-src-text: #fbbf24;
+  --pill-sta-bg: rgba(180, 153, 240, .18); --pill-sta-text: #c4b0f5;
+}
+:root[data-theme="dark"] .search-box input { color: var(--fg); }
+
+/* ---- Reduced-motion guard ---- */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
   }
 }

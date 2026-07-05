@@ -4,25 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Corpus map — ProteinTraitsMech</title>
-<script>
-  // Set the saved theme before first paint (no flash). Default = OS preference.
-  try{var _t=localStorage.getItem("ptm-theme"); if(_t) document.documentElement.setAttribute("data-theme",_t);}catch(e){}
-</script>
 <style>
-  :root{--pastel-a:#B7E4DC;--pastel-b:#FCE3B0;--accent:#2E8B84;--ink:#1a1a1a;--muted:#555;--line:rgba(0,0,0,.12);--card:#fff;--stage:#f8f9fa}
-  /* Dark: OS default, superseded by the toggle (data-theme). */
+  :root{--pastel-a:#B7E4DC;--pastel-b:#FCE3B0;--accent:#2E8B84;--ink:#1a1a1a;--muted:#555;--line:rgba(0,0,0,.12);--card:#fff;--stage-bg:#f8f9fa}
+  /* Dark palette shared with index/browse; OS default, superseded by theme-toggle.js (data-theme). */
   @media (prefers-color-scheme:dark){
-    :root:not([data-theme="light"]){--pastel-a:#173a37;--pastel-b:#241f14;--accent:#5fd0c4;--ink:#ececec;--muted:#a6a6a6;--line:rgba(255,255,255,.14);--card:#15130e;--stage:#0f0d09}
+    :root:not([data-theme="light"]){--pastel-a:#14231f;--pastel-b:#0f1615;--accent:#48c2b8;--ink:#e8efec;--muted:#9bb0aa;--line:#253230;--card:#17201e;--stage-bg:#17201e}
   }
-  :root[data-theme="dark"]{--pastel-a:#173a37;--pastel-b:#241f14;--accent:#5fd0c4;--ink:#ececec;--muted:#a6a6a6;--line:rgba(255,255,255,.14);--card:#15130e;--stage:#0f0d09}
-  :root[data-theme="light"]{--pastel-a:#B7E4DC;--pastel-b:#FCE3B0;--accent:#2E8B84;--ink:#1a1a1a;--muted:#555;--line:rgba(0,0,0,.12);--card:#fff;--stage:#f8f9fa}
+  :root[data-theme="dark"]{--pastel-a:#14231f;--pastel-b:#0f1615;--accent:#48c2b8;--ink:#e8efec;--muted:#9bb0aa;--line:#253230;--card:#17201e;--stage-bg:#17201e}
+  :root[data-theme="light"]{--pastel-a:#B7E4DC;--pastel-b:#FCE3B0;--accent:#2E8B84;--ink:#1a1a1a;--muted:#555;--line:rgba(0,0,0,.12);--card:#fff;--stage-bg:#f8f9fa}
   *{box-sizing:border-box}
   body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--pastel-b)}
-  header.site{background:linear-gradient(135deg,var(--pastel-a),var(--pastel-b));padding:20px 24px;border-bottom:1px solid var(--line);position:relative}
+  header.site{background:linear-gradient(135deg,var(--pastel-a),var(--pastel-b));padding:20px 24px;border-bottom:1px solid var(--line)}
   header.site h1{margin:0 0 .15em;font-size:1.5rem}
   header.site p{margin:0;color:var(--muted);font-size:.9rem}
   header.site a{color:var(--accent)}
-  #theme{position:absolute;top:18px;right:24px;background:var(--card);border:1px solid var(--line);color:var(--ink);border-radius:999px;width:36px;height:36px;font-size:1rem;cursor:pointer;line-height:1}
   .wrap{max-width:1160px;margin:0 auto;padding:18px 24px}
   .controls{display:flex;flex-wrap:wrap;align-items:flex-end;gap:16px;margin:.2rem 0 1rem}
   .stats{display:flex;gap:18px;font-size:.8rem;color:var(--muted)}
@@ -36,17 +31,24 @@
   .legend button.off{opacity:.4;text-decoration:line-through}
   .legend .sw{width:12px;height:12px;border-radius:3px;display:inline-block}
   .legend .cnt{color:var(--muted);font-variant-numeric:tabular-nums}
-  #stage{position:relative;background:var(--stage);border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.08)}
+  #stage{position:relative;background:var(--stage-bg);border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.08)}
   canvas{display:block;width:100%;height:auto;cursor:crosshair}
   #tip{position:absolute;pointer-events:none;background:rgba(0,0,0,.9);color:#fff;font-size:.78rem;line-height:1.4;padding:.5em .6em;border-radius:6px;opacity:0;transition:opacity .15s;transform:translate(-50%,-118%);white-space:nowrap;max-width:320px;overflow:hidden;text-overflow:ellipsis;z-index:5}
   #tip b{color:#ffd700;font-weight:600}
   #tip .t-sub{color:#cfcfcf}
   .hint{color:var(--muted);font-size:.82rem;margin-top:.6rem}
+  .dataview{margin-top:1rem;display:flex;flex-wrap:wrap;align-items:center;gap:.6rem}
+  .dlbtn{display:inline-block;background:var(--accent);color:#fff;padding:.45em 1em;border-radius:999px;font-size:.85rem;font-weight:600;text-decoration:none;cursor:pointer}
+  .dlbtn:hover{filter:brightness(.93)}
+  .dlbtn[aria-disabled="true"]{opacity:.55;pointer-events:none}
+  :root[data-theme="dark"] .dlbtn{color:#0f1615}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .dlbtn{color:#0f1615}}
+  .dataview .hint{margin-top:0}
+  @media (prefers-reduced-motion: reduce){*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}}
 </style>
 </head>
 <body>
   <header class="site">
-    <button id="theme" aria-label="Toggle light/dark theme" title="Toggle theme">◐</button>
     <h1>Corpus map</h1>
     <p>2-D map of every record's text embedding, colored by trait axis ·
        <a href="index.html">home</a> · <a href="browse.html">browse</a></p>
@@ -67,24 +69,15 @@
     <div class="legend" id="legend"></div>
     <div id="stage"><canvas id="cv" width="1120" height="660"></canvas><div id="tip"></div></div>
     <p class="hint" id="hint">Loading corpus map…</p>
+    <div class="dataview">
+      <a id="csv-dl" class="dlbtn" download="corpus_map.csv" aria-disabled="true">Download data (CSV)</a>
+      <span class="hint" id="dl-note">Data-table fallback for this dense scatter — the CSV lists every plotted point (identifier / CURIE, trait axis, trait category, x, y).</span>
+    </div>
   </main>
   <script>
-  // ---- Theme toggle (self-contained; persists to localStorage) ----
-  (function(){
-    const btn=document.getElementById("theme"), root=document.documentElement;
-    const osDark=window.matchMedia&&window.matchMedia("(prefers-color-scheme:dark)").matches;
-    function cur(){return root.getAttribute("data-theme") || (osDark?"dark":"light");}
-    btn.addEventListener("click",()=>{
-      const next=cur()==="dark"?"light":"dark";
-      root.setAttribute("data-theme",next);
-      try{localStorage.setItem("ptm-theme",next);}catch(e){}
-      draw&&DATA&&draw();  // recolor stage bg contrast if needed
-    });
-  })();
-
   // Axis palette (matches the landing stat-card hues).
   const COLORS = {STRUCTURE:"#16a34a",SEQUENCE:"#2563eb",SEQUENCE_STRUCTURE:"#a855f7",FUNCTION:"#d97706",EVOLUTION:"#0d9488",OTHER:"#888"};
-  const METHOD_LABEL = {pacmap:"PaCMAP",umap:"UMAP",pca:"PCA"};
+  const METHOD_LABEL = {pacmap:"PaCMAP",umap:"UMAP",pca:"PCA",tsne:"t-SNE"};
   const cv=document.getElementById("cv"), ctx=cv.getContext("2d");
   const W=cv.width, H=cv.height, PAD=14;
   const tip=document.getElementById("tip");
@@ -113,7 +106,7 @@
     const coverage=(d.n_total && d.n_shown<d.n_total)
       ? `${fmt(d.n_shown)} of ${fmt(d.n_total)} records (stratified sample)`
       : `${fmt(d.n_shown)} records`;
-    const ml=METHOD_LABEL[d.method]||d.method.toUpperCase();
+    const ml=METHOD_LABEL[d.method]||(d.method||"").toUpperCase();
     document.getElementById("hint").textContent=
       `${coverage} · ${ml} projection`
       + (d.explained ? ` (PC1 ${(d.explained[0]*100).toFixed(1)}%, PC2 ${(d.explained[1]*100).toFixed(1)}% variance)` : "")
@@ -121,7 +114,20 @@
     sel.addEventListener("change",e=>{catFilter=e.target.value; update();});
     let t; document.getElementById("search").addEventListener("input",e=>{clearTimeout(t); t=setTimeout(()=>{query=e.target.value.trim().toLowerCase(); update();},120);});
     update();
+    buildCsv();
   }).catch(()=>{document.getElementById("hint").textContent="Corpus map not built yet (run `just embed-map`).";});
+
+  // Accessible data-table fallback for this dense canvas scatter: a CSV built from
+  // the SAME points the plot renders (identifier, axis, category, x, y).
+  function buildCsv(){
+    const q=v=>{const s=String(v);return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;};
+    const lines=["identifier,trait_axis,trait_category,x,y"];
+    for(const p of DATA.points){ lines.push([p[3], DATA.axes[p[2]], DATA.cats[p[4]], p[0], p[1]].map(q).join(",")); }
+    const blob=new Blob([lines.join("\n")],{type:"text/csv"});
+    const dl=document.getElementById("csv-dl");
+    dl.href=URL.createObjectURL(blob);
+    dl.removeAttribute("aria-disabled");
+  }
 
   function axisCount(ax){let n=0; for(const p of DATA.points) if(DATA.axes[p[2]]===ax) n++; return n;}
   function buildLegend(){
@@ -192,5 +198,6 @@
     if(p) location.href="browse.html#record="+encodeURIComponent(p[3]);
   });
   </script>
+  <script src="theme-toggle.js"></script>
 </body>
 </html>
