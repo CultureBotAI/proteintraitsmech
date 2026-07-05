@@ -208,6 +208,13 @@ build-function-equivalence:
 build-pathway-equivalence:
     python3 scripts/build_pathway_overlap_equivalence.py
 
+# GO → ChEBI mapping (go-plus logical-definition cross-products) → data/mappings/
+# go2chebi.tsv. The .obo/current/snapshot go-plus endpoints 403 to bots; the JSON
+# 200s. The tiny TSV is tracked so the docs build needs no 135 MB refetch.
+build-go2chebi:
+    curl -sSLf -A "Mozilla/5.0" --max-time 300 -o data/raw/go-plus.json https://purl.obolibrary.org/obo/go/extensions/go-plus.json
+    python3 scripts/build_go2chebi.py
+
 # Seed the secondary-structure (2°) trait taxonomy — elements / arrangements /
 # turns / local + super-secondary motifs — with topology-string representations
 # (research/cross-source-comparison-review-1.md). Dry-run by default.

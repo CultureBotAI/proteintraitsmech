@@ -209,9 +209,48 @@ def load_chebi_names() -> None:
     try:
         for cid, meta in json.loads(p.read_text(encoding="utf-8")).items():
             if isinstance(meta, dict) and meta.get("name"):
-                CHEBI_NAMES[cid] = meta["name"]
+                CHEBI_NAMES[cid] = re.sub(r"<[^>]+>", "", meta["name"])  # strip ChEBI name HTML
     except Exception:  # noqa: BLE001
         pass
+
+
+# RHEA reaction → its ChEBI participants, from the Rhea records' own
+# chemical_participants. Lets a record that reaches a reaction only THROUGH a
+# mapping (EC → RHEA via rhea2ec) inherit that reaction's chemistry as a
+# MAPPING-DERIVED association (vs the reaction's own direct participants).
+RHEA_CHEBI: dict[str, list[str]] = {}
+
+
+def load_rhea_chebi() -> None:
+    base = REPO_ROOT / "data" / "traits" / "function" / "enzymatic_activity" / "rhea"
+    if not base.is_dir():
+        return
+    idre = re.compile(r"^identifier:\s*(RHEA:\d+)", re.M)
+    chre = re.compile(r"chebi:\s*(CHEBI:\d+)")
+    for p in base.rglob("*.yaml"):
+        t = p.read_text(encoding="utf-8", errors="replace")
+        m = idre.search(t)
+        ch = chre.findall(t)
+        if m and ch:
+            RHEA_CHEBI[m.group(1)] = list(dict.fromkeys(ch))
+
+
+# GO term → ChEBI from the go-plus logical-definition cross-products
+# (data/mappings/go2chebi.tsv). Lets a record grounded to a GO molecular-function
+# term (via ec2go / interpro2go / pfam2go) inherit that term's ChEBI as a
+# MAPPING-DERIVED chemical association.
+GO_CHEBI: dict[str, list[str]] = {}
+
+
+def load_go_chebi() -> None:
+    p = REPO_ROOT / "data" / "mappings" / "go2chebi.tsv"
+    if not p.is_file():
+        return
+    for line in p.read_text(encoding="utf-8").splitlines():
+        if line.startswith("#") or "\t" not in line:
+            continue
+        gid, chebis = line.split("\t", 1)
+        GO_CHEBI[gid] = chebis.split(";")
 
 
 def load_equivalence() -> None:
@@ -286,6 +325,31 @@ def _project_example(ex: dict) -> dict:
     return proj
 
 
+def _chem_fields(data: dict) -> dict:
+    """Direct vs mapping-derived chemical names, keyed chem / chemx. Present only
+    when non-empty (keeps the shard lean)."""
+    direct_ids = [c.get("chebi") for c in (data.get("chemical_participants") or []) if c.get("chebi")]
+    chem = list(dict.fromkeys(n for cid in direct_ids if (n := CHEBI_NAMES.get(cid))))
+    directset = set(direct_ids)
+    mapped_ids: list[str] = []
+    for m in (data.get("mapped_xrefs") or []):
+        obj = m.get("object") or ""
+        if obj.startswith("CHEBI:"):
+            mapped_ids.append(obj)
+        elif obj.startswith("RHEA:"):
+            mapped_ids.extend(RHEA_CHEBI.get(obj, []))
+        elif obj.startswith("GO:"):
+            mapped_ids.extend(GO_CHEBI.get(obj, []))
+    chemx = list(dict.fromkeys(
+        n for cid in mapped_ids if cid not in directset and (n := CHEBI_NAMES.get(cid))))
+    out = {}
+    if chem:
+        out["chem"] = chem
+    if chemx:
+        out["chemx"] = chemx
+    return out
+
+
 def load_record(path: Path) -> dict[str, Any] | None:
     try:
         with path.open("r", encoding="utf-8") as fh:
@@ -324,12 +388,14 @@ def load_record(path: Path) -> dict[str, Any] | None:
         # resolve from docs/data/chebi.json in the browser.
         "cp": [[c.get("chebi"), c.get("role")]
                for c in (data.get("chemical_participants") or []) if c.get("chebi")],
-        # Chemical NAMES (resolved from chebi.json) kept on the record — in the
-        # main shard, not detail-only — so a trait is findable by the molecule it
-        # acts on. Deduped; empty for records with no chemistry.
-        "chem": list(dict.fromkeys(
-            n for c in (data.get("chemical_participants") or [])
-            if (n := CHEBI_NAMES.get(c.get("chebi") or "")))),
+        # Chemical NAMES (resolved from chebi.json), split by provenance so the
+        # index mirrors direct-vs-mapping like xrefs/mapped_xrefs. Kept in the
+        # main shard so a trait is findable by the molecule it acts on.
+        #   chem  = DIRECT: the source's own chemical_participants
+        #   chemx = MAPPING-DERIVED: ChEBI reached via a mapping — a CHEBI in
+        #           mapped_xrefs, or a reaction the record reaches only through a
+        #           RHEA mapped_xref (EC→RHEA via rhea2ec) inheriting its ChEBI.
+        **_chem_fields(data),
         "ex": [_project_example(e) for e in (data.get("canonical_examples") or [])],
         # Cross-source equivalence [object, predicate, relation_source] from the
         # overlay (not stored on the YAML). Empty for most records.
@@ -378,8 +444,6 @@ def split_detail(records: list[dict]) -> list[tuple[dict, dict]]:
             v = rec.pop(k, None)
             if v not in (None, [], "", 0):
                 detail[k] = v
-        if not rec.get("chem"):          # keep chem in the main shard, but only when non-empty
-            rec.pop("chem", None)
         pairs.append((rec, detail))
     return pairs
 
@@ -462,6 +526,8 @@ def main() -> int:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     load_equivalence()
     load_chebi_names()
+    load_rhea_chebi()
+    load_go_chebi()
     records: list[dict] = []
     skipped = 0
     for path in sorted(TRAITS_DIR.rglob("*.yaml")):

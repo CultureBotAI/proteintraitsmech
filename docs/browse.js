@@ -339,7 +339,8 @@ function computeFacetCounts() {
       (r.id && r.id.toLowerCase().includes(qs)) ||
       (r.label && r.label.toLowerCase().includes(qs)) ||
       (r.def && r.def.toLowerCase().includes(qs)) ||
-      (r.chem && r.chem.some(n => n.toLowerCase().includes(qs))))) continue;
+      (r.chem && r.chem.some(n => n.toLowerCase().includes(qs))) ||
+      (r.chemx && r.chemx.some(n => n.toLowerCase().includes(qs))))) continue;
     for (const k of groups) {
       let ok = true;
       for (const k2 of groups) {
@@ -647,6 +648,7 @@ async function renderDetail(r) {
         ${eqHtml ? row("Equivalent entries", `<dd>${eqHtml}</dd>`, true) : ""}
         ${relatedHtml ? row("Related traits (semantic)", `<dd>${relatedHtml}</dd>`, true) : ""}
         ${(r.cp || []).length ? row("Chemistry", `<dd id="chem-list">${chemistryHtml(r)}</dd>`, true) : ""}
+        ${(r.chemx || []).length ? row("Chemistry (via mappings)", `<dd>${r.chemx.map(escapeHTML).join(", ")}</dd>`, true) : ""}
         ${row("Detection methods", `<dd id="method-list">${METHODS ? (methodsHtml(r) || "<em>—</em>") : "<em>loading…</em>"}</dd>`, true)}
         ${row("Source file", `<dd><a href="${escapeAttr(rawYamlLink)}" target="_blank" rel="noopener"><code>${escapeHTML(r.path)}</code></a></dd>`, true)}
       </dl>
