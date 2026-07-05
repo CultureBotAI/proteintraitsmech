@@ -59,6 +59,44 @@
   footer .fam{margin:.2em 0}
   footer .fam a{margin:0 .45em;white-space:nowrap}
   footer strong{color:var(--ink)}
+
+  /* ---- Dark theme (OS default; superseded by the toggle) ---- */
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --pastel-a:#14231f;      /* heroA gradient tint */
+      --pastel-b:#0f1615;      /* page background */
+      --accent:#48c2b8;
+      --ink:#e8efec;
+      --muted:#9bb0aa;
+      --card:#17201e;
+      --line:#253230;
+    }
+    :root:not([data-theme="light"]) .stat{background:rgba(255,255,255,.05)}
+    :root:not([data-theme="light"]) a.stat:hover{background:rgba(255,255,255,.09)}
+    :root:not([data-theme="light"]) footer{background:rgba(255,255,255,.04)}
+    :root:not([data-theme="light"]) .btn{color:#0f1615}
+    :root:not([data-theme="light"]) table code{background:rgba(255,255,255,.08)}
+  }
+  :root[data-theme="dark"]{
+    --pastel-a:#14231f;
+    --pastel-b:#0f1615;
+    --accent:#48c2b8;
+    --ink:#e8efec;
+    --muted:#9bb0aa;
+    --card:#17201e;
+    --line:#253230;
+  }
+  :root[data-theme="dark"] .stat{background:rgba(255,255,255,.05)}
+  :root[data-theme="dark"] a.stat:hover{background:rgba(255,255,255,.09)}
+  :root[data-theme="dark"] footer{background:rgba(255,255,255,.04)}
+  :root[data-theme="dark"] .btn{color:#0f1615}
+  :root[data-theme="dark"] table code{background:rgba(255,255,255,.08)}
+
+  /* ---- Reduced-motion guard ---- */
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;
+      transition-duration:.01ms!important;scroll-behavior:auto!important;}
+  }
 </style>
 </head>
 <body>
@@ -233,5 +271,6 @@
     const nsrc=Object.keys(c.src||{}).length; if(nsrc) set("sources",nsrc);
   }).catch(()=>{});
   </script>
+  <script src="theme-toggle.js"></script>
 </body>
 </html>
