@@ -117,7 +117,29 @@ def map_cog() -> dict[str, list[str]]:
     return out
 
 
+def map_rhea() -> dict[str, list[str]]:
+    """{RHEA:<id>: [pmids]} from rhea.rdf.gz — the only carrier of per-reaction
+    PubMed citations (the TSV export has none). A reaction's rh:citation triples
+    live in its rdf:about="http://rdf.rhea-db.org/<id>" block."""
+    out = defaultdict(list)
+    cur = None
+    about = re.compile(r'rdf:about="http://rdf\.rhea-db\.org/(\d+)"')
+    cite = re.compile(r'rh:citation rdf:resource="http://rdf\.ncbi\.nlm\.nih\.gov/pubmed/(\d+)"')
+    with gzip.open(RAW / "rhea" / "rhea.rdf.gz", "rt", encoding="utf-8", errors="replace") as fh:
+        for line in fh:
+            a = about.search(line)
+            if a:
+                cur = a.group(1)
+            c = cite.search(line)
+            if c and cur:
+                pm = c.group(1)
+                if pm not in out[f"RHEA:{cur}"]:
+                    out[f"RHEA:{cur}"].append(pm)
+    return dict(out)
+
+
 SOURCES = {
+    "rhea": (["function/enzymatic_activity/rhea"], map_rhea),
     "interpro": (["sequence/domain/interpro", "sequence/homologous_superfamily/interpro",
                   "sequence/repeat/interpro", "sequence/conservation/interpro",
                   "structure/active_site/interpro", "structure/binding_site/interpro",
