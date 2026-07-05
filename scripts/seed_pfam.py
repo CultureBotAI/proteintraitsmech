@@ -9,7 +9,10 @@ routed by its family type, and cross-referenced to GO (pfam2go), InterPro
   Domain          → SEQUENCE           / SEQ_DOMAIN
   Family          → SEQUENCE           / SEQ_FAMILY
   Repeat          → SEQUENCE           / SEQ_REPEAT
-  Coiled-coil     → SEQUENCE_STRUCTURE / MIXED_COILED_COIL
+  Coiled-coil     → SEQUENCE           / SEQ_DOMAIN   (a Pfam coiled-coil is a
+                                                     sequence HMM signature with no
+                                                     structural representation of
+                                                     its own → SEQUENCE, not MIXED)
   Disordered      → SEQUENCE           / SEQ_DISORDER
   Motif           → SEQUENCE           / SEQ_MOTIF
 
@@ -51,7 +54,7 @@ TYPE_MAP: dict[str, tuple[str, str, str]] = {
     "Domain":      ("SEQUENCE",           "SEQ_DOMAIN",        "sequence/domain/pfam"),
     "Family":      ("SEQUENCE",           "SEQ_FAMILY",        "sequence/family/pfam"),
     "Repeat":      ("SEQUENCE",           "SEQ_REPEAT",        "sequence/repeat/pfam"),
-    "Coiled-coil": ("SEQUENCE_STRUCTURE", "MIXED_COILED_COIL", "mixed/coiled_coil/pfam"),
+    "Coiled-coil": ("SEQUENCE",           "SEQ_DOMAIN",        "sequence/domain/pfam"),
     "Disordered":  ("SEQUENCE",           "SEQ_DISORDER",      "sequence/disorder/pfam"),
     "Motif":       ("SEQUENCE",           "SEQ_MOTIF",         "sequence/motif/pfam"),
 }
