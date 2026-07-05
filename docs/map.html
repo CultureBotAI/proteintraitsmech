@@ -4,55 +4,84 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Corpus map — ProteinTraitsMech</title>
+<script>
+  // Set the saved theme before first paint (no flash). Default = OS preference.
+  try{var _t=localStorage.getItem("ptm-theme"); if(_t) document.documentElement.setAttribute("data-theme",_t);}catch(e){}
+</script>
 <style>
-  :root{--pastel-a:#B7E4DC;--pastel-b:#FCE3B0;--accent:#2E8B84;--ink:#1a1a1a;--muted:#555;--line:rgba(0,0,0,.12);--card:#fff}
-  @media (prefers-color-scheme:dark){:root{--pastel-a:#173a37;--pastel-b:#241f14;--accent:#5fd0c4;--ink:#ececec;--muted:#a6a6a6;--line:rgba(255,255,255,.14);--card:#15130e}}
+  :root{--pastel-a:#B7E4DC;--pastel-b:#FCE3B0;--accent:#2E8B84;--ink:#1a1a1a;--muted:#555;--line:rgba(0,0,0,.12);--card:#fff;--stage:#f8f9fa}
+  /* Dark: OS default, superseded by the toggle (data-theme). */
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){--pastel-a:#173a37;--pastel-b:#241f14;--accent:#5fd0c4;--ink:#ececec;--muted:#a6a6a6;--line:rgba(255,255,255,.14);--card:#15130e;--stage:#0f0d09}
+  }
+  :root[data-theme="dark"]{--pastel-a:#173a37;--pastel-b:#241f14;--accent:#5fd0c4;--ink:#ececec;--muted:#a6a6a6;--line:rgba(255,255,255,.14);--card:#15130e;--stage:#0f0d09}
+  :root[data-theme="light"]{--pastel-a:#B7E4DC;--pastel-b:#FCE3B0;--accent:#2E8B84;--ink:#1a1a1a;--muted:#555;--line:rgba(0,0,0,.12);--card:#fff;--stage:#f8f9fa}
   *{box-sizing:border-box}
   body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--pastel-b)}
-  header.site{background:linear-gradient(135deg,var(--pastel-a),var(--pastel-b));padding:20px 24px;border-bottom:1px solid var(--line)}
+  header.site{background:linear-gradient(135deg,var(--pastel-a),var(--pastel-b));padding:20px 24px;border-bottom:1px solid var(--line);position:relative}
   header.site h1{margin:0 0 .15em;font-size:1.5rem}
   header.site p{margin:0;color:var(--muted);font-size:.9rem}
   header.site a{color:var(--accent)}
+  #theme{position:absolute;top:18px;right:24px;background:var(--card);border:1px solid var(--line);color:var(--ink);border-radius:999px;width:36px;height:36px;font-size:1rem;cursor:pointer;line-height:1}
   .wrap{max-width:1160px;margin:0 auto;padding:18px 24px}
-  .controls{display:flex;flex-wrap:wrap;align-items:flex-end;gap:14px;margin:.2rem 0 1rem}
+  .controls{display:flex;flex-wrap:wrap;align-items:flex-end;gap:16px;margin:.2rem 0 1rem}
+  .stats{display:flex;gap:18px;font-size:.8rem;color:var(--muted)}
+  .stat b{color:var(--accent);font-size:1.05rem;font-variant-numeric:tabular-nums;margin-left:.3em}
   .controls label{display:flex;flex-direction:column;gap:.25rem;font-size:.78rem;color:var(--muted)}
-  .controls select,.controls input{font:inherit;font-size:.9rem;padding:.35em .5em;border:1px solid var(--line);border-radius:7px;background:var(--card);color:var(--ink);min-width:190px}
-  .controls .count{font-size:.85rem;color:var(--muted);margin-left:auto;align-self:center}
-  .controls .count b{color:var(--ink)}
+  .controls select,.controls input{font:inherit;font-size:.9rem;padding:.4em .55em;border:1px solid var(--line);border-radius:7px;background:var(--card);color:var(--ink);min-width:200px}
+  .controls select:focus,.controls input:focus{outline:none;border-color:var(--accent)}
   .legend{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 .8rem}
-  .legend button{display:inline-flex;align-items:center;gap:.45em;font-size:.82rem;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:.25em .7em .25em .5em;color:var(--ink);cursor:pointer;transition:opacity .12s}
+  .legend button{display:inline-flex;align-items:center;gap:.45em;font-size:.82rem;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:.32em .7em .32em .55em;color:var(--ink);cursor:pointer;transition:all .15s}
+  .legend button:hover{border-color:var(--accent)}
   .legend button.off{opacity:.4;text-decoration:line-through}
-  .legend .sw{width:11px;height:11px;border-radius:3px;display:inline-block}
+  .legend .sw{width:12px;height:12px;border-radius:3px;display:inline-block}
   .legend .cnt{color:var(--muted);font-variant-numeric:tabular-nums}
-  #stage{position:relative;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  #stage{position:relative;background:var(--stage);border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.08)}
   canvas{display:block;width:100%;height:auto;cursor:crosshair}
-  #tip{position:absolute;pointer-events:none;background:#111;color:#fff;font-size:.78rem;line-height:1.35;padding:.4em .55em;border-radius:6px;opacity:0;transform:translate(-50%,-118%);white-space:nowrap;max-width:320px;overflow:hidden;text-overflow:ellipsis;z-index:5}
-  #tip b{font-weight:600}
-  #tip .t-sub{color:#bdbdbd}
+  #tip{position:absolute;pointer-events:none;background:rgba(0,0,0,.9);color:#fff;font-size:.78rem;line-height:1.4;padding:.5em .6em;border-radius:6px;opacity:0;transition:opacity .15s;transform:translate(-50%,-118%);white-space:nowrap;max-width:320px;overflow:hidden;text-overflow:ellipsis;z-index:5}
+  #tip b{color:#ffd700;font-weight:600}
+  #tip .t-sub{color:#cfcfcf}
   .hint{color:var(--muted);font-size:.82rem;margin-top:.6rem}
 </style>
 </head>
 <body>
   <header class="site">
+    <button id="theme" aria-label="Toggle light/dark theme" title="Toggle theme">◐</button>
     <h1>Corpus map</h1>
     <p>2-D map of every record's text embedding, colored by trait axis ·
        <a href="index.html">home</a> · <a href="browse.html">browse</a></p>
   </header>
   <main class="wrap">
     <div class="controls">
+      <div class="stats">
+        <span class="stat">Total<b id="s-total">…</b></span>
+        <span class="stat">Visible<b id="s-visible">…</b></span>
+      </div>
       <label>Filter category
         <select id="cat-filter"><option value="">All categories</option></select>
       </label>
       <label>Search
         <input type="search" id="search" placeholder="identifier / CURIE…" autocomplete="off">
       </label>
-      <span class="count" id="count">…</span>
     </div>
     <div class="legend" id="legend"></div>
     <div id="stage"><canvas id="cv" width="1120" height="660"></canvas><div id="tip"></div></div>
     <p class="hint" id="hint">Loading corpus map…</p>
   </main>
   <script>
+  // ---- Theme toggle (self-contained; persists to localStorage) ----
+  (function(){
+    const btn=document.getElementById("theme"), root=document.documentElement;
+    const osDark=window.matchMedia&&window.matchMedia("(prefers-color-scheme:dark)").matches;
+    function cur(){return root.getAttribute("data-theme") || (osDark?"dark":"light");}
+    btn.addEventListener("click",()=>{
+      const next=cur()==="dark"?"light":"dark";
+      root.setAttribute("data-theme",next);
+      try{localStorage.setItem("ptm-theme",next);}catch(e){}
+      draw&&DATA&&draw();  // recolor stage bg contrast if needed
+    });
+  })();
+
   // Axis palette (matches the landing stat-card hues).
   const COLORS = {STRUCTURE:"#16a34a",SEQUENCE:"#2563eb",SEQUENCE_STRUCTURE:"#a855f7",FUNCTION:"#d97706",EVOLUTION:"#0d9488",OTHER:"#888"};
   const METHOD_LABEL = {pacmap:"PaCMAP",umap:"UMAP",pca:"PCA"};
@@ -65,23 +94,25 @@
   let VF=new Uint8Array(0);        // per-point: passes all filters
 
   const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const fmt=n=>n.toLocaleString();
   function px(p){return [PAD + p[0]*(W-2*PAD), PAD + (1-p[1])*(H-2*PAD)];}
 
   fetch("data/corpus_map.json").then(r=>r.json()).then(d=>{
     DATA=d; VF=new Uint8Array(d.points.length);
     d.axes.forEach(a=>activeAxes.add(a));
+    document.getElementById("s-total").textContent=fmt(d.points.length);
     // Category dropdown, sorted, each with its count.
     const catCount={}; for(const p of d.points){const c=d.cats[p[4]]; catCount[c]=(catCount[c]||0)+1;}
     const sel=document.getElementById("cat-filter");
     d.cats.slice().sort().forEach(c=>{
       const o=document.createElement("option");
-      o.value=c; o.textContent=`${c} (${catCount[c].toLocaleString()})`;
+      o.value=c; o.textContent=`${c} (${fmt(catCount[c])})`;
       sel.appendChild(o);
     });
     buildLegend();
     const coverage=(d.n_total && d.n_shown<d.n_total)
-      ? `${d.n_shown.toLocaleString()} of ${d.n_total.toLocaleString()} records (stratified sample)`
-      : `${d.n_shown.toLocaleString()} records`;
+      ? `${fmt(d.n_shown)} of ${fmt(d.n_total)} records (stratified sample)`
+      : `${fmt(d.n_shown)} records`;
     const ml=METHOD_LABEL[d.method]||d.method.toUpperCase();
     document.getElementById("hint").textContent=
       `${coverage} · ${ml} projection`
@@ -97,7 +128,7 @@
     const leg=document.getElementById("legend"); leg.innerHTML="";
     DATA.axes.forEach(ax=>{
       const b=document.createElement("button");
-      b.innerHTML=`<span class="sw" style="background:${COLORS[ax]||"#888"}"></span>${ax} <span class="cnt">${axisCount(ax).toLocaleString()}</span>`;
+      b.innerHTML=`<span class="sw" style="background:${COLORS[ax]||"#888"}"></span>${ax} <span class="cnt">${fmt(axisCount(ax))}</span>`;
       b.addEventListener("click",()=>{
         if(activeAxes.has(ax)) activeAxes.delete(ax); else activeAxes.add(ax);
         b.classList.toggle("off",!activeAxes.has(ax));
@@ -107,7 +138,7 @@
     });
   }
 
-  // Recompute the visible mask, redraw, refresh the count.
+  // Recompute the visible mask, redraw, refresh the counts.
   function update(){
     const pts=DATA.points; let vis=0;
     for(let i=0;i<pts.length;i++){
@@ -117,7 +148,7 @@
         && (!query || p[3].toLowerCase().includes(query));
       VF[i]=ok?1:0; if(ok) vis++;
     }
-    document.getElementById("count").innerHTML=`<b>${vis.toLocaleString()}</b> of ${pts.length.toLocaleString()} points`;
+    document.getElementById("s-visible").textContent=fmt(vis);
     draw();
   }
 
