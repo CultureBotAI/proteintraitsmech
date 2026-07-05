@@ -338,7 +338,8 @@ function computeFacetCounts() {
     if (qs && !(
       (r.id && r.id.toLowerCase().includes(qs)) ||
       (r.label && r.label.toLowerCase().includes(qs)) ||
-      (r.def && r.def.toLowerCase().includes(qs)))) continue;
+      (r.def && r.def.toLowerCase().includes(qs)) ||
+      (r.chem && r.chem.some(n => n.toLowerCase().includes(qs))))) continue;
     for (const k of groups) {
       let ok = true;
       for (const k2 of groups) {

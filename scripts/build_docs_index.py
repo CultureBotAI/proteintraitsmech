@@ -196,6 +196,23 @@ def mx_predicate(mapping_source: str) -> str:
 # bidirectionally so both ends of each edge show the equivalence.
 EQUIV: dict[str, list] = {}
 
+# ChEBI id → display name, from docs/data/chebi.json (built by the chemistry
+# step). Used to put chemical NAMES on the record so search/browse can find a
+# trait by the molecule it acts on (not just its label/definition).
+CHEBI_NAMES: dict[str, str] = {}
+
+
+def load_chebi_names() -> None:
+    p = OUT_DIR / "chebi.json"
+    if not p.is_file():
+        return
+    try:
+        for cid, meta in json.loads(p.read_text(encoding="utf-8")).items():
+            if isinstance(meta, dict) and meta.get("name"):
+                CHEBI_NAMES[cid] = meta["name"]
+    except Exception:  # noqa: BLE001
+        pass
+
 
 def load_equivalence() -> None:
     eq_dir = REPO_ROOT / "data" / "equivalence"
@@ -307,6 +324,12 @@ def load_record(path: Path) -> dict[str, Any] | None:
         # resolve from docs/data/chebi.json in the browser.
         "cp": [[c.get("chebi"), c.get("role")]
                for c in (data.get("chemical_participants") or []) if c.get("chebi")],
+        # Chemical NAMES (resolved from chebi.json) kept on the record — in the
+        # main shard, not detail-only — so a trait is findable by the molecule it
+        # acts on. Deduped; empty for records with no chemistry.
+        "chem": list(dict.fromkeys(
+            n for c in (data.get("chemical_participants") or [])
+            if (n := CHEBI_NAMES.get(c.get("chebi") or "")))),
         "ex": [_project_example(e) for e in (data.get("canonical_examples") or [])],
         # Cross-source equivalence [object, predicate, relation_source] from the
         # overlay (not stored on the YAML). Empty for most records.
@@ -355,6 +378,8 @@ def split_detail(records: list[dict]) -> list[tuple[dict, dict]]:
             v = rec.pop(k, None)
             if v not in (None, [], "", 0):
                 detail[k] = v
+        if not rec.get("chem"):          # keep chem in the main shard, but only when non-empty
+            rec.pop("chem", None)
         pairs.append((rec, detail))
     return pairs
 
@@ -436,6 +461,7 @@ def write_shards(records: list[dict]) -> list[dict]:
 def main() -> int:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     load_equivalence()
+    load_chebi_names()
     records: list[dict] = []
     skipped = 0
     for path in sorted(TRAITS_DIR.rglob("*.yaml")):
