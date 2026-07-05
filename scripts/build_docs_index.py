@@ -407,6 +407,13 @@ def load_record(path: Path) -> dict[str, Any] | None:
                if isinstance(s, dict)],
         "geo": [g.get("structure_ref") for g in (data.get("structural_geometry_representations") or [])
                 if isinstance(g, dict) and g.get("structure_ref")],
+        # Literature citations as [reference, notes] pairs (DOI:/PMID:/CURIE).
+        "ev": [[e.get("reference"), e.get("notes")]
+               for e in (data.get("evidence") or []) if isinstance(e, dict) and e.get("reference")],
+        # EVOLUTION scope (taxon + prevalence band + method) — the axis's
+        # comparable representation.
+        "escope": (data.get("evolutionary_scope")
+                   if isinstance(data.get("evolutionary_scope"), dict) else None),
         "path": rel,
     }
 
@@ -425,7 +432,7 @@ MAX_SHARD_RECORDS = 25000
 # upfront payload small (~200k records × everything = ~108 MB → ~21 MB lean).
 # `def` is special-cased: the list keeps a short snippet (card preview +
 # search); the full text goes to the sidecar.
-DETAIL_ONLY = ("path", "pt", "xr", "mx", "cp", "ex", "eq", "ss", "geo", "rs", "pat")
+DETAIL_ONLY = ("path", "pt", "xr", "mx", "cp", "ex", "eq", "ss", "geo", "rs", "pat", "ev", "escope")
 LIST_DEF = 140
 
 

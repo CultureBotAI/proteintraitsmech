@@ -139,8 +139,9 @@ _CTRL_RE = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]")
 
 def _strip_control(text: str) -> str:
     """Remove ASCII control characters — a couple of M-CSA descriptions
-    have stray `\\x01` bytes that YAML refuses to load."""
-    return _CTRL_RE.sub("", text or "")
+    have stray `\\x01` bytes that YAML refuses to load — and HTML tags
+    (`<i>`, `<sub>`, `<p>`…) that M-CSA descriptions carry."""
+    return re.sub(r"</?[a-zA-Z][^>]*>", "", _CTRL_RE.sub("", text or ""))
 
 
 def yaml_folded(indent: str, text: str) -> list[str]:

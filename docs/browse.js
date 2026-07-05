@@ -428,7 +428,9 @@ function filterRecords() {
     out = out.filter(r =>
       (r.id && r.id.toLowerCase().includes(qs)) ||
       (r.label && r.label.toLowerCase().includes(qs)) ||
-      (r.def && r.def.toLowerCase().includes(qs))
+      (r.def && r.def.toLowerCase().includes(qs)) ||
+      (r.chem && r.chem.some(n => n.toLowerCase().includes(qs))) ||
+      (r.chemx && r.chemx.some(n => n.toLowerCase().includes(qs)))
     );
   }
   FILTERED_CACHE = out;
@@ -639,6 +641,13 @@ async function renderDetail(r) {
         ${residueRow}
         ${parentRow}
         ${examplesRow}
+        ${r.escope ? row("Evolutionary scope", `<dd>${
+          [r.escope.taxon_scope && escapeHTML(r.escope.taxon_scope) + (r.escope.taxon_rank ? ` (${escapeHTML(r.escope.taxon_rank)})` : ""),
+           (r.escope.min_prevalence != null || r.escope.max_prevalence != null) && `prevalence ${r.escope.min_prevalence ?? "?"}–${r.escope.max_prevalence ?? "?"}`,
+           r.escope.definition_method && escapeHTML(r.escope.definition_method),
+           r.escope.conservation_metric && escapeHTML(r.escope.conservation_metric),
+           r.escope.orthology_basis && escapeHTML(r.escope.orthology_basis)].filter(Boolean).join(" · ") || "—"
+        }</dd>`, true) : ""}
         ${uniprotMembersUrl(r.id)
           ? row("UniProt members",
                 `<dd><a href="${escapeAttr(uniprotMembersUrl(r.id))}" target="_blank" rel="noopener">all proteins carrying ${escapeHTML(r.id)} ↗</a></dd>`, true)
@@ -649,6 +658,9 @@ async function renderDetail(r) {
         ${relatedHtml ? row("Related traits (semantic)", `<dd>${relatedHtml}</dd>`, true) : ""}
         ${(r.cp || []).length ? row("Chemistry", `<dd id="chem-list">${chemistryHtml(r)}</dd>`, true) : ""}
         ${(r.chemx || []).length ? row("Chemistry (via mappings)", `<dd>${r.chemx.map(escapeHTML).join(", ")}</dd>`, true) : ""}
+        ${(r.ev || []).length ? row(`Evidence (${r.ev.length})`, `<dd>${
+          r.ev.map(e => `${curieLink(e[0])}${e[1] ? ` <span class="map-src">${escapeHTML(e[1])}</span>` : ""}`).join("<br>")
+        }</dd>`, true) : ""}
         ${row("Detection methods", `<dd id="method-list">${METHODS ? (methodsHtml(r) || "<em>—</em>") : "<em>loading…</em>"}</dd>`, true)}
         ${row("Source file", `<dd><a href="${escapeAttr(rawYamlLink)}" target="_blank" rel="noopener"><code>${escapeHTML(r.path)}</code></a></dd>`, true)}
       </dl>

@@ -121,8 +121,9 @@ def clean_abstract(el) -> str:
     if el is None:
         return ""
     text = " ".join("".join(el.itertext()).split())
-    # Stripped <cite>/<dbxref> tags leave empty "[ ]" / "[ , ]" stubs — drop them.
-    text = re.sub(r"\s*\[\s*(?:,\s*)*\]", "", text)
+    # Stripped <cite>/<dbxref> tags leave empty "[ ]" / "[ , ]" or "( )" / "( , )"
+    # stubs — drop them.
+    text = re.sub(r"\s*[\[(]\s*(?:,\s*)*[\])]", "", text)
     text = " ".join(text.split())
     if len(text) > DEF_CAP:
         text = text[: DEF_CAP - 1].rstrip() + "…"
