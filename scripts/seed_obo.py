@@ -16,7 +16,8 @@ Sources (`just fetch-obo` mirrors each into `data/raw/<FILE>.obo`):
 
   psimi  PSI-MI (HUPO-PSI molecular-interaction CV, CC-BY-4.0)
          → only the `interaction type` branch (MI:0190), mapped to
-           FUNCTION / FUNC_INTERACTION_PARTNER. The bulk of PSI-MI is
+           FUNCTION / FUNC_INTERACTION_TYPE (the *kind* of interaction, not a
+           partner). The bulk of PSI-MI is
            experimental *methods* (detection, participant identification)
            which are not protein traits and are skipped.
 
@@ -102,8 +103,8 @@ SOURCES: dict[str, Source] = {
         release_prefix="PSI-MI",
         license="CC-BY-4.0",
         routes=(
-            Route("MI:0190", "FUNCTION", "FUNC_INTERACTION_PARTNER",
-                  "function/interaction_partner/psi_mi"),
+            Route("MI:0190", "FUNCTION", "FUNC_INTERACTION_TYPE",
+                  "function/interaction_type/psi_mi"),
         ),
     ),
     "pato": Source(
