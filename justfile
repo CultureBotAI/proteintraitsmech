@@ -57,6 +57,7 @@ fetch-prosite:
     mkdir -p data/raw
     curl -sS --fail --max-time 300 -o data/raw/prosite.dat  ftp://ftp.expasy.org/databases/prosite/prosite.dat
     curl -sS --fail --max-time 120 -o data/raw/prorule.dat  ftp://ftp.expasy.org/databases/prosite/prorule.dat
+    curl -sS --fail --max-time 300 -o data/raw/prosite.doc  ftp://ftp.expasy.org/databases/prosite/prosite.doc
     curl -sS --fail --max-time  30 -o data/raw/ps_reldt.txt ftp://ftp.expasy.org/databases/prosite/ps_reldt.txt
     @cat data/raw/ps_reldt.txt
 
