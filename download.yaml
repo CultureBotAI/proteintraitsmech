@@ -266,6 +266,99 @@
     them. "conserved at taxon rank (id)" = a conserved/clade-specific record
     with an NCBITaxon xref.
 
+# ============================== DOCUMENTATION / METADATA ENRICHMENT ==========
+# Per-source documentation (prose) + entry-metadata files that enrich existing
+# seeded records' definitions / labels / citations (the prosite.doc analog).
+# Identified 2026-07-05 (research/source-documentation-*.md); not yet fetched.
+# `role: documentation|metadata`. Many enrichments need NO new download — the
+# prose/PMIDs are already in files we fetch but under-parse (InterPro
+# <publications>; NCBIfam pmids col; COG cog-20.def.tab col 6; CARD/ARO def
+# dbxrefs; EC enzyme.dat CC lines; DisProt/IDEAL/M-CSA/PSI-MOD JSON/XML/obo
+# fields; Reactome ContentService summation+literatureReference). The blocks
+# below are the genuinely-new files worth adding.
+-
+  url: https://scop.berkeley.edu/downloads/parse/dir.com.scope.2.08-stable.txt
+  local_name: scope/dir.com.scope.2.08-stable.txt
+  name: SCOPe curator comments (per-node prose)
+  source: scop2
+  license: CC-BY 4.0
+  status: candidate
+  role: documentation
+  note: >-
+    Highest-value new prose fetch — per-node curator comments fix the boilerplate
+    "SCOPe <level> node" definitions (the one classification source that has real
+    prose). We currently fetch only dir.des / dir.hie.
+-
+  url: https://ftp.ebi.ac.uk/pub/databases/Pfam/current_release/pfamA.txt.gz
+  local_name: pfam/pfamA.txt.gz
+  name: Pfam per-family comment + references
+  source: pfam
+  license: public domain (Pfam / InterPro)
+  status: candidate
+  role: documentation
+  note: >-
+    Per-family long comment + literature refs + thresholds (13 MB; the #=GF CC
+    prose without the 185 MB Pfam-A.seed.gz). Secondary to the InterPro-abstract
+    route already applied (enrich_pfam_definitions.py) — use for families with no
+    InterPro entry + per-family PMIDs.
+-
+  url: http://download.cathdb.info/cath/releases/latest-release/cath-classification-data/cath-domain-description-file.txt
+  local_name: cath/cath-domain-description-file.txt
+  name: CATH domain description file (CDDF)
+  source: cath
+  license: CC-BY 4.0
+  status: candidate
+  role: metadata
+  note: >-
+    Backfills names for the many unnamed ("-") CATH homologous-superfamily nodes
+    + secondary-structure content. Label completion, no citations (97 MB).
+-
+  url: https://ftp.ncbi.nlm.nih.gov/pub/mmdb/cdd/cddannot_generic.dat.gz
+  local_name: cdd/cddannot_generic.dat.gz
+  name: CDD conserved-feature annotations
+  source: cdd
+  license: US Government public domain
+  status: candidate
+  role: metadata
+  note: >-
+    Curated conserved-feature / functional-site annotations (441 KB) that could
+    feed STRUCT_ACTIVE_SITE / STRUCT_BINDING_SITE — feature payload, not prose.
+-
+  url: https://ftp.expasy.org/databases/rhea/rdf/rhea.rdf.gz
+  local_name: rhea/rhea.rdf.gz
+  name: Rhea RDF (per-reaction PubMed citations)
+  source: rhea
+  license: CC-BY 4.0
+  status: candidate
+  role: metadata
+  note: >-
+    The only carrier of per-reaction PubMed IDs (rh:citation, ~15.5k PMIDs) — the
+    biggest single evidence-slot win (18k FUNC_ENZYMATIC_ACTIVITY records). TSV
+    exports carry none.
+-
+  url: http://purl.obolibrary.org/obo/idpo.obo
+  local_name: idpo.obo
+  name: IDPO (Intrinsically Disordered Proteins Ontology)
+  source: idpo
+  license: CC-BY 4.0
+  status: candidate
+  role: documentation
+  note: >-
+    Authoritative disorder-class definitions + hierarchy for seed_disprot.py and
+    seed_ideal.py, which currently synthesize IDPO defs and fabricate parent
+    group-nodes. Only genuinely-new download from the feature-source review.
+-
+  url: https://ftp.expasy.org/databases/hamap/hamap_rules.dat
+  local_name: hamap/hamap_rules.dat
+  name: HAMAP family rules (prose + references)
+  source: hamap
+  license: CC BY-NC-ND 4.0 (SIB) — FLAGGED
+  status: candidate
+  role: documentation
+  note: >-
+    Real per-family prose + refs, but NoDerivatives (same caveat as PROSITE) —
+    prefer the public-domain InterPro-abstract route unless a family is HAMAP-only.
+
 # ========================================================= CANDIDATE =========
 
 -
