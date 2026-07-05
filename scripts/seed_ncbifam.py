@@ -75,17 +75,22 @@ def route(family_type: str):
     return "SEQUENCE", "SEQ_DOMAIN", "sequence/domain/ncbifam"
 
 
-def build_yaml(acc, label, definition, axis, category, ecs, gos, gene, family_type):
+def build_yaml(acc, label, definition, axis, category, ecs, gos, gene, family_type,
+               model=""):
     lines = [f"identifier: NCBIfam:{acc}", f"label: {yaml_escape(label)}"]
     f = folded(definition)
     lines += [f"definition: {f[0]}", *f[1:]]
     lines += ["definition_source: NCBIfam (NCBI PGAP HMM library)",
               f"trait_axis: {axis}", f"trait_category: {category}",
               "term_kind: CLASS", "mapping_status: SEEDED"]
-    if gene:
-        lines += ["synonyms:",
-                  f"  - synonym_text: {yaml_escape(gene)}",
-                  "    synonym_type: EXACT_SYNONYM", "    source: NCBIfam"]
+    # synonyms: gene symbol + the HMM model name (kept discoverable now that the
+    # readable product_name is the label), deduped against the label.
+    syns = [s for s in (gene, model) if s and s != label]
+    if syns:
+        lines.append("synonyms:")
+        for s in dict.fromkeys(syns):
+            lines += [f"  - synonym_text: {yaml_escape(s)}",
+                      "    synonym_type: EXACT_SYNONYM", "    source: NCBIfam"]
     # EC + GO are NCBIfam-curated assignments on the family → source-direct xrefs.
     xrefs = [f"EC:{e}" for e in ecs] + list(gos)
     if xrefs:
@@ -117,16 +122,19 @@ def main() -> int:
         acc = g("ncbi_accession").split(".")[0]
         if not acc:
             continue
-        label = g("label") or g("product_name")
+        model = g("label")
+        product = g("product_name")
+        # readable product_name is the label; the terse HMM model name (e.g.
+        # trim_DfrA1_rpt) is demoted to a synonym.
+        label = product or model
         if not label:
             continue
         family_type = g("family_type")
-        product = g("product_name")
         gene = g("gene_symbol")
         ecs = [e.strip() for e in re.split(r"[;, ]+", g("ec_numbers")) if e.strip()]
         gos = [x.strip() for x in re.split(r"[;, ]+", g("go_terms")) if x.strip().startswith("GO:")]
         axis, category, subdir = route(family_type)
-        definition = (f"{product or label} — an NCBIfam protein family "
+        definition = (f"{product or model} — an NCBIfam protein family "
                       f"({acc}, {family_type or 'family'}); members share this "
                       f"conserved family signature.")
         total += 1
@@ -137,7 +145,7 @@ def main() -> int:
         if args.apply:
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(build_yaml(acc, label, definition, axis, category,
-                                       ecs, gos, gene, family_type),
+                                       ecs, gos, gene, family_type, model),
                             encoding="utf-8")
             written += 1
 

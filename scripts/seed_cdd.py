@@ -69,10 +69,23 @@ AXIS = {
 }
 
 
+def clean_cdd_desc(desc: str) -> str:
+    """The cddid description is a real functional title; strip CDD status cruft
+    ('; Reviewed' / '; Validated' / '; Provisional') and the 'N/A' placeholder."""
+    d = " ".join((desc or "").split())
+    d = re.sub(r"\s*;\s*(Reviewed|Validated|Provisional)\s*\.?$", "", d, flags=re.I)
+    d = d.rstrip(" .")
+    return "" if d.upper() in ("N/A", "NA", "") else d
+
+
 def build_yaml(acc, short, desc, category, parent):
-    definition = (f"{desc or short} — an NCBI CDD {KIND[category]} ({acc}); "
-                  f"members share this curated model.")
-    label = desc or short
+    # label = the canonical CDD short name (readable domain/gene name); definition
+    # = the real functional description. The old seeding put the description in
+    # `label` and buried the short name in synonyms (record-sample-review-1 S5).
+    desc_c = clean_cdd_desc(desc)
+    opaque = (not short) or short == acc            # e.g. short 'PRK00009' == acc
+    label = (desc_c or acc) if opaque else short
+    definition = desc_c or f"NCBI CDD {KIND[category]} ({acc})."
     lines = [f"identifier: CDD:{acc}", f"label: {yaml_escape(label)}"]
     f = folded(definition)
     lines += [f"definition: {f[0]}", *f[1:]]
@@ -81,7 +94,7 @@ def build_yaml(acc, short, desc, category, parent):
               "mapping_status: SEEDED"]
     if parent:
         lines += ["parent_traits:", f"  - CDD:{parent}"]
-    if short and short != label:
+    if short and short != label and short != acc:
         lines += ["synonyms:",
                   f"  - synonym_text: {yaml_escape(short)}",
                   "    synonym_type: EXACT_SYNONYM", "    source: CDD"]
