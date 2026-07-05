@@ -70,13 +70,13 @@ def load_corpus() -> tuple[list[str], list[str]]:
         xr = d.get("xr") or []
         cat = human_cat(r.get("cat", ""))
         axis = (r.get("axis") or "").replace("_", " ").lower()
-        parts = [r.get("label") or rid]
+        parts = [str(r.get("label") or rid)]     # a numeric label parses to int in the shard
         if cat:
             parts.append(f"{cat} ({axis} trait)")
         if definition:
-            parts.append(definition)
+            parts.append(str(definition))
         if xr:
-            parts.append("groundings: " + ", ".join(xr[:8]))
+            parts.append("groundings: " + ", ".join(str(x) for x in xr[:8]))
         ids.append(rid)
         docs.append(". ".join(parts))
     return ids, docs
