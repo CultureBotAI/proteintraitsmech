@@ -641,6 +641,9 @@ async function renderDetail(r) {
         ${residueRow}
         ${parentRow}
         ${examplesRow}
+        ${(r.defs || []).length ? row("Definitions", `<dd>${
+          r.defs.map(d => `<b>${escapeHTML((d[0] || "").toLowerCase())}</b>: ${escapeHTML(d[1] || "")}${d[2] ? ` <span class="map-src">${escapeHTML(d[2])}</span>` : ""}`).join("<br>")
+        }</dd>`, true) : ""}
         ${r.escope ? row("Evolutionary scope", `<dd>${
           [r.escope.taxon_scope && escapeHTML(r.escope.taxon_scope) + (r.escope.taxon_rank ? ` (${escapeHTML(r.escope.taxon_rank)})` : ""),
            (r.escope.min_prevalence != null || r.escope.max_prevalence != null) && `prevalence ${r.escope.min_prevalence ?? "?"}–${r.escope.max_prevalence ?? "?"}`,

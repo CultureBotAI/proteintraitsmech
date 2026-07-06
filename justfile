@@ -343,6 +343,8 @@ fetch-scope-parse:
     mkdir -p data/raw/scope
     curl -sSLf --max-time 120 -o data/raw/scope/dir.des.scope.2.08-stable.txt https://scop.berkeley.edu/downloads/parse/dir.des.scope.2.08-stable.txt
     curl -sSLf --max-time 120 -o data/raw/scope/dir.hie.scope.2.08-stable.txt https://scop.berkeley.edu/downloads/parse/dir.hie.scope.2.08-stable.txt
+    # dir.com carries the fold-level structural descriptions (enrich_scop_structural_defs.py)
+    curl -sSLf --max-time 120 -o data/raw/scope/dir.com.scope.2.08-stable.txt https://scop.berkeley.edu/downloads/parse/dir.com.scope.2.08-stable.txt
     @ls -la data/raw/scope/
 
 # Download InterPro entries + hierarchy (public domain). Only the small
