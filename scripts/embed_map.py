@@ -57,12 +57,18 @@ def main() -> int:
     ap.add_argument("--neighbors", type=int, default=15, help="UMAP n_neighbors")
     ap.add_argument("--min-dist", type=float, default=0.1)
     ap.add_argument("--seed", type=int, default=42)
+    ap.add_argument("--emb-dir", default=None,
+                    help="embeddings dir (default data/embeddings; e.g. data/embeddings/definition)")
+    ap.add_argument("--out", default=None,
+                    help="output filename under docs/data/ (default corpus_map.json)")
     args = ap.parse_args()
 
     import numpy as np
 
-    ids = json.loads((EMB / "ids.json").read_text())
-    vecs = np.load(EMB / "vectors.f16.npy").astype(np.float32)
+    emb = REPO_ROOT / args.emb_dir if args.emb_dir else EMB
+    out_path = SHARDS / (args.out or "corpus_map.json")
+    ids = json.loads((emb / "ids.json").read_text())
+    vecs = np.load(emb / "vectors.f16.npy").astype(np.float32)
     axis_of, cat_of = {}, {}
     for f in glob.glob(str(SHARDS / "records.*.json")):
         for r in json.load(open(f)):
@@ -120,9 +126,9 @@ def main() -> int:
            "n_shown": len(points), "points": points}
     if explained:
         out["explained"] = [round(e, 4) for e in explained]
-    OUT.write_text(json.dumps(out, separators=(",", ":")))
-    print(f"wrote {len(points):,} points → {OUT.relative_to(REPO_ROOT)} "
-          f"({OUT.stat().st_size/1e6:.1f} MB)"
+    out_path.write_text(json.dumps(out, separators=(",", ":")))
+    print(f"wrote {len(points):,} points → {out_path.relative_to(REPO_ROOT)} "
+          f"({out_path.stat().st_size/1e6:.1f} MB)"
           + (f"; PC1/PC2 variance {explained}" if explained else ""))
     return 0
 

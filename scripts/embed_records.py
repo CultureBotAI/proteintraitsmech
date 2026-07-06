@@ -48,8 +48,14 @@ def human_cat(cat: str) -> str:
     return " ".join(parts).lower()
 
 
-def load_corpus() -> tuple[list[str], list[str]]:
-    """Return (ids, documents) in a stable order from the shards + sidecars."""
+def load_corpus(mode: str = "full") -> tuple[list[str], list[str]]:
+    """Return (ids, documents) in a stable order from the shards + sidecars.
+
+    mode="full": label · category · definition · layered-definition texts ·
+      sequence_pattern · a few semantic groundings (see the embedding-field-audit
+      skill for the include/exclude rationale).
+    mode="definition": ONLY the definition + layered-definition texts — powers the
+      definition-only corpus map."""
     # id/label/cat/axis/src + detail-bucket pointer from the list shards
     recs = []
     for f in sorted(glob.glob(str(SHARDS / "records.*.json"))):
@@ -66,19 +72,31 @@ def load_corpus() -> tuple[list[str], list[str]]:
     for r in sorted(recs, key=lambda r: r["id"]):
         rid = r["id"]
         d = detail.get(rid, {})
-        definition = d.get("def") or r.get("def") or ""
-        xr = d.get("xr") or []
-        cat = human_cat(r.get("cat", ""))
-        axis = (r.get("axis") or "").replace("_", " ").lower()
-        parts = [str(r.get("label") or rid)]     # a numeric label parses to int in the shard
-        if cat:
-            parts.append(f"{cat} ({axis} trait)")
-        if definition:
-            parts.append(str(definition))
-        if xr:
-            parts.append("groundings: " + ", ".join(str(x) for x in xr[:8]))
+        definition = str(d.get("def") or r.get("def") or "")
+        # layered definitions [[kind, text, source], …] → their texts, kind-prefixed
+        layered = [f"{(x[0] or '').lower()}: {x[1]}".strip(": ")
+                   for x in (d.get("defs") or []) if x and len(x) > 1 and x[1]]
+        if mode == "definition":
+            body = [definition] + layered
+            doc = ". ".join(p for p in body if p) or str(r.get("label") or rid)
+        else:  # full
+            xr = d.get("xr") or []
+            pat = d.get("pat")
+            cat = human_cat(r.get("cat", ""))
+            axis = (r.get("axis") or "").replace("_", " ").lower()
+            parts = [str(r.get("label") or rid)]  # numeric label parses to int in the shard
+            if cat:
+                parts.append(f"{cat} ({axis} trait)")
+            if definition:
+                parts.append(definition)
+            parts.extend(layered)                 # structural / mechanistic / general layers
+            if pat:                               # sequence_pattern (regex/motif) is class-defining
+                parts.append(f"pattern: {pat}")
+            if xr:
+                parts.append("groundings: " + ", ".join(str(x) for x in xr[:8]))
+            doc = ". ".join(parts)
         ids.append(rid)
-        docs.append(". ".join(parts))
+        docs.append(doc)
     return ids, docs
 
 
@@ -89,7 +107,11 @@ def main() -> int:
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--device", default=None, help="mps|cpu|cuda (auto if unset)")
     ap.add_argument("--fresh", action="store_true", help="ignore any checkpoint")
+    ap.add_argument("--text-mode", choices=["full", "definition"], default="full",
+                    help="full = label+category+definition+layers+pattern+groundings; "
+                         "definition = only the definition + layered-definition texts")
     args = ap.parse_args()
+    out = OUT if args.text_mode == "full" else OUT / args.text_mode
 
     import numpy as np
     import torch
@@ -97,15 +119,16 @@ def main() -> int:
 
     device = args.device or ("mps" if torch.backends.mps.is_available()
                              else "cuda" if torch.cuda.is_available() else "cpu")
-    ids, docs = load_corpus()
+    ids, docs = load_corpus(args.text_mode)
     if args.limit:
         ids, docs = ids[:args.limit], docs[:args.limit]
-    print(f"{len(ids):,} records → embedding with {args.model} on {device}")
+    print(f"{len(ids):,} records → embedding ({args.text_mode}) with {args.model} "
+          f"on {device} → {out.relative_to(REPO_ROOT)}")
 
     model = SentenceTransformer(args.model, device=device)
     dim = model.get_sentence_embedding_dimension()
-    OUT.mkdir(parents=True, exist_ok=True)
-    vpath = OUT / "vectors.f16.npy"
+    out.mkdir(parents=True, exist_ok=True)
+    vpath = out / "vectors.f16.npy"
     import time
 
     # Resume: docs are in a stable id-sorted order, so a partial vectors file
@@ -136,13 +159,13 @@ def main() -> int:
         np.save(vpath, np.vstack(parts))   # checkpoint every chunk (resumable)
     vecs = np.vstack(parts)
 
-    OUT.mkdir(parents=True, exist_ok=True)
-    np.save(OUT / "vectors.f16.npy", vecs)
-    (OUT / "ids.json").write_text(json.dumps(ids))
-    (OUT / "meta.json").write_text(json.dumps(
+    out.mkdir(parents=True, exist_ok=True)
+    np.save(out / "vectors.f16.npy", vecs)
+    (out / "ids.json").write_text(json.dumps(ids))
+    (out / "meta.json").write_text(json.dumps(
         {"model": args.model, "dim": int(vecs.shape[1]), "count": len(ids),
-         "normalized": True, "dtype": "float16"}, indent=2))
-    print(f"wrote {vecs.shape} → {(OUT / 'vectors.f16.npy').relative_to(REPO_ROOT)} "
+         "normalized": True, "dtype": "float16", "text_mode": args.text_mode}, indent=2))
+    print(f"wrote {vecs.shape} → {(out / 'vectors.f16.npy').relative_to(REPO_ROOT)} "
           f"({vecs.nbytes/1e6:.0f} MB)")
     return 0
 
