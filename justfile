@@ -268,6 +268,14 @@ seed-repeatsdb *args:
 fetch-repeatsdb-annotations:
     python3 scripts/fetch_repeatsdb_annotations.py
 
+# CAZy family classification + resource content (scrapes ~537 per-family cazy.org
+# pages: clan, mechanism, fold, activities/EC). © CAZy — academic use, FLAGGED.
+fetch-cazy-families:
+    python3 scripts/fetch_cazy_families.py
+
+seed-cazy *args:
+    python3 scripts/seed_cazy.py {{args}}
+
 fetch-ncbifam:
     mkdir -p data/raw/ncbifam
     curl -sSLf --max-time 120 -o data/raw/ncbifam/hmm_PGAP.tsv https://ftp.ncbi.nlm.nih.gov/hmm/current/hmm_PGAP.tsv

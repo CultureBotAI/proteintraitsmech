@@ -436,13 +436,24 @@
   status: candidate
   trait_categories: [STRUCT_METAL_SITE]
 -
-  url: https://bcb.unl.edu/dbCAN_seq/download/
-  name: CAZy / dbCAN-seq (carbohydrate-active enzymes)
+  url: https://www.cazy.org/
+  name: CAZy (Carbohydrate-Active enZymes) — family classification
   source: cazy
-  license: dbCAN-seq CC-BY (non-commercial re-use — FLAGGED)
-  status: candidate
-  hierarchy: true
-  trait_categories: [FUNC_ENZYMATIC_ACTIVITY]
+  # ⚠ FLAGGED: CAZy is © CNRS / Aix-Marseille Université / INRAE (AFMB), academic
+  # use, NOT openly licensed. The corpus is otherwise CC0-1.0, so every CAZy
+  # record carries this license string and is excluded from the CC0 grant.
+  license: CAZy (© CNRS - Aix-Marseille Université - INRAE, AFMB) — academic use, not openly licensed (FLAGGED)
+  status: seeded
+  hierarchy: true (class → clan → family)
+  trait_categories: [SEQ_FAMILY]
+  seeder: seed_cazy.py
+  note: >-
+    537 families (GH/GT/PL/CE/AA/CBM) + 20 clans + 6 class nodes as SEQ_FAMILY,
+    scraped from the per-family cazy.org pages (clan, mechanism, catalytic fold,
+    Activities-in-Family → EC as direct xrefs). InterPro (public domain) CAZy
+    cross-references are added as mapped_xrefs, and enrich_cazy_groundings.py
+    grounds existing InterPro/Pfam records to their CAZy families. Fetch via
+    `just fetch-cazy-families` (scrapes ~537 pages; no open bulk download exists).
 
 # --- ENIGMA trait-onto-map: generated traits from genome-annotation tools ---
 # Large catalogue of trait annotations parsed from DRAM, GTDB-Tk, GapMind,
