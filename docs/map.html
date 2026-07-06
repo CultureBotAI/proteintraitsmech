@@ -65,6 +65,12 @@
       <label>Search
         <input type="search" id="search" placeholder="identifier / CURIE…" autocomplete="off">
       </label>
+      <label>Embedding
+        <select id="emb-mode">
+          <option value="corpus_map.json">Full record</option>
+          <option value="corpus_map_definitions.json">Definition only</option>
+        </select>
+      </label>
     </div>
     <div class="legend" id="legend"></div>
     <div id="stage"><canvas id="cv" width="1120" height="660"></canvas><div id="tip"></div></div>
@@ -90,32 +96,44 @@
   const fmt=n=>n.toLocaleString();
   function px(p){return [PAD + p[0]*(W-2*PAD), PAD + (1-p[1])*(H-2*PAD)];}
 
-  fetch("data/corpus_map.json").then(r=>r.json()).then(d=>{
-    DATA=d; VF=new Uint8Array(d.points.length);
-    d.axes.forEach(a=>activeAxes.add(a));
-    document.getElementById("s-total").textContent=fmt(d.points.length);
-    // Category dropdown, sorted, each with its count.
-    const catCount={}; for(const p of d.points){const c=d.cats[p[4]]; catCount[c]=(catCount[c]||0)+1;}
-    const sel=document.getElementById("cat-filter");
-    d.cats.slice().sort().forEach(c=>{
-      const o=document.createElement("option");
-      o.value=c; o.textContent=`${c} (${fmt(catCount[c])})`;
-      sel.appendChild(o);
-    });
-    buildLegend();
-    const coverage=(d.n_total && d.n_shown<d.n_total)
-      ? `${fmt(d.n_shown)} of ${fmt(d.n_total)} records (stratified sample)`
-      : `${fmt(d.n_shown)} records`;
-    const ml=METHOD_LABEL[d.method]||(d.method||"").toUpperCase();
-    document.getElementById("hint").textContent=
-      `${coverage} · ${ml} projection`
-      + (d.explained ? ` (PC1 ${(d.explained[0]*100).toFixed(1)}%, PC2 ${(d.explained[1]*100).toFixed(1)}% variance)` : "")
-      + " · hover to identify, click to open · toggle axes in the legend.";
-    sel.addEventListener("change",e=>{catFilter=e.target.value; update();});
-    let t; document.getElementById("search").addEventListener("input",e=>{clearTimeout(t); t=setTimeout(()=>{query=e.target.value.trim().toLowerCase(); update();},120);});
-    update();
-    buildCsv();
-  }).catch(()=>{document.getElementById("hint").textContent="Corpus map not built yet (run `just embed-map`).";});
+  // Load (or reload) a corpus map file — "corpus_map.json" (full-record embedding)
+  // or "corpus_map_definitions.json" (definition-only embedding).
+  function loadMap(file){
+    document.getElementById("hint").textContent="Loading corpus map…";
+    fetch("data/"+file).then(r=>{if(!r.ok) throw 0; return r.json();}).then(d=>{
+      DATA=d; VF=new Uint8Array(d.points.length);
+      activeAxes.clear(); d.axes.forEach(a=>activeAxes.add(a));
+      catFilter=""; query=""; const srch=document.getElementById("search"); if(srch) srch.value="";
+      document.getElementById("s-total").textContent=fmt(d.points.length);
+      const catCount={}; for(const p of d.points){const c=d.cats[p[4]]; catCount[c]=(catCount[c]||0)+1;}
+      const sel=document.getElementById("cat-filter");
+      sel.innerHTML='<option value="">All categories</option>';
+      d.cats.slice().sort().forEach(c=>{
+        const o=document.createElement("option");
+        o.value=c; o.textContent=`${c} (${fmt(catCount[c])})`;
+        sel.appendChild(o);
+      });
+      buildLegend();
+      const coverage=(d.n_total && d.n_shown<d.n_total)
+        ? `${fmt(d.n_shown)} of ${fmt(d.n_total)} records (stratified sample)`
+        : `${fmt(d.n_shown)} records`;
+      const ml=METHOD_LABEL[d.method]||(d.method||"").toUpperCase();
+      const embLabel=file.includes("definition") ? " · definition-only embedding" : "";
+      document.getElementById("hint").textContent=
+        `${coverage} · ${ml} projection${embLabel}`
+        + (d.explained ? ` (PC1 ${(d.explained[0]*100).toFixed(1)}%, PC2 ${(d.explained[1]*100).toFixed(1)}% variance)` : "")
+        + " · hover to identify, click to open · toggle axes in the legend.";
+      update(); buildCsv();
+    }).catch(()=>{document.getElementById("hint").textContent=
+      file.includes("definition")
+        ? "Definition-only map not built yet (embed_records --text-mode definition → embed-map --emb-dir data/embeddings/definition --out corpus_map_definitions.json)."
+        : "Corpus map not built yet (run `just embed-map`).";});
+  }
+  // Wire the controls once; loadMap rebuilds the data each switch.
+  document.getElementById("cat-filter").addEventListener("change",e=>{catFilter=e.target.value; update();});
+  {let t; document.getElementById("search").addEventListener("input",e=>{clearTimeout(t); t=setTimeout(()=>{query=e.target.value.trim().toLowerCase(); update();},120);});}
+  document.getElementById("emb-mode").addEventListener("change",e=>loadMap(e.target.value));
+  loadMap("corpus_map.json");
 
   // Accessible data-table fallback for this dense canvas scatter: a CSV built from
   // the SAME points the plot renders (identifier, axis, category, x, y).
