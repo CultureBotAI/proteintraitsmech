@@ -181,6 +181,26 @@ SOURCES: dict[str, Source] = {
                   "function/enzymatic_activity/metpo"),  # coagulase activity
         ),
     ),
+    "go": Source(
+        key="go",
+        obo_file="go-basic.obo",
+        id_prefix="GO:",
+        release_prefix="GO",
+        license="CC-BY 4.0",
+        routes=(
+            # The three GO aspects → the FUNCTION axis. Every GO term is an is_a
+            # descendant of its namespace root, so these three routes cover all
+            # ~38k non-obsolete terms. MF lands in a single FUNC_MOLECULAR_FUNCTION
+            # bucket (finer FUNC_ENZYMATIC_ACTIVITY / BINDING / TRANSPORT cover
+            # sub-types from other sources); CC → localisation; BP → pathway.
+            Route("GO:0003674", "FUNCTION", "FUNC_MOLECULAR_FUNCTION",
+                  "function/molecular_function/go"),   # molecular_function
+            Route("GO:0005575", "FUNCTION", "FUNC_LOCALIZATION",
+                  "function/localization/go"),         # cellular_component
+            Route("GO:0008150", "FUNCTION", "FUNC_PATHWAY",
+                  "function/pathway/go"),               # biological_process
+        ),
+    ),
     "aro": Source(
         key="aro",
         obo_file="aro/aro.obo",
