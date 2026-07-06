@@ -95,7 +95,7 @@ def main() -> int:
         xy = umap.UMAP(n_neighbors=args.neighbors, min_dist=args.min_dist,
                        metric="cosine", random_state=args.seed,
                        verbose=True).fit_transform(sub)
-    else:  # pacmap (primary)
+    else:  # pacmap (primary) — parameter rationale: research/pacmap-parameters-rationale.md
         import pacmap
         reducer = pacmap.PaCMAP(n_components=2, n_neighbors=args.neighbors,
                                 random_state=args.seed, verbose=True)
