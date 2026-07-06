@@ -13,10 +13,13 @@ feature** — related-traits, Tier-5 candidates, the corpus map, the
 definition-only map — is bounded by *what text goes into that document*. This
 skill decides, field by field, what to include.
 
-The goal is a document that captures the trait **class's semantic identity** and
-maximally **distinguishes** it from other classes — nothing else. Every token
-spent on per-instance data, opaque identifiers, or boilerplate is a token stolen
-from the 512-token window and a small push toward the corpus mean.
+The goal is a document that captures the trait **class's semantic identity** plus
+the **shared identifiers/groundings that tie it to its source/classification
+neighbours** — and nothing else. Every token spent on **per-instance** data
+(example sequences, one protein's accession) or boilerplate is a token stolen
+from the 512-token window. Note the distinction: an *opaque but shared* token (a
+hierarchical id, a common xref) is signal — related traits co-occur on it; an
+*opaque and unique* token (an example's accession) is noise.
 
 ## The four tests (apply to every field)
 
@@ -28,10 +31,17 @@ A field's text earns a place in the embedding only if it passes **all four**:
 2. **Discriminative.** Does the value differ between classes? A field that is
    near-constant across the corpus (license, term_kind, mapping_status) adds no
    separating signal → **out**.
-3. **Meaningful to a language model.** Is it natural language, or a token whose
-   form carries meaning (a PROSITE regex, an EC/GO/ChEBI *name*)? An opaque
-   accession (`PDB:4ION`, `TED:AF-…-TED03`, `cd07064`) is noise to a text model
-   → **out** (keep it as a *field* for search, just not in the embedded string).
+3. **Meaningful OR shared.** A token earns its place if it is natural language,
+   OR a coded token whose *form carries meaning* (a PROSITE regex, an EC number's
+   dotted class), OR **an identifier/grounding shared between related class-level
+   entries**. This last case matters: a record's own hierarchical id
+   (`ECOD:F.1.1.1.3` / `…1.4` share the `F.1.1.1` prefix), its parent id (siblings
+   share it exactly), and its xrefs/mappings (related traits are grounded to the
+   same `GO:…`/`InterPro:…`) all cluster same-source / same-classification-subtree
+   traits **by co-occurrence**, even though each token is individually opaque —
+   that is genuine within-source structural similarity, not noise. What fails this
+   test is a token **unique to one instance** and therefore never shared (a
+   canonical_example's protein sequence or accession) — pure noise.
 4. **Fits the window.** Would it crowd out the definition? Long repeated blocks
    (full example lists, evidence snippets) → **out** or heavily capped.
 
@@ -48,13 +58,13 @@ A field's text earns a place in the embedding only if it passes **all four**:
 | `secondary_structure_representations` (descriptive parts) | **INCLUDE (text only)** | Fold/topology words are semantic; drop any bare ids. |
 | `chemical_participants` (ChEBI **names** / roles) | **INCLUDE names** | "ATP", "substrate", "cofactor" are semantic. Exclude the bare `CHEBI:` ids. |
 | `evolutionary_scope` (taxon_scope, method words) | **INCLUDE text** | Short descriptive tokens; skip numeric prevalence. |
-| `parent_traits` | **CONDITIONAL** | Embed the parent's *label* (resolve the CURIE), not the bare CURIE — the parent name adds context; the accession does not. |
-| `xrefs` / `mapped_xrefs` | **CONDITIONAL, capped** | A *few* **semantic** groundings help (`EC:3.2.1.21`, `GO:…`, `RHEA:…`, `CHEBI:…` where the prefix implies meaning). **Cap ~8** and **drop opaque structural accessions** (PDB, TED, ECOD, CATH-domain, `cd######`). Currently capped at 8 — also filter by prefix. |
-| `trait_relations` | **CONDITIONAL** | The `predicate` (member_of/part_of) is signal; the object CURIE is not — embed at most the predicate word. |
-| `structural_geometry_representations` | **EXCLUDE the id** | `structure_ref: PDB:4ION` is an opaque accession → out. Any *descriptive* field (fold text) → in. |
-| `canonical_examples[].sequence` and the whole example block | **EXCLUDE** | **Per-protein instances**: sequences (long, dominate the window, not class-level), `protein_id`, `protein_label`, `taxon_*`, `sequence_length`, `annotation_score`, `fetched_at`. This is the canonical thing to strip. |
+| `identifier` (the record's own CURIE) | **INCLUDE** | Opaque alone, but siblings share its hierarchical prefix (`ECOD:F.1.1.1.3`/`…1.4` → `F.1.1.1`), so it clusters same-source / same-subtree traits by co-occurrence. Still the row key in `ids.json` too. |
+| `parent_traits` | **INCLUDE (the CURIEs)** | All children of a group share the **exact** parent id — the strongest within-source clustering token. (The parent's label is a bonus if cheap to resolve, but the shared CURIE alone already works.) |
+| `xrefs` / `mapped_xrefs` | **INCLUDE, capped** | Related traits are grounded to the **same** `GO:…`/`EC:…`/`InterPro:…`/`PDB:…`; the shared token pulls them together regardless of whether the CURIE is "semantic". Do **not** prefix-filter — an audit showed 85% are structural accessions, and those are exactly the source/category-similarity signal. Cap (~16 total with the id + parents) for the window. |
+| `trait_relations` | **CONDITIONAL** | The `predicate` (member_of/part_of) is signal; the object CURIE overlaps parent_traits. |
+| `structural_geometry_representations` | **CONDITIONAL** | `structure_ref: PDB:4ION` is mostly per-record → low sharing; include only if members are shared across the group. Descriptive fold text → in. |
+| `canonical_examples[].sequence` and the whole example block | **EXCLUDE** | **Per-protein instances**: sequences (long, dominate the window) and `protein_id`/`taxon_*`/`sequence_length`/`fetched_at` are **unique to one protein — never shared between class-level traits**, so they add noise, not clustering. This is the canonical thing to strip. |
 | `evidence` (DOI/PMID + snippet) | **EXCLUDE** | Provenance, not identity. A verbatim snippet risks leaking example-specific wording that pulls unrelated records together. |
-| `identifier` | **EXCLUDE from text** | It is the row **key** (kept in `ids.json`), never embedded content. |
 | `definition_source`, `license`, `term_kind`, `mapping_status` | **EXCLUDE** | Metadata / near-constant → zero discriminative value. |
 
 ## Empirical audit (data-drive the borderline calls)
@@ -119,14 +129,18 @@ list it joins per record). To change what is embedded:
 1. **The definition (+ layered definitions) should dominate the vector.** Order
    `parts` so label + definition come first; keep everything else short so the
    512-token window is spent on meaning.
-2. **Spell out codes, drop accessions.** `human_cat` already turns
-   `SEQ_PTM_SITE` into "ptm site". Do the same for any coded field; never embed a
-   bare PDB/TED/ECOD/`cd######` id.
-3. **Cap and prefix-filter groundings.** Keep ≤8, and only semantic prefixes
-   (EC/GO/RHEA/CHEBI/PR/MOD). A long tail of structural accessions is pure noise.
-4. **Never embed `canonical_examples`.** Especially sequences — they are long,
-   per-instance, and pull unrelated classes together by incidental sequence
-   overlap.
+2. **Spell out coded *category* fields, but keep *identifiers*.** `human_cat`
+   turns `SEQ_PTM_SITE` into "ptm site" — do that for enum-like fields. But keep
+   the record's own id, its parents, and its xref CURIEs: their **shared** tokens
+   cluster same-source / same-subtree traits (a bare `ECOD:F.1.1.1.x` is signal
+   *because* siblings share the prefix).
+3. **Keep groundings; cap, don't prefix-filter.** Related traits share the same
+   `GO:…`/`InterPro:…`/`PDB:…` — that co-occurrence is the within-source
+   similarity signal (the 85%-"opaque" xrefs are the point, not noise). Cap the
+   id+parents+xrefs bundle (~16) so it doesn't crowd the definition.
+4. **Never embed `canonical_examples`.** Especially sequences — they are long and
+   **unique to one protein** (never shared between class-level traits), so they
+   add noise, not clustering.
 5. **Measure, then commit.** Run the audit snippet on any field you're unsure
    about; let coverage/uniqueness/opaque% decide the borderline cases.
 6. **Re-embedding is expensive — change fields in a batch**, then re-run the
