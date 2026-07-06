@@ -138,6 +138,16 @@ classes:
           or the source ontology CURIE).
         range: string
 
+      definitions:
+        description: >-
+          Layered definitions beyond the single `definition` string: a GENERAL
+          statement of what the trait is, plus a STRUCTURAL (elements + how they
+          are arranged) and/or MECHANISTIC (how it works) layer. `definition`
+          remains the general fallback for tools that read one string.
+        multivalued: true
+        inlined_as_list: true
+        range: TraitDefinition
+
       synonyms:
         description: >-
           Alternate labels (oboInOwl:hasExactSynonym, hasNarrowSynonym,
@@ -466,6 +476,28 @@ classes:
       source:
         description: Where the synonym came from (e.g. "UniProtKB", "PMID:...").
         range: string
+
+  TraitDefinition:
+    description: >-
+      One definition layer for a trait. A record may carry several — a plain
+      GENERAL statement of what it is, plus a STRUCTURAL (elements + their
+      arrangement) and/or MECHANISTIC (how it works) layer.
+    attributes:
+      kind:
+        description: Which layer this definition provides.
+        required: true
+        range: DefinitionKindEnum
+      text:
+        required: true
+        range: string
+      source:
+        description: >-
+          IAO:0000119 — where the text came from (source CURIE/name, PMID:/DOI:),
+          or the generating model when method is GENERATED.
+        range: string
+      method:
+        description: Whether the text was taken from a source or LLM-generated.
+        range: DefinitionMethodEnum
 
   EvidenceItem:
     description: A literature or database citation supporting a claim.
@@ -1268,6 +1300,22 @@ enums:
       DATATYPE_PROPERTY:
       OBJECT_PROPERTY:
       ANNOTATION_PROPERTY:
+
+  DefinitionKindEnum:
+    permissible_values:
+      GENERAL:
+        description: Plainly what the trait is.
+      STRUCTURAL:
+        description: The structural elements and how they are arranged.
+      MECHANISTIC:
+        description: How the trait works (catalytic / binding / interaction mechanism).
+
+  DefinitionMethodEnum:
+    permissible_values:
+      SOURCED:
+        description: Taken verbatim or lightly edited from an authoritative source.
+      GENERATED:
+        description: LLM-generated from the record's own content; flagged as synthetic.
 
   SynonymTypeEnum:
     permissible_values:
