@@ -39,6 +39,11 @@ SHARDS = REPO_ROOT / "docs" / "data"
 DETAIL = SHARDS / "detail"
 OUT = REPO_ROOT / "data" / "embeddings"
 
+# Grounding CURIE prefixes whose domain carries meaning worth embedding; the rest
+# (PDB/TED/ECOD/CATH/InterPro/Pfam/cd… accessions) are opaque → dropped from text.
+SEMANTIC_PREFIXES = ("EC:", "GO:", "RHEA:", "Rhea:", "CHEBI:", "PR:", "MOD:",
+                     "HP:", "MONDO:", "RO:", "GO_", "PATO:")
+
 
 def human_cat(cat: str) -> str:
     """SEQ_PTM_SITE -> 'ptm site' etc. (drop the axis prefix, spell it out)."""
@@ -80,7 +85,12 @@ def load_corpus(mode: str = "full") -> tuple[list[str], list[str]]:
             body = [definition] + layered
             doc = ". ".join(p for p in body if p) or str(r.get("label") or rid)
         else:  # full
-            xr = d.get("xr") or []
+            # keep only SEMANTIC groundings — ~85% of raw xrefs are opaque
+            # structural accessions (PDB/TED/ECOD/CATH/cd…) that are noise to a
+            # text model (embedding-field-audit skill).
+            sem = [x for x in (d.get("xr") or []) if str(x).startswith(SEMANTIC_PREFIXES)][:8]
+            syn = d.get("syn") or []
+            chem = r.get("chem") or []            # ChEBI *names* (semantic) not ids
             pat = d.get("pat")
             cat = human_cat(r.get("cat", ""))
             axis = (r.get("axis") or "").replace("_", " ").lower()
@@ -90,10 +100,14 @@ def load_corpus(mode: str = "full") -> tuple[list[str], list[str]]:
             if definition:
                 parts.append(definition)
             parts.extend(layered)                 # structural / mechanistic / general layers
+            if syn:
+                parts.append("also known as " + ", ".join(str(s) for s in syn))
             if pat:                               # sequence_pattern (regex/motif) is class-defining
                 parts.append(f"pattern: {pat}")
-            if xr:
-                parts.append("groundings: " + ", ".join(str(x) for x in xr[:8]))
+            if chem:
+                parts.append("chemistry: " + ", ".join(str(c) for c in chem[:8]))
+            if sem:
+                parts.append("groundings: " + ", ".join(str(x) for x in sem))
             doc = ". ".join(parts)
         ids.append(rid)
         docs.append(doc)
