@@ -419,6 +419,9 @@ def load_record(path: Path) -> dict[str, Any] | None:
         "defs": [[d.get("kind"), d.get("text"), d.get("source")]
                  for d in (data.get("definitions") or [])
                  if isinstance(d, dict) and d.get("text")],
+        # Synonyms (alternate names) — for the embedding (embedding-field-audit).
+        "syn": [s.get("synonym_text") for s in (data.get("synonyms") or [])
+                if isinstance(s, dict) and s.get("synonym_text")][:6],
         "path": rel,
     }
 
@@ -437,7 +440,7 @@ MAX_SHARD_RECORDS = 25000
 # upfront payload small (~200k records × everything = ~108 MB → ~21 MB lean).
 # `def` is special-cased: the list keeps a short snippet (card preview +
 # search); the full text goes to the sidecar.
-DETAIL_ONLY = ("path", "pt", "xr", "mx", "cp", "ex", "eq", "ss", "geo", "rs", "pat", "ev", "escope", "defs")
+DETAIL_ONLY = ("path", "pt", "xr", "mx", "cp", "ex", "eq", "ss", "geo", "rs", "pat", "ev", "escope", "defs", "syn")
 LIST_DEF = 140
 
 
