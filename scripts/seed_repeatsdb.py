@@ -17,15 +17,20 @@ Each record: identifier RepeatsDB:<id>, parent chained by dotted id, the
 representative PDB chain as a direct xref. Idempotent; dry-run unless --apply.
 Stdlib-only.
 
-Representative coverage: 87/122 nodes carry a curated `representative` PDB (→ a
-direct PDB xref, and a structural_geometry_representations block via
-enrich_structural_provenance.py). Of the 35 with an empty representative,
-enrich_repeatsdb_inherited_reps.py backfills 3 by inheriting a curated
-descendant's PDB (a genuine member of the group). The remaining 32 have no
-representative anywhere in their subtree, and RepeatsDB's bulk classification
-export lists no member structures (only aggregate `statistics` counts) — its
-public API exposes only /api/production/classification — so those are left as an
-explicit gap rather than fabricated.
+Representative / geometry-rep coverage: 119/122 nodes.
+  • 87 carry a curated `representative` PDB (→ a direct PDB xref, and a
+    structural_geometry_representations block via enrich_structural_provenance.py).
+  • 3 inherit a curated descendant's representative
+    (enrich_repeatsdb_inherited_reps.py).
+  • 29 get a real MEMBER structure drawn from RepeatsDB's per-structure
+    annotations (enrich_repeatsdb_member_reps.py, fed by
+    fetch_repeatsdb_annotations.py). RepeatsDB's annotations endpoint
+    (/api/production/annotations, limit+skip only — no server-side class filter,
+    so it is paged whole) lists every annotated PDB chain with its region_classes
+    codes; we pick one member per code with clear provenance.
+  • 3 remain without a rep: RepeatsDB Class 1 (1, 1.1, 1.2 — "crystalline
+    aggregates") has **0 solved structures** (per its own statistics), so there is
+    genuinely nothing to point to. Documented, not fabricated.
 """
 
 from __future__ import annotations

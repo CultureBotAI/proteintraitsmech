@@ -263,6 +263,11 @@ fetch-repeatsdb:
 seed-repeatsdb *args:
     python3 scripts/seed_repeatsdb.py {{args}}
 
+# Per-structure annotations → classification→member-PDB index (pages the whole
+# /api/production/annotations set; ~475 requests). Feeds enrich_repeatsdb_member_reps.
+fetch-repeatsdb-annotations:
+    python3 scripts/fetch_repeatsdb_annotations.py
+
 fetch-ncbifam:
     mkdir -p data/raw/ncbifam
     curl -sSLf --max-time 120 -o data/raw/ncbifam/hmm_PGAP.tsv https://ftp.ncbi.nlm.nih.gov/hmm/current/hmm_PGAP.tsv
