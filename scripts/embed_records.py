@@ -39,11 +39,6 @@ SHARDS = REPO_ROOT / "docs" / "data"
 DETAIL = SHARDS / "detail"
 OUT = REPO_ROOT / "data" / "embeddings"
 
-# Grounding CURIE prefixes whose domain carries meaning worth embedding; the rest
-# (PDB/TED/ECOD/CATH/InterPro/Pfam/cd… accessions) are opaque → dropped from text.
-SEMANTIC_PREFIXES = ("EC:", "GO:", "RHEA:", "Rhea:", "CHEBI:", "PR:", "MOD:",
-                     "HP:", "MONDO:", "RO:", "GO_", "PATO:")
-
 
 def human_cat(cat: str) -> str:
     """SEQ_PTM_SITE -> 'ptm site' etc. (drop the axis prefix, spell it out)."""
@@ -85,15 +80,23 @@ def load_corpus(mode: str = "full") -> tuple[list[str], list[str]]:
             body = [definition] + layered
             doc = ". ".join(p for p in body if p) or str(r.get("label") or rid)
         else:  # full
-            # keep only SEMANTIC groundings — ~85% of raw xrefs are opaque
-            # structural accessions (PDB/TED/ECOD/CATH/cd…) that are noise to a
-            # text model (embedding-field-audit skill).
-            sem = [x for x in (d.get("xr") or []) if str(x).startswith(SEMANTIC_PREFIXES)][:8]
             syn = d.get("syn") or []
             chem = r.get("chem") or []            # ChEBI *names* (semantic) not ids
             pat = d.get("pat")
             cat = human_cat(r.get("cat", ""))
             axis = (r.get("axis") or "").replace("_", " ").lower()
+            # Identifiers/groundings: opaque individually, but their SHARED tokens
+            # cluster same-source / same-classification-subtree entries — the
+            # record's own hierarchical id (siblings share its prefix, e.g.
+            # ECOD:F.1.1.1.3 / …1.4), its parents (siblings share the exact parent
+            # id), and its xrefs/mappings (related entries share groundings). That
+            # within-source structural similarity is signal, not noise. Only
+            # per-INSTANCE ids (canonical_example sequences/accessions) are excluded.
+            ground = [rid]
+            ground += [str(p[0]) for p in (d.get("pt") or []) if p and p[0]]
+            ground += [str(x) for x in (d.get("xr") or [])]
+            ground += [str(m[0]) for m in (d.get("mx") or []) if m and m[0]]
+            ground = list(dict.fromkeys(ground))[:16]  # dedupe, cap
             parts = [str(r.get("label") or rid)]  # numeric label parses to int in the shard
             if cat:
                 parts.append(f"{cat} ({axis} trait)")
@@ -106,8 +109,7 @@ def load_corpus(mode: str = "full") -> tuple[list[str], list[str]]:
                 parts.append(f"pattern: {pat}")
             if chem:
                 parts.append("chemistry: " + ", ".join(str(c) for c in chem[:8]))
-            if sem:
-                parts.append("groundings: " + ", ".join(str(x) for x in sem))
+            parts.append("identifiers: " + ", ".join(ground))
             doc = ". ".join(parts)
         ids.append(rid)
         docs.append(doc)
