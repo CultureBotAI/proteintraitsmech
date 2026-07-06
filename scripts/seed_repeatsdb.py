@@ -16,6 +16,16 @@ Input (fetch via `just fetch-repeatsdb`, gitignored):
 Each record: identifier RepeatsDB:<id>, parent chained by dotted id, the
 representative PDB chain as a direct xref. Idempotent; dry-run unless --apply.
 Stdlib-only.
+
+Representative coverage: 87/122 nodes carry a curated `representative` PDB (→ a
+direct PDB xref, and a structural_geometry_representations block via
+enrich_structural_provenance.py). Of the 35 with an empty representative,
+enrich_repeatsdb_inherited_reps.py backfills 3 by inheriting a curated
+descendant's PDB (a genuine member of the group). The remaining 32 have no
+representative anywhere in their subtree, and RepeatsDB's bulk classification
+export lists no member structures (only aggregate `statistics` counts) — its
+public API exposes only /api/production/classification — so those are left as an
+explicit gap rather than fabricated.
 """
 
 from __future__ import annotations
