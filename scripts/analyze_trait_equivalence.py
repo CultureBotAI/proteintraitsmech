@@ -97,8 +97,9 @@ def load_records() -> list[dict]:
     return recs
 
 
-def norm_label(s: str) -> str:
-    return re.sub(r"[^a-z0-9]+", " ", (s or "").lower()).strip()
+def norm_label(s) -> str:
+    # a purely numeric label (e.g. "40") parses to an int in the JSON shard
+    return re.sub(r"[^a-z0-9]+", " ", str(s or "").lower()).strip()
 
 
 def cat_key(r: dict) -> tuple[str, str]:
