@@ -57,7 +57,11 @@ def folded(text):
 #     (whole-protein families whose defining property is a conserved function)
 # The TIGRFAM "isology type" distinguishes these; `*_domain` variants (e.g.
 # equivalog_domain) are domain-level and stay on SEQ_DOMAIN.
-_FUNC_FAMILY_TYPES = {"equivalog", "subfamily", "exception", "hypoth_equivalog", "paralog"}
+# Function-conserved whole-protein family types → FUNCTION. `pfameq` (PfamEq) is
+# NCBI's equivalog-like Pfam-derived family type and belongs here too (axis-split
+# review 1). `*_domain` variants (e.g. equivalog_domain) are domain-level → SEQUENCE.
+_FUNC_FAMILY_TYPES = {"equivalog", "subfamily", "exception", "hypoth_equivalog",
+                      "paralog", "pfameq"}
 
 
 # family_type → (axis, category, subdir)
@@ -71,7 +75,14 @@ def route(family_type: str):
         return "SEQUENCE", "SEQ_HOMOLOGOUS_SUPERFAMILY", "sequence/homologous_superfamily/ncbifam"
     if ft in _FUNC_FAMILY_TYPES:
         return "FUNCTION", "FUNC_PROTEIN_FAMILY", "function/protein_family/ncbifam"
-    # unknown / blank isology → default to sequence-signature domain
+    # `pfamautoeq` is a weaker, auto-generated equivalog — a whole-protein *family*
+    # (not a domain) but not asserted function-conserved → SEQ_FAMILY.
+    if ft == "pfamautoeq":
+        return "SEQUENCE", "SEQ_FAMILY", "sequence/family/ncbifam"
+    # Any other non-blank isology is unhandled — surface it rather than silently
+    # emitting SEQ_DOMAIN (axis-split review 1).
+    if ft:
+        raise ValueError(f"unhandled NCBIfam family_type: {family_type!r}")
     return "SEQUENCE", "SEQ_DOMAIN", "sequence/domain/ncbifam"
 
 

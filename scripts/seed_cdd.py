@@ -61,11 +61,13 @@ KIND = {
     "SEQ_DOMAIN": "conserved domain",
     "SEQ_HOMOLOGOUS_SUPERFAMILY": "domain superfamily",
     "FUNC_ORTHOLOG_GROUP": "orthologous group",
+    "FUNC_PROTEIN_FAMILY": "protein family",
 }
 AXIS = {
     "SEQ_DOMAIN": "SEQUENCE",
     "SEQ_HOMOLOGOUS_SUPERFAMILY": "SEQUENCE",
     "FUNC_ORTHOLOG_GROUP": "FUNCTION",
+    "FUNC_PROTEIN_FAMILY": "FUNCTION",
 }
 
 
@@ -128,12 +130,18 @@ def main() -> int:
             if len(c) >= 3 and c[0].startswith("cd") and c[2].startswith("cl"):
                 parent_of[c[0].strip()] = c[2].strip()
 
-    # NCBI-curated protein-family / domain models not covered by other seeders.
-    DOMAIN_PREFIXES = ("cd", "PRK", "PLN", "PHA", "PTZ", "MTH", "CHL", "sd")
+    # cd/sd are curated *domain* models → SEQUENCE. PRK/PLN/PHA/PTZ/MTH/CHL are
+    # full-length *protein-cluster* models (whole-protein functional families) →
+    # FUNCTION, consistent with the NCBIfam function-family carve-out (axis-split
+    # review 1). KOG (eukaryotic orthologous groups) → FUNC_ORTHOLOG_GROUP.
+    DOMAIN_PREFIXES = ("cd", "sd")
+    PROTEIN_FAMILY_PREFIXES = ("PRK", "PLN", "PHA", "PTZ", "MTH", "CHL")
 
     def route(acc):
         if acc.startswith("KOG"):
             return "FUNC_ORTHOLOG_GROUP", "function/ortholog_group"
+        if any(acc.startswith(p) for p in PROTEIN_FAMILY_PREFIXES):
+            return "FUNC_PROTEIN_FAMILY", "function/protein_family"
         if any(acc.startswith(p) for p in DOMAIN_PREFIXES):
             return "SEQ_DOMAIN", "sequence/domain"
         return None  # pfam/COG/TIGR/NF/smart/cl/LOAD_* → skipped (covered/handled)

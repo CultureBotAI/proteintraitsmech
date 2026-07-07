@@ -13,8 +13,8 @@ definition (the InterPro abstract) and a type-specific parent/child hierarchy:
   Homologous_superfamily → SEQUENCE    / SEQ_HOMOLOGOUS_SUPERFAMILY
   Repeat                 → SEQUENCE    / SEQ_REPEAT
   Conserved_site         → SEQUENCE    / SEQ_CONSERVATION
-  Active_site            → STRUCTURE   / STRUCT_ACTIVE_SITE
-  Binding_site           → STRUCTURE   / STRUCT_BINDING_SITE
+  Active_site            → SEQUENCE    / SEQ_ACTIVE_SITE   (sequence signature)
+  Binding_site           → SEQUENCE    / SEQ_BINDING_SITE  (sequence signature)
   PTM                    → SEQUENCE    / SEQ_PTM_SITE
 
 An InterPro `Repeat` is a *sequence* signature (a repeated region detected by an
@@ -65,8 +65,11 @@ TYPE_MAP: dict[str, tuple[str, str, str]] = {
     "Homologous_superfamily": ("SEQUENCE",           "SEQ_HOMOLOGOUS_SUPERFAMILY",    "sequence/homologous_superfamily/interpro"),
     "Repeat":                 ("SEQUENCE",           "SEQ_REPEAT",                    "sequence/repeat/interpro"),
     "Conserved_site":         ("SEQUENCE",           "SEQ_CONSERVATION",              "sequence/conservation/interpro"),
-    "Active_site":            ("STRUCTURE",          "STRUCT_ACTIVE_SITE",            "structure/active_site/interpro"),
-    "Binding_site":           ("STRUCTURE",          "STRUCT_BINDING_SITE",           "structure/binding_site/interpro"),
+    # InterPro Active_site/Binding_site are short conserved *sequence* signatures,
+    # not structure-derived — SEQUENCE, not STRUCTURE (axis-split review 1).
+    # STRUCT_ACTIVE_SITE/STRUCT_BINDING_SITE are reserved for M-CSA / geometry.
+    "Active_site":            ("SEQUENCE",           "SEQ_ACTIVE_SITE",               "sequence/active_site/interpro"),
+    "Binding_site":           ("SEQUENCE",           "SEQ_BINDING_SITE",              "sequence/binding_site/interpro"),
     "PTM":                    ("SEQUENCE",           "SEQ_PTM_SITE",                  "sequence/ptm_ontology/interpro"),
 }
 

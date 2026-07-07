@@ -105,7 +105,8 @@ def compose(m: dict, acc: str, axis: str, ecn: dict, gon: dict) -> str:
         if m["taxon"].lower() not in GENERIC_TAXA:
             s += f" Members occur in {m['taxon']}."
     else:
-        kind = "region" if "repeat" in ft else "domain"
+        kind = ("family" if ft == "pfamautoeq"
+                else "region" if "repeat" in ft else "domain")
         s = (f"{lead} — a protein {kind} modelled by the NCBIfam sequence-profile HMM "
              f"{acc} ({ft}){fn_txt}.")
     return " ".join(s.split())
