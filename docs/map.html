@@ -25,6 +25,11 @@
   .controls label{display:flex;flex-direction:column;gap:.25rem;font-size:.78rem;color:var(--muted)}
   .controls select,.controls input{font:inherit;font-size:.9rem;padding:.4em .55em;border:1px solid var(--line);border-radius:7px;background:var(--card);color:var(--ink);min-width:200px}
   .controls select:focus,.controls input:focus{outline:none;border-color:var(--accent)}
+  .embseg{display:flex;align-items:stretch;border:1px solid var(--line);border-radius:8px;overflow:hidden;align-self:flex-end;background:var(--card)}
+  .embseg .seg-label{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;padding:0 .7em;background:var(--pastel-a)}
+  .seg-btn{font:inherit;font-size:.85rem;padding:.45em .9em;border:0;border-left:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;white-space:nowrap}
+  .seg-btn:hover{background:var(--stage-bg)}
+  .seg-btn.active{background:var(--accent);color:#fff;font-weight:600}
   .legend{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 .8rem}
   .legend button{display:inline-flex;align-items:center;gap:.45em;font-size:.82rem;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:.32em .7em .32em .55em;color:var(--ink);cursor:pointer;transition:all .15s}
   .legend button:hover{border-color:var(--accent)}
@@ -65,12 +70,11 @@
       <label>Search
         <input type="search" id="search" placeholder="identifier / CURIE…" autocomplete="off">
       </label>
-      <label>Embedding
-        <select id="emb-mode">
-          <option value="corpus_map.json">Full record</option>
-          <option value="corpus_map_definitions.json">Definition only</option>
-        </select>
-      </label>
+      <div class="embseg" role="group" aria-label="Map embedding">
+        <span class="seg-label">Embedding</span>
+        <button class="seg-btn active" data-map="corpus_map.json" title="definition + structure/source identifiers">Full record</button>
+        <button class="seg-btn" data-map="corpus_map_definitions.json" title="pure definition semantics only">Definition only</button>
+      </div>
     </div>
     <div class="legend" id="legend"></div>
     <div id="stage"><canvas id="cv" width="1120" height="660"></canvas><div id="tip"></div></div>
@@ -132,7 +136,12 @@
   // Wire the controls once; loadMap rebuilds the data each switch.
   document.getElementById("cat-filter").addEventListener("change",e=>{catFilter=e.target.value; update();});
   {let t; document.getElementById("search").addEventListener("input",e=>{clearTimeout(t); t=setTimeout(()=>{query=e.target.value.trim().toLowerCase(); update();},120);});}
-  document.getElementById("emb-mode").addEventListener("change",e=>loadMap(e.target.value));
+  document.querySelectorAll(".seg-btn").forEach(b=>b.addEventListener("click",()=>{
+    if(b.classList.contains("active")) return;
+    document.querySelectorAll(".seg-btn").forEach(x=>x.classList.remove("active"));
+    b.classList.add("active");
+    loadMap(b.dataset.map);
+  }));
   loadMap("corpus_map.json");
 
   // Accessible data-table fallback for this dense canvas scatter: a CSV built from
