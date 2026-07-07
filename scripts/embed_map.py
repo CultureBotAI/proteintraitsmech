@@ -52,8 +52,9 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--method", choices=["pacmap", "umap", "pca"], default="pacmap",
                     help="pacmap (primary) or umap/pca (secondary)")
-    ap.add_argument("--sample", type=int, default=0,
-                    help="stratified sample size; 0 = all (PCA) / method default")
+    ap.add_argument("--sample", type=int, default=-1,
+                    help="stratified sample size; 0 = ALL, -1 = method default "
+                         "(60k for pacmap/umap, all for pca), N = that many")
     ap.add_argument("--neighbors", type=int, default=15, help="UMAP n_neighbors")
     ap.add_argument("--min-dist", type=float, default=0.1)
     ap.add_argument("--seed", type=int, default=42)
@@ -76,9 +77,11 @@ def main() -> int:
             cat_of[r["id"]] = r.get("cat") or "OTHER"
 
     idx = np.arange(len(ids))
-    # PCA runs over everything; PaCMAP/UMAP sample for speed unless --sample 0.
+    # PCA runs over everything; PaCMAP/UMAP sample for speed unless --sample 0 (ALL).
+    # --sample: -1 → method default; 0 → all; N → that many. (0 is falsy, so it must
+    # be the explicit "all" sentinel — not conflated with the default.)
     default_sample = 0 if args.method == "pca" else 60000
-    sample = args.sample if args.sample else default_sample
+    sample = default_sample if args.sample < 0 else args.sample
     if sample and sample < len(ids):
         by_axis = defaultdict(list)
         for i in idx:
