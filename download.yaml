@@ -440,12 +440,27 @@
   hierarchy: true
   trait_categories: [FUNC_ENZYMATIC_ACTIVITY]
 -
-  url: https://zhanggroup.org/BioLiP/download/
+  url: https://zhanggroup.org/BioLiP/download/BioLiP_nr.txt.gz
   name: BioLiP2 (ligand-binding sites)
   source: biolip2
-  license: free
+  # ⚠ FLAGGED: BioLiP2 (Yang/Zhang group) is free for academic use with NO
+  # explicit open license. The corpus is otherwise CC0-1.0, so every BioLiP
+  # record carries this license string and is excluded from the CC0 grant.
+  license: BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)
   status: candidate
+  hierarchy: false
   trait_categories: [STRUCT_BINDING_SITE]
+  seeder: seed_biolip.py
+  note: >-
+    Per-PDB binding-site rows are INSTANCES; the seeder AGGREGATES them by
+    ligand (PDB CCD id in col 5, plus polymer pseudo-ligands rna/dna/peptide)
+    into ~6,020 ligand-keyed STRUCT_BINDING_SITE classes (STRUCTURE axis).
+    Chemical ligands grounded via xrefs to pdb.ligand:<CCD>; rna/dna/peptide to
+    ChEBI; per-PDB occurrences summarised as canonical_examples (capped) + a
+    count folded into the definition. Receptor EC/GO deliberately not
+    aggregated (receptor-specific, not class-defining). Fetch the non-redundant
+    flat file + ligand table via `just fetch-biolip`. Dry-run seeded, awaiting
+    modelling review before --apply.
 -
   url: https://metalpdb.cerm.unifi.it/
   name: MetalPDB (metal sites)

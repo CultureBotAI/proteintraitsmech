@@ -23,6 +23,9 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from deflib import add_layer  # noqa: E402
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 ENZCLASS = REPO_ROOT / "data" / "raw" / "ec" / "enzclass.txt"
 EC_DIR = REPO_ROOT / "data" / "traits" / "function" / "enzymatic_activity" / "ec"
@@ -82,13 +85,14 @@ def main() -> int:
         if not desc:
             thin += 1
             continue
-        block = ("definitions:\n"
-                 "  - kind: GENERAL\n"
-                 f"    text: >-\n      {desc[0].upper() + desc[1:]}.\n"
-                 '    source: "EC nomenclature (enzclass)"\n'
-                 "    method: SOURCED\n")
-        new = re.sub(r"(?m)^(license:.*)$", block + r"\1", text, count=1) \
-            if re.search(r"(?m)^license:", text) else text.rstrip("\n") + "\n" + block
+        # deflib.add_layer appends into any existing `definitions:` list — never a
+        # second block (which would be a duplicate mapping key, silently dropping
+        # a co-present layer on load).
+        new, changed = add_layer(text, "GENERAL", f"{desc[0].upper() + desc[1:]}.",
+                                 "EC nomenclature (enzclass)")
+        if not changed:
+            skipped += 1
+            continue
         added += 1
         if args.apply:
             p.write_text(new, encoding="utf-8")
