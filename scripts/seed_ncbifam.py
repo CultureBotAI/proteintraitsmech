@@ -23,6 +23,12 @@ import re
 import sys
 from pathlib import Path
 
+# The definition composer is shared with enrich_ncbifam_definitions.py so a fresh
+# seed and the post-seed enrichment produce byte-identical definitions.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from enrich_ncbifam_definitions import (  # noqa: E402
+    compose as compose_definition, load_ec_names, load_go_names, SOURCE as DEF_SOURCE)
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 RAW = REPO_ROOT / "data" / "raw" / "ncbifam" / "hmm_PGAP.tsv"
 OUT_DIR = REPO_ROOT / "data" / "traits"
@@ -91,7 +97,7 @@ def build_yaml(acc, label, definition, axis, category, ecs, gos, gene, family_ty
     lines = [f"identifier: NCBIfam:{acc}", f"label: {yaml_escape(label)}"]
     f = folded(definition)
     lines += [f"definition: {f[0]}", *f[1:]]
-    lines += ["definition_source: NCBIfam (NCBI PGAP HMM library)",
+    lines += [f"definition_source: {DEF_SOURCE}",
               f"trait_axis: {axis}", f"trait_category: {category}",
               "term_kind: CLASS", "mapping_status: SEEDED"]
     # synonyms: gene symbol + the HMM model name (kept discoverable now that the
@@ -120,6 +126,7 @@ def main() -> int:
               file=sys.stderr)
         return 2
 
+    go_names, ec_names = load_go_names(), load_ec_names()  # EC/GO → readable names
     lines_in = RAW.read_text(encoding="utf-8", errors="replace").splitlines()
     header = lines_in[0].lstrip("#").split("\t")
     idx = {c: i for i, c in enumerate(header)}
@@ -145,9 +152,11 @@ def main() -> int:
         ecs = [e.strip() for e in re.split(r"[;, ]+", g("ec_numbers")) if e.strip()]
         gos = [x.strip() for x in re.split(r"[;, ]+", g("go_terms")) if x.strip().startswith("GO:")]
         axis, category, subdir = route(family_type)
-        definition = (f"{product or model} — an NCBIfam protein family "
-                      f"({acc}, {family_type or 'family'}); members share this "
-                      f"conserved family signature.")
+        # Compose the definition from the source metadata (shared composer).
+        meta = {"product": product or model, "gene": gene, "ftype": family_type,
+                "ec": [e for e in ecs if re.fullmatch(r"\d+\.\d+\.\d+\.\d+", e)],
+                "go": gos, "taxon": g("taxonomic_range_name")}
+        definition = compose_definition(meta, acc, axis, ec_names, go_names)
         total += 1
         path = OUT_DIR / subdir / f"{slugify(label)}-{acc.lower()}.yaml"
         if path.exists() and not args.force:

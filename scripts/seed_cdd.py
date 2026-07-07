@@ -30,6 +30,13 @@ import re
 import sys
 from pathlib import Path
 
+# KOG definitions are composed by the shared enrichment composer so a fresh seed
+# matches the post-seed enrichment.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from enrich_cdd_ortholog_definitions import (  # noqa: E402
+    compose as compose_kog, SOURCE as KOG_SOURCE)
+from pathlib import Path
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 RAW = REPO_ROOT / "data" / "raw" / "cdd"
 CDDID = RAW / "cddid_all.tbl.gz"
@@ -88,10 +95,15 @@ def build_yaml(acc, short, desc, category, parent):
     opaque = (not short) or short == acc            # e.g. short 'PRK00009' == acc
     label = (desc_c or acc) if opaque else short
     definition = desc_c or f"NCBI CDD {KIND[category]} ({acc})."
+    def_source = "NCBI CDD"
+    if category == "FUNC_ORTHOLOG_GROUP":            # KOG "<acc>, name [cat]" → real def
+        composed = compose_kog(desc_c)
+        if composed:
+            definition, def_source = composed, KOG_SOURCE
     lines = [f"identifier: CDD:{acc}", f"label: {yaml_escape(label)}"]
     f = folded(definition)
     lines += [f"definition: {f[0]}", *f[1:]]
-    lines += ["definition_source: NCBI CDD", f"trait_axis: {AXIS[category]}",
+    lines += [f"definition_source: {def_source}", f"trait_axis: {AXIS[category]}",
               f"trait_category: {category}", "term_kind: CLASS",
               "mapping_status: SEEDED"]
     if parent:
@@ -174,9 +186,10 @@ def main() -> int:
         emit(acc, cat, subdir, parent if parent in info else "")
 
     n_kog = sum(1 for _, (c, _) in seedable.items() if c == "FUNC_ORTHOLOG_GROUP")
-    print(f"CDD: {len(domains)} curated domains + {len(sfs)} superfamilies "
-          f"(SEQ) + {n_kog} KOG orthologous groups (FUNC_ORTHOLOG_GROUP); "
-          f"pfam/COG/TIGR/NF/smart skipped (covered).")
+    n_fam = sum(1 for _, (c, _) in seedable.items() if c == "FUNC_PROTEIN_FAMILY")
+    print(f"CDD: {len(domains)} curated domains + {len(sfs)} superfamilies (SEQ) + "
+          f"{n_fam} protein-cluster families (FUNC_PROTEIN_FAMILY) + {n_kog} KOG "
+          f"orthologous groups (FUNC_ORTHOLOG_GROUP); pfam/COG/TIGR/NF/smart skipped.")
     if args.apply:
         print(f"Wrote {written}; skipped {skipped} existing.")
     else:
