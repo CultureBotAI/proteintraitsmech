@@ -30,6 +30,7 @@ from __future__ import annotations
 
 import argparse
 import glob
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -69,6 +70,7 @@ def load_corpus(mode: str = "full") -> tuple[list[str], list[str]]:
         detail.update(json.load(open(f)))
 
     ids, docs = [], []
+    n_fallback = 0
     for r in sorted(recs, key=lambda r: r["id"]):
         rid = r["id"]
         d = detail.get(rid, {})
@@ -77,8 +79,10 @@ def load_corpus(mode: str = "full") -> tuple[list[str], list[str]]:
         layered = [f"{(x[0] or '').lower()}: {x[1]}".strip(": ")
                    for x in (d.get("defs") or []) if x and len(x) > 1 and x[1]]
         if mode == "definition":
-            body = [definition] + layered
-            doc = ". ".join(p for p in body if p) or str(r.get("label") or rid)
+            doc = ". ".join(p for p in [definition] + layered if p)
+            if not doc:                            # issue #10: surface the fallbacks
+                doc = str(r.get("label") or rid)
+                n_fallback += 1
         else:  # full
             syn = d.get("syn") or []
             chem = r.get("chem") or []            # ChEBI *names* (semantic) not ids
@@ -113,6 +117,9 @@ def load_corpus(mode: str = "full") -> tuple[list[str], list[str]]:
             doc = ". ".join(parts)
         ids.append(rid)
         docs.append(doc)
+    if mode == "definition" and n_fallback:
+        print(f"  note: {n_fallback:,} records had no definition → label fallback",
+              file=sys.stderr)
     return ids, docs
 
 
@@ -149,8 +156,16 @@ def main() -> int:
 
     # Resume: docs are in a stable id-sorted order, so a partial vectors file
     # covers the first R docs — pick up at R. (`--fresh` ignores it.)
+    # Issue #9: the checkpoint is only valid for the SAME documents. A fingerprint
+    # (model · text-mode · count · sample docs) guards against splicing vectors of
+    # old document text onto new when load_corpus output has changed.
+    fp = hashlib.sha1("|".join([args.text_mode, args.model, str(len(docs)),
+                                docs[0][:200] if docs else "",
+                                docs[-1][:200] if docs else ""]).encode()).hexdigest()[:16]
+    fppath = out / ".corpus_fingerprint"
+    stale = fppath.exists() and fppath.read_text().strip() != fp
     parts, start = [], 0
-    if not args.fresh and vpath.exists():
+    if not args.fresh and vpath.exists() and not stale:
         try:
             prev = np.load(vpath)
             if prev.ndim == 2 and 0 < prev.shape[0] < len(docs) and prev.shape[1] == dim:
@@ -158,6 +173,9 @@ def main() -> int:
                 print(f"resuming from checkpoint: {start:,} already embedded")
         except Exception:  # noqa: BLE001
             pass
+    elif stale and vpath.exists() and not args.fresh:
+        print("corpus changed since checkpoint — discarding stale vectors, starting fresh")
+    fppath.write_text(fp)
 
     chunk = max(args.batch * 20, 5000)
     t0 = time.time()
