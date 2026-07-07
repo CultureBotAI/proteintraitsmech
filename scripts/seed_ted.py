@@ -2,6 +2,14 @@
 """Seed ProteinTraitRecord YAMLs from the TED (Encyclopedia of Domains)
 novel-fold and high-symmetry-fold catalogues.
 
+NOTE (definition-state review, research/definition-state-review.md): TED entries
+are AlphaFold *novel* / de-novo folds with no reference structural classification,
+so a named STRUCTURAL definition (like SCOP/CATH/ECOD carry) is not sourceable —
+the record's geometric summary (residues, length, pLDDT, symmetry) is the best
+available. Closing this gap would require computing geometric descriptors
+(secondary-structure string, contact topology) from the AF model — a future pass,
+not a text lift.
+
 Source:
   Zenodo record 13908086 (v5, 2024-10-31, CC-BY 4.0)
   DOI:10.5281/zenodo.13908086
