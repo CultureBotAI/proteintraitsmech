@@ -22,6 +22,9 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from deflib import add_layer  # noqa: E402
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TRAITS = REPO_ROOT / "data" / "traits"
 
@@ -75,13 +78,13 @@ def main() -> int:
         if not got:
             continue
         mtext, source = got
-        block = ("definitions:\n"
-                 "  - kind: MECHANISTIC\n"
-                 f"    text: >-\n      {yfold(mtext)}\n"
-                 f'    source: "{source}"\n'
-                 "    method: SOURCED\n")
-        new = re.sub(r"(?m)^(license:.*)$", block + r"\1", text, count=1) \
-            if re.search(r"(?m)^license:", text) else text.rstrip("\n") + "\n" + block
+        # deflib.add_layer appends into any existing `definitions:` list — never a
+        # second block (a duplicate mapping key that silently drops a co-present
+        # layer, e.g. the EC GENERAL layer, on load).
+        new, changed = add_layer(text, "MECHANISTIC", mtext, source)
+        if not changed:
+            skipped += 1
+            continue
         counts[m.group(1)] += 1
         if args.apply:
             p.write_text(new, encoding="utf-8")

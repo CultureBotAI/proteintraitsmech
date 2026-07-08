@@ -538,11 +538,14 @@ async function renderDetail(r) {
   }
   await loadNeighbors(r);
   if (window.location.hash !== "#record=" + encodeURIComponent(r.id)) return;
+  // Labels for every id rendered below (`<CURIE> — <label>`); one cached fetch.
+  await loadLabels();
+  if (window.location.hash !== "#record=" + encodeURIComponent(r.id)) return;
   // Semantic neighbors: [neighbor_id, cosine] → internal record links.
   const relatedHtml = (r._nb || []).length
     ? `<ul class="xref-list">
         ${r._nb.map(([nid, sc]) =>
-          `<li><a href="#record=${encodeURIComponent(nid)}">${escapeHTML(nid)}</a>`
+          `<li><a href="#record=${encodeURIComponent(nid)}">${escapeHTML(nid)}</a>${labelSuffix(nid)}`
           + ` <span class="map-src">${(sc).toFixed(2)}</span></li>`).join("")}
        </ul>`
     : "";
@@ -745,6 +748,38 @@ function loadChebi() {
       .catch(() => { CHEBI = {}; return {}; });
   }
   return CHEBI_PROMISE;
+}
+
+// id → label sidecar (data/labels.json): every corpus record's label, so any id
+// the detail view renders shows as `<CURIE> — <label>`. ~4 MB gzipped, fetched
+// once on first detail view and cached (independent of lazy axis-shard loading).
+let LABELS = null;
+let LABELS_PROMISE = null;
+function loadLabels() {
+  if (!LABELS_PROMISE) {
+    LABELS_PROMISE = fetch("data/labels.json")
+      .then(res => (res.ok ? res.json() : {}))
+      .then(j => { LABELS = j; return j; })
+      .catch(() => { LABELS = {}; return {}; });
+  }
+  return LABELS_PROMISE;
+}
+// Resolve an id/CURIE to its label — from the labels map, the loaded record
+// index, or the ChEBI sidecar. "" when no label is known.
+function labelFor(curie) {
+  if (LABELS && LABELS[curie]) return LABELS[curie];
+  const rec = ID_INDEX.get(curie);
+  if (rec && rec.label && rec.label !== curie) return rec.label;
+  if (curie.startsWith("CHEBI:") && CHEBI && CHEBI[curie]) {
+    const n = CHEBI[curie];
+    return (typeof n === "string" ? n : (n && n.name)) || "";
+  }
+  return "";
+}
+// " — <label>" HTML suffix for an id, or "" when no label is known.
+function labelSuffix(curie) {
+  const l = labelFor(curie);
+  return l ? ` <span class="curie-label">— ${escapeHTML(l)}</span>` : "";
 }
 
 const ROLE_LABEL = {
@@ -979,15 +1014,16 @@ function curieLink(curie) {
   const prefix = curie.slice(0, idx);
   const local  = curie.slice(idx + 1);
   const base   = PREFIXES[prefix];
+  const suffix = labelSuffix(curie);   // " — <label>" when a label is known
   if (base === null) {
     // Internal CURIE (proteintraitsmech:*) — try to resolve to a record in the index.
-    if (ID_INDEX.has(curie)) {
-      return `<a href="#record=${encodeURIComponent(curie)}">${escapeHTML(curie)}</a>`;
+    if (ID_INDEX.has(curie) || (LABELS && LABELS[curie])) {
+      return `<a href="#record=${encodeURIComponent(curie)}">${escapeHTML(curie)}</a>${suffix}`;
     }
-    return `<span class="mono">${escapeHTML(curie)}</span>`;
+    return `<span class="mono">${escapeHTML(curie)}</span>${suffix}`;
   }
-  if (!base) return `<span class="mono">${escapeHTML(curie)}</span>`;
-  return `<a href="${base}${encodeURIComponent(local)}" target="_blank" rel="noopener">${escapeHTML(curie)}</a>`;
+  if (!base) return `<span class="mono">${escapeHTML(curie)}</span>${suffix}`;
+  return `<a href="${base}${encodeURIComponent(local)}" target="_blank" rel="noopener">${escapeHTML(curie)}</a>${suffix}`;
 }
 
 function escapeHTML(s) {

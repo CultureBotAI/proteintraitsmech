@@ -577,6 +577,8 @@ def main() -> int:
 
     axes_by = {"src": _axes_by("src"), "cat": _axes_by("cat"), "sta": _axes_by("sta")}
 
+    labels_path = write_labels(records)
+
     pairs = split_detail(records)
     det_count, det_files, det_mb = write_detail(pairs)
     shards = write_shards(records)
@@ -604,6 +606,30 @@ def main() -> int:
     if skipped:
         print(f"Skipped {skipped} unparseable files")
     return 0
+
+
+def write_labels(records: list[dict]) -> Path:
+    """Emit docs/data/labels.json = {id: label} for every corpus record, so the
+    browser can render every id it shows — xrefs, parent_traits, mapped_xrefs,
+    equivalence, geometry refs, semantic neighbours, and the record's own
+    identifier — as `<CURIE> — <label>` (curieLink / idLink), independent of
+    which axis shards are lazily loaded. ~4.3 MB gzipped, fetched once on first
+    detail view and cached.
+
+    CHEBI ids are *not* here (they are not corpus record identifiers) — the
+    browser resolves those to names via the existing chebi.json sidecar. Any id
+    with no corpus label (PDB / AlphaFoldDB structure refs, PMIDs, per-protein
+    UniProtKB accessions, xref targets not seeded as their own record) is
+    absent, so it renders as the bare id — correct, since no label exists."""
+    labels = {r["id"]: r["label"] for r in records
+              if r.get("label") and r["label"] != r["id"]}
+    path = OUT_DIR / "labels.json"
+    with path.open("w", encoding="utf-8") as fh:
+        json.dump(labels, fh, ensure_ascii=False, sort_keys=True,
+                  separators=(",", ":"))
+    print(f"Wrote {len(labels):,} id→label entries → "
+          f"{path.relative_to(REPO_ROOT)} ({path.stat().st_size/(1024*1024):.2f} MB)")
+    return path
 
 
 def _tally(records: list[dict], key: str) -> dict[str, int]:

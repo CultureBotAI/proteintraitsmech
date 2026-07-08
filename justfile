@@ -144,6 +144,37 @@ fetch-tcdb:
 seed-tcdb *args:
     python3 scripts/seed_tcdb.py {{args}}
 
+# Download the MetalPDB bulk flat file (per-PDB metal sites; CERM, Univ.
+# Florence). NO explicit reuse licence — seeded records are flagged; confirm
+# terms with CERM before redistribution. ~40 MB gzip, gitignored.
+fetch-metalpdb:
+    mkdir -p data/raw/metalpdb
+    curl -sSLf --max-time 600 -o data/raw/metalpdb/flat_db_file.xml.gz \
+      "https://metalpdb.cerm.unifi.it/download?t=flatdb&id=flat_db_file.xml.gz"
+    @ls -la data/raw/metalpdb/flat_db_file.xml.gz
+
+# Seed data/traits/structure/metal_site/metalpdb/ — one STRUCT_METAL_SITE class
+# per (metal element, nuclearity), aggregated from MetalPDB per-PDB sites.
+# Requires `just fetch-metalpdb`. Dry-run by default; --apply to write.
+seed-metalpdb *args:
+    python3 scripts/seed_metalpdb.py {{args}}
+
+# BioLiP2 non-redundant ligand-binding-site flat file + ligand table + readme
+# (Yang/Zhang group). Free for academic use, no explicit open license (FLAGGED).
+fetch-biolip:
+    mkdir -p data/raw/biolip
+    curl -sSLf --max-time 300 -o data/raw/biolip/BioLiP_nr.txt.gz https://zhanggroup.org/BioLiP/download/BioLiP_nr.txt.gz
+    gunzip -f data/raw/biolip/BioLiP_nr.txt.gz
+    curl -sSLf --max-time 300 -o data/raw/biolip/ligand.tsv.gz https://zhanggroup.org/BioLiP/data/ligand.tsv.gz
+    gunzip -f data/raw/biolip/ligand.tsv.gz
+    curl -sSLf --max-time 60  -o data/raw/biolip/readme.txt https://zhanggroup.org/BioLiP/download/readme.txt
+    @wc -l data/raw/biolip/BioLiP_nr.txt data/raw/biolip/ligand.tsv
+
+# Aggregate BioLiP rows into ligand-keyed STRUCT_BINDING_SITE classes.
+# Requires `just fetch-biolip` first. Dry-run by default; --apply to write.
+seed-biolip *args:
+    python3 scripts/seed_biolip.py {{args}}
+
 fetch-cog:
     mkdir -p data/raw/cog
     curl -sSLf --max-time 120 -o data/raw/cog/cog-20.def.tab https://ftp.ncbi.nlm.nih.gov/pub/COG/COG2020/data/cog-20.def.tab
@@ -180,10 +211,32 @@ fetch-chebi:
     curl -sSLf --max-time 300 -o data/raw/chebi/compounds.tsv.gz https://ftp.ebi.ac.uk/pub/databases/chebi/flat_files/compounds.tsv.gz
     curl -sSLf --max-time 300 -o data/raw/chebi/chemical_data.tsv.gz https://ftp.ebi.ac.uk/pub/databases/chebi/flat_files/chemical_data.tsv.gz
     curl -sSLf --max-time 600 -o data/raw/chebi/structures.tsv.gz https://ftp.ebi.ac.uk/pub/databases/chebi/flat_files/structures.tsv.gz
+    # relation.tsv.gz (is_a / has_role edges) drives the cofactor role subtree
+    curl -sSLf --max-time 300 -o data/raw/chebi/relation.tsv.gz https://ftp.ebi.ac.uk/pub/databases/chebi/flat_files/relation.tsv.gz
 
 # Build docs/data/chebi.json (name/formula/InChIKey for referenced ChEBI ids)
 build-chebi:
     python3 scripts/build_chebi_sidecar.py
+
+# Seed cofactor-requirement traits from the ChEBI `cofactor` role subtree
+# (CHEBI:23357) -> FUNC_COFACTOR_REQUIREMENT. Requires `just fetch-chebi`.
+# Then align with the sibling projects' cofactor vocabularies (MicroGrowAgents +
+# PFAS) and write data/mappings/cofactor_crosswalk.tsv. Dry-run by default.
+seed-cofactor *args:
+    python3 scripts/seed_chebi_cofactor.py {{args}}
+    python3 scripts/seed_cofactor_alignment.py {{args}}
+
+# Curated stable complexes from the EBI Complex Portal (CC0, per-species
+# ComplexTAB) -> FUNC_INTERACTION_PARTNER (members as has_part edges).
+fetch-complexportal:
+    mkdir -p data/raw/complexportal
+    base=https://ftp.ebi.ac.uk/pub/databases/intact/complex/current/complextab; \
+    for f in $(curl -sSLf --max-time 60 $base/ | grep -oE '[0-9_a-z]+\.tsv'); do \
+      curl -sSLf --max-time 60 -o data/raw/complexportal/$f $base/$f; done
+    @ls data/raw/complexportal/*.tsv | wc -l
+
+seed-complexportal *args:
+    python3 scripts/seed_complexportal.py {{args}}
 
 # Validate data/methods/methods.yaml + build docs/data/methods.json (detection methods)
 build-methods:
@@ -471,6 +524,30 @@ fetch-examples *args:
 # page. Requires PyYAML; walks every data/traits/**/*.yaml.
 build-docs:
     python3 scripts/build_docs_index.py
+
+# Compose all layered definitions (GENERAL / STRUCTURAL / MECHANISTIC) across the
+# corpus, idempotently, in dependency order: base source layers first, then the
+# self-contained composers, then the cross-record inheritance passes (which read
+# the base layers). Re-run after any (re-)seed to restore the layers a seeder's
+# raw import doesn't carry. Dry-run by default; pass --apply to write.
+#   just enrich-definitions            # dry-run (all composers report counts)
+#   just enrich-definitions --apply    # write
+enrich-definitions *args:
+    # Phase 1 — base source layers (inheritance below reads these).
+    python3 scripts/enrich_ec_general_defs.py {{args}}
+    python3 scripts/enrich_mechanistic_defs.py {{args}}
+    python3 scripts/enrich_scop_structural_defs.py {{args}}
+    python3 scripts/enrich_scop_inherited_structural.py {{args}}
+    python3 scripts/enrich_cath_structural_defs.py {{args}}
+    python3 scripts/enrich_ecod_structural_defs.py {{args}}
+    python3 scripts/enrich_structural_provenance.py {{args}}
+    # Phase 2 — self-contained composers (a record's own content).
+    python3 scripts/enrich_go_mf_mechanistic_defs.py {{args}}
+    python3 scripts/enrich_interaction_mechanistic_defs.py {{args}}
+    python3 scripts/enrich_secondary_structural_defs.py {{args}}
+    # Phase 3 — cross-record inheritance (must follow Phase 1).
+    python3 scripts/enrich_seq_structural_inherited_defs.py {{args}}
+    python3 scripts/enrich_family_mechanistic_inherited_defs.py {{args}}
 
 # Analyze the catalog for equivalent, mergeable traits. Emits unequivocal
 # "Trait X = Trait Y" statements (deterministic) plus a separate review
