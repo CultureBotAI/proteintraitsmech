@@ -107,31 +107,73 @@ def located_residues(rec: dict) -> dict[str, set[int]]:
     return out
 
 
+# Predicate strength for keeping the best edge when a pair overlaps on several
+# proteins (related_to > part_of > overlaps).
+PRED_RANK = {"biolink:related_to": 3, "biolink:part_of": 2, "biolink:overlaps": 1}
+
+
 def classify(a: set[int], b: set[int], cat_a: str, cat_b: str):
-    """(predicate, metric) for an overlapping SEQ/STRUCT residue-set pair, or None."""
+    """(predicate, metric, a_is_subject) for an overlapping SEQ/STRUCT residue-set
+    pair, or None. `a_is_subject` gives the directed orientation (matters for the
+    asymmetric `part_of`); a/b are the SEQUENCE/STRUCTURE sets respectively."""
     inter = a & b
     if not inter:
         return None
     if a == b:
-        return "biolink:related_to", f"same-residues={len(inter)}"
+        return "biolink:related_to", f"same-residues={len(inter)}", True
     site = cat_a in SITE_CATS or cat_b in SITE_CATS
     if not site:
+        # Containment: the smaller region lies wholly inside the larger → part_of
+        # (subject = the contained/smaller region), per the analysis's ladder.
+        if len(inter) == min(len(a), len(b)):
+            a_is_subject = len(a) <= len(b)          # smaller set is the subject
+            return "biolink:part_of", f"contained={len(inter)}", a_is_subject
         recip = min(len(inter) / len(a), len(inter) / len(b))
         jacc = len(inter) / len(a | b)
         if recip < REGION_MIN_RECIPROCAL and jacc < REGION_MIN_JACCARD:
             return None
-    return "biolink:overlaps", f"inter={len(inter)}"
+    return "biolink:overlaps", f"inter={len(inter)}", True
+
+
+def _selftest() -> int:
+    """Assert the PROSITE→regex conversion + overlap classification behave."""
+    cases = [
+        # (prosite, sequence, expected 1-indexed match spans)
+        ("[SA]-[FY]-x-L.", "MASYAL", [(3, 6)]),           # [SA][FY].L
+        ("C-x(2)-C.", "AACGGCAA", [(3, 6)]),              # C..C
+        ("A-{P}-A.", "AQA-APA".replace("-", ""), [(1, 3)]),  # A[^P]A → AQA only
+        ("<M-x.", "MAXX", [(1, 2)]),                      # N-term anchor
+    ]
+    ok = True
+    for pat, seq, expect in cases:
+        rx = prosite_to_regex(pat)
+        got = [(m.start() + 1, m.end()) for m in re.finditer(rx or "(?!)", seq)]
+        if got != expect:
+            print(f"FAIL {pat!r} on {seq!r}: regex={rx!r} got={got} want={expect}")
+            ok = False
+    # classification: containment → part_of (region×region), site → overlaps
+    assert classify({5, 6, 7}, {1, 2, 3, 4, 5, 6, 7, 8}, "SEQ_MOTIF",
+                    "SEQ_DOMAIN")[0] == "biolink:part_of"
+    assert classify({62, 63, 64}, {64}, "SEQ_MOTIF",
+                    "STRUCT_ACTIVE_SITE")[0] == "biolink:overlaps"
+    assert classify({1, 2}, {5, 6}, "SEQ_MOTIF", "SEQ_DOMAIN") is None
+    print("selftest: OK" if ok else "selftest: FAILED")
+    return 0 if ok else 1
 
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--limit", type=int, default=0, help="cap files parsed (debug)")
     ap.add_argument("--dry-run", action="store_true", help="print stats, don't write")
+    ap.add_argument("--selftest", action="store_true",
+                    help="run PROSITE→regex + classifier self-tests and exit")
     args = ap.parse_args()
+    if args.selftest:
+        return _selftest()
 
     # protein_id → [(identifier, axis, category, residue set)]
     by_protein: dict[str, list] = {}
-    parsed = with_loc = 0
+    parsed = with_loc = unconvertible = 0
     for p in TRAITS.rglob("*.yaml"):
         text = p.read_text(encoding="utf-8", errors="replace")
         if "protein_id:" not in text or "canonical_examples:" not in text:
@@ -149,6 +191,9 @@ def main() -> int:
                           rec.get("identifier"))
         if axis not in ("SEQUENCE", "STRUCTURE") or not rid or not cat:
             continue
+        pat = rec.get("sequence_pattern")
+        if pat and prosite_to_regex(pat) is None:      # visibility on silent drops
+            unconvertible += 1
         loc = located_residues(rec)
         if loc:
             with_loc += 1
@@ -157,8 +202,9 @@ def main() -> int:
         if args.limit and parsed >= args.limit:
             break
 
-    # cross-axis pairs sharing a protein, with coordinate overlap
-    edges: dict[tuple, tuple] = {}   # (seq_id, struct_id) → (pred, src)
+    # cross-axis pairs sharing a protein, with coordinate overlap. Aggregate the
+    # supporting proteins per (subject,object) pair and keep the strongest edge.
+    edges: dict[tuple, dict] = {}   # (subj, obj) → {pred, proteins:set}
     shared_proteins = 0
     for pid, recs in by_protein.items():
         seqs = [r for r in recs if r[1] == "SEQUENCE"]
@@ -173,17 +219,28 @@ def main() -> int:
                 got = classify(sres, tres, scat, tcat)
                 if not got:
                     continue
-                pred, metric = got
-                key = (sid, tid)
-                src = f"seq-struct-coord-overlap|{pid}|{metric}"
-                # keep the strongest edge per pair (related_to > overlaps)
-                if key not in edges or (pred == "biolink:related_to"
-                                        and edges[key][0] != "biolink:related_to"):
-                    edges[key] = (pred, src)
+                pred, _metric, a_is_subject = got
+                subj, obj = (sid, tid) if a_is_subject else (tid, sid)
+                key = (subj, obj)
+                e = edges.get(key)
+                if e is None:
+                    edges[key] = {"pred": pred, "proteins": {pid}}
+                else:
+                    e["proteins"].add(pid)
+                    if PRED_RANK[pred] > PRED_RANK[e["pred"]]:
+                        e["pred"] = pred
 
-    rows = sorted((s, p, o, src) for (s, o), (p, src) in edges.items())
+    rows = []
+    for (subj, obj), e in edges.items():
+        prots = sorted(e["proteins"])
+        src = (f"seq-struct-coord-overlap|{','.join(prots[:5])}"
+               f"{'…' if len(prots) > 5 else ''}|n={len(prots)}")
+        rows.append((subj, e["pred"], obj, src))
+    rows.sort()
     print(f"parsed {parsed:,} example-bearing records; {with_loc:,} localized; "
-          f"{len(by_protein):,} proteins ({shared_proteins:,} with both axes)")
+          f"{unconvertible:,} unconvertible PROSITE patterns; "
+          f"{len(by_protein):,} proteins ({shared_proteins:,} with both axes)",
+          file=sys.stderr)
     from collections import Counter
     pc = Counter(r[1] for r in rows)
     print(f"cross-axis alignment edges: {len(rows):,}  {dict(pc)}")
