@@ -254,6 +254,15 @@ build-equivalence:
 build-function-equivalence:
     python3 scripts/build_function_anchor_equivalence.py
 
+# Build data/equivalence/seq_struct_alignment.tsv — STEP-1 pilot cross-axis
+# SEQUENCE↔STRUCTURE overlap edges: records sharing an exact canonical-example
+# protein_id whose stored coordinates (sequence_pattern hits + category-matching
+# UniProt FT features) overlap on the shared UniProt residue frame. Relate-only,
+# never a merge (research/sequence-structure-alignment-analysis-1.md). --dry-run
+# for stats; SIFTS/InterPro coordinate providers are step 2.
+build-seq-struct-alignment *args:
+    python3 scripts/build_sequence_structure_alignment.py {{args}}
+
 # Build data/equivalence/pathway.tsv — SEED↔Reactome FUNC_PATHWAY equivalence
 # from two parallel signals: shared GO biological-process anchor (close_match)
 # and constituent EC-set Jaccard (overlaps / close_match). Requires the pathway
