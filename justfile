@@ -435,6 +435,13 @@ seed-elm *args:
 fetch-merops:
     mkdir -p data/raw/merops
     curl -sSLf --max-time 300 -o data/raw/merops/pepunit.lib https://ftp.ebi.ac.uk/pub/databases/merops/current_release/pepunit.lib
+    curl -sSLf --max-time 300 -o data/raw/merops/Substrate_search.txt https://ftp.ebi.ac.uk/pub/databases/merops/current_release/Substrate_search.txt
+
+# Seed protease cleavage-site specificity from MEROPS Substrate_search.txt →
+# one SEQ_CLEAVAGE_SITE class per peptidase (P4–P4' consensus). Requires
+# `just fetch-merops`. Dry-run by default; --apply / --min-cleavages N.
+seed-merops-cleavage *args:
+    python3 scripts/seed_merops_cleavage.py {{args}}
 
 seed-merops *args:
     python3 scripts/seed_merops.py {{args}}
