@@ -159,6 +159,17 @@ fetch-metalpdb:
 seed-metalpdb *args:
     python3 scripts/seed_metalpdb.py {{args}}
 
+# 3did domain-domain interaction interfaces (IRB Barcelona; no explicit open
+# license, FLAGGED) -> STRUCT_INTERFACE. One class per Pfam-pair interface, with
+# representative PDBs. Dry-run by default; --apply.
+fetch-3did:
+    mkdir -p data/raw/3did
+    curl -sSLf --max-time 300 -o data/raw/3did/3did_flat.gz https://3did.irbbarcelona.org/download/current/3did_flat.gz
+    @ls -la data/raw/3did/3did_flat.gz
+
+seed-3did *args:
+    python3 scripts/seed_3did.py {{args}}
+
 # BioLiP2 non-redundant ligand-binding-site flat file + ligand table + readme
 # (Yang/Zhang group). Free for academic use, no explicit open license (FLAGGED).
 fetch-biolip:
