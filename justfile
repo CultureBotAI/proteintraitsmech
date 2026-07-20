@@ -312,6 +312,12 @@ build-equivalence:
 build-function-equivalence:
     python3 scripts/build_function_anchor_equivalence.py
 
+# Build data/equivalence/orthology.tsv — cross-source biolink:close_match edges
+# relating OrthoDB / OMA / COG / KOG FUNC_ORTHOLOG_GROUP records that share a
+# functional name (relate-only, never merge; issue #20). Generic names capped.
+build-orthology-equivalence *args:
+    python3 scripts/build_orthology_equivalence.py {{args}}
+
 # Build data/equivalence/seq_struct_alignment.tsv — STEP-1 pilot cross-axis
 # SEQUENCE↔STRUCTURE overlap edges: records sharing an exact canonical-example
 # protein_id whose stored coordinates (sequence_pattern hits + category-matching
