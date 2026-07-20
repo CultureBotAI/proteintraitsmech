@@ -108,10 +108,41 @@ def build_level(level):
     return "\n".join(lines) + "\n"
 
 
+# OMA descriptions may append a source-protein provenance tag, e.g.
+# "Uncharacterized protein MJ1511 {UniProtKB/Swiss-Prot Q58906}". Extract the
+# UniProt accession as an xref and strip the {…} tag from the label.
+_UNP = re.compile(r"[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2}")
+_TAG = re.compile(r"\s*\{[^}]*\}")
+# Non-functional / boilerplate descriptions to skip (quality over quantity —
+# OrthoDB covers the exhaustive orthology; OMA contributes its well-named HOGs).
+_NOFUNC = re.compile(
+    r"hypothetical|uncharacteri[sz]ed|unknown function|domain of unknown|"
+    r"gene prediction|automated computational|genemarks|putative protein|"
+    r"predicted protein", re.I)
+
+
+def clean_desc(desc: str):
+    """(clean_label, uniprot_acc|None) from a raw OMA description."""
+    desc = (desc or "").strip()
+    acc = None
+    tm = re.search(r"\{UniProtKB[^}]*\}", desc)
+    if tm:
+        am = _UNP.search(tm.group(0))
+        if am:
+            acc = am.group(0)
+    return _TAG.sub("", desc).strip(), acc
+
+
+def is_uncharacterized(label: str) -> bool:
+    """True if the label carries no function (empty or hypothetical/boilerplate)."""
+    return not (label or "").strip() or bool(_NOFUNC.search(label))
+
+
 def build_hog(hog):
     hid = hog["hog_id"]                       # e.g. HOG:F0000001
-    ident = "OMA:" + hid.replace(":", "-")    # OMA:HOG-F0000001
-    label = (hog.get("description") or hid).strip()
+    ident = "OMA:" + hid.split(":", 1)[-1]    # OMA:F0000001 (canonical F-id)
+    label, acc = clean_desc(hog.get("description"))
+    label = label or hid
     level = hog.get("level", "root")
     lines = [f"identifier: {ident}", f"label: {yaml_escape(label)}"]
     f = folded(f"{label} — an OMA hierarchical orthologous group at the "
@@ -122,8 +153,10 @@ def build_hog(hog):
               "mapping_status: SEEDED",
               "parent_traits:", f"  - {level_rid(level)}",
               "trait_relations:", "  - predicate: biolink:member_of",
-              f"    object: {level_rid(level)}", "    relation_source: OMA level",
-              f"license: {yaml_escape(LICENSE)}"]
+              f"    object: {level_rid(level)}", "    relation_source: OMA level"]
+    if acc:
+        lines += ["xrefs:", f"  - UniProtKB:{acc}"]
+    lines.append(f"license: {yaml_escape(LICENSE)}")
     return "\n".join(lines) + "\n"
 
 
@@ -160,11 +193,9 @@ def main() -> int:
         for hog in batch:
             if hogs >= args.limit:
                 break
-            label = (hog.get("description") or "").strip()
-            if not label or label.lower() in (
-                    "hypothetical protein", "uncharacterized protein",
-                    "putative uncharacterized protein"):
-                continue                      # prefer functionally-named HOGs
+            label, _ = clean_desc(hog.get("description"))
+            if is_uncharacterized(label):     # prefer functionally-named HOGs
+                continue
             hogs += 1
             emit(f"{slug(label)}-{slug(hog['hog_id'])}.yaml", build_hog(hog))
         page += 1
