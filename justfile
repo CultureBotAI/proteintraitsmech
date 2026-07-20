@@ -238,6 +238,64 @@ fetch-complexportal:
 seed-complexportal *args:
     python3 scripts/seed_complexportal.py {{args}}
 
+# --- Round-4 sources (research/protein-trait-sources-round4.md) ---
+
+# UniProtKB controlled-vocabulary Keywords (CC-BY 4.0) -> class-level
+# FUNC_BINDING_CAPACITY (Ligand) / FUNC_ENVIRONMENTAL_RESPONSE / SEQ_TARGETING_SIGNAL.
+fetch-uniprot-keywords:
+    mkdir -p data/raw/uniprot_keywords
+    curl -sSLf --max-time 120 -o data/raw/uniprot_keywords/keywlist.txt \
+      https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/docs/keywlist.txt
+    @wc -l data/raw/uniprot_keywords/keywlist.txt
+
+seed-uniprot-keywords *args:
+    python3 scripts/seed_uniprot_keywords.py {{args}}
+
+# OPM membrane-protein classification (CC-BY 3.0) -> MIXED_TRANSMEMBRANE / STRUCT_CLASS.
+# Fetches the OPM REST backend JSON (types + per-classtype detail with nested
+# superfamilies). Seeds the classification terms, not the per-PDB instances.
+fetch-opm:
+    mkdir -p data/raw/opm
+    base=https://opm-back.cc.lehigh.edu/opm-backend; \
+    curl -sSLf --max-time 30 -o data/raw/opm/types.json "$base/types"; \
+    curl -sSLf --max-time 30 -o data/raw/opm/classtypes.json "$base/classtypes?pageSize=50"; \
+    for id in $(python3 -c "import json;print(' '.join(str(o['id']) for o in json.load(open('data/raw/opm/classtypes.json'))['objects']))"); do \
+      curl -sSLf --max-time 30 -o data/raw/opm/classtype_$id.json "$base/classtypes/$id"; done
+    @ls data/raw/opm/classtype_*.json | wc -l
+
+seed-opm *args:
+    python3 scripts/seed_opm.py {{args}}
+
+# OrthoDB v12 orthologous groups (CC-BY 4.0) -> FUNC_ORTHOLOG_GROUP. Scoped by
+# --level (default broad domain clades) + capped (--limit); the OGs table is ~128 MB.
+fetch-orthodb:
+    mkdir -p data/raw/orthodb
+    base=https://data.orthodb.org/v12/download/odb_data_dump; \
+    curl -sSLf --max-time 600 -o data/raw/orthodb/odb12v2_OGs.tab.gz "$base/odb12v2_OGs.tab.gz"; \
+    curl -sSLf --max-time 60  -o data/raw/orthodb/odb12v2_levels.tab.gz "$base/odb12v2_levels.tab.gz"
+    @ls -la data/raw/orthodb/*.gz
+
+seed-orthodb *args:
+    python3 scripts/seed_orthodb.py {{args}}
+
+# OMA hierarchical orthologous groups (CC-BY 4.0) -> FUNC_ORTHOLOG_GROUP. The
+# seeder pages the OMA REST API (level-scoped, named HOGs) and caches to
+# data/raw/oma/; no separate fetch step. Overlaps OrthoDB (downstream dedup).
+seed-oma *args:
+    python3 scripts/seed_oma.py {{args}}
+
+# IEDB linear-peptide epitopes (CC-BY 4.0) -> SEQ_EPITOPE. Aggregates the
+# ~2M-row epitope export (1 GB) to UniProt-grounded epitope classes, capped.
+fetch-iedb:
+    mkdir -p data/raw/iedb
+    curl -sSLf --max-time 300 -o data/raw/iedb/epitope_full_v3.zip \
+      "https://www.iedb.org/downloader.php?file_name=doc/epitope_full_v3.zip"
+    cd data/raw/iedb && unzip -o -q epitope_full_v3.zip
+    @ls -la data/raw/iedb/epitope_full_v3.csv
+
+seed-iedb *args:
+    python3 scripts/seed_iedb.py {{args}}
+
 # Validate data/methods/methods.yaml + build docs/data/methods.json (detection methods)
 build-methods:
     python3 scripts/build_methods.py

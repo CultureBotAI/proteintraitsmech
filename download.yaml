@@ -377,6 +377,74 @@
     Real per-family prose + refs, but NoDerivatives (same caveat as PROSITE) —
     prefer the public-domain InterPro-abstract route unless a family is HAMAP-only.
 
+# ===================================================== ROUND-4 SEEDED =========
+# research/protein-trait-sources-round4.md
+
+-
+  url: https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/docs/keywlist.txt
+  local_name: keywlist.txt
+  name: UniProtKB Keywords (controlled vocabulary)
+  source: uniprot_keywords
+  license: CC-BY 4.0
+  status: seeded
+  hierarchy: true
+  trait_categories: [FUNC_BINDING_CAPACITY, FUNC_ENVIRONMENTAL_RESPONSE, SEQ_TARGETING_SIGNAL]
+  seeder: seed_uniprot_keywords.py
+  note: >-
+    Class-level keyword records (Ligand → FUNC_BINDING_CAPACITY, stress/response
+    BP → FUNC_ENVIRONMENTAL_RESPONSE, targeting signals → SEQ_TARGETING_SIGNAL);
+    orthogonal to seed_uniprot's instance-level FT/CC output.
+-
+  url: https://opm-back.cc.lehigh.edu/opm-backend/types
+  name: OPM (Orientations of Proteins in Membranes) classification
+  source: opm
+  license: CC-BY 3.0 (OPM) — confirm official reuse terms
+  status: seeded
+  hierarchy: true (type → classtype → superfamily)
+  trait_categories: [MIXED_TRANSMEMBRANE, STRUCT_CLASS]
+  seeder: seed_opm.py
+  note: >-
+    Membrane-protein classification TERMS (not the ~8,900 per-PDB entries);
+    Transmembrane tiers → MIXED_TRANSMEMBRANE (greenfield), else → STRUCT_CLASS.
+-
+  url: https://data.orthodb.org/v12/download/odb_data_dump/odb12v2_OGs.tab.gz
+  local_name: odb12v2_OGs.tab.gz
+  name: OrthoDB v12 orthologous groups
+  source: orthodb
+  license: CC-BY 4.0
+  status: seeded
+  hierarchy: partial (OG → level node)
+  trait_categories: [FUNC_ORTHOLOG_GROUP]
+  seeder: seed_orthodb.py
+  note: >-
+    Scoped by level (default broad domain clades) + capped (--limit 20000 named
+    OGs); the domain levels hold ~1.5M OGs.
+-
+  url: https://omabrowser.org/api/hog/
+  name: OMA hierarchical orthologous groups (HOGs)
+  source: oma
+  license: CC-BY 4.0
+  status: seeded
+  hierarchy: partial (HOG → level node)
+  trait_categories: [FUNC_ORTHOLOG_GROUP]
+  seeder: seed_oma.py
+  note: >-
+    REST-API paged (level-scoped named HOGs, default root), cached to
+    data/raw/oma/; overlaps OrthoDB (downstream merge-within-axis dedup).
+-
+  url: https://www.iedb.org/downloader.php?file_name=doc/epitope_full_v3.zip
+  local_name: epitope_full_v3.zip
+  name: IEDB epitope export (epitope_full_v3)
+  source: iedb
+  license: CC-BY 4.0
+  status: seeded
+  hierarchy: false
+  trait_categories: [SEQ_EPITOPE]
+  seeder: seed_iedb.py
+  note: >-
+    Linear-peptide epitopes with a UniProt source antigen, aggregated to classes
+    from the ~2M-row export (1 GB), capped (--limit 20000).
+
 # ========================================================= CANDIDATE =========
 
 -
