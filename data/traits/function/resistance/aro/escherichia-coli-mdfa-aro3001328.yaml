@@ -66,6 +66,16 @@ causal_graphs:
       - node_id: resistance
         label: multidrug resistance phenotype
         node_type: PHENOTYPE
+      - node_id: mfs_domain
+        label: major facilitator superfamily (MFS) transporter domain
+        node_type: DOMAIN
+        grounding: Pfam:PF07690
+        description: KB trait (SEQ_FAMILY).
+      - node_id: mfs_fold
+        label: MFS general substrate transporter fold
+        node_type: DOMAIN
+        grounding: CATH:1.20.1250.20
+        description: KB trait (STRUCT_HOMOLOGOUS_SUPERFAMILY).
     edges:
       - subject: mdfa
         predicate: member of
@@ -112,6 +122,33 @@ causal_graphs:
           - reference: PMID:12578981
             snippet: "The resistance of cells to many drugs simultaneously (multidrug resistance) often involves the expression of membrane transporters (Mdrs); each recognizes and expels a broad spectrum of chemically unrelated drugs from the cell."
             notes: Determinant → phenotype.
+      - subject: mfs_domain
+        predicate: part of (domain of the protein)
+        predicate_id: BFO:0000050
+        object: mdfa
+        description: The MFS transporter domain constitutes MdfA.
+        evidence:
+          - reference: Pfam:PF07690
+            snippet: "Major Facilitator Superfamily"
+            notes: KB trait Pfam:PF07690 (SEQ_FAMILY).
+      - subject: mdfa
+        predicate: member of (adopts fold)
+        predicate_id: RO:0002350
+        object: mfs_fold
+        description: MdfA adopts the MFS transporter fold.
+        evidence:
+          - reference: CATH:1.20.1250.20
+            snippet: "MFS general substrate transporter like domains"
+            notes: KB trait CATH:1.20.1250.20.
+      - subject: mfs_domain
+        predicate: enables
+        predicate_id: RO:0002327
+        object: efflux
+        description: The MFS domain carries out proton-coupled drug efflux.
+        evidence:
+          - reference: PMID:9079913
+            snippet: "MdfA is a multidrug transporter that is driven by the proton electrochemical gradient"
+            notes: ARO:0010000 antibiotic efflux.
 curation_history:
   - timestamp: "2026-07-21T00:00:00Z"
     curator: edison-causal-graphs

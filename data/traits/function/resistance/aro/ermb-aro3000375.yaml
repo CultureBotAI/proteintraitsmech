@@ -98,6 +98,16 @@ causal_graphs:
       - node_id: resistance
         label: MLSB resistance phenotype
         node_type: PHENOTYPE
+      - node_id: mtase_domain
+        label: rRNA adenine dimethyltransferase domain (RrnaAD)
+        node_type: DOMAIN
+        grounding: Pfam:PF00398
+        description: KB trait (SEQ_DOMAIN).
+      - node_id: mtase_sig
+        label: rRNA adenine N6-methyltransferase family signature
+        node_type: MOTIF
+        grounding: PROSITE:PRU01026
+        description: KB trait (SEQ_DOMAIN, ProRule).
     edges:
       - subject: ermb
         predicate: member of
@@ -162,6 +172,33 @@ causal_graphs:
           - reference: PMID:9187657
             snippet: "ErmB confers the MLSb phenotype."
             notes: ARO record definition (DOI:10.1038/nsb0697-483).
+      - subject: mtase_domain
+        predicate: part of (domain of the protein)
+        predicate_id: BFO:0000050
+        object: ermb
+        description: The RrnaAD methyltransferase domain constitutes ErmB.
+        evidence:
+          - reference: Pfam:PF00398
+            snippet: "Ribosomal RNA adenine dimethylase"
+            notes: KB trait Pfam:PF00398 (SEQ_DOMAIN).
+      - subject: mtase_sig
+        predicate: part of (located in)
+        predicate_id: BFO:0000050
+        object: mtase_domain
+        description: The methyltransferase signature lies within the domain.
+        evidence:
+          - reference: PROSITE:PRU01026
+            snippet: "rRNA adenine N(6)-methyltransferase family"
+            notes: KB trait PROSITE:PRU01026.
+      - subject: mtase_domain
+        predicate: enables
+        predicate_id: RO:0002327
+        object: methylation
+        description: The Rossmann-fold methyltransferase domain carries out 23S rRNA A2058 dimethylation.
+        evidence:
+          - reference: PMID:33453992
+            snippet: "Erythromycin-resistance methyltransferases are SAM dependent Rossmann fold methyltransferases that convert A2058 of 23S rRNA to m62A2058"
+            notes: SAM-dependent.
 curation_history:
   - timestamp: "2026-07-21T00:00:00Z"
     curator: edison-causal-graphs

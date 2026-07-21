@@ -70,6 +70,16 @@ causal_graphs:
       - node_id: resistance
         label: β-lactam (incl. carbapenem) resistance phenotype
         node_type: PHENOTYPE
+      - node_id: mbl_domain
+        label: metallo-beta-lactamase superfamily domain
+        node_type: DOMAIN
+        grounding: Pfam:PF00753
+        description: KB trait (SEQ_DOMAIN).
+      - node_id: mbl_fold
+        label: metallo-beta-lactamase domain fold
+        node_type: DOMAIN
+        grounding: CATH:3.60.15.30
+        description: KB trait (STRUCT_HOMOLOGOUS_SUPERFAMILY).
     edges:
       - subject: gob10
         predicate: member of
@@ -125,6 +135,33 @@ causal_graphs:
           - reference: PMID:21299838
             snippet: "Broad antibiotic resistance profile of the subclass B3 metallo-β-lactamase GOB-1, a di-zinc enzyme"
             notes: Determinant → phenotype; GOB-family MBLs confer broad β-lactam resistance.
+      - subject: mbl_domain
+        predicate: part of (domain of the protein)
+        predicate_id: BFO:0000050
+        object: gob10
+        description: The MBL domain is part of GOB-10.
+        evidence:
+          - reference: Pfam:PF00753
+            snippet: "Metallo-beta-lactamase superfamily"
+            notes: KB trait Pfam:PF00753 (SEQ_DOMAIN).
+      - subject: gob10
+        predicate: member of (adopts fold)
+        predicate_id: RO:0002350
+        object: mbl_fold
+        description: GOB-10 adopts the metallo-beta-lactamase fold.
+        evidence:
+          - reference: CATH:3.60.15.30
+            snippet: "Metallo-beta-lactamase domain"
+            notes: KB trait CATH:3.60.15.30 (STRUCT_HOMOLOGOUS_SUPERFAMILY).
+      - subject: mbl_domain
+        predicate: enables
+        predicate_id: RO:0002327
+        object: hydrolysis
+        description: The MBL domain carries out the beta-lactamase hydrolase activity.
+        evidence:
+          - reference: Pfam:PF00753
+            snippet: "Metallo-beta-lactamase superfamily"
+            notes: GO:0008800; the domain hosts the di-zinc active site.
 curation_history:
   - timestamp: "2026-07-21T00:00:00Z"
     curator: edison-causal-graphs

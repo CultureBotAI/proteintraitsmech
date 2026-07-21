@@ -60,6 +60,16 @@ causal_graphs:
       - node_id: resistance
         label: tetracycline resistance phenotype
         node_type: PHENOTYPE
+      - node_id: gtpase_domain
+        label: elongation factor Tu-like GTP-binding domain
+        node_type: DOMAIN
+        grounding: Pfam:PF00009
+        description: KB trait (SEQ_DOMAIN).
+      - node_id: efg_domain2
+        label: elongation factor G domain II
+        node_type: DOMAIN
+        grounding: Pfam:PF03144
+        description: KB trait (SEQ_DOMAIN).
     edges:
       - subject: tetm
         predicate: member of
@@ -115,6 +125,33 @@ causal_graphs:
           - reference: PMID:19475445
             snippet: "Tet(M) is a ribosomal protection protein that confers tetracycline resistance."
             notes: Determinant → phenotype.
+      - subject: gtpase_domain
+        predicate: part of (domain of the protein)
+        predicate_id: BFO:0000050
+        object: tetm
+        description: The EF-Tu-like GTPase domain constitutes the Tet(M) GTPase.
+        evidence:
+          - reference: Pfam:PF00009
+            snippet: "Elongation factor Tu GTP binding domain"
+            notes: KB trait Pfam:PF00009 (SEQ_DOMAIN).
+      - subject: efg_domain2
+        predicate: part of (domain of the protein)
+        predicate_id: BFO:0000050
+        object: tetm
+        description: Tet(M) has the EF-G domain-II architecture (EF-G paralogue).
+        evidence:
+          - reference: Pfam:PF03144
+            snippet: "Elongation factor Tu domain 2"
+            notes: KB trait Pfam:PF03144 (SEQ_DOMAIN).
+      - subject: gtpase_domain
+        predicate: enables
+        predicate_id: RO:0002327
+        object: protection
+        description: GTP hydrolysis by the GTPase domain powers ribosomal protection.
+        evidence:
+          - reference: PMID:8655505
+            snippet: "Tet(M)-promoted release of tetracycline from ribosomes is GTP dependent"
+            notes: EF-G-paralogue GTPase.
 curation_history:
   - timestamp: "2026-07-21T00:00:00Z"
     curator: edison-causal-graphs

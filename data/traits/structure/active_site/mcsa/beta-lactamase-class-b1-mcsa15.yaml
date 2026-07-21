@@ -279,6 +279,26 @@ causal_graphs:
         label: hydrolysed beta-lactam (substituted beta-amino acid)
         node_type: CHEMICAL
         grounding: CHEBI:33705
+      - node_id: mbl_domain
+        label: metallo-beta-lactamase superfamily domain
+        node_type: DOMAIN
+        grounding: Pfam:PF00753
+        description: KB trait (SEQ_DOMAIN).
+      - node_id: mbl_signature
+        label: metallo-beta-lactamase class B signature
+        node_type: MOTIF
+        grounding: PROSITE:PS00743
+        description: KB trait (SEQ_MOTIF).
+      - node_id: mbl_fold
+        label: metallo-beta-lactamase domain fold
+        node_type: DOMAIN
+        grounding: CATH:3.60.15.30
+        description: KB trait (STRUCT_HOMOLOGOUS_SUPERFAMILY).
+      - node_id: mbl_activity
+        label: beta-lactamase activity (beta-lactam hydrolysis)
+        node_type: MOLECULAR_FUNCTION
+        grounding: GO:0008800
+        description: KB activity; EC:3.5.2.6.
     edges:
       - subject: his99
         predicate: coordinates (metal ligand)
@@ -397,6 +417,51 @@ causal_graphs:
           - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/15/
             snippet: "The negatively charged nitrogen group then deprotonates an incoming, zinc-activated water molecule"
             notes: M-CSA entry 15, step 2 (rate-determining); product EC:3.5.2.6 / RHEA:20401.
+      - subject: his99
+        predicate: part of (metal ligand within domain)
+        predicate_id: BFO:0000050
+        object: mbl_domain
+        description: Zn-coordinating residues lie within the MBL domain.
+        evidence:
+          - reference: Pfam:PF00753
+            snippet: "Metallo-beta-lactamase superfamily"
+            notes: KB trait Pfam:PF00753 (SEQ_DOMAIN).
+      - subject: mbl_signature
+        predicate: part of (located in)
+        predicate_id: BFO:0000050
+        object: mbl_domain
+        description: The class B signature lies within the domain.
+        evidence:
+          - reference: PROSITE:PS00743
+            snippet: "Beta-lactamases class B signature 1"
+            notes: KB trait PROSITE:PS00743 (SEQ_MOTIF).
+      - subject: mbl_domain
+        predicate: member of (adopts fold)
+        predicate_id: RO:0002350
+        object: mbl_fold
+        description: The domain adopts the metallo-beta-lactamase fold.
+        evidence:
+          - reference: CATH:3.60.15.30
+            snippet: "Metallo-beta-lactamase domain"
+            notes: KB trait CATH:3.60.15.30 (STRUCT_HOMOLOGOUS_SUPERFAMILY).
+      - subject: mbl_domain
+        predicate: enables
+        predicate_id: RO:0002327
+        object: mbl_activity
+        description: The di-zinc domain carries out beta-lactam hydrolysis.
+        evidence:
+          - reference: PMID:19665032
+            snippet: "catalysis is associated with the dizinc enzyme species only"
+            notes: EC:3.5.2.6 / GO:0008800.
+      - subject: mbl_activity
+        predicate: has output
+        predicate_id: RO:0002234
+        object: product
+        description: The activity yields the hydrolysed beta-lactam.
+        evidence:
+          - reference: PMID:19665032
+            snippet: "catalysis is associated with the dizinc enzyme species only"
+            notes: RHEA:20401.
 curation_history:
   - timestamp: "2026-07-21T00:00:00Z"
     curator: edison-causal-graphs
