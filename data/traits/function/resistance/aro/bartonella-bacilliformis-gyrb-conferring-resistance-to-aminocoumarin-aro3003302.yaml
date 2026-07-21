@@ -24,4 +24,53 @@ xrefs:
 evidence:
 - reference: DOI:10.1128/AAC.42.11.2906
   notes: PMID:9797224 (aro citation)
+causal_graphs:
+  - graph_id: resistance-draft
+    title: "[DRAFT] Bartonella bacilliformis gyrB conferring resistance to aminocoumarin → mechanism → resistance (auto-scaffold from ARO relations)"
+    description: >-
+      Auto-drafted from this record's enriched ARO trait_relations (participates_in mechanism + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.
+    nodes:
+      - node_id: determinant
+        label: Bartonella bacilliformis gyrB conferring resistance to aminocoumarin
+        node_type: PROTEIN
+        grounding: ARO:3003302
+      - node_id: mech0
+        label: mutation conferring antibiotic resistance
+        node_type: MOLECULAR_FUNCTION
+        grounding: ARO:3000212
+      - node_id: drug0
+        label: aminocoumarin antibiotic
+        node_type: CHEMICAL
+        grounding: ARO:3000103
+      - node_id: resistance
+        label: antibiotic resistance phenotype
+        node_type: PHENOTYPE
+    edges:
+      - subject: determinant
+        predicate: participates in (resistance mechanism)
+        predicate_id: RO:0000056
+        object: mech0
+        evidence:
+          - reference: DOI:10.1128/AAC.42.11.2906
+            notes: "Auto-drafted from ARO participates_in ARO:3000212; verbatim snippet pending curation."
+      - subject: mech0
+        predicate: causally upstream of
+        predicate_id: RO:0002411
+        object: resistance
+        evidence:
+          - reference: DOI:10.1128/AAC.42.11.2906
+            notes: "Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation."
+      - subject: determinant
+        predicate: causally upstream of (confers resistance)
+        predicate_id: RO:0002411
+        object: resistance
+        evidence:
+          - reference: DOI:10.1128/AAC.42.11.2906
+            notes: "Auto-drafted: determinant → resistance phenotype; snippet pending curation."
+      - subject: resistance
+        predicate: related to (resistance is to)
+        object: drug0
+        evidence:
+          - reference: DOI:10.1128/AAC.42.11.2906
+            notes: "Auto-drafted from ARO confers_resistance_to_drug_class ARO:3000103; snippet pending curation."
 license: CC-BY 4.0

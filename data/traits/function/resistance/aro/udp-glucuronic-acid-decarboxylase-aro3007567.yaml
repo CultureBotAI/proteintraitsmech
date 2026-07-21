@@ -24,4 +24,53 @@ evidence:
   notes: PMID:31913284 (aro citation)
 - reference: DOI:10.1038/s41467-021-23745-1
   notes: PMID:34103502 (aro citation)
+causal_graphs:
+  - graph_id: resistance-draft
+    title: "[DRAFT] UDP-glucuronic acid decarboxylase → mechanism → resistance (auto-scaffold from ARO relations)"
+    description: >-
+      Auto-drafted from this record's enriched ARO trait_relations (participates_in mechanism + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.
+    nodes:
+      - node_id: determinant
+        label: UDP-glucuronic acid decarboxylase
+        node_type: PROTEIN
+        grounding: ARO:3007567
+      - node_id: mech0
+        label: resistance by absence
+        node_type: MOLECULAR_FUNCTION
+        grounding: ARO:3003764
+      - node_id: drug0
+        label: pyrimidine antifungal drug
+        node_type: CHEMICAL
+        grounding: ARO:3007560
+      - node_id: resistance
+        label: antibiotic resistance phenotype
+        node_type: PHENOTYPE
+    edges:
+      - subject: determinant
+        predicate: participates in (resistance mechanism)
+        predicate_id: RO:0000056
+        object: mech0
+        evidence:
+          - reference: DOI:10.1038/s41467-019-13890-z
+            notes: "Auto-drafted from ARO participates_in ARO:3003764; verbatim snippet pending curation."
+      - subject: mech0
+        predicate: causally upstream of
+        predicate_id: RO:0002411
+        object: resistance
+        evidence:
+          - reference: DOI:10.1038/s41467-019-13890-z
+            notes: "Auto-drafted: mechanism ARO:3003764 → resistance; snippet pending curation."
+      - subject: determinant
+        predicate: causally upstream of (confers resistance)
+        predicate_id: RO:0002411
+        object: resistance
+        evidence:
+          - reference: DOI:10.1038/s41467-019-13890-z
+            notes: "Auto-drafted: determinant → resistance phenotype; snippet pending curation."
+      - subject: resistance
+        predicate: related to (resistance is to)
+        object: drug0
+        evidence:
+          - reference: DOI:10.1038/s41467-019-13890-z
+            notes: "Auto-drafted from ARO confers_resistance_to_drug_class ARO:3007560; snippet pending curation."
 license: CC-BY 4.0

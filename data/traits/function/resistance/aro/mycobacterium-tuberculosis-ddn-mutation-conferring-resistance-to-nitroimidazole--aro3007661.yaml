@@ -28,4 +28,53 @@ evidence:
   notes: PMID:35944069 (aro citation)
 - reference: DOI:10.1128/aac.01026-22
   notes: PMID:36409105 (aro citation)
+causal_graphs:
+  - graph_id: resistance-draft
+    title: "[DRAFT] Mycobacterium tuberculosis ddn mutation conferring resistance to nitroimidazole antibiotics → mechanism → resistance (auto-scaffold from ARO relations)"
+    description: >-
+      Auto-drafted from this record's enriched ARO trait_relations (participates_in mechanism + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.
+    nodes:
+      - node_id: determinant
+        label: Mycobacterium tuberculosis ddn mutation conferring resistance to nitroimidazole antibiotics
+        node_type: PROTEIN
+        grounding: ARO:3007661
+      - node_id: mech0
+        label: mutation conferring antibiotic resistance
+        node_type: MOLECULAR_FUNCTION
+        grounding: ARO:3000212
+      - node_id: drug0
+        label: nitroimidazole antibiotic
+        node_type: CHEMICAL
+        grounding: ARO:3004115
+      - node_id: resistance
+        label: antibiotic resistance phenotype
+        node_type: PHENOTYPE
+    edges:
+      - subject: determinant
+        predicate: participates in (resistance mechanism)
+        predicate_id: RO:0000056
+        object: mech0
+        evidence:
+          - reference: DOI:10.1371/journal.pbio.3001721
+            notes: "Auto-drafted from ARO participates_in ARO:3000212; verbatim snippet pending curation."
+      - subject: mech0
+        predicate: causally upstream of
+        predicate_id: RO:0002411
+        object: resistance
+        evidence:
+          - reference: DOI:10.1371/journal.pbio.3001721
+            notes: "Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation."
+      - subject: determinant
+        predicate: causally upstream of (confers resistance)
+        predicate_id: RO:0002411
+        object: resistance
+        evidence:
+          - reference: DOI:10.1371/journal.pbio.3001721
+            notes: "Auto-drafted: determinant → resistance phenotype; snippet pending curation."
+      - subject: resistance
+        predicate: related to (resistance is to)
+        object: drug0
+        evidence:
+          - reference: DOI:10.1371/journal.pbio.3001721
+            notes: "Auto-drafted from ARO confers_resistance_to_drug_class ARO:3004115; snippet pending curation."
 license: CC-BY 4.0

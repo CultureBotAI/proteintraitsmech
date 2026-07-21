@@ -31,4 +31,53 @@ evidence:
   notes: PMID:16323116 (aro citation)
 - reference: DOI:10.1128/AAC.47.1.7-18.2003
   notes: PMID:12499162 (aro citation)
+causal_graphs:
+  - graph_id: resistance-draft
+    title: "[DRAFT] vanY gene in vanD cluster → mechanism → resistance (auto-scaffold from ARO relations)"
+    description: >-
+      Auto-drafted from this record's enriched ARO trait_relations (participates_in mechanism + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.
+    nodes:
+      - node_id: determinant
+        label: vanY gene in vanD cluster
+        node_type: PROTEIN
+        grounding: ARO:3002957
+      - node_id: mech0
+        label: restructuring of bacterial cell wall conferring antibiotic resistance
+        node_type: MOLECULAR_FUNCTION
+        grounding: ARO:3000213
+      - node_id: drug0
+        label: glycopeptide antibiotic
+        node_type: CHEMICAL
+        grounding: ARO:3000081
+      - node_id: resistance
+        label: antibiotic resistance phenotype
+        node_type: PHENOTYPE
+    edges:
+      - subject: determinant
+        predicate: participates in (resistance mechanism)
+        predicate_id: RO:0000056
+        object: mech0
+        evidence:
+          - reference: DOI:10.1086/491711
+            notes: "Auto-drafted from ARO participates_in ARO:3000213; verbatim snippet pending curation."
+      - subject: mech0
+        predicate: causally upstream of
+        predicate_id: RO:0002411
+        object: resistance
+        evidence:
+          - reference: DOI:10.1086/491711
+            notes: "Auto-drafted: mechanism ARO:3000213 → resistance; snippet pending curation."
+      - subject: determinant
+        predicate: causally upstream of (confers resistance)
+        predicate_id: RO:0002411
+        object: resistance
+        evidence:
+          - reference: DOI:10.1086/491711
+            notes: "Auto-drafted: determinant → resistance phenotype; snippet pending curation."
+      - subject: resistance
+        predicate: related to (resistance is to)
+        object: drug0
+        evidence:
+          - reference: DOI:10.1086/491711
+            notes: "Auto-drafted from ARO confers_resistance_to_drug_class ARO:3000081; snippet pending curation."
 license: CC-BY 4.0

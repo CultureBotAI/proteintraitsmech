@@ -333,6 +333,10 @@ def parse_xref(raw: str) -> str | None:
     # Non-grounding lexical sources some OBO files attach as xrefs.
     if prefix in {"WordNet", "url", "URL"}:
         return None
+    # DOIs (and any local with a '/') are citations, not CURIE xrefs — they fail
+    # the schema's xref pattern and belong in `evidence`. Drop them from xrefs.
+    if prefix == "DOI" or "/" in local:
+        return None
     curie = f"{prefix}:{local}"
     return curie if _CURIE_RE.match(curie) else None
 
