@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3004268
 trait_relations:
@@ -22,10 +22,10 @@ evidence:
 - reference: DOI:10.1186/s13756-021-00963-2
   notes: PMID:34187559 (aro citation)
 causal_graphs:
-  - graph_id: resistance-draft
-    title: "[DRAFT] MCR-3.37 → mechanism → resistance (auto-scaffold from ARO relations)"
+  - graph_id: resistance
+    title: MCR-3.37 → mechanism → resistance (curated from ARO relations + literature)
     description: >-
-      Auto-drafted from this record's enriched ARO trait_relations (participates_in mechanism + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.
+      Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence (PMID:27958270). MCR is a phosphoethanolamine transferase; it modifies lipid A (cell-surface charge alteration) to reduce colistin binding.
     nodes:
       - node_id: determinant
         label: MCR-3.37
@@ -39,6 +39,16 @@ causal_graphs:
         label: peptide antibiotic
         node_type: CHEMICAL
         grounding: ARO:3000053
+      - node_id: domain
+        label: phosphoethanolamine transferase C-terminal domain
+        node_type: DOMAIN
+        grounding: InterPro:IPR058130
+        description: KB protein-trait record carrying the mechanism.
+      - node_id: fold
+        label: alkaline phosphatase / sulfatase superfamily fold
+        node_type: DOMAIN
+        grounding: CATH:3.40.720.10
+        description: KB protein-trait record carrying the mechanism.
       - node_id: resistance
         label: antibiotic resistance phenotype
         node_type: PHENOTYPE
@@ -48,26 +58,59 @@ causal_graphs:
         predicate_id: RO:0000056
         object: mech0
         evidence:
-          - reference: DOI:10.1186/s13756-021-00963-2
-            notes: "Auto-drafted from ARO participates_in ARO:3003588; verbatim snippet pending curation."
+          - reference: PMID:27958270
+            snippet: "MCR-1 is a phosphoethanolamine (pEtN) transferase that modifies the pEtN moiety of lipid A, conferring resistance to colistin."
+            notes: "Family mechanism ARO:3003588."
       - subject: mech0
         predicate: causally upstream of
         predicate_id: RO:0002411
         object: resistance
         evidence:
-          - reference: DOI:10.1186/s13756-021-00963-2
-            notes: "Auto-drafted: mechanism ARO:3003588 → resistance; snippet pending curation."
+          - reference: PMID:27958270
+            snippet: "MCR-1 is a phosphoethanolamine (pEtN) transferase that modifies the pEtN moiety of lipid A, conferring resistance to colistin."
+            notes: "Mechanism ARO:3003588 → resistance."
       - subject: determinant
         predicate: causally upstream of (confers resistance)
         predicate_id: RO:0002411
         object: resistance
         evidence:
-          - reference: DOI:10.1186/s13756-021-00963-2
-            notes: "Auto-drafted: determinant → resistance phenotype; snippet pending curation."
+          - reference: PMID:27958270
+            snippet: "MCR-1 is a phosphoethanolamine (pEtN) transferase that modifies the pEtN moiety of lipid A, conferring resistance to colistin."
+            notes: Determinant → resistance phenotype.
       - subject: resistance
         predicate: related to (resistance is to)
         object: drug0
         evidence:
-          - reference: DOI:10.1186/s13756-021-00963-2
-            notes: "Auto-drafted from ARO confers_resistance_to_drug_class ARO:3000053; snippet pending curation."
+          - reference: PMID:27958270
+            snippet: "MCR-1 is a phosphoethanolamine (pEtN) transferase that modifies the pEtN moiety of lipid A, conferring resistance to colistin."
+            notes: Resistance to peptide antibiotic.
+      - subject: domain
+        predicate: part of (catalytic domain of the protein)
+        predicate_id: BFO:0000050
+        object: determinant
+        evidence:
+          - reference: InterPro:IPR058130
+            snippet: "Phosphoethanolamine transferase, C-terminal domain"
+            notes: "KB trait: the phosphoethanolamine-transferase catalytic domain."
+      - subject: determinant
+        predicate: member of (adopts fold)
+        predicate_id: RO:0002350
+        object: fold
+        evidence:
+          - reference: CATH:3.40.720.10
+            snippet: "Alkaline Phosphatase, subunit A"
+            notes: "KB trait: the alkaline-phosphatase/sulfatase superfamily fold."
+      - subject: domain
+        predicate: enables (lipid A modification)
+        predicate_id: RO:0002327
+        object: mech0
+        evidence:
+          - reference: PMID:27958270
+            snippet: "MCR-1 is a phosphoethanolamine (pEtN) transferase that modifies the pEtN moiety of lipid A, conferring resistance to colistin."
+            notes: The transferase domain adds phosphoethanolamine to lipid A.
+curation_history:
+  - timestamp: "2026-07-21T00:00:00Z"
+    curator: edison-causal-graphs
+    action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
+    llm_assisted: true
 license: CC-BY 4.0

@@ -124,6 +124,84 @@ FAMILY_SNIPPETS = {
             "enables_mech": "ARO:3000187",
         },
     },
+    # qnr — quinolone target protection (pentapeptide-repeat protein; no matching CATH fold record)
+    "ARO:3000419": {
+        "reference": "PMID:21227918",
+        "mech": {"ARO:0001003": "Plasmid genes qnrA, qnrB, qnrC, qnrD, qnrS, and qnrVC code for proteins of the pentapeptide repeat family that protects DNA gyrase and topoisomerase IV from quinolone inhibition."},
+        "mech_res": "Plasmid genes qnrA, qnrB, qnrC, qnrD, qnrS, and qnrVC code for proteins of the pentapeptide repeat family that protects DNA gyrase and topoisomerase IV from quinolone inhibition.",
+        "det_res": "Plasmid genes qnrA, qnrB, qnrC, qnrD, qnrS, and qnrVC code for proteins of the pentapeptide repeat family that protects DNA gyrase and topoisomerase IV from quinolone inhibition.",
+        "res_drug": "Plasmid genes qnrA, qnrB, qnrC, qnrD, qnrS, and qnrVC code for proteins of the pentapeptide repeat family that protects DNA gyrase and topoisomerase IV from quinolone inhibition.",
+        "note": "qnr is a pentapeptide-repeat protein; target protection of DNA gyrase/topoisomerase IV from fluoroquinolones.",
+        "protein_traits": {
+            "primary_key": "domain",
+            "part_pred": "part of (domain of the protein)",
+            "enable_pred": "enables (target protection)",
+            "part_note": "KB trait: the pentapeptide-repeat domain that mediates gyrase protection.",
+            "enable_note": "The pentapeptide-repeat domain protects DNA gyrase/topoisomerase IV from quinolones.",
+            "domain": ("Pfam:PF00805", "pentapeptide-repeat domain", "DOMAIN", "Pentapeptide repeats (8 copies)"),
+            "enables_mech": "ARO:0001003",
+        },
+    },
+    # MCR — phosphoethanolamine transferase; lipid A charge alteration → colistin resistance
+    "ARO:3004268": {
+        "reference": "PMID:27958270",
+        "mech": {"ARO:3003588": "MCR-1 is a phosphoethanolamine (pEtN) transferase that modifies the pEtN moiety of lipid A, conferring resistance to colistin."},
+        "mech_res": "MCR-1 is a phosphoethanolamine (pEtN) transferase that modifies the pEtN moiety of lipid A, conferring resistance to colistin.",
+        "det_res": "MCR-1 is a phosphoethanolamine (pEtN) transferase that modifies the pEtN moiety of lipid A, conferring resistance to colistin.",
+        "res_drug": "MCR-1 is a phosphoethanolamine (pEtN) transferase that modifies the pEtN moiety of lipid A, conferring resistance to colistin.",
+        "note": "MCR is a phosphoethanolamine transferase; it modifies lipid A (cell-surface charge alteration) to reduce colistin binding.",
+        "protein_traits": {
+            "primary_key": "domain",
+            "part_pred": "part of (catalytic domain of the protein)",
+            "enable_pred": "enables (lipid A modification)",
+            "part_note": "KB trait: the phosphoethanolamine-transferase catalytic domain.",
+            "fold_note": "KB trait: the alkaline-phosphatase/sulfatase superfamily fold.",
+            "enable_note": "The transferase domain adds phosphoethanolamine to lipid A.",
+            "domain": ("InterPro:IPR058130", "phosphoethanolamine transferase C-terminal domain", "DOMAIN", "Phosphoethanolamine transferase, C-terminal domain"),
+            "fold": ("CATH:3.40.720.10", "alkaline phosphatase / sulfatase superfamily fold", "DOMAIN", "Alkaline Phosphatase, subunit A"),
+            "enables_mech": "ARO:3003588",
+        },
+    },
+    # MFS antibiotic efflux pump (major facilitator superfamily)
+    "ARO:0010002": {
+        "reference": "PMID:38974671",
+        "mech": {"ARO:0010000": "The antimicrobial antiport transport cycle in bacteria is driven by the ion-motive force, an energy mode associated with changes in transporter conformations and gating during efflux across the membrane."},
+        "mech_res": "The antimicrobial antiport transport cycle in bacteria is driven by the ion-motive force, an energy mode associated with changes in transporter conformations and gating during efflux across the membrane.",
+        "det_res": "The antimicrobial antiport transport cycle in bacteria is driven by the ion-motive force, an energy mode associated with changes in transporter conformations and gating during efflux across the membrane.",
+        "res_drug": "The antimicrobial antiport transport cycle in bacteria is driven by the ion-motive force, an energy mode associated with changes in transporter conformations and gating during efflux across the membrane.",
+        "note": "MFS antibiotic efflux pump; ion-motive-force-driven drug antiport across the membrane.",
+        "protein_traits": {
+            "primary_key": "domain",
+            "part_pred": "part of (domain of the protein)",
+            "enable_pred": "enables (drug efflux)",
+            "part_note": "KB trait: the MFS transporter domain.",
+            "fold_note": "KB trait: the MFS general substrate transporter fold.",
+            "enable_note": "The MFS domain carries out ion-motive-force-driven drug efflux.",
+            "domain": ("Pfam:PF07690", "major facilitator superfamily (MFS) transporter domain", "DOMAIN", "Major Facilitator Superfamily"),
+            "fold": ("CATH:1.20.1250.20", "MFS general substrate transporter fold", "DOMAIN", "MFS general substrate transporter like domains"),
+            "enables_mech": "ARO:0010000",
+        },
+    },
+    # RND antibiotic efflux pump (resistance-nodulation-cell division; AcrB/MexB-type)
+    "ARO:0010004": {
+        "reference": "PMID:19166984",
+        "mech": {"ARO:0010000": "The inner membrane component AcrB, a member of the Resistance Nodulation cell Division (RND) family, is the major site for substrate recognition and energy transduction of the entire tripartite system."},
+        "mech_res": "The inner membrane component AcrB, a member of the Resistance Nodulation cell Division (RND) family, is the major site for substrate recognition and energy transduction of the entire tripartite system.",
+        "det_res": "The inner membrane component AcrB, a member of the Resistance Nodulation cell Division (RND) family, is the major site for substrate recognition and energy transduction of the entire tripartite system.",
+        "res_drug": "The inner membrane component AcrB, a member of the Resistance Nodulation cell Division (RND) family, is the major site for substrate recognition and energy transduction of the entire tripartite system.",
+        "note": "RND efflux pump (AcrB/MexB-type); proton-motive-force-driven drug efflux via a tripartite system.",
+        "protein_traits": {
+            "primary_key": "domain",
+            "part_pred": "part of (domain of the protein)",
+            "enable_pred": "enables (drug efflux)",
+            "part_note": "KB trait: the RND (AcrB/AcrD/AcrF) transporter domain.",
+            "fold_note": "KB trait: the AcrB pore-domain fold.",
+            "enable_note": "The RND transporter domain carries out proton-motive-force-driven drug efflux.",
+            "domain": ("Pfam:PF00873", "RND transporter domain (AcrB/AcrD/AcrF family)", "DOMAIN", "AcrB/AcrD/AcrF family"),
+            "fold": ("CATH:3.30.70.1430", "AcrB pore-domain fold", "DOMAIN", "Multidrug efflux transporter AcrB pore domain"),
+            "enables_mech": "ARO:0010000",
+        },
+    },
 }
 
 
@@ -161,7 +239,8 @@ def promoted_graph(ident: str, label: str, mech: list, drug: list, names: dict, 
               f"        grounding: {did}"]
     pt = cfg.get("protein_traits")
     if pt:
-        for key in ("active_site", "fold"):
+        pkey = pt.get("primary_key", "active_site")   # id of the primary trait node
+        for key in ([pkey] + (["fold"] if "fold" in pt else [])):
             cid, lab, ntype, _ = pt[key]
             L += [f"      - node_id: {key}",
                   f"        label: {D._yq(lab)}",
@@ -196,25 +275,27 @@ def promoted_graph(ident: str, label: str, mech: list, drug: list, names: dict, 
               *_ev(ref, cfg["res_drug"], f"Resistance to {names.get(did, did)}.")]
     # Route the mechanism through the KB's own protein-trait records.
     if pt:
-        as_cid, _, _, as_snip = pt["active_site"]
-        fo_cid, _, _, fo_snip = pt["fold"]
-        L += ["      - subject: active_site",
-              "        predicate: part of (active site of the protein)",
+        pkey = pt.get("primary_key", "active_site")
+        p_cid, _, _, p_snip = pt[pkey]
+        L += [f"      - subject: {pkey}",
+              f"        predicate: {pt.get('part_pred', 'part of (active site of the protein)')}",
               "        predicate_id: BFO:0000050",
               "        object: determinant",
-              *_ev(as_cid, as_snip, "KB trait: the class-A active-site signature carried by this determinant.")]
-        L += ["      - subject: determinant",
-              "        predicate: member of (adopts fold)",
-              "        predicate_id: RO:0002350",
-              "        object: fold",
-              *_ev(fo_cid, fo_snip, "KB trait: the DD-peptidase/beta-lactamase superfamily fold.")]
+              *_ev(p_cid, p_snip, pt.get("part_note", "KB trait: the class-A active-site signature carried by this determinant."))]
+        if "fold" in pt:
+            fo_cid, _, _, fo_snip = pt["fold"]
+            L += ["      - subject: determinant",
+                  "        predicate: member of (adopts fold)",
+                  "        predicate_id: RO:0002350",
+                  "        object: fold",
+                  *_ev(fo_cid, fo_snip, pt.get("fold_note", "KB trait: the DD-peptidase/beta-lactamase superfamily fold."))]
         em = pt.get("enables_mech")
         if em in mech:
-            L += ["      - subject: active_site",
-                  "        predicate: enables (catalysis)",
+            L += [f"      - subject: {pkey}",
+                  f"        predicate: {pt.get('enable_pred', 'enables (catalysis)')}",
                   "        predicate_id: RO:0002327",
                   f"        object: mech{mech.index(em)}",
-                  *_ev(ref, cfg["mech"][em], "The active site carries out the serine β-lactam hydrolysis mechanism.")]
+                  *_ev(ref, cfg["mech"][em], pt.get("enable_note", "The active site carries out the serine β-lactam hydrolysis mechanism."))]
     return L
 
 

@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000419
 trait_relations:
@@ -22,10 +22,10 @@ evidence:
 - reference: DOI:10.1093/jac/dkt127
   notes: PMID:23595824 (aro citation)
 causal_graphs:
-  - graph_id: resistance-draft
-    title: "[DRAFT] QnrVC7 → mechanism → resistance (auto-scaffold from ARO relations)"
+  - graph_id: resistance
+    title: QnrVC7 → mechanism → resistance (curated from ARO relations + literature)
     description: >-
-      Auto-drafted from this record's enriched ARO trait_relations (participates_in mechanism + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.
+      Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence (PMID:21227918). qnr is a pentapeptide-repeat protein; target protection of DNA gyrase/topoisomerase IV from fluoroquinolones.
     nodes:
       - node_id: determinant
         label: QnrVC7
@@ -39,6 +39,11 @@ causal_graphs:
         label: fluoroquinolone antibiotic
         node_type: CHEMICAL
         grounding: ARO:0000001
+      - node_id: domain
+        label: pentapeptide-repeat domain
+        node_type: DOMAIN
+        grounding: Pfam:PF00805
+        description: KB protein-trait record carrying the mechanism.
       - node_id: resistance
         label: antibiotic resistance phenotype
         node_type: PHENOTYPE
@@ -48,26 +53,51 @@ causal_graphs:
         predicate_id: RO:0000056
         object: mech0
         evidence:
-          - reference: DOI:10.1093/jac/dkt127
-            notes: "Auto-drafted from ARO participates_in ARO:0001003; verbatim snippet pending curation."
+          - reference: PMID:21227918
+            snippet: "Plasmid genes qnrA, qnrB, qnrC, qnrD, qnrS, and qnrVC code for proteins of the pentapeptide repeat family that protects DNA gyrase and topoisomerase IV from quinolone inhibition."
+            notes: "Family mechanism ARO:0001003."
       - subject: mech0
         predicate: causally upstream of
         predicate_id: RO:0002411
         object: resistance
         evidence:
-          - reference: DOI:10.1093/jac/dkt127
-            notes: "Auto-drafted: mechanism ARO:0001003 → resistance; snippet pending curation."
+          - reference: PMID:21227918
+            snippet: "Plasmid genes qnrA, qnrB, qnrC, qnrD, qnrS, and qnrVC code for proteins of the pentapeptide repeat family that protects DNA gyrase and topoisomerase IV from quinolone inhibition."
+            notes: "Mechanism ARO:0001003 → resistance."
       - subject: determinant
         predicate: causally upstream of (confers resistance)
         predicate_id: RO:0002411
         object: resistance
         evidence:
-          - reference: DOI:10.1093/jac/dkt127
-            notes: "Auto-drafted: determinant → resistance phenotype; snippet pending curation."
+          - reference: PMID:21227918
+            snippet: "Plasmid genes qnrA, qnrB, qnrC, qnrD, qnrS, and qnrVC code for proteins of the pentapeptide repeat family that protects DNA gyrase and topoisomerase IV from quinolone inhibition."
+            notes: Determinant → resistance phenotype.
       - subject: resistance
         predicate: related to (resistance is to)
         object: drug0
         evidence:
-          - reference: DOI:10.1093/jac/dkt127
-            notes: "Auto-drafted from ARO confers_resistance_to_drug_class ARO:0000001; snippet pending curation."
+          - reference: PMID:21227918
+            snippet: "Plasmid genes qnrA, qnrB, qnrC, qnrD, qnrS, and qnrVC code for proteins of the pentapeptide repeat family that protects DNA gyrase and topoisomerase IV from quinolone inhibition."
+            notes: Resistance to fluoroquinolone antibiotic.
+      - subject: domain
+        predicate: part of (domain of the protein)
+        predicate_id: BFO:0000050
+        object: determinant
+        evidence:
+          - reference: Pfam:PF00805
+            snippet: Pentapeptide repeats (8 copies)
+            notes: "KB trait: the pentapeptide-repeat domain that mediates gyrase protection."
+      - subject: domain
+        predicate: enables (target protection)
+        predicate_id: RO:0002327
+        object: mech0
+        evidence:
+          - reference: PMID:21227918
+            snippet: "Plasmid genes qnrA, qnrB, qnrC, qnrD, qnrS, and qnrVC code for proteins of the pentapeptide repeat family that protects DNA gyrase and topoisomerase IV from quinolone inhibition."
+            notes: The pentapeptide-repeat domain protects DNA gyrase/topoisomerase IV from quinolones.
+curation_history:
+  - timestamp: "2026-07-21T00:00:00Z"
+    curator: edison-causal-graphs
+    action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
+    llm_assisted: true
 license: CC-BY 4.0

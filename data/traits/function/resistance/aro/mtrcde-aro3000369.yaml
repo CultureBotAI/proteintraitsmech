@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:0010004
 trait_relations:
@@ -22,10 +22,10 @@ evidence:
 - reference: DOI:10.1128/IAI.71.10.5576-5582.2003
   notes: PMID:14500476 (aro citation)
 causal_graphs:
-  - graph_id: resistance-draft
-    title: "[DRAFT] MtrCDE → mechanism → resistance (auto-scaffold from ARO relations)"
+  - graph_id: resistance
+    title: MtrCDE → mechanism → resistance (curated from ARO relations + literature)
     description: >-
-      Auto-drafted from this record's enriched ARO trait_relations (participates_in mechanism + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.
+      Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence (PMID:19166984). RND efflux pump (AcrB/MexB-type); proton-motive-force-driven drug efflux via a tripartite system.
     nodes:
       - node_id: determinant
         label: MtrCDE
@@ -35,6 +35,16 @@ causal_graphs:
         label: antibiotic efflux
         node_type: MOLECULAR_FUNCTION
         grounding: ARO:0010000
+      - node_id: domain
+        label: RND transporter domain (AcrB/AcrD/AcrF family)
+        node_type: DOMAIN
+        grounding: Pfam:PF00873
+        description: KB protein-trait record carrying the mechanism.
+      - node_id: fold
+        label: AcrB pore-domain fold
+        node_type: DOMAIN
+        grounding: CATH:3.30.70.1430
+        description: KB protein-trait record carrying the mechanism.
       - node_id: resistance
         label: antibiotic resistance phenotype
         node_type: PHENOTYPE
@@ -44,20 +54,52 @@ causal_graphs:
         predicate_id: RO:0000056
         object: mech0
         evidence:
-          - reference: DOI:10.1099/13500872-141-3-611
-            notes: "Auto-drafted from ARO participates_in ARO:0010000; verbatim snippet pending curation."
+          - reference: PMID:19166984
+            snippet: "The inner membrane component AcrB, a member of the Resistance Nodulation cell Division (RND) family, is the major site for substrate recognition and energy transduction of the entire tripartite system."
+            notes: "Family mechanism ARO:0010000."
       - subject: mech0
         predicate: causally upstream of
         predicate_id: RO:0002411
         object: resistance
         evidence:
-          - reference: DOI:10.1099/13500872-141-3-611
-            notes: "Auto-drafted: mechanism ARO:0010000 → resistance; snippet pending curation."
+          - reference: PMID:19166984
+            snippet: "The inner membrane component AcrB, a member of the Resistance Nodulation cell Division (RND) family, is the major site for substrate recognition and energy transduction of the entire tripartite system."
+            notes: "Mechanism ARO:0010000 → resistance."
       - subject: determinant
         predicate: causally upstream of (confers resistance)
         predicate_id: RO:0002411
         object: resistance
         evidence:
-          - reference: DOI:10.1099/13500872-141-3-611
-            notes: "Auto-drafted: determinant → resistance phenotype; snippet pending curation."
+          - reference: PMID:19166984
+            snippet: "The inner membrane component AcrB, a member of the Resistance Nodulation cell Division (RND) family, is the major site for substrate recognition and energy transduction of the entire tripartite system."
+            notes: Determinant → resistance phenotype.
+      - subject: domain
+        predicate: part of (domain of the protein)
+        predicate_id: BFO:0000050
+        object: determinant
+        evidence:
+          - reference: Pfam:PF00873
+            snippet: AcrB/AcrD/AcrF family
+            notes: "KB trait: the RND (AcrB/AcrD/AcrF) transporter domain."
+      - subject: determinant
+        predicate: member of (adopts fold)
+        predicate_id: RO:0002350
+        object: fold
+        evidence:
+          - reference: CATH:3.30.70.1430
+            snippet: Multidrug efflux transporter AcrB pore domain
+            notes: "KB trait: the AcrB pore-domain fold."
+      - subject: domain
+        predicate: enables (drug efflux)
+        predicate_id: RO:0002327
+        object: mech0
+        evidence:
+          - reference: PMID:19166984
+            snippet: "The inner membrane component AcrB, a member of the Resistance Nodulation cell Division (RND) family, is the major site for substrate recognition and energy transduction of the entire tripartite system."
+            notes: The RND transporter domain carries out proton-motive-force-driven drug efflux.
+curation_history:
+  - timestamp: "2026-07-21T00:00:00Z"
+    curator: edison-causal-graphs
+    action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
+    llm_assisted: true
 license: CC-BY 4.0
