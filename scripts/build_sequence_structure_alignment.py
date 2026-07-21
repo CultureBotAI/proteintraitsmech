@@ -457,8 +457,16 @@ def main() -> int:
     if {"interpro", "sifts", "biolip"} & set(providers):
         http = Http(CACHE_DIR / "align_http_cache.json")
 
+    # interpro is scoped: an interpro call only matters if the exemplar protein is
+    # already localized by another record (only then can a pair form). So localize
+    # with every provider EXCEPT interpro first, then (phase 2) call interpro just
+    # for pattern-less signatures on already-shared proteins.
+    base_providers = tuple(p for p in providers if p != "interpro")
+    interpro_on = "interpro" in providers
+
     # protein_id → [(identifier, axis, category, residue set)]
     by_protein: dict[str, list] = {}
+    sig_stash = []          # (rid, axis, cat, prefix, acc, [pids]) pattern-less signatures
     parsed = with_loc = unconvertible = 0
     for p in TRAITS.rglob("*.yaml"):
         text = p.read_text(encoding="utf-8", errors="replace")
@@ -478,15 +486,39 @@ def main() -> int:
         pat = rec.get("sequence_pattern")
         if pat and "|" not in pat and prosite_to_regex(pat) is None:
             unconvertible += 1
-        loc = located_residues(rec, providers, http)
+        loc = located_residues(rec, base_providers, http)
         if loc:
             with_loc += 1
         for pid, res in loc.items():
             by_protein.setdefault(pid, []).append((rid, axis, cat, res))
+        if interpro_on and not pat:
+            prefix, _, acc = rid.partition(":")
+            if prefix in MEMBERDB and acc:
+                pids = [ex.get("protein_id") for ex in (rec.get("canonical_examples")
+                        or []) if isinstance(ex, dict) and ex.get("protein_id")]
+                if pids:
+                    sig_stash.append((rid, axis, cat, prefix, acc, pids))
         if args.limit and parsed >= args.limit:
             break
         if http and http.misses and http.misses % 500 == 0:
             http.flush()
+
+    # Phase 2 — scoped interpro: only for shared proteins already in by_protein.
+    ipro_calls = ipro_hits = 0
+    if interpro_on and http:
+        for rid, axis, cat, prefix, acc, pids in sig_stash:
+            for pid in pids:
+                if pid not in by_protein:          # no pairing partner → skip
+                    continue
+                r = interpro_residues(prefix, acc, pid, http)
+                ipro_calls += 1
+                if r:
+                    by_protein[pid].append((rid, axis, cat, r))
+                    ipro_hits += 1
+                if ipro_calls % 300 == 0:
+                    http.flush()
+        print(f"scoped interpro: {ipro_calls:,} calls on shared proteins, "
+              f"{ipro_hits:,} localized", file=sys.stderr)
     if http:
         http.flush()
 

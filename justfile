@@ -343,6 +343,16 @@ build-orthology-equivalence *args:
 build-seq-struct-alignment *args:
     python3 scripts/build_sequence_structure_alignment.py {{args}}
 
+# Build data/equivalence/seq_struct_comembership.tsv — Path 2 (whole-protein
+# co-membership). SEQUENCE signatures and STRUCT_FOLD records share NO exemplar
+# proteins, so the residue-frame path (above) can't connect them. This links a
+# signature to the CATH structural-classification record its exemplar proteins are
+# consistently classified into (family_classifications CATH id → a STRUCTURE record
+# grounded to that CATH). Entity-level `biolink:related_to`, relate-only, never a
+# merge. Offline. --min-fraction / --max-cath / --anchor-cap tune the quality gate.
+build-seq-struct-comembership *args:
+    python3 scripts/build_seq_struct_comembership.py {{args}}
+
 # Build data/equivalence/pathway.tsv — SEED↔Reactome FUNC_PATHWAY equivalence
 # from two parallel signals: shared GO biological-process anchor (close_match)
 # and constituent EC-set Jaccard (overlaps / close_match). Requires the pathway
