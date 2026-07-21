@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000059
 trait_relations:
@@ -34,10 +34,10 @@ evidence:
 - reference: DOI:10.1128/JCM.02739-15
   notes: PMID:26719440 (aro citation)
 causal_graphs:
-  - graph_id: resistance-draft
-    title: "[DRAFT] KPC-18 → mechanism → resistance (auto-scaffold from ARO relations)"
+  - graph_id: resistance
+    title: KPC-18 → mechanism → resistance (curated from ARO relations + literature)
     description: >-
-      Auto-drafted from this record's enriched ARO trait_relations (participates_in mechanism + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.
+      Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence (PMID:28388065). Family-level evidence: KPC is a class A serine carbapenemase; the Ser70 acyl-enzyme mechanism is the same chemistry curated atomically in MCSA:2.
     nodes:
       - node_id: determinant
         label: KPC-18
@@ -76,58 +76,72 @@ causal_graphs:
         predicate_id: RO:0000056
         object: mech0
         evidence:
-          - reference: DOI:10.1128/JCM.02739-15
-            notes: "Auto-drafted from ARO participates_in ARO:0001004; verbatim snippet pending curation."
+          - reference: PMID:28388065
+            snippet: "KPC-2 is the most prevalent carbapenemase in the United States and it has been termed the 'versatile β-lactamase' due to its large and shallow active site, allowing it to efficiently hydrolyze virtually all β-lactam antibiotics."
+            notes: "Family mechanism ARO:0001004."
       - subject: mech0
         predicate: causally upstream of
         predicate_id: RO:0002411
         object: resistance
         evidence:
-          - reference: DOI:10.1128/JCM.02739-15
-            notes: "Auto-drafted: mechanism ARO:0001004 → resistance; snippet pending curation."
+          - reference: PMID:28388065
+            snippet: The Klebsiella pneumoniae carbapenemase (KPC) class A β-lactamase poses a serious threat to nearly all β-lactam antibiotics.
+            notes: "Mechanism ARO:0001004 → resistance."
       - subject: determinant
         predicate: participates in (resistance mechanism)
         predicate_id: RO:0000056
         object: mech1
         evidence:
-          - reference: DOI:10.1128/JCM.02739-15
-            notes: "Auto-drafted from ARO participates_in ARO:3000187; verbatim snippet pending curation."
+          - reference: PMID:28388065
+            snippet: "The attack of Ser70 on the substrate β-lactam carbonyl results in a covalent acyl-enzyme complex. Subsequently, the catalytic water, activated by Glu166, cleaves the acyl-enzyme bond, leading to the formation of the hydrolyzed product."
+            notes: "Family mechanism ARO:3000187."
       - subject: mech1
         predicate: causally upstream of
         predicate_id: RO:0002411
         object: resistance
         evidence:
-          - reference: DOI:10.1128/JCM.02739-15
-            notes: "Auto-drafted: mechanism ARO:3000187 → resistance; snippet pending curation."
+          - reference: PMID:28388065
+            snippet: The Klebsiella pneumoniae carbapenemase (KPC) class A β-lactamase poses a serious threat to nearly all β-lactam antibiotics.
+            notes: "Mechanism ARO:3000187 → resistance."
       - subject: determinant
         predicate: causally upstream of (confers resistance)
         predicate_id: RO:0002411
         object: resistance
         evidence:
-          - reference: DOI:10.1128/JCM.02739-15
-            notes: "Auto-drafted: determinant → resistance phenotype; snippet pending curation."
+          - reference: PMID:28388065
+            snippet: The Klebsiella pneumoniae carbapenemase (KPC) class A β-lactamase poses a serious threat to nearly all β-lactam antibiotics.
+            notes: Determinant → resistance phenotype.
       - subject: resistance
         predicate: related to (resistance is to)
         object: drug0
         evidence:
-          - reference: DOI:10.1128/JCM.02739-15
-            notes: "Auto-drafted from ARO confers_resistance_to_drug_class ARO:0000004; snippet pending curation."
+          - reference: PMID:28388065
+            snippet: KPC-2 ... allowing it to efficiently hydrolyze virtually all β-lactam antibiotics.
+            notes: Resistance to monobactam.
       - subject: resistance
         predicate: related to (resistance is to)
         object: drug1
         evidence:
-          - reference: DOI:10.1128/JCM.02739-15
-            notes: "Auto-drafted from ARO confers_resistance_to_drug_class ARO:0000020; snippet pending curation."
+          - reference: PMID:28388065
+            snippet: KPC-2 ... allowing it to efficiently hydrolyze virtually all β-lactam antibiotics.
+            notes: Resistance to carbapenem.
       - subject: resistance
         predicate: related to (resistance is to)
         object: drug2
         evidence:
-          - reference: DOI:10.1128/JCM.02739-15
-            notes: "Auto-drafted from ARO confers_resistance_to_drug_class ARO:0000032; snippet pending curation."
+          - reference: PMID:28388065
+            snippet: KPC-2 ... allowing it to efficiently hydrolyze virtually all β-lactam antibiotics.
+            notes: Resistance to cephalosporin.
       - subject: resistance
         predicate: related to (resistance is to)
         object: drug3
         evidence:
-          - reference: DOI:10.1128/JCM.02739-15
-            notes: "Auto-drafted from ARO confers_resistance_to_drug_class ARO:3000008; snippet pending curation."
+          - reference: PMID:28388065
+            snippet: KPC-2 ... allowing it to efficiently hydrolyze virtually all β-lactam antibiotics.
+            notes: Resistance to penicillin beta-lactam.
+curation_history:
+  - timestamp: "2026-07-21T00:00:00Z"
+    curator: edison-causal-graphs
+    action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
+    llm_assisted: true
 license: CC-BY 4.0

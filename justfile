@@ -500,6 +500,14 @@ enrich-aro-resistance *args:
 draft-aro-causal-graphs *args:
     python3 scripts/draft_aro_causal_graphs.py {{args}}
 
+# Curator promotion pass: turn a whole AMR gene family's auto-DRAFT graphs into
+# REVIEWED graphs by attaching the family's verbatim literature snippets (one curated
+# evidence set promotes every family member). Snippets live in FAMILY_SNIPPETS in the
+# script, keyed by family ARO id. --apply to write; --family <ARO:id> required.
+# e.g. just promote-family-drafts --family ARO:3000059 --apply   (KPC beta-lactamase)
+promote-family-drafts *args:
+    python3 scripts/promote_family_drafts.py {{args}}
+
 # Download the CATH classification names (C/A/T/H hierarchy nodes; CC-BY 4.0).
 fetch-cath:
     mkdir -p data/raw/cath
