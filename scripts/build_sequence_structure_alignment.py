@@ -34,7 +34,13 @@ offline). A record is localized on each exemplar protein by any active provider:
     pattern.
   • `sifts`    — PDBe SIFTS UniProt residues covered by a STRUCTURE record's
     `structural_geometry_representations.structure_ref` PDB (author/label → UniProt;
-    coarse: the mapped segment).
+    coarse: the mapped segment). NOTE: a no-op on the current corpus — STRUCT_FOLD
+    records that carry protein_id exemplars use AlphaFoldDB refs (TED), and the
+    PDB-geo records (3did interfaces) carry no exemplars, so nothing matches. A
+    future AlphaFold/TED localizer could use the stored `residue_range` (AlphaFold
+    numbering = UniProt, no SIFTS needed); those proteins still share none with
+    signature records, so signature↔fold links come from the co-membership overlay
+    (build_seq_struct_comembership.py), not here.
   • `biolip`   — **Path 1's workhorse for STRUCT_BINDING_SITE**: parse the receptor
     binding residues from a BioLiP record's `canonical_examples[].note`
     ("… in PDB <id> chain <X> …; binding residues: I302 I432 E449") and map each
@@ -234,7 +240,11 @@ def _map_author_residues(auth_nums, segs) -> set[int]:
 # BioLiP note: "… in PDB 8fxi chain C (resolution 2.7 Å); binding residues: I302 I432 E449"
 _BIOLIP_PDB = re.compile(r"\bPDB\s+([0-9a-zA-Z]{4})\b(?:\s+chain\s+(\w+))?", re.I)
 _BIOLIP_RES = re.compile(r"binding\s+residues?:?\s*([^;.\n]+)", re.I)
-_RESNUM = re.compile(r"[A-Za-z](\d+)")
+# A residue token is one amino-acid letter + a bare author number. Tokens with a
+# trailing insertion code (e.g. `H432A`) are intentionally NOT matched — mapping
+# them by the number alone would collide with a genuine residue 432, so they are
+# skipped (drop, never mis-map).
+_RESTOKEN = re.compile(r"^[A-Za-z](\d+)$")
 
 
 def biolip_note_residues(rec: dict, http: Http) -> dict[str, set[int]]:
@@ -252,7 +262,8 @@ def biolip_note_residues(rec: dict, http: Http) -> dict[str, set[int]]:
         if not (mpdb and mres):
             continue
         pdb, chain = mpdb.group(1), mpdb.group(2)
-        auth = [int(n) for n in _RESNUM.findall(mres.group(1))]
+        auth = [int(m.group(1)) for tok in re.split(r"[\s,]+", mres.group(1).strip())
+                if (m := _RESTOKEN.match(tok))]
         if not auth:
             continue
         segs = sifts_author_to_unp(pdb, pid, chain, http)

@@ -114,23 +114,24 @@ def main() -> int:
                 continue
             per_ex_cath = Counter()
             n_ex_cath = 0
-            prots = []
+            cath_prots: dict[str, set] = defaultdict(set)   # proteins PER cath id
             for ex in (rec.get("canonical_examples") or []):
                 cids = _cath_from(ex.get("family_classifications"))
                 if cids:
                     n_ex_cath += 1
+                    pid = ex.get("protein_id")
                     for c in cids:
                         per_ex_cath[c] += 1
-                    if ex.get("protein_id"):
-                        prots.append(ex["protein_id"])
+                        if pid:
+                            cath_prots[c].add(pid)
             if per_ex_cath:
-                signatures.append((rid, n_ex_cath, per_ex_cath, prots))
+                signatures.append((rid, n_ex_cath, per_ex_cath, dict(cath_prots)))
         if args.limit and parsed >= args.limit:
             break
 
     rows = []
     skipped_generic = 0
-    for rid, n_ex_cath, per_ex, prots in signatures:
+    for rid, n_ex_cath, per_ex, cath_prots in signatures:
         need = max(1, math.ceil(args.min_fraction * n_ex_cath))
         dominant = [(c, k) for c, k in per_ex.most_common() if k >= need]
         for cid, k in dominant[:args.max_cath]:
@@ -140,11 +141,13 @@ def main() -> int:
             if len(targets) > args.anchor_cap:
                 skipped_generic += 1
                 continue
+            # cite only the proteins that actually carry THIS cath id
+            cid_prots = sorted(cath_prots.get(cid, ()))[:3]
             for tid in sorted(targets):
                 if tid == rid:
                     continue
                 src = (f"seq-struct-comembership|{cid}|ex={k}/{n_ex_cath}"
-                       f"|{','.join(sorted(set(prots))[:3])}")
+                       f"|{','.join(cid_prots)}")
                 rows.append((rid, "biolink:related_to", tid, src))
     # dedup
     seen = set()
