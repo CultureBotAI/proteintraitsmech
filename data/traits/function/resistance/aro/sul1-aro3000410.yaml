@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3004238
 trait_relations:
@@ -37,10 +37,10 @@ evidence:
 - reference: DOI:10.1128/JCM.00835-08
   notes: PMID:18753343 (aro citation)
 causal_graphs:
-  - graph_id: resistance-draft
-    title: "[DRAFT] sul1 → mechanism → resistance (auto-scaffold from ARO relations)"
+  - graph_id: resistance
+    title: sul1 → mechanism → resistance (curated from ARO relations + literature)
     description: >-
-      Auto-drafted from this record's enriched ARO trait_relations (participates_in mechanism + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.
+      Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence (PMID:37419898). sul — sulfonamide-resistant dihydropteroate synthase; a drug-insensitive DHPS that replaces the sulfonamide target enzyme.
     nodes:
       - node_id: determinant
         label: sul1
@@ -54,6 +54,16 @@ causal_graphs:
         label: sulfonamide antibiotic
         node_type: CHEMICAL
         grounding: ARO:3000282
+      - node_id: domain
+        label: pterin-binding (DHPS) domain
+        node_type: DOMAIN
+        grounding: Pfam:PF00809
+        description: KB protein-trait record carrying the mechanism.
+      - node_id: fold
+        label: TIM-barrel fold
+        node_type: DOMAIN
+        grounding: CATH:3.20.20
+        description: KB protein-trait record carrying the mechanism.
       - node_id: resistance
         label: antibiotic resistance phenotype
         node_type: PHENOTYPE
@@ -63,26 +73,59 @@ causal_graphs:
         predicate_id: RO:0000056
         object: mech0
         evidence:
-          - reference: DOI:10.1051/vetres:2001123
-            notes: "Auto-drafted from ARO participates_in ARO:0001002; verbatim snippet pending curation."
+          - reference: PMID:37419898
+            snippet: "We determine crystal structures of the most common Sul enzyme types (Sul1, Sul2 and Sul3) in multiple ligand-bound states, revealing a substantial reorganization of their pABA-interaction region relative to the corresponding region of DHPS."
+            notes: "Family mechanism ARO:0001002."
       - subject: mech0
         predicate: causally upstream of
         predicate_id: RO:0002411
         object: resistance
         evidence:
-          - reference: DOI:10.1051/vetres:2001123
-            notes: "Auto-drafted: mechanism ARO:0001002 → resistance; snippet pending curation."
+          - reference: PMID:37419898
+            snippet: "We determine crystal structures of the most common Sul enzyme types (Sul1, Sul2 and Sul3) in multiple ligand-bound states, revealing a substantial reorganization of their pABA-interaction region relative to the corresponding region of DHPS."
+            notes: "Mechanism ARO:0001002 → resistance."
       - subject: determinant
         predicate: causally upstream of (confers resistance)
         predicate_id: RO:0002411
         object: resistance
         evidence:
-          - reference: DOI:10.1051/vetres:2001123
-            notes: "Auto-drafted: determinant → resistance phenotype; snippet pending curation."
+          - reference: PMID:37419898
+            snippet: "We determine crystal structures of the most common Sul enzyme types (Sul1, Sul2 and Sul3) in multiple ligand-bound states, revealing a substantial reorganization of their pABA-interaction region relative to the corresponding region of DHPS."
+            notes: Determinant → resistance phenotype.
       - subject: resistance
         predicate: related to (resistance is to)
         object: drug0
         evidence:
-          - reference: DOI:10.1051/vetres:2001123
-            notes: "Auto-drafted from ARO confers_resistance_to_drug_class ARO:3000282; snippet pending curation."
+          - reference: PMID:37419898
+            snippet: "We determine crystal structures of the most common Sul enzyme types (Sul1, Sul2 and Sul3) in multiple ligand-bound states, revealing a substantial reorganization of their pABA-interaction region relative to the corresponding region of DHPS."
+            notes: Resistance to sulfonamide antibiotic.
+      - subject: domain
+        predicate: part of (catalytic domain of the protein)
+        predicate_id: BFO:0000050
+        object: determinant
+        evidence:
+          - reference: Pfam:PF00809
+            snippet: Pterin binding enzyme
+            notes: "KB trait: the pterin-binding DHPS domain."
+      - subject: determinant
+        predicate: member of (adopts fold)
+        predicate_id: RO:0002350
+        object: fold
+        evidence:
+          - reference: CATH:3.20.20
+            snippet: TIM Barrel
+            notes: "KB trait: the TIM-barrel fold."
+      - subject: domain
+        predicate: enables (drug-insensitive target enzyme)
+        predicate_id: RO:0002327
+        object: mech0
+        evidence:
+          - reference: PMID:37419898
+            snippet: "We determine crystal structures of the most common Sul enzyme types (Sul1, Sul2 and Sul3) in multiple ligand-bound states, revealing a substantial reorganization of their pABA-interaction region relative to the corresponding region of DHPS."
+            notes: The sulfonamide-insensitive DHPS replaces the drug-sensitive folate-pathway enzyme.
+curation_history:
+  - timestamp: "2026-07-21T00:00:00Z"
+    curator: edison-causal-graphs
+    action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
+    llm_assisted: true
 license: CC-BY 4.0

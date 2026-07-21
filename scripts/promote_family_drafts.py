@@ -232,6 +232,76 @@ for _fam, _name in [("ARO:3005459", "ADC"), ("ARO:3000098", "PDC"),
     FAMILY_SNIPPETS[_fam] = _classc(_name)
 
 
+def _domfam(ref, snip, note, dom, fold, em, enable_pred, part_note, fold_note, enable_note):
+    """A domain-primary family config (non-β-lactamase). dom/fold are
+    (CURIE, node-label, node-type, snippet) 4-tuples; fold may be None."""
+    pt = {"primary_key": "domain", "part_pred": "part of (catalytic domain of the protein)",
+          "enable_pred": enable_pred, "part_note": part_note, "enable_note": enable_note,
+          "domain": dom, "enables_mech": em}
+    if fold:
+        pt["fold"] = fold
+        pt["fold_note"] = fold_note
+    return {"reference": ref, "mech": {em: snip}, "mech_res": snip, "det_res": snip,
+            "res_drug": snip, "note": note, "protein_traits": pt}
+
+
+# Aminoglycoside-modifying enzymes (inactivation) + van/sul/dfr (target remodelling)
+FAMILY_SNIPPETS["ARO:3000121"] = _domfam(  # AAC — acetyltransferase
+    "PMID:26818562",
+    "N-Acetyltransferases transfer an acetyl group from acetyl-CoA to a large array of substrates, from small molecules such as aminoglycoside antibiotics to macromolecules.",
+    "AAC — aminoglycoside N-acetyltransferase; inactivates aminoglycosides by acetyl-CoA-dependent acetylation.",
+    ("InterPro:IPR000182", "GNAT acetyltransferase domain", "DOMAIN", "GNAT domain"),
+    ("CATH:3.40.630", "acyl-CoA N-acyltransferase (GNAT) fold", "DOMAIN", "Aminopeptidase"),
+    "ARO:3000106", "enables (antibiotic acetylation)",
+    "KB trait: the GNAT acetyltransferase domain.", "KB trait: the GNAT structural fold.",
+    "The GNAT domain transfers an acetyl group onto the aminoglycoside, inactivating it.")
+FAMILY_SNIPPETS["ARO:3000114"] = _domfam(  # APH — phosphotransferase
+    "PMID:9200607",
+    "Structure of an enzyme required for aminoglycoside antibiotic resistance reveals homology to eukaryotic protein kinases.",
+    "APH — aminoglycoside O-phosphotransferase; inactivates aminoglycosides by ATP-dependent phosphorylation (protein-kinase-like fold).",
+    ("Pfam:PF01636", "aminoglycoside phosphotransferase domain", "DOMAIN", "Phosphotransferase enzyme family"),
+    ("CATH:3.90.1200", "aminoglycoside phosphotransferase (protein-kinase-like) fold", "DOMAIN", "Aminoglycoside 3'-phosphotransferase; Chain: A, domain 2"),
+    "ARO:3000105", "enables (antibiotic phosphorylation)",
+    "KB trait: the aminoglycoside-phosphotransferase domain.", "KB trait: the protein-kinase-like fold.",
+    "The phosphotransferase domain transfers the ATP γ-phosphate onto the aminoglycoside.")
+FAMILY_SNIPPETS["ARO:3000218"] = _domfam(  # ANT — nucleotidyltransferase
+    "PMID:25564464",
+    "ANT(2″)-Ia confers resistance by magnesium-dependent transfer of a nucleoside monophosphate (AMP) to the 2″-hydroxyl of aminoglycoside substrates containing a 2-deoxystreptamine core.",
+    "ANT — aminoglycoside nucleotidyltransferase; inactivates aminoglycosides by adenylylation.",
+    ("Pfam:PF01909", "nucleotidyltransferase domain", "DOMAIN", "Nucleotidyltransferase domain"),
+    ("CATH:3.30.460", "DNA-polymerase-β-like nucleotidyltransferase fold", "DOMAIN", "Beta Polymerase; domain 2"),
+    "ARO:3000107", "enables (antibiotic nucleotidylation)",
+    "KB trait: the nucleotidyltransferase domain.", "KB trait: the nucleotidyltransferase fold.",
+    "The nucleotidyltransferase domain adenylylates the aminoglycoside.")
+FAMILY_SNIPPETS["ARO:3002978"] = _domfam(  # van — D-Ala-D-Lac ligase (target alteration)
+    "PMID:10908650",
+    "D-alanine-D-lactate ligase is directly responsible for the biosynthesis of alternate cell-wall precursors in bacteria that are resistant to the glycopeptide antibiotic vancomycin.",
+    "van (D-Ala-D-Lac ligase) — target alteration: remodels the peptidoglycan D-Ala-D-Ala terminus to D-Ala-D-Lac so vancomycin can no longer bind.",
+    ("Pfam:PF07478", "D-Ala-D-Ala/D-Lac ligase domain (C-terminus)", "DOMAIN", "D-ala D-ala ligase C-terminus"),
+    ("CATH:3.30.470", "ATP-grasp fold", "DOMAIN", "D-amino Acid Aminotransferase; Chain A, domain 1"),
+    "ARO:3000213", "enables (cell-wall precursor remodelling)",
+    "KB trait: the D-Ala-D-Lac ligase domain.", "KB trait: the ATP-grasp fold.",
+    "The ligase synthesises D-Ala-D-Lac, altering the vancomycin target.")
+FAMILY_SNIPPETS["ARO:3004238"] = _domfam(  # sul — sulfonamide-resistant DHPS (target replacement)
+    "PMID:37419898",
+    "We determine crystal structures of the most common Sul enzyme types (Sul1, Sul2 and Sul3) in multiple ligand-bound states, revealing a substantial reorganization of their pABA-interaction region relative to the corresponding region of DHPS.",
+    "sul — sulfonamide-resistant dihydropteroate synthase; a drug-insensitive DHPS that replaces the sulfonamide target enzyme.",
+    ("Pfam:PF00809", "pterin-binding (DHPS) domain", "DOMAIN", "Pterin binding enzyme"),
+    ("CATH:3.20.20", "TIM-barrel fold", "DOMAIN", "TIM Barrel"),
+    "ARO:0001002", "enables (drug-insensitive target enzyme)",
+    "KB trait: the pterin-binding DHPS domain.", "KB trait: the TIM-barrel fold.",
+    "The sulfonamide-insensitive DHPS replaces the drug-sensitive folate-pathway enzyme.")
+FAMILY_SNIPPETS["ARO:3001218"] = _domfam(  # dfr — trimethoprim-resistant DHFR (target replacement)
+    "PMID:35562546",
+    "Trimethoprim resistance in Enterobacteriaceae occurs almost exclusively through the acquisition of plasmid-associated dfr genes that encode intrinsically insensitive DHFR enzymes.",
+    "dfr — trimethoprim-resistant dihydrofolate reductase; a drug-insensitive DHFR that replaces the trimethoprim target enzyme.",
+    ("Pfam:PF00186", "dihydrofolate reductase domain", "DOMAIN", "Dihydrofolate reductase"),
+    ("CATH:3.40.430", "dihydrofolate reductase fold", "DOMAIN", "Dihydrofolate Reductase, subunit A"),
+    "ARO:0001002", "enables (drug-insensitive target enzyme)",
+    "KB trait: the dihydrofolate-reductase domain.", "KB trait: the DHFR fold.",
+    "The trimethoprim-insensitive DHFR replaces the drug-sensitive enzyme.")
+
+
 def _ev(ref: str, snippet: str, note: str) -> list[str]:
     return ["        evidence:",
             f"          - reference: {ref}",

@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3007415
 trait_relations:
@@ -33,10 +33,10 @@ evidence:
 - reference: DOI:10.1093/nar/13.1.195
   notes: PMID:3889831 (aro citation)
 causal_graphs:
-  - graph_id: resistance-draft
-    title: "[DRAFT] APH(6)-Ic → mechanism → resistance (auto-scaffold from ARO relations)"
+  - graph_id: resistance
+    title: APH(6)-Ic → mechanism → resistance (curated from ARO relations + literature)
     description: >-
-      Auto-drafted from this record's enriched ARO trait_relations (participates_in mechanism + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.
+      Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence (PMID:9200607). APH — aminoglycoside O-phosphotransferase; inactivates aminoglycosides by ATP-dependent phosphorylation (protein-kinase-like fold).
     nodes:
       - node_id: determinant
         label: APH(6)-Ic
@@ -54,6 +54,16 @@ causal_graphs:
         label: aminoglycoside antibiotic
         node_type: CHEMICAL
         grounding: ARO:0000016
+      - node_id: domain
+        label: aminoglycoside phosphotransferase domain
+        node_type: DOMAIN
+        grounding: Pfam:PF01636
+        description: KB protein-trait record carrying the mechanism.
+      - node_id: fold
+        label: aminoglycoside phosphotransferase (protein-kinase-like) fold
+        node_type: DOMAIN
+        grounding: CATH:3.90.1200
+        description: KB protein-trait record carrying the mechanism.
       - node_id: resistance
         label: antibiotic resistance phenotype
         node_type: PHENOTYPE
@@ -63,40 +73,75 @@ causal_graphs:
         predicate_id: RO:0000056
         object: mech0
         evidence:
-          - reference: DOI:10.1016/j.sbi.2004.01.008
-            notes: "Auto-drafted from ARO participates_in ARO:0001004; verbatim snippet pending curation."
+          - reference: PMID:9200607
+            snippet: Structure of an enzyme required for aminoglycoside antibiotic resistance reveals homology to eukaryotic protein kinases.
+            notes: "Family mechanism ARO:0001004."
       - subject: mech0
         predicate: causally upstream of
         predicate_id: RO:0002411
         object: resistance
         evidence:
-          - reference: DOI:10.1016/j.sbi.2004.01.008
-            notes: "Auto-drafted: mechanism ARO:0001004 → resistance; snippet pending curation."
+          - reference: PMID:9200607
+            snippet: Structure of an enzyme required for aminoglycoside antibiotic resistance reveals homology to eukaryotic protein kinases.
+            notes: "Mechanism ARO:0001004 → resistance."
       - subject: determinant
         predicate: participates in (resistance mechanism)
         predicate_id: RO:0000056
         object: mech1
         evidence:
-          - reference: DOI:10.1016/j.sbi.2004.01.008
-            notes: "Auto-drafted from ARO participates_in ARO:3000105; verbatim snippet pending curation."
+          - reference: PMID:9200607
+            snippet: Structure of an enzyme required for aminoglycoside antibiotic resistance reveals homology to eukaryotic protein kinases.
+            notes: "Family mechanism ARO:3000105."
       - subject: mech1
         predicate: causally upstream of
         predicate_id: RO:0002411
         object: resistance
         evidence:
-          - reference: DOI:10.1016/j.sbi.2004.01.008
-            notes: "Auto-drafted: mechanism ARO:3000105 → resistance; snippet pending curation."
+          - reference: PMID:9200607
+            snippet: Structure of an enzyme required for aminoglycoside antibiotic resistance reveals homology to eukaryotic protein kinases.
+            notes: "Mechanism ARO:3000105 → resistance."
       - subject: determinant
         predicate: causally upstream of (confers resistance)
         predicate_id: RO:0002411
         object: resistance
         evidence:
-          - reference: DOI:10.1016/j.sbi.2004.01.008
-            notes: "Auto-drafted: determinant → resistance phenotype; snippet pending curation."
+          - reference: PMID:9200607
+            snippet: Structure of an enzyme required for aminoglycoside antibiotic resistance reveals homology to eukaryotic protein kinases.
+            notes: Determinant → resistance phenotype.
       - subject: resistance
         predicate: related to (resistance is to)
         object: drug0
         evidence:
-          - reference: DOI:10.1016/j.sbi.2004.01.008
-            notes: "Auto-drafted from ARO confers_resistance_to_drug_class ARO:0000016; snippet pending curation."
+          - reference: PMID:9200607
+            snippet: Structure of an enzyme required for aminoglycoside antibiotic resistance reveals homology to eukaryotic protein kinases.
+            notes: Resistance to aminoglycoside antibiotic.
+      - subject: domain
+        predicate: part of (catalytic domain of the protein)
+        predicate_id: BFO:0000050
+        object: determinant
+        evidence:
+          - reference: Pfam:PF01636
+            snippet: Phosphotransferase enzyme family
+            notes: "KB trait: the aminoglycoside-phosphotransferase domain."
+      - subject: determinant
+        predicate: member of (adopts fold)
+        predicate_id: RO:0002350
+        object: fold
+        evidence:
+          - reference: CATH:3.90.1200
+            snippet: "Aminoglycoside 3'-phosphotransferase; Chain: A, domain 2"
+            notes: "KB trait: the protein-kinase-like fold."
+      - subject: domain
+        predicate: enables (antibiotic phosphorylation)
+        predicate_id: RO:0002327
+        object: mech1
+        evidence:
+          - reference: PMID:9200607
+            snippet: Structure of an enzyme required for aminoglycoside antibiotic resistance reveals homology to eukaryotic protein kinases.
+            notes: The phosphotransferase domain transfers the ATP γ-phosphate onto the aminoglycoside.
+curation_history:
+  - timestamp: "2026-07-21T00:00:00Z"
+    curator: edison-causal-graphs
+    action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
+    llm_assisted: true
 license: CC-BY 4.0
