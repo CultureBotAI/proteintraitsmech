@@ -27,4 +27,53 @@ evidence:
   notes: PMID:7840565 (aro citation)
 - reference: DOI:10.1016/0378-1119(93)90665-p
   notes: PMID:8370538 (aro citation)
+causal_graphs:
+  - graph_id: resistance-draft
+    title: "[DRAFT] tet(S) → mechanism → resistance (auto-scaffold from ARO relations)"
+    description: >-
+      Auto-drafted from this record's enriched ARO trait_relations (participates_in mechanism + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.
+    nodes:
+      - node_id: determinant
+        label: tet(S)
+        node_type: PROTEIN
+        grounding: ARO:3000192
+      - node_id: mech0
+        label: antibiotic target protection
+        node_type: MOLECULAR_FUNCTION
+        grounding: ARO:0001003
+      - node_id: drug0
+        label: tetracycline antibiotic
+        node_type: CHEMICAL
+        grounding: ARO:3000050
+      - node_id: resistance
+        label: antibiotic resistance phenotype
+        node_type: PHENOTYPE
+    edges:
+      - subject: determinant
+        predicate: participates in (resistance mechanism)
+        predicate_id: RO:0000056
+        object: mech0
+        evidence:
+          - reference: DOI:10.1128/AAC.38.10.2330
+            notes: "Auto-drafted from ARO participates_in ARO:0001003; verbatim snippet pending curation."
+      - subject: mech0
+        predicate: causally upstream of
+        predicate_id: RO:0002411
+        object: resistance
+        evidence:
+          - reference: DOI:10.1128/AAC.38.10.2330
+            notes: "Auto-drafted: mechanism ARO:0001003 → resistance; snippet pending curation."
+      - subject: determinant
+        predicate: causally upstream of (confers resistance)
+        predicate_id: RO:0002411
+        object: resistance
+        evidence:
+          - reference: DOI:10.1128/AAC.38.10.2330
+            notes: "Auto-drafted: determinant → resistance phenotype; snippet pending curation."
+      - subject: resistance
+        predicate: related to (resistance is to)
+        object: drug0
+        evidence:
+          - reference: DOI:10.1128/AAC.38.10.2330
+            notes: "Auto-drafted from ARO confers_resistance_to_drug_class ARO:3000050; snippet pending curation."
 license: CC-BY 4.0

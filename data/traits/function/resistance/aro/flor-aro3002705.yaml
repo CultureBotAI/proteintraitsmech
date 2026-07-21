@@ -46,4 +46,43 @@ evidence:
   notes: PMID:10991873 (aro citation)
 - reference: DOI:10.1089/fpd.2008.0199
   notes: PMID:19292580 (aro citation)
+causal_graphs:
+  - graph_id: resistance-draft
+    title: "[DRAFT] floR → mechanism → resistance (auto-scaffold from ARO relations)"
+    description: >-
+      Auto-drafted from this record's enriched ARO trait_relations (participates_in mechanism + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.
+    nodes:
+      - node_id: determinant
+        label: floR
+        node_type: PROTEIN
+        grounding: ARO:3002705
+      - node_id: mech0
+        label: antibiotic efflux
+        node_type: MOLECULAR_FUNCTION
+        grounding: ARO:0010000
+      - node_id: resistance
+        label: antibiotic resistance phenotype
+        node_type: PHENOTYPE
+    edges:
+      - subject: determinant
+        predicate: participates in (resistance mechanism)
+        predicate_id: RO:0000056
+        object: mech0
+        evidence:
+          - reference: DOI:10.1128/JB.183.19.5725-5732.2001
+            notes: "Auto-drafted from ARO participates_in ARO:0010000; verbatim snippet pending curation."
+      - subject: mech0
+        predicate: causally upstream of
+        predicate_id: RO:0002411
+        object: resistance
+        evidence:
+          - reference: DOI:10.1128/JB.183.19.5725-5732.2001
+            notes: "Auto-drafted: mechanism ARO:0010000 → resistance; snippet pending curation."
+      - subject: determinant
+        predicate: causally upstream of (confers resistance)
+        predicate_id: RO:0002411
+        object: resistance
+        evidence:
+          - reference: DOI:10.1128/JB.183.19.5725-5732.2001
+            notes: "Auto-drafted: determinant → resistance phenotype; snippet pending curation."
 license: CC-BY 4.0
