@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.5.2.6
 - CHEBI:35627
@@ -212,4 +212,194 @@ definitions:
       Beta-lactamase is a key enzyme in antibiotic resistance, catalysing the cleavage of the essential beta-lactam ring structure in penicillin and cephalosporinase type antibiotics. Substrate specificity varies considerably within the beta-lactamases, with some enzymes preferring penicillins and some cephalosporins. Alongside the class B beta-lactamases, described here, there also exist three other classes of beta-lactam cleaving enzymes (A,C and D). These groups of enzymes use a serine nucleophilic mechanism, while class B uses a mono/dimetallic zinc mechanism. This entry describes the dimetallic mechanism. There is considerable variety in substrate specificity between the classes, although class C enzymes tend to have a high cephalosporinase activity
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+  - graph_id: catalysis
+    title: Di-zinc hydrolytic mechanism of class B1 metallo-beta-lactamase
+    description: >-
+      Metal-dependent (non-covalent) mechanism transcribed from M-CSA entry 15
+      (Bacillus cereus BcII, PDB 1znb). Contrast with the class A serine mechanism
+      (MCSA:2): here two active-site Zn2+ ions polarise the substrate and activate
+      a bridging hydroxide nucleophile — there is no covalent acyl-enzyme. Residue
+      node groundings and numbers are on the UniProtKB:P25910 frame and match the
+      record's own STRUCT_METAL_SITE / STRUCT_BINDING_SITE features (99, 101, 103,
+      162, 181, 223 metal; 184, 193 stabilisers).
+    nodes:
+      - node_id: zn1
+        label: catalytic zinc Zn1 (3-His site)
+        node_type: LIGAND
+        grounding: CHEBI:29105
+      - node_id: zn2
+        label: catalytic zinc Zn2 (DCH site)
+        node_type: LIGAND
+        grounding: CHEBI:29105
+      - node_id: his99
+        label: His99 (Zn1 ligand)
+        node_type: RESIDUE
+        grounding: UniProtKB:P25910
+      - node_id: his101
+        label: His101 (Zn1 ligand)
+        node_type: RESIDUE
+        grounding: UniProtKB:P25910
+      - node_id: asp103
+        label: Asp103 (bridging Zn1/Zn2 ligand)
+        node_type: RESIDUE
+        grounding: UniProtKB:P25910
+      - node_id: his162
+        label: His162 (Zn2 ligand)
+        node_type: RESIDUE
+        grounding: UniProtKB:P25910
+      - node_id: cys181
+        label: Cys181 (bridging Zn1/Zn2 ligand)
+        node_type: RESIDUE
+        grounding: UniProtKB:P25910
+      - node_id: his223
+        label: His223 (Zn2 ligand)
+        node_type: RESIDUE
+        grounding: UniProtKB:P25910
+      - node_id: asn193
+        label: Asn193 (oxyanion stabiliser)
+        node_type: RESIDUE
+        grounding: UniProtKB:P25910
+      - node_id: lys184
+        label: Lys184 (electrostatic stabiliser)
+        node_type: RESIDUE
+        grounding: UniProtKB:P25910
+      - node_id: water
+        label: bridging zinc-activated hydroxide/water (nucleophile)
+        node_type: CHEMICAL
+        grounding: CHEBI:15377
+      - node_id: substrate
+        label: beta-lactam substrate
+        node_type: CHEMICAL
+        grounding: CHEBI:35627
+      - node_id: tetra
+        label: anionic (ring-opened) tetrahedral intermediate
+        node_type: STATE
+      - node_id: product
+        label: hydrolysed beta-lactam (substituted beta-amino acid)
+        node_type: CHEMICAL
+        grounding: CHEBI:33705
+    edges:
+      - subject: his99
+        predicate: coordinates (metal ligand)
+        predicate_id: RO:0002436
+        object: zn1
+        description: His99 is one of the three histidines of the Zn1 site.
+        evidence:
+          - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/15/
+            snippet: "Asp103, Cys181, His99, His101, His223, His162 (metal ligands); Asn193, Lys184 (stabilizers)"
+            notes: M-CSA entry 15 catalytic-residue roles; corroborated by UniProtKB:P25910 METAL_SITE features. Primary ref PMID:8994966 (BcII 1znb structure).
+      - subject: his101
+        predicate: coordinates (metal ligand)
+        predicate_id: RO:0002436
+        object: zn1
+        description: His101 completes the Zn1 3-His site.
+        evidence:
+          - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/15/
+            snippet: "Asp103, Cys181, His99, His101, His223, His162 (metal ligands); Asn193, Lys184 (stabilizers)"
+            notes: M-CSA entry 15 catalytic-residue roles.
+      - subject: asp103
+        predicate: coordinates (bridging metal ligand)
+        predicate_id: RO:0002436
+        object: zn1
+        description: Asp103 bridges the two zinc ions.
+        evidence:
+          - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/15/
+            snippet: "Asp103, Cys181, His99, His101, His223, His162 (metal ligands); Asn193, Lys184 (stabilizers)"
+            notes: M-CSA entry 15; Asp103 bridges Zn1 and Zn2.
+      - subject: his162
+        predicate: coordinates (metal ligand)
+        predicate_id: RO:0002436
+        object: zn2
+        description: His162 coordinates the Zn2 (DCH) site.
+        evidence:
+          - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/15/
+            snippet: "Asp103, Cys181, His99, His101, His223, His162 (metal ligands); Asn193, Lys184 (stabilizers)"
+            notes: M-CSA entry 15 catalytic-residue roles.
+      - subject: his223
+        predicate: coordinates (metal ligand)
+        predicate_id: RO:0002436
+        object: zn2
+        description: His223 coordinates the Zn2 (DCH) site.
+        evidence:
+          - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/15/
+            snippet: "Asp103, Cys181, His99, His101, His223, His162 (metal ligands); Asn193, Lys184 (stabilizers)"
+            notes: M-CSA entry 15 catalytic-residue roles.
+      - subject: cys181
+        predicate: coordinates (bridging metal ligand)
+        predicate_id: RO:0002436
+        object: zn2
+        description: Cys181 bridges the two zinc ions (Zn2 DCH site).
+        evidence:
+          - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/15/
+            snippet: "Asp103, Cys181, His99, His101, His223, His162 (metal ligands); Asn193, Lys184 (stabilizers)"
+            notes: M-CSA entry 15; Cys181 bridges Zn1 and Zn2.
+      - subject: zn1
+        predicate: polarises carbonyl of
+        predicate_id: RO:0002436
+        object: substrate
+        description: Zn1 polarises the beta-lactam carbonyl, priming it for nucleophilic attack.
+        evidence:
+          - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/15/
+            snippet: "The beta-lactam carbonyl interacts with zinc1 polarising the bond and enhancing its susceptibility to nucleophilic attack"
+            notes: M-CSA entry 15, mechanism.
+      - subject: zn2
+        predicate: activates nucleophile (zinc-activated water)
+        predicate_id: RO:0002436
+        object: water
+        description: The zinc site lowers the pKa of the bridging water, generating the hydroxide nucleophile.
+        evidence:
+          - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/15/
+            snippet: "Zinc activated water initiates a nucleophilic attack on the carbonyl of the beta-lactam ring, breaking the C-N bond in a substitution reaction"
+            notes: M-CSA entry 15, step 1.
+      - subject: water
+        predicate: nucleophilic attack on
+        predicate_id: RO:0002436
+        object: substrate
+        description: The zinc-activated hydroxide attacks the beta-lactam carbonyl carbon.
+        evidence:
+          - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/15/
+            snippet: "Zinc activated water initiates a nucleophilic attack on the carbonyl of the beta-lactam ring, breaking the C-N bond in a substitution reaction"
+            notes: M-CSA entry 15, step 1.
+      - subject: substrate
+        predicate: is converted to (C-N cleavage)
+        predicate_id: RO:0002411
+        object: tetra
+        description: Attack and C-N bond scission give the anionic (ring-opened) tetrahedral intermediate.
+        evidence:
+          - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/15/
+            snippet: "breaking the C-N bond in a substitution reaction"
+            notes: M-CSA entry 15, step 1 -> intermediate.
+      - subject: asn193
+        predicate: stabilises (oxyanion)
+        predicate_id: RO:0002436
+        object: tetra
+        description: Asn193 stabilises the anionic tetrahedral intermediate.
+        evidence:
+          - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/15/
+            snippet: "stabilises the anionic tetrahedral intermediate"
+            notes: M-CSA entry 15, Asn193 role.
+      - subject: lys184
+        predicate: stabilises (electrostatic)
+        predicate_id: RO:0002436
+        object: substrate
+        description: Lys184 provides electrostatic stabilisation at the active site.
+        evidence:
+          - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/15/
+            snippet: "Asp103, Cys181, His99, His101, His223, His162 (metal ligands); Asn193, Lys184 (stabilizers)"
+            notes: M-CSA entry 15, Lys184 stabiliser role.
+      - subject: tetra
+        predicate: collapses to (protonation, product release)
+        predicate_id: RO:0002411
+        object: product
+        description: The anionic nitrogen deprotonates a second zinc-activated water, completing decyclisation and releasing the substituted beta-amino acid.
+        evidence:
+          - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/15/
+            snippet: "The negatively charged nitrogen group then deprotonates an incoming, zinc-activated water molecule"
+            notes: M-CSA entry 15, step 2 (rate-determining); product EC:3.5.2.6 / RHEA:20401.
+curation_history:
+  - timestamp: "2026-07-21T00:00:00Z"
+    curator: edison-causal-graphs
+    action: "Added causal_graphs 'catalysis' (13 evidence-backed edges, di-zinc metal path) from M-CSA entry 15; SEEDED -> REVIEWED"
+    llm_assisted: true
 license: CC-BY-4.0
