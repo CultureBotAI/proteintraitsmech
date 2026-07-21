@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3004212
 xrefs:
@@ -14,4 +14,104 @@ xrefs:
 evidence:
 - reference: DOI:10.1007/s12275-010-9308-5
   notes: PMID:20571954 (aro citation)
+causal_graphs:
+  - graph_id: resistance
+    title: How GOB-10 confers β-lactam resistance (determinant → mechanism → phenotype)
+    description: >-
+      Resistance-causation graph for the GOB-10 determinant: a subclass B3
+      metallo-β-lactamase gene product enzymatically inactivates β-lactam
+      antibiotics (Zn-dependent hydrolysis — the same chemistry modelled at
+      atomic detail in MCSA:15), which causes the β-lactam-resistant phenotype.
+      This is the ARO/CARD edge shape (determinant → mechanism → phenotype),
+      distinct from the reaction-mechanism graphs on the M-CSA records.
+      Biochemical evidence is from the characterised GOB-family archetype GOB-1
+      (PMID:21299838); GOB-10 is a GOB-family variant (parent ARO:3004212) that
+      inherits the subclass-B3 MBL mechanism — a family-level inference, flagged.
+    nodes:
+      - node_id: gob10
+        label: GOB-10 (subclass B3 metallo-β-lactamase determinant)
+        node_type: PROTEIN
+        grounding: ARO:3004802
+      - node_id: gob_family
+        label: GOB β-lactamase family
+        node_type: PROTEIN
+        grounding: ARO:3004212
+      - node_id: zn
+        label: catalytic Zn(II) cofactor
+        node_type: LIGAND
+        grounding: CHEBI:29105
+      - node_id: hydrolysis
+        label: β-lactamase activity (enzymatic antibiotic inactivation)
+        node_type: MOLECULAR_FUNCTION
+        grounding: GO:0008800
+        xrefs:
+          - EC:3.5.2.6
+          - ARO:0001004
+      - node_id: betalactams
+        label: β-lactam antibiotics (penicillins, cephalosporins, carbapenems)
+        node_type: CHEMICAL
+        grounding: CHEBI:27933
+      - node_id: resistance
+        label: β-lactam (incl. carbapenem) resistance phenotype
+        node_type: PHENOTYPE
+    edges:
+      - subject: gob10
+        predicate: member of
+        predicate_id: RO:0002350
+        object: gob_family
+        description: GOB-10 is a class B β-lactamase of the GOB family.
+        evidence:
+          - reference: PMID:20571954
+            snippet: "GOB-10 is a class B beta-lactamase gene found in Chryseobacterium meningosepticum."
+            notes: ARO record definition (DOI:10.1007/s12275-010-9308-5); parent ARO:3004212.
+      - subject: gob10
+        predicate: enables
+        predicate_id: RO:0002327
+        object: hydrolysis
+        description: The GOB gene product is a metallo-β-lactamase — it carries out β-lactam hydrolysis.
+        evidence:
+          - reference: PMID:21299838
+            snippet: "Broad antibiotic resistance profile of the subclass B3 metallo-β-lactamase GOB-1, a di-zinc enzyme"
+            notes: Evidence from the characterised GOB archetype GOB-1; GOB-10 inherits the family mechanism.
+      - subject: zn
+        predicate: is cofactor for (molecularly interacts with)
+        predicate_id: RO:0002436
+        object: hydrolysis
+        description: The Zn(II) ion(s) at the active site are required for catalysis.
+        evidence:
+          - reference: PMID:21299838
+            snippet: "the Q116 residue plays a role in the binding of the zinc ion in the QHH site"
+            notes: GOB is a Zn-dependent (di-zinc) B3 MBL; cf. the di-zinc mechanism in MCSA:15.
+      - subject: hydrolysis
+        predicate: has input (hydrolyses)
+        predicate_id: RO:0002233
+        object: betalactams
+        description: The enzyme hydrolyses the β-lactam ring across penicillins, cephalosporins and carbapenems.
+        evidence:
+          - reference: PMID:21299838
+            snippet: "The MBL was purified to homogeneity and shown to exhibit a broad substrate profile, hydrolyzing all the tested β-lactam compounds efficiently."
+            notes: EC:3.5.2.6 / RHEA:20401; broad spectrum incl. carbapenems.
+      - subject: hydrolysis
+        predicate: causally upstream of
+        predicate_id: RO:0002411
+        object: resistance
+        description: Enzymatic inactivation of the antibiotic is the mechanism that produces the resistant phenotype.
+        evidence:
+          - reference: PMID:21299838
+            snippet: "Broad antibiotic resistance profile of the subclass B3 metallo-β-lactamase GOB-1, a di-zinc enzyme"
+            notes: ARO mechanism class antibiotic inactivation (ARO:0001004) → resistance.
+      - subject: gob10
+        predicate: causally upstream of (confers resistance)
+        predicate_id: RO:0002411
+        object: resistance
+        description: Carrying GOB-10 confers the β-lactam (incl. carbapenem) resistance phenotype.
+        evidence:
+          - reference: PMID:21299838
+            snippet: "Broad antibiotic resistance profile of the subclass B3 metallo-β-lactamase GOB-1, a di-zinc enzyme"
+            notes: Determinant → phenotype; GOB-family MBLs confer broad β-lactam resistance.
+curation_history:
+  - timestamp: "2026-07-21T00:00:00Z"
+    curator: edison-causal-graphs
+    action: "Added causal_graphs 'resistance' (6 evidence-backed determinant→mechanism→phenotype edges) from ARO + PMID:21299838; SEEDED -> REVIEWED"
+    llm_assisted: true
 license: CC-BY 4.0
