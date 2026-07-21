@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:0000002
 trait_relations:
@@ -24,4 +24,100 @@ xrefs:
 evidence:
 - reference: DOI:10.1007/s00248-009-9533-9
   notes: PMID:19475445 (aro citation)
+causal_graphs:
+  - graph_id: resistance
+    title: How Tet(M) confers tetracycline resistance by target protection (determinant → mechanism → phenotype)
+    description: >-
+      Resistance-causation graph for the Tet(M) determinant — a FOURTH mechanism
+      type: antibiotic **target protection**. Tet(M) is a ribosome-binding GTPase
+      (an EF-G paralogue) that, using GTP hydrolysis, dislodges tetracycline from
+      its binding site on the (unmodified) ribosome, letting translation resume.
+      Distinct from all prior rounds: neither the drug (cf. GOB-10 inactivation)
+      nor the target (cf. ErmB alteration) is chemically modified, and the drug is
+      not pumped out (cf. MdfA efflux) — it is physically displaced from an intact
+      target.
+    nodes:
+      - node_id: tetm
+        label: Tet(M) (ribosomal protection protein determinant)
+        node_type: PROTEIN
+        grounding: ARO:3000186
+      - node_id: rpp_family
+        label: antibiotic target protection protein
+        node_type: PROTEIN
+        grounding: ARO:3000185
+      - node_id: protection
+        label: ribosomal protection (GTP-dependent tetracycline release)
+        node_type: MOLECULAR_FUNCTION
+        grounding: ARO:0001003
+      - node_id: gtp
+        label: GTP (hydrolysed to power drug release)
+        node_type: CHEMICAL
+        grounding: CHEBI:15996
+      - node_id: tetracycline
+        label: tetracycline (bound at the ribosome)
+        node_type: CHEMICAL
+        grounding: CHEBI:27902
+      - node_id: resistance
+        label: tetracycline resistance phenotype
+        node_type: PHENOTYPE
+    edges:
+      - subject: tetm
+        predicate: member of
+        predicate_id: RO:0002350
+        object: rpp_family
+        description: Tet(M) is a ribosomal protection protein.
+        evidence:
+          - reference: PMID:19475445
+            snippet: "Tet(M) is a ribosomal protection protein that confers tetracycline resistance."
+            notes: ARO record definition (DOI:10.1007/s00248-009-9533-9); is_a parent ARO:3000185.
+      - subject: tetm
+        predicate: enables
+        predicate_id: RO:0002327
+        object: protection
+        description: The Tet(M) gene product performs GTP-dependent ribosomal protection.
+        evidence:
+          - reference: PMID:8655505
+            snippet: "Tet(M)-promoted release of tetracycline from ribosomes is GTP dependent"
+            notes: Tet(M) is an EF-G-paralogue GTPase (ARO antibiotic target protection, ARO:0001003).
+      - subject: gtp
+        predicate: has input (energises)
+        predicate_id: RO:0002233
+        object: protection
+        description: GTP hydrolysis powers the release reaction.
+        evidence:
+          - reference: PMID:8655505
+            snippet: "Tet(M)-promoted release of tetracycline from ribosomes is GTP dependent"
+            notes: Release is GTP-hydrolysis-dependent.
+      - subject: protection
+        predicate: has input (releases)
+        predicate_id: RO:0002233
+        object: tetracycline
+        description: The reaction dislodges tetracycline from its ribosomal binding site.
+        evidence:
+          - reference: PMID:8655505
+            snippet: "Tet(M)-promoted release of tetracycline from ribosomes is GTP dependent"
+            notes: Drug is displaced from an unmodified target; translation then resumes.
+      - subject: protection
+        predicate: causally upstream of
+        predicate_id: RO:0002411
+        object: resistance
+        description: Removing the drug from the ribosome lets protein synthesis continue → resistance.
+        evidence:
+          - reference: PMID:19475445
+            snippet: "Tet(M) is a ribosomal protection protein that confers tetracycline resistance."
+            notes: Target-protection mechanism → resistance.
+      - subject: tetm
+        predicate: causally upstream of (confers resistance)
+        predicate_id: RO:0002411
+        object: resistance
+        description: Carrying Tet(M) confers the tetracycline-resistance phenotype.
+        evidence:
+          - reference: PMID:19475445
+            snippet: "Tet(M) is a ribosomal protection protein that confers tetracycline resistance."
+            notes: Determinant → phenotype.
+curation_history:
+  - timestamp: "2026-07-21T00:00:00Z"
+    curator: edison-causal-graphs
+    action: "Added causal_graphs 'resistance' (6 edges, target-protection mechanism) from ARO + PMID:8655505; SEEDED -> REVIEWED"
+    llm_assisted: true
 license: CC-BY 4.0

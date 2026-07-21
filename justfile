@@ -493,6 +493,13 @@ fetch-aro:
 enrich-aro-resistance *args:
     python3 scripts/enrich_aro_resistance.py {{args}}
 
+# Auto-DRAFT determinant→mechanism→phenotype causal graphs for ARO records from
+# their enriched trait_relations (round-4). Drafts stay SEEDED and carry no verbatim
+# snippets (curator adds those before REVIEWED); `audit-graphs --strict` flags them.
+# Skips records that already have a hand-curated causal_graphs block. --apply to write.
+draft-aro-causal-graphs *args:
+    python3 scripts/draft_aro_causal_graphs.py {{args}}
+
 # Download the CATH classification names (C/A/T/H hierarchy nodes; CC-BY 4.0).
 fetch-cath:
     mkdir -p data/raw/cath

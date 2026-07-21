@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000560
 trait_relations:
@@ -58,4 +58,113 @@ evidence:
   notes: PMID:10508434 (aro citation)
 - reference: DOI:10.1038/nsb0697-483
   notes: PMID:9187657 (aro citation)
+causal_graphs:
+  - graph_id: resistance
+    title: How ErmB confers MLSB resistance by target alteration (determinant → mechanism → phenotype)
+    description: >-
+      Resistance-causation graph for the ErmB determinant — a THIRD mechanism type:
+      antibiotic **target alteration**. ErmB is a 23S rRNA methyltransferase that
+      dimethylates adenine A2058 in the 23S rRNA of the large ribosomal subunit
+      (using S-adenosyl-L-methionine as methyl donor); the methylated ribosome no
+      longer binds macrolide/lincosamide/streptogramin-B antibiotics, giving the
+      MLSB phenotype. Unlike inactivation (GOB-10 destroys the drug) or efflux
+      (MdfA expels it), here the drug's **target** is chemically modified.
+    nodes:
+      - node_id: ermb
+        label: ErmB (23S rRNA methyltransferase determinant)
+        node_type: PROTEIN
+        grounding: ARO:3000375
+      - node_id: erm_family
+        label: Erm 23S ribosomal RNA methyltransferase family
+        node_type: PROTEIN
+        grounding: ARO:3000560
+      - node_id: methylation
+        label: 23S rRNA A2058 dimethylation (antibiotic target alteration)
+        node_type: MOLECULAR_FUNCTION
+        grounding: ARO:0001001
+        xrefs:
+          - ARO:3000211
+      - node_id: sam
+        label: S-adenosyl-L-methionine (methyl donor)
+        node_type: CHEMICAL
+        grounding: CHEBI:15414
+      - node_id: rrna
+        label: 23S rRNA nucleotide A2058 (macrolide-binding site)
+        node_type: NUCLEIC_ACID
+      - node_id: mls
+        label: macrolide / lincosamide / streptogramin B (MLSB) antibiotics
+        node_type: CHEMICAL
+        grounding: CHEBI:25105
+      - node_id: resistance
+        label: MLSB resistance phenotype
+        node_type: PHENOTYPE
+    edges:
+      - subject: ermb
+        predicate: member of
+        predicate_id: RO:0002350
+        object: erm_family
+        description: ErmB is an Erm-family 23S rRNA methyltransferase.
+        evidence:
+          - reference: PMID:31601908
+            snippet: "ErmE is a methyltransferase (MTase) from Saccharopolyspora erythraea that dimethylates A2058 in 23S rRNA"
+            notes: Erm family; is_a parent ARO:3000560 (Erm 23S rRNA methyltransferase).
+      - subject: ermb
+        predicate: enables
+        predicate_id: RO:0002327
+        object: methylation
+        description: The ErmB gene product carries out 23S rRNA A2058 dimethylation.
+        evidence:
+          - reference: PMID:31601908
+            snippet: "ErmE is a methyltransferase (MTase) from Saccharopolyspora erythraea that dimethylates A2058 in 23S rRNA"
+            notes: ARO mechanism antibiotic target alteration (ARO:0001001) / ribosomal alteration (ARO:3000211).
+      - subject: sam
+        predicate: has input (methyl donor)
+        predicate_id: RO:0002233
+        object: methylation
+        description: S-adenosyl-L-methionine donates the methyl groups.
+        evidence:
+          - reference: PMID:31601908
+            snippet: "dimethylates A2058 in 23S rRNA using SAM as methyl donor"
+            notes: SAM-dependent methyltransferase (adds two methyl groups to the A2058 exocyclic amine).
+      - subject: methylation
+        predicate: has output (modifies)
+        predicate_id: RO:0002234
+        object: rrna
+        description: The reaction dimethylates adenine A2058 of the 23S rRNA.
+        evidence:
+          - reference: PMID:31601908
+            snippet: "ErmE is a methyltransferase (MTase) from Saccharopolyspora erythraea that dimethylates A2058 in 23S rRNA"
+            notes: A2058 is the macrolide-binding nucleotide in the 50S large subunit.
+      - subject: rrna
+        predicate: reduces binding of (altered target)
+        predicate_id: RO:0002212
+        object: mls
+        description: The methylated A2058 no longer accommodates MLSB antibiotics.
+        evidence:
+          - reference: PMID:31601908
+            snippet: "protecting the ribosomes from macrolide binding"
+            notes: Cross-resistance to macrolide, lincosamide and streptogramin B (MLSB).
+      - subject: methylation
+        predicate: causally upstream of
+        predicate_id: RO:0002411
+        object: resistance
+        description: Target alteration is the mechanism producing the MLSB phenotype.
+        evidence:
+          - reference: PMID:31601908
+            snippet: "protecting the ribosomes from macrolide binding"
+            notes: ARO antibiotic target alteration → resistance.
+      - subject: ermb
+        predicate: causally upstream of (confers resistance)
+        predicate_id: RO:0002411
+        object: resistance
+        description: Carrying ErmB confers the MLSB resistance phenotype.
+        evidence:
+          - reference: PMID:9187657
+            snippet: "ErmB confers the MLSb phenotype."
+            notes: ARO record definition (DOI:10.1038/nsb0697-483).
+curation_history:
+  - timestamp: "2026-07-21T00:00:00Z"
+    curator: edison-causal-graphs
+    action: "Added causal_graphs 'resistance' (7 edges, target-alteration mechanism) from ARO + PMID:31601908; SEEDED -> REVIEWED"
+    llm_assisted: true
 license: CC-BY 4.0
