@@ -289,6 +289,27 @@ causal_graphs:
         label: hydrolysed beta-lactam (substituted beta-amino acid)
         node_type: CHEMICAL
         grounding: CHEBI:33705
+      - node_id: active_site
+        label: class A beta-lactamase active-site signature (S-x-x-K motif)
+        node_type: MOTIF
+        grounding: PROSITE:PS00146
+        description: KB trait record (SEQ_MOTIF) — the sequence signature of the catalytic site.
+      - node_id: domain
+        label: beta-lactamase domain
+        node_type: DOMAIN
+        grounding: Pfam:PF13354
+        description: KB trait record (SEQ_DOMAIN); spans UniProt 32-286, covering the catalytic residues.
+      - node_id: fold
+        label: DD-peptidase/beta-lactamase superfamily fold
+        node_type: DOMAIN
+        grounding: CATH:3.40.710.10
+        description: KB trait record (STRUCT_HOMOLOGOUS_SUPERFAMILY).
+      - node_id: activity
+        label: beta-lactamase activity (beta-lactam hydrolysis)
+        node_type: MOLECULAR_FUNCTION
+        grounding: GO:0008800
+        xrefs:
+          - EC:3.5.2.6
     edges:
       - subject: glu166
         predicate: acts as general base towards (deprotonates)
@@ -389,9 +410,58 @@ causal_graphs:
           - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/2/
             snippet: "final collapse releases product and regenerates Ser70"
             notes: M-CSA entry 2, deacylation completion; EC:3.5.2.6 / RHEA:20401.
+      - subject: ser70
+        predicate: part of (catalytic residue of)
+        predicate_id: BFO:0000050
+        object: active_site
+        description: The catalytic Ser70 (with Lys73/Ser130/Glu166) constitutes the class A active site.
+        evidence:
+          - reference: PROSITE:PS00146
+            snippet: "Beta-lactamase class-A active site"
+            notes: KB trait PROSITE:PS00146 (SEQ_MOTIF), the S-x-x-K active-site signature; Ser70 = UniProt residue 68.
+      - subject: active_site
+        predicate: part of (located in)
+        predicate_id: BFO:0000050
+        object: domain
+        description: The active site lies within the beta-lactamase domain.
+        evidence:
+          - reference: Pfam:PF13354
+            snippet: "Beta-lactamase enzyme family"
+            notes: KB trait Pfam:PF13354 (SEQ_DOMAIN); the domain (UniProt 32-286) contains the catalytic residues.
+      - subject: domain
+        predicate: member of (adopts fold)
+        predicate_id: RO:0002350
+        object: fold
+        description: The beta-lactamase domain adopts the DD-peptidase/beta-lactamase superfamily fold.
+        evidence:
+          - reference: CATH:3.40.710.10
+            snippet: "DD-peptidase/beta-lactamase superfamily"
+            notes: KB trait CATH:3.40.710.10 (STRUCT_HOMOLOGOUS_SUPERFAMILY); via SIFTS on PDB 1BTL.
+      - subject: active_site
+        predicate: enables
+        predicate_id: RO:0002327
+        object: activity
+        description: The active site carries out beta-lactamase (beta-lactam hydrolysis) activity.
+        evidence:
+          - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/2/
+            snippet: "acylation (covalent attachment of the beta-lactam to an active site serine, Ser70), followed by deacylation"
+            notes: EC:3.5.2.6 / GO:0008800; the catalytic steps above realise this activity.
+      - subject: activity
+        predicate: has output
+        predicate_id: RO:0002234
+        object: product
+        description: The activity yields the hydrolysed beta-lactam product.
+        evidence:
+          - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/2/
+            snippet: "final collapse releases product and regenerates Ser70"
+            notes: RHEA:20401; the mechanism's product is this activity's output.
 curation_history:
   - timestamp: "2026-07-20T00:00:00Z"
     curator: edison-causal-graphs
     action: "Added causal_graphs 'catalysis' (11 evidence-backed edges) from M-CSA entry 2; SEEDED -> REVIEWED"
+    llm_assisted: true
+  - timestamp: "2026-07-21T00:00:00Z"
+    curator: edison-causal-graphs
+    action: "Wired the mechanism through KB protein-trait records (PROSITE:PS00146 active site, Pfam:PF13354 domain, CATH:3.40.710.10 fold, GO:0008800 activity) with partonomy/host edges (+4 nodes, +5 edges)"
     llm_assisted: true
 license: CC-BY-4.0

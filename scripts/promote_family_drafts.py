@@ -47,6 +47,14 @@ FAMILY_SNIPPETS = {
         "det_res": "The Klebsiella pneumoniae carbapenemase (KPC) class A β-lactamase poses a serious threat to nearly all β-lactam antibiotics.",
         "res_drug": "KPC-2 ... allowing it to efficiently hydrolyze virtually all β-lactam antibiotics.",
         "note": "Family-level evidence: KPC is a class A serine carbapenemase; the Ser70 acyl-enzyme mechanism is the same chemistry curated atomically in MCSA:2.",
+        # Wire the mechanism through the KB's own protein-trait records (all class A
+        # serine β-lactamases share the class-A active-site signature + β-lactamase
+        # fold). enables_mech = the mechanism ARO id the active site carries out.
+        "protein_traits": {
+            "active_site": ("PROSITE:PS00146", "class A beta-lactamase active-site signature (S-x-x-K)", "MOTIF", "Beta-lactamase class-A active site"),
+            "fold": ("CATH:3.40.710.10", "DD-peptidase/beta-lactamase superfamily fold", "DOMAIN", "DD-peptidase/beta-lactamase superfamily"),
+            "enables_mech": "ARO:3000187",
+        },
     },
 }
 
@@ -83,6 +91,15 @@ def promoted_graph(ident: str, label: str, mech: list, drug: list, names: dict, 
               f"        label: {D._yq(names.get(did, did))}",
               "        node_type: CHEMICAL",
               f"        grounding: {did}"]
+    pt = cfg.get("protein_traits")
+    if pt:
+        for key in ("active_site", "fold"):
+            cid, lab, ntype, _ = pt[key]
+            L += [f"      - node_id: {key}",
+                  f"        label: {D._yq(lab)}",
+                  f"        node_type: {ntype}",
+                  f"        grounding: {cid}",
+                  "        description: KB protein-trait record carrying the mechanism."]
     L += ["      - node_id: resistance",
           "        label: antibiotic resistance phenotype",
           "        node_type: PHENOTYPE",
@@ -109,6 +126,27 @@ def promoted_graph(ident: str, label: str, mech: list, drug: list, names: dict, 
               "        predicate: related to (resistance is to)",
               f"        object: drug{i}",
               *_ev(ref, cfg["res_drug"], f"Resistance to {names.get(did, did)}.")]
+    # Route the mechanism through the KB's own protein-trait records.
+    if pt:
+        as_cid, _, _, as_snip = pt["active_site"]
+        fo_cid, _, _, fo_snip = pt["fold"]
+        L += ["      - subject: active_site",
+              "        predicate: part of (active site of the protein)",
+              "        predicate_id: BFO:0000050",
+              "        object: determinant",
+              *_ev(as_cid, as_snip, "KB trait: the class-A active-site signature carried by this determinant.")]
+        L += ["      - subject: determinant",
+              "        predicate: member of (adopts fold)",
+              "        predicate_id: RO:0002350",
+              "        object: fold",
+              *_ev(fo_cid, fo_snip, "KB trait: the DD-peptidase/beta-lactamase superfamily fold.")]
+        em = pt.get("enables_mech")
+        if em in mech:
+            L += ["      - subject: active_site",
+                  "        predicate: enables (catalysis)",
+                  "        predicate_id: RO:0002327",
+                  f"        object: mech{mech.index(em)}",
+                  *_ev(ref, cfg["mech"][em], "The active site carries out the serine β-lactam hydrolysis mechanism.")]
     return L
 
 
@@ -141,11 +179,10 @@ def main() -> int:
             continue
         if args.family not in E.ancestry(terms, ident_m.group(1)):
             continue
-        if "graph_id: resistance\n" in text or re.search(r"graph_id: resistance$", text, re.M):
-            skip_done += 1
-            continue
-        if "graph_id: resistance-draft" not in text:
-            skip_nodraft += 1
+        is_draft = "graph_id: resistance-draft" in text
+        is_ours = "Promoted auto-draft to curated" in text     # this promoter's own output
+        if not (is_draft or is_ours):
+            skip_done += 1                                       # hand-curated / no draft → never clobber
             continue
         ident = ident_m.group(1)
         label = re.search(r'^label:\s*"?(.+?)"?\s*$', text, re.M).group(1)

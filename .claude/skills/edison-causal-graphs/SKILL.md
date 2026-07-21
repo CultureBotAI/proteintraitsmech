@@ -63,6 +63,38 @@ edge.
 5. **In scope for the record.** The graph explains *this trait's* mechanism
    (a catalytic-site record's chemistry; a resistance record's resistance route) —
    not the protein's whole biography. One record, one focused mechanism.
+6. **Runs through the KB's protein traits.** The causation must involve the corpus's
+   *specific protein traits*, not just generic ontology entities. Ground DOMAIN /
+   MOTIF / FOLD / RESIDUE / site nodes to the **actual KB trait CURIEs** that exist
+   as records (`grep -rl "^identifier: <CURIE>$" data/traits`), and route the
+   mechanism *through* them with partonomy/host edges. Residue nodes carry their
+   position on the **full UniProt sequence**. See "Wire the mechanism through
+   protein-trait nodes" below. This is a hard requirement — a graph of only
+   ARO/GO/CHEBI classes does not connect to what this KB is *about*.
+
+## Wire the mechanism through protein-trait nodes
+
+Because this is a KB *of protein traits*, the causal graph must route the mechanism
+through the corpus's own trait records, not just generic entities. For a catalytic /
+resistance record, add nodes for the protein traits that carry the mechanism and
+connect them:
+
+- **RESIDUE** → grounded to the `UniProtKB:` accession, position in the label
+  (context of the full sequence); `part_of` →
+- **the active-site / motif trait** (`STRUCT_ACTIVE_SITE` / `SEQ_MOTIF`, e.g. the
+  M-CSA record itself or `PROSITE:PS00146`); `part_of` →
+- **the DOMAIN** (`SEQ_DOMAIN`, e.g. `Pfam:PF13354`); `part_of` →
+- **the FOLD / superfamily** (`STRUCT_*`, e.g. `CATH:3.40.710.10`).
+- the domain/site `enables` (`RO:0002327`) the **MOLECULAR_FUNCTION** (the activity),
+  which is `causally upstream of` the phenotype.
+
+Every one of those groundings should be a **real record** — verify with
+`grep -rl "^identifier: <CURIE>$" data/traits`. This is the same cross-axis link the
+sequence↔structure↔function alignment overlays capture (see [[axis-follows-representation]]):
+a FUNCTION resistance determinant's mechanism runs through its SEQUENCE signature/
+domain and STRUCTURE fold/active-site traits. `promote_family_drafts.py`'s
+`FAMILY_SNIPPETS` carries a per-family `protein_traits` list so a whole family's
+graphs share the same domain/fold/site trait nodes.
 
 ## Where the mechanism content comes from (prioritized)
 

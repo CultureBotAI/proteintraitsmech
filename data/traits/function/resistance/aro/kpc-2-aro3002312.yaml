@@ -74,6 +74,16 @@ causal_graphs:
         label: penicillin beta-lactam
         node_type: CHEMICAL
         grounding: ARO:3000008
+      - node_id: active_site
+        label: class A beta-lactamase active-site signature (S-x-x-K)
+        node_type: MOTIF
+        grounding: PROSITE:PS00146
+        description: KB protein-trait record carrying the mechanism.
+      - node_id: fold
+        label: DD-peptidase/beta-lactamase superfamily fold
+        node_type: DOMAIN
+        grounding: CATH:3.40.710.10
+        description: KB protein-trait record carrying the mechanism.
       - node_id: resistance
         label: antibiotic resistance phenotype
         node_type: PHENOTYPE
@@ -146,6 +156,30 @@ causal_graphs:
           - reference: PMID:28388065
             snippet: KPC-2 ... allowing it to efficiently hydrolyze virtually all β-lactam antibiotics.
             notes: Resistance to penicillin beta-lactam.
+      - subject: active_site
+        predicate: part of (active site of the protein)
+        predicate_id: BFO:0000050
+        object: determinant
+        evidence:
+          - reference: PROSITE:PS00146
+            snippet: Beta-lactamase class-A active site
+            notes: "KB trait: the class-A active-site signature carried by this determinant."
+      - subject: determinant
+        predicate: member of (adopts fold)
+        predicate_id: RO:0002350
+        object: fold
+        evidence:
+          - reference: CATH:3.40.710.10
+            snippet: DD-peptidase/beta-lactamase superfamily
+            notes: "KB trait: the DD-peptidase/beta-lactamase superfamily fold."
+      - subject: active_site
+        predicate: enables (catalysis)
+        predicate_id: RO:0002327
+        object: mech1
+        evidence:
+          - reference: PMID:28388065
+            snippet: "The attack of Ser70 on the substrate β-lactam carbonyl results in a covalent acyl-enzyme complex. Subsequently, the catalytic water, activated by Glu166, cleaves the acyl-enzyme bond, leading to the formation of the hydrolyzed product."
+            notes: The active site carries out the serine β-lactam hydrolysis mechanism.
 curation_history:
   - timestamp: "2026-07-21T00:00:00Z"
     curator: edison-causal-graphs
