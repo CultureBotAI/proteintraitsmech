@@ -6,9 +6,13 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:0010002
+trait_relations:
+  - predicate: RO:0000056
+    object: ARO:0010000
+    relation_source: "ARO participates_in (mechanism) via ARO:3000159 efflux pump complex or subunit conferring antibiotic resistance"
 synonyms:
   - synonym_text: Ecol_mdfA
     synonym_type: EXACT_SYNONYM
@@ -27,4 +31,90 @@ evidence:
   notes: PMID:26238402 (aro citation)
 - reference: DOI:10.1128/JB.180.22.6072-6075.1998
   notes: PMID:9811673 (aro citation)
+causal_graphs:
+  - graph_id: resistance
+    title: How MdfA confers multidrug resistance by active efflux (determinant → mechanism → phenotype)
+    description: >-
+      Resistance-causation graph for the MdfA efflux determinant. Unlike the
+      β-lactamase determinant GOB-10 (which chemically inactivates the drug), MdfA
+      confers resistance without modifying the antibiotic: it is a major-facilitator
+      superfamily (MFS) H+-coupled antiporter that uses the proton-motive force to
+      actively expel intact drugs from the cytoplasm, lowering the intracellular
+      concentration. Same ARO edge shape (determinant → mechanism → phenotype), a
+      genuinely different mechanism (antibiotic efflux, ARO:0010000, vs antibiotic
+      inactivation, ARO:0001004).
+    nodes:
+      - node_id: mdfa
+        label: E. coli MdfA (MFS multidrug efflux pump determinant)
+        node_type: PROTEIN
+        grounding: ARO:3001328
+      - node_id: mfs_family
+        label: major facilitator superfamily (MFS) antibiotic efflux pump
+        node_type: PROTEIN
+        grounding: ARO:0010002
+      - node_id: efflux
+        label: H+-coupled multidrug efflux (antibiotic efflux)
+        node_type: MOLECULAR_FUNCTION
+        grounding: ARO:0010000
+        xrefs:
+          - GO:0015238
+        description: Proton-motive-force-driven drug/H+ antiport that exports intact antibiotic from the cell.
+      - node_id: chloramphenicol
+        label: chloramphenicol (archetypal substrate; broad multidrug spectrum)
+        node_type: CHEMICAL
+        grounding: CHEBI:17698
+      - node_id: resistance
+        label: multidrug resistance phenotype
+        node_type: PHENOTYPE
+    edges:
+      - subject: mdfa
+        predicate: member of
+        predicate_id: RO:0002350
+        object: mfs_family
+        description: MdfA belongs to the MFS antibiotic-efflux-pump family.
+        evidence:
+          - reference: PMID:9811673
+            snippet: "Multidrug efflux pump in E. coli. This multidrug efflux system was originally identified as the Cmr/CmlA chloramphenicol exporter."
+            notes: ARO record definition; is_a parent ARO:0010002 (MFS antibiotic efflux pump).
+      - subject: mdfa
+        predicate: enables
+        predicate_id: RO:0002327
+        object: efflux
+        description: The MdfA gene product is a multidrug efflux transporter.
+        evidence:
+          - reference: PMID:12578981
+            snippet: "each recognizes and expels a broad spectrum of chemically unrelated drugs from the cell"
+            notes: MdfA is such an Mdr membrane transporter (ARO mechanism antibiotic efflux, ARO:0010000).
+      - subject: efflux
+        predicate: has input (exports)
+        predicate_id: RO:0002233
+        object: chloramphenicol
+        description: The pump transports/exports chemically diverse drug substrates, including chloramphenicol.
+        evidence:
+          - reference: PMID:12578981
+            snippet: "The Escherichia coli Mdr transporter MdfA is able to transport differentially charged substrates"
+            notes: Substrates include neutral chloramphenicol/thiamphenicol and lipophilic cations.
+      - subject: efflux
+        predicate: causally upstream of
+        predicate_id: RO:0002411
+        object: resistance
+        description: Active export lowers the intracellular drug concentration, producing multidrug resistance.
+        evidence:
+          - reference: PMID:12578981
+            snippet: "The resistance of cells to many drugs simultaneously (multidrug resistance) often involves the expression of membrane transporters (Mdrs); each recognizes and expels a broad spectrum of chemically unrelated drugs from the cell."
+            notes: Efflux mechanism → multidrug-resistance phenotype.
+      - subject: mdfa
+        predicate: causally upstream of (confers resistance)
+        predicate_id: RO:0002411
+        object: resistance
+        description: Expression/overexpression of MdfA confers the multidrug-resistance phenotype.
+        evidence:
+          - reference: PMID:12578981
+            snippet: "The resistance of cells to many drugs simultaneously (multidrug resistance) often involves the expression of membrane transporters (Mdrs); each recognizes and expels a broad spectrum of chemically unrelated drugs from the cell."
+            notes: Determinant → phenotype.
+curation_history:
+  - timestamp: "2026-07-21T00:00:00Z"
+    curator: edison-causal-graphs
+    action: "Added causal_graphs 'resistance' (5 evidence-backed determinant→mechanism→phenotype edges, efflux mechanism) from ARO + PMID:12578981; SEEDED -> REVIEWED"
+    llm_assisted: true
 license: CC-BY 4.0

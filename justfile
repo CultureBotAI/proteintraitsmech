@@ -485,6 +485,14 @@ fetch-aro:
     mkdir -p data/raw/aro
     curl -sSLf --max-time 120 -o data/raw/aro/aro.obo https://raw.githubusercontent.com/arpcard/aro/master/src/ontology/aro.obo
 
+# Enrich ARO determinant records with inherited drug-class + mechanism relations
+# (CARD confers_resistance_to_drug_class / participates_in, walked up the is_a
+# ancestry) as trait_relations — so causal-graph rounds can transcribe the
+# resistance shape instead of researching each gene. Idempotent (skips records that
+# already have trait_relations); dry-run by default, --apply to write. Needs aro.obo.
+enrich-aro-resistance *args:
+    python3 scripts/enrich_aro_resistance.py {{args}}
+
 # Download the CATH classification names (C/A/T/H hierarchy nodes; CC-BY 4.0).
 fetch-cath:
     mkdir -p data/raw/cath
