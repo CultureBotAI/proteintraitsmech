@@ -204,6 +204,33 @@ FAMILY_SNIPPETS = {
     },
 }
 
+# Class C serine β-lactamases (AmpC cephalosporinases) — same fold as class A/D, a
+# distinct class-C active-site signature; one shared config across the 4 families.
+_AMPC = ("AmpC β-lactamases are clinically important cephalosporinases encoded on the "
+         "chromosomes of many of the Enterobacteriaceae and a few other organisms, where "
+         "they mediate resistance to cephalothin, cefazolin, cefoxitin, most penicillins, "
+         "and β-lactamase inhibitor-β-lactam combinations.")
+
+
+def _classc(family: str) -> dict:
+    return {
+        "reference": "PMID:19136439",
+        "mech": {"ARO:0001004": _AMPC, "ARO:3000187": _AMPC},
+        "mech_res": _AMPC, "det_res": _AMPC, "res_drug": _AMPC,
+        "note": f"{family} is a class C serine β-lactamase (AmpC cephalosporinase); Ser64 acyl-enzyme mechanism.",
+        "protein_traits": {
+            "active_site": ("PROSITE:PRU10102", "class C beta-lactamase active-site signature (Ser64 S-x-x-K)", "MOTIF", "Beta-lactamase class-C active site"),
+            "fold": ("CATH:3.40.710.10", "DD-peptidase/beta-lactamase superfamily fold", "DOMAIN", "DD-peptidase/beta-lactamase superfamily"),
+            "enables_mech": "ARO:3000187",
+            "part_note": "KB trait: the class-C active-site signature carried by this determinant.",
+        },
+    }
+
+
+for _fam, _name in [("ARO:3005459", "ADC"), ("ARO:3000098", "PDC"),
+                    ("ARO:3000072", "ACT"), ("ARO:3000069", "CMY")]:
+    FAMILY_SNIPPETS[_fam] = _classc(_name)
+
 
 def _ev(ref: str, snippet: str, note: str) -> list[str]:
     return ["        evidence:",
