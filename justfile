@@ -329,14 +329,29 @@ build-function-equivalence:
 build-orthology-equivalence *args:
     python3 scripts/build_orthology_equivalence.py {{args}}
 
-# Build data/equivalence/seq_struct_alignment.tsv — STEP-1 pilot cross-axis
-# SEQUENCE↔STRUCTURE overlap edges: records sharing an exact canonical-example
-# protein_id whose stored coordinates (sequence_pattern hits + category-matching
-# UniProt FT features) overlap on the shared UniProt residue frame. Relate-only,
-# never a merge (research/sequence-structure-alignment-analysis-1.md). --dry-run
-# for stats; SIFTS/InterPro coordinate providers are step 2.
+# Build the residue-frame alignment overlays: seq_struct_alignment.tsv (signature/
+# domain/fold edges) + seq_struct_func_sites.tsv (Path 1 — residue-localized
+# FUNCTION sites ↔ each other and ↔ the SEQ signatures / STRUCT folds that host
+# them). Records sharing an exact canonical-example protein_id whose coordinates
+# overlap on the shared UniProt residue frame; relate-only, never a merge
+# (research/sequence-structure-function-alignment-analysis-1.md §2 path 1).
+#   --providers stored           offline default (pattern hits + own-category FT)
+#   --providers stored,interpro,sifts,biolip   full crawl (queries EBI APIs,
+#       caches to data/raw/align_cache/; `biolip` maps BioLiP binding residues →
+#       UniProt via SIFTS — the ~5.5k STRUCT_BINDING_SITE workhorse)
+#   --dry-run for stats; --selftest for offline unit tests.
 build-seq-struct-alignment *args:
     python3 scripts/build_sequence_structure_alignment.py {{args}}
+
+# Build data/equivalence/seq_struct_comembership.tsv — Path 2 (whole-protein
+# co-membership). SEQUENCE signatures and STRUCT_FOLD records share NO exemplar
+# proteins, so the residue-frame path (above) can't connect them. This links a
+# signature to the CATH structural-classification record its exemplar proteins are
+# consistently classified into (family_classifications CATH id → a STRUCTURE record
+# grounded to that CATH). Entity-level `biolink:related_to`, relate-only, never a
+# merge. Offline. --min-fraction / --max-cath / --anchor-cap tune the quality gate.
+build-seq-struct-comembership *args:
+    python3 scripts/build_seq_struct_comembership.py {{args}}
 
 # Build data/equivalence/pathway.tsv — SEED↔Reactome FUNC_PATHWAY equivalence
 # from two parallel signals: shared GO biological-process anchor (close_match)

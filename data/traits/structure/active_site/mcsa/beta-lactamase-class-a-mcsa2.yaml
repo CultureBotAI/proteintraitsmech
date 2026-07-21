@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.5.2.6
 - CHEBI:35627
@@ -233,4 +233,165 @@ definitions:
       The Class A Beta lactamase acts to hydrolyse the endocyclic amide bond of beta-lactam substrates in a two step mechanism: acylation (covalent attachment of the beta-lactam to an active site serine, Ser70), followed by deacylation. The TEM-type are the most prevalent beta-lactamases in enterobacteria and confer resistance to penicillins and cephalosporins in these species. TEM-3 and TEM-4 are capable of hydrolyzing cefotaxime and ceftazidime. TEM-5 is capable of hydrolysing ceftazidime. TEM-6 is capable of hydrolysing ceftazidime and aztreonam. TEM-8/CAZ-2, TEM-16/CAZ-7 and TEM-24/CAZ-6 are markedly active against ceftazidime. IRT-4 shows resistance to beta-lactamase inhibitors.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+  - graph_id: catalysis
+    title: Catalytic mechanism of class A beta-lactamase (acylation + deacylation)
+    description: >-
+      Stepwise serine-hydrolase mechanism transcribed from M-CSA entry 2
+      (proposal 1, preferred). Residue node groundings use the UniProtKB:P62593
+      frame; the field-standard Ambler numbers are in each node label
+      (UniProt 68/71/128/164 = Ambler Ser70/Lys73/Ser130/Glu166, reconciled via
+      SIFTS). Two covalent steps: acylation to the Ser70 nucleophile, then
+      hydrolytic deacylation.
+    nodes:
+      - node_id: ser70
+        label: catalytic serine Ser70 (Ambler; UniProt residue 68)
+        node_type: RESIDUE
+        grounding: UniProtKB:P62593
+        description: Nucleophile; forms the covalent acyl-enzyme; backbone amide lines the oxyanion hole.
+      - node_id: lys73
+        label: Lys73 (Ambler; UniProt residue 71)
+        node_type: RESIDUE
+        grounding: UniProtKB:P62593
+        description: General acid/base; ion pair with Ser70 in the proton-transfer network.
+      - node_id: ser130
+        label: Ser130 (Ambler; UniProt residue 128)
+        node_type: RESIDUE
+        grounding: UniProtKB:P62593
+        description: Proton donor to the leaving-group beta-lactam nitrogen.
+      - node_id: glu166
+        label: Glu166 (Ambler; UniProt residue 164)
+        node_type: RESIDUE
+        grounding: UniProtKB:P62593
+        description: General base activating the conserved acylation water and the hydrolytic deacylation water.
+      - node_id: substrate
+        label: beta-lactam substrate
+        node_type: CHEMICAL
+        grounding: CHEBI:35627
+      - node_id: water_acyl
+        label: conserved acylation water (proton relay)
+        node_type: CHEMICAL
+        grounding: CHEBI:15377
+      - node_id: water_deacyl
+        label: hydrolytic deacylation water
+        node_type: CHEMICAL
+        grounding: CHEBI:15377
+      - node_id: tetra1
+        label: first tetrahedral intermediate
+        node_type: STATE
+      - node_id: acyl_enzyme
+        label: acyl-enzyme intermediate (Ser70 ester)
+        node_type: STATE
+      - node_id: tetra2
+        label: second (deacylation) tetrahedral intermediate
+        node_type: STATE
+      - node_id: product
+        label: hydrolysed beta-lactam (substituted beta-amino acid)
+        node_type: CHEMICAL
+        grounding: CHEBI:33705
+    edges:
+      - subject: glu166
+        predicate: acts as general base towards (deprotonates)
+        predicate_id: RO:0002436
+        object: water_acyl
+        description: Glu166 deprotonates the conserved water that relays the proton off Ser70.
+        evidence:
+          - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/2/
+            snippet: "acts as a general base towards a structurally conserved water molecule, leading to the deprotonation of Ser70 (proton relay)"
+            notes: M-CSA entry 2, Glu166 role; primary ref PMID:17408273.
+      - subject: water_acyl
+        predicate: deprotonates (proton relay)
+        predicate_id: RO:0002436
+        object: ser70
+        description: The activated water abstracts the Ser70 hydroxyl proton, generating the nucleophilic alkoxide.
+        evidence:
+          - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/2/
+            snippet: "Glu166 deprotonates a conserved water molecule which in turn deprotonates the nucleophilic Ser70, initiating the nucleophilic addition onto the carbonyl carbon of the beta-lactam"
+            notes: M-CSA entry 2, acylation step 1.
+      - subject: lys73
+        predicate: assists proton transfer (ion pair)
+        predicate_id: RO:0002436
+        object: ser70
+        description: Lys73 ion-pairs with Ser70 and participates in the proton-transfer event that activates the nucleophile.
+        evidence:
+          - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/2/
+            snippet: "forms an ion pair with Ser 70, which is involved in the proton transfer event"
+            notes: M-CSA entry 2, Lys73 role.
+      - subject: ser70
+        predicate: nucleophilic attack on
+        predicate_id: RO:0002436
+        object: substrate
+        description: The Ser70 alkoxide attacks the beta-lactam carbonyl carbon.
+        evidence:
+          - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/2/
+            snippet: "acts as a nucleophile towards the beta lactam substrate carbonyl group"
+            notes: M-CSA entry 2, Ser70 role.
+      - subject: substrate
+        predicate: is converted to (nucleophilic addition)
+        predicate_id: RO:0002411
+        object: tetra1
+        description: Nucleophilic addition to the carbonyl forms the first tetrahedral intermediate.
+        evidence:
+          - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/2/
+            snippet: "initiating the nucleophilic addition onto the carbonyl carbon of the beta-lactam, forming a tetrahedral intermediate"
+            notes: M-CSA entry 2, acylation step 1.
+      - subject: ser130
+        predicate: protonates leaving-group nitrogen (proton donor)
+        predicate_id: RO:0002436
+        object: substrate
+        description: Ser130 donates a proton to the beta-lactam nitrogen as the ring opens.
+        evidence:
+          - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/2/
+            snippet: "implicated in catalytic action within a hydrogen bonding network which mediates protonation of the substrate nitrogen"
+            notes: M-CSA entry 2, Ser130 role.
+      - subject: tetra1
+        predicate: collapses to (C-N bond cleavage)
+        predicate_id: RO:0002411
+        object: acyl_enzyme
+        description: The tetrahedral intermediate collapses, cleaving the endocyclic C-N bond and forming the covalent acyl-enzyme.
+        evidence:
+          - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/2/
+            snippet: "The tetrahedral intermediate collapses, cleaving the C-N bond in the beta-lactam, the nitrogen deprotonates Ser130"
+            notes: M-CSA entry 2, acylation step 2 → acyl-enzyme.
+      - subject: glu166
+        predicate: activates hydrolytic water (general base)
+        predicate_id: RO:0002436
+        object: water_deacyl
+        description: In deacylation, Glu166 again acts as general base, activating the hydrolytic water.
+        evidence:
+          - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/2/
+            snippet: "Glu166 deprotonates water, which initiates a nucleophilic addition at the carbonyl carbon, forming a new tetrahedral intermediate"
+            notes: M-CSA entry 2, deacylation step.
+      - subject: water_deacyl
+        predicate: nucleophilic attack on
+        predicate_id: RO:0002436
+        object: acyl_enzyme
+        description: The activated hydrolytic water attacks the acyl-enzyme ester carbonyl.
+        evidence:
+          - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/2/
+            snippet: "Water attacks the acyl-enzyme intermediate"
+            notes: M-CSA entry 2, deacylation.
+      - subject: acyl_enzyme
+        predicate: is converted to
+        predicate_id: RO:0002411
+        object: tetra2
+        description: Attack on the acyl-enzyme forms the second tetrahedral intermediate.
+        evidence:
+          - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/2/
+            snippet: "forming a new tetrahedral intermediate"
+            notes: M-CSA entry 2, deacylation.
+      - subject: tetra2
+        predicate: collapses to (releases product, regenerates Ser70)
+        predicate_id: RO:0002411
+        object: product
+        description: Collapse of the second tetrahedral intermediate releases the hydrolysed product and regenerates free Ser70.
+        evidence:
+          - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/2/
+            snippet: "final collapse releases product and regenerates Ser70"
+            notes: M-CSA entry 2, deacylation completion; EC:3.5.2.6 / RHEA:20401.
+curation_history:
+  - timestamp: "2026-07-20T00:00:00Z"
+    curator: edison-causal-graphs
+    action: "Added causal_graphs 'catalysis' (11 evidence-backed edges) from M-CSA entry 2; SEEDED -> REVIEWED"
+    llm_assisted: true
 license: CC-BY-4.0
