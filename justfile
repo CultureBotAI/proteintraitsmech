@@ -649,6 +649,15 @@ ground-categories *args:
 fetch-examples *args:
     uv run python scripts/fetch_uniprot_examples.py {{args}}
 
+# Build per-protein trait PROFILES from Swiss-Prot (issue #7): for each entry,
+# which corpus trait classes it carries (matched via Pfam/InterPro/CATH/PROSITE/
+# SMART/CDD/NCBIfam/EC/GO) + its GO/EC — the protein×trait matrix for trait↔GO
+# correlation + multi-trait-family clustering. --query / --limit bound the slice;
+# --apply writes data/profiles/<acc>.yaml (ProteinProfile) + profiles.jsonl.
+#   just build-profiles --query "reviewed:true AND organism_id:9606" --limit 1000 --apply
+build-profiles *args:
+    python3 scripts/build_swissprot_profiles.py {{args}}
+
 # Regenerate docs/data/records.json + facets.json used by the browse
 # page. Requires PyYAML; walks every data/traits/**/*.yaml.
 build-docs:

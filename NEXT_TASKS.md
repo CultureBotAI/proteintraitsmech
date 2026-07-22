@@ -12,14 +12,16 @@ _Last reconciled: 2026-07-21._
 
 ## Next up (actionable, ranked)
 
-1. **Populate real Swiss-Prot proteins → multi-trait families (issue #7).**
-   Fetch a Swiss-Prot slice and seed per-protein records so single proteins carry
-   *several* traits across axes. High leverage: it also **fixes the empty base
-   seq↔struct overlay** (item below) — that overlay is empty only because the
-   SEQUENCE-signature exemplars (Swiss-Prot) and STRUCT_FOLD exemplars (TED/TrEMBL
-   AlphaFold) currently share **zero** proteins; shared Swiss-Prot exemplars would
-   give it residue-frame edges. Start: `just seed-uniprot --accession …` /
-   `--from-file`; see `research/sequence-structure-function-alignment-analysis-1.md`.
+1. **Swiss-Prot multi-trait profiles (issue #7) — phase 1 shipped, phase 2 next.**
+   Phase 1 DONE (2026-07-21, branch `swissprot-trait-profiles`): `ProteinProfile`
+   schema class + `scripts/build_swissprot_profiles.py` (`just build-profiles`) →
+   1,000-protein pilot (`data/profiles/`), the protein×trait matrix, with real
+   trait↔GO correlation (kinase→ATP-binding, conf 1.0) and domain-architecture
+   families (GPCR/homeobox/EF-hand). See `research/swissprot-trait-profiles-1.md`.
+   **Phase 2 (next):** scale over all Swiss-Prot (`--query "reviewed:true"`; decide
+   committed vs gitignored bulk), train the trait→GO decision tree, formal fuzzy
+   clustering (Jaccard / doi:10.1186/s12859-022-05093-z), and a protein×trait map in
+   the browser. Also feeds item 4 (shared Swiss-Prot exemplars → base overlay edges).
 
 2. **Per-gene curation of the remaining ~1,219 resistance causal-graph drafts.**
    The family-level promotion is done (6,180 REVIEWED). The tail is genuinely

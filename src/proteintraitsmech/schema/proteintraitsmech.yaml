@@ -972,6 +972,76 @@ classes:
       llm_assisted:
         range: boolean
 
+  ProteinProfile:
+    class_uri: proteintraitsmech:ProteinProfile
+    description: >-
+      A Swiss-Prot protein and the corpus trait classes it carries, plus its
+      GO / EC groundings — the per-protein view used for trait-to-function
+      correlation and multi-trait-family clustering (issue #7). One YAML per
+      protein; complements the trait-class corpus (ProteinTraitRecord = one YAML
+      per trait) rather than replacing it.
+    attributes:
+      accession:
+        description: UniProtKB accession (e.g. UniProtKB:P00533).
+        identifier: true
+        required: true
+        range: string
+        pattern: "^UniProtKB:[A-Z0-9]+([-][0-9]+)?$"
+      protein_name:
+        description: Recommended protein name.
+        required: true
+        range: string
+      taxon_id:
+        range: string
+        pattern: "^NCBITaxon:[0-9]+$"
+      taxon_label:
+        range: string
+      sequence_length:
+        range: integer
+        minimum_value: 1
+      reviewed:
+        description: True for Swiss-Prot (reviewed) entries.
+        range: boolean
+      go_terms:
+        description: GO CURIEs annotated on the entry.
+        multivalued: true
+        range: string
+        pattern: "^GO:[0-9]{7}$"
+      ec_numbers:
+        description: EC numbers annotated on the entry.
+        multivalued: true
+        range: string
+      traits:
+        description: >-
+          Corpus trait classes this protein carries, resolved by matching the
+          entry's signature/classification cross-references (Pfam, InterPro,
+          CATH/Gene3D, PROSITE, SMART, CDD, NCBIfam, SUPERFAMILY, EC, GO)
+          against the identifiers of existing ProteinTraitRecords.
+        multivalued: true
+        inlined_as_list: true
+        range: ProfileTrait
+      profile_source:
+        description: Provenance (e.g. "UniProtKB Swiss-Prot; build_swissprot_profiles.py").
+        range: string
+
+  ProfileTrait:
+    description: One corpus trait class a protein carries, with its axis/category.
+    attributes:
+      trait:
+        description: CURIE of the corpus trait class (a ProteinTraitRecord identifier).
+        required: true
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+      trait_axis:
+        description: The trait's axis, copied from the matched record.
+        range: string
+      trait_category:
+        description: The trait's fine-grained category, copied from the matched record.
+        range: string
+      via:
+        description: The entry cross-reference that matched this trait (e.g. Pfam:PF00069).
+        range: string
+
 # ================================================================
 # ENUMS
 # ================================================================
