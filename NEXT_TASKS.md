@@ -27,10 +27,14 @@ _Last reconciled: 2026-07-21._
    (`just trait-correlations`) — cross-axis correlation; **226 sequence signatures
    that always encode a specific fold** (conf ≥0.99, lift 500–625×) + 419
    sequence/structure→function rules. See `research/swissprot-trait-profiles-3.md`.
-   **Phase 4 (next):** materialise the ≥0.99 sequence→fold rules as `trait_relations`
-   between the signature and fold records (data-backed cross-axis overlay); multi-
-   organism confirmation + held-out-organism decision-tree test; protein×trait browser
-   map. Also feeds item 4 (shared Swiss-Prot exemplars → base overlay).
+   Phase 4 DONE (2026-07-22): materialised the empirical cross-axis rules as
+   `data/equivalence/trait_cooccurrence.tsv` (516 edges: 284 seq-encodes-fold +
+   232 trait-implies-function, `biolink:related_to`, conf/lift in relation_source;
+   auto-loaded by build_docs_index). See `research/swissprot-trait-profiles-4.md`.
+   **Phase 5 (next):** auto-suggest `canonical_examples` from the `seq-encodes-fold`
+   rules (connects real proteins to trait records + feeds the base overlay, item 4);
+   multi-organism confirmation + held-out-organism decision-tree test; protein×trait
+   browser map (UMAP/PaCMAP of profiles.jsonl).
 
 2. **Per-gene curation of the remaining ~1,219 resistance causal-graph drafts.**
    The family-level promotion is done (6,180 REVIEWED). The tail is genuinely
