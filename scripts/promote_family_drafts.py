@@ -302,6 +302,43 @@ FAMILY_SNIPPETS["ARO:3001218"] = _domfam(  # dfr — trimethoprim-resistant DHFR
     "The trimethoprim-insensitive DHFR replaces the drug-sensitive enzyme.")
 
 
+# Broad class/family nodes — clear the long tail (remaining class A/C variants, all
+# metallo-β-lactamases IMP/VIM/NDM/GOB/BlaB, and the Erm methyltransferases). Already
+# hand-curated / previously-promoted members are skipped by the curation-signature guard.
+def _classa(family):
+    _s = "In the first acylation step, the β-lactam antibiotic forms an acyl-enzyme intermediate (ES*) with the catalytic serine residue."
+    return {"reference": "PMID:32576842", "mech": {"ARO:0001004": _s, "ARO:3000187": _s},
+            "mech_res": _s, "det_res": _s, "res_drug": _s,
+            "note": f"{family} — class A serine β-lactamase; Ser70 acyl-enzyme mechanism.",
+            "protein_traits": {
+                "active_site": ("PROSITE:PS00146", "class A beta-lactamase active-site signature (S-x-x-K)", "MOTIF", "Beta-lactamase class-A active site"),
+                "fold": ("CATH:3.40.710.10", "DD-peptidase/beta-lactamase superfamily fold", "DOMAIN", "DD-peptidase/beta-lactamase superfamily"),
+                "enables_mech": "ARO:3000187",
+                "part_note": "KB trait: the class-A active-site signature carried by this determinant."}}
+
+
+FAMILY_SNIPPETS["ARO:3000078"] = _classa("class A beta-lactamase")
+FAMILY_SNIPPETS["ARO:3000076"] = _classc("class C beta-lactamase")
+FAMILY_SNIPPETS["ARO:3000004"] = _domfam(  # class B metallo-β-lactamase (broad)
+    "PMID:33199283",
+    "MBLs are one class of β-lactamases (Ambler class B), requiring divalent zinc ions for their β-lactamase activity.",
+    "class B metallo-β-lactamase — Zn(II)-dependent hydrolysis of β-lactams (incl. carbapenems); no covalent acyl-enzyme.",
+    ("Pfam:PF00753", "metallo-beta-lactamase superfamily domain", "DOMAIN", "Metallo-beta-lactamase superfamily"),
+    ("CATH:3.60.15.30", "metallo-beta-lactamase domain fold", "DOMAIN", "Metallo-beta-lactamase domain"),
+    "ARO:3000203", "enables (Zn-dependent beta-lactam hydrolysis)",
+    "KB trait: the metallo-beta-lactamase domain.", "KB trait: the MBL structural fold.",
+    "The di-zinc metallo-beta-lactamase domain hydrolyses the beta-lactam ring.")
+FAMILY_SNIPPETS["ARO:3000560"] = _domfam(  # Erm 23S rRNA methyltransferase (broad)
+    "PMID:31601908",
+    "ErmE is a methyltransferase (MTase) from Saccharopolyspora erythraea that dimethylates A2058 in 23S rRNA",
+    "Erm — 23S rRNA adenine dimethyltransferase; target alteration (methylates A2058) conferring MLSB resistance.",
+    ("Pfam:PF00398", "rRNA adenine dimethyltransferase domain (RrnaAD)", "DOMAIN", "Ribosomal RNA adenine dimethylase"),
+    None,
+    "ARO:3000211", "enables (23S rRNA A2058 methylation)",
+    "KB trait: the RrnaAD methyltransferase domain.", None,
+    "The methyltransferase domain dimethylates 23S rRNA A2058, altering the drug target.")
+
+
 def _ev(ref: str, snippet: str, note: str) -> list[str]:
     return ["        evidence:",
             f"          - reference: {ref}",
@@ -408,6 +445,10 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--family", required=True, help="family ARO id (must be in FAMILY_SNIPPETS)")
     ap.add_argument("--apply", action="store_true")
+    ap.add_argument("--drafts-only", action="store_true",
+                    help="only promote resistance-draft graphs; never re-promote already-"
+                         "curated members (use for broad class/family nodes so they don't "
+                         "overwrite more-specific family configs)")
     ap.add_argument("--limit", type=int, default=0)
     args = ap.parse_args()
     cfg = FAMILY_SNIPPETS.get(args.family)
@@ -427,8 +468,12 @@ def main() -> int:
             continue
         is_draft = "graph_id: resistance-draft" in text
         is_ours = "Promoted auto-draft to curated" in text     # this promoter's own output
-        if not (is_draft or is_ours):
-            skip_done += 1                                       # hand-curated / no draft → never clobber
+        if is_draft:
+            pass                                                # a draft → promote
+        elif is_ours and not args.drafts_only:
+            pass                                                # re-promote our own output (config change)
+        else:
+            skip_done += 1                                       # hand-curated / already-curated (drafts-only) → never clobber
             continue
         ident = ident_m.group(1)
         label = re.search(r'^label:\s*"?(.+?)"?\s*$', text, re.M).group(1)

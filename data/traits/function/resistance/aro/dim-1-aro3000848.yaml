@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3004208
 trait_relations:
@@ -28,10 +28,10 @@ evidence:
 - reference: DOI:10.1128/AAC.01456-09
   notes: PMID:20308383 (aro citation)
 causal_graphs:
-  - graph_id: resistance-draft
-    title: "[DRAFT] DIM-1 → mechanism → resistance (auto-scaffold from ARO relations)"
+  - graph_id: resistance
+    title: DIM-1 → mechanism → resistance (curated from ARO relations + literature)
     description: >-
-      Auto-drafted from this record's enriched ARO trait_relations (participates_in mechanism + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.
+      Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence (PMID:33199283). class B metallo-β-lactamase — Zn(II)-dependent hydrolysis of β-lactams (incl. carbapenems); no covalent acyl-enzyme.
     nodes:
       - node_id: determinant
         label: DIM-1
@@ -53,6 +53,16 @@ causal_graphs:
         label: cephalosporin
         node_type: CHEMICAL
         grounding: ARO:0000032
+      - node_id: domain
+        label: metallo-beta-lactamase superfamily domain
+        node_type: DOMAIN
+        grounding: Pfam:PF00753
+        description: KB protein-trait record carrying the mechanism.
+      - node_id: fold
+        label: metallo-beta-lactamase domain fold
+        node_type: DOMAIN
+        grounding: CATH:3.60.15.30
+        description: KB protein-trait record carrying the mechanism.
       - node_id: resistance
         label: antibiotic resistance phenotype
         node_type: PHENOTYPE
@@ -62,46 +72,82 @@ causal_graphs:
         predicate_id: RO:0000056
         object: mech0
         evidence:
-          - reference: DOI:10.1128/AAC.01456-09
-            notes: "Auto-drafted from ARO participates_in ARO:0001004; verbatim snippet pending curation."
+          - reference: PMID:33199283
+            snippet: "MBLs are one class of β-lactamases (Ambler class B), requiring divalent zinc ions for their β-lactamase activity."
+            notes: "Family mechanism ARO:0001004."
       - subject: mech0
         predicate: causally upstream of
         predicate_id: RO:0002411
         object: resistance
         evidence:
-          - reference: DOI:10.1128/AAC.01456-09
-            notes: "Auto-drafted: mechanism ARO:0001004 → resistance; snippet pending curation."
+          - reference: PMID:33199283
+            snippet: "MBLs are one class of β-lactamases (Ambler class B), requiring divalent zinc ions for their β-lactamase activity."
+            notes: "Mechanism ARO:0001004 → resistance."
       - subject: determinant
         predicate: participates in (resistance mechanism)
         predicate_id: RO:0000056
         object: mech1
         evidence:
-          - reference: DOI:10.1128/AAC.01456-09
-            notes: "Auto-drafted from ARO participates_in ARO:3000203; verbatim snippet pending curation."
+          - reference: PMID:33199283
+            snippet: "MBLs are one class of β-lactamases (Ambler class B), requiring divalent zinc ions for their β-lactamase activity."
+            notes: "Family mechanism ARO:3000203."
       - subject: mech1
         predicate: causally upstream of
         predicate_id: RO:0002411
         object: resistance
         evidence:
-          - reference: DOI:10.1128/AAC.01456-09
-            notes: "Auto-drafted: mechanism ARO:3000203 → resistance; snippet pending curation."
+          - reference: PMID:33199283
+            snippet: "MBLs are one class of β-lactamases (Ambler class B), requiring divalent zinc ions for their β-lactamase activity."
+            notes: "Mechanism ARO:3000203 → resistance."
       - subject: determinant
         predicate: causally upstream of (confers resistance)
         predicate_id: RO:0002411
         object: resistance
         evidence:
-          - reference: DOI:10.1128/AAC.01456-09
-            notes: "Auto-drafted: determinant → resistance phenotype; snippet pending curation."
+          - reference: PMID:33199283
+            snippet: "MBLs are one class of β-lactamases (Ambler class B), requiring divalent zinc ions for their β-lactamase activity."
+            notes: Determinant → resistance phenotype.
       - subject: resistance
         predicate: related to (resistance is to)
         object: drug0
         evidence:
-          - reference: DOI:10.1128/AAC.01456-09
-            notes: "Auto-drafted from ARO confers_resistance_to_drug_class ARO:0000020; snippet pending curation."
+          - reference: PMID:33199283
+            snippet: "MBLs are one class of β-lactamases (Ambler class B), requiring divalent zinc ions for their β-lactamase activity."
+            notes: Resistance to carbapenem.
       - subject: resistance
         predicate: related to (resistance is to)
         object: drug1
         evidence:
-          - reference: DOI:10.1128/AAC.01456-09
-            notes: "Auto-drafted from ARO confers_resistance_to_drug_class ARO:0000032; snippet pending curation."
+          - reference: PMID:33199283
+            snippet: "MBLs are one class of β-lactamases (Ambler class B), requiring divalent zinc ions for their β-lactamase activity."
+            notes: Resistance to cephalosporin.
+      - subject: domain
+        predicate: part of (catalytic domain of the protein)
+        predicate_id: BFO:0000050
+        object: determinant
+        evidence:
+          - reference: Pfam:PF00753
+            snippet: Metallo-beta-lactamase superfamily
+            notes: "KB trait: the metallo-beta-lactamase domain."
+      - subject: determinant
+        predicate: member of (adopts fold)
+        predicate_id: RO:0002350
+        object: fold
+        evidence:
+          - reference: CATH:3.60.15.30
+            snippet: Metallo-beta-lactamase domain
+            notes: "KB trait: the MBL structural fold."
+      - subject: domain
+        predicate: enables (Zn-dependent beta-lactam hydrolysis)
+        predicate_id: RO:0002327
+        object: mech1
+        evidence:
+          - reference: PMID:33199283
+            snippet: "MBLs are one class of β-lactamases (Ambler class B), requiring divalent zinc ions for their β-lactamase activity."
+            notes: The di-zinc metallo-beta-lactamase domain hydrolyses the beta-lactam ring.
+curation_history:
+  - timestamp: "2026-07-21T00:00:00Z"
+    curator: edison-causal-graphs
+    action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
+    llm_assisted: true
 license: CC-BY 4.0
