@@ -60,6 +60,16 @@ functions), rRNA-mutation records (not proteins), and single-gene records. Forci
 config on these would produce *inaccurate* graphs, violating the protein-trait principle
 — so this is the honest stopping point for automated family promotion. Per-gene /
 per-mutation curation (with `audit-graphs --strict` listing each snippet-pending edge) is
-the remaining curator task. **Data-gap flags:** P-loop NTPase fold `CATH:3.40.50.300`,
-radical-SAM fold `CATH:3.20.20.70`, and the Qnr/MfpA β-helix fold are absent from the KB
-(ABC/Cfr/qnr used the nearest present fold node); seed these for exact fold grounding.
+the remaining curator task.
+
+## Fold re-grounding (the "data-gap" flags were false negatives)
+The three flagged folds all **already exist** as KB records — re-grounded to the precise
+ones (no seeding needed):
+- ABC-F + ABC efflux (73 records): `CATH:1.20.1580` (class-1, mainly-α — wrong for an
+  ATPase NBD) → **`CATH:3.40.50.300`** "P-loop containing nucleotide triphosphate
+  hydrolases" (the correct NBD superfamily).
+- qnr (111 records): added the fold node **`ECOD:T.207.9.1`** "Pentapeptide repeats" (the
+  Qnr/MfpA right-handed β-helix / Rfr fold) — previously fold-less.
+- Cfr: left at `CATH:3.20.20` (TIM Barrel — accurate; the radical-SAM identity is already
+  carried by its `Pfam:PF04055` domain node; `CATH:3.20.20.70` is labelled "Aldolase
+  class I", misleading for a radical-SAM enzyme).

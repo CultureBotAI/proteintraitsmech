@@ -137,8 +137,10 @@ FAMILY_SNIPPETS = {
             "part_pred": "part of (domain of the protein)",
             "enable_pred": "enables (target protection)",
             "part_note": "KB trait: the pentapeptide-repeat domain that mediates gyrase protection.",
+            "fold_note": "KB trait: the pentapeptide-repeat (Qnr/MfpA right-handed β-helix, Rfr) fold.",
             "enable_note": "The pentapeptide-repeat domain protects DNA gyrase/topoisomerase IV from quinolones.",
             "domain": ("Pfam:PF00805", "pentapeptide-repeat domain", "DOMAIN", "Pentapeptide repeats (8 copies)"),
+            "fold": ("ECOD:T.207.9.1", "pentapeptide-repeat (right-handed β-helix) fold", "DOMAIN", "Pentapeptide repeats"),
             "enables_mech": "ARO:0001003",
         },
     },
@@ -342,7 +344,7 @@ FAMILY_SNIPPETS["ARO:3004469"] = _domfam(  # ABC-F ribosomal protection protein
     "such proteins are capable of displacing antibiotic from the ribosome in vitro",
     "ABC-F ribosomal protection protein — an ABC-family ATPase that binds the ribosome and displaces the antibiotic (target protection).",
     ("Pfam:PF00005", "ABC transporter ATP-binding domain", "DOMAIN", "ABC transporter"),
-    ("CATH:1.20.1580", "ABC transporter ATPase fold", "DOMAIN", "ABC transporter ATPase like fold"),
+    ("CATH:3.40.50.300", "P-loop NTPase fold (ABC ATPase nucleotide-binding domain)", "DOMAIN", "P-loop containing nucleotide triphosphate hydrolases"),
     "ARO:0001003", "enables (ribosomal protection)",
     "KB trait: the ABC transporter ATP-binding domain.", "KB trait: the ABC ATPase fold.",
     "The ABC-F ATPase binds the ribosome and displaces the bound antibiotic.")
@@ -378,7 +380,7 @@ FAMILY_SNIPPETS["ARO:0010001"] = _domfam(  # ATP-binding cassette (ABC) efflux p
     "Tripartite efflux pumps built around ATP-binding cassette (ABC) transporters are membrane protein machineries that perform vectorial export of drugs and virulence factors from Gram negative bacteria, using ATP-hydrolysis as energy source.",
     "ABC antibiotic efflux pump — ATP-hydrolysis-driven vectorial export of drugs across the membrane.",
     ("Pfam:PF00005", "ABC transporter ATP-binding domain", "DOMAIN", "ABC transporter"),
-    ("CATH:1.20.1580", "ABC transporter ATPase fold", "DOMAIN", "ABC transporter ATPase like fold"),
+    ("CATH:3.40.50.300", "P-loop NTPase fold (ABC ATPase nucleotide-binding domain)", "DOMAIN", "P-loop containing nucleotide triphosphate hydrolases"),
     "ARO:0010000", "enables (ATP-driven drug efflux)",
     "KB trait: the ABC transporter ATP-binding domain.", "KB trait: the ABC ATPase fold.",
     "The ABC transporter exports the drug using ATP hydrolysis.")
