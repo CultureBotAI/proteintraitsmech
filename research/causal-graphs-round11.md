@@ -34,18 +34,32 @@ config — clobbering their family-specific evidence. Fixed by:
 - Verified KPC-2 kept its specific evidence (11 `PMID:28388065` refs) while GES-1/IMP-1
   gained curated graphs.
 
-## Curation tracker
+## Last clean clusters (`--drafts-only`, 166 drafts)
+Five more genuine protein families with verified traits:
+| family (ARO) | drafts | mechanism | domain / fold |
+|---|--:|---|---|
+| ABC-F ribosomal protection (3004469) | 46 | target protection | `Pfam:PF00005` / `CATH:1.20.1580` |
+| chloramphenicol acetyltransferase CAT (3000122) | 34 | inactivation (acetylation) | `Pfam:PF00302` / `CATH:3.30.559` |
+| fosfomycin thiol transferase FosA (3000133) | 31 | inactivation (epoxide opening) | `Pfam:PF00903` / `CATH:3.10.180` |
+| 23S rRNA methyltransferase Cfr (3004274) | 28 | target alteration | `Pfam:PF04055` (radical-SAM) / `CATH:3.20.20` |
+| ABC antibiotic efflux pump (0010001) | 27 | efflux | `Pfam:PF00005` / `CATH:1.20.1580` |
+
+## Curation tracker (final)
 | | records |
 |---|--:|
-| curated (REVIEWED, protein-trait-wired) | **6,014** |
-| remaining drafts | 1,385 |
+| curated (REVIEWED, protein-trait-wired) | **6,180** |
+| remaining drafts | 1,219 |
 
-`just audit-graphs` → 7,401 graphs, **0 errors**; snippet-cited edges 42,192 → 58,463.
+`just audit-graphs` → 7,401 graphs, **0 errors**; snippet-cited edges 42,192 → 59,870.
 
-## What remains (1,385 drafts)
-Genuinely heterogeneous, low per-family yield: `ARO:0000031` "antibiotic resistant gene
-variant or mutant" (~337 — point-mutant genes: gyrA/rpoB/16S rRNA mutations, target
-alteration by mutation), efflux-pump subunits / two-component regulators, glycopeptide-
-associated genes, and single-gene records. These need per-mutation or per-gene curation
-rather than one shared family reference — a curator task; `audit-graphs --strict` lists
-each snippet-pending edge.
+## What remains (1,219 drafts) — the un-batchable tail
+Genuinely heterogeneous, no shared family reference fits: `ARO:0000031` "antibiotic
+resistant gene variant or mutant" (~353 — point-mutant target genes gyrA/rpoB/16S/23S,
+each a different protein), efflux-pump subunits and two-component regulators (diverse
+functions), rRNA-mutation records (not proteins), and single-gene records. Forcing one
+config on these would produce *inaccurate* graphs, violating the protein-trait principle
+— so this is the honest stopping point for automated family promotion. Per-gene /
+per-mutation curation (with `audit-graphs --strict` listing each snippet-pending edge) is
+the remaining curator task. **Data-gap flags:** P-loop NTPase fold `CATH:3.40.50.300`,
+radical-SAM fold `CATH:3.20.20.70`, and the Qnr/MfpA β-helix fold are absent from the KB
+(ABC/Cfr/qnr used the nearest present fold node); seed these for exact fold grounding.

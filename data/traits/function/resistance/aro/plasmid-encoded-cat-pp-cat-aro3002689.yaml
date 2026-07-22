@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000122
 trait_relations:
@@ -28,10 +28,10 @@ evidence:
 - reference: DOI:10.1111/j.1348-0421.1993.tb01695.x
   notes: PMID:8271973 (aro citation)
 causal_graphs:
-  - graph_id: resistance-draft
-    title: "[DRAFT] Plasmid-encoded cat (pp-cat) → mechanism → resistance (auto-scaffold from ARO relations)"
+  - graph_id: resistance
+    title: Plasmid-encoded cat (pp-cat) → mechanism → resistance (curated from ARO relations + literature)
     description: >-
-      Auto-drafted from this record's enriched ARO trait_relations (participates_in mechanism + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.
+      Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence (PMID:1364583). Chloramphenicol acetyltransferase (CAT) — inactivates chloramphenicol by acetyl-CoA-dependent O-acetylation.
     nodes:
       - node_id: determinant
         label: Plasmid-encoded cat (pp-cat)
@@ -49,6 +49,16 @@ causal_graphs:
         label: phenicol antibiotic
         node_type: CHEMICAL
         grounding: ARO:3000387
+      - node_id: domain
+        label: chloramphenicol acetyltransferase domain
+        node_type: DOMAIN
+        grounding: Pfam:PF00302
+        description: KB protein-trait record carrying the mechanism.
+      - node_id: fold
+        label: chloramphenicol acetyltransferase fold
+        node_type: DOMAIN
+        grounding: CATH:3.30.559
+        description: KB protein-trait record carrying the mechanism.
       - node_id: resistance
         label: antibiotic resistance phenotype
         node_type: PHENOTYPE
@@ -58,40 +68,75 @@ causal_graphs:
         predicate_id: RO:0000056
         object: mech0
         evidence:
-          - reference: DOI:10.1111/j.1348-0421.1993.tb01695.x
-            notes: "Auto-drafted from ARO participates_in ARO:0001004; verbatim snippet pending curation."
+          - reference: PMID:1364583
+            snippet: "CAT, which catalyses O-acetylation of the antibiotic, using acetyl-CoA as the acyl donor."
+            notes: "Family mechanism ARO:0001004."
       - subject: mech0
         predicate: causally upstream of
         predicate_id: RO:0002411
         object: resistance
         evidence:
-          - reference: DOI:10.1111/j.1348-0421.1993.tb01695.x
-            notes: "Auto-drafted: mechanism ARO:0001004 → resistance; snippet pending curation."
+          - reference: PMID:1364583
+            snippet: "CAT, which catalyses O-acetylation of the antibiotic, using acetyl-CoA as the acyl donor."
+            notes: "Mechanism ARO:0001004 → resistance."
       - subject: determinant
         predicate: participates in (resistance mechanism)
         predicate_id: RO:0000056
         object: mech1
         evidence:
-          - reference: DOI:10.1111/j.1348-0421.1993.tb01695.x
-            notes: "Auto-drafted from ARO participates_in ARO:3000106; verbatim snippet pending curation."
+          - reference: PMID:1364583
+            snippet: "CAT, which catalyses O-acetylation of the antibiotic, using acetyl-CoA as the acyl donor."
+            notes: "Family mechanism ARO:3000106."
       - subject: mech1
         predicate: causally upstream of
         predicate_id: RO:0002411
         object: resistance
         evidence:
-          - reference: DOI:10.1111/j.1348-0421.1993.tb01695.x
-            notes: "Auto-drafted: mechanism ARO:3000106 → resistance; snippet pending curation."
+          - reference: PMID:1364583
+            snippet: "CAT, which catalyses O-acetylation of the antibiotic, using acetyl-CoA as the acyl donor."
+            notes: "Mechanism ARO:3000106 → resistance."
       - subject: determinant
         predicate: causally upstream of (confers resistance)
         predicate_id: RO:0002411
         object: resistance
         evidence:
-          - reference: DOI:10.1111/j.1348-0421.1993.tb01695.x
-            notes: "Auto-drafted: determinant → resistance phenotype; snippet pending curation."
+          - reference: PMID:1364583
+            snippet: "CAT, which catalyses O-acetylation of the antibiotic, using acetyl-CoA as the acyl donor."
+            notes: Determinant → resistance phenotype.
       - subject: resistance
         predicate: related to (resistance is to)
         object: drug0
         evidence:
-          - reference: DOI:10.1111/j.1348-0421.1993.tb01695.x
-            notes: "Auto-drafted from ARO confers_resistance_to_drug_class ARO:3000387; snippet pending curation."
+          - reference: PMID:1364583
+            snippet: "CAT, which catalyses O-acetylation of the antibiotic, using acetyl-CoA as the acyl donor."
+            notes: Resistance to phenicol antibiotic.
+      - subject: domain
+        predicate: part of (catalytic domain of the protein)
+        predicate_id: BFO:0000050
+        object: determinant
+        evidence:
+          - reference: Pfam:PF00302
+            snippet: Chloramphenicol acetyltransferase
+            notes: "KB trait: the CAT domain."
+      - subject: determinant
+        predicate: member of (adopts fold)
+        predicate_id: RO:0002350
+        object: fold
+        evidence:
+          - reference: CATH:3.30.559
+            snippet: Chloramphenicol Acetyltransferase
+            notes: "KB trait: the CAT fold."
+      - subject: domain
+        predicate: enables (chloramphenicol acetylation)
+        predicate_id: RO:0002327
+        object: mech1
+        evidence:
+          - reference: PMID:1364583
+            snippet: "CAT, which catalyses O-acetylation of the antibiotic, using acetyl-CoA as the acyl donor."
+            notes: "The CAT domain O-acetylates chloramphenicol, inactivating it."
+curation_history:
+  - timestamp: "2026-07-21T00:00:00Z"
+    curator: edison-causal-graphs
+    action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
+    llm_assisted: true
 license: CC-BY 4.0

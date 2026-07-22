@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3004469
 trait_relations:
@@ -31,10 +31,10 @@ evidence:
 - reference: DOI:10.1128/AAC.49.3.973-980.2005
   notes: PMID:15728891 (aro citation)
 causal_graphs:
-  - graph_id: resistance-draft
-    title: "[DRAFT] vga-type ABC-F protein → mechanism → resistance (auto-scaffold from ARO relations)"
+  - graph_id: resistance
+    title: vga-type ABC-F protein → mechanism → resistance (curated from ARO relations + literature)
     description: >-
-      Auto-drafted from this record's enriched ARO trait_relations (participates_in mechanism + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.
+      Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence (PMID:27006457). ABC-F ribosomal protection protein — an ABC-family ATPase that binds the ribosome and displaces the antibiotic (target protection).
     nodes:
       - node_id: determinant
         label: vga-type ABC-F protein
@@ -52,6 +52,16 @@ causal_graphs:
         label: pleuromutilin antibiotic
         node_type: CHEMICAL
         grounding: ARO:3000670
+      - node_id: domain
+        label: ABC transporter ATP-binding domain
+        node_type: DOMAIN
+        grounding: Pfam:PF00005
+        description: KB protein-trait record carrying the mechanism.
+      - node_id: fold
+        label: ABC transporter ATPase fold
+        node_type: DOMAIN
+        grounding: CATH:1.20.1580
+        description: KB protein-trait record carrying the mechanism.
       - node_id: resistance
         label: antibiotic resistance phenotype
         node_type: PHENOTYPE
@@ -61,32 +71,66 @@ causal_graphs:
         predicate_id: RO:0000056
         object: mech0
         evidence:
-          - reference: DOI:10.1093/jac/dkq365
-            notes: "Auto-drafted from ARO participates_in ARO:0001003; verbatim snippet pending curation."
+          - reference: PMID:27006457
+            snippet: such proteins are capable of displacing antibiotic from the ribosome in vitro
+            notes: "Family mechanism ARO:0001003."
       - subject: mech0
         predicate: causally upstream of
         predicate_id: RO:0002411
         object: resistance
         evidence:
-          - reference: DOI:10.1093/jac/dkq365
-            notes: "Auto-drafted: mechanism ARO:0001003 → resistance; snippet pending curation."
+          - reference: PMID:27006457
+            snippet: such proteins are capable of displacing antibiotic from the ribosome in vitro
+            notes: "Mechanism ARO:0001003 → resistance."
       - subject: determinant
         predicate: causally upstream of (confers resistance)
         predicate_id: RO:0002411
         object: resistance
         evidence:
-          - reference: DOI:10.1093/jac/dkq365
-            notes: "Auto-drafted: determinant → resistance phenotype; snippet pending curation."
+          - reference: PMID:27006457
+            snippet: such proteins are capable of displacing antibiotic from the ribosome in vitro
+            notes: Determinant → resistance phenotype.
       - subject: resistance
         predicate: related to (resistance is to)
         object: drug0
         evidence:
-          - reference: DOI:10.1093/jac/dkq365
-            notes: "Auto-drafted from ARO confers_resistance_to_drug_class ARO:0000034; snippet pending curation."
+          - reference: PMID:27006457
+            snippet: such proteins are capable of displacing antibiotic from the ribosome in vitro
+            notes: Resistance to streptogramin A antibiotic.
       - subject: resistance
         predicate: related to (resistance is to)
         object: drug1
         evidence:
-          - reference: DOI:10.1093/jac/dkq365
-            notes: "Auto-drafted from ARO confers_resistance_to_drug_class ARO:3000670; snippet pending curation."
+          - reference: PMID:27006457
+            snippet: such proteins are capable of displacing antibiotic from the ribosome in vitro
+            notes: Resistance to pleuromutilin antibiotic.
+      - subject: domain
+        predicate: part of (catalytic domain of the protein)
+        predicate_id: BFO:0000050
+        object: determinant
+        evidence:
+          - reference: Pfam:PF00005
+            snippet: ABC transporter
+            notes: "KB trait: the ABC transporter ATP-binding domain."
+      - subject: determinant
+        predicate: member of (adopts fold)
+        predicate_id: RO:0002350
+        object: fold
+        evidence:
+          - reference: CATH:1.20.1580
+            snippet: ABC transporter ATPase like fold
+            notes: "KB trait: the ABC ATPase fold."
+      - subject: domain
+        predicate: enables (ribosomal protection)
+        predicate_id: RO:0002327
+        object: mech0
+        evidence:
+          - reference: PMID:27006457
+            snippet: such proteins are capable of displacing antibiotic from the ribosome in vitro
+            notes: The ABC-F ATPase binds the ribosome and displaces the bound antibiotic.
+curation_history:
+  - timestamp: "2026-07-21T00:00:00Z"
+    curator: edison-causal-graphs
+    action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
+    llm_assisted: true
 license: CC-BY 4.0

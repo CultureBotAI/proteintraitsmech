@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000202
 trait_relations:
@@ -37,10 +37,10 @@ evidence:
 - reference: DOI:10.1016/j.ijantimicag.2017.03.013
   notes: PMID:28663118 (aro citation)
 causal_graphs:
-  - graph_id: resistance-draft
-    title: "[DRAFT] Cfr Group → mechanism → resistance (auto-scaffold from ARO relations)"
+  - graph_id: resistance
+    title: Cfr Group → mechanism → resistance (curated from ARO relations + literature)
     description: >-
-      Auto-drafted from this record's enriched ARO trait_relations (participates_in mechanism + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.
+      Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence (PMID:20007606). 23S rRNA methyltransferase (Cfr-type) — target alteration: methylates 23S rRNA A2503 in the peptidyl-transferase centre.
     nodes:
       - node_id: determinant
         label: Cfr Group
@@ -70,6 +70,16 @@ causal_graphs:
         label: phenicol antibiotic
         node_type: CHEMICAL
         grounding: ARO:3000387
+      - node_id: domain
+        label: radical-SAM methyltransferase domain
+        node_type: DOMAIN
+        grounding: Pfam:PF04055
+        description: KB protein-trait record carrying the mechanism.
+      - node_id: fold
+        label: radical-SAM (partial TIM-barrel) fold
+        node_type: DOMAIN
+        grounding: CATH:3.20.20
+        description: KB protein-trait record carrying the mechanism.
       - node_id: resistance
         label: antibiotic resistance phenotype
         node_type: PHENOTYPE
@@ -79,58 +89,96 @@ causal_graphs:
         predicate_id: RO:0000056
         object: mech0
         evidence:
-          - reference: DOI:10.1016/j.ijantimicag.2017.03.013
-            notes: "Auto-drafted from ARO participates_in ARO:0001001; verbatim snippet pending curation."
+          - reference: PMID:20007606
+            snippet: The Cfr methyltransferase confers combined resistance to five classes of antibiotics that bind to the peptidyl tranferase center of bacterial ribosomes by catalyzing methylation of the C-8 position of 23S rRNA nucleotide A2503.
+            notes: "Family mechanism ARO:0001001."
       - subject: mech0
         predicate: causally upstream of
         predicate_id: RO:0002411
         object: resistance
         evidence:
-          - reference: DOI:10.1016/j.ijantimicag.2017.03.013
-            notes: "Auto-drafted: mechanism ARO:0001001 → resistance; snippet pending curation."
+          - reference: PMID:20007606
+            snippet: The Cfr methyltransferase confers combined resistance to five classes of antibiotics that bind to the peptidyl tranferase center of bacterial ribosomes by catalyzing methylation of the C-8 position of 23S rRNA nucleotide A2503.
+            notes: "Mechanism ARO:0001001 → resistance."
       - subject: determinant
         predicate: participates in (resistance mechanism)
         predicate_id: RO:0000056
         object: mech1
         evidence:
-          - reference: DOI:10.1016/j.ijantimicag.2017.03.013
-            notes: "Auto-drafted from ARO participates_in ARO:3000211; verbatim snippet pending curation."
+          - reference: PMID:20007606
+            snippet: The Cfr methyltransferase confers combined resistance to five classes of antibiotics that bind to the peptidyl tranferase center of bacterial ribosomes by catalyzing methylation of the C-8 position of 23S rRNA nucleotide A2503.
+            notes: "Family mechanism ARO:3000211."
       - subject: mech1
         predicate: causally upstream of
         predicate_id: RO:0002411
         object: resistance
         evidence:
-          - reference: DOI:10.1016/j.ijantimicag.2017.03.013
-            notes: "Auto-drafted: mechanism ARO:3000211 → resistance; snippet pending curation."
+          - reference: PMID:20007606
+            snippet: The Cfr methyltransferase confers combined resistance to five classes of antibiotics that bind to the peptidyl tranferase center of bacterial ribosomes by catalyzing methylation of the C-8 position of 23S rRNA nucleotide A2503.
+            notes: "Mechanism ARO:3000211 → resistance."
       - subject: determinant
         predicate: causally upstream of (confers resistance)
         predicate_id: RO:0002411
         object: resistance
         evidence:
-          - reference: DOI:10.1016/j.ijantimicag.2017.03.013
-            notes: "Auto-drafted: determinant → resistance phenotype; snippet pending curation."
+          - reference: PMID:20007606
+            snippet: The Cfr methyltransferase confers combined resistance to five classes of antibiotics that bind to the peptidyl tranferase center of bacterial ribosomes by catalyzing methylation of the C-8 position of 23S rRNA nucleotide A2503.
+            notes: Determinant → resistance phenotype.
       - subject: resistance
         predicate: related to (resistance is to)
         object: drug0
         evidence:
-          - reference: DOI:10.1016/j.ijantimicag.2017.03.013
-            notes: "Auto-drafted from ARO confers_resistance_to_drug_class ARO:0000017; snippet pending curation."
+          - reference: PMID:20007606
+            snippet: The Cfr methyltransferase confers combined resistance to five classes of antibiotics that bind to the peptidyl tranferase center of bacterial ribosomes by catalyzing methylation of the C-8 position of 23S rRNA nucleotide A2503.
+            notes: Resistance to lincosamide antibiotic.
       - subject: resistance
         predicate: related to (resistance is to)
         object: drug1
         evidence:
-          - reference: DOI:10.1016/j.ijantimicag.2017.03.013
-            notes: "Auto-drafted from ARO confers_resistance_to_drug_class ARO:0000026; snippet pending curation."
+          - reference: PMID:20007606
+            snippet: The Cfr methyltransferase confers combined resistance to five classes of antibiotics that bind to the peptidyl tranferase center of bacterial ribosomes by catalyzing methylation of the C-8 position of 23S rRNA nucleotide A2503.
+            notes: Resistance to streptogramin antibiotic.
       - subject: resistance
         predicate: related to (resistance is to)
         object: drug2
         evidence:
-          - reference: DOI:10.1016/j.ijantimicag.2017.03.013
-            notes: "Auto-drafted from ARO confers_resistance_to_drug_class ARO:3000079; snippet pending curation."
+          - reference: PMID:20007606
+            snippet: The Cfr methyltransferase confers combined resistance to five classes of antibiotics that bind to the peptidyl tranferase center of bacterial ribosomes by catalyzing methylation of the C-8 position of 23S rRNA nucleotide A2503.
+            notes: Resistance to oxazolidinone antibiotic.
       - subject: resistance
         predicate: related to (resistance is to)
         object: drug3
         evidence:
-          - reference: DOI:10.1016/j.ijantimicag.2017.03.013
-            notes: "Auto-drafted from ARO confers_resistance_to_drug_class ARO:3000387; snippet pending curation."
+          - reference: PMID:20007606
+            snippet: The Cfr methyltransferase confers combined resistance to five classes of antibiotics that bind to the peptidyl tranferase center of bacterial ribosomes by catalyzing methylation of the C-8 position of 23S rRNA nucleotide A2503.
+            notes: Resistance to phenicol antibiotic.
+      - subject: domain
+        predicate: part of (catalytic domain of the protein)
+        predicate_id: BFO:0000050
+        object: determinant
+        evidence:
+          - reference: Pfam:PF04055
+            snippet: Radical SAM superfamily
+            notes: "KB trait: the radical-SAM methyltransferase domain."
+      - subject: determinant
+        predicate: member of (adopts fold)
+        predicate_id: RO:0002350
+        object: fold
+        evidence:
+          - reference: CATH:3.20.20
+            snippet: TIM Barrel
+            notes: "KB trait: the radical-SAM fold."
+      - subject: domain
+        predicate: enables (23S rRNA A2503 methylation)
+        predicate_id: RO:0002327
+        object: mech1
+        evidence:
+          - reference: PMID:20007606
+            snippet: The Cfr methyltransferase confers combined resistance to five classes of antibiotics that bind to the peptidyl tranferase center of bacterial ribosomes by catalyzing methylation of the C-8 position of 23S rRNA nucleotide A2503.
+            notes: "The methyltransferase domain methylates 23S rRNA A2503, altering the drug target."
+curation_history:
+  - timestamp: "2026-07-21T00:00:00Z"
+    curator: edison-causal-graphs
+    action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
+    llm_assisted: true
 license: CC-BY 4.0

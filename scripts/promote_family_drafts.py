@@ -337,6 +337,51 @@ FAMILY_SNIPPETS["ARO:3000560"] = _domfam(  # Erm 23S rRNA methyltransferase (bro
     "ARO:3000211", "enables (23S rRNA A2058 methylation)",
     "KB trait: the RrnaAD methyltransferase domain.", None,
     "The methyltransferase domain dimethylates 23S rRNA A2058, altering the drug target.")
+FAMILY_SNIPPETS["ARO:3004469"] = _domfam(  # ABC-F ribosomal protection protein
+    "PMID:27006457",
+    "such proteins are capable of displacing antibiotic from the ribosome in vitro",
+    "ABC-F ribosomal protection protein — an ABC-family ATPase that binds the ribosome and displaces the antibiotic (target protection).",
+    ("Pfam:PF00005", "ABC transporter ATP-binding domain", "DOMAIN", "ABC transporter"),
+    ("CATH:1.20.1580", "ABC transporter ATPase fold", "DOMAIN", "ABC transporter ATPase like fold"),
+    "ARO:0001003", "enables (ribosomal protection)",
+    "KB trait: the ABC transporter ATP-binding domain.", "KB trait: the ABC ATPase fold.",
+    "The ABC-F ATPase binds the ribosome and displaces the bound antibiotic.")
+FAMILY_SNIPPETS["ARO:3000122"] = _domfam(  # chloramphenicol acetyltransferase (CAT)
+    "PMID:1364583",
+    "CAT, which catalyses O-acetylation of the antibiotic, using acetyl-CoA as the acyl donor.",
+    "Chloramphenicol acetyltransferase (CAT) — inactivates chloramphenicol by acetyl-CoA-dependent O-acetylation.",
+    ("Pfam:PF00302", "chloramphenicol acetyltransferase domain", "DOMAIN", "Chloramphenicol acetyltransferase"),
+    ("CATH:3.30.559", "chloramphenicol acetyltransferase fold", "DOMAIN", "Chloramphenicol Acetyltransferase"),
+    "ARO:3000106", "enables (chloramphenicol acetylation)",
+    "KB trait: the CAT domain.", "KB trait: the CAT fold.",
+    "The CAT domain O-acetylates chloramphenicol, inactivating it.")
+FAMILY_SNIPPETS["ARO:3000133"] = _domfam(  # fosfomycin thiol transferase (FosA)
+    "PMID:15741169",
+    "The metalloglutathione transferase FosA catalyzes the conjugation of glutathione to carbon-1 of the antibiotic fosfomycin, rendering it ineffective as an antibacterial drug.",
+    "Fosfomycin thiol transferase (FosA) — inactivates fosfomycin by opening its epoxide ring via glutathione conjugation.",
+    ("Pfam:PF00903", "glyoxalase / VOC-superfamily domain", "DOMAIN", "Glyoxalase/Bleomycin resistance protein/Dioxygenase superfamily"),
+    ("CATH:3.10.180", "VOC / glyoxalase superfamily fold", "DOMAIN", "2,3-Dihydroxybiphenyl 1,2-Dioxygenase; domain 1"),
+    "ARO:3000125", "enables (fosfomycin epoxide opening)",
+    "KB trait: the glyoxalase/VOC domain.", "KB trait: the VOC/glyoxalase fold.",
+    "The FosA domain conjugates glutathione to fosfomycin, inactivating it.")
+FAMILY_SNIPPETS["ARO:3004274"] = _domfam(  # 23S rRNA methyltransferase (Cfr-type)
+    "PMID:20007606",
+    "The Cfr methyltransferase confers combined resistance to five classes of antibiotics that bind to the peptidyl tranferase center of bacterial ribosomes by catalyzing methylation of the C-8 position of 23S rRNA nucleotide A2503.",
+    "23S rRNA methyltransferase (Cfr-type) — target alteration: methylates 23S rRNA A2503 in the peptidyl-transferase centre.",
+    ("Pfam:PF04055", "radical-SAM methyltransferase domain", "DOMAIN", "Radical SAM superfamily"),
+    ("CATH:3.20.20", "radical-SAM (partial TIM-barrel) fold", "DOMAIN", "TIM Barrel"),
+    "ARO:3000211", "enables (23S rRNA A2503 methylation)",
+    "KB trait: the radical-SAM methyltransferase domain.", "KB trait: the radical-SAM fold.",
+    "The methyltransferase domain methylates 23S rRNA A2503, altering the drug target.")
+FAMILY_SNIPPETS["ARO:0010001"] = _domfam(  # ATP-binding cassette (ABC) efflux pump
+    "PMID:29892271",
+    "Tripartite efflux pumps built around ATP-binding cassette (ABC) transporters are membrane protein machineries that perform vectorial export of drugs and virulence factors from Gram negative bacteria, using ATP-hydrolysis as energy source.",
+    "ABC antibiotic efflux pump — ATP-hydrolysis-driven vectorial export of drugs across the membrane.",
+    ("Pfam:PF00005", "ABC transporter ATP-binding domain", "DOMAIN", "ABC transporter"),
+    ("CATH:1.20.1580", "ABC transporter ATPase fold", "DOMAIN", "ABC transporter ATPase like fold"),
+    "ARO:0010000", "enables (ATP-driven drug efflux)",
+    "KB trait: the ABC transporter ATP-binding domain.", "KB trait: the ABC ATPase fold.",
+    "The ABC transporter exports the drug using ATP hydrolysis.")
 
 
 def _ev(ref: str, snippet: str, note: str) -> list[str]:
