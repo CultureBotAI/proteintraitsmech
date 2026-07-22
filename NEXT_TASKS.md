@@ -18,10 +18,15 @@ _Last reconciled: 2026-07-21._
    1,000-protein pilot (`data/profiles/`), the protein×trait matrix, with real
    trait↔GO correlation (kinase→ATP-binding, conf 1.0) and domain-architecture
    families (GPCR/homeobox/EF-hand). See `research/swissprot-trait-profiles-1.md`.
-   **Phase 2 (next):** scale over all Swiss-Prot (`--query "reviewed:true"`; decide
-   committed vs gitignored bulk), train the trait→GO decision tree, formal fuzzy
-   clustering (Jaccard / doi:10.1186/s12859-022-05093-z), and a protein×trait map in
-   the browser. Also feeds item 4 (shared Swiss-Prot exemplars → base overlay edges).
+   Phase 2 DONE (2026-07-21, branch `swissprot-trait-tree`): scaled the matrix to
+   20,000 reviewed human proteins (`--jsonl-only`; matrix gitignored, regenerable) +
+   `scripts/train_trait_go_tree.py` (`just train-trait-tree`) — interpretable trait→GO
+   decision trees (GPCR F1 0.90, olfactory 0.94, kinase/Ca/Zn/ATP 0.70–0.78; generic
+   GO poorly, as expected). See `research/swissprot-trait-profiles-2.md`.
+   **Phase 3 (next):** multi-organism + per-GO-aspect trees weighted by GO information
+   content; multi-label/calibrated model over a held-out organism; cross-axis feature
+   correlation (motif↔fold); protein×trait browser map; auto-suggest `canonical_examples`
+   from confident rules. Also feeds item 4 (shared Swiss-Prot exemplars → base overlay).
 
 2. **Per-gene curation of the remaining ~1,219 resistance causal-graph drafts.**
    The family-level promotion is done (6,180 REVIEWED). The tail is genuinely

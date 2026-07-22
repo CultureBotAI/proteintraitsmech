@@ -658,6 +658,12 @@ fetch-examples *args:
 build-profiles *args:
     python3 scripts/build_swissprot_profiles.py {{args}}
 
+# Train interpretable trait->GO-function decision trees on the protein×trait matrix
+# (data/profiles/profiles.jsonl). "Predict function from the presence of certain
+# traits" (issue #7). Needs scikit-learn — run with system python3 (as here), not uv.
+train-trait-tree *args:
+    python3 scripts/train_trait_go_tree.py {{args}}
+
 # Regenerate docs/data/records.json + facets.json used by the browse
 # page. Requires PyYAML; walks every data/traits/**/*.yaml.
 build-docs:

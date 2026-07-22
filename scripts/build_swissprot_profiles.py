@@ -217,6 +217,7 @@ def main() -> int:
                     help="UniProtKB query (default: reviewed human)")
     ap.add_argument("--limit", type=int, default=500)
     ap.add_argument("--apply", action="store_true", help="write YAML + jsonl (else dry-run)")
+    ap.add_argument("--jsonl-only", action="store_true", help="write only profiles.jsonl (skip per-protein YAMLs) — for scaling the analysis matrix")
     ap.add_argument("--refresh-index", action="store_true")
     args = ap.parse_args()
 
@@ -236,7 +237,8 @@ def main() -> int:
             axes[t["trait_axis"]] = axes.get(t["trait_axis"], 0) + 1
         if args.apply:
             acc = p["accession"].split(":", 1)[1]
-            (OUT_DIR / f"{acc}.yaml").write_text(to_yaml(p), encoding="utf-8")
+            if not args.jsonl_only:
+                (OUT_DIR / f"{acc}.yaml").write_text(to_yaml(p), encoding="utf-8")
             jf.write(json.dumps({"accession": p["accession"], "go": p["go_terms"],
                                  "ec": p["ec_numbers"],
                                  "traits": [t["trait"] for t in p["traits"]],
