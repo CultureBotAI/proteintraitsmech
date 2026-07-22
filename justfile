@@ -664,6 +664,12 @@ build-profiles *args:
 train-trait-tree *args:
     python3 scripts/train_trait_go_tree.py {{args}}
 
+# Cross-axis trait correlations (issue #7): does a sequence signature always encode a
+# structural fold? which traits imply which GO/EC function? Association rules
+# (confidence + lift) over data/profiles/profiles.jsonl. Stdlib-only.
+trait-correlations *args:
+    python3 scripts/analyze_trait_correlations.py {{args}}
+
 # Regenerate docs/data/records.json + facets.json used by the browse
 # page. Requires PyYAML; walks every data/traits/**/*.yaml.
 build-docs:
