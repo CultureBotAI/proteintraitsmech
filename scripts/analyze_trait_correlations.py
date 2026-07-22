@@ -40,6 +40,9 @@ def main() -> int:
     ap.add_argument("--min-lift", type=float, default=3.0)
     ap.add_argument("--top", type=int, default=15)
     ap.add_argument("--out")
+    ap.add_argument("--emit-overlay",
+                    help="write the passing cross-axis rules as a data/equivalence TSV "
+                         "(biolink:related_to; both endpoints are corpus trait records)")
     args = ap.parse_args()
 
     idx = json.loads(INDEX.read_text(encoding="utf-8"))     # {trait: [axis, cat]}
@@ -99,6 +102,29 @@ def main() -> int:
     if args.out:
         Path(args.out).write_text(report + "\n", encoding="utf-8")
         print(f"\nwrote {args.out}", file=sys.stderr)
+
+    if args.emit_overlay:
+        # Materialise the passing cross-axis rules as a relate-only equivalence
+        # overlay. Both endpoints are corpus trait records (they came from the
+        # trait index); cross-axis → biolink:related_to, never a merge. The
+        # empirical confidence / lift / support live in relation_source.
+        seen, edges = set(), []
+        for kind, rr in (("seq-encodes-fold", seq_struct), ("trait-implies-function", struct_func)):
+            for conf, lift, c, a, b in rr:
+                if (a, b) in seen:
+                    continue
+                seen.add((a, b))
+                src = f"{kind}|conf={conf:.2f}|lift={lift:.0f}x|n={c}|Swiss-Prot(human)"
+                edges.append((a, "biolink:related_to", b, src))
+        edges.sort()
+        outp = Path(args.emit_overlay)
+        outp.parent.mkdir(parents=True, exist_ok=True)
+        with outp.open("w", encoding="utf-8") as fh:
+            fh.write("subject\tpredicate\tobject\trelation_source\n")
+            for e in edges:
+                fh.write("\t".join(e) + "\n")
+        print(f"\nwrote {len(edges):,} cross-axis co-occurrence edges → "
+              f"{outp.relative_to(REPO_ROOT) if outp.is_absolute() else outp}", file=sys.stderr)
     return 0
 
 
