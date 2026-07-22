@@ -23,10 +23,14 @@ _Last reconciled: 2026-07-21._
    `scripts/train_trait_go_tree.py` (`just train-trait-tree`) — interpretable trait→GO
    decision trees (GPCR F1 0.90, olfactory 0.94, kinase/Ca/Zn/ATP 0.70–0.78; generic
    GO poorly, as expected). See `research/swissprot-trait-profiles-2.md`.
-   **Phase 3 (next):** multi-organism + per-GO-aspect trees weighted by GO information
-   content; multi-label/calibrated model over a held-out organism; cross-axis feature
-   correlation (motif↔fold); protein×trait browser map; auto-suggest `canonical_examples`
-   from confident rules. Also feeds item 4 (shared Swiss-Prot exemplars → base overlay).
+   Phase 3 DONE (2026-07-21): `scripts/analyze_trait_correlations.py`
+   (`just trait-correlations`) — cross-axis correlation; **226 sequence signatures
+   that always encode a specific fold** (conf ≥0.99, lift 500–625×) + 419
+   sequence/structure→function rules. See `research/swissprot-trait-profiles-3.md`.
+   **Phase 4 (next):** materialise the ≥0.99 sequence→fold rules as `trait_relations`
+   between the signature and fold records (data-backed cross-axis overlay); multi-
+   organism confirmation + held-out-organism decision-tree test; protein×trait browser
+   map. Also feeds item 4 (shared Swiss-Prot exemplars → base overlay).
 
 2. **Per-gene curation of the remaining ~1,219 resistance causal-graph drafts.**
    The family-level promotion is done (6,180 REVIEWED). The tail is genuinely
