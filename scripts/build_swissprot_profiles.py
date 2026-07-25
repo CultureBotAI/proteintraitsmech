@@ -239,8 +239,18 @@ def main() -> int:
             acc = p["accession"].split(":", 1)[1]
             if not args.jsonl_only:
                 (OUT_DIR / f"{acc}.yaml").write_text(to_yaml(p), encoding="utf-8")
+            # The jsonl is the durable matrix for the downstream analyses. It
+            # carries the entry's identifying metadata as well as its traits so
+            # consumers (e.g. suggest_canonical_examples.py, which needs a
+            # protein_label / taxon / length per CanonicalExample) never have to
+            # re-query UniProt for what this pass already fetched.
             jf.write(json.dumps({"accession": p["accession"], "go": p["go_terms"],
                                  "ec": p["ec_numbers"],
+                                 "name": p["protein_name"],
+                                 "taxon": p.get("taxon_id"),
+                                 "taxon_label": p.get("taxon_label"),
+                                 "length": p.get("sequence_length"),
+                                 "reviewed": p["reviewed"],
                                  "traits": [t["trait"] for t in p["traits"]],
                                  "axes": {t["trait"]: t["trait_axis"] for t in p["traits"]}}) + "\n")
     if args.apply:

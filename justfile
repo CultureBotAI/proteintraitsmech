@@ -670,6 +670,16 @@ train-trait-tree *args:
 trait-correlations *args:
     python3 scripts/analyze_trait_correlations.py {{args}}
 
+# Write canonical_examples onto trait records from the protein×trait matrix
+# (issue #7, phase 5) — closes the loop from mined cross-axis rules back to real
+# proteins. Carriers are ranked by how many of the trait's empirically coupled
+# partners (data/equivalence/trait_cooccurrence.tsv) they also carry. Records
+# that already have examples are skipped. Dry-run unless --apply. Needs PyYAML.
+#   just suggest-examples --prefix CATH --apply
+#   just suggest-examples --rule-backed-only --apply
+suggest-examples *args:
+    uv run python scripts/suggest_canonical_examples.py {{args}}
+
 # Regenerate docs/data/records.json + facets.json used by the browse
 # page. Requires PyYAML; walks every data/traits/**/*.yaml.
 build-docs:
