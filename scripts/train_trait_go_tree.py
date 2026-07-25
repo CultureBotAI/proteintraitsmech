@@ -36,6 +36,11 @@ def main() -> int:
     ap.add_argument("--targets", type=int, default=25, help="top-K GO-MF terms to model")
     ap.add_argument("--min-pos", type=int, default=40, help="min proteins carrying a target GO")
     ap.add_argument("--max-depth", type=int, default=4)
+    ap.add_argument("--holdout-taxon", metavar="TAXON",
+                    help="hold out one organism as the test set (e.g. 10090) instead "
+                         "of a random 25%% split — tests whether trait→function "
+                         "prediction transfers across proteomes rather than merely "
+                         "generalising within one")
     ap.add_argument("--out", help="write the markdown report here")
     args = ap.parse_args()
 
@@ -74,10 +79,28 @@ def main() -> int:
         for f in r["_sig"]:
             if f in fpos:
                 X[i, fpos[f]] = 1
-    Xtr, Xte, tr_i, te_i = train_test_split(X, np.arange(len(rows)), test_size=0.25, random_state=42)
+    if args.holdout_taxon:
+        want = f"NCBITaxon:{args.holdout_taxon.replace('NCBITaxon:', '')}"
+        te_i = np.array([i for i, r in enumerate(rows) if r.get("taxon") == want])
+        tr_i = np.array([i for i, r in enumerate(rows) if r.get("taxon") != want])
+        if te_i.size == 0 or tr_i.size == 0:
+            present = sorted({r.get("taxon") for r in rows if r.get("taxon")})
+            print(f"holdout taxon {want} splits the matrix into an empty half. "
+                  f"Present: {', '.join(present) or '(none — matrix has no taxon field)'}",
+                  file=sys.stderr)
+            return 2
+        Xtr, Xte = X[tr_i], X[te_i]
+        split = (f"held out **{rows[te_i[0]].get('taxon_label') or want}** "
+                 f"({te_i.size:,} proteins); trained on the other "
+                 f"{tr_i.size:,}")
+    else:
+        Xtr, Xte, tr_i, te_i = train_test_split(X, np.arange(len(rows)),
+                                                test_size=0.25, random_state=42)
+        split = f"random 75/25 split ({tr_i.size:,} train / {te_i.size:,} test)"
 
     out = [f"proteins: {len(rows):,} | signature-trait features: {len(feats)} "
-           f"(of {len(feat_ct):,}) | GO-MF targets: {len(labels)}\n",
+           f"(of {len(feat_ct):,}) | GO-MF targets: {len(labels)}",
+           f"split: {split}\n",
            "| GO-MF target | pos | test P | R | F1 | top learned rule |",
            "|---|--:|--:|--:|--:|---|"]
     f1s = []

@@ -38,11 +38,23 @@ _Last reconciled: 2026-07-21._
    `SWISSPROT_PROFILE` provenance; carriers ranked by cross-axis rule coverage,
    then focus / annotation depth weighted by axis. Only 671 picks are rule-backed —
    see the report for that limitation. See `research/swissprot-trait-profiles-5.md`.
-   **Phase 6 (next):** multi-organism profiles (mouse/yeast/*E. coli*) — fixes the
-   human-only exemplar bias, raises rule support so more records become rule-backed,
-   and gives the held-out-organism decision-tree test; protein×trait browser map
-   (UMAP/PaCMAP of profiles.jsonl); feed shared exemplars into the residue-frame
-   base overlay (item 4).
+   Phase 6 DONE (2026-07-25, branch `swissprot-multi-organism`): matrix rebuilt over
+   four organisms (48,962 proteins: human/mouse/yeast/*E. coli*; `just build-profiles
+   --organisms`). **Held-out-organism tests**: `scripts/test_rule_generalization.py`
+   (`just test-rule-generalization`) shows seq-encodes-fold replicates at 96–99%
+   outside human but trait-implies-function only 81–88%, failing on GO
+   cellular-component / lineage-specific terms — that overlay is partly annotation
+   practice, not mechanism. `train_trait_go_tree.py --holdout-taxon` shows macro-F1
+   0.45 (mouse) → 0.33 (yeast) → 0.20 (*E. coli*) vs 0.44 random, i.e. a random split
+   leaks orthologs. Overlay re-mined: 516 → 1,506 edges. Exemplars re-ranked with
+   within-proteome normalisation (absolute GO counts handed picks to whichever
+   community annotates hardest — mouse 16.1 vs human 12.6 mean GO).
+   See `research/swissprot-trait-profiles-6.md` + `research/rule-generalization-1.md`.
+   **Phase 7 (next):** re-mine with per-organism weighted support so a rule cannot
+   clear threshold on vertebrate abundance alone; split the trait-implies-function
+   overlay by GO aspect (MF edges are trustworthy in a way CC edges are not);
+   protein×trait browser map (UMAP/PaCMAP of profiles.jsonl); feed shared exemplars
+   into the residue-frame base overlay (item 4).
 
 2. **Per-gene curation of the remaining ~1,219 resistance causal-graph drafts.**
    The family-level promotion is done (6,180 REVIEWED). The tail is genuinely
