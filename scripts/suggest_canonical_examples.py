@@ -63,6 +63,10 @@ RULES = REPO_ROOT / "data" / "equivalence" / "trait_cooccurrence.tsv"
 _IDENT = re.compile(r"(?m)^identifier:\s*([A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+)\s*$")
 _HAS_EXAMPLES = re.compile(r"(?m)^canonical_examples:")
 _LICENSE = re.compile(r"(?m)^license:")
+# a top-level key — column 0, and not a `- ` list item (those are indented or
+# start with a dash, so they never match)
+_TOP_KEY = re.compile(r"(?m)^[A-Za-z_][A-Za-z0-9_]*:")
+_EXAMPLE_ID = re.compile(r"(?m)^\s+-\s+protein_id:\s*(\S+)")
 
 # Namespaces that classify *what a protein is* — snapshotted onto each example
 # as `family_classifications`. GO / EC are function annotations, not
@@ -170,11 +174,22 @@ def load_profiles(path: Path) -> list:
 
 
 def build_record_paths(refresh: bool = False) -> dict:
-    """{trait CURIE → record path} for every ProteinTraitRecord in the corpus."""
+    """{trait CURIE → record path} for every ProteinTraitRecord in the corpus.
+
+    Cached, but stamped with the corpus file count: records are moved between
+    axis directories by the `migrate_*` scripts, and a stale path either skips
+    the trait silently or — worse — writes examples onto whatever record now
+    occupies that path. A count mismatch rebuilds automatically.
+    """
+    n_files = sum(1 for _ in TRAITS.rglob("*.yaml"))
     if PATHS_CACHE.exists() and not refresh:
         try:
-            return json.loads(PATHS_CACHE.read_text(encoding="utf-8"))
-        except (ValueError, OSError):
+            cached = json.loads(PATHS_CACHE.read_text(encoding="utf-8"))
+            if cached.get("corpus_files") == n_files:
+                return cached["paths"]
+            print(f"record path cache is stale ({cached.get('corpus_files')} files "
+                  f"cached, {n_files:,} on disk) — rebuilding", file=sys.stderr)
+        except (ValueError, OSError, KeyError, AttributeError):
             pass
     paths: dict = {}
     for p in TRAITS.rglob("*.yaml"):
@@ -182,7 +197,8 @@ def build_record_paths(refresh: bool = False) -> dict:
         if m:
             paths[m.group(1)] = str(p.relative_to(REPO_ROOT))
     PATHS_CACHE.parent.mkdir(parents=True, exist_ok=True)
-    PATHS_CACHE.write_text(json.dumps(paths), encoding="utf-8")
+    PATHS_CACHE.write_text(json.dumps({"corpus_files": n_files, "paths": paths}),
+                           encoding="utf-8")
     print(f"record path index: {len(paths):,} trait records", file=sys.stderr)
     return paths
 
@@ -285,16 +301,47 @@ def example_block(prot: dict, trait: str, trait_axis: str, coverage: float,
     return L
 
 
+def existing_example_ids(text: str) -> set:
+    """`protein_id`s already listed in the record's canonical_examples block."""
+    m = _HAS_EXAMPLES.search(text)
+    if not m:
+        return set()
+    nxt = _TOP_KEY.search(text, m.end())
+    seg = text[m.end():nxt.start() if nxt else len(text)]
+    return set(_EXAMPLE_ID.findall(seg))
+
+
 def insert_block(text: str, block: list) -> str:
-    """Insert a `canonical_examples:` block before the top-level `license:`
-    key (keeping licence last, as the seeders emit it) or append it."""
-    chunk = "canonical_examples:\n" + "\n".join(block) + "\n"
-    m = _LICENSE.search(text)
+    """Add the example items to the record.
+
+    When the record already has a `canonical_examples:` block (only reachable
+    under --force) the items are appended *inside* it. Emitting a second
+    top-level key instead would be silent data loss: YAML duplicate-key
+    semantics keep the last one, so every consumer would see only the new
+    block and the existing examples — possibly curator picks — would vanish
+    from the parsed record while still sitting in the file.
+    """
+    m = _HAS_EXAMPLES.search(text)
     if m:
-        return text[:m.start()] + chunk + text[m.start():]
+        nxt = _TOP_KEY.search(text, m.end())
+        end = nxt.start() if nxt else len(text)
+        head = text[:end].rstrip("\n") + "\n"
+        return head + "\n".join(block) + "\n" + text[end:]
+
+    chunk = "canonical_examples:\n" + "\n".join(block) + "\n"
+    lic = _LICENSE.search(text)
+    if lic:
+        return text[:lic.start()] + chunk + text[lic.start():]
     if not text.endswith("\n"):
         text += "\n"
     return text + chunk
+
+
+def duplicate_top_keys(text: str) -> list:
+    """Top-level keys appearing more than once — the bug class that a second
+    `canonical_examples:` key belongs to. Cheap enough to check every write."""
+    counts = collections.Counter(_TOP_KEY.findall(text))
+    return sorted(k for k, c in counts.items() if c > 1)
 
 
 # ---------------------------------------------------------------------------
@@ -357,11 +404,16 @@ def main() -> int:
     # widens it to the namespaces that mining left out. Overlay confidences win
     # on collision.
     partners = load_rules(Path(args.rules))
+    n_overlay = sum(len(v) for v in partners.values()) // 2
+    n_mined = 0
     if args.mine_rules:
         for a, bs in mine_rules(rows, idx, args.min_support, args.min_conf,
                                 args.min_lift).items():
             for b, conf in bs.items():
-                partners[a].setdefault(b, conf)
+                if b not in partners[a]:        # overlay confidences win
+                    partners[a][b] = conf
+                    n_mined += 1
+    n_mined //= 2
 
     n_matrix = len(rows)
     stats = collections.Counter()
@@ -392,6 +444,12 @@ def main() -> int:
         try:
             text = path.read_text(encoding="utf-8")
         except OSError:
+            # a cached path that no longer resolves; loud, because silently
+            # counting these looks identical to genuinely absent coverage
+            if stats["skip: unreadable"] == 0:
+                print(f"warning: {rel} is indexed but unreadable — the record "
+                      f"path cache may be stale; re-run with --refresh-paths",
+                      file=sys.stderr)
             stats["skip: unreadable"] += 1
             continue
         if _HAS_EXAMPLES.search(text) and not args.force:
@@ -399,10 +457,14 @@ def main() -> int:
             continue
 
         trait_axis = (idx.get(trait) or ["", ""])[0]
-        ranked = sorted(
+        already = existing_example_ids(text)          # only non-empty under --force
+        ranked = [sp for sp in sorted(
             ((score_carrier(p, trait, trait_axis, partners), p) for p in pool),
             key=lambda sp: (-sp[0][0], sp[1]["accession"]),
-        )[:args.max_examples]
+        ) if sp[1]["accession"] not in already][:args.max_examples]
+        if not ranked:
+            stats["skip: all carriers already listed"] += 1
+            continue
 
         block: list = []
         for (_score, coverage, matched, total), prot in ranked:
@@ -410,11 +472,16 @@ def main() -> int:
                                    total, len(pool), matrix_note, today)
         new_text = insert_block(text, block)
 
-        # Never write YAML we cannot read back.
+        # Never write YAML we cannot read back — and never write a duplicate
+        # top-level key, which parses fine but silently discards the earlier
+        # value (see issue #34).
         try:
+            dupes = duplicate_top_keys(new_text)
+            assert not dupes, f"duplicate top-level key(s): {', '.join(dupes)}"
             parsed = yaml.safe_load(new_text)
             got = len(parsed.get("canonical_examples") or [])
-            assert got >= len(ranked), f"{got} examples parsed, expected {len(ranked)}"
+            want = len(already) + len(ranked)
+            assert got == want, f"{got} examples parsed, expected {want}"
         except Exception as e:                            # noqa: BLE001
             failures.append(f"{rel}: {e}")
             stats["skip: verify failed"] += 1
@@ -436,7 +503,8 @@ def main() -> int:
     L = [f"# canonical_examples suggestions ({'APPLIED' if args.apply else 'dry-run'})",
          "",
          f"matrix: {n_matrix:,} proteins | traits observed in corpus: {len(carriers):,} | "
-         f"rule overlay: {sum(len(v) for v in partners.values())//2:,} pairs",
+         f"rule overlay ({Path(args.rules).name}): {n_overlay:,} pairs"
+         + (f" | mined in-process: {n_mined:,} pairs" if args.mine_rules else ""),
          "",
          f"**records to update: {stats['written']:,}** "
          f"({stats['rule-backed']:,} rule-backed, "
