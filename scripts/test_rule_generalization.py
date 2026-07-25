@@ -102,8 +102,18 @@ def main() -> int:
         r["_ts"] = trait_set(r)
 
     by_taxon: dict = collections.defaultdict(list)
+    untaxoned = 0
     for r in rows:
-        by_taxon[(r.get("taxon") or "").replace("NCBITaxon:", "")].append(r)
+        taxon = (r.get("taxon") or "").replace("NCBITaxon:", "")
+        if not taxon:
+            # would otherwise form an unnamed pseudo-organism and be reported as
+            # a held-out result (issue #40)
+            untaxoned += 1
+            continue
+        by_taxon[taxon].append(r)
+    if untaxoned:
+        print(f"warning: {untaxoned:,} profiles have no taxon and are excluded",
+              file=sys.stderr)
     labels = {t: (rs[0].get("taxon_label") or t) for t, rs in by_taxon.items()}
 
     train_key = args.train.replace("NCBITaxon:", "")
@@ -132,6 +142,11 @@ def main() -> int:
          f"≥{args.min_test_support} carriers of the antecedent.",
          ""]
 
+    # counts() is the dominant cost — build each held-out organism's tables once
+    # rather than once per rule family (issue #39)
+    held_counts = {taxon: counts(rs) for taxon, rs in by_taxon.items()
+                   if taxon != train_key}
+
     overall = {}
     for family, rules in (("seq-encodes-fold", seq_fold),
                           ("trait-implies-function", trait_func)):
@@ -141,7 +156,7 @@ def main() -> int:
         for taxon, rs in sorted(by_taxon.items(), key=lambda kv: -len(kv[1])):
             if taxon == train_key:
                 continue
-            supp, co, n = counts(rs)
+            supp, co, n = held_counts[taxon]
             rep = con = unt = 0
             confs, failures = [], []
             for a, b, tr_conf, _lift, _c in rules:

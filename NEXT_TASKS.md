@@ -45,7 +45,7 @@ _Last reconciled: 2026-07-21._
    outside human but trait-implies-function only 81–88%, failing on GO
    cellular-component / lineage-specific terms — that overlay is partly annotation
    practice, not mechanism. `train_trait_go_tree.py --holdout-taxon` shows macro-F1
-   0.45 (mouse) → 0.33 (yeast) → 0.20 (*E. coli*) vs 0.44 random, i.e. a random split
+   0.44 (mouse) → 0.32 (yeast) → 0.21 (*E. coli*) vs 0.44 random, i.e. a random split
    leaks orthologs. Overlay re-mined: 516 → 1,506 edges. Exemplars re-ranked with
    within-proteome normalisation (absolute GO counts handed picks to whichever
    community annotates hardest — mouse 16.1 vs human 12.6 mean GO).

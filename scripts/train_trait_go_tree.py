@@ -59,12 +59,19 @@ def main() -> int:
              if c.startswith("GO:") and cat == "FUNC_MOLECULAR_FUNCTION"}
 
     rows = [json.loads(l) for l in JSONL.open(encoding="utf-8")]
-    # signature-trait feature vocab (most frequent) + GO-MF label vocab
+    # signature-trait feature vocab (most frequent) + GO-MF label vocab.
+    # Under --holdout-taxon the vocabularies are built from the training rows
+    # only: choosing the top-N features with knowledge of the held-out proteome
+    # would defeat the point of holding it out (issue #38).
+    held = (f"NCBITaxon:{args.holdout_taxon.replace('NCBITaxon:', '')}"
+            if args.holdout_taxon else None)
     feat_ct, lab_ct = collections.Counter(), collections.Counter()
     for r in rows:
         sig = {t for t in r["traits"] if t.split(":")[0] in SIG_PREFIXES}
         r["_sig"] = sig
         r["_mf"] = set(r["go"]) & go_mf
+        if held and r.get("taxon") == held:
+            continue
         feat_ct.update(sig)
         lab_ct.update(r["_mf"])
     feats = [f for f, _ in feat_ct.most_common(args.max_features)]
@@ -80,7 +87,7 @@ def main() -> int:
             if f in fpos:
                 X[i, fpos[f]] = 1
     if args.holdout_taxon:
-        want = f"NCBITaxon:{args.holdout_taxon.replace('NCBITaxon:', '')}"
+        want = held
         te_i = np.array([i for i, r in enumerate(rows) if r.get("taxon") == want])
         tr_i = np.array([i for i, r in enumerate(rows) if r.get("taxon") != want])
         if te_i.size == 0 or tr_i.size == 0:

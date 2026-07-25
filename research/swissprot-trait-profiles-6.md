@@ -77,15 +77,21 @@ but the test set is an entire proteome instead of a random 25%.
 | split | macro-F1 |
 |---|--:|
 | random 75/25 | 0.44 |
-| held out *Mus musculus* | **0.45** |
-| held out *S. cerevisiae* | 0.33 |
-| held out *E. coli* | **0.20** |
+| held out *Mus musculus* | **0.44** |
+| held out *S. cerevisiae* | 0.32 |
+| held out *E. coli* | **0.21** |
 
 Two findings. **Mouse is not a held-out test** — it scores the same as a random
 split, because human and mouse proteins are near-duplicate by orthology. Any
 random split of a vertebrate-heavy matrix leaks orthologs across the boundary and
 reports optimistic generalisation. Real transfer decays with phylogenetic
-distance: 0.45 → 0.33 → 0.20.
+distance: 0.44 → 0.32 → 0.21.
+
+(Review caught that the first cut of this table leaked too: the top-400 feature
+and top-25 label vocabularies were selected over *all* rows, including the
+held-out proteome — see issue #38. Selecting them from the training rows only
+moves the numbers by ≤0.01 in either direction, so the shape of the result stands,
+but the figures above are the corrected ones.)
 
 And within the *E. coli* holdout the collapse is selective:
 
