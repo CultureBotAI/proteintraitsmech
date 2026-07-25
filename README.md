@@ -152,6 +152,20 @@ supports them, and can also be added by curators:
       `family_classifications` (Pfam / InterPro / HAMAP / SMART / CATH
       xrefs on that specific entry) and a `fetched_at` date stamp so
       downstream consumers can rank / filter without re-querying UniProt.
+    - `source: SWISSPROT_PROFILE` — selected by
+      [`scripts/suggest_canonical_examples.py`](scripts/suggest_canonical_examples.py)
+      (`just suggest-examples`) from the Swiss-Prot protein × trait matrix
+      (`data/profiles/profiles.jsonl`, issue #7). Unlike `UNIPROTKB_API`
+      this is a ranked selection over an existing local matrix rather
+      than a fresh query: among the observed carriers of the trait, the
+      pick maximises how many of the trait's empirically coupled
+      cross-axis partners (the `seq-encodes-fold` /
+      `trait-implies-function` rules) it also carries, then carrier focus
+      and annotation depth weighted by the trait's axis. The `note`
+      records the derivation and the carrier count. These are
+      **suggestions**, not curator picks, and are swept or re-ranked
+      wholesale by `source`. See
+      [`research/swissprot-trait-profiles-5.md`](research/swissprot-trait-profiles-5.md).
 
     ```bash
     # populate 3 reviewed examples on one PROSITE PATTERN record

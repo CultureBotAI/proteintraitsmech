@@ -875,6 +875,8 @@ function renderExample(e, lazyPending) {
   if (e.len)           badges.push(`<span class="pill">${escapeHTML(String(e.len))} aa</span>`);
   if (e.src === "UNIPROTKB_API") badges.push(`<span class="pill src">UniProtKB API</span>`);
   else if (e.src === "CURATOR")  badges.push(`<span class="pill src">curator</span>`);
+  // Profile-matrix picks are ranked suggestions, not curated archetypes — say so.
+  else if (e.src === "SWISSPROT_PROFILE") badges.push(`<span class="pill src">Swiss-Prot profile · suggested</span>`);
 
   const families = (e.fams || []).length
     ? `<div class="ex-families">${e.fams.map(curieLink).join(" ")}</div>`

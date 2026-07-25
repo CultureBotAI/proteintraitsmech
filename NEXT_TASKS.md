@@ -31,10 +31,18 @@ _Last reconciled: 2026-07-21._
    `data/equivalence/trait_cooccurrence.tsv` (516 edges: 284 seq-encodes-fold +
    232 trait-implies-function, `biolink:related_to`, conf/lift in relation_source;
    auto-loaded by build_docs_index). See `research/swissprot-trait-profiles-4.md`.
-   **Phase 5 (next):** auto-suggest `canonical_examples` from the `seq-encodes-fold`
-   rules (connects real proteins to trait records + feeds the base overlay, item 4);
-   multi-organism confirmation + held-out-organism decision-tree test; protein×trait
-   browser map (UMAP/PaCMAP of profiles.jsonl).
+   Phase 5 DONE (2026-07-24, branch `swissprot-canonical-examples`):
+   `scripts/suggest_canonical_examples.py` (`just suggest-examples`) wrote
+   **86,580 `canonical_examples` onto 44,929 trait records** (coverage 14.6% →
+   25.6%; all 2,342 observed CATH fold records had none before). New
+   `SWISSPROT_PROFILE` provenance; carriers ranked by cross-axis rule coverage,
+   then focus / annotation depth weighted by axis. Only 671 picks are rule-backed —
+   see the report for that limitation. See `research/swissprot-trait-profiles-5.md`.
+   **Phase 6 (next):** multi-organism profiles (mouse/yeast/*E. coli*) — fixes the
+   human-only exemplar bias, raises rule support so more records become rule-backed,
+   and gives the held-out-organism decision-tree test; protein×trait browser map
+   (UMAP/PaCMAP of profiles.jsonl); feed shared exemplars into the residue-frame
+   base overlay (item 4).
 
 2. **Per-gene curation of the remaining ~1,219 resistance causal-graph drafts.**
    The family-level promotion is done (6,180 REVIEWED). The tail is genuinely
