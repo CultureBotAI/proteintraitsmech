@@ -655,8 +655,19 @@ fetch-examples *args:
 # correlation + multi-trait-family clustering. --query / --limit bound the slice;
 # --apply writes data/profiles/<acc>.yaml (ProteinProfile) + profiles.jsonl.
 #   just build-profiles --query "reviewed:true AND organism_id:9606" --limit 1000 --apply
+# --query repeats for a multi-organism matrix; --organisms is shorthand for the
+# standard four (human / mouse / yeast / E. coli K-12) and --limit caps per query.
+#   just build-profiles --organisms --limit 25000 --jsonl-only --apply
 build-profiles *args:
     python3 scripts/build_swissprot_profiles.py {{args}}
+
+# Held-out-organism replication test for the phase-3/4 cross-axis rules (issue #7,
+# phase 6): mine on one organism, recompute each rule's confidence on the others.
+# Answers "are these rules biology or an artefact of the human proteome?".
+# Needs a multi-organism matrix (see build-profiles --organisms). Stdlib-only.
+#   just test-rule-generalization --train 9606
+test-rule-generalization *args:
+    python3 scripts/test_rule_generalization.py {{args}}
 
 # Train interpretable trait->GO-function decision trees on the protein×trait matrix
 # (data/profiles/profiles.jsonl). "Predict function from the presence of certain

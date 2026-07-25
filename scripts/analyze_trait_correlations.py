@@ -52,6 +52,12 @@ def main() -> int:
 
     rows = [json.loads(l) for l in JSONL.open(encoding="utf-8")]
     N = len(rows)
+    # Provenance stamped onto every emitted edge. Derived from the matrix rather
+    # than hardcoded — these rules were human-only through phase 5 and the
+    # relation_source has to say which proteomes actually support them.
+    orgs = collections.Counter(r.get("taxon_label") or "?" for r in rows)
+    matrix_src = "Swiss-Prot(" + ",".join(
+        o.split(" (")[0] for o, _ in orgs.most_common()) + ")"
     supp = collections.Counter()
     co = collections.Counter()
     for r in rows:
@@ -80,7 +86,8 @@ def main() -> int:
     seq_struct = rules(SEQ_PREF, STRUCT_PREF)
     struct_func = rules(STRUCT_PREF + SEQ_PREF, FUNC_PREF)
 
-    L = [f"proteins: {N:,} | trait pairs evaluated: {len(co):,} | "
+    L = [f"matrix: {matrix_src}",
+         f"proteins: {N:,} | trait pairs evaluated: {len(co):,} | "
          f"thresholds: support≥{args.min_support}, conf≥{args.min_conf}, lift≥{args.min_lift}\n",
          f"## Sequence signature → structure fold ({len(seq_struct):,} rules)",
          "_\"this sequence feature encodes this fold\" — P(fold | signature)_\n",
@@ -114,7 +121,7 @@ def main() -> int:
                 if (a, b) in seen:
                     continue
                 seen.add((a, b))
-                src = f"{kind}|conf={conf:.2f}|lift={lift:.0f}x|n={c}|Swiss-Prot(human)"
+                src = f"{kind}|conf={conf:.2f}|lift={lift:.0f}x|n={c}|{matrix_src}"
                 edges.append((a, "biolink:related_to", b, src))
         edges.sort()
         outp = Path(args.emit_overlay)

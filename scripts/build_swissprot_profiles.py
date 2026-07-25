@@ -52,6 +52,18 @@ _AXIS = re.compile(r"(?m)^trait_axis:\s*(\S+)")
 _CAT = re.compile(r"(?m)^trait_category:\s*(\S+)")
 _GROUND_PREFIXES = set(DB2PREFIX.values()) | {"GO", "EC"}
 
+# The standard multi-organism slice (--organisms). Human alone biases every
+# downstream artefact — exemplar picks, and the support counts that decide which
+# cross-axis rules clear threshold — toward traits that happen to occur in
+# vertebrates. Two eukaryotic models plus a bacterium give the rules something
+# to be held out against.
+ORGANISMS = {
+    9606:   "Homo sapiens",
+    10090:  "Mus musculus",
+    559292: "Saccharomyces cerevisiae S288C",
+    83333:  "Escherichia coli K-12",
+}
+
 
 def build_trait_index(refresh: bool = False) -> dict:
     """{trait CURIE → [axis, category]} for groundable corpus trait classes."""
@@ -213,50 +225,73 @@ def to_yaml(p: dict) -> str:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--query", default="reviewed:true AND organism_id:9606",
-                    help="UniProtKB query (default: reviewed human)")
-    ap.add_argument("--limit", type=int, default=500)
+    ap.add_argument("--query", action="append", metavar="Q",
+                    help="UniProtKB query; repeat for a multi-organism matrix "
+                         "(default: reviewed human). --limit applies per query.")
+    ap.add_argument("--organisms", action="store_true",
+                    help="shorthand for the standard four-organism slice: "
+                         "human, mouse, S. cerevisiae, E. coli K-12")
+    ap.add_argument("--limit", type=int, default=500,
+                    help="cap per query, not in total")
     ap.add_argument("--apply", action="store_true", help="write YAML + jsonl (else dry-run)")
     ap.add_argument("--jsonl-only", action="store_true", help="write only profiles.jsonl (skip per-protein YAMLs) — for scaling the analysis matrix")
     ap.add_argument("--refresh-index", action="store_true")
     args = ap.parse_args()
 
+    queries = list(args.query or [])
+    if args.organisms:
+        queries += [f"reviewed:true AND organism_id:{t}" for t in ORGANISMS]
+    if not queries:
+        queries = ["reviewed:true AND organism_id:9606"]
+
     idx = build_trait_index(args.refresh_index)
     n = with_traits = tot_traits = 0
     axes: dict = {}
+    seen_acc: set = set()          # an entry matching two queries is written once
+    per_query: list = []
     if args.apply:
         OUT_DIR.mkdir(parents=True, exist_ok=True)
         jf = JSONL.open("w", encoding="utf-8")
-    for entry in stream_swissprot(args.query, args.limit):
-        p = profile(entry, idx)
-        n += 1
-        if p["traits"]:
-            with_traits += 1
-        tot_traits += len(p["traits"])
-        for t in p["traits"]:
-            axes[t["trait_axis"]] = axes.get(t["trait_axis"], 0) + 1
-        if args.apply:
-            acc = p["accession"].split(":", 1)[1]
-            if not args.jsonl_only:
-                (OUT_DIR / f"{acc}.yaml").write_text(to_yaml(p), encoding="utf-8")
-            # The jsonl is the durable matrix for the downstream analyses. It
-            # carries the entry's identifying metadata as well as its traits so
-            # consumers (e.g. suggest_canonical_examples.py, which needs a
-            # protein_label / taxon / length per CanonicalExample) never have to
-            # re-query UniProt for what this pass already fetched.
-            jf.write(json.dumps({"accession": p["accession"], "go": p["go_terms"],
-                                 "ec": p["ec_numbers"],
-                                 "name": p["protein_name"],
-                                 "taxon": p.get("taxon_id"),
-                                 "taxon_label": p.get("taxon_label"),
-                                 "length": p.get("sequence_length"),
-                                 "reviewed": p["reviewed"],
-                                 "traits": [t["trait"] for t in p["traits"]],
-                                 "axes": {t["trait"]: t["trait_axis"] for t in p["traits"]}}) + "\n")
+    for query in queries:
+        q_n = 0
+        for entry in stream_swissprot(query, args.limit):
+            p = profile(entry, idx)
+            if p["accession"] in seen_acc:
+                continue
+            seen_acc.add(p["accession"])
+            n += 1
+            q_n += 1
+            if p["traits"]:
+                with_traits += 1
+            tot_traits += len(p["traits"])
+            for t in p["traits"]:
+                axes[t["trait_axis"]] = axes.get(t["trait_axis"], 0) + 1
+            if args.apply:
+                acc = p["accession"].split(":", 1)[1]
+                if not args.jsonl_only:
+                    (OUT_DIR / f"{acc}.yaml").write_text(to_yaml(p), encoding="utf-8")
+                # The jsonl is the durable matrix for the downstream analyses. It
+                # carries the entry's identifying metadata as well as its traits so
+                # consumers (e.g. suggest_canonical_examples.py, which needs a
+                # protein_label / taxon / length per CanonicalExample) never have to
+                # re-query UniProt for what this pass already fetched.
+                jf.write(json.dumps({"accession": p["accession"], "go": p["go_terms"],
+                                     "ec": p["ec_numbers"],
+                                     "name": p["protein_name"],
+                                     "taxon": p.get("taxon_id"),
+                                     "taxon_label": p.get("taxon_label"),
+                                     "length": p.get("sequence_length"),
+                                     "reviewed": p["reviewed"],
+                                     "traits": [t["trait"] for t in p["traits"]],
+                                     "axes": {t["trait"]: t["trait_axis"] for t in p["traits"]}}) + "\n")
+        per_query.append((query, q_n))
+        print(f"  {query!r}: {q_n:,} new profiles", file=sys.stderr)
     if args.apply:
         jf.close()
 
-    print(f"query={args.query!r} limit={args.limit}")
+    print(f"queries: {len(queries)} (limit {args.limit} each)")
+    for q, q_n in per_query:
+        print(f"  {q_n:>7,}  {q}")
     print(f"proteins: {n:,}; with ≥1 corpus trait: {with_traits:,} "
           f"({100*with_traits//max(1,n)}%); mean traits/protein: {tot_traits/max(1,n):.1f}")
     print(f"trait matches by axis: {dict(sorted(axes.items(), key=lambda kv:-kv[1]))}")
