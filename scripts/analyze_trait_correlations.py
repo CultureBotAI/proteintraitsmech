@@ -130,24 +130,42 @@ def main() -> int:
     o_co: dict = collections.defaultdict(collections.Counter)
     for i, r in enumerate(rows):
         tax, ts = org_of[i], r["_ts"]
+        if tax == "?":
+            continue                    # untaxoned rows must not vote (issue #43)
         for a in ts & by_ante.keys():
             o_supp[tax][a] += 1
             for b in by_ante[a]:
                 if b in ts:
                     o_co[tax][(a, b)] += 1
-    organisms = sorted({t for t in org_of.values()})
+    organisms = sorted({t for t in org_of.values() if t != "?"})
+    untaxoned = sum(1 for t in org_of.values() if t == "?")
+    if untaxoned:
+        print(f"warning: {untaxoned:,} profiles have no organism and are excluded "
+              f"from the balanced confidence", file=sys.stderr)
+    # a floor of 0 would admit organisms with no carriers at all and divide by
+    # zero (issue #42)
+    vote_floor = max(1, args.min_organism_support)
 
     def balanced(a, b):
         """(mean per-organism confidence, n organisms it was testable in)."""
         confs = [o_co[t][(a, b)] / o_supp[t][a] for t in organisms
-                 if o_supp[t][a] >= args.min_organism_support]
+                 if o_supp[t][a] >= vote_floor]
         return (sum(confs) / len(confs), len(confs)) if confs else (0.0, 0)
 
+    unjudged = 0
+
     def keep(cands):
+        nonlocal unjudged
         out = []
         for conf, lift, c, a, b in cands:
             cb, k = balanced(a, b)
-            if k and cb < args.min_balanced_conf:
+            if not k:
+                # no proteome carries the antecedent often enough to vote. Keep
+                # the rule — an unjudgeable rule has not failed — but count it,
+                # so a run with a gate set cannot quietly report rules the gate
+                # never actually examined.
+                unjudged += 1
+            elif cb < args.min_balanced_conf:
                 continue
             out.append((conf, lift, c, a, b, cb, k))
         out.sort(reverse=True)
@@ -161,8 +179,9 @@ def main() -> int:
          f"proteins: {N:,} | trait pairs evaluated: {len(co):,} | "
          f"thresholds: support≥{args.min_support}, conf≥{args.min_conf}, lift≥{args.min_lift}\n",
          f"organism-balanced: conf≥{args.min_balanced_conf} averaged over organisms "
-         f"with ≥{args.min_organism_support} carriers of the antecedent "
-         f"({dropped:,} raw-confidence rules dropped)\n",
+         f"with ≥{vote_floor} carriers of the antecedent "
+         f"({dropped:,} rules dropped; {unjudged:,} kept unjudged — no proteome "
+         f"carried the antecedent often enough to vote)\n",
          f"## Sequence signature → structure fold ({len(seq_struct):,} rules)",
          "_\"this sequence feature encodes this fold\" — P(fold | signature)_\n",
          "| sequence signature | → structure fold | conf | balanced | orgs | lift | n |",
@@ -199,6 +218,7 @@ def main() -> int:
         # trait index); cross-axis → biolink:related_to, never a merge. The
         # empirical confidence / lift / support live in relation_source.
         seen, edges = set(), []
+        unmapped: dict = collections.Counter()
         for kind, rr in (("seq-encodes-fold", seq_struct), (None, struct_func)):
             for conf, lift, c, a, b, cb, k in rr:
                 if (a, b) in seen:
@@ -208,7 +228,16 @@ def main() -> int:
                 # molecular-function edges replicate across organisms in a way
                 # cellular-component edges do not, so a consumer has to be able
                 # to tell them apart without re-deriving the aspect.
-                this = kind or KIND_BY_CATEGORY.get(cat(b), "trait-implies-function")
+                if kind:
+                    this = kind
+                else:
+                    this = KIND_BY_CATEGORY.get(cat(b))
+                    if this is None:
+                        # falling back to the undifferentiated kind is exactly
+                        # what this split exists to remove — say so rather than
+                        # silently reintroducing it
+                        unmapped[cat(b) or "(no category)"] += 1
+                        this = "trait-implies-function"
                 src = (f"{this}|conf={conf:.2f}|balanced={cb:.2f}|organisms={k}"
                        f"|lift={lift:.0f}x|n={c}|{matrix_src}")
                 edges.append((a, "biolink:related_to", b, src))
@@ -219,6 +248,12 @@ def main() -> int:
             fh.write("subject\tpredicate\tobject\trelation_source\n")
             for e in edges:
                 fh.write("\t".join(e) + "\n")
+        if unmapped:
+            print(f"warning: {sum(unmapped.values()):,} function edges fell back to "
+                  f"the undifferentiated `trait-implies-function` kind — add these "
+                  f"categories to KIND_BY_CATEGORY: "
+                  f"{', '.join(f'{k} ({v})' for k, v in unmapped.most_common())}",
+                  file=sys.stderr)
         print(f"\nwrote {len(edges):,} cross-axis co-occurrence edges → "
               f"{outp.relative_to(REPO_ROOT) if outp.is_absolute() else outp}", file=sys.stderr)
     return 0
