@@ -43,14 +43,22 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 DOCS = REPO_ROOT / "docs" / "data"
 
 
-def purity(space, labels, k, seed):
-    """(observed purity, chance purity) over k nearest neighbours."""
-    import numpy as np
+def neighbours(space, k):
+    """Indices of each point's k nearest neighbours (self excluded).
+
+    Computed once per space and reused for every labeling, so the labelings are
+    scored on provably identical neighbourhoods — which is the whole basis of
+    the axis-vs-source comparison, not merely an optimisation.
+    """
     from sklearn.neighbors import NearestNeighbors
 
-    nn = NearestNeighbors(n_neighbors=k + 1).fit(space)
-    _, ind = nn.kneighbors(space)
-    same = float((labels[ind[:, 1:]] == labels[:, None]).mean())
+    nn = NearestNeighbors(n_neighbors=min(k, len(space) - 1) + 1).fit(space)
+    return nn.kneighbors(space)[1][:, 1:]
+
+
+def purity(ind, labels):
+    """(observed purity, chance purity) over precomputed neighbourhoods."""
+    same = float((labels[ind] == labels[:, None]).mean())
     counts = collections.Counter(labels.tolist())
     n = len(labels)
     chance = sum((c / n) ** 2 for c in counts.values())
@@ -105,9 +113,17 @@ def main() -> int:
         if i is not None:
             pts.append(p)
             keep_rows.append(i)
+    dropped = len(d["points"]) - len(pts)
     if not pts:
-        print("no map point matched an embedding id", file=sys.stderr)
+        print("no map point matched an embedding id — the map and the embedding "
+              "were built from different corpus snapshots.", file=sys.stderr)
         return 1
+    if dropped:
+        pct = 100 * dropped / len(d["points"])
+        print(f"warning: {dropped:,} of {len(d['points']):,} map points ({pct:.1f}%) "
+              f"have no row in {args.emb_dir} and were dropped — the two artefacts "
+              f"are out of sync; rebuild the embedding or the map before trusting "
+              f"these numbers.", file=sys.stderr)
 
     rng = np.random.default_rng(args.seed)
     if 0 < args.sample < len(pts):
@@ -121,15 +137,18 @@ def main() -> int:
     source = np.asarray([p[3].split(":")[0] for p in pts])
 
     L = [f"# Does `{args.map}` show trait axis, or source database?", "",
-         f"{len(pts):,} records sampled of {len(d['points']):,} mapped "
-         f"({len(set(axis.tolist()))} axes, {len(set(source.tolist()))} source "
-         f"namespaces); k={args.k} neighbours.", "",
+         f"{len(pts):,} records sampled of {len(d['points']) - dropped:,} joined "
+         f"to the embedding ({len(d['points']):,} on the map"
+         + (f", **{dropped:,} dropped — artefacts out of sync**" if dropped else
+            ", all matched") + f"); {len(set(axis.tolist()))} axes, "
+         f"{len(set(source.tolist()))} source namespaces; k={args.k} neighbours.", "",
          "| space | label | purity | chance | lift |", "|---|---|--:|--:|--:|"]
     results = {}
     for space_name, space in (("embedding (pre-projection)", hi),
                               ("2-d map (what is rendered)", two)):
+        ind = neighbours(space, args.k)
         for lab_name, lab in (("trait axis", axis), ("source database", source)):
-            obs, ch = purity(space, lab, args.k, args.seed)
+            obs, ch = purity(ind, lab)
             results[(space_name, lab_name)] = obs / ch if ch else 0.0
             L.append(f"| {space_name} | {lab_name} | {obs:.3f} | {ch:.3f} "
                      f"| **{obs/ch:.2f}×** |")
@@ -174,7 +193,7 @@ def main() -> int:
             L.append(f"| {ax} | {int(m.sum()):,} | "
                      f"{len(set(source[m].tolist()))} | — | — | too few to judge |")
             continue
-        obs, ch = purity(hi[m], source[m], min(args.k, int(m.sum()) - 1), args.seed)
+        obs, ch = purity(neighbours(hi[m], args.k), source[m])
         L.append(f"| {ax} | {int(m.sum()):,} | {len(set(source[m].tolist()))} | "
                  f"{obs:.3f} | {ch:.3f} | **{obs/ch:.2f}×** |")
 

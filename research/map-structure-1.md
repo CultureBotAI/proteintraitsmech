@@ -1,6 +1,6 @@
 # Does `corpus_map.json` show trait axis, or source database?
 
-40,000 records sampled of 344,797 mapped (5 axes, 28 source namespaces); k=25 neighbours.
+40,000 records sampled of 344,797 joined to the embedding (344,797 on the map, all matched); 5 axes, 28 source namespaces; k=25 neighbours.
 
 | space | label | purity | chance | lift |
 |---|---|--:|--:|--:|
