@@ -9,7 +9,13 @@ on:
   push:
     branches: [main]
     paths:
+      # every input build_docs_index.py reads — an overlay-only change (e.g. a
+      # re-mined data/equivalence/*.tsv) is baked into the published site just
+      # as much as a trait edit, and used to deploy only by accident when the
+      # same PR happened to touch data/traits/
       - "data/traits/**"
+      - "data/equivalence/**"
+      - "data/mappings/**"
       - "docs/**"
       - "scripts/build_docs_index.py"
       - ".github/workflows/pages.yml"
