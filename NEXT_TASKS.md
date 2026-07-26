@@ -72,10 +72,27 @@ _Last reconciled: 2026-07-21._
    single-proteome edges are lineage-specific by biology (pilus/fungal cell
    wall/keratin), so an automatic `organisms>=2` filter would delete correct edges.
    See `research/swissprot-trait-profiles-8.md`.
-   **Phase 9 (next):** broaden the matrix beyond four organisms (no archaea, plants,
-   parasites) — longest-standing open item; feed shared exemplars into the
-   residue-frame base overlay (item 4); measure the *corpus* map the way the protein
-   map now is (do trait classes cluster by axis or by source database?).
+   Phase 9 DONE (2026-07-26, branch `swissprot-broaden-matrix`): matrix broadened to
+   **10 organisms / 80,066 proteins** (adds Arabidopsis, Drosophila, C. elegans,
+   B. subtilis, *M. jannaschii* (archaeon), *P. falciparum*); vertebrate share
+   76% → 47%. Held-out test across the tree: **seq-encodes-fold 97.2% aggregate,
+   100% in the archaeon**; trait-implies-function 84.8%, falling to **59% in the
+   archaeon** — the phase-6 split, now unambiguous. Overlay 1,479 → 2,590 edges.
+   **Withdrew a phase-8 claim**: "structure organises the protein map 1.6× more than
+   organism" was an artefact of a 4-organism matrix; at 10 organisms it is 2.34× vs
+   2.27×, i.e. about equal. Controlled check (same 4 organisms re-extracted)
+   reproduces phase 8 exactly, so the measurement was right and the generalisation
+   was not. New `just measure-map`: the corpus map is strongly source-stratified
+   (within STRUCTURE, 99% of a record's neighbours share its database) — but the
+   embedding still ranks a known cross-source equivalent #1 68% of the time, so it
+   is not blind across sources. Definition-only embedding is equally stratified:
+   the signal is house style in the prose, not identifiers.
+   See `research/swissprot-trait-profiles-9.md`, `research/map-structure-1.md`.
+   **Phase 10 (next):** feed shared exemplars into the residue-frame base overlay
+   (Path 1, carried since phase 4 and still untouched); act on the corpus map's
+   source stratification (source-balanced or source-residualised embedding) rather
+   than only measuring it; re-check phase 6's "random split leaks orthologs" now
+   that the matrix is 47% vertebrate.
 
 2. **Per-gene curation of the remaining ~1,219 resistance causal-graph drafts.**
    The family-level promotion is done (6,180 REVIEWED). The tail is genuinely

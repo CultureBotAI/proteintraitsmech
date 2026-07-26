@@ -55,13 +55,25 @@ _GROUND_PREFIXES = set(DB2PREFIX.values()) | {"GO", "EC"}
 # The standard multi-organism slice (--organisms). Human alone biases every
 # downstream artefact — exemplar picks, and the support counts that decide which
 # cross-axis rules clear threshold — toward traits that happen to occur in
-# vertebrates. Two eukaryotic models plus a bacterium give the rules something
-# to be held out against.
+# vertebrates.
+#
+# The first four were the phase-6 slice, and left the matrix 76% vertebrate with
+# no archaea, plants or parasites: a "held-out organism" that is a second mammal
+# is barely held out at all (phase 6 measured mouse as indistinguishable from a
+# random split). The rest span the tree far enough that replication across them
+# means something — two bacteria on opposite sides of the Gram stain, an
+# archaeon, a plant, an apicomplexan parasite, and two invertebrate models.
 ORGANISMS = {
-    9606:   "Homo sapiens",
-    10090:  "Mus musculus",
-    559292: "Saccharomyces cerevisiae S288C",
-    83333:  "Escherichia coli K-12",
+    9606:   "Homo sapiens",                     # mammal
+    10090:  "Mus musculus",                     # mammal
+    7227:   "Drosophila melanogaster",          # insect
+    6239:   "Caenorhabditis elegans",           # nematode
+    3702:   "Arabidopsis thaliana",             # plant
+    559292: "Saccharomyces cerevisiae S288C",   # fungus
+    36329:  "Plasmodium falciparum 3D7",        # apicomplexan parasite
+    83333:  "Escherichia coli K-12",            # Gram-negative bacterium
+    224308: "Bacillus subtilis 168",            # Gram-positive bacterium
+    243232: "Methanocaldococcus jannaschii",    # archaeon
 }
 
 

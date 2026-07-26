@@ -678,6 +678,14 @@ test-rule-generalization *args:
 protein-map *args:
     python3 scripts/build_protein_map.py {{args}}
 
+# Test what a corpus map actually organises by (issue #7, phase 9). The browser
+# colours by trait axis; this measures neighbour purity for axis vs SOURCE
+# DATABASE, in the embedding and in the 2-D map, plus a full-corpus retrieval
+# counter-test on known cross-source equivalent pairs. Read-only.
+#   just measure-map --map corpus_map_definitions.json --emb-dir data/embeddings/definition
+measure-map *args:
+    python3 scripts/measure_map_structure.py {{args}}
+
 # Train interpretable trait->GO-function decision trees on the protein×trait matrix
 # (data/profiles/profiles.jsonl). "Predict function from the presence of certain
 # traits" (issue #7). Needs scikit-learn — run with system python3 (as here), not uv.
