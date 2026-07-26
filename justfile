@@ -669,6 +669,15 @@ build-profiles *args:
 test-rule-generalization *args:
     python3 scripts/test_rule_generalization.py {{args}}
 
+# 2-D map of the protein×trait matrix → docs/data/protein_map.json (issue #7,
+# phase 8), rendered by the "Proteins" tab on docs/map.html. One point per
+# Swiss-Prot protein, positioned by the corpus traits it carries, coloured by
+# organism and filterable by CATH class. Needs numpy/scipy/scikit-learn/pacmap —
+# run with system python3 (as here), not uv.
+#   just protein-map --sample 20000
+protein-map *args:
+    python3 scripts/build_protein_map.py {{args}}
+
 # Train interpretable trait->GO-function decision trees on the protein×trait matrix
 # (data/profiles/profiles.jsonl). "Predict function from the presence of certain
 # traits" (issue #7). Needs scikit-learn — run with system python3 (as here), not uv.

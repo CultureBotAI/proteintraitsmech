@@ -60,11 +60,22 @@ _Last reconciled: 2026-07-21._
    endpoints by CURIE prefix only, letting 27 edges point at GO terms with no
    record in the corpus. Overlay 1,506 → 1,479 edges, 0 dangling.
    See `research/swissprot-trait-profiles-7.md`.
-   **Phase 8 (next):** protein×trait browser map (UMAP/PaCMAP of profiles.jsonl,
-   open since phase 4); hand-review the 65 `trait-implies-localization` edges now
-   that they are separable (phase 6 says they largely do not replicate); broaden
-   the matrix beyond four organisms; feed shared exemplars into the residue-frame
-   base overlay (item 4).
+   Phase 8 DONE (2026-07-25, branch `swissprot-protein-map`): **protein×trait map**
+   (`just protein-map` → `docs/data/protein_map.json`, "Proteins" tab on
+   docs/map.html) — 47,768 proteins, SVD→PaCMAP, coloured by organism, filterable
+   by CATH class. Measured rather than eyeballed: neighbour purity (k=25) shows
+   **CATH class organises the space 2.29× above chance vs organism's 1.42×**, and
+   the 2-D projection understates both (2.09 / 1.36) rather than inventing them.
+   Hand-reviewed the 65 `trait-implies-localization` edges → **keep all 65**: phase
+   6's offenders are already gone from pooled mining, and what survives is
+   domain→compartment (tubulin→microtubule, connexin→connexin complex). The 4
+   single-proteome edges are lineage-specific by biology (pilus/fungal cell
+   wall/keratin), so an automatic `organisms>=2` filter would delete correct edges.
+   See `research/swissprot-trait-profiles-8.md`.
+   **Phase 9 (next):** broaden the matrix beyond four organisms (no archaea, plants,
+   parasites) — longest-standing open item; feed shared exemplars into the
+   residue-frame base overlay (item 4); measure the *corpus* map the way the protein
+   map now is (do trait classes cluster by axis or by source database?).
 
 2. **Per-gene curation of the remaining ~1,219 resistance causal-graph drafts.**
    The family-level promotion is done (6,180 REVIEWED). The tail is genuinely
