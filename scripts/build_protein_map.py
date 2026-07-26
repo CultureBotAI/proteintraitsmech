@@ -79,7 +79,8 @@ def main() -> int:
     ap.add_argument("--svd", type=int, default=50,
                     help="dimensions to reduce to before the 2-D projection")
     ap.add_argument("--sample", type=int, default=-1,
-                    help="-1 = all proteins; N = a random N (seeded)")
+                    help="-1 = all proteins; N = a seeded sample of N, stratified "
+                         "by organism so the smaller proteomes keep their share")
     ap.add_argument("--neighbors", type=int, default=15)
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--out", default=str(OUT))
@@ -108,10 +109,24 @@ def main() -> int:
                                 | {f"EC:{e}" for e in r["ec"]}) if t in idx}
     rows = [r for r in rows if r["_ts"]]
 
+    n_corpus = len(rows)          # before sampling — the page compares against it
     if 0 < args.sample < len(rows):
+        # Stratified by organism: a uniform sample of a matrix whose proteomes
+        # differ 4.5-fold (human 20,023 … E. coli 4,400) leaves the smallest
+        # ones thinly represented in exactly the comparison the map is for.
         import random
-        random.Random(args.seed).shuffle(rows)
-        rows = rows[:args.sample]
+        rng = random.Random(args.seed)
+        by_org: dict = collections.defaultdict(list)
+        for r in rows:
+            by_org[(r.get("taxon_label") or "Unknown").split(" (")[0]].append(r)
+        keep: list = []
+        share = args.sample / len(rows)
+        for org in sorted(by_org):
+            group = by_org[org]
+            rng.shuffle(group)
+            keep.extend(group[:max(1, round(len(group) * share))])
+        rng.shuffle(keep)
+        rows = keep[:args.sample]
 
     supp = collections.Counter()
     for r in rows:
@@ -133,12 +148,15 @@ def main() -> int:
           file=sys.stderr)
 
     n_comp = min(args.svd, min(X.shape) - 1)
-    dense = TruncatedSVD(n_components=n_comp, random_state=args.seed).fit_transform(X)
+    svd = TruncatedSVD(n_components=n_comp, random_state=args.seed)
+    dense = svd.fit_transform(X)
     explained = None
 
     if args.method == "pca":
+        # the first two components of an *uncentred* truncated SVD — reporting
+        # the variance ratio keeps that visible rather than implying true PCA
         coords = dense[:, :2]
-        explained = None
+        explained = [float(v) for v in svd.explained_variance_ratio_[:2]]
     elif args.method == "umap":
         import umap
         coords = umap.UMAP(n_components=2, n_neighbors=args.neighbors,
@@ -177,7 +195,7 @@ def main() -> int:
         "method": args.method,
         "axes": groups,                 # the page's grouping dimension
         "cats": cats,
-        "n_total": len(rows),
+        "n_total": n_corpus,
         "n_shown": len(points),
         "points": points,
         # page-level presentation hints; embed_map.py's output omits these and
