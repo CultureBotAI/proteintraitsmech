@@ -254,8 +254,12 @@ def main() -> int:
                   f"categories to KIND_BY_CATEGORY: "
                   f"{', '.join(f'{k} ({v})' for k, v in unmapped.most_common())}",
                   file=sys.stderr)
-        print(f"\nwrote {len(edges):,} cross-axis co-occurrence edges → "
-              f"{outp.relative_to(REPO_ROOT) if outp.is_absolute() else outp}", file=sys.stderr)
+        try:                       # --emit-overlay may point anywhere on disk
+            shown = outp.relative_to(REPO_ROOT)
+        except ValueError:
+            shown = outp
+        print(f"\nwrote {len(edges):,} cross-axis co-occurrence edges → {shown}",
+              file=sys.stderr)
     return 0
 
 
