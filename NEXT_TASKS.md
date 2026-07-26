@@ -50,11 +50,21 @@ _Last reconciled: 2026-07-21._
    within-proteome normalisation (absolute GO counts handed picks to whichever
    community annotates hardest — mouse 16.1 vs human 12.6 mean GO).
    See `research/swissprot-trait-profiles-6.md` + `research/rule-generalization-1.md`.
-   **Phase 7 (next):** re-mine with per-organism weighted support so a rule cannot
-   clear threshold on vertebrate abundance alone; split the trait-implies-function
-   overlay by GO aspect (MF edges are trustworthy in a way CC edges are not);
-   protein×trait browser map (UMAP/PaCMAP of profiles.jsonl); feed shared exemplars
-   into the residue-frame base overlay (item 4).
+   Phase 7 DONE (2026-07-25, branch `swissprot-balanced-rules`): function edges
+   **split by GO aspect** (482 molecular-function / 148 biological-process / 65
+   localization / 13 enzymatic-activity), so consumers can filter to the edges
+   phase 6 showed replicate. Organism-balanced confidence is computed and emitted
+   (`balanced=`, `organisms=`) but **gating on it is a null result** — pooling four
+   proteomes already excludes every organism-specific rule phase 6 flagged, so
+   `--min-balanced-conf` defaults off. Fixed a phase-4 bug where the miner filtered
+   endpoints by CURIE prefix only, letting 27 edges point at GO terms with no
+   record in the corpus. Overlay 1,506 → 1,479 edges, 0 dangling.
+   See `research/swissprot-trait-profiles-7.md`.
+   **Phase 8 (next):** protein×trait browser map (UMAP/PaCMAP of profiles.jsonl,
+   open since phase 4); hand-review the 65 `trait-implies-localization` edges now
+   that they are separable (phase 6 says they largely do not replicate); broaden
+   the matrix beyond four organisms; feed shared exemplars into the residue-frame
+   base overlay (item 4).
 
 2. **Per-gene curation of the remaining ~1,219 resistance causal-graph drafts.**
    The family-level promotion is done (6,180 REVIEWED). The tail is genuinely

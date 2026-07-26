@@ -678,6 +678,10 @@ train-trait-tree *args:
 # Cross-axis trait correlations (issue #7): does a sequence signature always encode a
 # structural fold? which traits imply which GO/EC function? Association rules
 # (confidence + lift) over data/profiles/profiles.jsonl. Stdlib-only.
+# Function edges are split by GO aspect (molecular-function / biological-process /
+# localization / enzymatic-activity) because phase 6 showed they do not deserve
+# equal trust. Each edge also carries an organism-balanced confidence and the
+# number of proteomes that voted; --min-balanced-conf gates on it (default off).
 trait-correlations *args:
     python3 scripts/analyze_trait_correlations.py {{args}}
 
