@@ -103,6 +103,75 @@ FIELDS = ("accession,sequence,ft_domain,ft_act_site,ft_binding,ft_site,"
 
 ORGANISMS = (9606, 10090, 7227, 6239, 3702, 559292, 36329, 83333, 224308, 243232)
 
+TRAITS = REPO_ROOT / "data" / "traits"
+# `\s*` not `\s+`: fetch_uniprot_examples.py writes its blocks through
+# PyYAML, which emits list items at column 0 ("- protein_id:"). Requiring
+# leading whitespace silently skipped 27,325 records — every UNIPROTKB_API
+# exemplar block in the corpus.
+_PID = re.compile(r"(?m)^\s*-\s+protein_id:\s*(\S+)")
+
+
+def corpus_exemplars_missing(frame: dict) -> list:
+    """Exemplar accessions referenced by records but absent from the sidecar.
+
+    The ten proteomes cover the SWISSPROT_PROFILE picks, but CURATOR and
+    UNIPROTKB_API exemplars point anywhere — 19,371 SEQ_EPITOPE records name an
+    antigen outside them, and an epitope needs only its antigen's *sequence*
+    because the peptide is already the record's `sequence_pattern`.
+    """
+    want = set()
+    for p in TRAITS.rglob("*.yaml"):
+        text = p.read_text(encoding="utf-8", errors="replace")
+        i = text.find("\ncanonical_examples:")
+        if i < 0:
+            continue
+        for pid in _PID.findall(text[i:]):
+            acc = pid.split(":")[-1]
+            if acc not in frame:
+                want.add(acc)
+    return sorted(want)
+
+
+_dropped: list = []
+
+
+def fetch_accessions(accs, batch: int = 100, sleep: float = 0.15):
+    """Yield entries for an explicit accession list, 100 per request.
+
+    Far cheaper than a proteome crawl for a scattered set: ~200 requests for
+    ~20,000 proteins instead of one paged crawl per organism.
+    """
+    def _batch(chunk):
+        """Fetch one chunk; on failure split it so one bad accession costs one.
+
+        The endpoint rejects the whole request if any accession in it is
+        malformed or withdrawn, so a flat retry loses the other 99 — which is
+        exactly what a first run did. Splitting isolates the offender in
+        log2(100) ≈ 7 extra requests instead of discarding the batch.
+        """
+        url = ("https://rest.uniprot.org/uniprotkb/accessions?"
+               + urllib.parse.urlencode({"accessions": ",".join(chunk),
+                                         "fields": FIELDS, "format": "json"}))
+        data, _ = _get(url)
+        if data is not None:
+            yield from (data.get("results") if isinstance(data, dict) else data) or []
+            return
+        if len(chunk) == 1:
+            # An accession the endpoint will never serve — malformed or
+            # withdrawn. That is a fact about the corpus, not a fetch failure,
+            # so it is reported but must not block the write (issue #54).
+            _dropped.append(chunk[0])
+            return
+        mid = len(chunk) // 2
+        time.sleep(sleep)
+        yield from _batch(chunk[:mid])
+        time.sleep(sleep)
+        yield from _batch(chunk[mid:])
+
+    for i in range(0, len(accs), batch):
+        yield from _batch(accs[i:i + batch])
+        time.sleep(sleep)
+
 
 def _get(url: str, tries: int = 4):
     for i in range(tries):
@@ -190,6 +259,10 @@ def main() -> int:
                     help="the ten proteomes of the standard matrix")
     ap.add_argument("--limit", type=int, default=25000, help="cap per query")
     ap.add_argument("--apply", action="store_true")
+    ap.add_argument("--top-up", action="store_true",
+                    help="after the queries, fetch every exemplar accession the "
+                         "corpus references that is still missing (CURATOR / "
+                         "UNIPROTKB_API picks outside the ten proteomes)")
     ap.add_argument("--allow-partial", action="store_true",
                     help="write even if a query's pagination aborted early")
     ap.add_argument("--out", default=str(OUT))
@@ -198,10 +271,18 @@ def main() -> int:
     queries = list(args.query or [])
     if args.organisms:
         queries += [f"reviewed:true AND organism_id:{t}" for t in ORGANISMS]
-    if not queries:
-        queries = ["reviewed:true AND organism_id:9606"]
 
     frame: dict = {}
+    outp_existing = Path(args.out)
+    if args.top_up and not queries and outp_existing.exists():
+        # top-up alone extends the sidecar in place rather than re-crawling the
+        # proteomes that built it
+        frame = json.loads(outp_existing.read_text(encoding="utf-8"))
+        print(f"loaded {len(frame):,} proteins from {outp_existing.name}",
+              file=sys.stderr)
+    elif not queries:
+        queries = ["reviewed:true AND organism_id:9606"]
+
     n_ft = 0
     incomplete = []
     for q in queries:
@@ -220,6 +301,30 @@ def main() -> int:
         print(f"  {q!r}: +{len(frame)-before:,}"
               + ("  ** INCOMPLETE — pagination aborted **" if not st.get("complete", True) else ""),
               file=sys.stderr)
+
+    if args.top_up:
+        missing = corpus_exemplars_missing(frame)
+        print(f"top-up: {len(missing):,} exemplar accessions not yet in the frame",
+              file=sys.stderr)
+        _dropped.clear()
+        got = 0
+        for entry in fetch_accessions(missing):
+            if entry is None:
+                continue
+            acc = entry.get("primaryAccession")
+            if not acc or acc in frame:
+                continue
+            ft = entry_intervals(entry)
+            n_ft += len(ft)
+            frame[acc] = {"seq": ((entry.get("sequence") or {}).get("value")) or "",
+                          "ft": ft}
+            got += 1
+        print(f"top-up: +{got:,} proteins", file=sys.stderr)
+        if _dropped:
+            print(f"top-up: {len(_dropped)} accession(s) the endpoint would not "
+                  f"serve — these are corpus data errors, not fetch failures "
+                  f"(see issue #54): {', '.join(sorted(_dropped)[:12])}",
+                  file=sys.stderr)
 
     with_seq = sum(1 for v in frame.values() if v["seq"])
     with_ft = sum(1 for v in frame.values() if v["ft"])

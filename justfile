@@ -694,6 +694,16 @@ measure-map *args:
 fetch-residue-frame *args:
     python3 scripts/fetch_residue_frame.py {{args}}
 
+# InterPro match sidecar (issue #7, phase 11): every member-DB signature match
+# with coordinates, per protein, for the exemplar proteins that could actually
+# yield a residue-frame edge. Localizes domain/family records, which the residue
+# frame cannot (a UniProt DOMAIN interval says "a domain is here", not which
+# signature). Crawls per protein, not per (signature, protein) — 15,120 calls
+# instead of 63,718. Resumable + checkpointed; gitignored.
+#   just fetch-interpro-frame --apply
+fetch-interpro-frame *args:
+    python3 scripts/fetch_interpro_frame.py {{args}}
+
 # Train interpretable trait->GO-function decision trees on the protein×trait matrix
 # (data/profiles/profiles.jsonl). "Predict function from the presence of certain
 # traits" (issue #7). Needs scikit-learn — run with system python3 (as here), not uv.

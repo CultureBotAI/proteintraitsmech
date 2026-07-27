@@ -105,11 +105,27 @@ _Last reconciled: 2026-07-21._
    real (1.83–1.85× within CDD/NCBIfam). Phase 6's ortholog-leakage claim **holds** at
    47% vertebrate (mouse 0.45 vs random 0.43).
    See `research/swissprot-trait-profiles-10.md`.
-   **Phase 11 (next):** run the InterPro crawl over the expanded exemplar set and
-   regenerate the overlay from all five providers (1,152 edges, +48%) — banks phase
-   10's 374 new edges without losing the 384 existing ones; extend the residue frame
-   to `CURATOR` exemplars outside the ten proteomes; an IEDB localizer for the 20,000
-   `SEQ_EPITOPE` records.
+   Phase 11 DONE (2026-07-27, branch `swissprot-interpro-frame`): **Path 1 is now
+   real.** `scripts/fetch_interpro_frame.py` (`just fetch-interpro-frame`) crawls
+   InterPro **per protein** rather than per (signature, protein) and only for
+   edge-capable proteins — 104,176 calls → 27,498 — into a sidecar (392,277
+   signature matches) read by a new `interpro_frame` provider. Residue frame topped
+   up to 98,922 proteins, which also unblocked 19,371 `SEQ_EPITOPE` records (items 2
+   and 3 were one job: epitopes already carry the peptide as `sequence_pattern` and
+   needed only the antigen's sequence — no localizer required).
+   **`seq_struct_func_sites.tsv` 778 → 6,982 edges (clean superset, 0 lost);
+   `seq_struct_alignment.tsv` 0 → 12,424 edges**, the base signature↔fold overlay
+   populated for the first time, including **1,747 identical-residue-set
+   `related_to`** links. 61,015 records localized (was 6,424). Found #54 (nine
+   MetalPDB exemplars are `UNS…` placeholders, invisible to validate-all) and a
+   regex of mine that skipped **27,325 records** because PyYAML writes list items at
+   column 0 — phase 10's corpus figures understated by ~30% (exemplar proteins
+   64,725 → 93,150). See `research/swissprot-trait-profiles-11.md`.
+   **Phase 12 (next):** act on #54 (tighten the `protein_id` pattern to UniProt's
+   real accession syntax; decide what the MetalPDB seeder emits for a chain with no
+   UniProt mapping); curate the 1,747 identical-residue-set links — they are merge
+   *candidates* the merge-within-axis skill should adjudicate, not just relations;
+   make `--dry-run` mean "no network" across the fetchers.
 
 2. **Per-gene curation of the remaining ~1,219 resistance causal-graph drafts.**
    The family-level promotion is done (6,180 REVIEWED). The tail is genuinely

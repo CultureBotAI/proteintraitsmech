@@ -94,6 +94,27 @@ RESIDUE_FRAME = CACHE_DIR / "residue_frame.json"
 _FRAME: dict = {}
 
 
+INTERPRO_FRAME = CACHE_DIR / "interpro_frame.json"
+
+# {accession: {"<PREFIX>:<SIG>": [[start, end], ...]}} — the `interpro_frame`
+# provider's source, built by fetch_interpro_frame.py. Unlike the residue frame
+# (which matches a record to intervals of its own *category*), this matches a
+# record to the interval of its own *signature*, so a domain or family record is
+# placed exactly where that signature hit rather than anywhere a domain sits.
+_IPFRAME: dict = {}
+
+
+def load_interpro_frame(path: Path = INTERPRO_FRAME) -> dict:
+    global _IPFRAME
+    if not _IPFRAME:
+        if not path.exists():
+            print(f"no InterPro sidecar at {path} — build it with "
+                  f"`just fetch-interpro-frame --apply`", file=sys.stderr)
+            return {}
+        _IPFRAME = json.loads(path.read_text(encoding="utf-8"))
+    return _IPFRAME
+
+
 def load_residue_frame(path: Path = RESIDUE_FRAME) -> dict:
     global _FRAME
     if not _FRAME:
@@ -363,6 +384,10 @@ def located_residues(rec: dict, providers=("stored",),
                 for s, e, fcat in fr.get("ft") or ():
                     if fcat == cat:
                         res |= set(range(min(s, e), max(s, e) + 1))
+        if "interpro_frame" in providers and _IPFRAME:
+            for s, e in (_IPFRAME.get(pid.split(":", 1)[-1], {})
+                         .get(rec.get("identifier") or "", ())):
+                res |= set(range(min(s, e), max(s, e) + 1))
         if http and "interpro" in providers and prefix in MEMBERDB and acc:
             res |= interpro_residues(prefix, acc, pid, http)
         if http and "sifts" in providers and pdbs:
@@ -469,8 +494,8 @@ def _prefilter(text: str, providers) -> bool:
         return False
     if "sequence_pattern:" in text or "feature_type:" in text:
         return True
-    if "profile" in providers:
-        return True          # the sidecar may carry features for any exemplar
+    if "profile" in providers or "interpro_frame" in providers:
+        return True          # a sidecar may carry coordinates for any exemplar
     if "interpro" in providers:
         return True                                  # any member-DB signature
     if "sifts" in providers and "structure_ref:" in text:
@@ -483,10 +508,11 @@ def _prefilter(text: str, providers) -> bool:
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--providers", default="stored",
-                    help="comma list of stored,profile,interpro,sifts,biolip "
-                         "(default stored). `profile` reads the offline "
-                         "residue-frame sidecar and is what makes the "
-                         "SWISSPROT_PROFILE exemplars usable.")
+                    help="comma list of stored,profile,interpro_frame,interpro,"
+                         "sifts,biolip (default stored). `profile` and "
+                         "`interpro_frame` read offline sidecars and are what "
+                         "make the SWISSPROT_PROFILE exemplars usable; "
+                         "`interpro` is the older per-pair API crawl.")
     ap.add_argument("--limit", type=int, default=0, help="cap files parsed (debug)")
     ap.add_argument("--dry-run", action="store_true", help="print stats, don't write")
     ap.add_argument("--selftest", action="store_true",
@@ -496,11 +522,14 @@ def main() -> int:
         return _selftest()
 
     providers = tuple(p.strip() for p in args.providers.split(",") if p.strip())
-    unknown = set(providers) - {"stored", "profile", "interpro", "sifts", "biolip"}
+    unknown = set(providers) - {"stored", "profile", "interpro_frame", "interpro",
+                                "sifts", "biolip"}
     if unknown:
         print(f"unknown provider(s): {sorted(unknown)}", file=sys.stderr)
         return 2
     if "profile" in providers and not load_residue_frame():
+        return 2
+    if "interpro_frame" in providers and not load_interpro_frame():
         return 2
     http = None
     if {"interpro", "sifts", "biolip"} & set(providers):
