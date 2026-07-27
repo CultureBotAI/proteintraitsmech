@@ -36,10 +36,22 @@ under two identifiers.
 | refuted | 40 | InterPro integrates **no** Gene3D signature at all |
 | unresolved | 0 | |
 
-The refutations are clean: not one of the 40 pointed at a *different* Gene3D
-signature. Those entries are built on SUPERFAMILY rather than Gene3D, so their
-residues genuinely coincide with a CATH superfamily without the two being the
-same object. They stay `related_to`.
+The refutations are clean in one respect — not one of the 40 pointed at a
+*different* Gene3D signature; all 40 integrate none at all. But my first reading
+of *why* was wrong, and checking it gave a better answer:
+
+| the 40 refuted | count | what they are |
+|---|--:|---|
+| `type=domain` | **26** | InterPro **domain** entries, integrated from Pfam / SMART / CDD / PROSITE profiles |
+| `type=homologous_superfamily` | 14 | superfamily entries built on **SUPERFAMILY**, not Gene3D |
+
+I had written that all 40 were SUPERFAMILY-based. That holds for 14. The other 26
+are a different *kind* of entity: a domain family, not a homologous superfamily.
+Its residues coinciding exactly with a CATH superfamily on a protein is real —
+the domain is structurally that superfamily — but the two are not the same
+object, so `close_match` would be a category error and `related_to` is exactly
+right. The majority of the refutations are therefore refuted for a stronger
+reason than the one I first gave.
 
 Confirmed pairs are emitted as `data/equivalence/residue_identity.tsv` with
 `biolink:close_match` — a stronger claim than the alignment overlay's
@@ -119,6 +131,10 @@ visible. Recorded as the next phase's first item rather than expanding this one.
 
 ## Caveats
 
+* `gene3d_members()` caches an empty result for a 204/404 as well as for a
+  genuine "no Gene3D members", so a retired InterPro entry would be silently
+  refuted rather than flagged. It did not bite here — all 40 refuted entries
+  return HTTP 200 — but the two cases should be distinguished.
 * The InterPro membership check is a point-in-time snapshot with no release
   stamp — the same gap #57 records for the coordinate sidecars, now applying to a
   third cache.
@@ -131,5 +147,6 @@ visible. Recorded as the next phase's first item rather than expanding this one.
 - Top up the residue frame with the 24,908 newly-visible exemplars and rebuild
   the overlays.
 - #57: give the sidecars a release stamp and refuse to resume across releases.
-- The 40 refuted pairs are SUPERFAMILY-based InterPro entries; checking them
-  against SUPERFAMILY membership would either confirm or finally close them.
+- The 14 SUPERFAMILY-based refutations could be checked against SUPERFAMILY↔CATH
+  mappings; the 26 domain-type ones need no further work — `related_to` is the
+  correct predicate for them and always was.

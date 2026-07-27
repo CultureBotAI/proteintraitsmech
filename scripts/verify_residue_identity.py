@@ -67,9 +67,17 @@ def identical_pairs(path: Path) -> list:
 
 
 def gene3d_members(ipr: str, cache: dict) -> set:
-    """Gene3D signatures InterPro entry `ipr` integrates ({} = unknown/error)."""
+    """Gene3D signatures InterPro entry `ipr` integrates.
+
+    A missing entry (204/404) is cached as `None`, not `[]`: "this entry does not
+    exist" and "this entry integrates no Gene3D signature" would otherwise both
+    read as a refutation, and a retired InterPro accession would be silently
+    refuted rather than flagged. All 40 refutations in the first run return HTTP
+    200, so this distinction changes nothing today — it stops a future retirement
+    from looking like evidence.
+    """
     if ipr in cache:
-        return set(cache[ipr])
+        return set(cache[ipr] or ())      # cached None = entry not found
     acc = ipr.split(":", 1)[1]
     url = f"https://www.ebi.ac.uk/interpro/api/entry/interpro/{acc}/"
     for i in range(3):
@@ -80,7 +88,7 @@ def gene3d_members(ipr: str, cache: dict) -> set:
             with urllib.request.urlopen(req, timeout=45) as r:
                 body = r.read()
             if not body.strip():
-                cache[ipr] = []
+                cache[ipr] = None          # 204: entry not found
                 return set()
             md = (json.loads(body.decode("utf-8")).get("metadata") or {})
             mem = (md.get("member_databases") or {}).get("cathgene3d") or {}
@@ -89,7 +97,7 @@ def gene3d_members(ipr: str, cache: dict) -> set:
             return set(vals)
         except urllib.error.HTTPError as e:
             if e.code in (204, 404):
-                cache[ipr] = []
+                cache[ipr] = None          # entry not found / retired
                 return set()
             time.sleep(2.0 * (i + 1))
         except Exception:                       # noqa: BLE001
@@ -130,7 +138,7 @@ def main() -> int:
 
     confirmed, refuted, unresolved = [], [], []
     for ipr, cath, n, src in pairs:
-        if ipr not in cache:
+        if ipr not in cache or cache[ipr] is None:
             unresolved.append((ipr, cath, n, src))
         elif cath.split(":", 1)[1] in set(cache[ipr]):
             confirmed.append((ipr, cath, n, src))
@@ -149,7 +157,8 @@ def main() -> int:
          f"under two identifiers |",
          f"| refuted | {len(refuted):,} | InterPro integrates no Gene3D signature, "
          f"or a different one: the residues coincide for another reason |",
-         f"| unresolved | {len(unresolved):,} | membership could not be fetched |",
+         f"| unresolved | {len(unresolved):,} | membership unfetchable, or the "
+         f"InterPro entry no longer exists |",
          "",
          "Confirmed pairs by supporting-protein count "
          "(3 is the ceiling — `suggest_canonical_examples --max-examples 3` gives "

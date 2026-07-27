@@ -6,7 +6,7 @@
 |---|--:|---|
 | **confirmed** | **1,640** | InterPro lists this CATH superfamily among the entry's Gene3D members — the same superfamily under two identifiers |
 | refuted | 40 | InterPro integrates no Gene3D signature, or a different one: the residues coincide for another reason |
-| unresolved | 0 | membership could not be fetched |
+| unresolved | 0 | membership unfetchable, or the InterPro entry no longer exists |
 
 Confirmed pairs by supporting-protein count (3 is the ceiling — `suggest_canonical_examples --max-examples 3` gives each record at most three exemplars, so n=3 means *all* available evidence agrees):
 
