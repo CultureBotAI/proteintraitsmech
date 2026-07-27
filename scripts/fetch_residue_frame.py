@@ -284,6 +284,21 @@ def main() -> int:
         queries = ["reviewed:true AND organism_id:9606"]
 
     n_ft = 0
+    if not args.apply:
+        # A dry run must not hit the network. It previously streamed every
+        # proteome and only gated the *write*, so "dry run" cost a full crawl
+        # and, with --top-up, ~200 more requests.
+        print(f"planned queries ({len(queries)}):")
+        for q in queries:
+            print(f"    {q}")
+        if args.top_up:
+            missing = corpus_exemplars_missing(frame)
+            print(f"top-up would fetch {len(missing):,} exemplar accessions "
+                  f"not yet in the frame")
+        print(f"frame currently holds {len(frame):,} proteins")
+        print("Dry-run — pass --apply to fetch and write.")
+        return 0
+
     incomplete = []
     for q in queries:
         before = len(frame)
@@ -340,9 +355,6 @@ def main() -> int:
                   "--allow-partial to accept it.", file=sys.stderr)
             return 1
         print("--allow-partial given; writing anyway.", file=sys.stderr)
-    if not args.apply:
-        print("Dry-run — pass --apply to write.")
-        return 0
     outp = Path(args.out)
     outp.parent.mkdir(parents=True, exist_ok=True)
     outp.write_text(json.dumps(frame, separators=(",", ":")), encoding="utf-8")
