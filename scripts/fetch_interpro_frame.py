@@ -42,6 +42,9 @@ import urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import sidecar  # noqa: E402
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TRAITS = REPO_ROOT / "data" / "traits"
 OUT = REPO_ROOT / "data" / "raw" / "align_cache" / "interpro_frame.json"
@@ -177,20 +180,21 @@ def main() -> int:
                     help="concurrent requests. Serial is ~1.04s per protein, so "
                          "15,120 proteins is ~5h; 6 workers brings it under an "
                          "hour while staying near 5 req/s at EBI.")
+    ap.add_argument("--allow-stale", action="store_true",
+                    help="resume from a sidecar built against a different release")
     ap.add_argument("--allow-partial", action="store_true",
                     help="write even if some proteins failed after retries")
     ap.add_argument("--out", default=str(OUT))
     args = ap.parse_args()
 
     outp = Path(args.out)
-    have: dict = {}
-    if outp.exists():
-        try:
-            have = json.loads(outp.read_text(encoding="utf-8"))
-            print(f"resuming: {len(have):,} proteins already in {outp.name}",
-                  file=sys.stderr)
-        except ValueError:
-            pass
+    release = sidecar.interpro_release()
+    have, meta = sidecar.read(outp, "proteins")
+    if have:
+        if not sidecar.check_release(meta, release, outp, args.allow_stale):
+            return 2
+        print(f"resuming: {len(have):,} proteins already in {outp.name} "
+              f"(release {meta.get('release')})", file=sys.stderr)
 
     targets = target_proteins()
     todo = [a for a in targets if a not in have]
@@ -218,8 +222,9 @@ def main() -> int:
                 print(f"  {n:,}/{len(todo):,} fetched ({failed} failed)",
                       file=sys.stderr)
                 outp.parent.mkdir(parents=True, exist_ok=True)
-                outp.write_text(json.dumps(have, separators=(",", ":")),
-                                encoding="utf-8")
+                outp.write_text(json.dumps(
+                    sidecar.wrap("proteins", have, "InterPro", release),
+                    separators=(",", ":")), encoding="utf-8")
 
     n_sig = sum(len(v) for v in have.values())
     print(f"proteins in sidecar: {len(have):,} | signature matches: {n_sig:,} | "
@@ -229,7 +234,8 @@ def main() -> int:
               "checkpointed and the run is resumable; re-run to fill the gaps, "
               "or pass --allow-partial to accept it as final.", file=sys.stderr)
     outp.parent.mkdir(parents=True, exist_ok=True)
-    outp.write_text(json.dumps(have, separators=(",", ":")), encoding="utf-8")
+    outp.write_text(json.dumps(sidecar.wrap("proteins", have, "InterPro", release),
+                               separators=(",", ":")), encoding="utf-8")
     try:
         shown = outp.relative_to(REPO_ROOT)
     except ValueError:

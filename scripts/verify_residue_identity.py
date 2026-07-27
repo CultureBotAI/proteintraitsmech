@@ -42,6 +42,9 @@ import urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import sidecar  # noqa: E402
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 ALIGN = REPO_ROOT / "data" / "equivalence" / "seq_struct_alignment.tsv"
 OUT = REPO_ROOT / "data" / "equivalence" / "residue_identity.tsv"
@@ -111,6 +114,8 @@ def main() -> int:
     ap.add_argument("--apply", action="store_true", help="write the overlay")
     ap.add_argument("--workers", type=int, default=6)
     ap.add_argument("--out", default=str(OUT))
+    ap.add_argument("--allow-stale", action="store_true",
+                    help="reuse a cache built against a different InterPro release")
     ap.add_argument("--report")
     args = ap.parse_args()
 
@@ -121,12 +126,10 @@ def main() -> int:
 
     pairs = identical_pairs(ALIGN)
     print(f"identical-residue CATH<->InterPro pairs: {len(pairs):,}", file=sys.stderr)
-    cache: dict = {}
-    if CACHE.exists():
-        try:
-            cache = json.loads(CACHE.read_text(encoding="utf-8"))
-        except ValueError:
-            pass
+    release = sidecar.interpro_release()
+    cache, meta = sidecar.read(CACHE, "entries")
+    if cache and not sidecar.check_release(meta, release, CACHE, args.allow_stale):
+        return 2
 
     want = sorted({ipr for ipr, _c, _n, _s in pairs if ipr not in cache})
     if want:
@@ -134,7 +137,9 @@ def main() -> int:
         with ThreadPoolExecutor(max_workers=max(1, args.workers)) as pool:
             list(pool.map(lambda i: gene3d_members(i, cache), want))
         CACHE.parent.mkdir(parents=True, exist_ok=True)
-        CACHE.write_text(json.dumps(cache, separators=(",", ":")), encoding="utf-8")
+        CACHE.write_text(json.dumps(
+            sidecar.wrap("entries", cache, "InterPro", release),
+            separators=(",", ":")), encoding="utf-8")
 
     confirmed, refuted, unresolved = [], [], []
     for ipr, cath, n, src in pairs:

@@ -111,7 +111,13 @@ def load_interpro_frame(path: Path = INTERPRO_FRAME) -> dict:
             print(f"no InterPro sidecar at {path} — build it with "
                   f"`just fetch-interpro-frame --apply`", file=sys.stderr)
             return {}
-        _IPFRAME = json.loads(path.read_text(encoding="utf-8"))
+        blob = json.loads(path.read_text(encoding="utf-8"))
+        _IPFRAME = blob.get("proteins", blob) if isinstance(blob, dict) else {}
+        meta = blob.get("_meta") if isinstance(blob, dict) else None
+        if meta:
+            print(f"InterPro frame: {len(_IPFRAME):,} proteins, "
+                  f"{meta.get('source')} release {meta.get('release')} "
+                  f"(built {meta.get('built')})", file=sys.stderr)
     return _IPFRAME
 
 
@@ -122,7 +128,14 @@ def load_residue_frame(path: Path = RESIDUE_FRAME) -> dict:
             print(f"no residue-frame sidecar at {path} — build it with "
                   f"`just fetch-residue-frame --organisms --apply`", file=sys.stderr)
             return {}
-        _FRAME = json.loads(path.read_text(encoding="utf-8"))
+        blob = json.loads(path.read_text(encoding="utf-8"))
+        # sidecars gained a provenance header in phase 13; accept both shapes
+        _FRAME = blob.get("proteins", blob) if isinstance(blob, dict) else {}
+        meta = blob.get("_meta") if isinstance(blob, dict) else None
+        if meta:
+            print(f"residue frame: {len(_FRAME):,} proteins, "
+                  f"{meta.get('source')} release {meta.get('release')} "
+                  f"(built {meta.get('built')})", file=sys.stderr)
     return _FRAME
 
 # Record identifier prefix → InterPro member-database slug for the API.
