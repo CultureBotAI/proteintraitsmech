@@ -187,11 +187,11 @@ def main() -> int:
                          "split (absolute, not a fraction — see divik())")
     ap.add_argument("--max-prevalence", type=float, default=0.98,
                     help="…and no commoner than this (universal traits separate nothing)")
-    ap.add_argument("--min-silhouette", type=float, default=0.10,
+    ap.add_argument("--min-silhouette", type=float, default=0.02,
                     help="reject a split below this silhouette")
     ap.add_argument("--svd", type=int, default=20,
                     help="dimensions to project a node into before splitting it")
-    ap.add_argument("--max-depth", type=int, default=24)
+    ap.add_argument("--max-depth", type=int, default=40)
     ap.add_argument("--core-frac", type=float, default=0.8,
                     help="a trait is 'core' if this fraction of members carry it")
     ap.add_argument("--seed", type=int, default=42)
@@ -266,7 +266,26 @@ def main() -> int:
 
     outp = Path(args.out)
     outp.parent.mkdir(parents=True, exist_ok=True)
+    from datetime import datetime, timezone
+    organisms = len({r.get("taxon_label") for r in rows if r.get("taxon_label")})
     with outp.open("w", encoding="utf-8") as fh:
+        # Provenance header. The input matrix (data/profiles/profiles.jsonl) is
+        # gitignored, so without this a reader cannot tell what this file was
+        # clustered from, and the hyperparameters materially change it (#64).
+        fh.write(f"# built: {datetime.now(timezone.utc).strftime('%Y-%m-%d')}\n")
+        fh.write(f"# script: cluster_trait_families.py (DiviK, "
+                 f"doi:10.1186/s12859-022-05093-z)\n")
+        fh.write(f"# matrix: {X.shape[0]:,} proteins x {X.shape[1]:,} signature "
+                 f"traits, {organisms} organisms\n")
+        fh.write(f"# params: min_support={args.min_support} min_size={args.min_size} "
+                 f"min_features={args.min_features} "
+                 f"min_feature_count={args.min_feature_count} "
+                 f"max_prevalence={args.max_prevalence} "
+                 f"min_silhouette={args.min_silhouette} svd={args.svd} "
+                 f"max_depth={args.max_depth} core_frac={args.core_frac} "
+                 f"seed={args.seed}\n")
+        fh.write(f"# families: {len(families):,} covering {clustered:,} proteins; "
+                 f"unassigned: {unassigned:,}\n")
         fh.write("family_id\tsize\tcore_traits\tlabel\tmembers\n")
         for i, (fam, core) in enumerate(zip(families, cores), 1):
             lbl = labels.get(core[0], core[0]) if core else ""
