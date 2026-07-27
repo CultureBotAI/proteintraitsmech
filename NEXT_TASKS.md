@@ -135,11 +135,22 @@ _Last reconciled: 2026-07-21._
    records, and the schema pattern is now UniProt's real accession syntax (verified
    to reject exactly those 9 of 93,150 values). `--dry-run` no longer hits the
    network. See `research/swissprot-trait-profiles-12.md`.
-   **Phase 13 (next):** top up the residue frame with the **24,908** exemplar
-   accessions still missing (phase 11's regex fix made 27,325 records visible) and
-   rebuild the overlays; #57 (release-stamp the sidecars, refuse to resume across
-   releases); check the 40 refuted pairs against SUPERFAMILY membership to close
-   them.
+   Phase 13 DONE (2026-07-27, branch `swissprot-sidecar-provenance`): #57 closed —
+   `scripts/sidecar.py` stamps all three align_cache sidecars with source + release
+   + build date (UniProt via the `x-uniprot-release` header, InterPro via
+   `utils/release/`), and the fetchers **refuse to resume across a release change**
+   because that would mix coordinates from two releases into one overlay; consumers
+   accept both shapes. Topped the residue frame up to **113,592 proteins**
+   (+14,670) — and it produced **zero new edges**, because 83,604 of those proteins
+   host records of only one trait category and so can never form a comparable pair.
+   The binding constraint is protein *sharing*, not protein count: only 8,689
+   proteins host >=2 comparable records, and **57% of records sit exactly at the
+   `--max-examples 3` cap**. See `research/swissprot-trait-profiles-13.md`.
+   **Phase 14 (next):** raise `--max-examples` and re-rank — the cap is the live
+   limit on residue-frame edges and costs nothing to lift (exemplars come from a
+   matrix we already hold); cache the ~10,238 permanently-absent accessions so the
+   top-up stops re-requesting them; check phase 12's 14 SUPERFAMILY-based
+   refutations against SUPERFAMILY<->CATH mappings.
 
 2. **Per-gene curation of the remaining ~1,219 resistance causal-graph drafts.**
    The family-level promotion is done (6,180 REVIEWED). The tail is genuinely

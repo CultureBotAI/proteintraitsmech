@@ -43,6 +43,9 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import sidecar  # noqa: E402
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 OUT = REPO_ROOT / "data" / "raw" / "align_cache" / "residue_frame.json"
 
@@ -263,6 +266,8 @@ def main() -> int:
                     help="after the queries, fetch every exemplar accession the "
                          "corpus references that is still missing (CURATOR / "
                          "UNIPROTKB_API picks outside the ten proteomes)")
+    ap.add_argument("--allow-stale", action="store_true",
+                    help="resume from a sidecar built against a different release")
     ap.add_argument("--allow-partial", action="store_true",
                     help="write even if a query's pagination aborted early")
     ap.add_argument("--out", default=str(OUT))
@@ -274,12 +279,15 @@ def main() -> int:
 
     frame: dict = {}
     outp_existing = Path(args.out)
+    release = sidecar.uniprot_release()
     if args.top_up and not queries and outp_existing.exists():
         # top-up alone extends the sidecar in place rather than re-crawling the
         # proteomes that built it
-        frame = json.loads(outp_existing.read_text(encoding="utf-8"))
-        print(f"loaded {len(frame):,} proteins from {outp_existing.name}",
-              file=sys.stderr)
+        frame, meta = sidecar.read(outp_existing, "proteins")
+        if not sidecar.check_release(meta, release, outp_existing, args.allow_stale):
+            return 2
+        print(f"loaded {len(frame):,} proteins from {outp_existing.name} "
+              f"(release {meta.get('release')})", file=sys.stderr)
     elif not queries:
         queries = ["reviewed:true AND organism_id:9606"]
 
@@ -357,7 +365,8 @@ def main() -> int:
         print("--allow-partial given; writing anyway.", file=sys.stderr)
     outp = Path(args.out)
     outp.parent.mkdir(parents=True, exist_ok=True)
-    outp.write_text(json.dumps(frame, separators=(",", ":")), encoding="utf-8")
+    outp.write_text(json.dumps(sidecar.wrap("proteins", frame, "UniProt", release),
+                               separators=(",", ":")), encoding="utf-8")
     try:
         shown = outp.relative_to(REPO_ROOT)
     except ValueError:

@@ -691,6 +691,10 @@ measure-map *args:
 # Path 1 aligner can localize records on their SWISSPROT_PROFILE exemplars
 # without inlining a sequence into every record. Gitignored + regenerable.
 #   just fetch-residue-frame --organisms --apply
+# All three align_cache sidecars carry a provenance header (issue #57): source
+# database + release + build date. The fetchers refuse to resume across a release
+# change unless --allow-stale, because resuming would mix coordinates from two
+# releases into one overlay and nothing downstream could tell.
 fetch-residue-frame *args:
     python3 scripts/fetch_residue_frame.py {{args}}
 
