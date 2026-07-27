@@ -121,11 +121,25 @@ _Last reconciled: 2026-07-21._
    regex of mine that skipped **27,325 records** because PyYAML writes list items at
    column 0 — phase 10's corpus figures understated by ~30% (exemplar proteins
    64,725 → 93,150). See `research/swissprot-trait-profiles-11.md`.
-   **Phase 12 (next):** act on #54 (tighten the `protein_id` pattern to UniProt's
-   real accession syntax; decide what the MetalPDB seeder emits for a chain with no
-   UniProt mapping); curate the 1,747 identical-residue-set links — they are merge
-   *candidates* the merge-within-axis skill should adjudicate, not just relations;
-   make `--dry-run` mean "no network" across the fetchers.
+   Phase 12 DONE (2026-07-27, branch `swissprot-residue-curation`): adjudicated the
+   1,747 identical-residue links. **None of them were in `cross_source.tsv`** — the
+   residue frame found them independently of every identifier mapping. Checked each
+   against InterPro's published Gene3D membership (`just verify-residue-identity`):
+   **1,640 confirmed (97.6%)**, 40 refuted (those entries integrate *no* Gene3D
+   signature — SUPERFAMILY-based), 0 unresolved. Confirmed pairs emitted as
+   `data/equivalence/residue_identity.tsv` with `biolink:close_match` — relate-only,
+   never a merge, per merge-within-axis. Support ceiling is 3 because
+   `--max-examples 3` caps exemplars, so n=3 means *all* evidence agrees (1,052 of
+   1,640). #54 closed: the nine `UNS…` exemplars are **rRNA chains** (16S/23S) that
+   have no UniProt accession because they are not proteins — 34 removed across 22
+   records, and the schema pattern is now UniProt's real accession syntax (verified
+   to reject exactly those 9 of 93,150 values). `--dry-run` no longer hits the
+   network. See `research/swissprot-trait-profiles-12.md`.
+   **Phase 13 (next):** top up the residue frame with the **24,908** exemplar
+   accessions still missing (phase 11's regex fix made 27,325 records visible) and
+   rebuild the overlays; #57 (release-stamp the sidecars, refuse to resume across
+   releases); check the 40 refuted pairs against SUPERFAMILY membership to close
+   them.
 
 2. **Per-gene curation of the remaining ~1,219 resistance causal-graph drafts.**
    The family-level promotion is done (6,180 REVIEWED). The tail is genuinely

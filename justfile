@@ -704,6 +704,15 @@ fetch-residue-frame *args:
 fetch-interpro-frame *args:
     python3 scripts/fetch_interpro_frame.py {{args}}
 
+# Adjudicate the identical-residue-set links from the alignment overlay (issue #7,
+# phase 12): a CATH superfamily and an InterPro entry covering the same residues
+# are the same superfamily under two identifiers only if InterPro actually
+# integrates that Gene3D signature. Confirmed pairs become a biolink:close_match
+# overlay (data/equivalence/residue_identity.tsv); the rest stay related_to.
+#   just verify-residue-identity --apply
+verify-residue-identity *args:
+    python3 scripts/verify_residue_identity.py {{args}}
+
 # Train interpretable trait->GO-function decision trees on the protein×trait matrix
 # (data/profiles/profiles.jsonl). "Predict function from the presence of certain
 # traits" (issue #7). Needs scikit-learn — run with system python3 (as here), not uv.
