@@ -88,11 +88,28 @@ _Last reconciled: 2026-07-21._
    is not blind across sources. Definition-only embedding is equally stratified:
    the signal is house style in the prose, not identifiers.
    See `research/swissprot-trait-profiles-9.md`, `research/map-structure-1.md`.
-   **Phase 10 (next):** feed shared exemplars into the residue-frame base overlay
-   (Path 1, carried since phase 4 and still untouched); act on the corpus map's
-   source stratification (source-balanced or source-residualised embedding) rather
-   than only measuring it; re-check phase 6's "random split leaks orthologs" now
-   that the matrix is 47% vertebrate.
+   Phase 10 DONE (2026-07-26, branch `swissprot-residue-frame`): Path 1 was starved
+   of *coordinates*, not exemplars — 34,227 proteins are shared by ≥2 records but only
+   **33 records in the corpus had a stored sequence**. New
+   `scripts/fetch_residue_frame.py` (`just fetch-residue-frame`) builds a gitignored
+   sidecar (80,066 proteins, 530,588 FT intervals routed to trait categories) and a
+   new `profile` provider in the aligner reads it: func-site edges **394 → 768
+   (+95%)** over the offline providers. The overlay was **deliberately not
+   regenerated** — a `stored,profile,biolip` run keeps 394 committed edges, loses 384
+   InterPro-derived ones and adds 374, so writing it would destroy real data for a
+   net −10. Ceiling found: only **23.2%** of records with exemplars are
+   residue-localizable at all (`SEQ_DOMAIN` 34,781 needs InterPro; `FUNC_PATHWAY`
+   15,452 is not a residue range). Source residualisation **fails structurally** —
+   per-source centering cuts source lift 26% but axis lift 18%, because 25 of 28
+   sources are axis-pure so most axis signal is between-source; axis is nonetheless
+   real (1.83–1.85× within CDD/NCBIfam). Phase 6's ortholog-leakage claim **holds** at
+   47% vertebrate (mouse 0.45 vs random 0.43).
+   See `research/swissprot-trait-profiles-10.md`.
+   **Phase 11 (next):** run the InterPro crawl over the expanded exemplar set and
+   regenerate the overlay from all five providers (1,152 edges, +48%) — banks phase
+   10's 374 new edges without losing the 384 existing ones; extend the residue frame
+   to `CURATOR` exemplars outside the ten proteomes; an IEDB localizer for the 20,000
+   `SEQ_EPITOPE` records.
 
 2. **Per-gene curation of the remaining ~1,219 resistance causal-graph drafts.**
    The family-level promotion is done (6,180 REVIEWED). The tail is genuinely
