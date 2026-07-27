@@ -27,7 +27,14 @@ _Last reconciled: 2026-07-27._
    correlations, residue-frame alignment. See "Recently shipped" and
    `research/swissprot-trait-profiles-{1..14}.md`.
    **Two of the issue's own asks remain open** (checked 2026-07-27, not assumed):
-   - **Multi-trait family clustering — never built.** The issue title says
+   - ~~**Multi-trait family clustering — never built.**~~ **DONE (2026-07-27,
+     PR #63):** `scripts/cluster_trait_families.py` (`just cluster-families`)
+     implements DiviK (doi:10.1186/s12859-022-05093-z) — divisive top-down
+     splitting with local feature re-selection per node → **1,837 families with
+     a shared trait core** over 29,313 proteins. Validated against held-out GO
+     terms (excluded from the features): **81% of families have ≥80% of members
+     sharing a GO term**, median 1.00. 57% of proteins are reported *unassigned*
+     rather than forced into families. Was: the issue title says
      "+ build multi-trait families" and names doi:10.1186/s12859-022-05093-z.
      What exists is *exact signature-architecture matching* on the 1,000-protein
      pilot (45 families, `research/swissprot-trait-profiles-1.md` §Signal 2) —
@@ -35,7 +42,7 @@ _Last reconciled: 2026-07-27._
      "replace exact-architecture matching with trait-set similarity (Jaccard /
      the s12859 method) for fuzzy families" and no phase did it. There is no
      clustering script in `scripts/`. The protein map (phase 8) is a 2-D
-     projection, not clustering. **This is the largest genuinely-missing piece.**
+     projection, not clustering.
    - **Per-protein YAML coverage.** The issue asks for "a YAML record for each
      SwissProt protein". We have the `ProteinProfile` class and 1,000 committed
      YAMLs; the other 80,066 live in the gitignored `profiles.jsonl`, and

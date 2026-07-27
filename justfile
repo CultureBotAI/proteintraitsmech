@@ -678,6 +678,15 @@ test-rule-generalization *args:
 protein-map *args:
     python3 scripts/build_protein_map.py {{args}}
 
+# Multi-trait families (issue #7): DiviK-style divisive clustering of the
+# protein×trait matrix — top-down splits with local feature re-selection at each
+# node, per doi:10.1186/s12859-022-05093-z. Emits data/families/trait_families.tsv
+# with each family's core traits. Clusters with no shared core are reported as
+# unassigned rather than called families. Needs numpy/scipy/scikit-learn.
+#   just cluster-families --max-depth 40 --min-silhouette 0.02 --apply
+cluster-families *args:
+    python3 scripts/cluster_trait_families.py {{args}}
+
 # Test what a corpus map actually organises by (issue #7, phase 9). The browser
 # colours by trait axis; this measures neighbour purity for axis vs SOURCE
 # DATABASE, in the embedding and in the 2-D map, plus a full-corpus retrieval
