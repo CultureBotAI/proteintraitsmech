@@ -136,6 +136,11 @@ def main() -> int:
         print(f"fetching membership for {len(want):,} InterPro entries", file=sys.stderr)
         with ThreadPoolExecutor(max_workers=max(1, args.workers)) as pool:
             list(pool.map(lambda i: gene3d_members(i, cache), want))
+    if cache and (want or meta.get("legacy")):
+        # Re-write whenever there is something new OR the file predates release
+        # stamping. Writing only when `want` is non-empty left a fully-cached
+        # legacy file unstamped forever, so --allow-stale would be needed on
+        # every run — the flag would become noise instead of a signal.
         CACHE.parent.mkdir(parents=True, exist_ok=True)
         CACHE.write_text(json.dumps(
             sidecar.wrap("entries", cache, "InterPro", release),
