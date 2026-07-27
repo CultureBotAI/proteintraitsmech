@@ -37,6 +37,7 @@ import json
 import re
 import sys
 import time
+import urllib.error
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -120,10 +121,18 @@ def fetch_protein(acc: str, tries: int = 3):
                     url, headers={"Accept": "application/json",
                                   "User-Agent": "ProteinTraitsMech-interpro-frame/1.0"})
                 with urllib.request.urlopen(req, timeout=60) as r:
-                    data = json.loads(r.read().decode("utf-8"))
+                    body = r.read()
+                    if r.status == 204 or not body.strip():
+                        # InterPro answers 204 No Content — NOT 404 — for a
+                        # protein with no member-DB matches. That is a real,
+                        # cacheable answer; letting json.loads() choke on the
+                        # empty body instead cost three retries and ~6s and then
+                        # reported a false failure (issue #56).
+                        return {}
+                    data = json.loads(body.decode("utf-8"))
                 break
             except urllib.error.HTTPError as e:
-                if e.code == 404:          # no matches: a real, cacheable answer
+                if e.code in (204, 404):   # no matches: a real, cacheable answer
                     return {}
                 if i == tries - 1:
                     return None
