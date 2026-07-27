@@ -6,165 +6,13 @@ convention:** update an item when work on it starts or ships (mark
 section with enough context to pick it up cold; keep absolute dates. Reconcile
 against merged PRs + `git log` before trusting it.
 
-_Last reconciled: 2026-07-21._
+_Last reconciled: 2026-07-27._
 
 ---
 
 ## Next up (actionable, ranked)
 
-1. **Swiss-Prot multi-trait profiles (issue #7) — phase 1 shipped, phase 2 next.**
-   Phase 1 DONE (2026-07-21, branch `swissprot-trait-profiles`): `ProteinProfile`
-   schema class + `scripts/build_swissprot_profiles.py` (`just build-profiles`) →
-   1,000-protein pilot (`data/profiles/`), the protein×trait matrix, with real
-   trait↔GO correlation (kinase→ATP-binding, conf 1.0) and domain-architecture
-   families (GPCR/homeobox/EF-hand). See `research/swissprot-trait-profiles-1.md`.
-   Phase 2 DONE (2026-07-21, branch `swissprot-trait-tree`): scaled the matrix to
-   20,000 reviewed human proteins (`--jsonl-only`; matrix gitignored, regenerable) +
-   `scripts/train_trait_go_tree.py` (`just train-trait-tree`) — interpretable trait→GO
-   decision trees (GPCR F1 0.90, olfactory 0.94, kinase/Ca/Zn/ATP 0.70–0.78; generic
-   GO poorly, as expected). See `research/swissprot-trait-profiles-2.md`.
-   Phase 3 DONE (2026-07-21): `scripts/analyze_trait_correlations.py`
-   (`just trait-correlations`) — cross-axis correlation; **226 sequence signatures
-   that always encode a specific fold** (conf ≥0.99, lift 500–625×) + 419
-   sequence/structure→function rules. See `research/swissprot-trait-profiles-3.md`.
-   Phase 4 DONE (2026-07-22): materialised the empirical cross-axis rules as
-   `data/equivalence/trait_cooccurrence.tsv` (516 edges: 284 seq-encodes-fold +
-   232 trait-implies-function, `biolink:related_to`, conf/lift in relation_source;
-   auto-loaded by build_docs_index). See `research/swissprot-trait-profiles-4.md`.
-   Phase 5 DONE (2026-07-24, branch `swissprot-canonical-examples`):
-   `scripts/suggest_canonical_examples.py` (`just suggest-examples`) wrote
-   **86,580 `canonical_examples` onto 44,929 trait records** (coverage 14.6% →
-   25.6%; all 2,342 observed CATH fold records had none before). New
-   `SWISSPROT_PROFILE` provenance; carriers ranked by cross-axis rule coverage,
-   then focus / annotation depth weighted by axis. Only 671 picks are rule-backed —
-   see the report for that limitation. See `research/swissprot-trait-profiles-5.md`.
-   Phase 6 DONE (2026-07-25, branch `swissprot-multi-organism`): matrix rebuilt over
-   four organisms (48,962 proteins: human/mouse/yeast/*E. coli*; `just build-profiles
-   --organisms`). **Held-out-organism tests**: `scripts/test_rule_generalization.py`
-   (`just test-rule-generalization`) shows seq-encodes-fold replicates at 96–99%
-   outside human but trait-implies-function only 81–88%, failing on GO
-   cellular-component / lineage-specific terms — that overlay is partly annotation
-   practice, not mechanism. `train_trait_go_tree.py --holdout-taxon` shows macro-F1
-   0.44 (mouse) → 0.32 (yeast) → 0.21 (*E. coli*) vs 0.44 random, i.e. a random split
-   leaks orthologs. Overlay re-mined: 516 → 1,506 edges. Exemplars re-ranked with
-   within-proteome normalisation (absolute GO counts handed picks to whichever
-   community annotates hardest — mouse 16.1 vs human 12.6 mean GO).
-   See `research/swissprot-trait-profiles-6.md` + `research/rule-generalization-1.md`.
-   Phase 7 DONE (2026-07-25, branch `swissprot-balanced-rules`): function edges
-   **split by GO aspect** (482 molecular-function / 148 biological-process / 65
-   localization / 13 enzymatic-activity), so consumers can filter to the edges
-   phase 6 showed replicate. Organism-balanced confidence is computed and emitted
-   (`balanced=`, `organisms=`) but **gating on it is a null result** — pooling four
-   proteomes already excludes every organism-specific rule phase 6 flagged, so
-   `--min-balanced-conf` defaults off. Fixed a phase-4 bug where the miner filtered
-   endpoints by CURIE prefix only, letting 27 edges point at GO terms with no
-   record in the corpus. Overlay 1,506 → 1,479 edges, 0 dangling.
-   See `research/swissprot-trait-profiles-7.md`.
-   Phase 8 DONE (2026-07-25, branch `swissprot-protein-map`): **protein×trait map**
-   (`just protein-map` → `docs/data/protein_map.json`, "Proteins" tab on
-   docs/map.html) — 47,768 proteins, SVD→PaCMAP, coloured by organism, filterable
-   by CATH class. Measured rather than eyeballed: neighbour purity (k=25) shows
-   **CATH class organises the space 2.29× above chance vs organism's 1.42×**, and
-   the 2-D projection understates both (2.09 / 1.36) rather than inventing them.
-   Hand-reviewed the 65 `trait-implies-localization` edges → **keep all 65**: phase
-   6's offenders are already gone from pooled mining, and what survives is
-   domain→compartment (tubulin→microtubule, connexin→connexin complex). The 4
-   single-proteome edges are lineage-specific by biology (pilus/fungal cell
-   wall/keratin), so an automatic `organisms>=2` filter would delete correct edges.
-   See `research/swissprot-trait-profiles-8.md`.
-   Phase 9 DONE (2026-07-26, branch `swissprot-broaden-matrix`): matrix broadened to
-   **10 organisms / 80,066 proteins** (adds Arabidopsis, Drosophila, C. elegans,
-   B. subtilis, *M. jannaschii* (archaeon), *P. falciparum*); vertebrate share
-   76% → 47%. Held-out test across the tree: **seq-encodes-fold 97.2% aggregate,
-   100% in the archaeon**; trait-implies-function 84.8%, falling to **59% in the
-   archaeon** — the phase-6 split, now unambiguous. Overlay 1,479 → 2,590 edges.
-   **Withdrew a phase-8 claim**: "structure organises the protein map 1.6× more than
-   organism" was an artefact of a 4-organism matrix; at 10 organisms it is 2.34× vs
-   2.27×, i.e. about equal. Controlled check (same 4 organisms re-extracted)
-   reproduces phase 8 exactly, so the measurement was right and the generalisation
-   was not. New `just measure-map`: the corpus map is strongly source-stratified
-   (within STRUCTURE, 99% of a record's neighbours share its database) — but the
-   embedding still ranks a known cross-source equivalent #1 68% of the time, so it
-   is not blind across sources. Definition-only embedding is equally stratified:
-   the signal is house style in the prose, not identifiers.
-   See `research/swissprot-trait-profiles-9.md`, `research/map-structure-1.md`.
-   Phase 10 DONE (2026-07-26, branch `swissprot-residue-frame`): Path 1 was starved
-   of *coordinates*, not exemplars — 34,227 proteins are shared by ≥2 records but only
-   **33 records in the corpus had a stored sequence**. New
-   `scripts/fetch_residue_frame.py` (`just fetch-residue-frame`) builds a gitignored
-   sidecar (80,066 proteins, 530,588 FT intervals routed to trait categories) and a
-   new `profile` provider in the aligner reads it: func-site edges **394 → 768
-   (+95%)** over the offline providers. The overlay was **deliberately not
-   regenerated** — a `stored,profile,biolip` run keeps 394 committed edges, loses 384
-   InterPro-derived ones and adds 374, so writing it would destroy real data for a
-   net −10. Ceiling found: only **23.2%** of records with exemplars are
-   residue-localizable at all (`SEQ_DOMAIN` 34,781 needs InterPro; `FUNC_PATHWAY`
-   15,452 is not a residue range). Source residualisation **fails structurally** —
-   per-source centering cuts source lift 26% but axis lift 18%, because 25 of 28
-   sources are axis-pure so most axis signal is between-source; axis is nonetheless
-   real (1.83–1.85× within CDD/NCBIfam). Phase 6's ortholog-leakage claim **holds** at
-   47% vertebrate (mouse 0.45 vs random 0.43).
-   See `research/swissprot-trait-profiles-10.md`.
-   Phase 11 DONE (2026-07-27, branch `swissprot-interpro-frame`): **Path 1 is now
-   real.** `scripts/fetch_interpro_frame.py` (`just fetch-interpro-frame`) crawls
-   InterPro **per protein** rather than per (signature, protein) and only for
-   edge-capable proteins — 104,176 calls → 27,498 — into a sidecar (392,277
-   signature matches) read by a new `interpro_frame` provider. Residue frame topped
-   up to 98,922 proteins, which also unblocked 19,371 `SEQ_EPITOPE` records (items 2
-   and 3 were one job: epitopes already carry the peptide as `sequence_pattern` and
-   needed only the antigen's sequence — no localizer required).
-   **`seq_struct_func_sites.tsv` 778 → 6,982 edges (clean superset, 0 lost);
-   `seq_struct_alignment.tsv` 0 → 12,424 edges**, the base signature↔fold overlay
-   populated for the first time, including **1,747 identical-residue-set
-   `related_to`** links. 61,015 records localized (was 6,424). Found #54 (nine
-   MetalPDB exemplars are `UNS…` placeholders, invisible to validate-all) and a
-   regex of mine that skipped **27,325 records** because PyYAML writes list items at
-   column 0 — phase 10's corpus figures understated by ~30% (exemplar proteins
-   64,725 → 93,150). See `research/swissprot-trait-profiles-11.md`.
-   Phase 12 DONE (2026-07-27, branch `swissprot-residue-curation`): adjudicated the
-   1,747 identical-residue links. **None of them were in `cross_source.tsv`** — the
-   residue frame found them independently of every identifier mapping. Checked each
-   against InterPro's published Gene3D membership (`just verify-residue-identity`):
-   **1,640 confirmed (97.6%)**, 40 refuted (those entries integrate *no* Gene3D
-   signature — SUPERFAMILY-based), 0 unresolved. Confirmed pairs emitted as
-   `data/equivalence/residue_identity.tsv` with `biolink:close_match` — relate-only,
-   never a merge, per merge-within-axis. Support ceiling is 3 because
-   `--max-examples 3` caps exemplars, so n=3 means *all* evidence agrees (1,052 of
-   1,640). #54 closed: the nine `UNS…` exemplars are **rRNA chains** (16S/23S) that
-   have no UniProt accession because they are not proteins — 34 removed across 22
-   records, and the schema pattern is now UniProt's real accession syntax (verified
-   to reject exactly those 9 of 93,150 values). `--dry-run` no longer hits the
-   network. See `research/swissprot-trait-profiles-12.md`.
-   Phase 13 DONE (2026-07-27, branch `swissprot-sidecar-provenance`): #57 closed —
-   `scripts/sidecar.py` stamps all three align_cache sidecars with source + release
-   + build date (UniProt via the `x-uniprot-release` header, InterPro via
-   `utils/release/`), and the fetchers **refuse to resume across a release change**
-   because that would mix coordinates from two releases into one overlay; consumers
-   accept both shapes. Topped the residue frame up to **113,592 proteins**
-   (+14,670) — and it produced **zero new edges**, because 83,604 of those proteins
-   host records of only one trait category and so can never form a comparable pair.
-   The binding constraint is protein *sharing*, not protein count: only 8,689
-   proteins host >=2 comparable records, and **57% of records sit exactly at the
-   `--max-examples 3` cap**. See `research/swissprot-trait-profiles-13.md`.
-   Phase 14 DONE (2026-07-27, branch `swissprot-raise-exemplar-cap`): raised
-   `--max-examples` 3 → **8**, chosen by simulating the real ranking across caps
-   (8→12 would buy only +15% sharing for +22% payload). Exemplars 169,177 →
-   **309,535**; records at the cap 57% → 30%. Required an InterPro delta crawl
-   (27,498 → 41,585 proteins) — the residue frame needed nothing, because phase
-   13's completeness already covered the new exemplars. Result: proteins hosting
-   ≥2 comparable records **8,689 → 15,554**, `seq_struct_alignment` 12,424 →
-   **16,350** and `seq_struct_func_sites` 6,982 → **9,798** edges (0 lost),
-   `residue_identity` close_match 1,640 → **1,697**. The measured gain is 2.7×
-   below the simulation, which counted proteins with ≥2 categories rather than
-   ≥2 *localizable, comparable* records. Also closed #60 (aligner cross-checks
-   sidecar build dates; every edge now carries its coordinate release).
-   See `research/swissprot-trait-profiles-14.md`.
-   **Phase 15 (next):** cache the ~10,238 permanently-absent accessions so the
-   residue-frame top-up stops re-requesting them; check phase 12's SUPERFAMILY-based
-   refutations against SUPERFAMILY↔CATH mappings; consider whether the doubled
-   exemplar payload needs a leaner docs projection.
-
-2. **Per-gene curation of the remaining ~1,219 resistance causal-graph drafts.**
+1. **Per-gene curation of the remaining ~1,219 resistance causal-graph drafts.**
    The family-level promotion is done (6,180 REVIEWED). The tail is genuinely
    per-gene: `ARO:0000031` gene-variant point mutants (gyrA/rpoB/16S/23S — each a
    different target protein), efflux subunits, two-component regulators, rRNA
@@ -173,15 +21,24 @@ _Last reconciled: 2026-07-21._
    `just audit-graphs --strict` lists every snippet-pending edge. Skill:
    `edison-causal-graphs`; promoter: `promote_family_drafts.py` (`FAMILY_SNIPPETS`).
 
+2. **Swiss-Prot trait profiles (issue #7) — phases 1–14 shipped; phase 15 is small.**
+   The thread is delivered end-to-end (protein×trait matrix → cross-axis rules →
+   canonical_examples → 10-organism validation → residue-frame alignment). See
+   "Recently shipped" for the summary and `research/swissprot-trait-profiles-{1..14}.md`
+   for the detail. What is left is cleanup, not capability:
+   - **Cache the ~10,238 permanently-absent UniProt accessions.** They return no
+     result inside an otherwise-successful batch, so nothing records that they are
+     dead and `fetch_residue_frame.py --top-up` re-requests them every run. Unlike
+     the 9 malformed ones (#54, fixed) they fail silently.
+   - **Check the 68 SUPERFAMILY-based refutations** from `residue_identity` against
+     SUPERFAMILY↔CATH mappings — would either confirm them as equivalences or close
+     them for good. `just verify-residue-identity` holds the current verdicts.
+   - **Revisit the docs projection** now the exemplar payload has doubled
+     (169,177 → 309,535 examples; detail buckets +33%). `_project_example` in
+     `build_docs_index.py` is where to trim.
+
 3. **Web design review — dataviz / artifact-design findings (issue #5).**
    Docs-site polish on `docs/browse.*` + landing. Self-contained.
-
-4. **Empty base overlay `data/equivalence/seq_struct_alignment.tsv`.**
-   Zero residue-overlap edges — a data-coverage fact, not a bug (0 shared proteins;
-   see item 1). Two paths: (a) item 1 (shared Swiss-Prot exemplars), or (b) a
-   structure-fold localizer using TED's stored `residue_range` on the AlphaFold
-   frame. Path-2 co-membership (`seq_struct_comembership.tsv`, 13,400 edges) already
-   connects signatures↔folds by CATH grounding instead.
 
 ## Refinements (small, opportunistic)
 
@@ -195,6 +52,22 @@ _Last reconciled: 2026-07-21._
   `just audit-graphs --strict` in CI if the causal layer should be gated on snippets.
 
 ## Recently shipped (DONE)
+
+- **Swiss-Prot trait profiles, phases 1–14** (2026-07-21 → 2026-07-27, PRs #29–#33,
+  #37, #41, #45, #48, #51, #55, #58, #59, #61, #62). Protein×trait matrix over
+  **10 proteomes / 80,066 proteins** (`build_swissprot_profiles.py`); cross-axis
+  rule overlay `trait_cooccurrence.tsv` (2,590 edges, split by GO aspect);
+  **309,535 `canonical_examples`** on 72,003 records (`suggest_canonical_examples.py`);
+  held-out-organism validation (`test_rule_generalization.py` — seq-encodes-fold
+  replicates 97.2% incl. 100% in an archaeon, trait-implies-function 84.8%);
+  protein map (`build_protein_map.py`, "Proteins" tab); corpus-map structure audit
+  (`measure_map_structure.py`); **residue-frame alignment** —
+  `seq_struct_alignment.tsv` **0 → 16,350** and `seq_struct_func_sites.tsv`
+  778 → **9,798** edges via the `profile` + `interpro_frame` providers and two
+  release-stamped sidecars (`fetch_residue_frame.py`, `fetch_interpro_frame.py`,
+  `sidecar.py`); **1,697 adjudicated `close_match`** CATH↔InterPro equivalences
+  (`verify_residue_identity.py`) that no identifier mapping in the corpus had.
+  Closed #54, #56, #57, #60. Reports: `research/swissprot-trait-profiles-{1..14}.md`.
 
 - **Causal-graph mechanism layer, rounds 1–11** (2026-07-21, PR #24/#28 + direct to
   main): `edison-causal-graphs` skill, `audit_causal_graphs.py` (`just audit-graphs`),
@@ -214,9 +87,15 @@ _Last reconciled: 2026-07-21._
 
 ## Blocked / not actionable (kept for context — do not recommend as "next")
 
-- **Full `interpro,sifts` crawl to populate the base overlay** — measured ~33k API
-  calls that would yield **0** base edges (SEQ signatures and STRUCT folds share no
-  exemplar proteins). Superseded by item 1 / the co-membership overlay. Do not run.
+- ~~**Full `interpro,sifts` crawl to populate the base overlay** — ~33k API calls
+  yielding 0 base edges; do not run.~~ **This was wrong and is now retracted
+  (2026-07-27).** The measurement was sound for its moment and did not generalise:
+  it assumed the *per-(signature, protein)* query shape and the pre-phase-5
+  exemplar set, when signatures and folds genuinely shared no exemplars. Phase 11
+  ran the crawl **per protein** over the exemplars phases 5–9 added and the base
+  overlay went 0 → 12,424 edges (16,350 after phase 14). Kept here, struck through,
+  because "do not run" sat in the backlog for a week over work that turned out to
+  be the single largest win of the thread.
 - **Fold data-gaps (`CATH:3.40.50.300`, `CATH:3.20.20.70`, Qnr β-helix)** — turned
   out to be false alarms; all existed and the ABC/qnr graphs were re-grounded
   (2026-07-21). Closed.
