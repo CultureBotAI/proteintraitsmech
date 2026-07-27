@@ -93,11 +93,11 @@ _Last reconciled: 2026-07-21._
    **33 records in the corpus had a stored sequence**. New
    `scripts/fetch_residue_frame.py` (`just fetch-residue-frame`) builds a gitignored
    sidecar (80,066 proteins, 530,588 FT intervals routed to trait categories) and a
-   new `profile` provider in the aligner reads it: func-site edges **394 → 773
-   (+96%)** over the offline providers. The overlay was **deliberately not
+   new `profile` provider in the aligner reads it: func-site edges **394 → 768
+   (+95%)** over the offline providers. The overlay was **deliberately not
    regenerated** — a `stored,profile,biolip` run keeps 394 committed edges, loses 384
-   InterPro-derived ones and adds 379, so writing it would destroy real data for a
-   net −5. Ceiling found: only **23.2%** of records with exemplars are
+   InterPro-derived ones and adds 374, so writing it would destroy real data for a
+   net −10. Ceiling found: only **23.2%** of records with exemplars are
    residue-localizable at all (`SEQ_DOMAIN` 34,781 needs InterPro; `FUNC_PATHWAY`
    15,452 is not a residue range). Source residualisation **fails structurally** —
    per-source centering cuts source lift 26% but axis lift 18%, because 25 of 28
@@ -106,8 +106,8 @@ _Last reconciled: 2026-07-21._
    47% vertebrate (mouse 0.45 vs random 0.43).
    See `research/swissprot-trait-profiles-10.md`.
    **Phase 11 (next):** run the InterPro crawl over the expanded exemplar set and
-   regenerate the overlay from all five providers (~1,157 edges, +48%) — banks phase
-   10's 379 new edges without losing the 384 existing ones; extend the residue frame
+   regenerate the overlay from all five providers (1,152 edges, +48%) — banks phase
+   10's 374 new edges without losing the 384 existing ones; extend the residue frame
    to `CURATOR` exemplars outside the ten proteomes; an IEDB localizer for the 20,000
    `SEQ_EPITOPE` records.
 

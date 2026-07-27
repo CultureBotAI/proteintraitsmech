@@ -19,9 +19,12 @@ instead, which a new `profile` provider reads.
 Output: `data/raw/align_cache/residue_frame.json` (gitignored, regenerable)
   {"<ACC>": {"seq": "MSTA…", "ft": [[start, end, "<trait_category>"], …]}, …}
 
-Feature types are routed to trait categories with the same table
-`seed_uniprot.py` uses, so a sidecar interval is comparable to a record's own
-`trait_category` exactly as a stored `features[]` entry would be.
+Feature types are routed to the same trait categories `seed_uniprot.py` targets,
+so a sidecar interval is comparable to a record's own `trait_category` exactly as
+a stored `features[]` entry would be. The routing table is *not* shared with that
+seeder: it is keyed on UniProt's JSON labels rather than flat-file FT keywords,
+and it deliberately drops two of the seeder's types (see `_UNROUTED`) because a
+category match on them localizes falsely.
 
 Bounded by --query / --organisms (same shorthand as build_swissprot_profiles).
 Dry-run unless --apply. Stdlib-only.
@@ -75,9 +78,23 @@ FT_CATEGORY = {
 #     per protein (they were 75% of a first cut's intervals). Matching a
 #     STRUCT_SECONDARY record to all of them localizes nothing meaningful.
 _UNROUTED = {"domain", "helix", "betastrand", "turn"}
-# BINDING carries a ligand; a metal ligand routes to the metal-site category,
-# the same re-route seed_uniprot.py applies.
-_METAL_RE = re.compile(r"\b(zn|fe|mg|mn|ca|cu|co|ni|cd|k|na|metal)\b", re.I)
+# A BINDING feature carries a ligand; a metal ligand routes to the metal-site
+# category, the same re-route seed_uniprot.py applies.
+#
+# Matching bare element symbols with \b is wrong in both directions: a hyphen is
+# a word boundary so "co-factor" matched cobalt, a stray capital matched
+# potassium ("a K+ channel ligand"), and spelled-out metals were missed entirely
+# ("sodium"). A symbol now only counts when it carries a charge or oxidation
+# marker, which is how UniProt writes ions (`Zn(2+)`, `Fe cation`, `K(+)`), and
+# the spelled-out names are listed explicitly. A misroute is one-directional
+# damage: it fabricates a metal-site interval that then localizes a
+# STRUCT_METAL_SITE record onto the wrong residues.
+_METAL_SYMBOL = r"(?:zn|fe|mg|mn|ca|cu|co|ni|cd|mo|se|w|k|na)"
+_METAL_RE = re.compile(
+    rf"\b{_METAL_SYMBOL}\s*(?:\(\s*[0-9]*\s*[+-]\s*\)|[0-9]*\s*[+]|\s+(?:cation|ion))"
+    r"|\b(?:zinc|iron|magnesium|manganese|calcium|copper|cobalt|nickel|cadmium|"
+    r"molybdenum|potassium|sodium|tungsten|metal|heme iron)\b",
+    re.I)
 
 FIELDS = ("accession,sequence,ft_domain,ft_act_site,ft_binding,ft_site,"
           "ft_disulfid,ft_signal,ft_transit,ft_propep,ft_mod_res,ft_lipid,"
@@ -103,15 +120,29 @@ def _get(url: str, tries: int = 4):
     return None, ""
 
 
-def stream(query: str, limit: int, page: int = 200):
+def stream(query: str, limit: int, page: int = 200, status: dict | None = None):
+    """Yield entries; record {"complete": bool, "expected": int} in `status`.
+
+    A failed page ends the crawl for this query. Without a status flag that
+    truncation is invisible: the sidecar is written, the count looks plausible
+    (the ten proteomes span 321 to 20,431 entries, so a short one does not stand
+    out) and Path 1 simply finds fewer edges — indistinguishable from those
+    records genuinely having no features (issue #53).
+    """
     url = ("https://rest.uniprot.org/uniprotkb/search?"
            + urllib.parse.urlencode({"query": query, "fields": FIELDS,
                                      "format": "json", "size": min(page, 500)}))
     got = 0
+    if status is not None:
+        status.update({"complete": True, "expected": None})
     while url and got < limit:
         data, link = _get(url)
         if not data:
+            if status is not None:
+                status["complete"] = False
             break
+        if status is not None and status.get("expected") is None:
+            status["expected"] = data.get("total") 
         for e in data.get("results", []):
             yield e
             got += 1
@@ -136,8 +167,13 @@ def entry_intervals(entry: dict) -> list:
             continue
         cat = FT_CATEGORY.get(t)
         if cat == "STRUCT_BINDING_SITE":
-            lig = (((f.get("ligand") or {}).get("name") or "") + " "
-                   + (f.get("description") or ""))
+            # Test `ligand.name` — the authoritative field — and fall back to the
+            # free-text description only when there is no ligand. Testing both
+            # together let prose about the protein decide the ligand's identity:
+            # "a K+ channel ligand" names potassium but is not a potassium ligand.
+            lig = ((f.get("ligand") or {}).get("name") or "").strip()
+            if not lig:
+                lig = f.get("description") or ""
             if _METAL_RE.search(lig):
                 cat = "STRUCT_METAL_SITE"
         if not cat:
@@ -154,6 +190,8 @@ def main() -> int:
                     help="the ten proteomes of the standard matrix")
     ap.add_argument("--limit", type=int, default=25000, help="cap per query")
     ap.add_argument("--apply", action="store_true")
+    ap.add_argument("--allow-partial", action="store_true",
+                    help="write even if a query's pagination aborted early")
     ap.add_argument("--out", default=str(OUT))
     args = ap.parse_args()
 
@@ -165,9 +203,11 @@ def main() -> int:
 
     frame: dict = {}
     n_ft = 0
+    incomplete = []
     for q in queries:
         before = len(frame)
-        for entry in stream(q, args.limit):
+        st: dict = {}
+        for entry in stream(q, args.limit, status=st):
             acc = entry.get("primaryAccession")
             if not acc or acc in frame:
                 continue
@@ -175,12 +215,26 @@ def main() -> int:
             ft = entry_intervals(entry)
             n_ft += len(ft)
             frame[acc] = {"seq": seq, "ft": ft}
-        print(f"  {q!r}: +{len(frame)-before:,}", file=sys.stderr)
+        if not st.get("complete", True):
+            incomplete.append(q)
+        print(f"  {q!r}: +{len(frame)-before:,}"
+              + ("  ** INCOMPLETE — pagination aborted **" if not st.get("complete", True) else ""),
+              file=sys.stderr)
 
     with_seq = sum(1 for v in frame.values() if v["seq"])
     with_ft = sum(1 for v in frame.values() if v["ft"])
     print(f"proteins: {len(frame):,} | with sequence: {with_seq:,} | "
           f"with >=1 routed feature: {with_ft:,} | intervals: {n_ft:,}")
+    if incomplete:
+        print(f"\n{len(incomplete)} of {len(queries)} queries ended early "
+              f"(network failure after retries):", file=sys.stderr)
+        for q in incomplete:
+            print(f"    {q}", file=sys.stderr)
+        if not args.allow_partial:
+            print("refusing to write a partial sidecar — re-run, or pass "
+                  "--allow-partial to accept it.", file=sys.stderr)
+            return 1
+        print("--allow-partial given; writing anyway.", file=sys.stderr)
     if not args.apply:
         print("Dry-run — pass --apply to write.")
         return 0

@@ -37,8 +37,8 @@ So the work was not "re-run the builder" but "give it a coordinate source".
 
 `scripts/fetch_residue_frame.py` (`just fetch-residue-frame --organisms --apply`)
 crawls the ten matrix proteomes once for each entry's sequence and feature table,
-routes every FT interval to a `trait_category` with the same mapping
-`seed_uniprot.py` uses, and writes
+routes every FT interval to the same `trait_category` values `seed_uniprot.py`
+targets (keyed on UniProt's JSON labels, not flat-file FT keywords), and writes
 `data/raw/align_cache/residue_frame.json` (gitignored, regenerable).
 
 Keyed by accession rather than inlined into records, because one protein is an
@@ -104,29 +104,29 @@ candidate records:
 |---|--:|--:|
 | `stored` | 2,254 | 123 |
 | `stored,biolip` | 4,507 | 394 |
-| **`stored,profile,biolip`** | **6,432** | **773** |
+| **`stored,profile,biolip`** | **6,424** | **768** |
 | committed file (`…,interpro,sifts,biolip`) | — | 778 |
 
 **`profile` nearly doubles the yield of the providers that can run offline** —
-394 → 773 edges, +96%. That is the deliverable.
+394 → 768 edges, **+95%**. That is the deliverable.
 
 ### The overlay was deliberately not regenerated
 
-773 is suspiciously close to the committed 778, and that closeness is a trap. The
+768 is suspiciously close to the committed 778, and that closeness is a trap. The
 two sets are not the same edges:
 
 | | edges |
 |---|--:|
 | in both | 394 |
 | **only in the committed file** (InterPro-derived) | **384** |
-| only in a `stored,profile,biolip` run | 379 |
+| only in a `stored,profile,biolip` run | 374 |
 
-Writing the new run would have destroyed 384 real edges to add 379 — a net change
-of −5 that looks harmless in a line count and is not. The committed overlay is
+Writing the new run would have destroyed 384 real edges to add 374 — a net change
+of −10 that looks harmless in a line count and is not. The committed overlay is
 left untouched.
 
 Regenerating it properly needs `stored,profile,interpro,sifts,biolip` in one
-pass, which would yield an estimated **1,157 edges (+48%)**. The obstacle is
+pass, which would yield **1,152 edges (+48%)**. The obstacle is
 `interpro`: its 18,108 cached URLs cover the *old* exemplar set, and
 `located_residues` queries per (signature, protein) pair, so the exemplar growth
 of phases 5-9 turns a cached replay into a large uncached crawl. That crawl is
@@ -222,8 +222,8 @@ either is the robust part.
 ## Next
 
 - **Run the InterPro crawl over the expanded exemplar set and regenerate the
-  overlay from all five providers** (~1,157 edges, +48%). This is the one action
-  that both banks this phase's 379 new edges and keeps the 384 existing ones.
+  overlay from all five providers** (1,152 edges, +48%). This is the one action
+  that both banks this phase's 374 new edges and keeps the 384 existing ones.
 - Extend the residue frame beyond the matrix proteomes to cover `CURATOR`
   exemplars from other organisms.
 - `SEQ_EPITOPE` (20,000 records) has coordinates in IEDB but no UniProt FT
