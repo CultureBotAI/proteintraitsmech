@@ -92,6 +92,7 @@ RESIDUE_FRAME = CACHE_DIR / "residue_frame.json"
 # exemplar of up to 574 records, so inlining would repeat the same sequence and
 # feature table hundreds of times.
 _FRAME: dict = {}
+_FRAME_META: dict = {}
 
 
 INTERPRO_FRAME = CACHE_DIR / "interpro_frame.json"
@@ -102,10 +103,11 @@ INTERPRO_FRAME = CACHE_DIR / "interpro_frame.json"
 # record to the interval of its own *signature*, so a domain or family record is
 # placed exactly where that signature hit rather than anywhere a domain sits.
 _IPFRAME: dict = {}
+_IPFRAME_META: dict = {}
 
 
 def load_interpro_frame(path: Path = INTERPRO_FRAME) -> dict:
-    global _IPFRAME
+    global _IPFRAME, _IPFRAME_META
     if not _IPFRAME:
         if not path.exists():
             print(f"no InterPro sidecar at {path} — build it with "
@@ -114,6 +116,7 @@ def load_interpro_frame(path: Path = INTERPRO_FRAME) -> dict:
         blob = json.loads(path.read_text(encoding="utf-8"))
         _IPFRAME = blob.get("proteins", blob) if isinstance(blob, dict) else {}
         meta = blob.get("_meta") if isinstance(blob, dict) else None
+        _IPFRAME_META = meta or {}
         if meta:
             print(f"InterPro frame: {len(_IPFRAME):,} proteins, "
                   f"{meta.get('source')} release {meta.get('release')} "
@@ -122,7 +125,7 @@ def load_interpro_frame(path: Path = INTERPRO_FRAME) -> dict:
 
 
 def load_residue_frame(path: Path = RESIDUE_FRAME) -> dict:
-    global _FRAME
+    global _FRAME, _FRAME_META
     if not _FRAME:
         if not path.exists():
             print(f"no residue-frame sidecar at {path} — build it with "
@@ -132,6 +135,7 @@ def load_residue_frame(path: Path = RESIDUE_FRAME) -> dict:
         # sidecars gained a provenance header in phase 13; accept both shapes
         _FRAME = blob.get("proteins", blob) if isinstance(blob, dict) else {}
         meta = blob.get("_meta") if isinstance(blob, dict) else None
+        _FRAME_META = meta or {}
         if meta:
             print(f"residue frame: {len(_FRAME):,} proteins, "
                   f"{meta.get('source')} release {meta.get('release')} "
@@ -501,6 +505,41 @@ def _selftest() -> int:
     return 0 if ok else 1
 
 
+def coordinate_provenance(max_gap_days: int = 30) -> str:
+    """Release tag for the emitted edges, warning when the sidecars disagree in time.
+
+    The aligner is deliberately offline, so it cannot ask what the *current*
+    releases are and an old-but-self-consistent pair of sidecars is valid input.
+    What it CAN check offline is the two build dates against each other — and
+    that is the signal that matters here: an identical-residue call is exact, so
+    a boundary that moved between the InterPro release the coordinates came from
+    and the UniProt release the sequence came from silently changes the
+    predicate (issue #60).
+    """
+    parts, dates = [], []
+    for meta in (_FRAME_META, _IPFRAME_META):
+        if not meta:
+            continue
+        if meta.get("source") and meta.get("release"):
+            parts.append(f"{meta['source']}:{meta['release']}")
+        if meta.get("built"):
+            dates.append((meta["built"], meta.get("source") or "?"))
+    if len(dates) == 2:
+        try:
+            from datetime import date
+            d0, d1 = (date.fromisoformat(x) for x, _s in dates)
+            gap = abs((d1 - d0).days)
+            if gap > max_gap_days:
+                print(f"warning: the two coordinate sidecars were built {gap} days "
+                      f"apart ({dates[0][1]} {dates[0][0]}, {dates[1][1]} "
+                      f"{dates[1][0]}). Signature boundaries move between releases, "
+                      f"and an identical-residue call is exact — rebuild both "
+                      f"before trusting the related_to edges.", file=sys.stderr)
+        except ValueError:
+            pass
+    return ",".join(parts)
+
+
 def _prefilter(text: str, providers) -> bool:
     """Cheap text gate: can any active provider possibly localize this record?"""
     if "protein_id:" not in text or "canonical_examples:" not in text:
@@ -613,6 +652,7 @@ def main() -> int:
     if http:
         http.flush()
 
+    provenance = coordinate_provenance()
     # record pairs sharing a protein, with coordinate overlap. Aggregate the
     # supporting proteins per (subject,object) pair and keep the strongest edge.
     # edges keyed by (subj,obj) → {pred, proteins, func} ; func = touches a site cat
@@ -650,8 +690,12 @@ def main() -> int:
     for (subj, obj), e in edges.items():
         prots = sorted(e["proteins"])
         tag = "func-site" if e["func"] else "seq-struct"
+        # coordinate provenance travels with the edge: relation_source named the
+        # supporting proteins but never which release the coordinates came from,
+        # so an edge could not be traced to the sidecar that produced it (#60)
         src = (f"{tag}-coord-overlap|{','.join(prots[:5])}"
-               f"{'…' if len(prots) > 5 else ''}|n={len(prots)}")
+               f"{'…' if len(prots) > 5 else ''}|n={len(prots)}"
+               + (f"|{provenance}" if provenance else ""))
         (func_rows if e["func"] else base_rows).append((subj, e["pred"], obj, src))
     base_rows.sort()
     func_rows.sort()
