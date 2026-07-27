@@ -21,21 +21,32 @@ _Last reconciled: 2026-07-27._
    `just audit-graphs --strict` lists every snippet-pending edge. Skill:
    `edison-causal-graphs`; promoter: `promote_family_drafts.py` (`FAMILY_SNIPPETS`).
 
-2. **Swiss-Prot trait profiles (issue #7) — phases 1–14 shipped; phase 15 is small.**
-   The thread is delivered end-to-end (protein×trait matrix → cross-axis rules →
-   canonical_examples → 10-organism validation → residue-frame alignment). See
-   "Recently shipped" for the summary and `research/swissprot-trait-profiles-{1..14}.md`
-   for the detail. What is left is cleanup, not capability:
-   - **Cache the ~10,238 permanently-absent UniProt accessions.** They return no
-     result inside an otherwise-successful batch, so nothing records that they are
-     dead and `fetch_residue_frame.py --top-up` re-requests them every run. Unlike
-     the 9 malformed ones (#54, fixed) they fail silently.
-   - **Check the 68 SUPERFAMILY-based refutations** from `residue_identity` against
-     SUPERFAMILY↔CATH mappings — would either confirm them as equivalences or close
-     them for good. `just verify-residue-identity` holds the current verdicts.
-   - **Revisit the docs projection** now the exemplar payload has doubled
-     (169,177 → 309,535 examples; detail buckets +33%). `_project_example` in
-     `build_docs_index.py` is where to trim.
+2. **Swiss-Prot trait profiles (issue #7) — phases 1–14 shipped; issue NOT complete.**
+   Delivered: protein×trait matrix over 10 proteomes, trait↔GO correlation,
+   trait→function decision trees (held-out-organism validated), cross-axis feature
+   correlations, residue-frame alignment. See "Recently shipped" and
+   `research/swissprot-trait-profiles-{1..14}.md`.
+   **Two of the issue's own asks remain open** (checked 2026-07-27, not assumed):
+   - **Multi-trait family clustering — never built.** The issue title says
+     "+ build multi-trait families" and names doi:10.1186/s12859-022-05093-z.
+     What exists is *exact signature-architecture matching* on the 1,000-protein
+     pilot (45 families, `research/swissprot-trait-profiles-1.md` §Signal 2) —
+     computed ad-hoc in that report, never a script. Phase 1 explicitly queued
+     "replace exact-architecture matching with trait-set similarity (Jaccard /
+     the s12859 method) for fuzzy families" and no phase did it. There is no
+     clustering script in `scripts/`. The protein map (phase 8) is a 2-D
+     projection, not clustering. **This is the largest genuinely-missing piece.**
+   - **Per-protein YAML coverage.** The issue asks for "a YAML record for each
+     SwissProt protein". We have the `ProteinProfile` class and 1,000 committed
+     YAMLs; the other 80,066 live in the gitignored `profiles.jsonl`, and
+     Swiss-Prot has ~570k reviewed entries. The jsonl-only decision was made
+     deliberately in phase 2 for scale — but it is a departure from the ask and
+     should be confirmed rather than assumed settled.
+   Remaining cleanup (small): cache the ~10,238 permanently-absent UniProt
+   accessions so `fetch_residue_frame.py --top-up` stops re-requesting them;
+   check the 68 SUPERFAMILY-based refutations in `residue_identity` against
+   SUPERFAMILY↔CATH mappings; revisit `_project_example` in `build_docs_index.py`
+   now the exemplar payload has doubled (169,177 → 309,535).
 
 3. **Web design review — dataviz / artifact-design findings (issue #5).**
    Docs-site polish on `docs/browse.*` + landing. Self-contained.
@@ -68,6 +79,7 @@ _Last reconciled: 2026-07-27._
   `sidecar.py`); **1,697 adjudicated `close_match`** CATH↔InterPro equivalences
   (`verify_residue_identity.py`) that no identifier mapping in the corpus had.
   Closed #54, #56, #57, #60. Reports: `research/swissprot-trait-profiles-{1..14}.md`.
+  **Issue #7 itself stays open** — its clustering ask was never built (see Next up #2).
 
 - **Causal-graph mechanism layer, rounds 1–11** (2026-07-21, PR #24/#28 + direct to
   main): `edison-causal-graphs` skill, `audit_causal_graphs.py` (`just audit-graphs`),
