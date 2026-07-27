@@ -146,11 +146,23 @@ _Last reconciled: 2026-07-21._
    The binding constraint is protein *sharing*, not protein count: only 8,689
    proteins host >=2 comparable records, and **57% of records sit exactly at the
    `--max-examples 3` cap**. See `research/swissprot-trait-profiles-13.md`.
-   **Phase 14 (next):** raise `--max-examples` and re-rank — the cap is the live
-   limit on residue-frame edges and costs nothing to lift (exemplars come from a
-   matrix we already hold); cache the ~10,238 permanently-absent accessions so the
-   top-up stops re-requesting them; check phase 12's 14 SUPERFAMILY-based
-   refutations against SUPERFAMILY<->CATH mappings.
+   Phase 14 DONE (2026-07-27, branch `swissprot-raise-exemplar-cap`): raised
+   `--max-examples` 3 → **8**, chosen by simulating the real ranking across caps
+   (8→12 would buy only +15% sharing for +22% payload). Exemplars 169,177 →
+   **309,535**; records at the cap 57% → 30%. Required an InterPro delta crawl
+   (27,498 → 41,585 proteins) — the residue frame needed nothing, because phase
+   13's completeness already covered the new exemplars. Result: proteins hosting
+   ≥2 comparable records **8,689 → 15,554**, `seq_struct_alignment` 12,424 →
+   **16,350** and `seq_struct_func_sites` 6,982 → **9,798** edges (0 lost),
+   `residue_identity` close_match 1,640 → **1,697**. The measured gain is 2.7×
+   below the simulation, which counted proteins with ≥2 categories rather than
+   ≥2 *localizable, comparable* records. Also closed #60 (aligner cross-checks
+   sidecar build dates; every edge now carries its coordinate release).
+   See `research/swissprot-trait-profiles-14.md`.
+   **Phase 15 (next):** cache the ~10,238 permanently-absent accessions so the
+   residue-frame top-up stops re-requesting them; check phase 12's SUPERFAMILY-based
+   refutations against SUPERFAMILY↔CATH mappings; consider whether the doubled
+   exemplar payload needs a leaner docs projection.
 
 2. **Per-gene curation of the remaining ~1,219 resistance causal-graph drafts.**
    The family-level promotion is done (6,180 REVIEWED). The tail is genuinely
