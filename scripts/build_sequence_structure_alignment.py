@@ -84,6 +84,25 @@ TRAITS = REPO_ROOT / "data" / "traits"
 OUT_BASE = REPO_ROOT / "data" / "equivalence" / "seq_struct_alignment.tsv"
 OUT_FUNC = REPO_ROOT / "data" / "equivalence" / "seq_struct_func_sites.tsv"
 CACHE_DIR = REPO_ROOT / "data" / "raw" / "align_cache"
+RESIDUE_FRAME = CACHE_DIR / "residue_frame.json"
+
+# {accession: {"seq": str, "ft": [[start, end, trait_category], ...]}} — the
+# `profile` provider's coordinate source, built by fetch_residue_frame.py. Held
+# once here rather than inlined per record: phases 5-9 made one protein an
+# exemplar of up to 574 records, so inlining would repeat the same sequence and
+# feature table hundreds of times.
+_FRAME: dict = {}
+
+
+def load_residue_frame(path: Path = RESIDUE_FRAME) -> dict:
+    global _FRAME
+    if not _FRAME:
+        if not path.exists():
+            print(f"no residue-frame sidecar at {path} — build it with "
+                  f"`just fetch-residue-frame --organisms --apply`", file=sys.stderr)
+            return {}
+        _FRAME = json.loads(path.read_text(encoding="utf-8"))
+    return _FRAME
 
 # Record identifier prefix → InterPro member-database slug for the API.
 MEMBERDB = {
@@ -332,6 +351,18 @@ def located_residues(rec: dict, providers=("stored",),
             for f in (ex.get("features") or []):
                 if isinstance(f, dict) and f.get("trait_category") == cat:
                     res |= _feature_residues(f)
+        if "profile" in providers and _FRAME:
+            # SWISSPROT_PROFILE exemplars carry no sequence/features of their
+            # own; take both from the sidecar keyed by accession.
+            fr = _FRAME.get(pid.split(":", 1)[-1])
+            if fr:
+                seq = fr.get("seq")
+                if rx and seq:
+                    for m in re.finditer(rx, seq):
+                        res |= set(range(m.start() + 1, m.end() + 1))
+                for s, e, fcat in fr.get("ft") or ():
+                    if fcat == cat:
+                        res |= set(range(min(s, e), max(s, e) + 1))
         if http and "interpro" in providers and prefix in MEMBERDB and acc:
             res |= interpro_residues(prefix, acc, pid, http)
         if http and "sifts" in providers and pdbs:
@@ -438,6 +469,8 @@ def _prefilter(text: str, providers) -> bool:
         return False
     if "sequence_pattern:" in text or "feature_type:" in text:
         return True
+    if "profile" in providers:
+        return True          # the sidecar may carry features for any exemplar
     if "interpro" in providers:
         return True                                  # any member-DB signature
     if "sifts" in providers and "structure_ref:" in text:
@@ -450,7 +483,10 @@ def _prefilter(text: str, providers) -> bool:
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--providers", default="stored",
-                    help="comma list of stored,interpro,sifts,biolip (default stored)")
+                    help="comma list of stored,profile,interpro,sifts,biolip "
+                         "(default stored). `profile` reads the offline "
+                         "residue-frame sidecar and is what makes the "
+                         "SWISSPROT_PROFILE exemplars usable.")
     ap.add_argument("--limit", type=int, default=0, help="cap files parsed (debug)")
     ap.add_argument("--dry-run", action="store_true", help="print stats, don't write")
     ap.add_argument("--selftest", action="store_true",
@@ -460,9 +496,11 @@ def main() -> int:
         return _selftest()
 
     providers = tuple(p.strip() for p in args.providers.split(",") if p.strip())
-    unknown = set(providers) - {"stored", "interpro", "sifts", "biolip"}
+    unknown = set(providers) - {"stored", "profile", "interpro", "sifts", "biolip"}
     if unknown:
         print(f"unknown provider(s): {sorted(unknown)}", file=sys.stderr)
+        return 2
+    if "profile" in providers and not load_residue_frame():
         return 2
     http = None
     if {"interpro", "sifts", "biolip"} & set(providers):

@@ -686,6 +686,14 @@ protein-map *args:
 measure-map *args:
     python3 scripts/measure_map_structure.py {{args}}
 
+# Residue-frame sidecar for the exemplar proteins (issue #7, phase 10): UniProt
+# sequence + FT intervals routed to trait categories, keyed by accession, so the
+# Path 1 aligner can localize records on their SWISSPROT_PROFILE exemplars
+# without inlining a sequence into every record. Gitignored + regenerable.
+#   just fetch-residue-frame --organisms --apply
+fetch-residue-frame *args:
+    python3 scripts/fetch_residue_frame.py {{args}}
+
 # Train interpretable trait->GO-function decision trees on the protein×trait matrix
 # (data/profiles/profiles.jsonl). "Predict function from the presence of certain
 # traits" (issue #7). Needs scikit-learn — run with system python3 (as here), not uv.
