@@ -262,6 +262,13 @@
     ctx.clearRect(0,0,W,H);
     let vis=0; for(let i=0;i<VF.length;i++) if(VF[i]) vis++;
     const s=markSize(vis), round=s>=5, half=s/2;
+    if(round){
+      // read once per draw, not once per mark — getComputedStyle in the loop
+      // forces a style recalculation on every point
+      ctx.lineWidth=2;
+      ctx.strokeStyle=getComputedStyle(document.documentElement)
+        .getPropertyValue("--stage-bg").trim()||"#fff";
+    }
     // Dim the filtered-out points faintly for context, then the visible ones on top.
     ctx.globalAlpha=.06; ctx.fillStyle="#999";
     // centred, like the circles below and like nearest()'s hit test — fillRect
@@ -275,10 +282,7 @@
       ctx.fillStyle=colorOf(DATA.axes[p[2]]);
       if(round){
         // a surface ring keeps overlapping marks readable once they are big
-        ctx.beginPath(); ctx.arc(x,y,half,0,6.2832); ctx.fill();
-        ctx.lineWidth=2; ctx.strokeStyle=getComputedStyle(document.body)
-          .getPropertyValue("--stage-bg").trim()||"#fff";
-        ctx.stroke();
+        ctx.beginPath(); ctx.arc(x,y,half,0,6.2832); ctx.fill(); ctx.stroke();
       } else {
         ctx.fillRect(x-half,y-half,s,s);
       }
