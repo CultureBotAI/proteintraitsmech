@@ -286,6 +286,11 @@ def truncate(text: str, limit: int = DEF_TRUNC) -> str:
     return text[: limit - 1].rstrip() + "…"
 
 
+# exemplars projected into the browser payload per record (the record itself
+# keeps every one it has)
+DOCS_MAX_EXAMPLES = 5
+
+
 def _project_example(ex: dict) -> dict:
     """Lean projection of a CanonicalExample suitable for the browser
     detail view. Skips empty fields to keep records.json small."""
@@ -396,7 +401,15 @@ def load_record(path: Path) -> dict[str, Any] | None:
         #           mapped_xrefs, or a reaction the record reaches only through a
         #           RHEA mapped_xref (EC→RHEA via rhea2ec) inheriting its ChEBI.
         **_chem_fields(data),
-        "ex": [_project_example(e) for e in (data.get("canonical_examples") or [])],
+        # Only the top few exemplars reach the browser. Phase 14 raised
+        # suggest_canonical_examples --max-examples 3 -> 8 for a *data* reason —
+        # more protein sharing between records, which is what the residue-frame
+        # aligner needs — not so the detail page could list eight. Projecting all
+        # of them took canonical_examples from 28% to 58% of every detail bucket.
+        # The record keeps all 8; the page shows the best DOCS_MAX_EXAMPLES,
+        # which are first because they are rank-ordered.
+        "ex": [_project_example(e)
+               for e in (data.get("canonical_examples") or [])[:DOCS_MAX_EXAMPLES]],
         # Cross-source equivalence [object, predicate, relation_source] from the
         # overlay (not stored on the YAML). Empty for most records.
         "eq": EQUIV.get(identifier, []),

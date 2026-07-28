@@ -49,11 +49,26 @@ _Last reconciled: 2026-07-27._
      Swiss-Prot has ~570k reviewed entries. The jsonl-only decision was made
      deliberately in phase 2 for scale — but it is a departure from the ask and
      should be confirmed rather than assumed settled.
-   Remaining cleanup (small): cache the ~10,238 permanently-absent UniProt
-   accessions so `fetch_residue_frame.py --top-up` stops re-requesting them;
-   check the 68 SUPERFAMILY-based refutations in `residue_identity` against
-   SUPERFAMILY↔CATH mappings; revisit `_project_example` in `build_docs_index.py`
-   now the exemplar payload has doubled (169,177 → 309,535).
+   Remaining cleanup **DONE (2026-07-27, PR #65)** — see
+   `research/swissprot-trait-profiles-15.md`:
+   - Dead-accession cache: `--top-up` recorded 10,238 accessions UniProt does not
+     serve into `_meta.absent` and now skips them (10,238 → 0 re-requests).
+   - The 68 `residue_identity` refutations are **closed as not-actionable**: 46 are
+     InterPro *domain* entries (never candidates), and the 22 SUPERFAMILY-based
+     superfamilies cannot be confirmed on principle — SUPERFAMILY is SCOP-derived,
+     CATH is independent, neither publishes a mapping, and InterPro's
+     `overlaps_with` is co-occurrence (one superfamily "overlaps" a domain, a
+     family and another domain). They stay `related_to` permanently.
+   - Docs projection: exemplars were **58% of every detail bucket** (measured live;
+     a stale local copy said 28% and gave the opposite answer). The browser now
+     projects the top 5 of 8 — the cap was raised for protein sharing, not for
+     display — cutting ~13% per bucket. Records keep all 8.
+
+   **Open scope call (not a task):** issue #7 asks for "a YAML record for each
+   SwissProt protein". We have the `ProteinProfile` class, 1,000 committed YAMLs
+   and 80,066 in the gitignored `profiles.jsonl`, against ~570k reviewed entries.
+   The jsonl-only decision was deliberate (phase 2, for scale). Confirm or revise
+   before closing #7.
 
 3. **Web design review — dataviz / artifact-design findings (issue #5).**
    Docs-site polish on `docs/browse.*` + landing. Self-contained.
