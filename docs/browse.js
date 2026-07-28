@@ -907,11 +907,21 @@ function renderExample(e, lazyPending) {
 
 // Colour per trait axis. FUNCTION features aren't localised so they
 // don't appear in the per-residue tracks.
-const AXIS_COLORS = {
-  SEQUENCE:            "#2563eb",  // blue
-  STRUCTURE:           "#16a34a",  // green
-  SEQUENCE_STRUCTURE:  "#a855f7",  // purple
-};
+// Categorical hues in fixed order, validated with the dataviz skill's checker:
+// worst adjacent CVD ΔE 9.1 light / 8.4 dark (target >=8). The previous set
+// failed — blue vs purple ΔE 2.6 under protanopia, green vs teal ΔE 10.8 even
+// with normal vision (issue #5). Adjacent-pair is the right test: an axis hue
+// is always rendered beside its label, so identity is never colour-alone.
+const AXIS_COLORS_LIGHT = {SEQUENCE: "#2a78d6", STRUCTURE: "#eb6834", FUNCTION: "#1baf7a", SEQUENCE_STRUCTURE: "#eda100", EVOLUTION: "#e87ba4", OTHER: "#8a8a85"};
+const AXIS_COLORS_DARK  = {SEQUENCE: "#3987e5", STRUCTURE: "#d95926", FUNCTION: "#199e70", SEQUENCE_STRUCTURE: "#c98500", EVOLUTION: "#d55181", OTHER: "#9a9a95"};
+const AXIS_COLORS = new Proxy({}, {get: (_t, k) => {
+  const dark = document.documentElement.dataset.theme === "dark"
+    || (!document.documentElement.dataset.theme
+        && window.matchMedia("(prefers-color-scheme: dark)").matches);
+  return (dark ? AXIS_COLORS_DARK : AXIS_COLORS_LIGHT)[k];
+}});
+
+
 const AXIS_LABELS = {
   SEQUENCE:            "sequence",
   STRUCTURE:           "structure",

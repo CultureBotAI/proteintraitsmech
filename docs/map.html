@@ -87,7 +87,18 @@
   </main>
   <script>
   // Axis palette (matches the landing stat-card hues).
-  const AXIS_COLORS = {STRUCTURE:"#16a34a",SEQUENCE:"#2563eb",SEQUENCE_STRUCTURE:"#a855f7",FUNCTION:"#d97706",EVOLUTION:"#0d9488",OTHER:"#888"};
+  // Categorical hues in fixed order, validated with the dataviz skill's
+  // checker: worst adjacent CVD ΔE 9.1 light / 8.4 dark (target >=8). The
+  // previous set failed — blue #2563eb vs purple #a855f7 was ΔE 2.6 under
+  // protanopia, and green #16a34a vs teal #0d9488 was ΔE 10.8 even with
+  // normal vision (issue #5). Adjacent-pair is the right test here because a
+  // hue never appears without its label beside it.
+  const AXIS_COLORS_LIGHT = {SEQUENCE:"#2a78d6",STRUCTURE:"#eb6834",FUNCTION:"#1baf7a",SEQUENCE_STRUCTURE:"#eda100",EVOLUTION:"#e87ba4",OTHER:"#8a8a85"};
+  const AXIS_COLORS_DARK  = {SEQUENCE:"#3987e5",STRUCTURE:"#d95926",FUNCTION:"#199e70",SEQUENCE_STRUCTURE:"#c98500",EVOLUTION:"#d55181",OTHER:"#9a9a95"};
+  const prefersDark = () => (document.documentElement.dataset.theme === "dark")
+    || (!document.documentElement.dataset.theme
+        && window.matchMedia("(prefers-color-scheme: dark)").matches);
+  const AXIS_COLORS = prefersDark() ? AXIS_COLORS_DARK : AXIS_COLORS_LIGHT;
   // A map file may carry its own palette / link template / labels (the protein
   // map groups by organism, not trait axis); corpus maps omit them and fall back.
   let COLORS = AXIS_COLORS, LINK = null, ID_STRIP = "", UNIT = "records";
@@ -111,7 +122,8 @@
     document.getElementById("hint").textContent="Loading corpus map…";
     fetch("data/"+file).then(r=>{if(!r.ok) throw 0; return r.json();}).then(d=>{
       DATA=d; VF=new Uint8Array(d.points.length);
-      COLORS=d.colors||AXIS_COLORS; LINK=d.link||null;
+      COLORS=(prefersDark() && d.colors_dark) ? d.colors_dark : (d.colors||AXIS_COLORS);
+      LINK=d.link||null;
       ID_STRIP=d.id_strip_prefix||""; UNIT=d.unit||"records";
       activeAxes.clear(); d.axes.forEach(a=>activeAxes.add(a));
       catFilter=""; query=""; const srch=document.getElementById("search"); if(srch) srch.value="";
@@ -158,8 +170,14 @@
   // the SAME points the plot renders (identifier, axis, category, x, y).
   function buildCsv(){
     const q=v=>{const s=String(v);return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;};
-    const lines=[`identifier,${(DATA.group_label||"trait_axis").replace(/ /g,"_")},${(DATA.cat_label||"trait_category").replace(/ /g,"_")},x,y`];
-    for(const p of DATA.points){ lines.push([p[3], DATA.axes[p[2]], DATA.cats[p[4]], p[0], p[1]].map(q).join(",")); }
+    const hasOrg=!!DATA.orgs;
+    const lines=[`identifier,${(DATA.group_label||"trait_axis").replace(/ /g,"_")}${hasOrg?",organism":""},${(DATA.cat_label||"trait_category").replace(/ /g,"_")},x,y`];
+    for(const p of DATA.points){
+      const row=[p[3], DATA.axes[p[2]]];
+      if(hasOrg) row.push(p[5]!==undefined ? DATA.orgs[p[5]] : "");
+      row.push(DATA.cats[p[4]], p[0], p[1]);
+      lines.push(row.map(q).join(","));
+    }
     const blob=new Blob([lines.join("\n")],{type:"text/csv"});
     const dl=document.getElementById("csv-dl");
     dl.href=URL.createObjectURL(blob);
@@ -222,7 +240,10 @@
       const mx=(ev.x-r.left)*sx, my=(ev.y-r.top)*sy;
       const p=nearest(mx,my);
       if(p){
-        tip.innerHTML=`<b>${esc(p[3])}</b><br><span class="t-sub">${esc(DATA.axes[p[2]])} · ${esc(DATA.cats[p[4]])}</span>`;
+        const org=(DATA.orgs && p[5]!==undefined) ? DATA.orgs[p[5]] : null;
+        tip.innerHTML=`<b>${esc(p[3])}</b><br><span class="t-sub">`
+          + (org ? esc(org)+" · " : "")
+          + `${esc(DATA.axes[p[2]])} · ${esc(DATA.cats[p[4]])}</span>`;
         tip.style.left=(mx/sx)+"px"; tip.style.top=(my/sy)+"px"; tip.style.opacity=1;
       } else tip.style.opacity=0;
     });
