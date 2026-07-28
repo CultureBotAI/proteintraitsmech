@@ -41,13 +41,30 @@ JSONL = REPO_ROOT / "data" / "profiles" / "profiles.jsonl"
 INDEX = REPO_ROOT / "data" / "raw" / "profiles_cache" / "trait_index.json"
 OUT = REPO_ROOT / "docs" / "data" / "protein_map.json"
 
-# Organism palette — distinct hues, readable in both themes. Keys are the
-# taxon_label prefixes as they appear in the matrix.
-ORGANISM_COLORS = {
-    "Homo sapiens": "#2563eb",
-    "Mus musculus": "#d97706",
-    "Saccharomyces cerevisiae": "#16a34a",
-    "Escherichia coli": "#a855f7",
+# Points are coloured by DOMAIN OF LIFE, not by organism, and that is a
+# constraint rather than a preference. A dense scatter has no labels on its
+# marks, so every pair of hues must be separable — the all-pairs test. Run
+# through the dataviz skill's validator, no 10-hue set passes it, no 5-hue set
+# passes it in dark mode, and only 3-hue sets clear it in both modes. Colouring
+# by organism also left six of the ten proteomes sharing one fallback grey once
+# the matrix grew from four organisms to ten (issue #5).
+#
+# Domain is the grouping the analysis actually turns on anyway: phase 9 measured
+# transfer decaying with phylogenetic distance. Organism stays available on the
+# point tooltip and in the CSV, and remains the unit of the underlying data.
+#
+# Validated all-pairs, both modes: worst CVD ΔE 13.2 (deutan).
+DOMAIN_COLORS_LIGHT = {"Eukaryota": "#2a78d6", "Bacteria": "#c98500",
+                       "Archaea": "#d55181"}
+DOMAIN_COLORS_DARK = {"Eukaryota": "#3987e5", "Bacteria": "#c98500",
+                      "Archaea": "#d55181"}
+DOMAIN_OF = {
+    "Homo sapiens": "Eukaryota", "Mus musculus": "Eukaryota",
+    "Drosophila melanogaster": "Eukaryota", "Caenorhabditis elegans": "Eukaryota",
+    "Arabidopsis thaliana": "Eukaryota", "Saccharomyces cerevisiae": "Eukaryota",
+    "Plasmodium falciparum": "Eukaryota",
+    "Escherichia coli": "Bacteria", "Bacillus subtilis": "Bacteria",
+    "Methanocaldococcus jannaschii": "Archaea",
 }
 
 # CATH top-level class → readable label, used as the filterable facet.
@@ -173,8 +190,10 @@ def main() -> int:
     norm = (coords - lo) / span
 
     def organism(r):
-        lab = (r.get("taxon_label") or "Unknown").split(" (")[0]
-        return lab
+        return (r.get("taxon_label") or "Unknown").split(" (")[0]
+
+    def domain(r):
+        return DOMAIN_OF.get(organism(r), "Eukaryota")
 
     def cath_class(r):
         cs = sorted(t for t in r["_ts"] if t.startswith("CATH:"))
@@ -182,27 +201,33 @@ def main() -> int:
             return NO_FOLD
         return CATH_CLASS.get(cs[0].split(":")[1].split(".")[0], "Other class")
 
-    groups = sorted({organism(r) for r in rows})
+    groups = [d for d in ("Eukaryota", "Bacteria", "Archaea")
+              if any(domain(r) == d for r in rows)]
+    orgs = sorted({organism(r) for r in rows})
+    o_pos = {o: i for i, o in enumerate(orgs)}
     cats = sorted({cath_class(r) for r in rows})
     g_pos = {g: i for i, g in enumerate(groups)}
     c_pos = {c: i for i, c in enumerate(cats)}
 
     points = [[round(float(norm[i, 0]), 4), round(float(norm[i, 1]), 4),
-               g_pos[organism(r)], r["accession"], c_pos[cath_class(r)]]
+               g_pos[domain(r)], r["accession"], c_pos[cath_class(r)],
+               o_pos[organism(r)]]
               for i, r in enumerate(rows)]
 
     payload = {
         "method": args.method,
         "axes": groups,                 # the page's grouping dimension
+        "orgs": orgs,                   # per-point organism, shown on hover
         "cats": cats,
         "n_total": n_corpus,
         "n_shown": len(points),
         "points": points,
         # page-level presentation hints; embed_map.py's output omits these and
         # the page falls back to its trait-axis defaults
-        "group_label": "organism",
+        "group_label": "domain of life",
         "cat_label": "CATH class",
-        "colors": {g: ORGANISM_COLORS.get(g, "#888") for g in groups},
+        "colors": {g: DOMAIN_COLORS_LIGHT[g] for g in groups},
+        "colors_dark": {g: DOMAIN_COLORS_DARK[g] for g in groups},
         "link": "https://www.uniprot.org/uniprotkb/{id}/entry",
         "id_strip_prefix": "UniProtKB:",
         "unit": "proteins",
@@ -214,7 +239,7 @@ def main() -> int:
     outp.parent.mkdir(parents=True, exist_ok=True)
     outp.write_text(json.dumps(payload, separators=(",", ":")), encoding="utf-8")
 
-    by_org = collections.Counter(organism(r) for r in rows)
+    by_org = collections.Counter(f"{organism(r)} [{domain(r)}]" for r in rows)
     by_cat = collections.Counter(cath_class(r) for r in rows)
     print(f"wrote {len(points):,} points ({args.method}) → {rel(outp)}", file=sys.stderr)
     print("  organisms: " + ", ".join(f"{k} {v:,}" for k, v in by_org.most_common()),
