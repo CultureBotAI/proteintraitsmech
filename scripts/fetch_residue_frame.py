@@ -114,7 +114,7 @@ TRAITS = REPO_ROOT / "data" / "traits"
 _PID = re.compile(r"(?m)^\s*-\s+protein_id:\s*(\S+)")
 
 
-def corpus_exemplars_missing(frame: dict) -> list:
+def corpus_exemplars_missing(frame: dict, absent: set | None = None) -> list:
     """Exemplar accessions referenced by records but absent from the sidecar.
 
     The ten proteomes cover the SWISSPROT_PROFILE picks, but CURATOR and
@@ -130,7 +130,7 @@ def corpus_exemplars_missing(frame: dict) -> list:
             continue
         for pid in _PID.findall(text[i:]):
             acc = pid.split(":")[-1]
-            if acc not in frame:
+            if acc not in frame and acc not in (absent or ()):
                 want.add(acc)
     return sorted(want)
 
@@ -278,6 +278,8 @@ def main() -> int:
         queries += [f"reviewed:true AND organism_id:{t}" for t in ORGANISMS]
 
     frame: dict = {}
+    meta: dict = {}
+    absent: set = set()
     outp_existing = Path(args.out)
     release = sidecar.uniprot_release()
     if args.top_up and not queries and outp_existing.exists():
@@ -300,7 +302,11 @@ def main() -> int:
         for q in queries:
             print(f"    {q}")
         if args.top_up:
-            missing = corpus_exemplars_missing(frame)
+            absent = set(meta.get("absent") or []) if args.top_up else set()
+        missing = corpus_exemplars_missing(frame, absent)
+        if absent:
+            print(f"skipping {len(absent):,} accessions previously confirmed "
+                  f"absent from UniProt", file=sys.stderr)
             print(f"top-up would fetch {len(missing):,} exemplar accessions "
                   f"not yet in the frame")
         print(f"frame currently holds {len(frame):,} proteins")
@@ -326,7 +332,11 @@ def main() -> int:
               file=sys.stderr)
 
     if args.top_up:
-        missing = corpus_exemplars_missing(frame)
+        absent = set(meta.get("absent") or []) if args.top_up else set()
+        missing = corpus_exemplars_missing(frame, absent)
+        if absent:
+            print(f"skipping {len(absent):,} accessions previously confirmed "
+                  f"absent from UniProt", file=sys.stderr)
         print(f"top-up: {len(missing):,} exemplar accessions not yet in the frame",
               file=sys.stderr)
         _dropped.clear()
@@ -342,7 +352,15 @@ def main() -> int:
             frame[acc] = {"seq": ((entry.get("sequence") or {}).get("value")) or "",
                           "ft": ft}
             got += 1
-        print(f"top-up: +{got:,} proteins", file=sys.stderr)
+        # An accession that came back empty from a SUCCESSFUL batch is not a
+        # transient failure — UniProt does not serve it (withdrawn, demerged).
+        # Recording that stops the next top-up re-requesting ~10,000 dead
+        # accessions forever, which it did on every run until now.
+        still_missing = {a for a in missing if a not in frame}
+        absent |= still_missing
+        print(f"top-up: +{got:,} proteins; {len(still_missing):,} confirmed "
+              f"absent from UniProt (recorded, will not be retried)",
+              file=sys.stderr)
         if _dropped:
             print(f"top-up: {len(_dropped)} accession(s) the endpoint would not "
                   f"serve — these are corpus data errors, not fetch failures "
@@ -365,8 +383,11 @@ def main() -> int:
         print("--allow-partial given; writing anyway.", file=sys.stderr)
     outp = Path(args.out)
     outp.parent.mkdir(parents=True, exist_ok=True)
-    outp.write_text(json.dumps(sidecar.wrap("proteins", frame, "UniProt", release),
-                               separators=(",", ":")), encoding="utf-8")
+    payload = sidecar.wrap("proteins", frame, "UniProt", release)
+    known_absent = sorted(absent) if args.top_up else sorted(meta.get("absent") or [])
+    if known_absent:
+        payload["_meta"]["absent"] = known_absent
+    outp.write_text(json.dumps(payload, separators=(",", ":")), encoding="utf-8")
     try:
         shown = outp.relative_to(REPO_ROOT)
     except ValueError:

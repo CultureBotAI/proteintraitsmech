@@ -286,6 +286,27 @@ def truncate(text: str, limit: int = DEF_TRUNC) -> str:
     return text[: limit - 1].rstrip() + "…"
 
 
+# exemplars projected into the browser payload per record (the record itself
+# keeps every one it has)
+DOCS_MAX_EXAMPLES = 5
+
+
+# CURATOR picks outrank API-fetched ones, which outrank machine suggestions, so
+# the cap can only ever drop the lowest-standing entries. This is a guard, not a
+# repair: measured against the corpus, no record today has a curated pick hidden
+# while a suggestion is shown (--rerank skips records holding curated examples).
+# But that protection is incidental rather than enforced, and a cap sliced by
+# file position would silently invert the moment it stopped holding (#66).
+_EXAMPLE_RANK = {"CURATOR": 0, "UNIPROTKB_API": 1, "SWISSPROT_PROFILE": 2}
+
+
+def _docs_examples(examples: list) -> list:
+    """The exemplars the browser shows: highest-standing first, then capped."""
+    ordered = sorted(enumerate(examples),
+                     key=lambda p: (_EXAMPLE_RANK.get(p[1].get("source"), 3), p[0]))
+    return [e for _i, e in ordered[:DOCS_MAX_EXAMPLES]]
+
+
 def _project_example(ex: dict) -> dict:
     """Lean projection of a CanonicalExample suitable for the browser
     detail view. Skips empty fields to keep records.json small."""
@@ -396,7 +417,15 @@ def load_record(path: Path) -> dict[str, Any] | None:
         #           mapped_xrefs, or a reaction the record reaches only through a
         #           RHEA mapped_xref (EC→RHEA via rhea2ec) inheriting its ChEBI.
         **_chem_fields(data),
-        "ex": [_project_example(e) for e in (data.get("canonical_examples") or [])],
+        # Only the top few exemplars reach the browser. Phase 14 raised
+        # suggest_canonical_examples --max-examples 3 -> 8 for a *data* reason —
+        # more protein sharing between records, which is what the residue-frame
+        # aligner needs — not so the detail page could list eight. Projecting all
+        # of them took canonical_examples from 28% to 58% of every detail bucket.
+        # The record keeps all 8; the page shows the best DOCS_MAX_EXAMPLES,
+        # which are first because they are rank-ordered.
+        "ex": [_project_example(e)
+               for e in _docs_examples(data.get("canonical_examples") or [])],
         # Cross-source equivalence [object, predicate, relation_source] from the
         # overlay (not stored on the YAML). Empty for most records.
         "eq": EQUIV.get(identifier, []),
