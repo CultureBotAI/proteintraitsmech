@@ -114,7 +114,7 @@
   const cv=document.getElementById("cv"), ctx=cv.getContext("2d");
   const W=cv.width, H=cv.height, PAD=14;
   const tip=document.getElementById("tip");
-  let DATA=null;
+  let DATA=null, CURRENT_MAP=null;
   const activeAxes=new Set();      // axis names currently shown (legend toggles)
   let catFilter="", query="";      // dropdown + search
   let VF=new Uint8Array(0);        // per-point: passes all filters
@@ -127,6 +127,7 @@
   // or "corpus_map_definitions.json" (definition-only embedding).
   function loadMap(file){
     document.getElementById("hint").textContent="Loading corpus map…";
+    CURRENT_MAP=file;
     fetch("data/"+file).then(r=>{if(!r.ok) throw 0; return r.json();}).then(d=>{
       DATA=d; VF=new Uint8Array(d.points.length);
       COLORS_LIGHT=d.colors||null; COLORS_DARK=d.colors_dark||d.colors||null;
@@ -169,6 +170,8 @@
     if(b.classList.contains("active")) return;
     document.querySelectorAll(".seg-btn").forEach(x=>x.classList.remove("active"));
     b.classList.add("active");
+    const h=Object.keys(MAP_BY_HASH).find(k=>MAP_BY_HASH[k]===b.dataset.map);
+    if(h) history.replaceState(null,"",h);
     loadMap(b.dataset.map);
   }));
   // The canvas is painted, not styled, so a CSS theme flip does not repaint it.
@@ -177,7 +180,21 @@
   window.matchMedia("(prefers-color-scheme: dark)")
     .addEventListener("change", () => { if (DATA) { buildLegend(); draw(); } });
 
-  loadMap("corpus_map.json");
+  // Deep-link a tab: the landing links straight to #proteins, and a shared URL
+  // should reopen the same view rather than always the full-record corpus map.
+  const MAP_BY_HASH = {"#proteins": "protein_map.json",
+                       "#definitions": "corpus_map_definitions.json",
+                       "#corpus": "corpus_map.json"};
+  function selectMap(file){
+    document.querySelectorAll(".seg-btn").forEach(b =>
+      b.classList.toggle("active", b.dataset.map === file));
+    loadMap(file);
+  }
+  window.addEventListener("hashchange", () => {
+    const f = MAP_BY_HASH[location.hash];
+    if (f && DATA && f !== CURRENT_MAP) selectMap(f);
+  });
+  selectMap(MAP_BY_HASH[location.hash] || "corpus_map.json");
 
   // Accessible data-table fallback for this dense canvas scatter: a CSV built from
   // the SAME points the plot renders (identifier, axis, category, x, y).
@@ -226,14 +243,50 @@
     draw();
   }
 
+  // Mark size follows how many points are actually visible. A 1.4px dot is right
+  // for 78k overlapping points and wrong for nine: filtering to EVOLUTION used to
+  // leave nine near-invisible specks. The dataviz >=8px marker floor is a dot-plot
+  // rule that a dense scatter cannot meet — but once a filter thins the field it
+  // can, so it is met wherever it applies rather than waived outright.
+  function markSize(vis){
+    if (vis > 20000) return 1.6;
+    if (vis >  5000) return 2.4;
+    if (vis >  1000) return 3.5;
+    if (vis >   200) return 5;
+    if (vis >    50) return 7;
+    return 9;                       // sparse: full marker, ringed below
+  }
+
   function draw(){
     const pts=DATA.points;
     ctx.clearRect(0,0,W,H);
+    let vis=0; for(let i=0;i<VF.length;i++) if(VF[i]) vis++;
+    const s=markSize(vis), round=s>=5, half=s/2;
+    if(round){
+      // read once per draw, not once per mark — getComputedStyle in the loop
+      // forces a style recalculation on every point
+      ctx.lineWidth=2;
+      ctx.strokeStyle=getComputedStyle(document.documentElement)
+        .getPropertyValue("--stage-bg").trim()||"#fff";
+    }
     // Dim the filtered-out points faintly for context, then the visible ones on top.
     ctx.globalAlpha=.06; ctx.fillStyle="#999";
-    for(let i=0;i<pts.length;i++){ if(VF[i]) continue; const [x,y]=px(pts[i]); ctx.fillRect(x,y,1.3,1.3); }
-    ctx.globalAlpha=.6;
-    for(let i=0;i<pts.length;i++){ if(!VF[i]) continue; const p=pts[i]; const [x,y]=px(p); ctx.fillStyle=colorOf(DATA.axes[p[2]]); ctx.fillRect(x,y,1.6,1.6); }
+    // centred, like the circles below and like nearest()'s hit test — fillRect
+    // draws from the top-left, so the old marks sat down-right of the position
+    // the hover actually probed
+    for(let i=0;i<pts.length;i++){ if(VF[i]) continue; const [x,y]=px(pts[i]); ctx.fillRect(x-0.65,y-0.65,1.3,1.3); }
+    ctx.globalAlpha = vis > 5000 ? .6 : .85;
+    for(let i=0;i<pts.length;i++){
+      if(!VF[i]) continue;
+      const p=pts[i], [x,y]=px(p);
+      ctx.fillStyle=colorOf(DATA.axes[p[2]]);
+      if(round){
+        // a surface ring keeps overlapping marks readable once they are big
+        ctx.beginPath(); ctx.arc(x,y,half,0,6.2832); ctx.fill(); ctx.stroke();
+      } else {
+        ctx.fillRect(x-half,y-half,s,s);
+      }
+    }
     ctx.globalAlpha=1;
   }
 
