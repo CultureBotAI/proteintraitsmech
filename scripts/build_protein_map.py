@@ -13,7 +13,8 @@ organism-specific annotation. If organisms interleave and the structure follows
 fold and function instead, the profiles carry biology that survives the species
 boundary.
 
-Pipeline: binary protein × trait incidence (traits with ≥ --min-support carriers)
+Pipeline: binary protein × *signature* trait incidence (traits with
+≥ --min-support carriers; GO/EC excluded, see SIG_PREFIXES)
 → TruncatedSVD to --svd dims (the matrix is large and very sparse) → PaCMAP to
 2-D, matching the corpus map's primary projection.
 
@@ -77,6 +78,22 @@ CATH_CLASS = {
 }
 NO_FOLD = "No CATH fold assigned"
 
+# Traits that describe what a protein *is*. GO/EC describe what it does, and
+# their density tracks curation effort rather than biology — mouse averages 16.1
+# GO terms to human's 12.6, the same confound that forced within-proteome
+# normalisation in the exemplar ranking. Including them made the map 44% GO
+# features by vocabulary and measurably worse at its actual job:
+#
+#   feature space              organism purity   CATH-class purity
+#   signatures + GO/EC             2.27x               2.34x
+#   signatures only                1.86x               3.12x
+#
+# Excluding GO cuts the organism signal by 18% and improves structural
+# organisation by 33%. cluster_trait_families.py already excluded them for the
+# same reason; this brings the map into line.
+SIG_PREFIXES = ("Pfam", "InterPro", "CDD", "PROSITE", "SMART", "NCBIfam",
+                "CATH", "SUPERFAMILY", "HAMAP", "PIRSF", "PANTHER", "PRINTS")
+
 
 def rel(p: Path) -> str:
     """Repo-relative path for logging, tolerating --out anywhere on disk."""
@@ -121,9 +138,9 @@ def main() -> int:
     idx = json.loads(INDEX.read_text(encoding="utf-8"))
     rows = [json.loads(l) for l in JSONL.open(encoding="utf-8")]
     for r in rows:
-        # same trait set the miners use: signatures plus GO / EC, corpus members only
-        r["_ts"] = {t for t in (set(r["traits"]) | set(r["go"])
-                                | {f"EC:{e}" for e in r["ec"]}) if t in idx}
+        # signature traits only — see SIG_PREFIXES for why GO/EC are excluded
+        r["_ts"] = {t for t in r["traits"]
+                    if t.split(":")[0] in SIG_PREFIXES and t in idx}
     rows = [r for r in rows if r["_ts"]]
 
     n_corpus = len(rows)          # before sampling — the page compares against it
