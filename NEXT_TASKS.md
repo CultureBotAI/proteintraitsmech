@@ -64,11 +64,14 @@ _Last reconciled: 2026-07-27._
      projects the top 5 of 8 — the cap was raised for protein sharing, not for
      display — cutting ~13% per bucket. Records keep all 8.
 
-   **Open scope call (not a task):** issue #7 asks for "a YAML record for each
-   SwissProt protein". We have the `ProteinProfile` class, 1,000 committed YAMLs
-   and 80,066 in the gitignored `profiles.jsonl`, against ~570k reviewed entries.
-   The jsonl-only decision was deliberate (phase 2, for scale). Confirm or revise
-   before closing #7.
+   **Scope call ANSWERED (2026-07-27, `research/docs-scalability-audit-1.md`):**
+   issue #7 asks for "a YAML record for each SwissProt protein". Measured: a
+   `ProteinProfile` averages 3,810 B, so 570k of them is ~2.2 GB and would take
+   the repo to **980,494 tracked files — 2× the 500k threshold** where git and the
+   GitHub UI degrade. **Keep the jsonl-only decision.** If more coverage must be
+   committed, bucket it (~256 multi-record files, as the detail sidecars already
+   do) rather than minting 570k tiny files. This is the `scalability-check`
+   skill's tier D. Nothing else blocks closing #7.
 
 3. **Web design review — dataviz / artifact-design findings (issue #5).**
    Docs-site polish on `docs/browse.*` + landing. Self-contained.
