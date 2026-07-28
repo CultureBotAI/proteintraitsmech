@@ -12,6 +12,11 @@ _Last reconciled: 2026-07-27._
 
 ## Next up (actionable, ranked)
 
+_Issue #7 (Swiss-Prot population + multi-trait families) was **closed 2026-07-27**
+after 15 phases; the per-protein-YAML ask was answered with measurements rather
+than deferred (see `research/docs-scalability-audit-1.md`). Issue #5 is all but
+cleared. **Item 1 below is the only substantial thread left.**_
+
 1. **Per-gene curation of the remaining ~1,219 resistance causal-graph drafts.**
    The family-level promotion is done (6,180 REVIEWED). The tail is genuinely
    per-gene: `ARO:0000031` gene-variant point mutants (gyrA/rpoB/16S/23S — each a
@@ -74,7 +79,21 @@ _Last reconciled: 2026-07-27._
    skill's tier D. Nothing else blocks closing #7.
 
 3. **Web design review — dataviz / artifact-design findings (issue #5).**
-   Docs-site polish on `docs/browse.*` + landing. Self-contained.
+   **Mostly cleared (2026-07-27, PR #68.)** CVD-unsafe palettes fixed via the
+   `dataviz` validator: blue↔purple was ΔE 2.6 (protan), green↔teal ΔE 10.8
+   (normal vision). Axis pills → reference slots 1–5, worst adjacent CVD ΔE 9.1
+   light / 8.4 dark; the protein map → **domain of life** (3 hues, all-pairs
+   ΔE 13.2 both modes) because no 10-hue set — and in dark mode no 5-hue set —
+   passes all-pairs, with organism kept on the tooltip + CSV. Fixed a live
+   regression found while measuring: six of ten proteomes were rendering as the
+   same `#888` grey after phase 9 grew the matrix. Landing count fallbacks
+   refreshed (were 47% stale).
+   **Recorded as exceptions, not doing:** 4 landing cards (the corpus map is a
+   real top-level destination with two tabs; reconciling to 3 would hide a view
+   to satisfy a count); 1.4px canvas markers (the ≥8px rule is for dot plots — at
+   78k points that is a solid blob, and the hover hit radius is already far
+   larger than the mark). The Cayman→teal/amber rebrand stays **deferred by
+   request**, and is all that remains on #5.
 
 ## Refinements (small, opportunistic)
 
