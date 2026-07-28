@@ -98,11 +98,18 @@
   const prefersDark = () => (document.documentElement.dataset.theme === "dark")
     || (!document.documentElement.dataset.theme
         && window.matchMedia("(prefers-color-scheme: dark)").matches);
-  const AXIS_COLORS = prefersDark() ? AXIS_COLORS_DARK : AXIS_COLORS_LIGHT;
+  // Re-read per access, never captured at load: the theme toggle flips
+  // data-theme at runtime and a captured palette would leave the canvas on the
+  // previous mode's hues until reload.
+  const AXIS_COLORS = new Proxy({}, {get: (_t, k) =>
+    (prefersDark() ? AXIS_COLORS_DARK : AXIS_COLORS_LIGHT)[k]});
   // A map file may carry its own palette / link template / labels (the protein
   // map groups by organism, not trait axis); corpus maps omit them and fall back.
-  let COLORS = AXIS_COLORS, LINK = null, ID_STRIP = "", UNIT = "records";
-  const colorOf = g => (COLORS && COLORS[g]) || AXIS_COLORS[g] || "#888";
+  let COLORS_LIGHT = null, COLORS_DARK = null, LINK = null, ID_STRIP = "", UNIT = "records";
+  const colorOf = g => {
+    const pal = prefersDark() ? COLORS_DARK : COLORS_LIGHT;
+    return (pal && pal[g]) || AXIS_COLORS[g] || "#8a8a85";
+  };
   const METHOD_LABEL = {pacmap:"PaCMAP",umap:"UMAP",pca:"PCA",tsne:"t-SNE"};
   const cv=document.getElementById("cv"), ctx=cv.getContext("2d");
   const W=cv.width, H=cv.height, PAD=14;
@@ -122,7 +129,7 @@
     document.getElementById("hint").textContent="Loading corpus map…";
     fetch("data/"+file).then(r=>{if(!r.ok) throw 0; return r.json();}).then(d=>{
       DATA=d; VF=new Uint8Array(d.points.length);
-      COLORS=(prefersDark() && d.colors_dark) ? d.colors_dark : (d.colors||AXIS_COLORS);
+      COLORS_LIGHT=d.colors||null; COLORS_DARK=d.colors_dark||d.colors||null;
       LINK=d.link||null;
       ID_STRIP=d.id_strip_prefix||""; UNIT=d.unit||"records";
       activeAxes.clear(); d.axes.forEach(a=>activeAxes.add(a));
@@ -164,6 +171,12 @@
     b.classList.add("active");
     loadMap(b.dataset.map);
   }));
+  // The canvas is painted, not styled, so a CSS theme flip does not repaint it.
+  new MutationObserver(() => { if (DATA) { buildLegend(); draw(); } })
+    .observe(document.documentElement, {attributes: true, attributeFilter: ["data-theme"]});
+  window.matchMedia("(prefers-color-scheme: dark)")
+    .addEventListener("change", () => { if (DATA) { buildLegend(); draw(); } });
+
   loadMap("corpus_map.json");
 
   // Accessible data-table fallback for this dense canvas scatter: a CSV built from
