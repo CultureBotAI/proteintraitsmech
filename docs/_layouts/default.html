@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ page.title | default: site.title }}</title>
+<style>
+  /* Teal/amber shell, shared with index.html and map.html. This layout replaces
+     jekyll-theme-cayman: the site previously rendered its Markdown pages in
+     Cayman's green→blue while the hand-built landing and map used teal/amber,
+     so following a link changed the site's identity mid-visit (issue #5). */
+  :root{
+    --pastel-a:#B7E4DC;      /* pastel teal */
+    --pastel-b:#FCE3B0;      /* pastel amber */
+    --accent:#2E8B84;
+    --ink:#1a1a1a;
+    --muted:#555;
+    --card:#ffffff;
+    --line:rgba(0,0,0,.10);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --pastel-a:#14231f;--pastel-b:#0f1615;--accent:#48c2b8;
+      --ink:#e8efec;--muted:#9bb0aa;--card:#17201e;--line:#253230;
+    }
+    :root:not([data-theme="light"]) footer{background:rgba(255,255,255,.04)}
+  }
+  :root[data-theme="dark"]{
+    --pastel-a:#14231f;--pastel-b:#0f1615;--accent:#48c2b8;
+    --ink:#e8efec;--muted:#9bb0aa;--card:#17201e;--line:#253230;
+  }
+  :root[data-theme="dark"] footer{background:rgba(255,255,255,.04)}
+  *{box-sizing:border-box}
+  body{margin:0;font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+       color:var(--ink);background:var(--card)}
+  header.hero{background:linear-gradient(135deg,var(--pastel-a),var(--pastel-b));
+              padding:44px 20px 34px;text-align:center}
+  header.hero h1{margin:0;font-size:1.9rem;letter-spacing:-.01em}
+  header.hero h1 a{color:var(--ink);text-decoration:none}
+  header.hero .tagline{margin:.5em auto 0;max-width:60ch;color:var(--ink);opacity:.82;font-size:.98rem}
+  nav.crumbs{margin-top:1em;display:flex;gap:.9em;justify-content:center;flex-wrap:wrap;font-size:.92rem}
+  nav.crumbs a{color:var(--ink);opacity:.75;text-decoration:none;border-bottom:1px solid transparent}
+  nav.crumbs a:hover{opacity:1;border-bottom-color:currentColor}
+  main.wrap{max-width:70ch;margin:0 auto;padding:36px 20px 56px}
+  main.wrap h1,main.wrap h2,main.wrap h3{line-height:1.25;margin:1.6em 0 .4em}
+  main.wrap h1{font-size:1.7rem;margin-top:0}
+  main.wrap h2{font-size:1.3rem;border-bottom:1px solid var(--line);padding-bottom:.25em}
+  main.wrap a{color:var(--accent)}
+  main.wrap code{background:rgba(127,127,127,.14);padding:.15em .35em;border-radius:4px;font-size:.92em}
+  main.wrap pre{background:rgba(127,127,127,.12);padding:14px 16px;border-radius:10px;overflow-x:auto}
+  main.wrap pre code{background:none;padding:0}
+  main.wrap table{border-collapse:collapse;width:100%;margin:1em 0;display:block;overflow-x:auto}
+  main.wrap th,main.wrap td{border:1px solid var(--line);padding:.45em .6em;text-align:left}
+  main.wrap th{background:rgba(127,127,127,.10)}
+  main.wrap blockquote{margin:1em 0;padding:.2em 1em;border-left:3px solid var(--accent);color:var(--muted)}
+  footer{background:rgba(0,0,0,.03);border-top:1px solid var(--line);
+         padding:22px 20px;text-align:center;font-size:.9rem;color:var(--muted)}
+  footer a{color:var(--muted)}
+  footer .fam{margin:.2em 0}
+  footer .self{font-weight:600;color:var(--ink)}
+</style>
+</head>
+<body>
+  <header class="hero">
+    <h1><a href="{{ '/' | relative_url }}">ProteinTraitsMech</a></h1>
+    <p class="tagline">{{ site.description }}</p>
+    <nav class="crumbs">
+      <a href="{{ '/' | relative_url }}">Home</a>
+      <a href="{{ '/browse.html' | relative_url }}">Record browser</a>
+      <a href="{{ '/map.html' | relative_url }}">Corpus map</a>
+      <a href="{{ '/schema.html' | relative_url }}">Schema</a>
+      <a href="{{ '/example.html' | relative_url }}">Example</a>
+      <a href="https://github.com/CultureBotAI/proteintraitsmech">GitHub</a>
+    </nav>
+  </header>
+  <main class="wrap">
+    {{ content }}
+  </main>
+  <footer>
+    <div class="fam"><strong>KG-Microbe Mechs:</strong>
+      <a href="https://culturebotai.github.io/CultureMech/">CultureMech</a>&middot;<a href="https://culturebotai.github.io/MediaIngredientMech/">MediaIngredientMech</a>&middot;<a href="https://culturebotai.github.io/CommunityMech/">CommunityMech</a>&middot;<a href="https://culturebotai.github.io/TraitMech/">TraitMech</a>&middot;<span class="self" aria-current="page">ProteinTraitsMech</span>
+    </div>
+    <div class="fam">
+      <a href="https://github.com/Knowledge-Graph-Hub/kg-microbe">kg-microbe</a>&middot;<a href="https://bioportal.bioontology.org/ontologies/METPO">METPO</a>&middot;CC0-1.0
+    </div>
+  </footer>
+  <script src="{{ '/theme-toggle.js' | relative_url }}"></script>
+</body>
+</html>
