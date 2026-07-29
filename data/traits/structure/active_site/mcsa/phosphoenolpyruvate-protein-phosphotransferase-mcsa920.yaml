@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.7.3.9
 - CHEBI:29979
@@ -431,4 +431,202 @@ definitions:
       Phosphoenolpyruvate-protein phosphotransferase, (PTS enzyme I), is a component of the phosphoenolpyruvate-dependent sugar phosphotransferase system (sugar PTS). PTS catalyses the phosphorylation of incoming sugar substrates concomitantly with their translocation across the cell membrane. PTS enzyme I transfers the phosphoryl group from phosphoenolpyruvate to the phosphoryl carrier protein HPr [PMID:9922238].
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of phosphoenolpyruvate---protein phosphotransferase
+  description: Mechanism transcribed from M-CSA entry 920. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: his189
+    label: catalytic His189 (M-CSA/PDB numbering; UniProt residue 189)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08839
+    description: 'M-CSA roles: covalent catalysis.'
+  - node_id: glu431
+    label: catalytic Glu431 (M-CSA/PDB numbering; UniProt residue 431)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08839
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp455
+    label: catalytic Asp455 (M-CSA/PDB numbering; UniProt residue 455)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08839
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: cys502
+    label: catalytic Cys502 (M-CSA/PDB numbering; UniProt residue 502)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08839
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: L-histidine residue
+    node_type: CHEMICAL
+    grounding: CHEBI:29979
+  - node_id: reactant1
+    label: phosphonatoenolpyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:58702
+  - node_id: product0
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+  - node_id: product1
+    label: N(pros)-phosphonato-L-histidine residue
+    node_type: CHEMICAL
+    grounding: CHEBI:64837
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: The reaction follows an in-line phosphotransfer mechanism involving pentacoordinated
+      phosphorous with trigonal bipyramidal geometry, and the donor (PEP) and acceptor (His-189 in EI)
+      in the apical positions. The pyruvyl enolate product is protonated by Cys502.
+  - node_id: active_site
+    label: phosphoenolpyruvate---protein phosphotransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:920
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.50.30.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.50.30.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: phosphoenolpyruvate---protein phosphotransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.7.3.9
+  edges:
+  - subject: cys502
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys502 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/920/
+      snippet: The reaction follows an in-line phosphotransfer mechanism involving pentacoordinated phosphorous
+        with trigonal bipyramidal geometry, and the donor (PEP) and acceptor (His-189 in EI) in the apical
+        positions. The pyruvyl enolate product is protonated by Cys502.
+      notes: M-CSA entry 920, mechanism 2; M-CSA cites PMID:10892802, PMID:11741915, PMID:12705838, PMID:17053069,
+        PMID:19801641, PMID:8805571, PMID:9541412, PMID:9922238; step 1
+  - subject: his189
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His189 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/920/
+      snippet: covalent catalysis
+      notes: M-CSA entry 920, mechanism 2; M-CSA cites PMID:10892802, PMID:11741915, PMID:12705838, PMID:17053069,
+        PMID:19801641, PMID:8805571, PMID:9541412, PMID:9922238; M-CSA catalytic-residue roles for His189
+  - subject: glu431
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu431 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/920/
+      snippet: metal ligand
+      notes: M-CSA entry 920, mechanism 2; M-CSA cites PMID:10892802, PMID:11741915, PMID:12705838, PMID:17053069,
+        PMID:19801641, PMID:8805571, PMID:9541412, PMID:9922238; M-CSA catalytic-residue roles for Glu431
+  - subject: asp455
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp455 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/920/
+      snippet: metal ligand
+      notes: M-CSA entry 920, mechanism 2; M-CSA cites PMID:10892802, PMID:11741915, PMID:12705838, PMID:17053069,
+        PMID:19801641, PMID:8805571, PMID:9541412, PMID:9922238; M-CSA catalytic-residue roles for Asp455
+  - subject: cys502
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys502 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/920/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 920, mechanism 2; M-CSA cites PMID:10892802, PMID:11741915, PMID:12705838, PMID:17053069,
+        PMID:19801641, PMID:8805571, PMID:9541412, PMID:9922238; M-CSA catalytic-residue roles for Cys502
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/920/
+      snippet: The reaction follows an in-line phosphotransfer mechanism involving pentacoordinated phosphorous
+        with trigonal bipyramidal geometry, and the donor (PEP) and acceptor (His-189 in EI) in the apical
+        positions. The pyruvyl enolate product is protonated by Cys502.
+      notes: M-CSA entry 920, mechanism 2; M-CSA cites PMID:10892802, PMID:11741915, PMID:12705838, PMID:17053069,
+        PMID:19801641, PMID:8805571, PMID:9541412, PMID:9922238; CATH domain 3.50.30.10 assigned to the
+        catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/920/
+      snippet: The reaction follows an in-line phosphotransfer mechanism involving pentacoordinated phosphorous
+        with trigonal bipyramidal geometry, and the donor (PEP) and acceptor (His-189 in EI) in the apical
+        positions. The pyruvyl enolate product is protonated by Cys502.
+      notes: M-CSA entry 920, mechanism 2; M-CSA cites PMID:10892802, PMID:11741915, PMID:12705838, PMID:17053069,
+        PMID:19801641, PMID:8805571, PMID:9541412, PMID:9922238; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/920/
+      snippet: The reaction follows an in-line phosphotransfer mechanism involving pentacoordinated phosphorous
+        with trigonal bipyramidal geometry, and the donor (PEP) and acceptor (His-189 in EI) in the apical
+        positions. The pyruvyl enolate product is protonated by Cys502.
+      notes: M-CSA entry 920, mechanism 2; M-CSA cites PMID:10892802, PMID:11741915, PMID:12705838, PMID:17053069,
+        PMID:19801641, PMID:8805571, PMID:9541412, PMID:9922238; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/920/
+      snippet: The reaction follows an in-line phosphotransfer mechanism involving pentacoordinated phosphorous
+        with trigonal bipyramidal geometry, and the donor (PEP) and acceptor (His-189 in EI) in the apical
+        positions. The pyruvyl enolate product is protonated by Cys502.
+      notes: M-CSA entry 920, mechanism 2; M-CSA cites PMID:10892802, PMID:11741915, PMID:12705838, PMID:17053069,
+        PMID:19801641, PMID:8805571, PMID:9541412, PMID:9922238; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/920/
+      snippet: The reaction follows an in-line phosphotransfer mechanism involving pentacoordinated phosphorous
+        with trigonal bipyramidal geometry, and the donor (PEP) and acceptor (His-189 in EI) in the apical
+        positions. The pyruvyl enolate product is protonated by Cys502.
+      notes: M-CSA entry 920, mechanism 2; M-CSA cites PMID:10892802, PMID:11741915, PMID:12705838, PMID:17053069,
+        PMID:19801641, PMID:8805571, PMID:9541412, PMID:9922238; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/920/
+      snippet: The reaction follows an in-line phosphotransfer mechanism involving pentacoordinated phosphorous
+        with trigonal bipyramidal geometry, and the donor (PEP) and acceptor (His-189 in EI) in the apical
+        positions. The pyruvyl enolate product is protonated by Cys502.
+      notes: M-CSA entry 920, mechanism 2; M-CSA cites PMID:10892802, PMID:11741915, PMID:12705838, PMID:17053069,
+        PMID:19801641, PMID:8805571, PMID:9541412, PMID:9922238; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (11 evidence-backed edges) transcribed from M-CSA entry 920;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

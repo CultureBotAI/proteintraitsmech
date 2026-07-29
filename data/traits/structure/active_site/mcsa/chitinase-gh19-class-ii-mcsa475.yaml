@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.1.14
 - CHEBI:50670
@@ -186,4 +186,226 @@ definitions:
       Chitinase binds to chitin and randomly cleaves glycosidic linkages in chitin and chitodextrins in a non-processive mode, generating chitooligosaccharides and free ends on which exo-chitinases and exo-chitodextrinases can act. Chitin is a bio-polymer composed of 1,4-beta linked N-acetylglucosamine units, a major component of fungal cell walls and insect exoskeletons. Activity is greatly stimulated in the presence of EC 1.14.99.53, lytic chitin monoxygenase, which attacks the crystalline structure of chitin and makes the polymer more accessible to the chitinase. It is used by the seeds to retard fungal growth by interfering with the cell wall. The enzyme, collected from barely seeds, is a type b member of the class II group, which is a member of Glycoside Hydrolase Family 19.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of chitinase (GH19, Class II)
+  description: Mechanism transcribed from M-CSA entry 475. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +23).
+  nodes:
+  - node_id: glu67
+    label: catalytic Glu67 (M-CSA/PDB numbering; UniProt residue 90)
+    node_type: RESIDUE
+    grounding: UniProtKB:P23951
+    description: 'M-CSA roles: electrostatic stabiliser, proton shuttle (general acid/base).'
+  - node_id: glu89
+    label: catalytic Glu89 (M-CSA/PDB numbering; UniProt residue 112)
+    node_type: RESIDUE
+    grounding: UniProtKB:P23951
+    description: 'M-CSA roles: electrostatic stabiliser, proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: N-acetyl-beta-D-glucosaminyl-(1->4)-N-acetyl-beta-D-glucosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:50670
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: N-acetyl-D-glucosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:506227
+  - node_id: product1
+    label: N-acetyl-D-glucosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:506227
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: "Initially, the catalytic site structure had been thought to resemble that of Hen Egg\
+      \ White Lysozyme, and adopt a similar mechanism in hydrolysing the 1,4 glycosidic link of chitin.\
+      \ However, more recent investigations have shown chitinase to operate by a different mechanism and\
+      \ is now known to be inverting.
+<br/><br/>
+The reaction proceeds through a single displacement\
+      \ mechanism. The general acid"
+  - node_id: active_site
+    label: chitinase (GH19, Class II) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:475
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.10.530.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.10.530.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: chitinase (GH19, Class II) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.1.14
+  edges:
+  - subject: glu67
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu67 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/475/
+      snippet: "Initially, the catalytic site structure had been thought to resemble that of Hen Egg White\
+        \ Lysozyme, and adopt a similar mechanism in hydrolysing the 1,4 glycosidic link of chitin. However,\
+        \ more recent investigations have shown chitinase to operate by a different mechanism and is now\
+        \ known to be inverting.
+<br/><br/>
+The reaction proceeds through a single displacement\
+        \ mechanism. The general acid, Glu67, protonates the beta-1,4-glycosidic oxygen atom, forming\
+        \ an oxocarbonium ion intermediate. A water molecule, activated by the general base Glu89 attacks\
+        \ the C1 atom of the intermediate state from the alpha side, hydrolytically cleaving the glycosyl\
+        \ bond with inversion of the anomeric position."
+      notes: M-CSA entry 475, mechanism 1; M-CSA cites PMID:11999399, PMID:12369923, PMID:12825688, PMID:15299702,
+        PMID:19332152, PMID:19665502, PMID:7739049; step 1
+  - subject: glu89
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu89 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/475/
+      snippet: "Initially, the catalytic site structure had been thought to resemble that of Hen Egg White\
+        \ Lysozyme, and adopt a similar mechanism in hydrolysing the 1,4 glycosidic link of chitin. However,\
+        \ more recent investigations have shown chitinase to operate by a different mechanism and is now\
+        \ known to be inverting.
+<br/><br/>
+The reaction proceeds through a single displacement\
+        \ mechanism. The general acid, Glu67, protonates the beta-1,4-glycosidic oxygen atom, forming\
+        \ an oxocarbonium ion intermediate. A water molecule, activated by the general base Glu89 attacks\
+        \ the C1 atom of the intermediate state from the alpha side, hydrolytically cleaving the glycosyl\
+        \ bond with inversion of the anomeric position."
+      notes: M-CSA entry 475, mechanism 1; M-CSA cites PMID:11999399, PMID:12369923, PMID:12825688, PMID:15299702,
+        PMID:19332152, PMID:19665502, PMID:7739049; step 1
+  - subject: glu67
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu67 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/475/
+      snippet: electrostatic stabiliser, proton shuttle (general acid/base)
+      notes: M-CSA entry 475, mechanism 1; M-CSA cites PMID:11999399, PMID:12369923, PMID:12825688, PMID:15299702,
+        PMID:19332152, PMID:19665502, PMID:7739049; M-CSA catalytic-residue roles for Glu67
+  - subject: glu89
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu89 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/475/
+      snippet: electrostatic stabiliser, proton shuttle (general acid/base)
+      notes: M-CSA entry 475, mechanism 1; M-CSA cites PMID:11999399, PMID:12369923, PMID:12825688, PMID:15299702,
+        PMID:19332152, PMID:19665502, PMID:7739049; M-CSA catalytic-residue roles for Glu89
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/475/
+      snippet: "Initially, the catalytic site structure had been thought to resemble that of Hen Egg White\
+        \ Lysozyme, and adopt a similar mechanism in hydrolysing the 1,4 glycosidic link of chitin. However,\
+        \ more recent investigations have shown chitinase to operate by a different mechanism and is now\
+        \ known to be inverting.
+<br/><br/>
+The reaction proceeds through a single displacement\
+        \ mechanism. The general acid"
+      notes: M-CSA entry 475, mechanism 1; M-CSA cites PMID:11999399, PMID:12369923, PMID:12825688, PMID:15299702,
+        PMID:19332152, PMID:19665502, PMID:7739049; CATH domain 1.10.530.10 assigned to the catalytic
+        chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/475/
+      snippet: "Initially, the catalytic site structure had been thought to resemble that of Hen Egg White\
+        \ Lysozyme, and adopt a similar mechanism in hydrolysing the 1,4 glycosidic link of chitin. However,\
+        \ more recent investigations have shown chitinase to operate by a different mechanism and is now\
+        \ known to be inverting.
+<br/><br/>
+The reaction proceeds through a single displacement\
+        \ mechanism. The general acid"
+      notes: M-CSA entry 475, mechanism 1; M-CSA cites PMID:11999399, PMID:12369923, PMID:12825688, PMID:15299702,
+        PMID:19332152, PMID:19665502, PMID:7739049; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/475/
+      snippet: "Initially, the catalytic site structure had been thought to resemble that of Hen Egg White\
+        \ Lysozyme, and adopt a similar mechanism in hydrolysing the 1,4 glycosidic link of chitin. However,\
+        \ more recent investigations have shown chitinase to operate by a different mechanism and is now\
+        \ known to be inverting.
+<br/><br/>
+The reaction proceeds through a single displacement\
+        \ mechanism. The general acid"
+      notes: M-CSA entry 475, mechanism 1; M-CSA cites PMID:11999399, PMID:12369923, PMID:12825688, PMID:15299702,
+        PMID:19332152, PMID:19665502, PMID:7739049; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/475/
+      snippet: "Initially, the catalytic site structure had been thought to resemble that of Hen Egg White\
+        \ Lysozyme, and adopt a similar mechanism in hydrolysing the 1,4 glycosidic link of chitin. However,\
+        \ more recent investigations have shown chitinase to operate by a different mechanism and is now\
+        \ known to be inverting.
+<br/><br/>
+The reaction proceeds through a single displacement\
+        \ mechanism. The general acid"
+      notes: M-CSA entry 475, mechanism 1; M-CSA cites PMID:11999399, PMID:12369923, PMID:12825688, PMID:15299702,
+        PMID:19332152, PMID:19665502, PMID:7739049; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/475/
+      snippet: "Initially, the catalytic site structure had been thought to resemble that of Hen Egg White\
+        \ Lysozyme, and adopt a similar mechanism in hydrolysing the 1,4 glycosidic link of chitin. However,\
+        \ more recent investigations have shown chitinase to operate by a different mechanism and is now\
+        \ known to be inverting.
+<br/><br/>
+The reaction proceeds through a single displacement\
+        \ mechanism. The general acid"
+      notes: M-CSA entry 475, mechanism 1; M-CSA cites PMID:11999399, PMID:12369923, PMID:12825688, PMID:15299702,
+        PMID:19332152, PMID:19665502, PMID:7739049; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/475/
+      snippet: "Initially, the catalytic site structure had been thought to resemble that of Hen Egg White\
+        \ Lysozyme, and adopt a similar mechanism in hydrolysing the 1,4 glycosidic link of chitin. However,\
+        \ more recent investigations have shown chitinase to operate by a different mechanism and is now\
+        \ known to be inverting.
+<br/><br/>
+The reaction proceeds through a single displacement\
+        \ mechanism. The general acid"
+      notes: M-CSA entry 475, mechanism 1; M-CSA cites PMID:11999399, PMID:12369923, PMID:12825688, PMID:15299702,
+        PMID:19332152, PMID:19665502, PMID:7739049; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (10 evidence-backed edges) transcribed from M-CSA entry 475;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

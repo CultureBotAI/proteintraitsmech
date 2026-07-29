@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.1.1.-
 - CHEBI:90726
@@ -407,4 +407,239 @@ definitions:
       Mammalian peroxisomal multifunctional enzyme type 2 (MFE-2) is important in the beta-oxidation of very-long-chain and alpha-methyl-branched fatty acids as well as the synthesis of bile acids. It has three units: a dehydrogenase unit, an sterol carrier protein (SCP) -like unit and a central hydratase unit. This entry represents the dehydrogenase unit oxidises the C3 hydroxyl group of (3R)-hydroxyacyl-CoA molecules to obtain the corresponding (3R)-ketoacyl-CoA. It belongs to the short chain alcohol dehydrogenase/reductase (SDR) superfamily.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of (3R)-hydroxyacyl-CoA dehydrogenase
+  description: Mechanism transcribed from M-CSA entry 470. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: tyr164
+    label: catalytic Tyr164 (M-CSA/PDB numbering; UniProt residue 164)
+    node_type: RESIDUE
+    grounding: UniProtKB:P97852
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: lys168
+    label: catalytic Lys168 (M-CSA/PDB numbering; UniProt residue 168)
+    node_type: RESIDUE
+    grounding: UniProtKB:P97852
+    description: 'M-CSA roles: activator, electrostatic stabiliser.'
+  - node_id: reactant0
+    label: (R)-3-hydroxyacyl-CoA(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57319
+  - node_id: reactant1
+    label: NAD(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+  - node_id: product0
+    label: 3-oxoacyl-CoA(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:90726
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: NADH(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: "Lys 168 is protonated and decreases the pKa of Tyr 164 so that Tyr is deprotonated.\
+      \ Tyr 164 can then deprotonate the hydroxy group of 3-hydroxyacyl-CoA.      
+<br/><br/>
+The\
+      \ reaction is concerted (E1-like elimination of H2) so that the deprotonation occurs at the same\
+      \ time as the C3 hydride is delivered to NAD+. Ser 151 may stabilise the transition state (it hydrogen\
+      \ bonds to the substrate hydro"
+  - node_id: active_site
+    label: (3R)-hydroxyacyl-CoA dehydrogenase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:470
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.720 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.720
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: (3R)-hydroxyacyl-CoA dehydrogenase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.1.1.-
+  edges:
+  - subject: tyr164
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr164 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/470/
+      snippet: "Lys 168 is protonated and decreases the pKa of Tyr 164 so that Tyr is deprotonated. Tyr\
+        \ 164 can then deprotonate the hydroxy group of 3-hydroxyacyl-CoA.      
+<br/><br/>
+The\
+        \ reaction is concerted (E1-like elimination of H2) so that the deprotonation occurs at the same\
+        \ time as the C3 hydride is delivered to NAD+. Ser 151 may stabilise the transition state (it\
+        \ hydrogen bonds to the substrate hydroxyl group) but its role is thought to be mainly to ensure\
+        \ correct orientation of the substrate.   
+<br/><br/>
+The oxidised product is 3-ketoacyl\
+        \ CoA."
+      notes: M-CSA entry 470, mechanism 2; M-CSA cites PMID:12517343; step 1
+  - subject: lys168
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys168 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/470/
+      snippet: "Lys 168 is protonated and decreases the pKa of Tyr 164 so that Tyr is deprotonated. Tyr\
+        \ 164 can then deprotonate the hydroxy group of 3-hydroxyacyl-CoA.      
+<br/><br/>
+The\
+        \ reaction is concerted (E1-like elimination of H2) so that the deprotonation occurs at the same\
+        \ time as the C3 hydride is delivered to NAD+. Ser 151 may stabilise the transition state (it\
+        \ hydrogen bonds to the substrate hydroxyl group) but its role is thought to be mainly to ensure\
+        \ correct orientation of the substrate.   
+<br/><br/>
+The oxidised product is 3-ketoacyl\
+        \ CoA."
+      notes: M-CSA entry 470, mechanism 2; M-CSA cites PMID:12517343; step 1
+  - subject: tyr164
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr164 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/470/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 470, mechanism 2; M-CSA cites PMID:12517343; M-CSA catalytic-residue roles for
+        Tyr164
+  - subject: lys168
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys168 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/470/
+      snippet: activator, electrostatic stabiliser
+      notes: M-CSA entry 470, mechanism 2; M-CSA cites PMID:12517343; M-CSA catalytic-residue roles for
+        Lys168
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/470/
+      snippet: "Lys 168 is protonated and decreases the pKa of Tyr 164 so that Tyr is deprotonated. Tyr\
+        \ 164 can then deprotonate the hydroxy group of 3-hydroxyacyl-CoA.      
+<br/><br/>
+The\
+        \ reaction is concerted (E1-like elimination of H2) so that the deprotonation occurs at the same\
+        \ time as the C3 hydride is delivered to NAD+. Ser 151 may stabilise the transition state (it\
+        \ hydrogen bonds to the substrate hydro"
+      notes: M-CSA entry 470, mechanism 2; M-CSA cites PMID:12517343; CATH domain 3.40.50.720 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/470/
+      snippet: "Lys 168 is protonated and decreases the pKa of Tyr 164 so that Tyr is deprotonated. Tyr\
+        \ 164 can then deprotonate the hydroxy group of 3-hydroxyacyl-CoA.      
+<br/><br/>
+The\
+        \ reaction is concerted (E1-like elimination of H2) so that the deprotonation occurs at the same\
+        \ time as the C3 hydride is delivered to NAD+. Ser 151 may stabilise the transition state (it\
+        \ hydrogen bonds to the substrate hydro"
+      notes: M-CSA entry 470, mechanism 2; M-CSA cites PMID:12517343; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/470/
+      snippet: "Lys 168 is protonated and decreases the pKa of Tyr 164 so that Tyr is deprotonated. Tyr\
+        \ 164 can then deprotonate the hydroxy group of 3-hydroxyacyl-CoA.      
+<br/><br/>
+The\
+        \ reaction is concerted (E1-like elimination of H2) so that the deprotonation occurs at the same\
+        \ time as the C3 hydride is delivered to NAD+. Ser 151 may stabilise the transition state (it\
+        \ hydrogen bonds to the substrate hydro"
+      notes: M-CSA entry 470, mechanism 2; M-CSA cites PMID:12517343; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/470/
+      snippet: "Lys 168 is protonated and decreases the pKa of Tyr 164 so that Tyr is deprotonated. Tyr\
+        \ 164 can then deprotonate the hydroxy group of 3-hydroxyacyl-CoA.      
+<br/><br/>
+The\
+        \ reaction is concerted (E1-like elimination of H2) so that the deprotonation occurs at the same\
+        \ time as the C3 hydride is delivered to NAD+. Ser 151 may stabilise the transition state (it\
+        \ hydrogen bonds to the substrate hydro"
+      notes: M-CSA entry 470, mechanism 2; M-CSA cites PMID:12517343; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/470/
+      snippet: "Lys 168 is protonated and decreases the pKa of Tyr 164 so that Tyr is deprotonated. Tyr\
+        \ 164 can then deprotonate the hydroxy group of 3-hydroxyacyl-CoA.      
+<br/><br/>
+The\
+        \ reaction is concerted (E1-like elimination of H2) so that the deprotonation occurs at the same\
+        \ time as the C3 hydride is delivered to NAD+. Ser 151 may stabilise the transition state (it\
+        \ hydrogen bonds to the substrate hydro"
+      notes: M-CSA entry 470, mechanism 2; M-CSA cites PMID:12517343; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/470/
+      snippet: "Lys 168 is protonated and decreases the pKa of Tyr 164 so that Tyr is deprotonated. Tyr\
+        \ 164 can then deprotonate the hydroxy group of 3-hydroxyacyl-CoA.      
+<br/><br/>
+The\
+        \ reaction is concerted (E1-like elimination of H2) so that the deprotonation occurs at the same\
+        \ time as the C3 hydride is delivered to NAD+. Ser 151 may stabilise the transition state (it\
+        \ hydrogen bonds to the substrate hydro"
+      notes: M-CSA entry 470, mechanism 2; M-CSA cites PMID:12517343; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/470/
+      snippet: "Lys 168 is protonated and decreases the pKa of Tyr 164 so that Tyr is deprotonated. Tyr\
+        \ 164 can then deprotonate the hydroxy group of 3-hydroxyacyl-CoA.      
+<br/><br/>
+The\
+        \ reaction is concerted (E1-like elimination of H2) so that the deprotonation occurs at the same\
+        \ time as the C3 hydride is delivered to NAD+. Ser 151 may stabilise the transition state (it\
+        \ hydrogen bonds to the substrate hydro"
+      notes: M-CSA entry 470, mechanism 2; M-CSA cites PMID:12517343; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (11 evidence-backed edges) transcribed from M-CSA entry 470;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

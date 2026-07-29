@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.11.3
 - CHEBI:9160
@@ -253,4 +253,366 @@ definitions:
       The 5'-3' exonuclease enzymes hydrolyse DNA.DNA and RNA.DNA substrates in a structurally specific manner. These enzymes are necessary for efficient cellular DNA replication, with the uncatalysed reaction having a half life of 30 million years at room temperature. The enzymes enhance the rate by 10^15-10^17, allowing the reaction to proceed on a biologically useful time scale.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of exodeoxyribonuclease (lambda-induced)
+  description: Mechanism transcribed from M-CSA entry 549. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: asp26
+    label: catalytic Asp26 (M-CSA/PDB numbering; UniProt residue 26)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06229
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp68
+    label: catalytic Asp68 (M-CSA/PDB numbering; UniProt residue 68)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06229
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: lys83
+    label: catalytic Lys83 (M-CSA/PDB numbering; UniProt residue 83)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06229
+    description: 'M-CSA roles: electrostatic stabiliser, proton shuttle (general acid/base).'
+  - node_id: arg86
+    label: catalytic Arg86 (M-CSA/PDB numbering; UniProt residue 86)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06229
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu128
+    label: catalytic Glu128 (M-CSA/PDB numbering; UniProt residue 128)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06229
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp131
+    label: catalytic Asp131 (M-CSA/PDB numbering; UniProt residue 131)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06229
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp153
+    label: catalytic Asp153 (M-CSA/PDB numbering; UniProt residue 153)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06229
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp155
+    label: catalytic Asp155 (M-CSA/PDB numbering; UniProt residue 155)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06229
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp201
+    label: catalytic Asp201 (M-CSA/PDB numbering; UniProt residue 201)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06229
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp204
+    label: catalytic Asp204 (M-CSA/PDB numbering; UniProt residue 204)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06229
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: single-stranded DNA
+    node_type: CHEMICAL
+    grounding: CHEBI:9160
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: 5'-end 2'-deoxyribonucleotide(2-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:136412
+  - node_id: product1
+    label: 2'-deoxynucleoside 3'-monophosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:131705
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: There are several proposed mechanisms for the action of 5'-3' exonuclease, taking into
+      account many possible mechanisms involving up to three catalytic divalent metal ions.  The most
+      accepted mechanism implies the involvement of two catalytic Mg(2+) ions. A water molecule is deprotonated
+      by the conserved basic Lys 83, which remains deprotonated at pH 6 through interactions with a positively
+      charge
+  - node_id: active_site
+    label: exodeoxyribonuclease (lambda-induced) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:549
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1010 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1010
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: exodeoxyribonuclease (lambda-induced) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.11.3
+  edges:
+  - subject: lys83
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys83 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/549/
+      snippet: There are several proposed mechanisms for the action of 5'-3' exonuclease, taking into
+        account many possible mechanisms involving up to three catalytic divalent metal ions.  The most
+        accepted mechanism implies the involvement of two catalytic Mg(2+) ions. A water molecule is deprotonated
+        by the conserved basic Lys 83, which remains deprotonated at pH 6 through interactions with a
+        positively charged dicationic metal and the positively charged guanidinium group of Arg 86 (also
+        a conserved residue). This water molecule then acts as a nucleophile towards the scissile phosphate.
+        The pentavalent intermediate is stabilised by a second dicationic Mg while the scissile phosphate
+        oxygen is coordinated to both metal centres. The collapse of the intermediate and reprotonation
+        of the 3' leaving group from the Lys 83 gives the hydrolysis products.  Crystallographic evidence
+        suggests a two-metal-ion catalytic process in homologous enzymes, although this pdb doesn't show
+        the Mg atoms implicated. Later kinetic evidence suggests the presence of three metal cations is
+        necessary. It has also been proposed on evidence from mutagenesis reactions that the endo- and
+        exonucleolytic cleavage mechanisms are distinct.
+      notes: M-CSA entry 549, mechanism 1; M-CSA cites PMID:12606565, PMID:15077103, PMID:16600865, PMID:18697748,
+        PMID:21734257, PMID:26884332, PMID:27273516, PMID:27526030, PMID:9874768; step 1
+  - subject: arg86
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg86 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/549/
+      snippet: There are several proposed mechanisms for the action of 5'-3' exonuclease, taking into
+        account many possible mechanisms involving up to three catalytic divalent metal ions.  The most
+        accepted mechanism implies the involvement of two catalytic Mg(2+) ions. A water molecule is deprotonated
+        by the conserved basic Lys 83, which remains deprotonated at pH 6 through interactions with a
+        positively charged dicationic metal and the positively charged guanidinium group of Arg 86 (also
+        a conserved residue). This water molecule then acts as a nucleophile towards the scissile phosphate.
+        The pentavalent intermediate is stabilised by a second dicationic Mg while the scissile phosphate
+        oxygen is coordinated to both metal centres. The collapse of the intermediate and reprotonation
+        of the 3' leaving group from the Lys 83 gives the hydrolysis products.  Crystallographic evidence
+        suggests a two-metal-ion catalytic process in homologous enzymes, although this pdb doesn't show
+        the Mg atoms implicated. Later kinetic evidence suggests the presence of three metal cations is
+        necessary. It has also been proposed on evidence from mutagenesis reactions that the endo- and
+        exonucleolytic cleavage mechanisms are distinct.
+      notes: M-CSA entry 549, mechanism 1; M-CSA cites PMID:12606565, PMID:15077103, PMID:16600865, PMID:18697748,
+        PMID:21734257, PMID:26884332, PMID:27273516, PMID:27526030, PMID:9874768; step 1
+  - subject: asp26
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp26 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/549/
+      snippet: metal ligand
+      notes: M-CSA entry 549, mechanism 1; M-CSA cites PMID:12606565, PMID:15077103, PMID:16600865, PMID:18697748,
+        PMID:21734257, PMID:26884332, PMID:27273516, PMID:27526030, PMID:9874768; M-CSA catalytic-residue
+        roles for Asp26
+  - subject: asp68
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp68 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/549/
+      snippet: metal ligand
+      notes: M-CSA entry 549, mechanism 1; M-CSA cites PMID:12606565, PMID:15077103, PMID:16600865, PMID:18697748,
+        PMID:21734257, PMID:26884332, PMID:27273516, PMID:27526030, PMID:9874768; M-CSA catalytic-residue
+        roles for Asp68
+  - subject: lys83
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys83 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/549/
+      snippet: electrostatic stabiliser, proton shuttle (general acid/base)
+      notes: M-CSA entry 549, mechanism 1; M-CSA cites PMID:12606565, PMID:15077103, PMID:16600865, PMID:18697748,
+        PMID:21734257, PMID:26884332, PMID:27273516, PMID:27526030, PMID:9874768; M-CSA catalytic-residue
+        roles for Lys83
+  - subject: arg86
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg86 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/549/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 549, mechanism 1; M-CSA cites PMID:12606565, PMID:15077103, PMID:16600865, PMID:18697748,
+        PMID:21734257, PMID:26884332, PMID:27273516, PMID:27526030, PMID:9874768; M-CSA catalytic-residue
+        roles for Arg86
+  - subject: glu128
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu128 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/549/
+      snippet: metal ligand
+      notes: M-CSA entry 549, mechanism 1; M-CSA cites PMID:12606565, PMID:15077103, PMID:16600865, PMID:18697748,
+        PMID:21734257, PMID:26884332, PMID:27273516, PMID:27526030, PMID:9874768; M-CSA catalytic-residue
+        roles for Glu128
+  - subject: asp131
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp131 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/549/
+      snippet: metal ligand
+      notes: M-CSA entry 549, mechanism 1; M-CSA cites PMID:12606565, PMID:15077103, PMID:16600865, PMID:18697748,
+        PMID:21734257, PMID:26884332, PMID:27273516, PMID:27526030, PMID:9874768; M-CSA catalytic-residue
+        roles for Asp131
+  - subject: asp153
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp153 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/549/
+      snippet: metal ligand
+      notes: M-CSA entry 549, mechanism 1; M-CSA cites PMID:12606565, PMID:15077103, PMID:16600865, PMID:18697748,
+        PMID:21734257, PMID:26884332, PMID:27273516, PMID:27526030, PMID:9874768; M-CSA catalytic-residue
+        roles for Asp153
+  - subject: asp155
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp155 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/549/
+      snippet: metal ligand
+      notes: M-CSA entry 549, mechanism 1; M-CSA cites PMID:12606565, PMID:15077103, PMID:16600865, PMID:18697748,
+        PMID:21734257, PMID:26884332, PMID:27273516, PMID:27526030, PMID:9874768; M-CSA catalytic-residue
+        roles for Asp155
+  - subject: asp201
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp201 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/549/
+      snippet: metal ligand
+      notes: M-CSA entry 549, mechanism 1; M-CSA cites PMID:12606565, PMID:15077103, PMID:16600865, PMID:18697748,
+        PMID:21734257, PMID:26884332, PMID:27273516, PMID:27526030, PMID:9874768; M-CSA catalytic-residue
+        roles for Asp201
+  - subject: asp204
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp204 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/549/
+      snippet: metal ligand
+      notes: M-CSA entry 549, mechanism 1; M-CSA cites PMID:12606565, PMID:15077103, PMID:16600865, PMID:18697748,
+        PMID:21734257, PMID:26884332, PMID:27273516, PMID:27526030, PMID:9874768; M-CSA catalytic-residue
+        roles for Asp204
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/549/
+      snippet: There are several proposed mechanisms for the action of 5'-3' exonuclease, taking into
+        account many possible mechanisms involving up to three catalytic divalent metal ions.  The most
+        accepted mechanism implies the involvement of two catalytic Mg(2+) ions. A water molecule is deprotonated
+        by the conserved basic Lys 83, which remains deprotonated at pH 6 through interactions with a
+        positively charge
+      notes: M-CSA entry 549, mechanism 1; M-CSA cites PMID:12606565, PMID:15077103, PMID:16600865, PMID:18697748,
+        PMID:21734257, PMID:26884332, PMID:27273516, PMID:27526030, PMID:9874768; CATH domain 3.40.50.1010
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/549/
+      snippet: There are several proposed mechanisms for the action of 5'-3' exonuclease, taking into
+        account many possible mechanisms involving up to three catalytic divalent metal ions.  The most
+        accepted mechanism implies the involvement of two catalytic Mg(2+) ions. A water molecule is deprotonated
+        by the conserved basic Lys 83, which remains deprotonated at pH 6 through interactions with a
+        positively charge
+      notes: M-CSA entry 549, mechanism 1; M-CSA cites PMID:12606565, PMID:15077103, PMID:16600865, PMID:18697748,
+        PMID:21734257, PMID:26884332, PMID:27273516, PMID:27526030, PMID:9874768; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/549/
+      snippet: There are several proposed mechanisms for the action of 5'-3' exonuclease, taking into
+        account many possible mechanisms involving up to three catalytic divalent metal ions.  The most
+        accepted mechanism implies the involvement of two catalytic Mg(2+) ions. A water molecule is deprotonated
+        by the conserved basic Lys 83, which remains deprotonated at pH 6 through interactions with a
+        positively charge
+      notes: M-CSA entry 549, mechanism 1; M-CSA cites PMID:12606565, PMID:15077103, PMID:16600865, PMID:18697748,
+        PMID:21734257, PMID:26884332, PMID:27273516, PMID:27526030, PMID:9874768; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/549/
+      snippet: There are several proposed mechanisms for the action of 5'-3' exonuclease, taking into
+        account many possible mechanisms involving up to three catalytic divalent metal ions.  The most
+        accepted mechanism implies the involvement of two catalytic Mg(2+) ions. A water molecule is deprotonated
+        by the conserved basic Lys 83, which remains deprotonated at pH 6 through interactions with a
+        positively charge
+      notes: M-CSA entry 549, mechanism 1; M-CSA cites PMID:12606565, PMID:15077103, PMID:16600865, PMID:18697748,
+        PMID:21734257, PMID:26884332, PMID:27273516, PMID:27526030, PMID:9874768; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/549/
+      snippet: There are several proposed mechanisms for the action of 5'-3' exonuclease, taking into
+        account many possible mechanisms involving up to three catalytic divalent metal ions.  The most
+        accepted mechanism implies the involvement of two catalytic Mg(2+) ions. A water molecule is deprotonated
+        by the conserved basic Lys 83, which remains deprotonated at pH 6 through interactions with a
+        positively charge
+      notes: M-CSA entry 549, mechanism 1; M-CSA cites PMID:12606565, PMID:15077103, PMID:16600865, PMID:18697748,
+        PMID:21734257, PMID:26884332, PMID:27273516, PMID:27526030, PMID:9874768; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/549/
+      snippet: There are several proposed mechanisms for the action of 5'-3' exonuclease, taking into
+        account many possible mechanisms involving up to three catalytic divalent metal ions.  The most
+        accepted mechanism implies the involvement of two catalytic Mg(2+) ions. A water molecule is deprotonated
+        by the conserved basic Lys 83, which remains deprotonated at pH 6 through interactions with a
+        positively charge
+      notes: M-CSA entry 549, mechanism 1; M-CSA cites PMID:12606565, PMID:15077103, PMID:16600865, PMID:18697748,
+        PMID:21734257, PMID:26884332, PMID:27273516, PMID:27526030, PMID:9874768; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/549/
+      snippet: There are several proposed mechanisms for the action of 5'-3' exonuclease, taking into
+        account many possible mechanisms involving up to three catalytic divalent metal ions.  The most
+        accepted mechanism implies the involvement of two catalytic Mg(2+) ions. A water molecule is deprotonated
+        by the conserved basic Lys 83, which remains deprotonated at pH 6 through interactions with a
+        positively charge
+      notes: M-CSA entry 549, mechanism 1; M-CSA cites PMID:12606565, PMID:15077103, PMID:16600865, PMID:18697748,
+        PMID:21734257, PMID:26884332, PMID:27273516, PMID:27526030, PMID:9874768; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (19 evidence-backed edges) transcribed from M-CSA entry 549;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

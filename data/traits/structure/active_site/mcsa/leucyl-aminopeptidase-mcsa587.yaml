@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.11.1
 - CHEBI:74534
@@ -463,4 +463,200 @@ definitions:
       Bovine lens leucine aminopeptidase (blLAP) is a widespread bizinc exopeptidase, whose function is to remove the N-terminal residue in a peptide chain. It plays a key role in the degradation and modification of proteins in the metabolism of mammals and has even been implicated in human HIV pathophysiology. blLAP has a hexameric structure, in which each monomer functions independently of the others. The active site (one per monomer) is sitting on the edge of two water channels: a large one for the substrate located below the two metal ions and a much smaller one located above Zn1.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of leucyl aminopeptidase
+  description: Mechanism transcribed from M-CSA entry 587. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering only — no unique offset to the record's reference sequence could
+    be verified, so no UniProt position is asserted.
+  nodes:
+  - node_id: lys262
+    label: catalytic Lys262 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00727
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: arg336
+    label: catalytic Arg336 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00727
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: Leu-Gly
+    node_type: CHEMICAL
+    grounding: CHEBI:74534
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: glycine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57305
+  - node_id: product1
+    label: L-leucine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57427
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: Bicarbonate ion acts as a general base to deprotonate a water molecule bound by the two
+      active site zinc ions, creating a hydroxide nucleophile. Zinc1 (Zinc488) and a hydrogen bond from
+      Lys262 polarises the carbonyl group of the substrate, to increase its electrophilicity. In concert
+      with the bicarbonate ion deprotonating the water molecule, it nucleophilically attacks the polarised
+      carbonyl group
+  - node_id: active_site
+    label: leucyl aminopeptidase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:587
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.630.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.630.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: leucyl aminopeptidase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.11.1
+  edges:
+  - subject: lys262
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys262 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/587/
+      snippet: Bicarbonate ion acts as a general base to deprotonate a water molecule bound by the two
+        active site zinc ions, creating a hydroxide nucleophile. Zinc1 (Zinc488) and a hydrogen bond from
+        Lys262 polarises the carbonyl group of the substrate, to increase its electrophilicity. In concert
+        with the bicarbonate ion deprotonating the water molecule, it nucleophilically attacks the polarised
+        carbonyl group to form a tetrahedral gem-diolate intermediate. The negative charge is subsequently
+        stabilised by the Lys262 and Zinc1. Collapse of the tetrahedral intermediate leads to protonation
+        of the amine leaving group by the bicarbonate ion, which shuttles the proton from water to it.
+        Arg336 provides a positively charged pocket for the bicarbonate ion.
+      notes: M-CSA entry 587, mechanism 1; M-CSA cites PMID:10500145, PMID:7578088; step 1
+  - subject: arg336
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg336 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/587/
+      snippet: Bicarbonate ion acts as a general base to deprotonate a water molecule bound by the two
+        active site zinc ions, creating a hydroxide nucleophile. Zinc1 (Zinc488) and a hydrogen bond from
+        Lys262 polarises the carbonyl group of the substrate, to increase its electrophilicity. In concert
+        with the bicarbonate ion deprotonating the water molecule, it nucleophilically attacks the polarised
+        carbonyl group to form a tetrahedral gem-diolate intermediate. The negative charge is subsequently
+        stabilised by the Lys262 and Zinc1. Collapse of the tetrahedral intermediate leads to protonation
+        of the amine leaving group by the bicarbonate ion, which shuttles the proton from water to it.
+        Arg336 provides a positively charged pocket for the bicarbonate ion.
+      notes: M-CSA entry 587, mechanism 1; M-CSA cites PMID:10500145, PMID:7578088; step 1
+  - subject: lys262
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys262 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/587/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 587, mechanism 1; M-CSA cites PMID:10500145, PMID:7578088; M-CSA catalytic-residue
+        roles for Lys262
+  - subject: arg336
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg336 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/587/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 587, mechanism 1; M-CSA cites PMID:10500145, PMID:7578088; M-CSA catalytic-residue
+        roles for Arg336
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/587/
+      snippet: Bicarbonate ion acts as a general base to deprotonate a water molecule bound by the two
+        active site zinc ions, creating a hydroxide nucleophile. Zinc1 (Zinc488) and a hydrogen bond from
+        Lys262 polarises the carbonyl group of the substrate, to increase its electrophilicity. In concert
+        with the bicarbonate ion deprotonating the water molecule, it nucleophilically attacks the polarised
+        carbonyl group
+      notes: M-CSA entry 587, mechanism 1; M-CSA cites PMID:10500145, PMID:7578088; CATH domain 3.40.630.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/587/
+      snippet: Bicarbonate ion acts as a general base to deprotonate a water molecule bound by the two
+        active site zinc ions, creating a hydroxide nucleophile. Zinc1 (Zinc488) and a hydrogen bond from
+        Lys262 polarises the carbonyl group of the substrate, to increase its electrophilicity. In concert
+        with the bicarbonate ion deprotonating the water molecule, it nucleophilically attacks the polarised
+        carbonyl group
+      notes: M-CSA entry 587, mechanism 1; M-CSA cites PMID:10500145, PMID:7578088; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/587/
+      snippet: Bicarbonate ion acts as a general base to deprotonate a water molecule bound by the two
+        active site zinc ions, creating a hydroxide nucleophile. Zinc1 (Zinc488) and a hydrogen bond from
+        Lys262 polarises the carbonyl group of the substrate, to increase its electrophilicity. In concert
+        with the bicarbonate ion deprotonating the water molecule, it nucleophilically attacks the polarised
+        carbonyl group
+      notes: M-CSA entry 587, mechanism 1; M-CSA cites PMID:10500145, PMID:7578088; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/587/
+      snippet: Bicarbonate ion acts as a general base to deprotonate a water molecule bound by the two
+        active site zinc ions, creating a hydroxide nucleophile. Zinc1 (Zinc488) and a hydrogen bond from
+        Lys262 polarises the carbonyl group of the substrate, to increase its electrophilicity. In concert
+        with the bicarbonate ion deprotonating the water molecule, it nucleophilically attacks the polarised
+        carbonyl group
+      notes: M-CSA entry 587, mechanism 1; M-CSA cites PMID:10500145, PMID:7578088; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/587/
+      snippet: Bicarbonate ion acts as a general base to deprotonate a water molecule bound by the two
+        active site zinc ions, creating a hydroxide nucleophile. Zinc1 (Zinc488) and a hydrogen bond from
+        Lys262 polarises the carbonyl group of the substrate, to increase its electrophilicity. In concert
+        with the bicarbonate ion deprotonating the water molecule, it nucleophilically attacks the polarised
+        carbonyl group
+      notes: M-CSA entry 587, mechanism 1; M-CSA cites PMID:10500145, PMID:7578088; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/587/
+      snippet: Bicarbonate ion acts as a general base to deprotonate a water molecule bound by the two
+        active site zinc ions, creating a hydroxide nucleophile. Zinc1 (Zinc488) and a hydrogen bond from
+        Lys262 polarises the carbonyl group of the substrate, to increase its electrophilicity. In concert
+        with the bicarbonate ion deprotonating the water molecule, it nucleophilically attacks the polarised
+        carbonyl group
+      notes: M-CSA entry 587, mechanism 1; M-CSA cites PMID:10500145, PMID:7578088; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (10 evidence-backed edges) transcribed from M-CSA entry 587;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

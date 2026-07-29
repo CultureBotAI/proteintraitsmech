@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.6.1.57
 - CHEBI:84824
@@ -263,4 +263,196 @@ definitions:
       Tyrosine (aromatic) aminotransferase (TATase) is a well-characterized Fold Type I PLP-dependent enzyme that has natural specificity for the aromatic amino acids tyrosine, phenylalanine, and tryptophan, as well as for the dicarboxylic amino acids aspartate and glutamate.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of aromatic-amino-acid transaminase
+  description: Mechanism transcribed from M-CSA entry 411. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering only — no unique offset to the record's reference sequence could
+    be verified, so no UniProt position is asserted.
+  nodes:
+  - node_id: trp140
+    label: catalytic Trp140 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P95468
+    description: 'M-CSA roles: steric role.'
+  - node_id: asp222
+    label: catalytic Asp222 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P95468
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ala224
+    label: catalytic Ala224 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P95468
+    description: 'M-CSA roles: steric role.'
+  - node_id: lys258
+    label: catalytic Lys258 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P95468
+    description: 'M-CSA roles: covalent catalysis, proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: aromatic L-alpha-amino acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:84824
+  - node_id: reactant1
+    label: 2-oxoglutarate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:16810
+  - node_id: product0
+    label: L-glutamate(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:29985
+  - node_id: product1
+    label: aromatic 2-oxo monocarboxylic acid anion
+    node_type: CHEMICAL
+    grounding: CHEBI:73309
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: 'Transamination occurs in two steps: the amine group of the substrate amino acid residue
+      (the amino donor) undergoes a transaldimination with PLP, liberating Lys and resulting in the oxo-acid
+      product. Then the second substrate accepts the amino group and lysine is reattached to the PLP cofactor
+      in a second transaldinination reaction.'
+  - node_id: active_site
+    label: aromatic-amino-acid transaminase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:411
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.640.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.640.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: aromatic-amino-acid transaminase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.6.1.57
+  edges:
+  - subject: trp140
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp140 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/411/
+      snippet: steric role
+      notes: M-CSA entry 411, mechanism 2; M-CSA cites PMID:24817714, PMID:9665848, PMID:9930977; M-CSA
+        catalytic-residue roles for Trp140
+  - subject: asp222
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp222 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/411/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 411, mechanism 2; M-CSA cites PMID:24817714, PMID:9665848, PMID:9930977; M-CSA
+        catalytic-residue roles for Asp222
+  - subject: ala224
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ala224 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/411/
+      snippet: steric role
+      notes: M-CSA entry 411, mechanism 2; M-CSA cites PMID:24817714, PMID:9665848, PMID:9930977; M-CSA
+        catalytic-residue roles for Ala224
+  - subject: lys258
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys258 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/411/
+      snippet: covalent catalysis, proton shuttle (general acid/base)
+      notes: M-CSA entry 411, mechanism 2; M-CSA cites PMID:24817714, PMID:9665848, PMID:9930977; M-CSA
+        catalytic-residue roles for Lys258
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/411/
+      snippet: 'Transamination occurs in two steps: the amine group of the substrate amino acid residue
+        (the amino donor) undergoes a transaldimination with PLP, liberating Lys and resulting in the
+        oxo-acid product. Then the second substrate accepts the amino group and lysine is reattached to
+        the PLP cofactor in a second transaldinination reaction.'
+      notes: M-CSA entry 411, mechanism 2; M-CSA cites PMID:24817714, PMID:9665848, PMID:9930977; CATH
+        domain 3.40.640.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/411/
+      snippet: 'Transamination occurs in two steps: the amine group of the substrate amino acid residue
+        (the amino donor) undergoes a transaldimination with PLP, liberating Lys and resulting in the
+        oxo-acid product. Then the second substrate accepts the amino group and lysine is reattached to
+        the PLP cofactor in a second transaldinination reaction.'
+      notes: M-CSA entry 411, mechanism 2; M-CSA cites PMID:24817714, PMID:9665848, PMID:9930977; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/411/
+      snippet: 'Transamination occurs in two steps: the amine group of the substrate amino acid residue
+        (the amino donor) undergoes a transaldimination with PLP, liberating Lys and resulting in the
+        oxo-acid product. Then the second substrate accepts the amino group and lysine is reattached to
+        the PLP cofactor in a second transaldinination reaction.'
+      notes: M-CSA entry 411, mechanism 2; M-CSA cites PMID:24817714, PMID:9665848, PMID:9930977; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/411/
+      snippet: 'Transamination occurs in two steps: the amine group of the substrate amino acid residue
+        (the amino donor) undergoes a transaldimination with PLP, liberating Lys and resulting in the
+        oxo-acid product. Then the second substrate accepts the amino group and lysine is reattached to
+        the PLP cofactor in a second transaldinination reaction.'
+      notes: M-CSA entry 411, mechanism 2; M-CSA cites PMID:24817714, PMID:9665848, PMID:9930977; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/411/
+      snippet: 'Transamination occurs in two steps: the amine group of the substrate amino acid residue
+        (the amino donor) undergoes a transaldimination with PLP, liberating Lys and resulting in the
+        oxo-acid product. Then the second substrate accepts the amino group and lysine is reattached to
+        the PLP cofactor in a second transaldinination reaction.'
+      notes: M-CSA entry 411, mechanism 2; M-CSA cites PMID:24817714, PMID:9665848, PMID:9930977; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/411/
+      snippet: 'Transamination occurs in two steps: the amine group of the substrate amino acid residue
+        (the amino donor) undergoes a transaldimination with PLP, liberating Lys and resulting in the
+        oxo-acid product. Then the second substrate accepts the amino group and lysine is reattached to
+        the PLP cofactor in a second transaldinination reaction.'
+      notes: M-CSA entry 411, mechanism 2; M-CSA cites PMID:24817714, PMID:9665848, PMID:9930977; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (10 evidence-backed edges) transcribed from M-CSA entry 411;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

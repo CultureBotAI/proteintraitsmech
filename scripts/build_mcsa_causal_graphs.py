@@ -140,12 +140,24 @@ def build_graph(entry: dict, residues: list, offset, cath_ok: set) -> dict | Non
     mid = entry["mcsa_id"]
     url = ENTRY_URL.format(id=mid)
     mechs = (entry.get("reaction") or {}).get("mechanisms") or []
-    mech = next((m for m in mechs if m.get("steps")), None)
-    if not mech:
-        return None
-    steps = [s for s in mech["steps"] if (s.get("description") or "").strip()]
-    if not steps:
-        return None
+    mech = next((m for m in mechs
+                 if any((s.get("description") or "").strip()
+                        for s in (m.get("steps") or []))), None)
+    stepwise = mech is not None
+    if mech is None:
+        # 264 entries carry arrow-pushing `marvin_xml` with empty per-step
+        # `description`s, but a populated `mechanism_text` — prose of the same
+        # kind, just not split into steps ("First, Asp 222 B deprotonates the
+        # 2-hydroxy oxygen…"). Treating that as a single unstepped mechanism
+        # keeps them citable instead of dropping them for a formatting reason.
+        mech = next((m for m in mechs if (m.get("mechanism_text") or "").strip()),
+                    None)
+        if mech is None:
+            return None
+    if stepwise:
+        steps = [s for s in mech["steps"] if (s.get("description") or "").strip()]
+    else:
+        steps = [{"description": (mech.get("mechanism_text") or "").strip()}]
 
     pmids = sorted({str(r["pubmed_id"]) for r in (mech.get("references") or [])
                     if r.get("pubmed_id")})
@@ -202,7 +214,9 @@ def build_graph(entry: dict, residues: list, offset, cath_ok: set) -> dict | Non
         step_ids.append((nid, s))
         desc = (s.get("description") or "").strip()
         nodes.append({"node_id": nid,
-                      "label": f"mechanism step {i}",
+                      "label": (f"mechanism step {i}" if stepwise
+                                else "overall catalytic mechanism (not resolved "
+                                     "into steps by M-CSA)"),
                       "node_type": "STATE",
                       "description": desc[:400]})
 
@@ -290,12 +304,16 @@ def build_graph(entry: dict, residues: list, offset, cath_ok: set) -> dict | Non
              "Residue nodes carry M-CSA/PDB author numbering only — no unique "
              "offset to the record's reference sequence could be verified, so "
              "no UniProt position is asserted.")
+    shape = (f"Stepwise mechanism transcribed from M-CSA entry {mid} "
+             f"({len(steps)} steps)." if stepwise else
+             f"Mechanism transcribed from M-CSA entry {mid}. M-CSA does not "
+             f"resolve this one into steps, so the whole mechanism is a single "
+             f"node quoting its `mechanism_text`; residue edges are still "
+             f"per-residue.")
     return {"graph_id": "catalysis",
             "title": f"Catalytic mechanism of {entry.get('enzyme_name') or 'the enzyme'}",
-            "description": (f"Stepwise mechanism transcribed from M-CSA entry {mid} "
-                            f"({len(steps)} steps). Every edge quotes the M-CSA "
-                            f"entry; M-CSA's primary references are in the edge "
-                            f"notes. {frame}"),
+            "description": (f"{shape} Every edge quotes the M-CSA entry; M-CSA's "
+                            f"primary references are in the edge notes. {frame}"),
             "nodes": nodes, "edges": edges}
 
 

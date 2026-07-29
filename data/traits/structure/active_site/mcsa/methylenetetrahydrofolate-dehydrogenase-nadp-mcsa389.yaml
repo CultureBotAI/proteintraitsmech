@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.5.1.5
 - CHEBI:18009
@@ -259,4 +259,167 @@ definitions:
       Enzymes involved in tetrahydrofolate metabolism are of particular pharmaceutical interest, as their function is crucial for amino acid and DNA biosynthesis. In eukaryotes, the enzyme that performs this reaction occurs as a trifunctional enzyme that also has methylenetetrahydrofolate dehydrogenase (NADP+) (EC 1.5.1.5) and formate-tetrahydrofolate ligase (EC 6.3.4.3) activity. In some prokaryotes, it occurs as a bifunctional enzyme that also has dehydrogenase (EC 1.5.1.5) activity or formiminotetrahydrofolate cyclodeaminase (EC 4.3.1.4) activity. This particular entry represents the dehydrogenase activity. Although the human protein represented here is actually trifunctional, the representative PDB structure only contains the dehydrogenase (D) and cyclohydrolase (C) domains, which have an overlapping active site (as determined by chemical modification and kinetic studies).
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of methylenetetrahydrofolate dehydrogenase (NADP+)
+  description: Mechanism transcribed from M-CSA entry 389. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: lys56
+    label: catalytic Lys56 (M-CSA/PDB numbering; UniProt residue 56)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11586
+    description: 'M-CSA roles: activator.'
+  - node_id: gln100
+    label: catalytic Gln100 (M-CSA/PDB numbering; UniProt residue 100)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11586
+    description: 'M-CSA roles: activator.'
+  - node_id: asp125
+    label: catalytic Asp125 (M-CSA/PDB numbering; UniProt residue 125)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11586
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:18009
+  - node_id: reactant1
+    label: 5,10-methylenetetrahydrofolate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:12071
+  - node_id: product0
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:16908
+  - node_id: product1
+    label: (6R)-5,10-methenyltetrahydrofolate
+    node_type: CHEMICAL
+    grounding: CHEBI:57455
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: 5,10-methylene-tetrahydrofolate is converted to 5,10-methenyltetrahydrofolate. The mechanism
+      involves hydride transfer from the substrate to NADP+.
+  - node_id: active_site
+    label: methylenetetrahydrofolate dehydrogenase (NADP+) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:389
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.10860 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.10860
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: methylenetetrahydrofolate dehydrogenase (NADP+) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.5.1.5
+  edges:
+  - subject: lys56
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys56 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/389/
+      snippet: activator
+      notes: M-CSA entry 389, mechanism 2; M-CSA cites PMID:10828945, PMID:11904299, PMID:16185084, PMID:25988590,
+        PMID:9519408; M-CSA catalytic-residue roles for Lys56
+  - subject: gln100
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln100 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/389/
+      snippet: activator
+      notes: M-CSA entry 389, mechanism 2; M-CSA cites PMID:10828945, PMID:11904299, PMID:16185084, PMID:25988590,
+        PMID:9519408; M-CSA catalytic-residue roles for Gln100
+  - subject: asp125
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp125 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/389/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 389, mechanism 2; M-CSA cites PMID:10828945, PMID:11904299, PMID:16185084, PMID:25988590,
+        PMID:9519408; M-CSA catalytic-residue roles for Asp125
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/389/
+      snippet: 5,10-methylene-tetrahydrofolate is converted to 5,10-methenyltetrahydrofolate. The mechanism
+        involves hydride transfer from the substrate to NADP+.
+      notes: M-CSA entry 389, mechanism 2; M-CSA cites PMID:10828945, PMID:11904299, PMID:16185084, PMID:25988590,
+        PMID:9519408; CATH domain 3.40.50.10860 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/389/
+      snippet: 5,10-methylene-tetrahydrofolate is converted to 5,10-methenyltetrahydrofolate. The mechanism
+        involves hydride transfer from the substrate to NADP+.
+      notes: M-CSA entry 389, mechanism 2; M-CSA cites PMID:10828945, PMID:11904299, PMID:16185084, PMID:25988590,
+        PMID:9519408; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/389/
+      snippet: 5,10-methylene-tetrahydrofolate is converted to 5,10-methenyltetrahydrofolate. The mechanism
+        involves hydride transfer from the substrate to NADP+.
+      notes: M-CSA entry 389, mechanism 2; M-CSA cites PMID:10828945, PMID:11904299, PMID:16185084, PMID:25988590,
+        PMID:9519408; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/389/
+      snippet: 5,10-methylene-tetrahydrofolate is converted to 5,10-methenyltetrahydrofolate. The mechanism
+        involves hydride transfer from the substrate to NADP+.
+      notes: M-CSA entry 389, mechanism 2; M-CSA cites PMID:10828945, PMID:11904299, PMID:16185084, PMID:25988590,
+        PMID:9519408; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/389/
+      snippet: 5,10-methylene-tetrahydrofolate is converted to 5,10-methenyltetrahydrofolate. The mechanism
+        involves hydride transfer from the substrate to NADP+.
+      notes: M-CSA entry 389, mechanism 2; M-CSA cites PMID:10828945, PMID:11904299, PMID:16185084, PMID:25988590,
+        PMID:9519408; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/389/
+      snippet: 5,10-methylene-tetrahydrofolate is converted to 5,10-methenyltetrahydrofolate. The mechanism
+        involves hydride transfer from the substrate to NADP+.
+      notes: M-CSA entry 389, mechanism 2; M-CSA cites PMID:10828945, PMID:11904299, PMID:16185084, PMID:25988590,
+        PMID:9519408; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (9 evidence-backed edges) transcribed from M-CSA entry 389;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

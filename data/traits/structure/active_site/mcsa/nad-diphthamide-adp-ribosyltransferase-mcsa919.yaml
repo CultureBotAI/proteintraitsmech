@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.4.2.36
 - CHEBI:16692
@@ -296,4 +296,251 @@ definitions:
       The ADP-ribosyltransferases are a class of enzymes that display activity in a variety of bacterial pathogens responsible for causing diseases in plants and animals, including those affecting mankind, such as diphtheria, cholera, and whooping cough.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of NAD+---diphthamide ADP-ribosyltransferase
+  description: Mechanism transcribed from M-CSA entry 919. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +18).
+  nodes:
+  - node_id: arg7
+    label: catalytic Arg7 (M-CSA/PDB numbering; UniProt residue 25)
+    node_type: RESIDUE
+    grounding: UniProtKB:P01555
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ser61
+    label: catalytic Ser61 (M-CSA/PDB numbering; UniProt residue 79)
+    node_type: RESIDUE
+    grounding: UniProtKB:P01555
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu110
+    label: catalytic Glu110 (M-CSA/PDB numbering; UniProt residue 128)
+    node_type: RESIDUE
+    grounding: UniProtKB:P01555
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: glu112
+    label: catalytic Glu112 (M-CSA/PDB numbering; UniProt residue 130)
+    node_type: RESIDUE
+    grounding: UniProtKB:P01555
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: diphthamide residue
+    node_type: CHEMICAL
+    grounding: CHEBI:16692
+  - node_id: reactant1
+    label: NAD(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+  - node_id: product0
+    label: N-(ADP-D-ribosyl)diphthamide(1-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:82697
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: nicotinamide
+    node_type: CHEMICAL
+    grounding: CHEBI:17154
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: The mechanism for this enzyme is currently unclear, however an SN2-like mechanism has
+      been proposed. Here, the attacking nucleophile may be the substrate arginine, diphthamide or asparagine,
+      depending on the toxin involved, and may even be water in auto-hydrolysis. This nucleophile is then
+      deprotonated by a conserved active site glutamate (Glu110?). The activated nucleophile then attacks
+      the anome
+  - node_id: active_site
+    label: NAD+---diphthamide ADP-ribosyltransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:919
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.210.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.210.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: NAD+---diphthamide ADP-ribosyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.4.2.36
+  edges:
+  - subject: glu110
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu110 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/919/
+      snippet: The mechanism for this enzyme is currently unclear, however an SN2-like mechanism has been
+        proposed. Here, the attacking nucleophile may be the substrate arginine, diphthamide or asparagine,
+        depending on the toxin involved, and may even be water in auto-hydrolysis. This nucleophile is
+        then deprotonated by a conserved active site glutamate (Glu110?). The activated nucleophile then
+        attacks the anomeric carbon of the ribose ring which, due to the conformation of the NAD, has
+        been exposed to the solvent forming a pentacoordinate oxocarbenium transition state intermediate.
+        This intermediate is  partially stabilised by a catalytic glutamate (Glu112) forming a hydrogen
+        bond with the O2 atom on the nicotinamide ribose. This makes the ring more electronegative, which
+        stabilises the positively charged oxocarbenium ion before the N-glycosidic bond is cleaved, completing
+        the transfer of the ADP-ribose+ moiety on to the substrate.
+      notes: M-CSA entry 919, mechanism 1; M-CSA cites PMID:15049684, PMID:7658473; step 1
+  - subject: glu112
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu112 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/919/
+      snippet: The mechanism for this enzyme is currently unclear, however an SN2-like mechanism has been
+        proposed. Here, the attacking nucleophile may be the substrate arginine, diphthamide or asparagine,
+        depending on the toxin involved, and may even be water in auto-hydrolysis. This nucleophile is
+        then deprotonated by a conserved active site glutamate (Glu110?). The activated nucleophile then
+        attacks the anomeric carbon of the ribose ring which, due to the conformation of the NAD, has
+        been exposed to the solvent forming a pentacoordinate oxocarbenium transition state intermediate.
+        This intermediate is  partially stabilised by a catalytic glutamate (Glu112) forming a hydrogen
+        bond with the O2 atom on the nicotinamide ribose. This makes the ring more electronegative, which
+        stabilises the positively charged oxocarbenium ion before the N-glycosidic bond is cleaved, completing
+        the transfer of the ADP-ribose+ moiety on to the substrate.
+      notes: M-CSA entry 919, mechanism 1; M-CSA cites PMID:15049684, PMID:7658473; step 1
+  - subject: arg7
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg7 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/919/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 919, mechanism 1; M-CSA cites PMID:15049684, PMID:7658473; M-CSA catalytic-residue
+        roles for Arg7
+  - subject: ser61
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser61 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/919/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 919, mechanism 1; M-CSA cites PMID:15049684, PMID:7658473; M-CSA catalytic-residue
+        roles for Ser61
+  - subject: glu110
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu110 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/919/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 919, mechanism 1; M-CSA cites PMID:15049684, PMID:7658473; M-CSA catalytic-residue
+        roles for Glu110
+  - subject: glu112
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu112 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/919/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 919, mechanism 1; M-CSA cites PMID:15049684, PMID:7658473; M-CSA catalytic-residue
+        roles for Glu112
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/919/
+      snippet: The mechanism for this enzyme is currently unclear, however an SN2-like mechanism has been
+        proposed. Here, the attacking nucleophile may be the substrate arginine, diphthamide or asparagine,
+        depending on the toxin involved, and may even be water in auto-hydrolysis. This nucleophile is
+        then deprotonated by a conserved active site glutamate (Glu110?). The activated nucleophile then
+        attacks the anome
+      notes: M-CSA entry 919, mechanism 1; M-CSA cites PMID:15049684, PMID:7658473; CATH domain 3.90.210.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/919/
+      snippet: The mechanism for this enzyme is currently unclear, however an SN2-like mechanism has been
+        proposed. Here, the attacking nucleophile may be the substrate arginine, diphthamide or asparagine,
+        depending on the toxin involved, and may even be water in auto-hydrolysis. This nucleophile is
+        then deprotonated by a conserved active site glutamate (Glu110?). The activated nucleophile then
+        attacks the anome
+      notes: M-CSA entry 919, mechanism 1; M-CSA cites PMID:15049684, PMID:7658473; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/919/
+      snippet: The mechanism for this enzyme is currently unclear, however an SN2-like mechanism has been
+        proposed. Here, the attacking nucleophile may be the substrate arginine, diphthamide or asparagine,
+        depending on the toxin involved, and may even be water in auto-hydrolysis. This nucleophile is
+        then deprotonated by a conserved active site glutamate (Glu110?). The activated nucleophile then
+        attacks the anome
+      notes: M-CSA entry 919, mechanism 1; M-CSA cites PMID:15049684, PMID:7658473; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/919/
+      snippet: The mechanism for this enzyme is currently unclear, however an SN2-like mechanism has been
+        proposed. Here, the attacking nucleophile may be the substrate arginine, diphthamide or asparagine,
+        depending on the toxin involved, and may even be water in auto-hydrolysis. This nucleophile is
+        then deprotonated by a conserved active site glutamate (Glu110?). The activated nucleophile then
+        attacks the anome
+      notes: M-CSA entry 919, mechanism 1; M-CSA cites PMID:15049684, PMID:7658473; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/919/
+      snippet: The mechanism for this enzyme is currently unclear, however an SN2-like mechanism has been
+        proposed. Here, the attacking nucleophile may be the substrate arginine, diphthamide or asparagine,
+        depending on the toxin involved, and may even be water in auto-hydrolysis. This nucleophile is
+        then deprotonated by a conserved active site glutamate (Glu110?). The activated nucleophile then
+        attacks the anome
+      notes: M-CSA entry 919, mechanism 1; M-CSA cites PMID:15049684, PMID:7658473; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/919/
+      snippet: The mechanism for this enzyme is currently unclear, however an SN2-like mechanism has been
+        proposed. Here, the attacking nucleophile may be the substrate arginine, diphthamide or asparagine,
+        depending on the toxin involved, and may even be water in auto-hydrolysis. This nucleophile is
+        then deprotonated by a conserved active site glutamate (Glu110?). The activated nucleophile then
+        attacks the anome
+      notes: M-CSA entry 919, mechanism 1; M-CSA cites PMID:15049684, PMID:7658473; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/919/
+      snippet: The mechanism for this enzyme is currently unclear, however an SN2-like mechanism has been
+        proposed. Here, the attacking nucleophile may be the substrate arginine, diphthamide or asparagine,
+        depending on the toxin involved, and may even be water in auto-hydrolysis. This nucleophile is
+        then deprotonated by a conserved active site glutamate (Glu110?). The activated nucleophile then
+        attacks the anome
+      notes: M-CSA entry 919, mechanism 1; M-CSA cites PMID:15049684, PMID:7658473; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 919;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

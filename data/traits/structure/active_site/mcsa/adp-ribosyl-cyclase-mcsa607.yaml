@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.2.6
 - CHEBI:15377
@@ -223,4 +223,219 @@ definitions:
       ADP-ribosyl cyclase catalyses the elimination of nicotinamide from NAD and cyclisation of cADPR. It has been identified in many organisms from microbes to mammals. The product from this enzyme, cADPR, is a second messenger in cellular calcium signalling pathways and it regulates the concentration of calcium ions in a variety of mammalian and non-mammalian cell types.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of ADP-ribosyl cyclase
+  description: Mechanism transcribed from M-CSA entry 607. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +24).
+  nodes:
+  - node_id: glu98
+    label: catalytic Glu98 (M-CSA/PDB numbering; UniProt residue 122)
+    node_type: RESIDUE
+    grounding: UniProtKB:P29241
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: phe174
+    label: catalytic Phe174 (M-CSA/PDB numbering; UniProt residue 198)
+    node_type: RESIDUE
+    grounding: UniProtKB:P29241
+    description: 'M-CSA roles: hydrophobic interaction.'
+  - node_id: glu179
+    label: catalytic Glu179 (M-CSA/PDB numbering; UniProt residue 203)
+    node_type: RESIDUE
+    grounding: UniProtKB:P29241
+    description: 'M-CSA roles: covalent catalysis, covalently attached, nucleophile.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: NAD(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+  - node_id: product0
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product1
+    label: nicotinamide
+    node_type: CHEMICAL
+    grounding: CHEBI:17154
+  - node_id: product2
+    label: cyclic ADP-ribose(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:73672
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: Glu203 nucleophilically attacks the ribose C1' which nicotinamide attached to. The nucleophilic
+      attack eliminates the nicotinamide and leads to the formation of a Glu179-R5P intermediate. N1 of
+      purine group then acts as a nucleophile to attack the ester bond between Glu203 and ribose, resulting
+      in cyclisation to form cADPR. Glu122 provides stabilisation of hydrolysis at ribose C1' by Glu203.
+  - node_id: active_site
+    label: ADP-ribosyl cyclase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:607
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.720 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.720
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: ADP-ribosyl cyclase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.2.6
+  edges:
+  - subject: glu179
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu179 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/607/
+      snippet: Glu203 nucleophilically attacks the ribose C1' which nicotinamide attached to. The nucleophilic
+        attack eliminates the nicotinamide and leads to the formation of a Glu179-R5P intermediate. N1
+        of purine group then acts as a nucleophile to attack the ester bond between Glu203 and ribose,
+        resulting in cyclisation to form cADPR. Glu122 provides stabilisation of hydrolysis at ribose
+        C1' by Glu203.
+      notes: M-CSA entry 607, mechanism 1; M-CSA cites PMID:10521467, PMID:15016363, PMID:19640843; step
+        1
+  - subject: glu98
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu98 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/607/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 607, mechanism 1; M-CSA cites PMID:10521467, PMID:15016363, PMID:19640843; M-CSA
+        catalytic-residue roles for Glu98
+  - subject: phe174
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Phe174 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/607/
+      snippet: hydrophobic interaction
+      notes: M-CSA entry 607, mechanism 1; M-CSA cites PMID:10521467, PMID:15016363, PMID:19640843; M-CSA
+        catalytic-residue roles for Phe174
+  - subject: glu179
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu179 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/607/
+      snippet: covalent catalysis, covalently attached, nucleophile
+      notes: M-CSA entry 607, mechanism 1; M-CSA cites PMID:10521467, PMID:15016363, PMID:19640843; M-CSA
+        catalytic-residue roles for Glu179
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/607/
+      snippet: Glu203 nucleophilically attacks the ribose C1' which nicotinamide attached to. The nucleophilic
+        attack eliminates the nicotinamide and leads to the formation of a Glu179-R5P intermediate. N1
+        of purine group then acts as a nucleophile to attack the ester bond between Glu203 and ribose,
+        resulting in cyclisation to form cADPR. Glu122 provides stabilisation of hydrolysis at ribose
+        C1' by Glu203.
+      notes: M-CSA entry 607, mechanism 1; M-CSA cites PMID:10521467, PMID:15016363, PMID:19640843; CATH
+        domain 3.40.50.720 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/607/
+      snippet: Glu203 nucleophilically attacks the ribose C1' which nicotinamide attached to. The nucleophilic
+        attack eliminates the nicotinamide and leads to the formation of a Glu179-R5P intermediate. N1
+        of purine group then acts as a nucleophile to attack the ester bond between Glu203 and ribose,
+        resulting in cyclisation to form cADPR. Glu122 provides stabilisation of hydrolysis at ribose
+        C1' by Glu203.
+      notes: M-CSA entry 607, mechanism 1; M-CSA cites PMID:10521467, PMID:15016363, PMID:19640843; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/607/
+      snippet: Glu203 nucleophilically attacks the ribose C1' which nicotinamide attached to. The nucleophilic
+        attack eliminates the nicotinamide and leads to the formation of a Glu179-R5P intermediate. N1
+        of purine group then acts as a nucleophile to attack the ester bond between Glu203 and ribose,
+        resulting in cyclisation to form cADPR. Glu122 provides stabilisation of hydrolysis at ribose
+        C1' by Glu203.
+      notes: M-CSA entry 607, mechanism 1; M-CSA cites PMID:10521467, PMID:15016363, PMID:19640843; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/607/
+      snippet: Glu203 nucleophilically attacks the ribose C1' which nicotinamide attached to. The nucleophilic
+        attack eliminates the nicotinamide and leads to the formation of a Glu179-R5P intermediate. N1
+        of purine group then acts as a nucleophile to attack the ester bond between Glu203 and ribose,
+        resulting in cyclisation to form cADPR. Glu122 provides stabilisation of hydrolysis at ribose
+        C1' by Glu203.
+      notes: M-CSA entry 607, mechanism 1; M-CSA cites PMID:10521467, PMID:15016363, PMID:19640843; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/607/
+      snippet: Glu203 nucleophilically attacks the ribose C1' which nicotinamide attached to. The nucleophilic
+        attack eliminates the nicotinamide and leads to the formation of a Glu179-R5P intermediate. N1
+        of purine group then acts as a nucleophile to attack the ester bond between Glu203 and ribose,
+        resulting in cyclisation to form cADPR. Glu122 provides stabilisation of hydrolysis at ribose
+        C1' by Glu203.
+      notes: M-CSA entry 607, mechanism 1; M-CSA cites PMID:10521467, PMID:15016363, PMID:19640843; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/607/
+      snippet: Glu203 nucleophilically attacks the ribose C1' which nicotinamide attached to. The nucleophilic
+        attack eliminates the nicotinamide and leads to the formation of a Glu179-R5P intermediate. N1
+        of purine group then acts as a nucleophile to attack the ester bond between Glu203 and ribose,
+        resulting in cyclisation to form cADPR. Glu122 provides stabilisation of hydrolysis at ribose
+        C1' by Glu203.
+      notes: M-CSA entry 607, mechanism 1; M-CSA cites PMID:10521467, PMID:15016363, PMID:19640843; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/607/
+      snippet: Glu203 nucleophilically attacks the ribose C1' which nicotinamide attached to. The nucleophilic
+        attack eliminates the nicotinamide and leads to the formation of a Glu179-R5P intermediate. N1
+        of purine group then acts as a nucleophile to attack the ester bond between Glu203 and ribose,
+        resulting in cyclisation to form cADPR. Glu122 provides stabilisation of hydrolysis at ribose
+        C1' by Glu203.
+      notes: M-CSA entry 607, mechanism 1; M-CSA cites PMID:10521467, PMID:15016363, PMID:19640843; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (11 evidence-backed edges) transcribed from M-CSA entry 607;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

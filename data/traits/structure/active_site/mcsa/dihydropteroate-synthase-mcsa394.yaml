@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.5.1.15
 - CHEBI:17836
@@ -314,4 +314,166 @@ definitions:
       Dihydropteroate synthase (DHPS) is essential for the de novo synthesis of folate in prokaryotes, in lower eukaryotes such as protozoa and yeast, and in plants. DHPS is absent in mammals. This makes it an ideal drug target.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of dihydropteroate synthase
+  description: Mechanism transcribed from M-CSA entry 394. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: lys221
+    label: catalytic Lys221 (M-CSA/PDB numbering; UniProt residue 221)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AC13
+    description: 'M-CSA roles: activator.'
+  - node_id: arg255
+    label: catalytic Arg255 (M-CSA/PDB numbering; UniProt residue 255)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AC13
+    description: 'M-CSA roles: activator.'
+  - node_id: reactant0
+    label: 4-aminobenzoate
+    node_type: CHEMICAL
+    grounding: CHEBI:17836
+  - node_id: reactant1
+    label: (7,8-dihydropterin-6-yl)methyl diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:72950
+  - node_id: product0
+    label: 7,8-dihydropteroate
+    node_type: CHEMICAL
+    grounding: CHEBI:17839
+  - node_id: product1
+    label: diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: DHPS catalyses the reaction of para-aminobenzoic acid (pABA) with 7,8-dihydropterin-pyrophosphate
+      to form pyrophosphate and 7,8-dihydropteroate. The condensation of pABA with DHPPP to form 7,8-dihydropteroate
+      occurs via an SN1 reaction mechanism in an ordered manner in which DHPPP first binds DHPS, which
+      then eliminates its pyrophosphate group (PPi) prior to pABA binding by stabilizing the cationi
+  - node_id: active_site
+    label: dihydropteroate synthase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:394
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.20 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.20
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: dihydropteroate synthase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.5.1.15
+  edges:
+  - subject: lys221
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys221 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/394/
+      snippet: activator
+      notes: M-CSA entry 394, mechanism 2; M-CSA cites PMID:11007651, PMID:15341734, PMID:22383850, PMID:23859210,
+        PMID:9149138, PMID:9187658; M-CSA catalytic-residue roles for Lys221
+  - subject: arg255
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg255 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/394/
+      snippet: activator
+      notes: M-CSA entry 394, mechanism 2; M-CSA cites PMID:11007651, PMID:15341734, PMID:22383850, PMID:23859210,
+        PMID:9149138, PMID:9187658; M-CSA catalytic-residue roles for Arg255
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/394/
+      snippet: DHPS catalyses the reaction of para-aminobenzoic acid (pABA) with 7,8-dihydropterin-pyrophosphate
+        to form pyrophosphate and 7,8-dihydropteroate. The condensation of pABA with DHPPP to form 7,8-dihydropteroate
+        occurs via an SN1 reaction mechanism in an ordered manner in which DHPPP first binds DHPS, which
+        then eliminates its pyrophosphate group (PPi) prior to pABA binding by stabilizing the cationi
+      notes: M-CSA entry 394, mechanism 2; M-CSA cites PMID:11007651, PMID:15341734, PMID:22383850, PMID:23859210,
+        PMID:9149138, PMID:9187658; CATH domain 3.20.20.20 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/394/
+      snippet: DHPS catalyses the reaction of para-aminobenzoic acid (pABA) with 7,8-dihydropterin-pyrophosphate
+        to form pyrophosphate and 7,8-dihydropteroate. The condensation of pABA with DHPPP to form 7,8-dihydropteroate
+        occurs via an SN1 reaction mechanism in an ordered manner in which DHPPP first binds DHPS, which
+        then eliminates its pyrophosphate group (PPi) prior to pABA binding by stabilizing the cationi
+      notes: M-CSA entry 394, mechanism 2; M-CSA cites PMID:11007651, PMID:15341734, PMID:22383850, PMID:23859210,
+        PMID:9149138, PMID:9187658; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/394/
+      snippet: DHPS catalyses the reaction of para-aminobenzoic acid (pABA) with 7,8-dihydropterin-pyrophosphate
+        to form pyrophosphate and 7,8-dihydropteroate. The condensation of pABA with DHPPP to form 7,8-dihydropteroate
+        occurs via an SN1 reaction mechanism in an ordered manner in which DHPPP first binds DHPS, which
+        then eliminates its pyrophosphate group (PPi) prior to pABA binding by stabilizing the cationi
+      notes: M-CSA entry 394, mechanism 2; M-CSA cites PMID:11007651, PMID:15341734, PMID:22383850, PMID:23859210,
+        PMID:9149138, PMID:9187658; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/394/
+      snippet: DHPS catalyses the reaction of para-aminobenzoic acid (pABA) with 7,8-dihydropterin-pyrophosphate
+        to form pyrophosphate and 7,8-dihydropteroate. The condensation of pABA with DHPPP to form 7,8-dihydropteroate
+        occurs via an SN1 reaction mechanism in an ordered manner in which DHPPP first binds DHPS, which
+        then eliminates its pyrophosphate group (PPi) prior to pABA binding by stabilizing the cationi
+      notes: M-CSA entry 394, mechanism 2; M-CSA cites PMID:11007651, PMID:15341734, PMID:22383850, PMID:23859210,
+        PMID:9149138, PMID:9187658; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/394/
+      snippet: DHPS catalyses the reaction of para-aminobenzoic acid (pABA) with 7,8-dihydropterin-pyrophosphate
+        to form pyrophosphate and 7,8-dihydropteroate. The condensation of pABA with DHPPP to form 7,8-dihydropteroate
+        occurs via an SN1 reaction mechanism in an ordered manner in which DHPPP first binds DHPS, which
+        then eliminates its pyrophosphate group (PPi) prior to pABA binding by stabilizing the cationi
+      notes: M-CSA entry 394, mechanism 2; M-CSA cites PMID:11007651, PMID:15341734, PMID:22383850, PMID:23859210,
+        PMID:9149138, PMID:9187658; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/394/
+      snippet: DHPS catalyses the reaction of para-aminobenzoic acid (pABA) with 7,8-dihydropterin-pyrophosphate
+        to form pyrophosphate and 7,8-dihydropteroate. The condensation of pABA with DHPPP to form 7,8-dihydropteroate
+        occurs via an SN1 reaction mechanism in an ordered manner in which DHPPP first binds DHPS, which
+        then eliminates its pyrophosphate group (PPi) prior to pABA binding by stabilizing the cationi
+      notes: M-CSA entry 394, mechanism 2; M-CSA cites PMID:11007651, PMID:15341734, PMID:22383850, PMID:23859210,
+        PMID:9149138, PMID:9187658; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (8 evidence-backed edges) transcribed from M-CSA entry 394;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.1.1.1
 - CHEBI:15734
@@ -328,4 +328,283 @@ definitions:
       This entry represents the rodent class-II subfamily of the zinc-containing alcohol dehydrogenase family (ADH2). Most of the proteins in this subfamily are from mammals. They are involved in the reduction of benzoquinones [PMID:10514444]. Rodent ADH2s are inefficient in alcohol oxidation with roughly three orders of magnitude lower activity than the "classical" ADHs. They show a preference for aromatic alcohols (such as benzyl alcohols).
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of alcohol dehydrogenase (class II)
+  description: Mechanism transcribed from M-CSA entry 500. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +1).
+  nodes:
+  - node_id: cys46
+    label: catalytic Cys46 (M-CSA/PDB numbering; UniProt residue 47)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9QYY9
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: pro47
+    label: catalytic Pro47 (M-CSA/PDB numbering; UniProt residue 48)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9QYY9
+    description: 'M-CSA roles: steric role.'
+  - node_id: thr48
+    label: catalytic Thr48 (M-CSA/PDB numbering; UniProt residue 49)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9QYY9
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: his67
+    label: catalytic His67 (M-CSA/PDB numbering; UniProt residue 68)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9QYY9
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: cys178
+    label: catalytic Cys178 (M-CSA/PDB numbering; UniProt residue 179)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9QYY9
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: ser182
+    label: catalytic Ser182 (M-CSA/PDB numbering; UniProt residue 183)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9QYY9
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: primary alcohol
+    node_type: CHEMICAL
+    grounding: CHEBI:15734
+  - node_id: reactant1
+    label: NAD(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+  - node_id: product0
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product1
+    label: aldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:17478
+  - node_id: product2
+    label: NADH(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: 'Mouse ADH2 follows an ordered bi-bi mechanism, and hydride transfer is rate-limiting
+      for oxidation of benzyl alcohols. The general mechanism is thought to proceed in the same manner
+      as for other zinc-dependent ADHs: the substrate binds to a zinc ion at the active site, which allows
+      deprotonation of the OH group by Thr48 or Ser182 and probably active site water in a proton relay
+      system, because the'
+  - node_id: active_site
+    label: alcohol dehydrogenase (class II) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:500
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.180.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.180.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: alcohol dehydrogenase (class II) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.1.1.1
+  edges:
+  - subject: thr48
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Thr48 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/500/
+      snippet: 'Mouse ADH2 follows an ordered bi-bi mechanism, and hydride transfer is rate-limiting for
+        oxidation of benzyl alcohols. The general mechanism is thought to proceed in the same manner as
+        for other zinc-dependent ADHs: the substrate binds to a zinc ion at the active site, which allows
+        deprotonation of the OH group by Thr48 or Ser182 and probably active site water in a proton relay
+        system, because the zinc ion stabilises the oxyanion thus reducing the pKa of the OH to around
+        8.4. This allows hydride transfer from C2 to the NAD<sup>+</sup> with the oxygen lone pair overlapping
+        with the sigma* orbital of C2 to create the double bond that characterises the product.'
+      notes: M-CSA entry 500, mechanism 1; M-CSA cites PMID:10514444, PMID:10970744, PMID:14756569; step
+        1
+  - subject: ser182
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser182 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/500/
+      snippet: 'Mouse ADH2 follows an ordered bi-bi mechanism, and hydride transfer is rate-limiting for
+        oxidation of benzyl alcohols. The general mechanism is thought to proceed in the same manner as
+        for other zinc-dependent ADHs: the substrate binds to a zinc ion at the active site, which allows
+        deprotonation of the OH group by Thr48 or Ser182 and probably active site water in a proton relay
+        system, because the zinc ion stabilises the oxyanion thus reducing the pKa of the OH to around
+        8.4. This allows hydride transfer from C2 to the NAD<sup>+</sup> with the oxygen lone pair overlapping
+        with the sigma* orbital of C2 to create the double bond that characterises the product.'
+      notes: M-CSA entry 500, mechanism 1; M-CSA cites PMID:10514444, PMID:10970744, PMID:14756569; step
+        1
+  - subject: cys46
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys46 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/500/
+      snippet: metal ligand
+      notes: M-CSA entry 500, mechanism 1; M-CSA cites PMID:10514444, PMID:10970744, PMID:14756569; M-CSA
+        catalytic-residue roles for Cys46
+  - subject: pro47
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Pro47 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/500/
+      snippet: steric role
+      notes: M-CSA entry 500, mechanism 1; M-CSA cites PMID:10514444, PMID:10970744, PMID:14756569; M-CSA
+        catalytic-residue roles for Pro47
+  - subject: thr48
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr48 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/500/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 500, mechanism 1; M-CSA cites PMID:10514444, PMID:10970744, PMID:14756569; M-CSA
+        catalytic-residue roles for Thr48
+  - subject: his67
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His67 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/500/
+      snippet: metal ligand
+      notes: M-CSA entry 500, mechanism 1; M-CSA cites PMID:10514444, PMID:10970744, PMID:14756569; M-CSA
+        catalytic-residue roles for His67
+  - subject: cys178
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys178 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/500/
+      snippet: metal ligand
+      notes: M-CSA entry 500, mechanism 1; M-CSA cites PMID:10514444, PMID:10970744, PMID:14756569; M-CSA
+        catalytic-residue roles for Cys178
+  - subject: ser182
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser182 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/500/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 500, mechanism 1; M-CSA cites PMID:10514444, PMID:10970744, PMID:14756569; M-CSA
+        catalytic-residue roles for Ser182
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/500/
+      snippet: 'Mouse ADH2 follows an ordered bi-bi mechanism, and hydride transfer is rate-limiting for
+        oxidation of benzyl alcohols. The general mechanism is thought to proceed in the same manner as
+        for other zinc-dependent ADHs: the substrate binds to a zinc ion at the active site, which allows
+        deprotonation of the OH group by Thr48 or Ser182 and probably active site water in a proton relay
+        system, because the'
+      notes: M-CSA entry 500, mechanism 1; M-CSA cites PMID:10514444, PMID:10970744, PMID:14756569; CATH
+        domain 3.90.180.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/500/
+      snippet: 'Mouse ADH2 follows an ordered bi-bi mechanism, and hydride transfer is rate-limiting for
+        oxidation of benzyl alcohols. The general mechanism is thought to proceed in the same manner as
+        for other zinc-dependent ADHs: the substrate binds to a zinc ion at the active site, which allows
+        deprotonation of the OH group by Thr48 or Ser182 and probably active site water in a proton relay
+        system, because the'
+      notes: M-CSA entry 500, mechanism 1; M-CSA cites PMID:10514444, PMID:10970744, PMID:14756569; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/500/
+      snippet: 'Mouse ADH2 follows an ordered bi-bi mechanism, and hydride transfer is rate-limiting for
+        oxidation of benzyl alcohols. The general mechanism is thought to proceed in the same manner as
+        for other zinc-dependent ADHs: the substrate binds to a zinc ion at the active site, which allows
+        deprotonation of the OH group by Thr48 or Ser182 and probably active site water in a proton relay
+        system, because the'
+      notes: M-CSA entry 500, mechanism 1; M-CSA cites PMID:10514444, PMID:10970744, PMID:14756569; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/500/
+      snippet: 'Mouse ADH2 follows an ordered bi-bi mechanism, and hydride transfer is rate-limiting for
+        oxidation of benzyl alcohols. The general mechanism is thought to proceed in the same manner as
+        for other zinc-dependent ADHs: the substrate binds to a zinc ion at the active site, which allows
+        deprotonation of the OH group by Thr48 or Ser182 and probably active site water in a proton relay
+        system, because the'
+      notes: M-CSA entry 500, mechanism 1; M-CSA cites PMID:10514444, PMID:10970744, PMID:14756569; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/500/
+      snippet: 'Mouse ADH2 follows an ordered bi-bi mechanism, and hydride transfer is rate-limiting for
+        oxidation of benzyl alcohols. The general mechanism is thought to proceed in the same manner as
+        for other zinc-dependent ADHs: the substrate binds to a zinc ion at the active site, which allows
+        deprotonation of the OH group by Thr48 or Ser182 and probably active site water in a proton relay
+        system, because the'
+      notes: M-CSA entry 500, mechanism 1; M-CSA cites PMID:10514444, PMID:10970744, PMID:14756569; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/500/
+      snippet: 'Mouse ADH2 follows an ordered bi-bi mechanism, and hydride transfer is rate-limiting for
+        oxidation of benzyl alcohols. The general mechanism is thought to proceed in the same manner as
+        for other zinc-dependent ADHs: the substrate binds to a zinc ion at the active site, which allows
+        deprotonation of the OH group by Thr48 or Ser182 and probably active site water in a proton relay
+        system, because the'
+      notes: M-CSA entry 500, mechanism 1; M-CSA cites PMID:10514444, PMID:10970744, PMID:14756569; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/500/
+      snippet: 'Mouse ADH2 follows an ordered bi-bi mechanism, and hydride transfer is rate-limiting for
+        oxidation of benzyl alcohols. The general mechanism is thought to proceed in the same manner as
+        for other zinc-dependent ADHs: the substrate binds to a zinc ion at the active site, which allows
+        deprotonation of the OH group by Thr48 or Ser182 and probably active site water in a proton relay
+        system, because the'
+      notes: M-CSA entry 500, mechanism 1; M-CSA cites PMID:10514444, PMID:10970744, PMID:14756569; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 500;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

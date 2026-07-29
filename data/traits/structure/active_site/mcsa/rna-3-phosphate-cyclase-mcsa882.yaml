@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:6.5.1.4
 - CHEBI:83062
@@ -265,4 +265,223 @@ definitions:
       The enzyme converts the 3'-terminal phosphate of various RNA substrates into the 2',3'-cyclic phosphodiester in an ATP-dependent reaction. The enzyme also has a polynucleotide 5' adenylylation activity [PMID:21098490 ]. The biological role of this enzyme is unknown but it is likely to function in some aspects of cellular RNA processing.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of RNA-3'-phosphate cyclase
+  description: Mechanism transcribed from M-CSA entry 882. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset -1).
+  nodes:
+  - node_id: glu14
+    label: catalytic Glu14 (M-CSA/PDB numbering; UniProt residue 13)
+    node_type: RESIDUE
+    grounding: UniProtKB:P46849
+    description: 'M-CSA roles: modifies pKa.'
+  - node_id: his309
+    label: catalytic His309 (M-CSA/PDB numbering; UniProt residue 308)
+    node_type: RESIDUE
+    grounding: UniProtKB:P46849
+    description: 'M-CSA roles: covalent catalysis.'
+  - node_id: reactant0
+    label: 3'-end ribonucleotide 3'-phosphate(3-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:83062
+  - node_id: reactant1
+    label: ATP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+  - node_id: product0
+    label: adenosine 5'-monophosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+  - node_id: product1
+    label: 3'-end ribonucleotide 2',3'-cyclic phosphate(2-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:83064
+  - node_id: product2
+    label: diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: Catalysis occurs by a three-step mechanism, starting with the activation of the enzyme
+      by ATP, forming a phosphoramide bond between adenylate and a histidine (His309, activated by Glu14)
+      residue [PMID:10574971, PMID:19690099]. The adenylate group is then transferred to the 3'-phosphate
+      terminus of the substrate, forming the capped structure [RNA]-3'-(5'-diphosphoadenosine). Finally,
+      the enzyme cat
+  - node_id: active_site
+    label: RNA-3'-phosphate cyclase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:882
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.65.10.20 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.65.10.20
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: RNA-3'-phosphate cyclase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:6.5.1.4
+  edges:
+  - subject: glu14
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu14 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/882/
+      snippet: Catalysis occurs by a three-step mechanism, starting with the activation of the enzyme
+        by ATP, forming a phosphoramide bond between adenylate and a histidine (His309, activated by Glu14)
+        residue [PMID:10574971, PMID:19690099]. The adenylate group is then transferred to the 3'-phosphate
+        terminus of the substrate, forming the capped structure [RNA]-3'-(5'-diphosphoadenosine). Finally,
+        the enzyme catalyses an attack of the vicinal O-2' on the 3'-phosphorus, which results in formation
+        of cyclic phosphate and release of the adenylate. As with other ATP-dependent enzymes, it is thought
+        that the magnesium ion is bound directly to the phosphate groups of ATP.
+      notes: M-CSA entry 882, mechanism 1; M-CSA cites PMID:19690099, PMID:20399182, PMID:21098490, PMID:22167800,
+        PMID:9184239, PMID:9738023; step 1
+  - subject: his309
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His309 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/882/
+      snippet: Catalysis occurs by a three-step mechanism, starting with the activation of the enzyme
+        by ATP, forming a phosphoramide bond between adenylate and a histidine (His309, activated by Glu14)
+        residue [PMID:10574971, PMID:19690099]. The adenylate group is then transferred to the 3'-phosphate
+        terminus of the substrate, forming the capped structure [RNA]-3'-(5'-diphosphoadenosine). Finally,
+        the enzyme catalyses an attack of the vicinal O-2' on the 3'-phosphorus, which results in formation
+        of cyclic phosphate and release of the adenylate. As with other ATP-dependent enzymes, it is thought
+        that the magnesium ion is bound directly to the phosphate groups of ATP.
+      notes: M-CSA entry 882, mechanism 1; M-CSA cites PMID:19690099, PMID:20399182, PMID:21098490, PMID:22167800,
+        PMID:9184239, PMID:9738023; step 1
+  - subject: glu14
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu14 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/882/
+      snippet: modifies pKa
+      notes: M-CSA entry 882, mechanism 1; M-CSA cites PMID:19690099, PMID:20399182, PMID:21098490, PMID:22167800,
+        PMID:9184239, PMID:9738023; M-CSA catalytic-residue roles for Glu14
+  - subject: his309
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His309 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/882/
+      snippet: covalent catalysis
+      notes: M-CSA entry 882, mechanism 1; M-CSA cites PMID:19690099, PMID:20399182, PMID:21098490, PMID:22167800,
+        PMID:9184239, PMID:9738023; M-CSA catalytic-residue roles for His309
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/882/
+      snippet: Catalysis occurs by a three-step mechanism, starting with the activation of the enzyme
+        by ATP, forming a phosphoramide bond between adenylate and a histidine (His309, activated by Glu14)
+        residue [PMID:10574971, PMID:19690099]. The adenylate group is then transferred to the 3'-phosphate
+        terminus of the substrate, forming the capped structure [RNA]-3'-(5'-diphosphoadenosine). Finally,
+        the enzyme cat
+      notes: M-CSA entry 882, mechanism 1; M-CSA cites PMID:19690099, PMID:20399182, PMID:21098490, PMID:22167800,
+        PMID:9184239, PMID:9738023; CATH domain 3.65.10.20 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/882/
+      snippet: Catalysis occurs by a three-step mechanism, starting with the activation of the enzyme
+        by ATP, forming a phosphoramide bond between adenylate and a histidine (His309, activated by Glu14)
+        residue [PMID:10574971, PMID:19690099]. The adenylate group is then transferred to the 3'-phosphate
+        terminus of the substrate, forming the capped structure [RNA]-3'-(5'-diphosphoadenosine). Finally,
+        the enzyme cat
+      notes: M-CSA entry 882, mechanism 1; M-CSA cites PMID:19690099, PMID:20399182, PMID:21098490, PMID:22167800,
+        PMID:9184239, PMID:9738023; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/882/
+      snippet: Catalysis occurs by a three-step mechanism, starting with the activation of the enzyme
+        by ATP, forming a phosphoramide bond between adenylate and a histidine (His309, activated by Glu14)
+        residue [PMID:10574971, PMID:19690099]. The adenylate group is then transferred to the 3'-phosphate
+        terminus of the substrate, forming the capped structure [RNA]-3'-(5'-diphosphoadenosine). Finally,
+        the enzyme cat
+      notes: M-CSA entry 882, mechanism 1; M-CSA cites PMID:19690099, PMID:20399182, PMID:21098490, PMID:22167800,
+        PMID:9184239, PMID:9738023; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/882/
+      snippet: Catalysis occurs by a three-step mechanism, starting with the activation of the enzyme
+        by ATP, forming a phosphoramide bond between adenylate and a histidine (His309, activated by Glu14)
+        residue [PMID:10574971, PMID:19690099]. The adenylate group is then transferred to the 3'-phosphate
+        terminus of the substrate, forming the capped structure [RNA]-3'-(5'-diphosphoadenosine). Finally,
+        the enzyme cat
+      notes: M-CSA entry 882, mechanism 1; M-CSA cites PMID:19690099, PMID:20399182, PMID:21098490, PMID:22167800,
+        PMID:9184239, PMID:9738023; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/882/
+      snippet: Catalysis occurs by a three-step mechanism, starting with the activation of the enzyme
+        by ATP, forming a phosphoramide bond between adenylate and a histidine (His309, activated by Glu14)
+        residue [PMID:10574971, PMID:19690099]. The adenylate group is then transferred to the 3'-phosphate
+        terminus of the substrate, forming the capped structure [RNA]-3'-(5'-diphosphoadenosine). Finally,
+        the enzyme cat
+      notes: M-CSA entry 882, mechanism 1; M-CSA cites PMID:19690099, PMID:20399182, PMID:21098490, PMID:22167800,
+        PMID:9184239, PMID:9738023; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/882/
+      snippet: Catalysis occurs by a three-step mechanism, starting with the activation of the enzyme
+        by ATP, forming a phosphoramide bond between adenylate and a histidine (His309, activated by Glu14)
+        residue [PMID:10574971, PMID:19690099]. The adenylate group is then transferred to the 3'-phosphate
+        terminus of the substrate, forming the capped structure [RNA]-3'-(5'-diphosphoadenosine). Finally,
+        the enzyme cat
+      notes: M-CSA entry 882, mechanism 1; M-CSA cites PMID:19690099, PMID:20399182, PMID:21098490, PMID:22167800,
+        PMID:9184239, PMID:9738023; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/882/
+      snippet: Catalysis occurs by a three-step mechanism, starting with the activation of the enzyme
+        by ATP, forming a phosphoramide bond between adenylate and a histidine (His309, activated by Glu14)
+        residue [PMID:10574971, PMID:19690099]. The adenylate group is then transferred to the 3'-phosphate
+        terminus of the substrate, forming the capped structure [RNA]-3'-(5'-diphosphoadenosine). Finally,
+        the enzyme cat
+      notes: M-CSA entry 882, mechanism 1; M-CSA cites PMID:19690099, PMID:20399182, PMID:21098490, PMID:22167800,
+        PMID:9184239, PMID:9738023; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (11 evidence-backed edges) transcribed from M-CSA entry 882;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

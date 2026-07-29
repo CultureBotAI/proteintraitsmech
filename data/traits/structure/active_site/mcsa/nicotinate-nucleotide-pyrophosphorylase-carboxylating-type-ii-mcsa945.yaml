@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.4.2.19
 - CHEBI:58017
@@ -229,4 +229,187 @@ definitions:
       This is a type II Quinolinic acid phosphoribosyltransferase (QAPRTase). This protein is required for the de novo biosynthesis of NAD in both prokaryotes and eukaryotes. The enzyme catalyses the reaction between quinolinic acid (QA) and 5-phosphoribosyl-1-pyrophosphate (PRPP), to yield nicotinic acid mononucleotide (NAMN), pyrophosphate and CO2, the latter resulting from decarboxylation at position 2 of the quinolinate ring. QAPRTase has been grouped with nine other enzymes, (phosphoribosyltransferases, PRTases) that catalyse chemically similar phosphoribosyl transfer reactions using the substrate PRPP. The PRTases are involved in de novo and salvage reactions of nucleotide synthesis, as well as in histidine and tryptophan biosynthesis. Type II enzymes lack the type I PRPP-binding motif and have TIM barrel-like structure [PMID:9016724].
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of nicotinate-nucleotide pyrophosphorylase (carboxylating) (type II)
+  description: Mechanism transcribed from M-CSA entry 945. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering only — no unique offset to the record's reference sequence could
+    be verified, so no UniProt position is asserted.
+  nodes:
+  - node_id: lys144
+    label: catalytic Lys144 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P43619
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: 5-O-phosphonato-alpha-D-ribofuranosyl diphosphate(5-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58017
+  - node_id: reactant1
+    label: quinolinate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:29959
+  - node_id: reactant2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product0
+    label: nicotinate D-ribonucleotide(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57502
+  - node_id: product1
+    label: carbon dioxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+  - node_id: product2
+    label: diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: Phosphoribosyl transfer has been proposed to proceed via a unimolecular nucleophilic
+      substitution (SN1 reaction) involving an oxycarbonium-like intermediate. In the first step of the
+      reaction the sugar ring eliminates the diphosphate group. In the second step, the carboxylic acid
+      group forms carbon dioxide, which initiates the nucleophilic addition of the pyridine nitrogen to
+      the oxycarbonium-like
+  - node_id: active_site
+    label: nicotinate-nucleotide pyrophosphorylase (carboxylating) (type II) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:945
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.70 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.70
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: nicotinate-nucleotide pyrophosphorylase (carboxylating) (type II) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.4.2.19
+  edges:
+  - subject: lys144
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys144 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/945/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 945, mechanism 1; M-CSA cites PMID:18321072, PMID:9016724; M-CSA catalytic-residue
+        roles for Lys144
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/945/
+      snippet: Phosphoribosyl transfer has been proposed to proceed via a unimolecular nucleophilic substitution
+        (SN1 reaction) involving an oxycarbonium-like intermediate. In the first step of the reaction
+        the sugar ring eliminates the diphosphate group. In the second step, the carboxylic acid group
+        forms carbon dioxide, which initiates the nucleophilic addition of the pyridine nitrogen to the
+        oxycarbonium-like
+      notes: M-CSA entry 945, mechanism 1; M-CSA cites PMID:18321072, PMID:9016724; CATH domain 3.20.20.70
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/945/
+      snippet: Phosphoribosyl transfer has been proposed to proceed via a unimolecular nucleophilic substitution
+        (SN1 reaction) involving an oxycarbonium-like intermediate. In the first step of the reaction
+        the sugar ring eliminates the diphosphate group. In the second step, the carboxylic acid group
+        forms carbon dioxide, which initiates the nucleophilic addition of the pyridine nitrogen to the
+        oxycarbonium-like
+      notes: M-CSA entry 945, mechanism 1; M-CSA cites PMID:18321072, PMID:9016724; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/945/
+      snippet: Phosphoribosyl transfer has been proposed to proceed via a unimolecular nucleophilic substitution
+        (SN1 reaction) involving an oxycarbonium-like intermediate. In the first step of the reaction
+        the sugar ring eliminates the diphosphate group. In the second step, the carboxylic acid group
+        forms carbon dioxide, which initiates the nucleophilic addition of the pyridine nitrogen to the
+        oxycarbonium-like
+      notes: M-CSA entry 945, mechanism 1; M-CSA cites PMID:18321072, PMID:9016724; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/945/
+      snippet: Phosphoribosyl transfer has been proposed to proceed via a unimolecular nucleophilic substitution
+        (SN1 reaction) involving an oxycarbonium-like intermediate. In the first step of the reaction
+        the sugar ring eliminates the diphosphate group. In the second step, the carboxylic acid group
+        forms carbon dioxide, which initiates the nucleophilic addition of the pyridine nitrogen to the
+        oxycarbonium-like
+      notes: M-CSA entry 945, mechanism 1; M-CSA cites PMID:18321072, PMID:9016724; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/945/
+      snippet: Phosphoribosyl transfer has been proposed to proceed via a unimolecular nucleophilic substitution
+        (SN1 reaction) involving an oxycarbonium-like intermediate. In the first step of the reaction
+        the sugar ring eliminates the diphosphate group. In the second step, the carboxylic acid group
+        forms carbon dioxide, which initiates the nucleophilic addition of the pyridine nitrogen to the
+        oxycarbonium-like
+      notes: M-CSA entry 945, mechanism 1; M-CSA cites PMID:18321072, PMID:9016724; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/945/
+      snippet: Phosphoribosyl transfer has been proposed to proceed via a unimolecular nucleophilic substitution
+        (SN1 reaction) involving an oxycarbonium-like intermediate. In the first step of the reaction
+        the sugar ring eliminates the diphosphate group. In the second step, the carboxylic acid group
+        forms carbon dioxide, which initiates the nucleophilic addition of the pyridine nitrogen to the
+        oxycarbonium-like
+      notes: M-CSA entry 945, mechanism 1; M-CSA cites PMID:18321072, PMID:9016724; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/945/
+      snippet: Phosphoribosyl transfer has been proposed to proceed via a unimolecular nucleophilic substitution
+        (SN1 reaction) involving an oxycarbonium-like intermediate. In the first step of the reaction
+        the sugar ring eliminates the diphosphate group. In the second step, the carboxylic acid group
+        forms carbon dioxide, which initiates the nucleophilic addition of the pyridine nitrogen to the
+        oxycarbonium-like
+      notes: M-CSA entry 945, mechanism 1; M-CSA cites PMID:18321072, PMID:9016724; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/945/
+      snippet: Phosphoribosyl transfer has been proposed to proceed via a unimolecular nucleophilic substitution
+        (SN1 reaction) involving an oxycarbonium-like intermediate. In the first step of the reaction
+        the sugar ring eliminates the diphosphate group. In the second step, the carboxylic acid group
+        forms carbon dioxide, which initiates the nucleophilic addition of the pyridine nitrogen to the
+        oxycarbonium-like
+      notes: M-CSA entry 945, mechanism 1; M-CSA cites PMID:18321072, PMID:9016724; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (9 evidence-backed edges) transcribed from M-CSA entry 945;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

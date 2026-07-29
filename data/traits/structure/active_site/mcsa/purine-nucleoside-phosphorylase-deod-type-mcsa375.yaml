@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.4.2.1
 - CHEBI:17596
@@ -212,4 +212,260 @@ definitions:
       Purine nucleoside phosphorylase is involved in purine metabolism, metabolising adenosine into adenine and guanosine into guanine, for example. Also works on inosine. These pathways allow the cell to produce nucleotide monophosphates when they cannot synthesise them de novo. The enzyme catalyses the reversible phosphorolytic cleavage of the glycosidic bond of purine nucleosides with the overall reaction: beta-purine nucleoside + orthophosphate <-> purine base + alpha-D-pentose-1-phosphate
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of Purine nucleoside phosphorylase DeoD-type
+  description: Mechanism transcribed from M-CSA entry 375. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +1).
+  nodes:
+  - node_id: gly20
+    label: catalytic Gly20 (M-CSA/PDB numbering; UniProt residue 21)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0ABP8
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: arg24
+    label: catalytic Arg24 (M-CSA/PDB numbering; UniProt residue 25)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0ABP8
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: arg43
+    label: catalytic Arg43 (M-CSA/PDB numbering; UniProt residue 44)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0ABP8
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: arg87
+    label: catalytic Arg87 (M-CSA/PDB numbering; UniProt residue 88)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0ABP8
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ser90
+    label: catalytic Ser90 (M-CSA/PDB numbering; UniProt residue 91)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0ABP8
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp204
+    label: catalytic Asp204 (M-CSA/PDB numbering; UniProt residue 205)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0ABP8
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: arg217
+    label: catalytic Arg217 (M-CSA/PDB numbering; UniProt residue 218)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0ABP8
+    description: 'M-CSA roles: enhance reactivity.'
+  - node_id: reactant0
+    label: inosine
+    node_type: CHEMICAL
+    grounding: CHEBI:17596
+  - node_id: reactant1
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: product0
+    label: alpha-D-ribose 1-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57720
+  - node_id: product1
+    label: hypoxanthine
+    node_type: CHEMICAL
+    grounding: CHEBI:17368
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: Catalytic action involves protonation of the purine base at position N7 by the side-chain
+      of Asp204, which is initially in the acid form. The proton transfer is triggered by the Arg217 side-chain
+      which is moved by the conformation change into hydrogen bond distance to Asp204. When the substrate
+      is protonated, it can be attacked by the negatively charged orthophosphate group.
+  - node_id: active_site
+    label: Purine nucleoside phosphorylase DeoD-type catalytic site
+    node_type: MOTIF
+    grounding: MCSA:375
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1580 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1580
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: Purine nucleoside phosphorylase DeoD-type activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.4.2.1
+  edges:
+  - subject: asp204
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp204 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/375/
+      snippet: Catalytic action involves protonation of the purine base at position N7 by the side-chain
+        of Asp204, which is initially in the acid form. The proton transfer is triggered by the Arg217
+        side-chain which is moved by the conformation change into hydrogen bond distance to Asp204. When
+        the substrate is protonated, it can be attacked by the negatively charged orthophosphate group.
+      notes: M-CSA entry 375, mechanism 1; M-CSA cites PMID:11786017; step 1
+  - subject: arg217
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg217 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/375/
+      snippet: Catalytic action involves protonation of the purine base at position N7 by the side-chain
+        of Asp204, which is initially in the acid form. The proton transfer is triggered by the Arg217
+        side-chain which is moved by the conformation change into hydrogen bond distance to Asp204. When
+        the substrate is protonated, it can be attacked by the negatively charged orthophosphate group.
+      notes: M-CSA entry 375, mechanism 1; M-CSA cites PMID:11786017; step 1
+  - subject: gly20
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly20 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/375/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 375, mechanism 1; M-CSA cites PMID:11786017; M-CSA catalytic-residue roles for
+        Gly20
+  - subject: arg24
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg24 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/375/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 375, mechanism 1; M-CSA cites PMID:11786017; M-CSA catalytic-residue roles for
+        Arg24
+  - subject: arg43
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg43 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/375/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 375, mechanism 1; M-CSA cites PMID:11786017; M-CSA catalytic-residue roles for
+        Arg43
+  - subject: arg87
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg87 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/375/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 375, mechanism 1; M-CSA cites PMID:11786017; M-CSA catalytic-residue roles for
+        Arg87
+  - subject: ser90
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser90 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/375/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 375, mechanism 1; M-CSA cites PMID:11786017; M-CSA catalytic-residue roles for
+        Ser90
+  - subject: asp204
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp204 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/375/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 375, mechanism 1; M-CSA cites PMID:11786017; M-CSA catalytic-residue roles for
+        Asp204
+  - subject: arg217
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg217 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/375/
+      snippet: enhance reactivity
+      notes: M-CSA entry 375, mechanism 1; M-CSA cites PMID:11786017; M-CSA catalytic-residue roles for
+        Arg217
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/375/
+      snippet: Catalytic action involves protonation of the purine base at position N7 by the side-chain
+        of Asp204, which is initially in the acid form. The proton transfer is triggered by the Arg217
+        side-chain which is moved by the conformation change into hydrogen bond distance to Asp204. When
+        the substrate is protonated, it can be attacked by the negatively charged orthophosphate group.
+      notes: M-CSA entry 375, mechanism 1; M-CSA cites PMID:11786017; CATH domain 3.40.50.1580 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/375/
+      snippet: Catalytic action involves protonation of the purine base at position N7 by the side-chain
+        of Asp204, which is initially in the acid form. The proton transfer is triggered by the Arg217
+        side-chain which is moved by the conformation change into hydrogen bond distance to Asp204. When
+        the substrate is protonated, it can be attacked by the negatively charged orthophosphate group.
+      notes: M-CSA entry 375, mechanism 1; M-CSA cites PMID:11786017; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/375/
+      snippet: Catalytic action involves protonation of the purine base at position N7 by the side-chain
+        of Asp204, which is initially in the acid form. The proton transfer is triggered by the Arg217
+        side-chain which is moved by the conformation change into hydrogen bond distance to Asp204. When
+        the substrate is protonated, it can be attacked by the negatively charged orthophosphate group.
+      notes: M-CSA entry 375, mechanism 1; M-CSA cites PMID:11786017; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/375/
+      snippet: Catalytic action involves protonation of the purine base at position N7 by the side-chain
+        of Asp204, which is initially in the acid form. The proton transfer is triggered by the Arg217
+        side-chain which is moved by the conformation change into hydrogen bond distance to Asp204. When
+        the substrate is protonated, it can be attacked by the negatively charged orthophosphate group.
+      notes: M-CSA entry 375, mechanism 1; M-CSA cites PMID:11786017; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/375/
+      snippet: Catalytic action involves protonation of the purine base at position N7 by the side-chain
+        of Asp204, which is initially in the acid form. The proton transfer is triggered by the Arg217
+        side-chain which is moved by the conformation change into hydrogen bond distance to Asp204. When
+        the substrate is protonated, it can be attacked by the negatively charged orthophosphate group.
+      notes: M-CSA entry 375, mechanism 1; M-CSA cites PMID:11786017; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/375/
+      snippet: Catalytic action involves protonation of the purine base at position N7 by the side-chain
+        of Asp204, which is initially in the acid form. The proton transfer is triggered by the Arg217
+        side-chain which is moved by the conformation change into hydrogen bond distance to Asp204. When
+        the substrate is protonated, it can be attacked by the negatively charged orthophosphate group.
+      notes: M-CSA entry 375, mechanism 1; M-CSA cites PMID:11786017; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 375;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

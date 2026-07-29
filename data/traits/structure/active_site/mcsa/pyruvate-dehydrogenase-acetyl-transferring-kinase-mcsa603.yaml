@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.7.11.2
 - CHEBI:29999
@@ -235,4 +235,203 @@ definitions:
       Mitochondrial Pyruvate Dehydrogenase kinase (PDK) regulates the activity of Pyruvate dehydrogenase complex (PDC) by phosphorylating a serine residue at the E1 subunit and thus inactivating it. Mitochondrial PDK is in a family of serine protein kinases that lacks sequence similarity with all other eukaryotic protein kinase but show similarity with key motifs of prokaryotic histidine protein kinases and a family of eukaryotic ATPases. In mammals, 4 isozymes of PDK have been found, PDK1, PDK2, PDK3, PDK4. PDK2 is found in many tissues but is low in amount in lung and spleen. It only phosphorylates site 2 and 3 serine residue of the E1 subunit.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of [pyruvate dehydrogenase (acetyl-transferring)] kinase
+  description: Mechanism transcribed from M-CSA entry 603. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering only — no unique offset to the record's reference sequence could
+    be verified, so no UniProt position is asserted.
+  nodes:
+  - node_id: his1239
+    label: catalytic His1239 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q64536
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu1243
+    label: catalytic Glu1243 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q64536
+    description: 'M-CSA roles: metal ligand, proton shuttle (general acid/base).'
+  - node_id: lys1246
+    label: catalytic Lys1246 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q64536
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asn1247
+    label: catalytic Asn1247 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q64536
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: L-serine residue
+    node_type: CHEMICAL
+    grounding: CHEBI:29999
+  - node_id: reactant1
+    label: ATP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+  - node_id: product0
+    label: ADP(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:87518
+  - node_id: product1
+    label: O-phospho-L-serine(2-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:83421
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: One proposed mechanism is a general base mechanism. Glu251 deprotonates the targeted
+      serine residue of the pyruvate dehydrogenase E1 subunit and promotes its nucleophilic attack on
+      the terminal phosphate of ATP. His247 polarises Glu243 to allow deprotonation. Magnesium ion coordinated
+      to Asp helps in positioning of the ATP and promotes the nucleophilic attack. There is also evidence
+      to suggest Glu
+  - node_id: active_site
+    label: '[pyruvate dehydrogenase (acetyl-transferring)] kinase catalytic site'
+    node_type: MOTIF
+    grounding: MCSA:603
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.565.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.565.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: '[pyruvate dehydrogenase (acetyl-transferring)] kinase activity'
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.7.11.2
+  edges:
+  - subject: his1239
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His1239 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/603/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 603, mechanism 1; M-CSA cites PMID:11278487, PMID:11483605, PMID:15629119; M-CSA
+        catalytic-residue roles for His1239
+  - subject: glu1243
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu1243 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/603/
+      snippet: metal ligand, proton shuttle (general acid/base)
+      notes: M-CSA entry 603, mechanism 1; M-CSA cites PMID:11278487, PMID:11483605, PMID:15629119; M-CSA
+        catalytic-residue roles for Glu1243
+  - subject: lys1246
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys1246 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/603/
+      snippet: metal ligand
+      notes: M-CSA entry 603, mechanism 1; M-CSA cites PMID:11278487, PMID:11483605, PMID:15629119; M-CSA
+        catalytic-residue roles for Lys1246
+  - subject: asn1247
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn1247 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/603/
+      snippet: metal ligand
+      notes: M-CSA entry 603, mechanism 1; M-CSA cites PMID:11278487, PMID:11483605, PMID:15629119; M-CSA
+        catalytic-residue roles for Asn1247
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/603/
+      snippet: One proposed mechanism is a general base mechanism. Glu251 deprotonates the targeted serine
+        residue of the pyruvate dehydrogenase E1 subunit and promotes its nucleophilic attack on the terminal
+        phosphate of ATP. His247 polarises Glu243 to allow deprotonation. Magnesium ion coordinated to
+        Asp helps in positioning of the ATP and promotes the nucleophilic attack. There is also evidence
+        to suggest Glu
+      notes: M-CSA entry 603, mechanism 1; M-CSA cites PMID:11278487, PMID:11483605, PMID:15629119; CATH
+        domain 3.30.565.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/603/
+      snippet: One proposed mechanism is a general base mechanism. Glu251 deprotonates the targeted serine
+        residue of the pyruvate dehydrogenase E1 subunit and promotes its nucleophilic attack on the terminal
+        phosphate of ATP. His247 polarises Glu243 to allow deprotonation. Magnesium ion coordinated to
+        Asp helps in positioning of the ATP and promotes the nucleophilic attack. There is also evidence
+        to suggest Glu
+      notes: M-CSA entry 603, mechanism 1; M-CSA cites PMID:11278487, PMID:11483605, PMID:15629119; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/603/
+      snippet: One proposed mechanism is a general base mechanism. Glu251 deprotonates the targeted serine
+        residue of the pyruvate dehydrogenase E1 subunit and promotes its nucleophilic attack on the terminal
+        phosphate of ATP. His247 polarises Glu243 to allow deprotonation. Magnesium ion coordinated to
+        Asp helps in positioning of the ATP and promotes the nucleophilic attack. There is also evidence
+        to suggest Glu
+      notes: M-CSA entry 603, mechanism 1; M-CSA cites PMID:11278487, PMID:11483605, PMID:15629119; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/603/
+      snippet: One proposed mechanism is a general base mechanism. Glu251 deprotonates the targeted serine
+        residue of the pyruvate dehydrogenase E1 subunit and promotes its nucleophilic attack on the terminal
+        phosphate of ATP. His247 polarises Glu243 to allow deprotonation. Magnesium ion coordinated to
+        Asp helps in positioning of the ATP and promotes the nucleophilic attack. There is also evidence
+        to suggest Glu
+      notes: M-CSA entry 603, mechanism 1; M-CSA cites PMID:11278487, PMID:11483605, PMID:15629119; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/603/
+      snippet: One proposed mechanism is a general base mechanism. Glu251 deprotonates the targeted serine
+        residue of the pyruvate dehydrogenase E1 subunit and promotes its nucleophilic attack on the terminal
+        phosphate of ATP. His247 polarises Glu243 to allow deprotonation. Magnesium ion coordinated to
+        Asp helps in positioning of the ATP and promotes the nucleophilic attack. There is also evidence
+        to suggest Glu
+      notes: M-CSA entry 603, mechanism 1; M-CSA cites PMID:11278487, PMID:11483605, PMID:15629119; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/603/
+      snippet: One proposed mechanism is a general base mechanism. Glu251 deprotonates the targeted serine
+        residue of the pyruvate dehydrogenase E1 subunit and promotes its nucleophilic attack on the terminal
+        phosphate of ATP. His247 polarises Glu243 to allow deprotonation. Magnesium ion coordinated to
+        Asp helps in positioning of the ATP and promotes the nucleophilic attack. There is also evidence
+        to suggest Glu
+      notes: M-CSA entry 603, mechanism 1; M-CSA cites PMID:11278487, PMID:11483605, PMID:15629119; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (10 evidence-backed edges) transcribed from M-CSA entry 603;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

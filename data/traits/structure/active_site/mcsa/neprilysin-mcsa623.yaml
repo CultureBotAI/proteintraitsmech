@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.24.11
 - CHEBI:15377
@@ -540,4 +540,276 @@ definitions:
       Neutral endopeptidase, or neprelysin, is a Zinc protease located in the membrane of mammalian tissue and responsible for the hydrolysis of peptides such as Insulin at the cell surface. As a result it plays a key role in many of the processes involved in cell signalling. Although it displays little sequence or structural homology to other known Zinc dependent proteases such as the bacterial protein thermolysin, it's active site can be successfully aligned to the active site of thermolysin, thus convergent evolution is believed to account for the similarity in mechanism between the two that is observed.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of neprilysin
+  description: Mechanism transcribed from M-CSA entry 623. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +1).
+  nodes:
+  - node_id: his583
+    label: catalytic His583 (M-CSA/PDB numbering; UniProt residue 584)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08473
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu584
+    label: catalytic Glu584 (M-CSA/PDB numbering; UniProt residue 585)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08473
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: his587
+    label: catalytic His587 (M-CSA/PDB numbering; UniProt residue 588)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08473
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu646
+    label: catalytic Glu646 (M-CSA/PDB numbering; UniProt residue 647)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08473
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp650
+    label: catalytic Asp650 (M-CSA/PDB numbering; UniProt residue 651)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08473
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his711
+    label: catalytic His711 (M-CSA/PDB numbering; UniProt residue 712)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08473
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: arg717
+    label: catalytic Arg717 (M-CSA/PDB numbering; UniProt residue 718)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08473
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: dipeptide zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:90799
+  - node_id: product0
+    label: L-alpha-amino acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:59869
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: The Zinc ion and the catalytic residue Glu 584 act together to activate a water molecule
+      for nucleophilic attack on the peptide substrate. This forms an oxyanion intermediate, stabilised
+      by His 711 in a hydrogen bond network involving Asp 650 and Arg 717. Subsequent collapse of the
+      intermediate results in cleavage of the peptide bond and release of the products.
+  - node_id: active_site
+    label: neprilysin catalytic site
+    node_type: MOTIF
+    grounding: MCSA:623
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.390.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.390.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: neprilysin activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.24.11
+  edges:
+  - subject: glu584
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu584 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/623/
+      snippet: The Zinc ion and the catalytic residue Glu 584 act together to activate a water molecule
+        for nucleophilic attack on the peptide substrate. This forms an oxyanion intermediate, stabilised
+        by His 711 in a hydrogen bond network involving Asp 650 and Arg 717. Subsequent collapse of the
+        intermediate results in cleavage of the peptide bond and release of the products.
+      notes: M-CSA entry 623, mechanism 1; M-CSA cites PMID:10669592, PMID:2894375, PMID:3162886, PMID:8168535,
+        PMID:8440386, PMID:9374873; step 1
+  - subject: asp650
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp650 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/623/
+      snippet: The Zinc ion and the catalytic residue Glu 584 act together to activate a water molecule
+        for nucleophilic attack on the peptide substrate. This forms an oxyanion intermediate, stabilised
+        by His 711 in a hydrogen bond network involving Asp 650 and Arg 717. Subsequent collapse of the
+        intermediate results in cleavage of the peptide bond and release of the products.
+      notes: M-CSA entry 623, mechanism 1; M-CSA cites PMID:10669592, PMID:2894375, PMID:3162886, PMID:8168535,
+        PMID:8440386, PMID:9374873; step 1
+  - subject: his711
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His711 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/623/
+      snippet: The Zinc ion and the catalytic residue Glu 584 act together to activate a water molecule
+        for nucleophilic attack on the peptide substrate. This forms an oxyanion intermediate, stabilised
+        by His 711 in a hydrogen bond network involving Asp 650 and Arg 717. Subsequent collapse of the
+        intermediate results in cleavage of the peptide bond and release of the products.
+      notes: M-CSA entry 623, mechanism 1; M-CSA cites PMID:10669592, PMID:2894375, PMID:3162886, PMID:8168535,
+        PMID:8440386, PMID:9374873; step 1
+  - subject: arg717
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg717 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/623/
+      snippet: The Zinc ion and the catalytic residue Glu 584 act together to activate a water molecule
+        for nucleophilic attack on the peptide substrate. This forms an oxyanion intermediate, stabilised
+        by His 711 in a hydrogen bond network involving Asp 650 and Arg 717. Subsequent collapse of the
+        intermediate results in cleavage of the peptide bond and release of the products.
+      notes: M-CSA entry 623, mechanism 1; M-CSA cites PMID:10669592, PMID:2894375, PMID:3162886, PMID:8168535,
+        PMID:8440386, PMID:9374873; step 1
+  - subject: his583
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His583 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/623/
+      snippet: metal ligand
+      notes: M-CSA entry 623, mechanism 1; M-CSA cites PMID:10669592, PMID:2894375, PMID:3162886, PMID:8168535,
+        PMID:8440386, PMID:9374873; M-CSA catalytic-residue roles for His583
+  - subject: glu584
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu584 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/623/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 623, mechanism 1; M-CSA cites PMID:10669592, PMID:2894375, PMID:3162886, PMID:8168535,
+        PMID:8440386, PMID:9374873; M-CSA catalytic-residue roles for Glu584
+  - subject: his587
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His587 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/623/
+      snippet: metal ligand
+      notes: M-CSA entry 623, mechanism 1; M-CSA cites PMID:10669592, PMID:2894375, PMID:3162886, PMID:8168535,
+        PMID:8440386, PMID:9374873; M-CSA catalytic-residue roles for His587
+  - subject: glu646
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu646 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/623/
+      snippet: metal ligand
+      notes: M-CSA entry 623, mechanism 1; M-CSA cites PMID:10669592, PMID:2894375, PMID:3162886, PMID:8168535,
+        PMID:8440386, PMID:9374873; M-CSA catalytic-residue roles for Glu646
+  - subject: asp650
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp650 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/623/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 623, mechanism 1; M-CSA cites PMID:10669592, PMID:2894375, PMID:3162886, PMID:8168535,
+        PMID:8440386, PMID:9374873; M-CSA catalytic-residue roles for Asp650
+  - subject: his711
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His711 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/623/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 623, mechanism 1; M-CSA cites PMID:10669592, PMID:2894375, PMID:3162886, PMID:8168535,
+        PMID:8440386, PMID:9374873; M-CSA catalytic-residue roles for His711
+  - subject: arg717
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg717 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/623/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 623, mechanism 1; M-CSA cites PMID:10669592, PMID:2894375, PMID:3162886, PMID:8168535,
+        PMID:8440386, PMID:9374873; M-CSA catalytic-residue roles for Arg717
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/623/
+      snippet: The Zinc ion and the catalytic residue Glu 584 act together to activate a water molecule
+        for nucleophilic attack on the peptide substrate. This forms an oxyanion intermediate, stabilised
+        by His 711 in a hydrogen bond network involving Asp 650 and Arg 717. Subsequent collapse of the
+        intermediate results in cleavage of the peptide bond and release of the products.
+      notes: M-CSA entry 623, mechanism 1; M-CSA cites PMID:10669592, PMID:2894375, PMID:3162886, PMID:8168535,
+        PMID:8440386, PMID:9374873; CATH domain 3.40.390.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/623/
+      snippet: The Zinc ion and the catalytic residue Glu 584 act together to activate a water molecule
+        for nucleophilic attack on the peptide substrate. This forms an oxyanion intermediate, stabilised
+        by His 711 in a hydrogen bond network involving Asp 650 and Arg 717. Subsequent collapse of the
+        intermediate results in cleavage of the peptide bond and release of the products.
+      notes: M-CSA entry 623, mechanism 1; M-CSA cites PMID:10669592, PMID:2894375, PMID:3162886, PMID:8168535,
+        PMID:8440386, PMID:9374873; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/623/
+      snippet: The Zinc ion and the catalytic residue Glu 584 act together to activate a water molecule
+        for nucleophilic attack on the peptide substrate. This forms an oxyanion intermediate, stabilised
+        by His 711 in a hydrogen bond network involving Asp 650 and Arg 717. Subsequent collapse of the
+        intermediate results in cleavage of the peptide bond and release of the products.
+      notes: M-CSA entry 623, mechanism 1; M-CSA cites PMID:10669592, PMID:2894375, PMID:3162886, PMID:8168535,
+        PMID:8440386, PMID:9374873; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/623/
+      snippet: The Zinc ion and the catalytic residue Glu 584 act together to activate a water molecule
+        for nucleophilic attack on the peptide substrate. This forms an oxyanion intermediate, stabilised
+        by His 711 in a hydrogen bond network involving Asp 650 and Arg 717. Subsequent collapse of the
+        intermediate results in cleavage of the peptide bond and release of the products.
+      notes: M-CSA entry 623, mechanism 1; M-CSA cites PMID:10669592, PMID:2894375, PMID:3162886, PMID:8168535,
+        PMID:8440386, PMID:9374873; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/623/
+      snippet: The Zinc ion and the catalytic residue Glu 584 act together to activate a water molecule
+        for nucleophilic attack on the peptide substrate. This forms an oxyanion intermediate, stabilised
+        by His 711 in a hydrogen bond network involving Asp 650 and Arg 717. Subsequent collapse of the
+        intermediate results in cleavage of the peptide bond and release of the products.
+      notes: M-CSA entry 623, mechanism 1; M-CSA cites PMID:10669592, PMID:2894375, PMID:3162886, PMID:8168535,
+        PMID:8440386, PMID:9374873; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (16 evidence-backed edges) transcribed from M-CSA entry 623;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

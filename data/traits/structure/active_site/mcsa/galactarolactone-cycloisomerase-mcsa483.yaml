@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.5.1.27
 - CHEBI:85317
@@ -238,4 +238,230 @@ definitions:
       Experimentally characterized enzymes in the galactarolactone cycloisomerase (D-galactarolactone 3-deoxy-2-keto-L-threo-hexarate isomerase) family convert D-galactarolactone to 3-deoxy-2-keto-hexarate as part of D-galacturonate catabolism. The characterized enzyme from Agrobacterium tumefaciens is also active on D-glucarolactone.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of galactarolactone cycloisomerase
+  description: Mechanism transcribed from M-CSA entry 483. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: lys166
+    label: catalytic Lys166 (M-CSA/PDB numbering; UniProt residue 166)
+    node_type: RESIDUE
+    grounding: UniProtKB:A9CEQ8
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: asp194
+    label: catalytic Asp194 (M-CSA/PDB numbering; UniProt residue 194)
+    node_type: RESIDUE
+    grounding: UniProtKB:A9CEQ8
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu220
+    label: catalytic Glu220 (M-CSA/PDB numbering; UniProt residue 220)
+    node_type: RESIDUE
+    grounding: UniProtKB:A9CEQ8
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu246
+    label: catalytic Glu246 (M-CSA/PDB numbering; UniProt residue 246)
+    node_type: RESIDUE
+    grounding: UniProtKB:A9CEQ8
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp269
+    label: catalytic Asp269 (M-CSA/PDB numbering; UniProt residue 269)
+    node_type: RESIDUE
+    grounding: UniProtKB:A9CEQ8
+    description: 'M-CSA roles: modifies pKa.'
+  - node_id: his296
+    label: catalytic His296 (M-CSA/PDB numbering; UniProt residue 296)
+    node_type: RESIDUE
+    grounding: UniProtKB:A9CEQ8
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: glu329
+    label: catalytic Glu329 (M-CSA/PDB numbering; UniProt residue 329)
+    node_type: RESIDUE
+    grounding: UniProtKB:A9CEQ8
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: D-galactaro-1,4-lactone(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:85317
+  - node_id: product0
+    label: 5-dehydro-4-deoxy-D-glucarate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:42819
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: Catalyzes the ring opening of D-galactaro-1,4-lactone to yield 5-keto-4-deoxy-D-glucarate
+      (KDG) via a beta-elimination reaction. This is a step in the oxidative degradation pathway of D-galacturonate,
+      which allows <i>Agrobacterium tumefaciens</i> to utilise D-galacturonate as a sole carbon source.
+      To a lesser extent, can also use D-glucaro-1,4-lactone as substrate to produce KDG, but cannot use
+      D-
+  - node_id: active_site
+    label: galactarolactone cycloisomerase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:483
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.120 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.120
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: galactarolactone cycloisomerase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.5.1.27
+  edges:
+  - subject: lys166
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys166 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/483/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 483, mechanism 1; M-CSA cites PMID:22493433, PMID:24450804, PMID:26750482; M-CSA
+        catalytic-residue roles for Lys166
+  - subject: asp194
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp194 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/483/
+      snippet: metal ligand
+      notes: M-CSA entry 483, mechanism 1; M-CSA cites PMID:22493433, PMID:24450804, PMID:26750482; M-CSA
+        catalytic-residue roles for Asp194
+  - subject: glu220
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu220 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/483/
+      snippet: metal ligand
+      notes: M-CSA entry 483, mechanism 1; M-CSA cites PMID:22493433, PMID:24450804, PMID:26750482; M-CSA
+        catalytic-residue roles for Glu220
+  - subject: glu246
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu246 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/483/
+      snippet: metal ligand
+      notes: M-CSA entry 483, mechanism 1; M-CSA cites PMID:22493433, PMID:24450804, PMID:26750482; M-CSA
+        catalytic-residue roles for Glu246
+  - subject: asp269
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp269 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/483/
+      snippet: modifies pKa
+      notes: M-CSA entry 483, mechanism 1; M-CSA cites PMID:22493433, PMID:24450804, PMID:26750482; M-CSA
+        catalytic-residue roles for Asp269
+  - subject: his296
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His296 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/483/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 483, mechanism 1; M-CSA cites PMID:22493433, PMID:24450804, PMID:26750482; M-CSA
+        catalytic-residue roles for His296
+  - subject: glu329
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu329 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/483/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 483, mechanism 1; M-CSA cites PMID:22493433, PMID:24450804, PMID:26750482; M-CSA
+        catalytic-residue roles for Glu329
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/483/
+      snippet: Catalyzes the ring opening of D-galactaro-1,4-lactone to yield 5-keto-4-deoxy-D-glucarate
+        (KDG) via a beta-elimination reaction. This is a step in the oxidative degradation pathway of
+        D-galacturonate, which allows <i>Agrobacterium tumefaciens</i> to utilise D-galacturonate as a
+        sole carbon source. To a lesser extent, can also use D-glucaro-1,4-lactone as substrate to produce
+        KDG, but cannot use D-
+      notes: M-CSA entry 483, mechanism 1; M-CSA cites PMID:22493433, PMID:24450804, PMID:26750482; CATH
+        domain 3.20.20.120 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/483/
+      snippet: Catalyzes the ring opening of D-galactaro-1,4-lactone to yield 5-keto-4-deoxy-D-glucarate
+        (KDG) via a beta-elimination reaction. This is a step in the oxidative degradation pathway of
+        D-galacturonate, which allows <i>Agrobacterium tumefaciens</i> to utilise D-galacturonate as a
+        sole carbon source. To a lesser extent, can also use D-glucaro-1,4-lactone as substrate to produce
+        KDG, but cannot use D-
+      notes: M-CSA entry 483, mechanism 1; M-CSA cites PMID:22493433, PMID:24450804, PMID:26750482; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/483/
+      snippet: Catalyzes the ring opening of D-galactaro-1,4-lactone to yield 5-keto-4-deoxy-D-glucarate
+        (KDG) via a beta-elimination reaction. This is a step in the oxidative degradation pathway of
+        D-galacturonate, which allows <i>Agrobacterium tumefaciens</i> to utilise D-galacturonate as a
+        sole carbon source. To a lesser extent, can also use D-glucaro-1,4-lactone as substrate to produce
+        KDG, but cannot use D-
+      notes: M-CSA entry 483, mechanism 1; M-CSA cites PMID:22493433, PMID:24450804, PMID:26750482; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/483/
+      snippet: Catalyzes the ring opening of D-galactaro-1,4-lactone to yield 5-keto-4-deoxy-D-glucarate
+        (KDG) via a beta-elimination reaction. This is a step in the oxidative degradation pathway of
+        D-galacturonate, which allows <i>Agrobacterium tumefaciens</i> to utilise D-galacturonate as a
+        sole carbon source. To a lesser extent, can also use D-glucaro-1,4-lactone as substrate to produce
+        KDG, but cannot use D-
+      notes: M-CSA entry 483, mechanism 1; M-CSA cites PMID:22493433, PMID:24450804, PMID:26750482; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/483/
+      snippet: Catalyzes the ring opening of D-galactaro-1,4-lactone to yield 5-keto-4-deoxy-D-glucarate
+        (KDG) via a beta-elimination reaction. This is a step in the oxidative degradation pathway of
+        D-galacturonate, which allows <i>Agrobacterium tumefaciens</i> to utilise D-galacturonate as a
+        sole carbon source. To a lesser extent, can also use D-glucaro-1,4-lactone as substrate to produce
+        KDG, but cannot use D-
+      notes: M-CSA entry 483, mechanism 1; M-CSA cites PMID:22493433, PMID:24450804, PMID:26750482; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (12 evidence-backed edges) transcribed from M-CSA entry 483;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

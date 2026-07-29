@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.2.22
 - CHEBI:74151
@@ -244,4 +244,301 @@ definitions:
       Palmitoyl-protein thioesterase I (PPT1) is a lysosomal enzyme which is implicated in the degredation of lipid modified proteins, removing fatty acid groups from cysteine residues. The accumulation of undisgested substrate when a mutant enzyme is present leads to the formation of neuronal storage bodies that are associated with the clinical symptoms of infantile ceroid lipofuscinosis.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of palmitoyl[protein] hydrolase (type 1)
+  description: Mechanism transcribed from M-CSA entry 522. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: met41
+    label: catalytic Met41 (M-CSA/PDB numbering; UniProt residue 41)
+    node_type: RESIDUE
+    grounding: UniProtKB:P45478
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ser115
+    label: catalytic Ser115 (M-CSA/PDB numbering; UniProt residue 115)
+    node_type: RESIDUE
+    grounding: UniProtKB:P45478
+    description: 'M-CSA roles: covalently attached, electrostatic stabiliser, proton shuttle (general
+      acid/base).'
+  - node_id: gln116
+    label: catalytic Gln116 (M-CSA/PDB numbering; UniProt residue 116)
+    node_type: RESIDUE
+    grounding: UniProtKB:P45478
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp233
+    label: catalytic Asp233 (M-CSA/PDB numbering; UniProt residue 233)
+    node_type: RESIDUE
+    grounding: UniProtKB:P45478
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his289
+    label: catalytic His289 (M-CSA/PDB numbering; UniProt residue 289)
+    node_type: RESIDUE
+    grounding: UniProtKB:P45478
+    description: 'M-CSA roles: electrostatic stabiliser, proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: S-palmitoyl-L-cysteine residue
+    node_type: CHEMICAL
+    grounding: CHEBI:74151
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: L-cysteine residue
+    node_type: CHEMICAL
+    grounding: CHEBI:29950
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: hexadecanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:7896
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: PPT1 contains a catalytic triad composed of Ser115, His 289 and Asp233. Nucleophilic
+      attack by Ser155 on the carbonyl of the substrate palmitate generates a enzyme-substrate tetrahedral
+      intermediate where the main chain NH components of Met41 and Gln116 acts as hydrogen bond donors
+      to stabilise the intermediate oxyanion. Proton donation and subsequent collapse of the intermediate
+      forms an acyl-enz
+  - node_id: active_site
+    label: palmitoyl[protein] hydrolase (type 1) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:522
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1820 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1820
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: palmitoyl[protein] hydrolase (type 1) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.2.22
+  edges:
+  - subject: met41
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Met41 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/522/
+      snippet: PPT1 contains a catalytic triad composed of Ser115, His 289 and Asp233. Nucleophilic attack
+        by Ser155 on the carbonyl of the substrate palmitate generates a enzyme-substrate tetrahedral
+        intermediate where the main chain NH components of Met41 and Gln116 acts as hydrogen bond donors
+        to stabilise the intermediate oxyanion. Proton donation and subsequent collapse of the intermediate
+        forms an acyl-enzyme intermediate. This is then attacked by a nucleophilic water molcecule, generating
+        a second anionic intermediate, followed by cleavage of the enzyme-acyl bond to generate the products.
+      notes: M-CSA entry 522, mechanism 1; M-CSA cites PMID:10781062, PMID:12369917; step 1
+  - subject: ser115
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser115 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/522/
+      snippet: PPT1 contains a catalytic triad composed of Ser115, His 289 and Asp233. Nucleophilic attack
+        by Ser155 on the carbonyl of the substrate palmitate generates a enzyme-substrate tetrahedral
+        intermediate where the main chain NH components of Met41 and Gln116 acts as hydrogen bond donors
+        to stabilise the intermediate oxyanion. Proton donation and subsequent collapse of the intermediate
+        forms an acyl-enzyme intermediate. This is then attacked by a nucleophilic water molcecule, generating
+        a second anionic intermediate, followed by cleavage of the enzyme-acyl bond to generate the products.
+      notes: M-CSA entry 522, mechanism 1; M-CSA cites PMID:10781062, PMID:12369917; step 1
+  - subject: gln116
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Gln116 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/522/
+      snippet: PPT1 contains a catalytic triad composed of Ser115, His 289 and Asp233. Nucleophilic attack
+        by Ser155 on the carbonyl of the substrate palmitate generates a enzyme-substrate tetrahedral
+        intermediate where the main chain NH components of Met41 and Gln116 acts as hydrogen bond donors
+        to stabilise the intermediate oxyanion. Proton donation and subsequent collapse of the intermediate
+        forms an acyl-enzyme intermediate. This is then attacked by a nucleophilic water molcecule, generating
+        a second anionic intermediate, followed by cleavage of the enzyme-acyl bond to generate the products.
+      notes: M-CSA entry 522, mechanism 1; M-CSA cites PMID:10781062, PMID:12369917; step 1
+  - subject: asp233
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp233 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/522/
+      snippet: PPT1 contains a catalytic triad composed of Ser115, His 289 and Asp233. Nucleophilic attack
+        by Ser155 on the carbonyl of the substrate palmitate generates a enzyme-substrate tetrahedral
+        intermediate where the main chain NH components of Met41 and Gln116 acts as hydrogen bond donors
+        to stabilise the intermediate oxyanion. Proton donation and subsequent collapse of the intermediate
+        forms an acyl-enzyme intermediate. This is then attacked by a nucleophilic water molcecule, generating
+        a second anionic intermediate, followed by cleavage of the enzyme-acyl bond to generate the products.
+      notes: M-CSA entry 522, mechanism 1; M-CSA cites PMID:10781062, PMID:12369917; step 1
+  - subject: his289
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His289 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/522/
+      snippet: PPT1 contains a catalytic triad composed of Ser115, His 289 and Asp233. Nucleophilic attack
+        by Ser155 on the carbonyl of the substrate palmitate generates a enzyme-substrate tetrahedral
+        intermediate where the main chain NH components of Met41 and Gln116 acts as hydrogen bond donors
+        to stabilise the intermediate oxyanion. Proton donation and subsequent collapse of the intermediate
+        forms an acyl-enzyme intermediate. This is then attacked by a nucleophilic water molcecule, generating
+        a second anionic intermediate, followed by cleavage of the enzyme-acyl bond to generate the products.
+      notes: M-CSA entry 522, mechanism 1; M-CSA cites PMID:10781062, PMID:12369917; step 1
+  - subject: met41
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Met41 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/522/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 522, mechanism 1; M-CSA cites PMID:10781062, PMID:12369917; M-CSA catalytic-residue
+        roles for Met41
+  - subject: ser115
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser115 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/522/
+      snippet: covalently attached, electrostatic stabiliser, proton shuttle (general acid/base)
+      notes: M-CSA entry 522, mechanism 1; M-CSA cites PMID:10781062, PMID:12369917; M-CSA catalytic-residue
+        roles for Ser115
+  - subject: gln116
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln116 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/522/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 522, mechanism 1; M-CSA cites PMID:10781062, PMID:12369917; M-CSA catalytic-residue
+        roles for Gln116
+  - subject: asp233
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp233 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/522/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 522, mechanism 1; M-CSA cites PMID:10781062, PMID:12369917; M-CSA catalytic-residue
+        roles for Asp233
+  - subject: his289
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His289 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/522/
+      snippet: electrostatic stabiliser, proton shuttle (general acid/base)
+      notes: M-CSA entry 522, mechanism 1; M-CSA cites PMID:10781062, PMID:12369917; M-CSA catalytic-residue
+        roles for His289
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/522/
+      snippet: PPT1 contains a catalytic triad composed of Ser115, His 289 and Asp233. Nucleophilic attack
+        by Ser155 on the carbonyl of the substrate palmitate generates a enzyme-substrate tetrahedral
+        intermediate where the main chain NH components of Met41 and Gln116 acts as hydrogen bond donors
+        to stabilise the intermediate oxyanion. Proton donation and subsequent collapse of the intermediate
+        forms an acyl-enz
+      notes: M-CSA entry 522, mechanism 1; M-CSA cites PMID:10781062, PMID:12369917; CATH domain 3.40.50.1820
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/522/
+      snippet: PPT1 contains a catalytic triad composed of Ser115, His 289 and Asp233. Nucleophilic attack
+        by Ser155 on the carbonyl of the substrate palmitate generates a enzyme-substrate tetrahedral
+        intermediate where the main chain NH components of Met41 and Gln116 acts as hydrogen bond donors
+        to stabilise the intermediate oxyanion. Proton donation and subsequent collapse of the intermediate
+        forms an acyl-enz
+      notes: M-CSA entry 522, mechanism 1; M-CSA cites PMID:10781062, PMID:12369917; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/522/
+      snippet: PPT1 contains a catalytic triad composed of Ser115, His 289 and Asp233. Nucleophilic attack
+        by Ser155 on the carbonyl of the substrate palmitate generates a enzyme-substrate tetrahedral
+        intermediate where the main chain NH components of Met41 and Gln116 acts as hydrogen bond donors
+        to stabilise the intermediate oxyanion. Proton donation and subsequent collapse of the intermediate
+        forms an acyl-enz
+      notes: M-CSA entry 522, mechanism 1; M-CSA cites PMID:10781062, PMID:12369917; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/522/
+      snippet: PPT1 contains a catalytic triad composed of Ser115, His 289 and Asp233. Nucleophilic attack
+        by Ser155 on the carbonyl of the substrate palmitate generates a enzyme-substrate tetrahedral
+        intermediate where the main chain NH components of Met41 and Gln116 acts as hydrogen bond donors
+        to stabilise the intermediate oxyanion. Proton donation and subsequent collapse of the intermediate
+        forms an acyl-enz
+      notes: M-CSA entry 522, mechanism 1; M-CSA cites PMID:10781062, PMID:12369917; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/522/
+      snippet: PPT1 contains a catalytic triad composed of Ser115, His 289 and Asp233. Nucleophilic attack
+        by Ser155 on the carbonyl of the substrate palmitate generates a enzyme-substrate tetrahedral
+        intermediate where the main chain NH components of Met41 and Gln116 acts as hydrogen bond donors
+        to stabilise the intermediate oxyanion. Proton donation and subsequent collapse of the intermediate
+        forms an acyl-enz
+      notes: M-CSA entry 522, mechanism 1; M-CSA cites PMID:10781062, PMID:12369917; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/522/
+      snippet: PPT1 contains a catalytic triad composed of Ser115, His 289 and Asp233. Nucleophilic attack
+        by Ser155 on the carbonyl of the substrate palmitate generates a enzyme-substrate tetrahedral
+        intermediate where the main chain NH components of Met41 and Gln116 acts as hydrogen bond donors
+        to stabilise the intermediate oxyanion. Proton donation and subsequent collapse of the intermediate
+        forms an acyl-enz
+      notes: M-CSA entry 522, mechanism 1; M-CSA cites PMID:10781062, PMID:12369917; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/522/
+      snippet: PPT1 contains a catalytic triad composed of Ser115, His 289 and Asp233. Nucleophilic attack
+        by Ser155 on the carbonyl of the substrate palmitate generates a enzyme-substrate tetrahedral
+        intermediate where the main chain NH components of Met41 and Gln116 acts as hydrogen bond donors
+        to stabilise the intermediate oxyanion. Proton donation and subsequent collapse of the intermediate
+        forms an acyl-enz
+      notes: M-CSA entry 522, mechanism 1; M-CSA cites PMID:10781062, PMID:12369917; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (17 evidence-backed edges) transcribed from M-CSA entry 522;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

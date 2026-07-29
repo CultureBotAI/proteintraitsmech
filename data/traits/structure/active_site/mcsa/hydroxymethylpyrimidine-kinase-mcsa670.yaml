@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.7.1.49
 - CHEBI:16892
@@ -176,4 +176,315 @@ definitions:
       HMPP kinase is a key enzyme in the biosynthetic pathway for the formation of thiamine. The bacterial form of the enzyme described here is a member of the ribokinase/sugar kinase family, meaning that it displays significant sequence and structural homology with a large number of kinases with different substrates such as Adenosine kinase. It is unusual however because it is able to catalyse two consecutive steps in the synthesis of thiamine; phosphorylation of 4-amino-5-hydroxymethyl-5-methyl pyrimidine (HM) to give HMP followed by phosphorylation of HMP to give HMPP. This makes studying the enzyme interesting for understanding the specificity of the active site.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of hydroxymethylpyrimidine kinase
+  description: Mechanism transcribed from M-CSA entry 670. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: lys176
+    label: catalytic Lys176 (M-CSA/PDB numbering; UniProt residue 176)
+    node_type: RESIDUE
+    grounding: UniProtKB:P55882
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: thr208
+    label: catalytic Thr208 (M-CSA/PDB numbering; UniProt residue 208)
+    node_type: RESIDUE
+    grounding: UniProtKB:P55882
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: gly210
+    label: catalytic Gly210 (M-CSA/PDB numbering; UniProt residue 210)
+    node_type: RESIDUE
+    grounding: UniProtKB:P55882
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: thr211
+    label: catalytic Thr211 (M-CSA/PDB numbering; UniProt residue 211)
+    node_type: RESIDUE
+    grounding: UniProtKB:P55882
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: gly212
+    label: catalytic Gly212 (M-CSA/PDB numbering; UniProt residue 212)
+    node_type: RESIDUE
+    grounding: UniProtKB:P55882
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: cys213
+    label: catalytic Cys213 (M-CSA/PDB numbering; UniProt residue 213)
+    node_type: RESIDUE
+    grounding: UniProtKB:P55882
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: 4-amino-5-hydroxymethyl-2-methylpyrimidine
+    node_type: CHEMICAL
+    grounding: CHEBI:16892
+  - node_id: reactant1
+    label: ATP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+  - node_id: product0
+    label: 4-amino-2-methyl-5-phosphonatooxymethylpyrimidine(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58354
+  - node_id: product1
+    label: ADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: HMPP kinase catalyses an SN2 type in line displacement reaction where the substrate acts
+      as the nucleophile to attack the gamma phosphate of ATP, forming a pentavalent phosphate transition
+      state. This is stabilised by Mg2+and Lys 176 at the active site, and collapses to release the end
+      products. Gly210, along with Thr211, Gly212 and Cys213 form the anion hole which also helps stabilise
+      the transit
+  - node_id: active_site
+    label: hydroxymethylpyrimidine kinase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:670
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.1190.20 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.1190.20
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: hydroxymethylpyrimidine kinase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.7.1.49
+  edges:
+  - subject: lys176
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys176 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/670/
+      snippet: HMPP kinase catalyses an SN2 type in line displacement reaction where the substrate acts
+        as the nucleophile to attack the gamma phosphate of ATP, forming a pentavalent phosphate transition
+        state. This is stabilised by Mg2+and Lys 176 at the active site, and collapses to release the
+        end products. Gly210, along with Thr211, Gly212 and Cys213 form the anion hole which also helps
+        stabilise the transition state. A subsequent phosphorylation of the product HMP-P occurs by a
+        similar in line displacement in an overlapping active site.
+      notes: M-CSA entry 670, mechanism 1; M-CSA cites PMID:11839308; step 1
+  - subject: gly210
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Gly210 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/670/
+      snippet: HMPP kinase catalyses an SN2 type in line displacement reaction where the substrate acts
+        as the nucleophile to attack the gamma phosphate of ATP, forming a pentavalent phosphate transition
+        state. This is stabilised by Mg2+and Lys 176 at the active site, and collapses to release the
+        end products. Gly210, along with Thr211, Gly212 and Cys213 form the anion hole which also helps
+        stabilise the transition state. A subsequent phosphorylation of the product HMP-P occurs by a
+        similar in line displacement in an overlapping active site.
+      notes: M-CSA entry 670, mechanism 1; M-CSA cites PMID:11839308; step 1
+  - subject: thr211
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Thr211 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/670/
+      snippet: HMPP kinase catalyses an SN2 type in line displacement reaction where the substrate acts
+        as the nucleophile to attack the gamma phosphate of ATP, forming a pentavalent phosphate transition
+        state. This is stabilised by Mg2+and Lys 176 at the active site, and collapses to release the
+        end products. Gly210, along with Thr211, Gly212 and Cys213 form the anion hole which also helps
+        stabilise the transition state. A subsequent phosphorylation of the product HMP-P occurs by a
+        similar in line displacement in an overlapping active site.
+      notes: M-CSA entry 670, mechanism 1; M-CSA cites PMID:11839308; step 1
+  - subject: gly212
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Gly212 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/670/
+      snippet: HMPP kinase catalyses an SN2 type in line displacement reaction where the substrate acts
+        as the nucleophile to attack the gamma phosphate of ATP, forming a pentavalent phosphate transition
+        state. This is stabilised by Mg2+and Lys 176 at the active site, and collapses to release the
+        end products. Gly210, along with Thr211, Gly212 and Cys213 form the anion hole which also helps
+        stabilise the transition state. A subsequent phosphorylation of the product HMP-P occurs by a
+        similar in line displacement in an overlapping active site.
+      notes: M-CSA entry 670, mechanism 1; M-CSA cites PMID:11839308; step 1
+  - subject: cys213
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys213 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/670/
+      snippet: HMPP kinase catalyses an SN2 type in line displacement reaction where the substrate acts
+        as the nucleophile to attack the gamma phosphate of ATP, forming a pentavalent phosphate transition
+        state. This is stabilised by Mg2+and Lys 176 at the active site, and collapses to release the
+        end products. Gly210, along with Thr211, Gly212 and Cys213 form the anion hole which also helps
+        stabilise the transition state. A subsequent phosphorylation of the product HMP-P occurs by a
+        similar in line displacement in an overlapping active site.
+      notes: M-CSA entry 670, mechanism 1; M-CSA cites PMID:11839308; step 1
+  - subject: lys176
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys176 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/670/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 670, mechanism 1; M-CSA cites PMID:11839308; M-CSA catalytic-residue roles for
+        Lys176
+  - subject: thr208
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr208 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/670/
+      snippet: metal ligand
+      notes: M-CSA entry 670, mechanism 1; M-CSA cites PMID:11839308; M-CSA catalytic-residue roles for
+        Thr208
+  - subject: gly210
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly210 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/670/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 670, mechanism 1; M-CSA cites PMID:11839308; M-CSA catalytic-residue roles for
+        Gly210
+  - subject: thr211
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr211 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/670/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 670, mechanism 1; M-CSA cites PMID:11839308; M-CSA catalytic-residue roles for
+        Thr211
+  - subject: gly212
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly212 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/670/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 670, mechanism 1; M-CSA cites PMID:11839308; M-CSA catalytic-residue roles for
+        Gly212
+  - subject: cys213
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys213 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/670/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 670, mechanism 1; M-CSA cites PMID:11839308; M-CSA catalytic-residue roles for
+        Cys213
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/670/
+      snippet: HMPP kinase catalyses an SN2 type in line displacement reaction where the substrate acts
+        as the nucleophile to attack the gamma phosphate of ATP, forming a pentavalent phosphate transition
+        state. This is stabilised by Mg2+and Lys 176 at the active site, and collapses to release the
+        end products. Gly210, along with Thr211, Gly212 and Cys213 form the anion hole which also helps
+        stabilise the transit
+      notes: M-CSA entry 670, mechanism 1; M-CSA cites PMID:11839308; CATH domain 3.40.1190.20 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/670/
+      snippet: HMPP kinase catalyses an SN2 type in line displacement reaction where the substrate acts
+        as the nucleophile to attack the gamma phosphate of ATP, forming a pentavalent phosphate transition
+        state. This is stabilised by Mg2+and Lys 176 at the active site, and collapses to release the
+        end products. Gly210, along with Thr211, Gly212 and Cys213 form the anion hole which also helps
+        stabilise the transit
+      notes: M-CSA entry 670, mechanism 1; M-CSA cites PMID:11839308; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/670/
+      snippet: HMPP kinase catalyses an SN2 type in line displacement reaction where the substrate acts
+        as the nucleophile to attack the gamma phosphate of ATP, forming a pentavalent phosphate transition
+        state. This is stabilised by Mg2+and Lys 176 at the active site, and collapses to release the
+        end products. Gly210, along with Thr211, Gly212 and Cys213 form the anion hole which also helps
+        stabilise the transit
+      notes: M-CSA entry 670, mechanism 1; M-CSA cites PMID:11839308; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/670/
+      snippet: HMPP kinase catalyses an SN2 type in line displacement reaction where the substrate acts
+        as the nucleophile to attack the gamma phosphate of ATP, forming a pentavalent phosphate transition
+        state. This is stabilised by Mg2+and Lys 176 at the active site, and collapses to release the
+        end products. Gly210, along with Thr211, Gly212 and Cys213 form the anion hole which also helps
+        stabilise the transit
+      notes: M-CSA entry 670, mechanism 1; M-CSA cites PMID:11839308; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/670/
+      snippet: HMPP kinase catalyses an SN2 type in line displacement reaction where the substrate acts
+        as the nucleophile to attack the gamma phosphate of ATP, forming a pentavalent phosphate transition
+        state. This is stabilised by Mg2+and Lys 176 at the active site, and collapses to release the
+        end products. Gly210, along with Thr211, Gly212 and Cys213 form the anion hole which also helps
+        stabilise the transit
+      notes: M-CSA entry 670, mechanism 1; M-CSA cites PMID:11839308; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/670/
+      snippet: HMPP kinase catalyses an SN2 type in line displacement reaction where the substrate acts
+        as the nucleophile to attack the gamma phosphate of ATP, forming a pentavalent phosphate transition
+        state. This is stabilised by Mg2+and Lys 176 at the active site, and collapses to release the
+        end products. Gly210, along with Thr211, Gly212 and Cys213 form the anion hole which also helps
+        stabilise the transit
+      notes: M-CSA entry 670, mechanism 1; M-CSA cites PMID:11839308; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/670/
+      snippet: HMPP kinase catalyses an SN2 type in line displacement reaction where the substrate acts
+        as the nucleophile to attack the gamma phosphate of ATP, forming a pentavalent phosphate transition
+        state. This is stabilised by Mg2+and Lys 176 at the active site, and collapses to release the
+        end products. Gly210, along with Thr211, Gly212 and Cys213 form the anion hole which also helps
+        stabilise the transit
+      notes: M-CSA entry 670, mechanism 1; M-CSA cites PMID:11839308; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (18 evidence-backed edges) transcribed from M-CSA entry 670;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

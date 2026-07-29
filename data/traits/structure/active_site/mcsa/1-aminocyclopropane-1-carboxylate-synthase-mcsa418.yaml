@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.4.1.14
 - CHEBI:59789
@@ -284,4 +284,198 @@ definitions:
       Catalyzes the formation of 1-aminocyclopropane-1-carboxylate, a direct precursor of ethylene in higher plants
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 1-aminocyclopropane-1-carboxylate synthase
+  description: Mechanism transcribed from M-CSA entry 418. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: tyr145
+    label: catalytic Tyr145 (M-CSA/PDB numbering; UniProt residue 145)
+    node_type: RESIDUE
+    grounding: UniProtKB:P37821
+    description: 'M-CSA roles: activator, steric role.'
+  - node_id: asp230
+    label: catalytic Asp230 (M-CSA/PDB numbering; UniProt residue 230)
+    node_type: RESIDUE
+    grounding: UniProtKB:P37821
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ile232
+    label: catalytic Ile232 (M-CSA/PDB numbering; UniProt residue 232)
+    node_type: RESIDUE
+    grounding: UniProtKB:P37821
+    description: 'M-CSA roles: steric role.'
+  - node_id: lys273
+    label: catalytic Lys273 (M-CSA/PDB numbering; UniProt residue 273)
+    node_type: RESIDUE
+    grounding: UniProtKB:P37821
+    description: 'M-CSA roles: covalent catalysis, proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: S-adenosyl-L-methionine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+  - node_id: product0
+    label: 1-aminocyclopropanecarboxylic acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:58360
+  - node_id: product1
+    label: 5'-S-methyl-5'-thioadenosine
+    node_type: CHEMICAL
+    grounding: CHEBI:17509
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: The S-adenosyl-L-methionine substrate undergoes a transaldimination reaction with the
+      Lysine bound PLP, resulting in the aldimine intermediate. The S-methyl-5'-thioadenosine is eliminated
+      with concomitant cyclisation of the bound amino acid intermediate. The second transaldimination
+      reaction between Lys and PLP results in the elimination of the cyclic product and regeneration of
+      the enzyme's activ
+  - node_id: active_site
+    label: 1-aminocyclopropane-1-carboxylate synthase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:418
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.640.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.640.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: 1-aminocyclopropane-1-carboxylate synthase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.4.1.14
+  edges:
+  - subject: tyr145
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr145 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/418/
+      snippet: activator, steric role
+      notes: M-CSA entry 418, mechanism 2; M-CSA cites PMID:10610793; M-CSA catalytic-residue roles for
+        Tyr145
+  - subject: asp230
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp230 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/418/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 418, mechanism 2; M-CSA cites PMID:10610793; M-CSA catalytic-residue roles for
+        Asp230
+  - subject: ile232
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ile232 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/418/
+      snippet: steric role
+      notes: M-CSA entry 418, mechanism 2; M-CSA cites PMID:10610793; M-CSA catalytic-residue roles for
+        Ile232
+  - subject: lys273
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys273 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/418/
+      snippet: covalent catalysis, proton shuttle (general acid/base)
+      notes: M-CSA entry 418, mechanism 2; M-CSA cites PMID:10610793; M-CSA catalytic-residue roles for
+        Lys273
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/418/
+      snippet: The S-adenosyl-L-methionine substrate undergoes a transaldimination reaction with the Lysine
+        bound PLP, resulting in the aldimine intermediate. The S-methyl-5'-thioadenosine is eliminated
+        with concomitant cyclisation of the bound amino acid intermediate. The second transaldimination
+        reaction between Lys and PLP results in the elimination of the cyclic product and regeneration
+        of the enzyme's activ
+      notes: M-CSA entry 418, mechanism 2; M-CSA cites PMID:10610793; CATH domain 3.40.640.10 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/418/
+      snippet: The S-adenosyl-L-methionine substrate undergoes a transaldimination reaction with the Lysine
+        bound PLP, resulting in the aldimine intermediate. The S-methyl-5'-thioadenosine is eliminated
+        with concomitant cyclisation of the bound amino acid intermediate. The second transaldimination
+        reaction between Lys and PLP results in the elimination of the cyclic product and regeneration
+        of the enzyme's activ
+      notes: M-CSA entry 418, mechanism 2; M-CSA cites PMID:10610793; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/418/
+      snippet: The S-adenosyl-L-methionine substrate undergoes a transaldimination reaction with the Lysine
+        bound PLP, resulting in the aldimine intermediate. The S-methyl-5'-thioadenosine is eliminated
+        with concomitant cyclisation of the bound amino acid intermediate. The second transaldimination
+        reaction between Lys and PLP results in the elimination of the cyclic product and regeneration
+        of the enzyme's activ
+      notes: M-CSA entry 418, mechanism 2; M-CSA cites PMID:10610793; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/418/
+      snippet: The S-adenosyl-L-methionine substrate undergoes a transaldimination reaction with the Lysine
+        bound PLP, resulting in the aldimine intermediate. The S-methyl-5'-thioadenosine is eliminated
+        with concomitant cyclisation of the bound amino acid intermediate. The second transaldimination
+        reaction between Lys and PLP results in the elimination of the cyclic product and regeneration
+        of the enzyme's activ
+      notes: M-CSA entry 418, mechanism 2; M-CSA cites PMID:10610793; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/418/
+      snippet: The S-adenosyl-L-methionine substrate undergoes a transaldimination reaction with the Lysine
+        bound PLP, resulting in the aldimine intermediate. The S-methyl-5'-thioadenosine is eliminated
+        with concomitant cyclisation of the bound amino acid intermediate. The second transaldimination
+        reaction between Lys and PLP results in the elimination of the cyclic product and regeneration
+        of the enzyme's activ
+      notes: M-CSA entry 418, mechanism 2; M-CSA cites PMID:10610793; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/418/
+      snippet: The S-adenosyl-L-methionine substrate undergoes a transaldimination reaction with the Lysine
+        bound PLP, resulting in the aldimine intermediate. The S-methyl-5'-thioadenosine is eliminated
+        with concomitant cyclisation of the bound amino acid intermediate. The second transaldimination
+        reaction between Lys and PLP results in the elimination of the cyclic product and regeneration
+        of the enzyme's activ
+      notes: M-CSA entry 418, mechanism 2; M-CSA cites PMID:10610793; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (10 evidence-backed edges) transcribed from M-CSA entry 418;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.1.68
 - CHEBI:15377
@@ -436,4 +436,273 @@ definitions:
       Isoamylase (glycogen 6-glucanohydrolase, EC 3.2.1.68) is one of the starch-debranching enzymes that catalyses the hydrolysis of alpha-1,6-glucosidic linkages specific in alpha-glucans such as amylopectin or glycogen. Belongs to Glycoside Hydrolase Family 13.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of isoamylase
+  description: Mechanism transcribed from M-CSA entry 421. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +26).
+  nodes:
+  - node_id: asp128
+    label: catalytic Asp128 (M-CSA/PDB numbering; UniProt residue 154)
+    node_type: RESIDUE
+    grounding: UniProtKB:P10342
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu229
+    label: catalytic Glu229 (M-CSA/PDB numbering; UniProt residue 255)
+    node_type: RESIDUE
+    grounding: UniProtKB:P10342
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: thr230
+    label: catalytic Thr230 (M-CSA/PDB numbering; UniProt residue 256)
+    node_type: RESIDUE
+    grounding: UniProtKB:P10342
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asn232
+    label: catalytic Asn232 (M-CSA/PDB numbering; UniProt residue 258)
+    node_type: RESIDUE
+    grounding: UniProtKB:P10342
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp259
+    label: catalytic Asp259 (M-CSA/PDB numbering; UniProt residue 285)
+    node_type: RESIDUE
+    grounding: UniProtKB:P10342
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp375
+    label: catalytic Asp375 (M-CSA/PDB numbering; UniProt residue 401)
+    node_type: RESIDUE
+    grounding: UniProtKB:P10342
+    description: 'M-CSA roles: covalent catalysis.'
+  - node_id: glu435
+    label: catalytic Glu435 (M-CSA/PDB numbering; UniProt residue 461)
+    node_type: RESIDUE
+    grounding: UniProtKB:P10342
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: asp510
+    label: catalytic Asp510 (M-CSA/PDB numbering; UniProt residue 536)
+    node_type: RESIDUE
+    grounding: UniProtKB:P10342
+    description: 'M-CSA roles: transition state stabiliser.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: isomaltose
+    node_type: CHEMICAL
+    grounding: CHEBI:28189
+  - node_id: product0
+    label: alpha-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:17925
+  - node_id: product1
+    label: D-glucopyranose
+    node_type: CHEMICAL
+    grounding: CHEBI:4167
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: Asp375 initiates a nucleophilic attack on the substrate, eliminating one of the products.
+      A water molecule is then activated by Glu435 and attacks the enzyme-substrate complex, eliminating
+      the second product and regenerating the enzyme active site.
+  - node_id: active_site
+    label: isoamylase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:421
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.60.40.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.60.40.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: isoamylase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.1.68
+  edges:
+  - subject: asp375
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp375 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/421/
+      snippet: Asp375 initiates a nucleophilic attack on the substrate, eliminating one of the products.
+        A water molecule is then activated by Glu435 and attacks the enzyme-substrate complex, eliminating
+        the second product and regenerating the enzyme active site.
+      notes: M-CSA entry 421, mechanism 2; M-CSA cites PMID:12196524, PMID:21493662, PMID:9719642; step
+        1
+  - subject: glu435
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu435 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/421/
+      snippet: Asp375 initiates a nucleophilic attack on the substrate, eliminating one of the products.
+        A water molecule is then activated by Glu435 and attacks the enzyme-substrate complex, eliminating
+        the second product and regenerating the enzyme active site.
+      notes: M-CSA entry 421, mechanism 2; M-CSA cites PMID:12196524, PMID:21493662, PMID:9719642; step
+        1
+  - subject: asp128
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp128 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/421/
+      snippet: metal ligand
+      notes: M-CSA entry 421, mechanism 2; M-CSA cites PMID:12196524, PMID:21493662, PMID:9719642; M-CSA
+        catalytic-residue roles for Asp128
+  - subject: glu229
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu229 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/421/
+      snippet: metal ligand
+      notes: M-CSA entry 421, mechanism 2; M-CSA cites PMID:12196524, PMID:21493662, PMID:9719642; M-CSA
+        catalytic-residue roles for Glu229
+  - subject: thr230
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr230 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/421/
+      snippet: metal ligand
+      notes: M-CSA entry 421, mechanism 2; M-CSA cites PMID:12196524, PMID:21493662, PMID:9719642; M-CSA
+        catalytic-residue roles for Thr230
+  - subject: asn232
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn232 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/421/
+      snippet: metal ligand
+      notes: M-CSA entry 421, mechanism 2; M-CSA cites PMID:12196524, PMID:21493662, PMID:9719642; M-CSA
+        catalytic-residue roles for Asn232
+  - subject: asp259
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp259 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/421/
+      snippet: metal ligand
+      notes: M-CSA entry 421, mechanism 2; M-CSA cites PMID:12196524, PMID:21493662, PMID:9719642; M-CSA
+        catalytic-residue roles for Asp259
+  - subject: asp375
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp375 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/421/
+      snippet: covalent catalysis
+      notes: M-CSA entry 421, mechanism 2; M-CSA cites PMID:12196524, PMID:21493662, PMID:9719642; M-CSA
+        catalytic-residue roles for Asp375
+  - subject: glu435
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu435 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/421/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 421, mechanism 2; M-CSA cites PMID:12196524, PMID:21493662, PMID:9719642; M-CSA
+        catalytic-residue roles for Glu435
+  - subject: asp510
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp510 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/421/
+      snippet: transition state stabiliser
+      notes: M-CSA entry 421, mechanism 2; M-CSA cites PMID:12196524, PMID:21493662, PMID:9719642; M-CSA
+        catalytic-residue roles for Asp510
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/421/
+      snippet: Asp375 initiates a nucleophilic attack on the substrate, eliminating one of the products.
+        A water molecule is then activated by Glu435 and attacks the enzyme-substrate complex, eliminating
+        the second product and regenerating the enzyme active site.
+      notes: M-CSA entry 421, mechanism 2; M-CSA cites PMID:12196524, PMID:21493662, PMID:9719642; CATH
+        domain 2.60.40.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/421/
+      snippet: Asp375 initiates a nucleophilic attack on the substrate, eliminating one of the products.
+        A water molecule is then activated by Glu435 and attacks the enzyme-substrate complex, eliminating
+        the second product and regenerating the enzyme active site.
+      notes: M-CSA entry 421, mechanism 2; M-CSA cites PMID:12196524, PMID:21493662, PMID:9719642; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/421/
+      snippet: Asp375 initiates a nucleophilic attack on the substrate, eliminating one of the products.
+        A water molecule is then activated by Glu435 and attacks the enzyme-substrate complex, eliminating
+        the second product and regenerating the enzyme active site.
+      notes: M-CSA entry 421, mechanism 2; M-CSA cites PMID:12196524, PMID:21493662, PMID:9719642; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/421/
+      snippet: Asp375 initiates a nucleophilic attack on the substrate, eliminating one of the products.
+        A water molecule is then activated by Glu435 and attacks the enzyme-substrate complex, eliminating
+        the second product and regenerating the enzyme active site.
+      notes: M-CSA entry 421, mechanism 2; M-CSA cites PMID:12196524, PMID:21493662, PMID:9719642; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/421/
+      snippet: Asp375 initiates a nucleophilic attack on the substrate, eliminating one of the products.
+        A water molecule is then activated by Glu435 and attacks the enzyme-substrate complex, eliminating
+        the second product and regenerating the enzyme active site.
+      notes: M-CSA entry 421, mechanism 2; M-CSA cites PMID:12196524, PMID:21493662, PMID:9719642; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/421/
+      snippet: Asp375 initiates a nucleophilic attack on the substrate, eliminating one of the products.
+        A water molecule is then activated by Glu435 and attacks the enzyme-substrate complex, eliminating
+        the second product and regenerating the enzyme active site.
+      notes: M-CSA entry 421, mechanism 2; M-CSA cites PMID:12196524, PMID:21493662, PMID:9719642; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (16 evidence-backed edges) transcribed from M-CSA entry 421;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

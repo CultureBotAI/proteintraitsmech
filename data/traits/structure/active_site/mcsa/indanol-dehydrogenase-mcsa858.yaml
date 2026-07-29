@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.1.1.112
 - CHEBI:16697
@@ -277,4 +277,213 @@ definitions:
       Converts progesterone to its inactive form, 20-alpha-dihydroxyprogesterone (20-alpha-OHP). In the liver and intestine, may have a role in the transport of bile. May have a role in monitoring the intrahepatic bile acid concentration. Has a low bile-binding ability. May play a role in myelin formation.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of indanol dehydrogenase
+  description: Mechanism transcribed from M-CSA entry 858. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: asp50
+    label: catalytic Asp50 (M-CSA/PDB numbering; UniProt residue 50)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q04828
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: tyr55
+    label: catalytic Tyr55 (M-CSA/PDB numbering; UniProt residue 55)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q04828
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: lys84
+    label: catalytic Lys84 (M-CSA/PDB numbering; UniProt residue 84)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q04828
+    description: 'M-CSA roles: modifies pKa.'
+  - node_id: his117
+    label: catalytic His117 (M-CSA/PDB numbering; UniProt residue 117)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q04828
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: indan-1-ol
+    node_type: CHEMICAL
+    grounding: CHEBI:16697
+  - node_id: reactant1
+    label: NAD(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+  - node_id: product0
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product1
+    label: indan-1-one
+    node_type: CHEMICAL
+    grounding: CHEBI:17404
+  - node_id: product2
+    label: NADH(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: This enzyme displays a sequential ordered kinetic mechanism, in which the pyridine nucleotide
+      cofactor binds first and leaves last. It is a class A dehydrogenase which catalyses direct hydride
+      transfer of the pro-R hydrogen from the C4 position of the nicotinamide ring to the acceptor carbonyl
+      at C3 of the steroid substrate.
+  - node_id: active_site
+    label: indanol dehydrogenase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:858
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.100 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.100
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: indanol dehydrogenase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.1.1.112
+  edges:
+  - subject: asp50
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp50 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/858/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 858, mechanism 1; M-CSA cites PMID:12899831, PMID:18620380, PMID:21272640, PMID:8146147,
+        PMID:8718859, PMID:9261071; M-CSA catalytic-residue roles for Asp50
+  - subject: tyr55
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr55 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/858/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 858, mechanism 1; M-CSA cites PMID:12899831, PMID:18620380, PMID:21272640, PMID:8146147,
+        PMID:8718859, PMID:9261071; M-CSA catalytic-residue roles for Tyr55
+  - subject: lys84
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys84 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/858/
+      snippet: modifies pKa
+      notes: M-CSA entry 858, mechanism 1; M-CSA cites PMID:12899831, PMID:18620380, PMID:21272640, PMID:8146147,
+        PMID:8718859, PMID:9261071; M-CSA catalytic-residue roles for Lys84
+  - subject: his117
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His117 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/858/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 858, mechanism 1; M-CSA cites PMID:12899831, PMID:18620380, PMID:21272640, PMID:8146147,
+        PMID:8718859, PMID:9261071; M-CSA catalytic-residue roles for His117
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/858/
+      snippet: This enzyme displays a sequential ordered kinetic mechanism, in which the pyridine nucleotide
+        cofactor binds first and leaves last. It is a class A dehydrogenase which catalyses direct hydride
+        transfer of the pro-R hydrogen from the C4 position of the nicotinamide ring to the acceptor carbonyl
+        at C3 of the steroid substrate.
+      notes: M-CSA entry 858, mechanism 1; M-CSA cites PMID:12899831, PMID:18620380, PMID:21272640, PMID:8146147,
+        PMID:8718859, PMID:9261071; CATH domain 3.20.20.100 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/858/
+      snippet: This enzyme displays a sequential ordered kinetic mechanism, in which the pyridine nucleotide
+        cofactor binds first and leaves last. It is a class A dehydrogenase which catalyses direct hydride
+        transfer of the pro-R hydrogen from the C4 position of the nicotinamide ring to the acceptor carbonyl
+        at C3 of the steroid substrate.
+      notes: M-CSA entry 858, mechanism 1; M-CSA cites PMID:12899831, PMID:18620380, PMID:21272640, PMID:8146147,
+        PMID:8718859, PMID:9261071; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/858/
+      snippet: This enzyme displays a sequential ordered kinetic mechanism, in which the pyridine nucleotide
+        cofactor binds first and leaves last. It is a class A dehydrogenase which catalyses direct hydride
+        transfer of the pro-R hydrogen from the C4 position of the nicotinamide ring to the acceptor carbonyl
+        at C3 of the steroid substrate.
+      notes: M-CSA entry 858, mechanism 1; M-CSA cites PMID:12899831, PMID:18620380, PMID:21272640, PMID:8146147,
+        PMID:8718859, PMID:9261071; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/858/
+      snippet: This enzyme displays a sequential ordered kinetic mechanism, in which the pyridine nucleotide
+        cofactor binds first and leaves last. It is a class A dehydrogenase which catalyses direct hydride
+        transfer of the pro-R hydrogen from the C4 position of the nicotinamide ring to the acceptor carbonyl
+        at C3 of the steroid substrate.
+      notes: M-CSA entry 858, mechanism 1; M-CSA cites PMID:12899831, PMID:18620380, PMID:21272640, PMID:8146147,
+        PMID:8718859, PMID:9261071; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/858/
+      snippet: This enzyme displays a sequential ordered kinetic mechanism, in which the pyridine nucleotide
+        cofactor binds first and leaves last. It is a class A dehydrogenase which catalyses direct hydride
+        transfer of the pro-R hydrogen from the C4 position of the nicotinamide ring to the acceptor carbonyl
+        at C3 of the steroid substrate.
+      notes: M-CSA entry 858, mechanism 1; M-CSA cites PMID:12899831, PMID:18620380, PMID:21272640, PMID:8146147,
+        PMID:8718859, PMID:9261071; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/858/
+      snippet: This enzyme displays a sequential ordered kinetic mechanism, in which the pyridine nucleotide
+        cofactor binds first and leaves last. It is a class A dehydrogenase which catalyses direct hydride
+        transfer of the pro-R hydrogen from the C4 position of the nicotinamide ring to the acceptor carbonyl
+        at C3 of the steroid substrate.
+      notes: M-CSA entry 858, mechanism 1; M-CSA cites PMID:12899831, PMID:18620380, PMID:21272640, PMID:8146147,
+        PMID:8718859, PMID:9261071; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/858/
+      snippet: This enzyme displays a sequential ordered kinetic mechanism, in which the pyridine nucleotide
+        cofactor binds first and leaves last. It is a class A dehydrogenase which catalyses direct hydride
+        transfer of the pro-R hydrogen from the C4 position of the nicotinamide ring to the acceptor carbonyl
+        at C3 of the steroid substrate.
+      notes: M-CSA entry 858, mechanism 1; M-CSA cites PMID:12899831, PMID:18620380, PMID:21272640, PMID:8146147,
+        PMID:8718859, PMID:9261071; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (11 evidence-backed edges) transcribed from M-CSA entry 858;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

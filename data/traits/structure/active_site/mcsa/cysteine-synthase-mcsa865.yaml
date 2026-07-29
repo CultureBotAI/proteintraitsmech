@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.5.1.47
 - CHEBI:58340
@@ -282,4 +282,173 @@ definitions:
       O-Acetylserine sulfhydrylase (cystenie synthase, OASS) is a pyridoxal 5′-phosphate (PLP)-dependent enzyme that catalyses the conversion of O-acetylserine and bisulfide to L-cysteine and acetate in bacteria and higher plants. Enteric bacteria have two isozymes of OASS, A and B, produced under aerobic and anaerobic growth conditions, respectively, with different substrate specificity. This entry represents CysK (the A isoenzyme), which can use sulphide instead of thiosulphate, to produce cysteine instead of cysteine thiosulphonate.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of cysteine synthase
+  description: Mechanism transcribed from M-CSA entry 865. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +1).
+  nodes:
+  - node_id: lys41
+    label: catalytic Lys41 (M-CSA/PDB numbering; UniProt residue 42)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A1E3
+    description: 'M-CSA roles: covalent catalysis, proton shuttle (general acid/base).'
+  - node_id: ser272
+    label: catalytic Ser272 (M-CSA/PDB numbering; UniProt residue 273)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A1E3
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: O-acetyl-L-serine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:58340
+  - node_id: reactant1
+    label: hydrosulfide
+    node_type: CHEMICAL
+    grounding: CHEBI:29919
+  - node_id: product0
+    label: L-cysteine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:35235
+  - node_id: product1
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: 'O-Acetylserine sulfhydrylase (OASS)1 catalyses the PLP-dependent replacement of the
+      beta-acetoxy of OAS by inorganic bisulfide to generate l-cysteine. Steady-state kinetic studies
+      indicate that the kinetic mechanism of OASS-A is ping-pong or double displacement. The first half
+      of the reaction results in the conversion of the internal Schiff base and OAS to acetate and an
+      external Schiff base with '
+  - node_id: active_site
+    label: cysteine synthase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:865
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1100 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1100
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: cysteine synthase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.5.1.47
+  edges:
+  - subject: lys41
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys41 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/865/
+      snippet: covalent catalysis, proton shuttle (general acid/base)
+      notes: M-CSA entry 865, mechanism 1; M-CSA cites PMID:10995767, PMID:12515544, PMID:15807548, PMID:17583914,
+        PMID:20550197, PMID:9761678; M-CSA catalytic-residue roles for Lys41
+  - subject: ser272
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser272 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/865/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 865, mechanism 1; M-CSA cites PMID:10995767, PMID:12515544, PMID:15807548, PMID:17583914,
+        PMID:20550197, PMID:9761678; M-CSA catalytic-residue roles for Ser272
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/865/
+      snippet: O-Acetylserine sulfhydrylase (OASS)1 catalyses the PLP-dependent replacement of the beta-acetoxy
+        of OAS by inorganic bisulfide to generate l-cysteine. Steady-state kinetic studies indicate that
+        the kinetic mechanism of OASS-A is ping-pong or double displacement. The first half of the reaction
+        results in the conversion of the internal Schiff base and OAS to acetate and an external Schiff
+        base with
+      notes: M-CSA entry 865, mechanism 1; M-CSA cites PMID:10995767, PMID:12515544, PMID:15807548, PMID:17583914,
+        PMID:20550197, PMID:9761678; CATH domain 3.40.50.1100 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/865/
+      snippet: O-Acetylserine sulfhydrylase (OASS)1 catalyses the PLP-dependent replacement of the beta-acetoxy
+        of OAS by inorganic bisulfide to generate l-cysteine. Steady-state kinetic studies indicate that
+        the kinetic mechanism of OASS-A is ping-pong or double displacement. The first half of the reaction
+        results in the conversion of the internal Schiff base and OAS to acetate and an external Schiff
+        base with
+      notes: M-CSA entry 865, mechanism 1; M-CSA cites PMID:10995767, PMID:12515544, PMID:15807548, PMID:17583914,
+        PMID:20550197, PMID:9761678; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/865/
+      snippet: O-Acetylserine sulfhydrylase (OASS)1 catalyses the PLP-dependent replacement of the beta-acetoxy
+        of OAS by inorganic bisulfide to generate l-cysteine. Steady-state kinetic studies indicate that
+        the kinetic mechanism of OASS-A is ping-pong or double displacement. The first half of the reaction
+        results in the conversion of the internal Schiff base and OAS to acetate and an external Schiff
+        base with
+      notes: M-CSA entry 865, mechanism 1; M-CSA cites PMID:10995767, PMID:12515544, PMID:15807548, PMID:17583914,
+        PMID:20550197, PMID:9761678; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/865/
+      snippet: O-Acetylserine sulfhydrylase (OASS)1 catalyses the PLP-dependent replacement of the beta-acetoxy
+        of OAS by inorganic bisulfide to generate l-cysteine. Steady-state kinetic studies indicate that
+        the kinetic mechanism of OASS-A is ping-pong or double displacement. The first half of the reaction
+        results in the conversion of the internal Schiff base and OAS to acetate and an external Schiff
+        base with
+      notes: M-CSA entry 865, mechanism 1; M-CSA cites PMID:10995767, PMID:12515544, PMID:15807548, PMID:17583914,
+        PMID:20550197, PMID:9761678; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/865/
+      snippet: O-Acetylserine sulfhydrylase (OASS)1 catalyses the PLP-dependent replacement of the beta-acetoxy
+        of OAS by inorganic bisulfide to generate l-cysteine. Steady-state kinetic studies indicate that
+        the kinetic mechanism of OASS-A is ping-pong or double displacement. The first half of the reaction
+        results in the conversion of the internal Schiff base and OAS to acetate and an external Schiff
+        base with
+      notes: M-CSA entry 865, mechanism 1; M-CSA cites PMID:10995767, PMID:12515544, PMID:15807548, PMID:17583914,
+        PMID:20550197, PMID:9761678; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/865/
+      snippet: O-Acetylserine sulfhydrylase (OASS)1 catalyses the PLP-dependent replacement of the beta-acetoxy
+        of OAS by inorganic bisulfide to generate l-cysteine. Steady-state kinetic studies indicate that
+        the kinetic mechanism of OASS-A is ping-pong or double displacement. The first half of the reaction
+        results in the conversion of the internal Schiff base and OAS to acetate and an external Schiff
+        base with
+      notes: M-CSA entry 865, mechanism 1; M-CSA cites PMID:10995767, PMID:12515544, PMID:15807548, PMID:17583914,
+        PMID:20550197, PMID:9761678; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (8 evidence-backed edges) transcribed from M-CSA entry 865;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

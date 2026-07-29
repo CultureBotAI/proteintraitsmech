@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.1.21
 - CHEBI:15377
@@ -337,4 +337,278 @@ definitions:
       beta-glucosidases are an important group of enzymes that are responsible for cleaving a range of biologically significant compounds. Many show a strict specificity for their substrates although others, like the cyanogenic beta-glucosidase from white clover (CBG) are less stringent, cleaving xylosides and arabinosides as well as glucosides. In general, they hydrolyse terminal, non-reducing beta-D-glucosyl residues with release of beta-D-glucose. Member of the Glycoside Hydrolase Family 1 (GH1). GH1 comprises enzymes with a number of known activities; beta-glucosidase (EC:3.2.1.21); beta-galactosidase (EC:3.2.1.23); 6-phospho-beta-galactosidase (EC:3.2.1.85); 6-phospho-beta-glucosidase (EC:3.2.1.86); lactase-phlorizin hydrolase (EC:3.2.1.62), (EC:3.2.1.108); beta-mannosidase(EC:3.2.1.25); myrosinase (EC:3.2.1.147). However, we consider myrosinase to be a different entry due to the fact that is lacking in one of the catalytic glutamates (the general acid/base) and cleaves a C-S bond, rather than the C-O bond of this entry (i.e. has a different reactive centre)
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of beta-glucosidase (GH1)
+  description: Mechanism transcribed from M-CSA entry 442. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +11).
+  nodes:
+  - node_id: arg91
+    label: catalytic Arg91 (M-CSA/PDB numbering; UniProt residue 102)
+    node_type: RESIDUE
+    grounding: UniProtKB:P26205
+    description: 'M-CSA roles: modifies pKa.'
+  - node_id: his137
+    label: catalytic His137 (M-CSA/PDB numbering; UniProt residue 148)
+    node_type: RESIDUE
+    grounding: UniProtKB:P26205
+    description: 'M-CSA roles: transition state stabiliser.'
+  - node_id: glu183
+    label: catalytic Glu183 (M-CSA/PDB numbering; UniProt residue 194)
+    node_type: RESIDUE
+    grounding: UniProtKB:P26205
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: asn324
+    label: catalytic Asn324 (M-CSA/PDB numbering; UniProt residue 335)
+    node_type: RESIDUE
+    grounding: UniProtKB:P26205
+    description: 'M-CSA roles: modifies pKa, steric role.'
+  - node_id: tyr326
+    label: catalytic Tyr326 (M-CSA/PDB numbering; UniProt residue 337)
+    node_type: RESIDUE
+    grounding: UniProtKB:P26205
+    description: 'M-CSA roles: modifies pKa.'
+  - node_id: glu397
+    label: catalytic Glu397 (M-CSA/PDB numbering; UniProt residue 408)
+    node_type: RESIDUE
+    grounding: UniProtKB:P26205
+    description: 'M-CSA roles: covalent catalysis.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: beta-cellobiose
+    node_type: CHEMICAL
+    grounding: CHEBI:36217
+  - node_id: product0
+    label: beta-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:15903
+  - node_id: product1
+    label: beta-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:15903
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: In this retaining mechanism, the nucleophile (Glu397) performs a nucleophilic attack
+      at the anomeric carbon, which results in formation of a glucose-enzyme intermediate. In this process,
+      aglucone departure is facilitated by protonation of the glucosidic oxygen by the acid catalyst (Glu183).
+      During the second catalytic step (deglucosylation), a water molecule is activated by the catalytic
+      base (Glu
+  - node_id: active_site
+    label: beta-glucosidase (GH1) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:442
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.80 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.80
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: beta-glucosidase (GH1) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.1.21
+  edges:
+  - subject: glu183
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu183 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/442/
+      snippet: In this retaining mechanism, the nucleophile (Glu397) performs a nucleophilic attack at
+        the anomeric carbon, which results in formation of a glucose-enzyme intermediate. In this process,
+        aglucone departure is facilitated by protonation of the glucosidic oxygen by the acid catalyst
+        (Glu183). During the second catalytic step (deglucosylation), a water molecule is activated by
+        the catalytic base (Glu183) to serve as a nucleophile for hydrolysis of the glucosidic bond and
+        release of the glucose.
+      notes: M-CSA entry 442, mechanism 1; M-CSA cites PMID:11106394, PMID:11139381, PMID:11352732, PMID:17585934,
+        PMID:18308333, PMID:18422657, PMID:18472115, PMID:20490603, PMID:23079707, PMID:24143051, PMID:26139075,
+        PMID:8535788, PMID:9466926, PMID:9860830; step 1
+  - subject: glu397
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu397 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/442/
+      snippet: In this retaining mechanism, the nucleophile (Glu397) performs a nucleophilic attack at
+        the anomeric carbon, which results in formation of a glucose-enzyme intermediate. In this process,
+        aglucone departure is facilitated by protonation of the glucosidic oxygen by the acid catalyst
+        (Glu183). During the second catalytic step (deglucosylation), a water molecule is activated by
+        the catalytic base (Glu183) to serve as a nucleophile for hydrolysis of the glucosidic bond and
+        release of the glucose.
+      notes: M-CSA entry 442, mechanism 1; M-CSA cites PMID:11106394, PMID:11139381, PMID:11352732, PMID:17585934,
+        PMID:18308333, PMID:18422657, PMID:18472115, PMID:20490603, PMID:23079707, PMID:24143051, PMID:26139075,
+        PMID:8535788, PMID:9466926, PMID:9860830; step 1
+  - subject: arg91
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg91 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/442/
+      snippet: modifies pKa
+      notes: M-CSA entry 442, mechanism 1; M-CSA cites PMID:11106394, PMID:11139381, PMID:11352732, PMID:17585934,
+        PMID:18308333, PMID:18422657, PMID:18472115, PMID:20490603, PMID:23079707, PMID:24143051, PMID:26139075,
+        PMID:8535788, PMID:9466926, PMID:9860830; M-CSA catalytic-residue roles for Arg91
+  - subject: his137
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His137 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/442/
+      snippet: transition state stabiliser
+      notes: M-CSA entry 442, mechanism 1; M-CSA cites PMID:11106394, PMID:11139381, PMID:11352732, PMID:17585934,
+        PMID:18308333, PMID:18422657, PMID:18472115, PMID:20490603, PMID:23079707, PMID:24143051, PMID:26139075,
+        PMID:8535788, PMID:9466926, PMID:9860830; M-CSA catalytic-residue roles for His137
+  - subject: glu183
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu183 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/442/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 442, mechanism 1; M-CSA cites PMID:11106394, PMID:11139381, PMID:11352732, PMID:17585934,
+        PMID:18308333, PMID:18422657, PMID:18472115, PMID:20490603, PMID:23079707, PMID:24143051, PMID:26139075,
+        PMID:8535788, PMID:9466926, PMID:9860830; M-CSA catalytic-residue roles for Glu183
+  - subject: asn324
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn324 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/442/
+      snippet: modifies pKa, steric role
+      notes: M-CSA entry 442, mechanism 1; M-CSA cites PMID:11106394, PMID:11139381, PMID:11352732, PMID:17585934,
+        PMID:18308333, PMID:18422657, PMID:18472115, PMID:20490603, PMID:23079707, PMID:24143051, PMID:26139075,
+        PMID:8535788, PMID:9466926, PMID:9860830; M-CSA catalytic-residue roles for Asn324
+  - subject: tyr326
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr326 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/442/
+      snippet: modifies pKa
+      notes: M-CSA entry 442, mechanism 1; M-CSA cites PMID:11106394, PMID:11139381, PMID:11352732, PMID:17585934,
+        PMID:18308333, PMID:18422657, PMID:18472115, PMID:20490603, PMID:23079707, PMID:24143051, PMID:26139075,
+        PMID:8535788, PMID:9466926, PMID:9860830; M-CSA catalytic-residue roles for Tyr326
+  - subject: glu397
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu397 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/442/
+      snippet: covalent catalysis
+      notes: M-CSA entry 442, mechanism 1; M-CSA cites PMID:11106394, PMID:11139381, PMID:11352732, PMID:17585934,
+        PMID:18308333, PMID:18422657, PMID:18472115, PMID:20490603, PMID:23079707, PMID:24143051, PMID:26139075,
+        PMID:8535788, PMID:9466926, PMID:9860830; M-CSA catalytic-residue roles for Glu397
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/442/
+      snippet: In this retaining mechanism, the nucleophile (Glu397) performs a nucleophilic attack at
+        the anomeric carbon, which results in formation of a glucose-enzyme intermediate. In this process,
+        aglucone departure is facilitated by protonation of the glucosidic oxygen by the acid catalyst
+        (Glu183). During the second catalytic step (deglucosylation), a water molecule is activated by
+        the catalytic base (Glu
+      notes: M-CSA entry 442, mechanism 1; M-CSA cites PMID:11106394, PMID:11139381, PMID:11352732, PMID:17585934,
+        PMID:18308333, PMID:18422657, PMID:18472115, PMID:20490603, PMID:23079707, PMID:24143051, PMID:26139075,
+        PMID:8535788, PMID:9466926, PMID:9860830; CATH domain 3.20.20.80 assigned to the catalytic chain
+        by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/442/
+      snippet: In this retaining mechanism, the nucleophile (Glu397) performs a nucleophilic attack at
+        the anomeric carbon, which results in formation of a glucose-enzyme intermediate. In this process,
+        aglucone departure is facilitated by protonation of the glucosidic oxygen by the acid catalyst
+        (Glu183). During the second catalytic step (deglucosylation), a water molecule is activated by
+        the catalytic base (Glu
+      notes: M-CSA entry 442, mechanism 1; M-CSA cites PMID:11106394, PMID:11139381, PMID:11352732, PMID:17585934,
+        PMID:18308333, PMID:18422657, PMID:18472115, PMID:20490603, PMID:23079707, PMID:24143051, PMID:26139075,
+        PMID:8535788, PMID:9466926, PMID:9860830; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/442/
+      snippet: In this retaining mechanism, the nucleophile (Glu397) performs a nucleophilic attack at
+        the anomeric carbon, which results in formation of a glucose-enzyme intermediate. In this process,
+        aglucone departure is facilitated by protonation of the glucosidic oxygen by the acid catalyst
+        (Glu183). During the second catalytic step (deglucosylation), a water molecule is activated by
+        the catalytic base (Glu
+      notes: M-CSA entry 442, mechanism 1; M-CSA cites PMID:11106394, PMID:11139381, PMID:11352732, PMID:17585934,
+        PMID:18308333, PMID:18422657, PMID:18472115, PMID:20490603, PMID:23079707, PMID:24143051, PMID:26139075,
+        PMID:8535788, PMID:9466926, PMID:9860830; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/442/
+      snippet: In this retaining mechanism, the nucleophile (Glu397) performs a nucleophilic attack at
+        the anomeric carbon, which results in formation of a glucose-enzyme intermediate. In this process,
+        aglucone departure is facilitated by protonation of the glucosidic oxygen by the acid catalyst
+        (Glu183). During the second catalytic step (deglucosylation), a water molecule is activated by
+        the catalytic base (Glu
+      notes: M-CSA entry 442, mechanism 1; M-CSA cites PMID:11106394, PMID:11139381, PMID:11352732, PMID:17585934,
+        PMID:18308333, PMID:18422657, PMID:18472115, PMID:20490603, PMID:23079707, PMID:24143051, PMID:26139075,
+        PMID:8535788, PMID:9466926, PMID:9860830; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/442/
+      snippet: In this retaining mechanism, the nucleophile (Glu397) performs a nucleophilic attack at
+        the anomeric carbon, which results in formation of a glucose-enzyme intermediate. In this process,
+        aglucone departure is facilitated by protonation of the glucosidic oxygen by the acid catalyst
+        (Glu183). During the second catalytic step (deglucosylation), a water molecule is activated by
+        the catalytic base (Glu
+      notes: M-CSA entry 442, mechanism 1; M-CSA cites PMID:11106394, PMID:11139381, PMID:11352732, PMID:17585934,
+        PMID:18308333, PMID:18422657, PMID:18472115, PMID:20490603, PMID:23079707, PMID:24143051, PMID:26139075,
+        PMID:8535788, PMID:9466926, PMID:9860830; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/442/
+      snippet: In this retaining mechanism, the nucleophile (Glu397) performs a nucleophilic attack at
+        the anomeric carbon, which results in formation of a glucose-enzyme intermediate. In this process,
+        aglucone departure is facilitated by protonation of the glucosidic oxygen by the acid catalyst
+        (Glu183). During the second catalytic step (deglucosylation), a water molecule is activated by
+        the catalytic base (Glu
+      notes: M-CSA entry 442, mechanism 1; M-CSA cites PMID:11106394, PMID:11139381, PMID:11352732, PMID:17585934,
+        PMID:18308333, PMID:18422657, PMID:18472115, PMID:20490603, PMID:23079707, PMID:24143051, PMID:26139075,
+        PMID:8535788, PMID:9466926, PMID:9860830; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (14 evidence-backed edges) transcribed from M-CSA entry 442;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

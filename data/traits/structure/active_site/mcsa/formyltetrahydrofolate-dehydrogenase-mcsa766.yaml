@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.5.1.6
 - CHEBI:57454
@@ -639,4 +639,259 @@ definitions:
       10-Formyltetrahydrofolate dehydrogenase (FDH) converts 10-formyltetrahydrofolate, a precursor for nucleotide biosynthesis, to tetrahydrofolate. FDH comprises two domains: a hydrolase domain that hydrolyses the formyl group off the substrate, and a dehydrogenase domain that reduces the formyl group to carbon dioxide. FDH is an component of a folate metabolism pathway, with a possible role in control of folate levels and cross-talk between purine and thymidine synthesis pathways. Pathogenically, studies imply that FDH may possess a growth-regulatory function and that cancer cells lower FDH expression to enhance proliferation.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of formyltetrahydrofolate dehydrogenase
+  description: Mechanism transcribed from M-CSA entry 766. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: his106
+    label: catalytic His106 (M-CSA/PDB numbering; UniProt residue 106)
+    node_type: RESIDUE
+    grounding: UniProtKB:P28037
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp142
+    label: catalytic Asp142 (M-CSA/PDB numbering; UniProt residue 142)
+    node_type: RESIDUE
+    grounding: UniProtKB:P28037
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: 10-formyltetrahydrofolate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57454
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant2
+    label: NADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+  - node_id: product0
+    label: carbon dioxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+  - node_id: product1
+    label: (6S)-5,6,7,8-tetrahydrofolate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57453
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product3
+    label: NADPH(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: A water molecule is polarised by Asp 142, facilitating a nucleophilic attack at the carbonyl
+      carbon of formyl-THF. A proton of this polarised water is picked up by the folate N10 lone pair.   This
+      generates an intermediate comprising a quarternary amine adjacent to a tetrahedral carbon centre,
+      in which the charge of the oxyanion is stabilised by His 106, whereas Asp 142 stabilises that of
+      the cati
+  - node_id: active_site
+    label: formyltetrahydrofolate dehydrogenase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:766
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.170 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.170
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: formyltetrahydrofolate dehydrogenase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.5.1.6
+  edges:
+  - subject: his106
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His106 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/766/
+      snippet: "A water molecule is polarised by Asp 142, facilitating a nucleophilic attack at the carbonyl\
+        \ carbon of formyl-THF. A proton of this polarised water is picked up by the folate N10 lone pair.\
+        \   This generates an intermediate comprising a quarternary amine adjacent to a tetrahedral carbon\
+        \ centre, in which the charge of the oxyanion is stabilised by His 106, whereas Asp 142 stabilises\
+        \ that of the cationic nitrogen.
+  The intermediate then collapses to form the products, THF\
+        \ and formate.   The formate is then passed on to the dehydrogenase domain for detoxification."
+      notes: M-CSA entry 766, mechanism 1; M-CSA cites PMID:10585460, PMID:11320079, PMID:14729668; step
+        1
+  - subject: asp142
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp142 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/766/
+      snippet: "A water molecule is polarised by Asp 142, facilitating a nucleophilic attack at the carbonyl\
+        \ carbon of formyl-THF. A proton of this polarised water is picked up by the folate N10 lone pair.\
+        \   This generates an intermediate comprising a quarternary amine adjacent to a tetrahedral carbon\
+        \ centre, in which the charge of the oxyanion is stabilised by His 106, whereas Asp 142 stabilises\
+        \ that of the cationic nitrogen.
+  The intermediate then collapses to form the products, THF\
+        \ and formate.   The formate is then passed on to the dehydrogenase domain for detoxification."
+      notes: M-CSA entry 766, mechanism 1; M-CSA cites PMID:10585460, PMID:11320079, PMID:14729668; step
+        1
+  - subject: his106
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His106 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/766/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 766, mechanism 1; M-CSA cites PMID:10585460, PMID:11320079, PMID:14729668; M-CSA
+        catalytic-residue roles for His106
+  - subject: asp142
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp142 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/766/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 766, mechanism 1; M-CSA cites PMID:10585460, PMID:11320079, PMID:14729668; M-CSA
+        catalytic-residue roles for Asp142
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/766/
+      snippet: A water molecule is polarised by Asp 142, facilitating a nucleophilic attack at the carbonyl
+        carbon of formyl-THF. A proton of this polarised water is picked up by the folate N10 lone pair.   This
+        generates an intermediate comprising a quarternary amine adjacent to a tetrahedral carbon centre,
+        in which the charge of the oxyanion is stabilised by His 106, whereas Asp 142 stabilises that
+        of the cati
+      notes: M-CSA entry 766, mechanism 1; M-CSA cites PMID:10585460, PMID:11320079, PMID:14729668; CATH
+        domain 3.40.50.170 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/766/
+      snippet: A water molecule is polarised by Asp 142, facilitating a nucleophilic attack at the carbonyl
+        carbon of formyl-THF. A proton of this polarised water is picked up by the folate N10 lone pair.   This
+        generates an intermediate comprising a quarternary amine adjacent to a tetrahedral carbon centre,
+        in which the charge of the oxyanion is stabilised by His 106, whereas Asp 142 stabilises that
+        of the cati
+      notes: M-CSA entry 766, mechanism 1; M-CSA cites PMID:10585460, PMID:11320079, PMID:14729668; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/766/
+      snippet: A water molecule is polarised by Asp 142, facilitating a nucleophilic attack at the carbonyl
+        carbon of formyl-THF. A proton of this polarised water is picked up by the folate N10 lone pair.   This
+        generates an intermediate comprising a quarternary amine adjacent to a tetrahedral carbon centre,
+        in which the charge of the oxyanion is stabilised by His 106, whereas Asp 142 stabilises that
+        of the cati
+      notes: M-CSA entry 766, mechanism 1; M-CSA cites PMID:10585460, PMID:11320079, PMID:14729668; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/766/
+      snippet: A water molecule is polarised by Asp 142, facilitating a nucleophilic attack at the carbonyl
+        carbon of formyl-THF. A proton of this polarised water is picked up by the folate N10 lone pair.   This
+        generates an intermediate comprising a quarternary amine adjacent to a tetrahedral carbon centre,
+        in which the charge of the oxyanion is stabilised by His 106, whereas Asp 142 stabilises that
+        of the cati
+      notes: M-CSA entry 766, mechanism 1; M-CSA cites PMID:10585460, PMID:11320079, PMID:14729668; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/766/
+      snippet: A water molecule is polarised by Asp 142, facilitating a nucleophilic attack at the carbonyl
+        carbon of formyl-THF. A proton of this polarised water is picked up by the folate N10 lone pair.   This
+        generates an intermediate comprising a quarternary amine adjacent to a tetrahedral carbon centre,
+        in which the charge of the oxyanion is stabilised by His 106, whereas Asp 142 stabilises that
+        of the cati
+      notes: M-CSA entry 766, mechanism 1; M-CSA cites PMID:10585460, PMID:11320079, PMID:14729668; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/766/
+      snippet: A water molecule is polarised by Asp 142, facilitating a nucleophilic attack at the carbonyl
+        carbon of formyl-THF. A proton of this polarised water is picked up by the folate N10 lone pair.   This
+        generates an intermediate comprising a quarternary amine adjacent to a tetrahedral carbon centre,
+        in which the charge of the oxyanion is stabilised by His 106, whereas Asp 142 stabilises that
+        of the cati
+      notes: M-CSA entry 766, mechanism 1; M-CSA cites PMID:10585460, PMID:11320079, PMID:14729668; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/766/
+      snippet: A water molecule is polarised by Asp 142, facilitating a nucleophilic attack at the carbonyl
+        carbon of formyl-THF. A proton of this polarised water is picked up by the folate N10 lone pair.   This
+        generates an intermediate comprising a quarternary amine adjacent to a tetrahedral carbon centre,
+        in which the charge of the oxyanion is stabilised by His 106, whereas Asp 142 stabilises that
+        of the cati
+      notes: M-CSA entry 766, mechanism 1; M-CSA cites PMID:10585460, PMID:11320079, PMID:14729668; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/766/
+      snippet: A water molecule is polarised by Asp 142, facilitating a nucleophilic attack at the carbonyl
+        carbon of formyl-THF. A proton of this polarised water is picked up by the folate N10 lone pair.   This
+        generates an intermediate comprising a quarternary amine adjacent to a tetrahedral carbon centre,
+        in which the charge of the oxyanion is stabilised by His 106, whereas Asp 142 stabilises that
+        of the cati
+      notes: M-CSA entry 766, mechanism 1; M-CSA cites PMID:10585460, PMID:11320079, PMID:14729668; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product3
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/766/
+      snippet: A water molecule is polarised by Asp 142, facilitating a nucleophilic attack at the carbonyl
+        carbon of formyl-THF. A proton of this polarised water is picked up by the folate N10 lone pair.   This
+        generates an intermediate comprising a quarternary amine adjacent to a tetrahedral carbon centre,
+        in which the charge of the oxyanion is stabilised by His 106, whereas Asp 142 stabilises that
+        of the cati
+      notes: M-CSA entry 766, mechanism 1; M-CSA cites PMID:10585460, PMID:11320079, PMID:14729668; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 766;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.8.1.6
 - CHEBI:29917
@@ -233,4 +233,426 @@ definitions:
       Biotin synthase (BioB) is a member of the radical-SAM superfamily. It catalyses the insertion of an S atom between the C6 and C9 carbon atoms of dethiobiotin (DTB). BioB contains [4Fe-4S] clusters involved in the reduction and cleavage of S-adenosyl-L-methionine (AdoMet), generating methionine and a primary 5'-deoxyadenosyl radical responsible for dethiobiotin H-abstraction. i.e. BioB is involved in the activation of AdoMet in the biotin synthesis pathway and the incorporation of S atoms into DTB. An oxygen sensitive Fe/S cluster is bound to each polypeptide chain and is chelated by three catalytic Cys residues. The cluster provides electrons for AdoMet cleavage and can adopt both +1 and +2 redox states.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of biotin synthase
+  description: Mechanism transcribed from M-CSA entry 767. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: cys53
+    label: catalytic Cys53 (M-CSA/PDB numbering; UniProt residue 53)
+    node_type: RESIDUE
+    grounding: UniProtKB:P12996
+    description: 'M-CSA roles: electrostatic stabiliser, metal ligand.'
+  - node_id: cys57
+    label: catalytic Cys57 (M-CSA/PDB numbering; UniProt residue 57)
+    node_type: RESIDUE
+    grounding: UniProtKB:P12996
+    description: 'M-CSA roles: electrostatic stabiliser, metal ligand.'
+  - node_id: cys60
+    label: catalytic Cys60 (M-CSA/PDB numbering; UniProt residue 60)
+    node_type: RESIDUE
+    grounding: UniProtKB:P12996
+    description: 'M-CSA roles: electrostatic stabiliser, metal ligand.'
+  - node_id: cys97
+    label: catalytic Cys97 (M-CSA/PDB numbering; UniProt residue 97)
+    node_type: RESIDUE
+    grounding: UniProtKB:P12996
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: cys128
+    label: catalytic Cys128 (M-CSA/PDB numbering; UniProt residue 128)
+    node_type: RESIDUE
+    grounding: UniProtKB:P12996
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: cys188
+    label: catalytic Cys188 (M-CSA/PDB numbering; UniProt residue 188)
+    node_type: RESIDUE
+    grounding: UniProtKB:P12996
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: arg260
+    label: catalytic Arg260 (M-CSA/PDB numbering; UniProt residue 260)
+    node_type: RESIDUE
+    grounding: UniProtKB:P12996
+    description: 'M-CSA roles: alter redox potential, electrostatic stabiliser.'
+  - node_id: reactant0
+    label: thiol group
+    node_type: CHEMICAL
+    grounding: CHEBI:29917
+  - node_id: reactant1
+    label: S-adenosyl-L-methionine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+  - node_id: reactant2
+    label: dethiobiotin(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57861
+  - node_id: reactant3
+    label: di-mu-sulfido-diiron(1+)
+    node_type: CHEMICAL
+    grounding: CHEBI:33738
+  - node_id: product0
+    label: H group
+    node_type: CHEMICAL
+    grounding: CHEBI:64428
+  - node_id: product1
+    label: 5'-deoxyadenosine
+    node_type: CHEMICAL
+    grounding: CHEBI:17319
+  - node_id: product2
+    label: L-methionine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57844
+  - node_id: product3
+    label: biotinate
+    node_type: CHEMICAL
+    grounding: CHEBI:57586
+  - node_id: product4
+    label: di-mu-sulfido-diiron(2+)
+    node_type: CHEMICAL
+    grounding: CHEBI:33737
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: Formation of biotin from dethiobiotin (DTB) requires the abstraction of 2 hydrogen atoms
+      from the DTB C6 and C9 carbons. This is carried out by the product of AdoMet reduction, the 5'-deoxyadenosyl
+      radical. Two hydrogen atoms are selectively removed from the C9 methyl and C6 methylene positions
+      of DTB.  Radicals of C6 and C9 can then react with sulpur atoms , leading to C-S bond formations
+      at thes
+  - node_id: active_site
+    label: biotin synthase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:767
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.70 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.70
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: biotin synthase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.8.1.6
+  edges:
+  - subject: cys53
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys53 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/767/
+      snippet: Formation of biotin from dethiobiotin (DTB) requires the abstraction of 2 hydrogen atoms
+        from the DTB C6 and C9 carbons. This is carried out by the product of AdoMet reduction, the 5'-deoxyadenosyl
+        radical. Two hydrogen atoms are selectively removed from the C9 methyl and C6 methylene positions
+        of DTB.  Radicals of C6 and C9 can then react with sulpur atoms , leading to C-S bond formations
+        at these positions. [4Fe-4S] clusters of +1 oxidation state are required for this process. Since
+        the Fe/S clusters are essential for catalysis, the 3 cluster-chelating Cys residues (Cys 53, Cys
+        57 and Cys 60) also have a catalytic effect, and are arranged in a conserved C-X3-C-X2-C cysteine
+        triad motif. A fourth cluster ligand, Arg 260 is also essential for catalysis.  The +1 iron-sulphur
+        cluster injects one electron into the AdoMet bound in its close proximity. The resulting, unstable
+        suphuranyl radical breaks down into methionine and the 5'-deoxyadenosyl radical. This subsequently
+        abstracts a hydrogen from a specific carbon atom of a glycine residue in the polypeptide chain.
+      notes: M-CSA entry 767, mechanism 1; M-CSA cites PMID:11834738, PMID:11862544, PMID:14704425, PMID:14967042,
+        PMID:16042606, PMID:17014080, PMID:21370834, PMID:21859080; step 1
+  - subject: cys57
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys57 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/767/
+      snippet: Formation of biotin from dethiobiotin (DTB) requires the abstraction of 2 hydrogen atoms
+        from the DTB C6 and C9 carbons. This is carried out by the product of AdoMet reduction, the 5'-deoxyadenosyl
+        radical. Two hydrogen atoms are selectively removed from the C9 methyl and C6 methylene positions
+        of DTB.  Radicals of C6 and C9 can then react with sulpur atoms , leading to C-S bond formations
+        at these positions. [4Fe-4S] clusters of +1 oxidation state are required for this process. Since
+        the Fe/S clusters are essential for catalysis, the 3 cluster-chelating Cys residues (Cys 53, Cys
+        57 and Cys 60) also have a catalytic effect, and are arranged in a conserved C-X3-C-X2-C cysteine
+        triad motif. A fourth cluster ligand, Arg 260 is also essential for catalysis.  The +1 iron-sulphur
+        cluster injects one electron into the AdoMet bound in its close proximity. The resulting, unstable
+        suphuranyl radical breaks down into methionine and the 5'-deoxyadenosyl radical. This subsequently
+        abstracts a hydrogen from a specific carbon atom of a glycine residue in the polypeptide chain.
+      notes: M-CSA entry 767, mechanism 1; M-CSA cites PMID:11834738, PMID:11862544, PMID:14704425, PMID:14967042,
+        PMID:16042606, PMID:17014080, PMID:21370834, PMID:21859080; step 1
+  - subject: cys60
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys60 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/767/
+      snippet: Formation of biotin from dethiobiotin (DTB) requires the abstraction of 2 hydrogen atoms
+        from the DTB C6 and C9 carbons. This is carried out by the product of AdoMet reduction, the 5'-deoxyadenosyl
+        radical. Two hydrogen atoms are selectively removed from the C9 methyl and C6 methylene positions
+        of DTB.  Radicals of C6 and C9 can then react with sulpur atoms , leading to C-S bond formations
+        at these positions. [4Fe-4S] clusters of +1 oxidation state are required for this process. Since
+        the Fe/S clusters are essential for catalysis, the 3 cluster-chelating Cys residues (Cys 53, Cys
+        57 and Cys 60) also have a catalytic effect, and are arranged in a conserved C-X3-C-X2-C cysteine
+        triad motif. A fourth cluster ligand, Arg 260 is also essential for catalysis.  The +1 iron-sulphur
+        cluster injects one electron into the AdoMet bound in its close proximity. The resulting, unstable
+        suphuranyl radical breaks down into methionine and the 5'-deoxyadenosyl radical. This subsequently
+        abstracts a hydrogen from a specific carbon atom of a glycine residue in the polypeptide chain.
+      notes: M-CSA entry 767, mechanism 1; M-CSA cites PMID:11834738, PMID:11862544, PMID:14704425, PMID:14967042,
+        PMID:16042606, PMID:17014080, PMID:21370834, PMID:21859080; step 1
+  - subject: arg260
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg260 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/767/
+      snippet: Formation of biotin from dethiobiotin (DTB) requires the abstraction of 2 hydrogen atoms
+        from the DTB C6 and C9 carbons. This is carried out by the product of AdoMet reduction, the 5'-deoxyadenosyl
+        radical. Two hydrogen atoms are selectively removed from the C9 methyl and C6 methylene positions
+        of DTB.  Radicals of C6 and C9 can then react with sulpur atoms , leading to C-S bond formations
+        at these positions. [4Fe-4S] clusters of +1 oxidation state are required for this process. Since
+        the Fe/S clusters are essential for catalysis, the 3 cluster-chelating Cys residues (Cys 53, Cys
+        57 and Cys 60) also have a catalytic effect, and are arranged in a conserved C-X3-C-X2-C cysteine
+        triad motif. A fourth cluster ligand, Arg 260 is also essential for catalysis.  The +1 iron-sulphur
+        cluster injects one electron into the AdoMet bound in its close proximity. The resulting, unstable
+        suphuranyl radical breaks down into methionine and the 5'-deoxyadenosyl radical. This subsequently
+        abstracts a hydrogen from a specific carbon atom of a glycine residue in the polypeptide chain.
+      notes: M-CSA entry 767, mechanism 1; M-CSA cites PMID:11834738, PMID:11862544, PMID:14704425, PMID:14967042,
+        PMID:16042606, PMID:17014080, PMID:21370834, PMID:21859080; step 1
+  - subject: cys53
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys53 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/767/
+      snippet: electrostatic stabiliser, metal ligand
+      notes: M-CSA entry 767, mechanism 1; M-CSA cites PMID:11834738, PMID:11862544, PMID:14704425, PMID:14967042,
+        PMID:16042606, PMID:17014080, PMID:21370834, PMID:21859080; M-CSA catalytic-residue roles for
+        Cys53
+  - subject: cys57
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys57 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/767/
+      snippet: electrostatic stabiliser, metal ligand
+      notes: M-CSA entry 767, mechanism 1; M-CSA cites PMID:11834738, PMID:11862544, PMID:14704425, PMID:14967042,
+        PMID:16042606, PMID:17014080, PMID:21370834, PMID:21859080; M-CSA catalytic-residue roles for
+        Cys57
+  - subject: cys60
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys60 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/767/
+      snippet: electrostatic stabiliser, metal ligand
+      notes: M-CSA entry 767, mechanism 1; M-CSA cites PMID:11834738, PMID:11862544, PMID:14704425, PMID:14967042,
+        PMID:16042606, PMID:17014080, PMID:21370834, PMID:21859080; M-CSA catalytic-residue roles for
+        Cys60
+  - subject: cys97
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys97 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/767/
+      snippet: metal ligand
+      notes: M-CSA entry 767, mechanism 1; M-CSA cites PMID:11834738, PMID:11862544, PMID:14704425, PMID:14967042,
+        PMID:16042606, PMID:17014080, PMID:21370834, PMID:21859080; M-CSA catalytic-residue roles for
+        Cys97
+  - subject: cys128
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys128 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/767/
+      snippet: metal ligand
+      notes: M-CSA entry 767, mechanism 1; M-CSA cites PMID:11834738, PMID:11862544, PMID:14704425, PMID:14967042,
+        PMID:16042606, PMID:17014080, PMID:21370834, PMID:21859080; M-CSA catalytic-residue roles for
+        Cys128
+  - subject: cys188
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys188 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/767/
+      snippet: metal ligand
+      notes: M-CSA entry 767, mechanism 1; M-CSA cites PMID:11834738, PMID:11862544, PMID:14704425, PMID:14967042,
+        PMID:16042606, PMID:17014080, PMID:21370834, PMID:21859080; M-CSA catalytic-residue roles for
+        Cys188
+  - subject: arg260
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg260 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/767/
+      snippet: alter redox potential, electrostatic stabiliser
+      notes: M-CSA entry 767, mechanism 1; M-CSA cites PMID:11834738, PMID:11862544, PMID:14704425, PMID:14967042,
+        PMID:16042606, PMID:17014080, PMID:21370834, PMID:21859080; M-CSA catalytic-residue roles for
+        Arg260
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/767/
+      snippet: Formation of biotin from dethiobiotin (DTB) requires the abstraction of 2 hydrogen atoms
+        from the DTB C6 and C9 carbons. This is carried out by the product of AdoMet reduction, the 5'-deoxyadenosyl
+        radical. Two hydrogen atoms are selectively removed from the C9 methyl and C6 methylene positions
+        of DTB.  Radicals of C6 and C9 can then react with sulpur atoms , leading to C-S bond formations
+        at thes
+      notes: M-CSA entry 767, mechanism 1; M-CSA cites PMID:11834738, PMID:11862544, PMID:14704425, PMID:14967042,
+        PMID:16042606, PMID:17014080, PMID:21370834, PMID:21859080; CATH domain 3.20.20.70 assigned to
+        the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/767/
+      snippet: Formation of biotin from dethiobiotin (DTB) requires the abstraction of 2 hydrogen atoms
+        from the DTB C6 and C9 carbons. This is carried out by the product of AdoMet reduction, the 5'-deoxyadenosyl
+        radical. Two hydrogen atoms are selectively removed from the C9 methyl and C6 methylene positions
+        of DTB.  Radicals of C6 and C9 can then react with sulpur atoms , leading to C-S bond formations
+        at thes
+      notes: M-CSA entry 767, mechanism 1; M-CSA cites PMID:11834738, PMID:11862544, PMID:14704425, PMID:14967042,
+        PMID:16042606, PMID:17014080, PMID:21370834, PMID:21859080; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/767/
+      snippet: Formation of biotin from dethiobiotin (DTB) requires the abstraction of 2 hydrogen atoms
+        from the DTB C6 and C9 carbons. This is carried out by the product of AdoMet reduction, the 5'-deoxyadenosyl
+        radical. Two hydrogen atoms are selectively removed from the C9 methyl and C6 methylene positions
+        of DTB.  Radicals of C6 and C9 can then react with sulpur atoms , leading to C-S bond formations
+        at thes
+      notes: M-CSA entry 767, mechanism 1; M-CSA cites PMID:11834738, PMID:11862544, PMID:14704425, PMID:14967042,
+        PMID:16042606, PMID:17014080, PMID:21370834, PMID:21859080; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/767/
+      snippet: Formation of biotin from dethiobiotin (DTB) requires the abstraction of 2 hydrogen atoms
+        from the DTB C6 and C9 carbons. This is carried out by the product of AdoMet reduction, the 5'-deoxyadenosyl
+        radical. Two hydrogen atoms are selectively removed from the C9 methyl and C6 methylene positions
+        of DTB.  Radicals of C6 and C9 can then react with sulpur atoms , leading to C-S bond formations
+        at thes
+      notes: M-CSA entry 767, mechanism 1; M-CSA cites PMID:11834738, PMID:11862544, PMID:14704425, PMID:14967042,
+        PMID:16042606, PMID:17014080, PMID:21370834, PMID:21859080; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/767/
+      snippet: Formation of biotin from dethiobiotin (DTB) requires the abstraction of 2 hydrogen atoms
+        from the DTB C6 and C9 carbons. This is carried out by the product of AdoMet reduction, the 5'-deoxyadenosyl
+        radical. Two hydrogen atoms are selectively removed from the C9 methyl and C6 methylene positions
+        of DTB.  Radicals of C6 and C9 can then react with sulpur atoms , leading to C-S bond formations
+        at thes
+      notes: M-CSA entry 767, mechanism 1; M-CSA cites PMID:11834738, PMID:11862544, PMID:14704425, PMID:14967042,
+        PMID:16042606, PMID:17014080, PMID:21370834, PMID:21859080; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant3
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/767/
+      snippet: Formation of biotin from dethiobiotin (DTB) requires the abstraction of 2 hydrogen atoms
+        from the DTB C6 and C9 carbons. This is carried out by the product of AdoMet reduction, the 5'-deoxyadenosyl
+        radical. Two hydrogen atoms are selectively removed from the C9 methyl and C6 methylene positions
+        of DTB.  Radicals of C6 and C9 can then react with sulpur atoms , leading to C-S bond formations
+        at thes
+      notes: M-CSA entry 767, mechanism 1; M-CSA cites PMID:11834738, PMID:11862544, PMID:14704425, PMID:14967042,
+        PMID:16042606, PMID:17014080, PMID:21370834, PMID:21859080; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/767/
+      snippet: Formation of biotin from dethiobiotin (DTB) requires the abstraction of 2 hydrogen atoms
+        from the DTB C6 and C9 carbons. This is carried out by the product of AdoMet reduction, the 5'-deoxyadenosyl
+        radical. Two hydrogen atoms are selectively removed from the C9 methyl and C6 methylene positions
+        of DTB.  Radicals of C6 and C9 can then react with sulpur atoms , leading to C-S bond formations
+        at thes
+      notes: M-CSA entry 767, mechanism 1; M-CSA cites PMID:11834738, PMID:11862544, PMID:14704425, PMID:14967042,
+        PMID:16042606, PMID:17014080, PMID:21370834, PMID:21859080; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/767/
+      snippet: Formation of biotin from dethiobiotin (DTB) requires the abstraction of 2 hydrogen atoms
+        from the DTB C6 and C9 carbons. This is carried out by the product of AdoMet reduction, the 5'-deoxyadenosyl
+        radical. Two hydrogen atoms are selectively removed from the C9 methyl and C6 methylene positions
+        of DTB.  Radicals of C6 and C9 can then react with sulpur atoms , leading to C-S bond formations
+        at thes
+      notes: M-CSA entry 767, mechanism 1; M-CSA cites PMID:11834738, PMID:11862544, PMID:14704425, PMID:14967042,
+        PMID:16042606, PMID:17014080, PMID:21370834, PMID:21859080; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/767/
+      snippet: Formation of biotin from dethiobiotin (DTB) requires the abstraction of 2 hydrogen atoms
+        from the DTB C6 and C9 carbons. This is carried out by the product of AdoMet reduction, the 5'-deoxyadenosyl
+        radical. Two hydrogen atoms are selectively removed from the C9 methyl and C6 methylene positions
+        of DTB.  Radicals of C6 and C9 can then react with sulpur atoms , leading to C-S bond formations
+        at thes
+      notes: M-CSA entry 767, mechanism 1; M-CSA cites PMID:11834738, PMID:11862544, PMID:14704425, PMID:14967042,
+        PMID:16042606, PMID:17014080, PMID:21370834, PMID:21859080; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product3
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/767/
+      snippet: Formation of biotin from dethiobiotin (DTB) requires the abstraction of 2 hydrogen atoms
+        from the DTB C6 and C9 carbons. This is carried out by the product of AdoMet reduction, the 5'-deoxyadenosyl
+        radical. Two hydrogen atoms are selectively removed from the C9 methyl and C6 methylene positions
+        of DTB.  Radicals of C6 and C9 can then react with sulpur atoms , leading to C-S bond formations
+        at thes
+      notes: M-CSA entry 767, mechanism 1; M-CSA cites PMID:11834738, PMID:11862544, PMID:14704425, PMID:14967042,
+        PMID:16042606, PMID:17014080, PMID:21370834, PMID:21859080; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product4
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/767/
+      snippet: Formation of biotin from dethiobiotin (DTB) requires the abstraction of 2 hydrogen atoms
+        from the DTB C6 and C9 carbons. This is carried out by the product of AdoMet reduction, the 5'-deoxyadenosyl
+        radical. Two hydrogen atoms are selectively removed from the C9 methyl and C6 methylene positions
+        of DTB.  Radicals of C6 and C9 can then react with sulpur atoms , leading to C-S bond formations
+        at thes
+      notes: M-CSA entry 767, mechanism 1; M-CSA cites PMID:11834738, PMID:11862544, PMID:14704425, PMID:14967042,
+        PMID:16042606, PMID:17014080, PMID:21370834, PMID:21859080; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (22 evidence-backed edges) transcribed from M-CSA entry 767;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

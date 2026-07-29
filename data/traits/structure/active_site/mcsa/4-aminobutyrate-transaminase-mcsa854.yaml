@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.6.1.19
 - CHEBI:59888
@@ -377,4 +377,196 @@ definitions:
       4-aminobutyrate aminotransferase is a class III pyridoxal-phosphate-dependent aminotransferase. The enzyme catalyses the conversion of 4-aminobutanoate and 2-oxoglutarate into succinate semialdehyde and L-glutamate.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 4-aminobutyrate transaminase
+  description: Mechanism transcribed from M-CSA entry 854. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +28).
+  nodes:
+  - node_id: phe189
+    label: catalytic Phe189 (M-CSA/PDB numbering; UniProt residue 217)
+    node_type: RESIDUE
+    grounding: UniProtKB:P80147
+    description: 'M-CSA roles: steric role.'
+  - node_id: asp298
+    label: catalytic Asp298 (M-CSA/PDB numbering; UniProt residue 326)
+    node_type: RESIDUE
+    grounding: UniProtKB:P80147
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: lys329
+    label: catalytic Lys329 (M-CSA/PDB numbering; UniProt residue 357)
+    node_type: RESIDUE
+    grounding: UniProtKB:P80147
+    description: 'M-CSA roles: covalent catalysis, proton shuttle (general acid/base).'
+  - node_id: thr353
+    label: catalytic Thr353 (M-CSA/PDB numbering; UniProt residue 381)
+    node_type: RESIDUE
+    grounding: UniProtKB:P80147
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: gamma-aminobutyric acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:59888
+  - node_id: reactant1
+    label: 2-oxoglutarate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:16810
+  - node_id: product0
+    label: L-glutamate(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:29985
+  - node_id: product1
+    label: 4-oxobutanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:57706
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: The catalytic mechanism of GABA-AT is usually divided into two parts. In the first half
+      reaction, the natural substrate GABA is converted to succinic semialdehyde and it involves the conversion
+      of PLP to pyridoxamine phosphate (PMP).  The PMP molecule in the active site is then bound to the
+      enzyme again during the second half reaction.
+  - node_id: active_site
+    label: 4-aminobutyrate transaminase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:854
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.640.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.640.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: 4-aminobutyrate transaminase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.6.1.19
+  edges:
+  - subject: phe189
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Phe189 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/854/
+      snippet: steric role
+      notes: M-CSA entry 854, mechanism 1; M-CSA cites PMID:14534310, PMID:25616005, PMID:26110556, PMID:26800298;
+        M-CSA catalytic-residue roles for Phe189
+  - subject: asp298
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp298 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/854/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 854, mechanism 1; M-CSA cites PMID:14534310, PMID:25616005, PMID:26110556, PMID:26800298;
+        M-CSA catalytic-residue roles for Asp298
+  - subject: lys329
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys329 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/854/
+      snippet: covalent catalysis, proton shuttle (general acid/base)
+      notes: M-CSA entry 854, mechanism 1; M-CSA cites PMID:14534310, PMID:25616005, PMID:26110556, PMID:26800298;
+        M-CSA catalytic-residue roles for Lys329
+  - subject: thr353
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr353 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/854/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 854, mechanism 1; M-CSA cites PMID:14534310, PMID:25616005, PMID:26110556, PMID:26800298;
+        M-CSA catalytic-residue roles for Thr353
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/854/
+      snippet: The catalytic mechanism of GABA-AT is usually divided into two parts. In the first half
+        reaction, the natural substrate GABA is converted to succinic semialdehyde and it involves the
+        conversion of PLP to pyridoxamine phosphate (PMP).  The PMP molecule in the active site is then
+        bound to the enzyme again during the second half reaction.
+      notes: M-CSA entry 854, mechanism 1; M-CSA cites PMID:14534310, PMID:25616005, PMID:26110556, PMID:26800298;
+        CATH domain 3.40.640.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/854/
+      snippet: The catalytic mechanism of GABA-AT is usually divided into two parts. In the first half
+        reaction, the natural substrate GABA is converted to succinic semialdehyde and it involves the
+        conversion of PLP to pyridoxamine phosphate (PMP).  The PMP molecule in the active site is then
+        bound to the enzyme again during the second half reaction.
+      notes: M-CSA entry 854, mechanism 1; M-CSA cites PMID:14534310, PMID:25616005, PMID:26110556, PMID:26800298;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/854/
+      snippet: The catalytic mechanism of GABA-AT is usually divided into two parts. In the first half
+        reaction, the natural substrate GABA is converted to succinic semialdehyde and it involves the
+        conversion of PLP to pyridoxamine phosphate (PMP).  The PMP molecule in the active site is then
+        bound to the enzyme again during the second half reaction.
+      notes: M-CSA entry 854, mechanism 1; M-CSA cites PMID:14534310, PMID:25616005, PMID:26110556, PMID:26800298;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/854/
+      snippet: The catalytic mechanism of GABA-AT is usually divided into two parts. In the first half
+        reaction, the natural substrate GABA is converted to succinic semialdehyde and it involves the
+        conversion of PLP to pyridoxamine phosphate (PMP).  The PMP molecule in the active site is then
+        bound to the enzyme again during the second half reaction.
+      notes: M-CSA entry 854, mechanism 1; M-CSA cites PMID:14534310, PMID:25616005, PMID:26110556, PMID:26800298;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/854/
+      snippet: The catalytic mechanism of GABA-AT is usually divided into two parts. In the first half
+        reaction, the natural substrate GABA is converted to succinic semialdehyde and it involves the
+        conversion of PLP to pyridoxamine phosphate (PMP).  The PMP molecule in the active site is then
+        bound to the enzyme again during the second half reaction.
+      notes: M-CSA entry 854, mechanism 1; M-CSA cites PMID:14534310, PMID:25616005, PMID:26110556, PMID:26800298;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/854/
+      snippet: The catalytic mechanism of GABA-AT is usually divided into two parts. In the first half
+        reaction, the natural substrate GABA is converted to succinic semialdehyde and it involves the
+        conversion of PLP to pyridoxamine phosphate (PMP).  The PMP molecule in the active site is then
+        bound to the enzyme again during the second half reaction.
+      notes: M-CSA entry 854, mechanism 1; M-CSA cites PMID:14534310, PMID:25616005, PMID:26110556, PMID:26800298;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (10 evidence-backed edges) transcribed from M-CSA entry 854;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

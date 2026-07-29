@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.1.1.113
 - CHEBI:59789
@@ -178,4 +178,198 @@ definitions:
       This methylase recognizes the double-stranded sequence CAGCTG, causes specific methylation on C-4 on both strands, and protects the DNA from cleavage by the PvuII endonuclease.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of site-specific DNA-methyltransferase (cytosine-N4-specific)
+  description: Mechanism transcribed from M-CSA entry 427. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: ser53
+    label: catalytic Ser53 (M-CSA/PDB numbering; UniProt residue 53)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11409
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: pro54
+    label: catalytic Pro54 (M-CSA/PDB numbering; UniProt residue 54)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11409
+    description: 'M-CSA roles: electrostatic stabiliser, modifies pKa.'
+  - node_id: asp96
+    label: catalytic Asp96 (M-CSA/PDB numbering; UniProt residue 96)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11409
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: S-adenosyl-L-methionine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+  - node_id: reactant1
+    label: DNA cytosine
+    node_type: CHEMICAL
+    grounding: CHEBI:17873
+  - node_id: product0
+    label: S-adenosyl-L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:16680
+  - node_id: product1
+    label: DNA N(4)-methylcytosine
+    node_type: CHEMICAL
+    grounding: CHEBI:15988
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: Asp96 abstracts the proton of the cytsosine base via a charge relay with Ser53. This
+      step occurs first, followed by the nucleophilic attack of the activated amine on the methyl group
+      of SAM.
+  - node_id: active_site
+    label: site-specific DNA-methyltransferase (cytosine-N4-specific) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:427
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.150 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.150
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: site-specific DNA-methyltransferase (cytosine-N4-specific) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.1.1.113
+  edges:
+  - subject: ser53
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser53 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/427/
+      snippet: Asp96 abstracts the proton of the cytsosine base via a charge relay with Ser53. This step
+        occurs first, followed by the nucleophilic attack of the activated amine on the methyl group of
+        SAM.
+      notes: M-CSA entry 427, mechanism 2; M-CSA cites PMID:11405235, PMID:20524651, PMID:22699309, PMID:9207015,
+        PMID:9927736; step 1
+  - subject: asp96
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp96 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/427/
+      snippet: Asp96 abstracts the proton of the cytsosine base via a charge relay with Ser53. This step
+        occurs first, followed by the nucleophilic attack of the activated amine on the methyl group of
+        SAM.
+      notes: M-CSA entry 427, mechanism 2; M-CSA cites PMID:11405235, PMID:20524651, PMID:22699309, PMID:9207015,
+        PMID:9927736; step 1
+  - subject: ser53
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser53 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/427/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 427, mechanism 2; M-CSA cites PMID:11405235, PMID:20524651, PMID:22699309, PMID:9207015,
+        PMID:9927736; M-CSA catalytic-residue roles for Ser53
+  - subject: pro54
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Pro54 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/427/
+      snippet: electrostatic stabiliser, modifies pKa
+      notes: M-CSA entry 427, mechanism 2; M-CSA cites PMID:11405235, PMID:20524651, PMID:22699309, PMID:9207015,
+        PMID:9927736; M-CSA catalytic-residue roles for Pro54
+  - subject: asp96
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp96 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/427/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 427, mechanism 2; M-CSA cites PMID:11405235, PMID:20524651, PMID:22699309, PMID:9207015,
+        PMID:9927736; M-CSA catalytic-residue roles for Asp96
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/427/
+      snippet: Asp96 abstracts the proton of the cytsosine base via a charge relay with Ser53. This step
+        occurs first, followed by the nucleophilic attack of the activated amine on the methyl group of
+        SAM.
+      notes: M-CSA entry 427, mechanism 2; M-CSA cites PMID:11405235, PMID:20524651, PMID:22699309, PMID:9207015,
+        PMID:9927736; CATH domain 3.40.50.150 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/427/
+      snippet: Asp96 abstracts the proton of the cytsosine base via a charge relay with Ser53. This step
+        occurs first, followed by the nucleophilic attack of the activated amine on the methyl group of
+        SAM.
+      notes: M-CSA entry 427, mechanism 2; M-CSA cites PMID:11405235, PMID:20524651, PMID:22699309, PMID:9207015,
+        PMID:9927736; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/427/
+      snippet: Asp96 abstracts the proton of the cytsosine base via a charge relay with Ser53. This step
+        occurs first, followed by the nucleophilic attack of the activated amine on the methyl group of
+        SAM.
+      notes: M-CSA entry 427, mechanism 2; M-CSA cites PMID:11405235, PMID:20524651, PMID:22699309, PMID:9207015,
+        PMID:9927736; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/427/
+      snippet: Asp96 abstracts the proton of the cytsosine base via a charge relay with Ser53. This step
+        occurs first, followed by the nucleophilic attack of the activated amine on the methyl group of
+        SAM.
+      notes: M-CSA entry 427, mechanism 2; M-CSA cites PMID:11405235, PMID:20524651, PMID:22699309, PMID:9207015,
+        PMID:9927736; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/427/
+      snippet: Asp96 abstracts the proton of the cytsosine base via a charge relay with Ser53. This step
+        occurs first, followed by the nucleophilic attack of the activated amine on the methyl group of
+        SAM.
+      notes: M-CSA entry 427, mechanism 2; M-CSA cites PMID:11405235, PMID:20524651, PMID:22699309, PMID:9207015,
+        PMID:9927736; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/427/
+      snippet: Asp96 abstracts the proton of the cytsosine base via a charge relay with Ser53. This step
+        occurs first, followed by the nucleophilic attack of the activated amine on the methyl group of
+        SAM.
+      notes: M-CSA entry 427, mechanism 2; M-CSA cites PMID:11405235, PMID:20524651, PMID:22699309, PMID:9207015,
+        PMID:9927736; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (11 evidence-backed edges) transcribed from M-CSA entry 427;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

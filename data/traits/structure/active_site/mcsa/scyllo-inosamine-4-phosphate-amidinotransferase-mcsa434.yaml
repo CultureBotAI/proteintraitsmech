@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.1.4.2
 - CHEBI:32682
@@ -270,4 +270,272 @@ definitions:
       Inosamine-phosphate amidinotransferase catalyses two reactions in the biosynthesis of antibiotics in the streptomycin family. The structure of this enzyme is similar to that of glycine amidinotransferase, being an alpha-beta 5-propeller and the active site residues are in the same spatial positions.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of scyllo-inosamine-4-phosphate amidinotransferase
+  description: Mechanism transcribed from M-CSA entry 434. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: glu9
+    label: catalytic Glu9 (M-CSA/PDB numbering; UniProt residue 9)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08078
+    description: 'M-CSA roles: modifies pKa.'
+  - node_id: asp108
+    label: catalytic Asp108 (M-CSA/PDB numbering; UniProt residue 108)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08078
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp179
+    label: catalytic Asp179 (M-CSA/PDB numbering; UniProt residue 179)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08078
+    description: 'M-CSA roles: modifies pKa.'
+  - node_id: his227
+    label: catalytic His227 (M-CSA/PDB numbering; UniProt residue 227)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08078
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: asp229
+    label: catalytic Asp229 (M-CSA/PDB numbering; UniProt residue 229)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08078
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: asn286
+    label: catalytic Asn286 (M-CSA/PDB numbering; UniProt residue 286)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08078
+    description: 'M-CSA roles: modifies pKa.'
+  - node_id: his331
+    label: catalytic His331 (M-CSA/PDB numbering; UniProt residue 331)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08078
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: cys332
+    label: catalytic Cys332 (M-CSA/PDB numbering; UniProt residue 332)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08078
+    description: 'M-CSA roles: covalent catalysis, proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: L-argininium(1+)
+    node_type: CHEMICAL
+    grounding: CHEBI:32682
+  - node_id: reactant1
+    label: 1-ammonio-1-deoxy-scyllo-inositol 4-phosphate(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58325
+  - node_id: product0
+    label: 1-guanidino-1-deoxy-scyllo-inositol 4-phosphate(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57656
+  - node_id: product1
+    label: L-ornithinium(1+)
+    node_type: CHEMICAL
+    grounding: CHEBI:46911
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: The proposed transamidination starts with the binding of L-arginine and the subsequent
+      nucleophilic attack of the thiolate anion of Cys332 on the positively polarized carbon atom of the
+      guanidino group. As the tetrahedral transition state decays, a covalent cysteine−amidino intermediate
+      and l-ornithine are formed. The binding of the amidino acceptor scyllo-inosamine 4-phosphate, the
+      nucleophilic a
+  - node_id: active_site
+    label: scyllo-inosamine-4-phosphate amidinotransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:434
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.75.10.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.75.10.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: scyllo-inosamine-4-phosphate amidinotransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.1.4.2
+  edges:
+  - subject: cys332
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys332 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/434/
+      snippet: The proposed transamidination starts with the binding of L-arginine and the subsequent
+        nucleophilic attack of the thiolate anion of Cys332 on the positively polarized carbon atom of
+        the guanidino group. As the tetrahedral transition state decays, a covalent cysteine−amidino intermediate
+        and l-ornithine are formed. The binding of the amidino acceptor scyllo-inosamine 4-phosphate,
+        the nucleophilic attack on the planar isothiourea group, and the liberation of the reaction product
+        are the final steps of the reaction cycle.
+      notes: M-CSA entry 434, mechanism 1; M-CSA cites PMID:9922132; step 1
+  - subject: glu9
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu9 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/434/
+      snippet: modifies pKa
+      notes: M-CSA entry 434, mechanism 1; M-CSA cites PMID:9922132; M-CSA catalytic-residue roles for
+        Glu9
+  - subject: asp108
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp108 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/434/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 434, mechanism 1; M-CSA cites PMID:9922132; M-CSA catalytic-residue roles for
+        Asp108
+  - subject: asp179
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp179 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/434/
+      snippet: modifies pKa
+      notes: M-CSA entry 434, mechanism 1; M-CSA cites PMID:9922132; M-CSA catalytic-residue roles for
+        Asp179
+  - subject: his227
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His227 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/434/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 434, mechanism 1; M-CSA cites PMID:9922132; M-CSA catalytic-residue roles for
+        His227
+  - subject: asp229
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp229 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/434/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 434, mechanism 1; M-CSA cites PMID:9922132; M-CSA catalytic-residue roles for
+        Asp229
+  - subject: asn286
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn286 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/434/
+      snippet: modifies pKa
+      notes: M-CSA entry 434, mechanism 1; M-CSA cites PMID:9922132; M-CSA catalytic-residue roles for
+        Asn286
+  - subject: his331
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His331 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/434/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 434, mechanism 1; M-CSA cites PMID:9922132; M-CSA catalytic-residue roles for
+        His331
+  - subject: cys332
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys332 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/434/
+      snippet: covalent catalysis, proton shuttle (general acid/base)
+      notes: M-CSA entry 434, mechanism 1; M-CSA cites PMID:9922132; M-CSA catalytic-residue roles for
+        Cys332
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/434/
+      snippet: The proposed transamidination starts with the binding of L-arginine and the subsequent
+        nucleophilic attack of the thiolate anion of Cys332 on the positively polarized carbon atom of
+        the guanidino group. As the tetrahedral transition state decays, a covalent cysteine−amidino intermediate
+        and l-ornithine are formed. The binding of the amidino acceptor scyllo-inosamine 4-phosphate,
+        the nucleophilic a
+      notes: M-CSA entry 434, mechanism 1; M-CSA cites PMID:9922132; CATH domain 3.75.10.10 assigned to
+        the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/434/
+      snippet: The proposed transamidination starts with the binding of L-arginine and the subsequent
+        nucleophilic attack of the thiolate anion of Cys332 on the positively polarized carbon atom of
+        the guanidino group. As the tetrahedral transition state decays, a covalent cysteine−amidino intermediate
+        and l-ornithine are formed. The binding of the amidino acceptor scyllo-inosamine 4-phosphate,
+        the nucleophilic a
+      notes: M-CSA entry 434, mechanism 1; M-CSA cites PMID:9922132; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/434/
+      snippet: The proposed transamidination starts with the binding of L-arginine and the subsequent
+        nucleophilic attack of the thiolate anion of Cys332 on the positively polarized carbon atom of
+        the guanidino group. As the tetrahedral transition state decays, a covalent cysteine−amidino intermediate
+        and l-ornithine are formed. The binding of the amidino acceptor scyllo-inosamine 4-phosphate,
+        the nucleophilic a
+      notes: M-CSA entry 434, mechanism 1; M-CSA cites PMID:9922132; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/434/
+      snippet: The proposed transamidination starts with the binding of L-arginine and the subsequent
+        nucleophilic attack of the thiolate anion of Cys332 on the positively polarized carbon atom of
+        the guanidino group. As the tetrahedral transition state decays, a covalent cysteine−amidino intermediate
+        and l-ornithine are formed. The binding of the amidino acceptor scyllo-inosamine 4-phosphate,
+        the nucleophilic a
+      notes: M-CSA entry 434, mechanism 1; M-CSA cites PMID:9922132; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/434/
+      snippet: The proposed transamidination starts with the binding of L-arginine and the subsequent
+        nucleophilic attack of the thiolate anion of Cys332 on the positively polarized carbon atom of
+        the guanidino group. As the tetrahedral transition state decays, a covalent cysteine−amidino intermediate
+        and l-ornithine are formed. The binding of the amidino acceptor scyllo-inosamine 4-phosphate,
+        the nucleophilic a
+      notes: M-CSA entry 434, mechanism 1; M-CSA cites PMID:9922132; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/434/
+      snippet: The proposed transamidination starts with the binding of L-arginine and the subsequent
+        nucleophilic attack of the thiolate anion of Cys332 on the positively polarized carbon atom of
+        the guanidino group. As the tetrahedral transition state decays, a covalent cysteine−amidino intermediate
+        and l-ornithine are formed. The binding of the amidino acceptor scyllo-inosamine 4-phosphate,
+        the nucleophilic a
+      notes: M-CSA entry 434, mechanism 1; M-CSA cites PMID:9922132; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 434;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

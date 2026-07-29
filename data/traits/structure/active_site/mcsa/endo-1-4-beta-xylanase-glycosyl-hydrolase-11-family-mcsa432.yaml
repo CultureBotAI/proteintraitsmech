@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.1.8
 - CHEBI:28309
@@ -169,4 +169,298 @@ definitions:
       These enzymes all belong to glycosyl hydrolase 11 (cellulase G) family (GH11). They are typically small (~20 kDa) with a conserved jelly-roll fold, that catalyse the hydrolysis of beta-1,4-xylan linkages using general acid/base catalysis with retention of the anomeric configuration via a covalent glycosyl-enzyme intermediate. Xylan is a major plant cell wall hemicellulose made up of 1,4-beta-linked and 1,3-beta-linked D-xylopyranose residues. These enzymes catalyse the endohydrolysis of the main- chain 1,4-beta-glycosidic bonds connecting the xylose subunits yielding various xylooligosaccharides and xylose. These enzymes are excellent targets for protein engineering experiments as xylanolytic activity is useful in biotechnological applications such as the bleaching of hardwood kraft pulp for paper manufacture as use of this protein is effective in reducing the amount of environmentally toxic chlorine and chlorine-containing chemicals used. It is also used in the processing of feed for livestock.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of endo-1,4-beta-xylanase (glycosyl hydrolase 11 family)
+  description: Mechanism transcribed from M-CSA entry 432. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +28).
+  nodes:
+  - node_id: asn35
+    label: catalytic Asn35 (M-CSA/PDB numbering; UniProt residue 63)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09850
+    description: 'M-CSA roles: modifies pKa.'
+  - node_id: tyr69
+    label: catalytic Tyr69 (M-CSA/PDB numbering; UniProt residue 97)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09850
+    description: 'M-CSA roles: electrostatic destabiliser.'
+  - node_id: glu78
+    label: catalytic Glu78 (M-CSA/PDB numbering; UniProt residue 106)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09850
+    description: 'M-CSA roles: covalent catalysis, proton shuttle (general acid/base).'
+  - node_id: tyr80
+    label: catalytic Tyr80 (M-CSA/PDB numbering; UniProt residue 108)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09850
+    description: 'M-CSA roles: modifies pKa.'
+  - node_id: glu172
+    label: catalytic Glu172 (M-CSA/PDB numbering; UniProt residue 200)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09850
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: xylobiose
+    node_type: CHEMICAL
+    grounding: CHEBI:28309
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: beta-D-xylose
+    node_type: CHEMICAL
+    grounding: CHEBI:28161
+  - node_id: product1
+    label: beta-D-xylose
+    node_type: CHEMICAL
+    grounding: CHEBI:28161
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: 'Hydrolysis proceeds through a glycosyl-enzyme intermediate that is formed and hydrolysed
+      via transition states with substantial oxocarbenium ion character. More specifically: Glu172 acts
+      as a general acid to protonate the leaving oxygen atom, leading to a oxocarbenium-like transtion
+      state from xylan substrate, activating the substrate for nucleophilic attack by Glu78. This forms
+      a glycosyl-enzyme '
+  - node_id: active_site
+    label: endo-1,4-beta-xylanase (glycosyl hydrolase 11 family) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:432
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.60.120.180 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.60.120.180
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: endo-1,4-beta-xylanase (glycosyl hydrolase 11 family) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.1.8
+  edges:
+  - subject: tyr69
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr69 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/432/
+      snippet: "Hydrolysis proceeds through a glycosyl-enzyme intermediate that is formed and hydrolysed\
+        \ via transition states with substantial oxocarbenium ion character. More specifically: Glu172\
+        \ acts as a general acid to protonate the leaving oxygen atom, leading to a oxocarbenium-like\
+        \ transtion state from xylan substrate, activating the substrate for nucleophilic attack by Glu78.\
+        \ This forms a glycosyl-enzyme intermediate. Glu172 acts as a general base to activate the water\
+        \ molecule, which makes a  nucleophilic attack on the C1 atom of the intermediate. Again, the\
+        \ reaction proceeds through an oxocarbenium-like transition state to complete.
+<br/><br/>\
+        
+The enzyme forces the substrate sugar into a 2,5B (or Boat) conformation, which places C5, O5,\
+        \ C1 and C2 in a planar arrangement, for the intermediate. A conformation that is stabilised by\
+        \ Tyr69. This fulfils the stereochemical requirements for the oxocarbenium ion-like transition\
+        \ state of the retaining mechanism."
+      notes: M-CSA entry 432, mechanism 1; M-CSA cites PMID:10220321, PMID:10381409, PMID:10860737, PMID:11526340,
+        PMID:12559743, PMID:17475200, PMID:19156310, PMID:24419374, PMID:26392527, PMID:8013449, PMID:8019418,
+        PMID:8535779, PMID:8890913; step 1
+  - subject: glu78
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu78 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/432/
+      snippet: "Hydrolysis proceeds through a glycosyl-enzyme intermediate that is formed and hydrolysed\
+        \ via transition states with substantial oxocarbenium ion character. More specifically: Glu172\
+        \ acts as a general acid to protonate the leaving oxygen atom, leading to a oxocarbenium-like\
+        \ transtion state from xylan substrate, activating the substrate for nucleophilic attack by Glu78.\
+        \ This forms a glycosyl-enzyme intermediate. Glu172 acts as a general base to activate the water\
+        \ molecule, which makes a  nucleophilic attack on the C1 atom of the intermediate. Again, the\
+        \ reaction proceeds through an oxocarbenium-like transition state to complete.
+<br/><br/>\
+        
+The enzyme forces the substrate sugar into a 2,5B (or Boat) conformation, which places C5, O5,\
+        \ C1 and C2 in a planar arrangement, for the intermediate. A conformation that is stabilised by\
+        \ Tyr69. This fulfils the stereochemical requirements for the oxocarbenium ion-like transition\
+        \ state of the retaining mechanism."
+      notes: M-CSA entry 432, mechanism 1; M-CSA cites PMID:10220321, PMID:10381409, PMID:10860737, PMID:11526340,
+        PMID:12559743, PMID:17475200, PMID:19156310, PMID:24419374, PMID:26392527, PMID:8013449, PMID:8019418,
+        PMID:8535779, PMID:8890913; step 1
+  - subject: glu172
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu172 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/432/
+      snippet: "Hydrolysis proceeds through a glycosyl-enzyme intermediate that is formed and hydrolysed\
+        \ via transition states with substantial oxocarbenium ion character. More specifically: Glu172\
+        \ acts as a general acid to protonate the leaving oxygen atom, leading to a oxocarbenium-like\
+        \ transtion state from xylan substrate, activating the substrate for nucleophilic attack by Glu78.\
+        \ This forms a glycosyl-enzyme intermediate. Glu172 acts as a general base to activate the water\
+        \ molecule, which makes a  nucleophilic attack on the C1 atom of the intermediate. Again, the\
+        \ reaction proceeds through an oxocarbenium-like transition state to complete.
+<br/><br/>\
+        
+The enzyme forces the substrate sugar into a 2,5B (or Boat) conformation, which places C5, O5,\
+        \ C1 and C2 in a planar arrangement, for the intermediate. A conformation that is stabilised by\
+        \ Tyr69. This fulfils the stereochemical requirements for the oxocarbenium ion-like transition\
+        \ state of the retaining mechanism."
+      notes: M-CSA entry 432, mechanism 1; M-CSA cites PMID:10220321, PMID:10381409, PMID:10860737, PMID:11526340,
+        PMID:12559743, PMID:17475200, PMID:19156310, PMID:24419374, PMID:26392527, PMID:8013449, PMID:8019418,
+        PMID:8535779, PMID:8890913; step 1
+  - subject: asn35
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn35 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/432/
+      snippet: modifies pKa
+      notes: M-CSA entry 432, mechanism 1; M-CSA cites PMID:10220321, PMID:10381409, PMID:10860737, PMID:11526340,
+        PMID:12559743, PMID:17475200, PMID:19156310, PMID:24419374, PMID:26392527, PMID:8013449, PMID:8019418,
+        PMID:8535779, PMID:8890913; M-CSA catalytic-residue roles for Asn35
+  - subject: tyr69
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr69 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/432/
+      snippet: electrostatic destabiliser
+      notes: M-CSA entry 432, mechanism 1; M-CSA cites PMID:10220321, PMID:10381409, PMID:10860737, PMID:11526340,
+        PMID:12559743, PMID:17475200, PMID:19156310, PMID:24419374, PMID:26392527, PMID:8013449, PMID:8019418,
+        PMID:8535779, PMID:8890913; M-CSA catalytic-residue roles for Tyr69
+  - subject: glu78
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu78 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/432/
+      snippet: covalent catalysis, proton shuttle (general acid/base)
+      notes: M-CSA entry 432, mechanism 1; M-CSA cites PMID:10220321, PMID:10381409, PMID:10860737, PMID:11526340,
+        PMID:12559743, PMID:17475200, PMID:19156310, PMID:24419374, PMID:26392527, PMID:8013449, PMID:8019418,
+        PMID:8535779, PMID:8890913; M-CSA catalytic-residue roles for Glu78
+  - subject: tyr80
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr80 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/432/
+      snippet: modifies pKa
+      notes: M-CSA entry 432, mechanism 1; M-CSA cites PMID:10220321, PMID:10381409, PMID:10860737, PMID:11526340,
+        PMID:12559743, PMID:17475200, PMID:19156310, PMID:24419374, PMID:26392527, PMID:8013449, PMID:8019418,
+        PMID:8535779, PMID:8890913; M-CSA catalytic-residue roles for Tyr80
+  - subject: glu172
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu172 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/432/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 432, mechanism 1; M-CSA cites PMID:10220321, PMID:10381409, PMID:10860737, PMID:11526340,
+        PMID:12559743, PMID:17475200, PMID:19156310, PMID:24419374, PMID:26392527, PMID:8013449, PMID:8019418,
+        PMID:8535779, PMID:8890913; M-CSA catalytic-residue roles for Glu172
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/432/
+      snippet: 'Hydrolysis proceeds through a glycosyl-enzyme intermediate that is formed and hydrolysed
+        via transition states with substantial oxocarbenium ion character. More specifically: Glu172 acts
+        as a general acid to protonate the leaving oxygen atom, leading to a oxocarbenium-like transtion
+        state from xylan substrate, activating the substrate for nucleophilic attack by Glu78. This forms
+        a glycosyl-enzyme'
+      notes: M-CSA entry 432, mechanism 1; M-CSA cites PMID:10220321, PMID:10381409, PMID:10860737, PMID:11526340,
+        PMID:12559743, PMID:17475200, PMID:19156310, PMID:24419374, PMID:26392527, PMID:8013449, PMID:8019418,
+        PMID:8535779, PMID:8890913; CATH domain 2.60.120.180 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/432/
+      snippet: 'Hydrolysis proceeds through a glycosyl-enzyme intermediate that is formed and hydrolysed
+        via transition states with substantial oxocarbenium ion character. More specifically: Glu172 acts
+        as a general acid to protonate the leaving oxygen atom, leading to a oxocarbenium-like transtion
+        state from xylan substrate, activating the substrate for nucleophilic attack by Glu78. This forms
+        a glycosyl-enzyme'
+      notes: M-CSA entry 432, mechanism 1; M-CSA cites PMID:10220321, PMID:10381409, PMID:10860737, PMID:11526340,
+        PMID:12559743, PMID:17475200, PMID:19156310, PMID:24419374, PMID:26392527, PMID:8013449, PMID:8019418,
+        PMID:8535779, PMID:8890913; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/432/
+      snippet: 'Hydrolysis proceeds through a glycosyl-enzyme intermediate that is formed and hydrolysed
+        via transition states with substantial oxocarbenium ion character. More specifically: Glu172 acts
+        as a general acid to protonate the leaving oxygen atom, leading to a oxocarbenium-like transtion
+        state from xylan substrate, activating the substrate for nucleophilic attack by Glu78. This forms
+        a glycosyl-enzyme'
+      notes: M-CSA entry 432, mechanism 1; M-CSA cites PMID:10220321, PMID:10381409, PMID:10860737, PMID:11526340,
+        PMID:12559743, PMID:17475200, PMID:19156310, PMID:24419374, PMID:26392527, PMID:8013449, PMID:8019418,
+        PMID:8535779, PMID:8890913; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/432/
+      snippet: 'Hydrolysis proceeds through a glycosyl-enzyme intermediate that is formed and hydrolysed
+        via transition states with substantial oxocarbenium ion character. More specifically: Glu172 acts
+        as a general acid to protonate the leaving oxygen atom, leading to a oxocarbenium-like transtion
+        state from xylan substrate, activating the substrate for nucleophilic attack by Glu78. This forms
+        a glycosyl-enzyme'
+      notes: M-CSA entry 432, mechanism 1; M-CSA cites PMID:10220321, PMID:10381409, PMID:10860737, PMID:11526340,
+        PMID:12559743, PMID:17475200, PMID:19156310, PMID:24419374, PMID:26392527, PMID:8013449, PMID:8019418,
+        PMID:8535779, PMID:8890913; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/432/
+      snippet: 'Hydrolysis proceeds through a glycosyl-enzyme intermediate that is formed and hydrolysed
+        via transition states with substantial oxocarbenium ion character. More specifically: Glu172 acts
+        as a general acid to protonate the leaving oxygen atom, leading to a oxocarbenium-like transtion
+        state from xylan substrate, activating the substrate for nucleophilic attack by Glu78. This forms
+        a glycosyl-enzyme'
+      notes: M-CSA entry 432, mechanism 1; M-CSA cites PMID:10220321, PMID:10381409, PMID:10860737, PMID:11526340,
+        PMID:12559743, PMID:17475200, PMID:19156310, PMID:24419374, PMID:26392527, PMID:8013449, PMID:8019418,
+        PMID:8535779, PMID:8890913; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/432/
+      snippet: 'Hydrolysis proceeds through a glycosyl-enzyme intermediate that is formed and hydrolysed
+        via transition states with substantial oxocarbenium ion character. More specifically: Glu172 acts
+        as a general acid to protonate the leaving oxygen atom, leading to a oxocarbenium-like transtion
+        state from xylan substrate, activating the substrate for nucleophilic attack by Glu78. This forms
+        a glycosyl-enzyme'
+      notes: M-CSA entry 432, mechanism 1; M-CSA cites PMID:10220321, PMID:10381409, PMID:10860737, PMID:11526340,
+        PMID:12559743, PMID:17475200, PMID:19156310, PMID:24419374, PMID:26392527, PMID:8013449, PMID:8019418,
+        PMID:8535779, PMID:8890913; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (14 evidence-backed edges) transcribed from M-CSA entry 432;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

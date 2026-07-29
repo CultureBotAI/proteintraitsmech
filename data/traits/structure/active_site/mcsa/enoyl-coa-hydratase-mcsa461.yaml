@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.2.1.119
 - CHEBI:57319
@@ -595,4 +595,297 @@ definitions:
       Mammalian peroxisomal multifunctional enzyme type 2 (MFE-2) is important in the beta-oxidation of very-long-chain and alpha-methyl-branched fatty acids as well as the synthesis of bile acids. It has three units: a dehydrogenase unit, an sterol carrier protein (SCP)-like unit and a central hydratase unit. This entry represents the hydratase function, which reversibly catalyses the addition of water to the beta-carbon of trans-2-enoyl-CoAs with (R) specificity (the opposite to MFE-1).
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of enoyl-CoA hydratase
+  description: Mechanism transcribed from M-CSA entry 461. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering only — no unique offset to the record's reference sequence could
+    be verified, so no UniProt position is asserted.
+  nodes:
+  - node_id: asp193
+    label: catalytic Asp193 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P51659
+    description: 'M-CSA roles: electrostatic stabiliser, proton shuttle (general acid/base).'
+  - node_id: his198
+    label: catalytic His198 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P51659
+    description: 'M-CSA roles: electrostatic stabiliser, proton shuttle (general acid/base).'
+  - node_id: ile213
+    label: catalytic Ile213 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P51659
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: gly216
+    label: catalytic Gly216 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P51659
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: (R)-3-hydroxyacyl-CoA(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57319
+  - node_id: product0
+    label: 2,3-trans-enoyl CoA(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58856
+  - node_id: product1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: "The water residue is activated as a nucleophile by the side chains of Asp 193 and His\
+      \ 198 (both are deprotonated, and coordinate the protons on water, with the carbonyl of Ile 213\
+      \ reducing the pKa of His 198).   
+<br/><br/>
+A lone pair on water attacks C3 of the enoyl\
+      \ substrate (the electrophilic alkene). The reaction is proposed to have a concerted transition\
+      \ state, where the water proton coord"
+  - node_id: active_site
+    label: enoyl-CoA hydratase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:461
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.10.129.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.10.129.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: enoyl-CoA hydratase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.2.1.119
+  edges:
+  - subject: asp193
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp193 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/461/
+      snippet: "The water residue is activated as a nucleophile by the side chains of Asp 193 and His\
+        \ 198 (both are deprotonated, and coordinate the protons on water, with the carbonyl of Ile 213\
+        \ reducing the pKa of His 198).   
+<br/><br/>
+A lone pair on water attacks C3 of the enoyl\
+        \ substrate (the electrophilic alkene). The reaction is proposed to have a concerted transition\
+        \ state, where the water proton coordinated to His 813 is delivered to C2 of the substrate, and\
+        \ the bond between that proton and the oxygen of water begins to break.  
+<br/><br/>
+The\
+        \ partial negative charge on the thioester oxygen in the transition state is stabilised by the\
+        \ backbone amide of Gly 216.    
+<br/><br/>
+Thus, the overall reaction adds hydroxide from\
+        \ water to the C3 carbon of the substrate, and the proton from the same water molecule to the\
+        \ C2 carbon."
+      notes: M-CSA entry 461, mechanism 2; M-CSA cites PMID:10671535, PMID:15051722, PMID:15644212; step
+        1
+  - subject: his198
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His198 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/461/
+      snippet: "The water residue is activated as a nucleophile by the side chains of Asp 193 and His\
+        \ 198 (both are deprotonated, and coordinate the protons on water, with the carbonyl of Ile 213\
+        \ reducing the pKa of His 198).   
+<br/><br/>
+A lone pair on water attacks C3 of the enoyl\
+        \ substrate (the electrophilic alkene). The reaction is proposed to have a concerted transition\
+        \ state, where the water proton coordinated to His 813 is delivered to C2 of the substrate, and\
+        \ the bond between that proton and the oxygen of water begins to break.  
+<br/><br/>
+The\
+        \ partial negative charge on the thioester oxygen in the transition state is stabilised by the\
+        \ backbone amide of Gly 216.    
+<br/><br/>
+Thus, the overall reaction adds hydroxide from\
+        \ water to the C3 carbon of the substrate, and the proton from the same water molecule to the\
+        \ C2 carbon."
+      notes: M-CSA entry 461, mechanism 2; M-CSA cites PMID:10671535, PMID:15051722, PMID:15644212; step
+        1
+  - subject: ile213
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ile213 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/461/
+      snippet: "The water residue is activated as a nucleophile by the side chains of Asp 193 and His\
+        \ 198 (both are deprotonated, and coordinate the protons on water, with the carbonyl of Ile 213\
+        \ reducing the pKa of His 198).   
+<br/><br/>
+A lone pair on water attacks C3 of the enoyl\
+        \ substrate (the electrophilic alkene). The reaction is proposed to have a concerted transition\
+        \ state, where the water proton coordinated to His 813 is delivered to C2 of the substrate, and\
+        \ the bond between that proton and the oxygen of water begins to break.  
+<br/><br/>
+The\
+        \ partial negative charge on the thioester oxygen in the transition state is stabilised by the\
+        \ backbone amide of Gly 216.    
+<br/><br/>
+Thus, the overall reaction adds hydroxide from\
+        \ water to the C3 carbon of the substrate, and the proton from the same water molecule to the\
+        \ C2 carbon."
+      notes: M-CSA entry 461, mechanism 2; M-CSA cites PMID:10671535, PMID:15051722, PMID:15644212; step
+        1
+  - subject: gly216
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Gly216 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/461/
+      snippet: "The water residue is activated as a nucleophile by the side chains of Asp 193 and His\
+        \ 198 (both are deprotonated, and coordinate the protons on water, with the carbonyl of Ile 213\
+        \ reducing the pKa of His 198).   
+<br/><br/>
+A lone pair on water attacks C3 of the enoyl\
+        \ substrate (the electrophilic alkene). The reaction is proposed to have a concerted transition\
+        \ state, where the water proton coordinated to His 813 is delivered to C2 of the substrate, and\
+        \ the bond between that proton and the oxygen of water begins to break.  
+<br/><br/>
+The\
+        \ partial negative charge on the thioester oxygen in the transition state is stabilised by the\
+        \ backbone amide of Gly 216.    
+<br/><br/>
+Thus, the overall reaction adds hydroxide from\
+        \ water to the C3 carbon of the substrate, and the proton from the same water molecule to the\
+        \ C2 carbon."
+      notes: M-CSA entry 461, mechanism 2; M-CSA cites PMID:10671535, PMID:15051722, PMID:15644212; step
+        1
+  - subject: asp193
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp193 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/461/
+      snippet: electrostatic stabiliser, proton shuttle (general acid/base)
+      notes: M-CSA entry 461, mechanism 2; M-CSA cites PMID:10671535, PMID:15051722, PMID:15644212; M-CSA
+        catalytic-residue roles for Asp193
+  - subject: his198
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His198 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/461/
+      snippet: electrostatic stabiliser, proton shuttle (general acid/base)
+      notes: M-CSA entry 461, mechanism 2; M-CSA cites PMID:10671535, PMID:15051722, PMID:15644212; M-CSA
+        catalytic-residue roles for His198
+  - subject: ile213
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ile213 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/461/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 461, mechanism 2; M-CSA cites PMID:10671535, PMID:15051722, PMID:15644212; M-CSA
+        catalytic-residue roles for Ile213
+  - subject: gly216
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly216 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/461/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 461, mechanism 2; M-CSA cites PMID:10671535, PMID:15051722, PMID:15644212; M-CSA
+        catalytic-residue roles for Gly216
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/461/
+      snippet: "The water residue is activated as a nucleophile by the side chains of Asp 193 and His\
+        \ 198 (both are deprotonated, and coordinate the protons on water, with the carbonyl of Ile 213\
+        \ reducing the pKa of His 198).   
+<br/><br/>
+A lone pair on water attacks C3 of the enoyl\
+        \ substrate (the electrophilic alkene). The reaction is proposed to have a concerted transition\
+        \ state, where the water proton coord"
+      notes: M-CSA entry 461, mechanism 2; M-CSA cites PMID:10671535, PMID:15051722, PMID:15644212; CATH
+        domain 3.10.129.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/461/
+      snippet: "The water residue is activated as a nucleophile by the side chains of Asp 193 and His\
+        \ 198 (both are deprotonated, and coordinate the protons on water, with the carbonyl of Ile 213\
+        \ reducing the pKa of His 198).   
+<br/><br/>
+A lone pair on water attacks C3 of the enoyl\
+        \ substrate (the electrophilic alkene). The reaction is proposed to have a concerted transition\
+        \ state, where the water proton coord"
+      notes: M-CSA entry 461, mechanism 2; M-CSA cites PMID:10671535, PMID:15051722, PMID:15644212; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/461/
+      snippet: "The water residue is activated as a nucleophile by the side chains of Asp 193 and His\
+        \ 198 (both are deprotonated, and coordinate the protons on water, with the carbonyl of Ile 213\
+        \ reducing the pKa of His 198).   
+<br/><br/>
+A lone pair on water attacks C3 of the enoyl\
+        \ substrate (the electrophilic alkene). The reaction is proposed to have a concerted transition\
+        \ state, where the water proton coord"
+      notes: M-CSA entry 461, mechanism 2; M-CSA cites PMID:10671535, PMID:15051722, PMID:15644212; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/461/
+      snippet: "The water residue is activated as a nucleophile by the side chains of Asp 193 and His\
+        \ 198 (both are deprotonated, and coordinate the protons on water, with the carbonyl of Ile 213\
+        \ reducing the pKa of His 198).   
+<br/><br/>
+A lone pair on water attacks C3 of the enoyl\
+        \ substrate (the electrophilic alkene). The reaction is proposed to have a concerted transition\
+        \ state, where the water proton coord"
+      notes: M-CSA entry 461, mechanism 2; M-CSA cites PMID:10671535, PMID:15051722, PMID:15644212; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/461/
+      snippet: "The water residue is activated as a nucleophile by the side chains of Asp 193 and His\
+        \ 198 (both are deprotonated, and coordinate the protons on water, with the carbonyl of Ile 213\
+        \ reducing the pKa of His 198).   
+<br/><br/>
+A lone pair on water attacks C3 of the enoyl\
+        \ substrate (the electrophilic alkene). The reaction is proposed to have a concerted transition\
+        \ state, where the water proton coord"
+      notes: M-CSA entry 461, mechanism 2; M-CSA cites PMID:10671535, PMID:15051722, PMID:15644212; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 461;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

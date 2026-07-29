@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.14.13.39
 - CHEBI:15379
@@ -644,4 +644,281 @@ definitions:
       Nitric oxide synthase (NOS) enzymes produce nitric oxide (NO) by catalysing a five-electron oxidation of a guanidino nitrogen of L-arginine (L-Arg). Oxidation of L-Arg to L-citrulline occurs via two successive monooxygenation reactions producing N(omega)-hydroxy-L-arginine as an intermediate. 2 Mols of dioxygen and 1.5 Mol of NADPH are consumed per mole of NO formed [PMID: 8782597]. Arginine-derived NO synthesis has been identified in mammals, fish, birds, invertebrates, plants, and bacteria [PMID: 8782597].
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of nitric-oxide synthase
+  description: Mechanism transcribed from M-CSA entry 935. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: cys184
+    label: catalytic Cys184 (M-CSA/PDB numbering; UniProt residue 184)
+    node_type: RESIDUE
+    grounding: UniProtKB:P29474
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: arg187
+    label: catalytic Arg187 (M-CSA/PDB numbering; UniProt residue 187)
+    node_type: RESIDUE
+    grounding: UniProtKB:P29474
+    description: 'M-CSA roles: steric role.'
+  - node_id: trp356
+    label: catalytic Trp356 (M-CSA/PDB numbering; UniProt residue 356)
+    node_type: RESIDUE
+    grounding: UniProtKB:P29474
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu361
+    label: catalytic Glu361 (M-CSA/PDB numbering; UniProt residue 361)
+    node_type: RESIDUE
+    grounding: UniProtKB:P29474
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: dioxygen
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+  - node_id: reactant1
+    label: L-argininium(1+)
+    node_type: CHEMICAL
+    grounding: CHEBI:32682
+  - node_id: reactant2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: reactant3
+    label: NADPH(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+  - node_id: product0
+    label: L-citrulline zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57743
+  - node_id: product1
+    label: nitric oxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16480
+  - node_id: product2
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product3
+    label: NADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: "<p>NOS catalysis is a two-step process: the substrate, l-Arg, is first converted to\
+      \ N-hydroxy-l-arginine (NOHA), which in turn is converted to NO and citrulline. The oxidation mechanism\
+      \ of the substrate by NOS heme is intricate, and many details of the chemistry mechanism remain\
+      \ to be fully elucidated.</p>
+<p>N-terminal catalytic heme-containing oxygenase domain (NOSoxy),\
+      \ which belongs to class o"
+  - node_id: active_site
+    label: nitric-oxide synthase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:935
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.340.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.340.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: nitric-oxide synthase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.14.13.39
+  edges:
+  - subject: cys184
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys184 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/935/
+      snippet: metal ligand
+      notes: M-CSA entry 935, mechanism 1; M-CSA cites PMID:10074942, PMID:11744064, PMID:12220171, PMID:12480940,
+        PMID:24084585, PMID:25287765, PMID:26277414, PMID:27760279, PMID:8782597; M-CSA catalytic-residue
+        roles for Cys184
+  - subject: arg187
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg187 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/935/
+      snippet: steric role
+      notes: M-CSA entry 935, mechanism 1; M-CSA cites PMID:10074942, PMID:11744064, PMID:12220171, PMID:12480940,
+        PMID:24084585, PMID:25287765, PMID:26277414, PMID:27760279, PMID:8782597; M-CSA catalytic-residue
+        roles for Arg187
+  - subject: trp356
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp356 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/935/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 935, mechanism 1; M-CSA cites PMID:10074942, PMID:11744064, PMID:12220171, PMID:12480940,
+        PMID:24084585, PMID:25287765, PMID:26277414, PMID:27760279, PMID:8782597; M-CSA catalytic-residue
+        roles for Trp356
+  - subject: glu361
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu361 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/935/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 935, mechanism 1; M-CSA cites PMID:10074942, PMID:11744064, PMID:12220171, PMID:12480940,
+        PMID:24084585, PMID:25287765, PMID:26277414, PMID:27760279, PMID:8782597; M-CSA catalytic-residue
+        roles for Glu361
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/935/
+      snippet: "<p>NOS catalysis is a two-step process: the substrate, l-Arg, is first converted to N-hydroxy-l-arginine\
+        \ (NOHA), which in turn is converted to NO and citrulline. The oxidation mechanism of the substrate\
+        \ by NOS heme is intricate, and many details of the chemistry mechanism remain to be fully elucidated.</p>\
+        
+<p>N-terminal catalytic heme-containing oxygenase domain (NOSoxy), which belongs to class o"
+      notes: M-CSA entry 935, mechanism 1; M-CSA cites PMID:10074942, PMID:11744064, PMID:12220171, PMID:12480940,
+        PMID:24084585, PMID:25287765, PMID:26277414, PMID:27760279, PMID:8782597; CATH domain 3.90.340.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/935/
+      snippet: "<p>NOS catalysis is a two-step process: the substrate, l-Arg, is first converted to N-hydroxy-l-arginine\
+        \ (NOHA), which in turn is converted to NO and citrulline. The oxidation mechanism of the substrate\
+        \ by NOS heme is intricate, and many details of the chemistry mechanism remain to be fully elucidated.</p>\
+        
+<p>N-terminal catalytic heme-containing oxygenase domain (NOSoxy), which belongs to class o"
+      notes: M-CSA entry 935, mechanism 1; M-CSA cites PMID:10074942, PMID:11744064, PMID:12220171, PMID:12480940,
+        PMID:24084585, PMID:25287765, PMID:26277414, PMID:27760279, PMID:8782597; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/935/
+      snippet: "<p>NOS catalysis is a two-step process: the substrate, l-Arg, is first converted to N-hydroxy-l-arginine\
+        \ (NOHA), which in turn is converted to NO and citrulline. The oxidation mechanism of the substrate\
+        \ by NOS heme is intricate, and many details of the chemistry mechanism remain to be fully elucidated.</p>\
+        
+<p>N-terminal catalytic heme-containing oxygenase domain (NOSoxy), which belongs to class o"
+      notes: M-CSA entry 935, mechanism 1; M-CSA cites PMID:10074942, PMID:11744064, PMID:12220171, PMID:12480940,
+        PMID:24084585, PMID:25287765, PMID:26277414, PMID:27760279, PMID:8782597; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/935/
+      snippet: "<p>NOS catalysis is a two-step process: the substrate, l-Arg, is first converted to N-hydroxy-l-arginine\
+        \ (NOHA), which in turn is converted to NO and citrulline. The oxidation mechanism of the substrate\
+        \ by NOS heme is intricate, and many details of the chemistry mechanism remain to be fully elucidated.</p>\
+        
+<p>N-terminal catalytic heme-containing oxygenase domain (NOSoxy), which belongs to class o"
+      notes: M-CSA entry 935, mechanism 1; M-CSA cites PMID:10074942, PMID:11744064, PMID:12220171, PMID:12480940,
+        PMID:24084585, PMID:25287765, PMID:26277414, PMID:27760279, PMID:8782597; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/935/
+      snippet: "<p>NOS catalysis is a two-step process: the substrate, l-Arg, is first converted to N-hydroxy-l-arginine\
+        \ (NOHA), which in turn is converted to NO and citrulline. The oxidation mechanism of the substrate\
+        \ by NOS heme is intricate, and many details of the chemistry mechanism remain to be fully elucidated.</p>\
+        
+<p>N-terminal catalytic heme-containing oxygenase domain (NOSoxy), which belongs to class o"
+      notes: M-CSA entry 935, mechanism 1; M-CSA cites PMID:10074942, PMID:11744064, PMID:12220171, PMID:12480940,
+        PMID:24084585, PMID:25287765, PMID:26277414, PMID:27760279, PMID:8782597; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant3
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/935/
+      snippet: "<p>NOS catalysis is a two-step process: the substrate, l-Arg, is first converted to N-hydroxy-l-arginine\
+        \ (NOHA), which in turn is converted to NO and citrulline. The oxidation mechanism of the substrate\
+        \ by NOS heme is intricate, and many details of the chemistry mechanism remain to be fully elucidated.</p>\
+        
+<p>N-terminal catalytic heme-containing oxygenase domain (NOSoxy), which belongs to class o"
+      notes: M-CSA entry 935, mechanism 1; M-CSA cites PMID:10074942, PMID:11744064, PMID:12220171, PMID:12480940,
+        PMID:24084585, PMID:25287765, PMID:26277414, PMID:27760279, PMID:8782597; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/935/
+      snippet: "<p>NOS catalysis is a two-step process: the substrate, l-Arg, is first converted to N-hydroxy-l-arginine\
+        \ (NOHA), which in turn is converted to NO and citrulline. The oxidation mechanism of the substrate\
+        \ by NOS heme is intricate, and many details of the chemistry mechanism remain to be fully elucidated.</p>\
+        
+<p>N-terminal catalytic heme-containing oxygenase domain (NOSoxy), which belongs to class o"
+      notes: M-CSA entry 935, mechanism 1; M-CSA cites PMID:10074942, PMID:11744064, PMID:12220171, PMID:12480940,
+        PMID:24084585, PMID:25287765, PMID:26277414, PMID:27760279, PMID:8782597; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/935/
+      snippet: "<p>NOS catalysis is a two-step process: the substrate, l-Arg, is first converted to N-hydroxy-l-arginine\
+        \ (NOHA), which in turn is converted to NO and citrulline. The oxidation mechanism of the substrate\
+        \ by NOS heme is intricate, and many details of the chemistry mechanism remain to be fully elucidated.</p>\
+        
+<p>N-terminal catalytic heme-containing oxygenase domain (NOSoxy), which belongs to class o"
+      notes: M-CSA entry 935, mechanism 1; M-CSA cites PMID:10074942, PMID:11744064, PMID:12220171, PMID:12480940,
+        PMID:24084585, PMID:25287765, PMID:26277414, PMID:27760279, PMID:8782597; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/935/
+      snippet: "<p>NOS catalysis is a two-step process: the substrate, l-Arg, is first converted to N-hydroxy-l-arginine\
+        \ (NOHA), which in turn is converted to NO and citrulline. The oxidation mechanism of the substrate\
+        \ by NOS heme is intricate, and many details of the chemistry mechanism remain to be fully elucidated.</p>\
+        
+<p>N-terminal catalytic heme-containing oxygenase domain (NOSoxy), which belongs to class o"
+      notes: M-CSA entry 935, mechanism 1; M-CSA cites PMID:10074942, PMID:11744064, PMID:12220171, PMID:12480940,
+        PMID:24084585, PMID:25287765, PMID:26277414, PMID:27760279, PMID:8782597; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product3
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/935/
+      snippet: "<p>NOS catalysis is a two-step process: the substrate, l-Arg, is first converted to N-hydroxy-l-arginine\
+        \ (NOHA), which in turn is converted to NO and citrulline. The oxidation mechanism of the substrate\
+        \ by NOS heme is intricate, and many details of the chemistry mechanism remain to be fully elucidated.</p>\
+        
+<p>N-terminal catalytic heme-containing oxygenase domain (NOSoxy), which belongs to class o"
+      notes: M-CSA entry 935, mechanism 1; M-CSA cites PMID:10074942, PMID:11744064, PMID:12220171, PMID:12480940,
+        PMID:24084585, PMID:25287765, PMID:26277414, PMID:27760279, PMID:8782597; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (14 evidence-backed edges) transcribed from M-CSA entry 935;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

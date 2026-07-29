@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.6.1.3
 - CHEBI:456216
@@ -578,4 +578,230 @@ definitions:
       Heat shock chaperone 70 (Hsc70) is a molecular chaperone of the 70 kilodalton heat shock protein family. It is thought to facilitate protein folding by binding to nascent or misfolding segments of peptide, thus preventing their aggregation. The peptide binding activity is regulated by ATP binding and hydrolysis: with ADP bound Hsc70 binds peptides tightly, but when ATP binds it releases them. The ATPase domain of Hsc70 is located at the N-terminus of the protein and can be isolated as an independent, fully functional entity by proteolysis of the complete protein or as a recombinant expression product.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of adenosinetriphosphatase
+  description: Mechanism transcribed from M-CSA entry 656. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering only — no unique offset to the record's reference sequence could
+    be verified, so no UniProt position is asserted.
+  nodes:
+  - node_id: asp10
+    label: catalytic Asp10 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P19120
+  - node_id: glu71
+    label: catalytic Glu71 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P19120
+    description: 'M-CSA roles: enhance reactivity.'
+  - node_id: glu175
+    label: catalytic Glu175 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P19120
+  - node_id: asp199
+    label: catalytic Asp199 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P19120
+  - node_id: reactant0
+    label: ATP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: ADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: Once ATP has bound to the enzyme, hydrolysis proceeds through the attack of a water molecule,
+      activated by Lys 71, on the gamma phosphate of ATP. This results in a pentavalent phosphate transition
+      state, stabilised by Mg2+ at the active site, which collapses to release ADP and Pi. In addition,
+      there are two potassium ions that are bound at the active site. One of these coordinates the gamma
+      phosph
+  - node_id: active_site
+    label: adenosinetriphosphatase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:656
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.420.40 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.420.40
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: adenosinetriphosphatase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.6.1.3
+  edges:
+  - subject: asp10
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp10 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/656/
+      snippet: Once ATP has bound to the enzyme, hydrolysis proceeds through the attack of a water molecule,
+        activated by Lys 71, on the gamma phosphate of ATP. This results in a pentavalent phosphate transition
+        state, stabilised by Mg2+ at the active site, which collapses to release ADP and Pi. In addition,
+        there are two potassium ions that are bound at the active site. One of these coordinates the gamma
+        phosph
+      notes: M-CSA entry 656, mechanism 1; M-CSA cites PMID:17177430, PMID:29300467, PMID:7836458, PMID:8175707,
+        PMID:8663302, PMID:9585559; M-CSA catalytic-residue roles for Asp10
+  - subject: glu71
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu71 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/656/
+      snippet: enhance reactivity
+      notes: M-CSA entry 656, mechanism 1; M-CSA cites PMID:17177430, PMID:29300467, PMID:7836458, PMID:8175707,
+        PMID:8663302, PMID:9585559; M-CSA catalytic-residue roles for Glu71
+  - subject: glu175
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu175 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/656/
+      snippet: Once ATP has bound to the enzyme, hydrolysis proceeds through the attack of a water molecule,
+        activated by Lys 71, on the gamma phosphate of ATP. This results in a pentavalent phosphate transition
+        state, stabilised by Mg2+ at the active site, which collapses to release ADP and Pi. In addition,
+        there are two potassium ions that are bound at the active site. One of these coordinates the gamma
+        phosph
+      notes: M-CSA entry 656, mechanism 1; M-CSA cites PMID:17177430, PMID:29300467, PMID:7836458, PMID:8175707,
+        PMID:8663302, PMID:9585559; M-CSA catalytic-residue roles for Glu175
+  - subject: asp199
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp199 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/656/
+      snippet: Once ATP has bound to the enzyme, hydrolysis proceeds through the attack of a water molecule,
+        activated by Lys 71, on the gamma phosphate of ATP. This results in a pentavalent phosphate transition
+        state, stabilised by Mg2+ at the active site, which collapses to release ADP and Pi. In addition,
+        there are two potassium ions that are bound at the active site. One of these coordinates the gamma
+        phosph
+      notes: M-CSA entry 656, mechanism 1; M-CSA cites PMID:17177430, PMID:29300467, PMID:7836458, PMID:8175707,
+        PMID:8663302, PMID:9585559; M-CSA catalytic-residue roles for Asp199
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/656/
+      snippet: Once ATP has bound to the enzyme, hydrolysis proceeds through the attack of a water molecule,
+        activated by Lys 71, on the gamma phosphate of ATP. This results in a pentavalent phosphate transition
+        state, stabilised by Mg2+ at the active site, which collapses to release ADP and Pi. In addition,
+        there are two potassium ions that are bound at the active site. One of these coordinates the gamma
+        phosph
+      notes: M-CSA entry 656, mechanism 1; M-CSA cites PMID:17177430, PMID:29300467, PMID:7836458, PMID:8175707,
+        PMID:8663302, PMID:9585559; CATH domain 3.30.420.40 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/656/
+      snippet: Once ATP has bound to the enzyme, hydrolysis proceeds through the attack of a water molecule,
+        activated by Lys 71, on the gamma phosphate of ATP. This results in a pentavalent phosphate transition
+        state, stabilised by Mg2+ at the active site, which collapses to release ADP and Pi. In addition,
+        there are two potassium ions that are bound at the active site. One of these coordinates the gamma
+        phosph
+      notes: M-CSA entry 656, mechanism 1; M-CSA cites PMID:17177430, PMID:29300467, PMID:7836458, PMID:8175707,
+        PMID:8663302, PMID:9585559; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/656/
+      snippet: Once ATP has bound to the enzyme, hydrolysis proceeds through the attack of a water molecule,
+        activated by Lys 71, on the gamma phosphate of ATP. This results in a pentavalent phosphate transition
+        state, stabilised by Mg2+ at the active site, which collapses to release ADP and Pi. In addition,
+        there are two potassium ions that are bound at the active site. One of these coordinates the gamma
+        phosph
+      notes: M-CSA entry 656, mechanism 1; M-CSA cites PMID:17177430, PMID:29300467, PMID:7836458, PMID:8175707,
+        PMID:8663302, PMID:9585559; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/656/
+      snippet: Once ATP has bound to the enzyme, hydrolysis proceeds through the attack of a water molecule,
+        activated by Lys 71, on the gamma phosphate of ATP. This results in a pentavalent phosphate transition
+        state, stabilised by Mg2+ at the active site, which collapses to release ADP and Pi. In addition,
+        there are two potassium ions that are bound at the active site. One of these coordinates the gamma
+        phosph
+      notes: M-CSA entry 656, mechanism 1; M-CSA cites PMID:17177430, PMID:29300467, PMID:7836458, PMID:8175707,
+        PMID:8663302, PMID:9585559; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/656/
+      snippet: Once ATP has bound to the enzyme, hydrolysis proceeds through the attack of a water molecule,
+        activated by Lys 71, on the gamma phosphate of ATP. This results in a pentavalent phosphate transition
+        state, stabilised by Mg2+ at the active site, which collapses to release ADP and Pi. In addition,
+        there are two potassium ions that are bound at the active site. One of these coordinates the gamma
+        phosph
+      notes: M-CSA entry 656, mechanism 1; M-CSA cites PMID:17177430, PMID:29300467, PMID:7836458, PMID:8175707,
+        PMID:8663302, PMID:9585559; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/656/
+      snippet: Once ATP has bound to the enzyme, hydrolysis proceeds through the attack of a water molecule,
+        activated by Lys 71, on the gamma phosphate of ATP. This results in a pentavalent phosphate transition
+        state, stabilised by Mg2+ at the active site, which collapses to release ADP and Pi. In addition,
+        there are two potassium ions that are bound at the active site. One of these coordinates the gamma
+        phosph
+      notes: M-CSA entry 656, mechanism 1; M-CSA cites PMID:17177430, PMID:29300467, PMID:7836458, PMID:8175707,
+        PMID:8663302, PMID:9585559; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/656/
+      snippet: Once ATP has bound to the enzyme, hydrolysis proceeds through the attack of a water molecule,
+        activated by Lys 71, on the gamma phosphate of ATP. This results in a pentavalent phosphate transition
+        state, stabilised by Mg2+ at the active site, which collapses to release ADP and Pi. In addition,
+        there are two potassium ions that are bound at the active site. One of these coordinates the gamma
+        phosph
+      notes: M-CSA entry 656, mechanism 1; M-CSA cites PMID:17177430, PMID:29300467, PMID:7836458, PMID:8175707,
+        PMID:8663302, PMID:9585559; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (11 evidence-backed edges) transcribed from M-CSA entry 656;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

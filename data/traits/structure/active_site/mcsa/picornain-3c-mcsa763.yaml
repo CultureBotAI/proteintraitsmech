@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.22.28
 - CHEBI:73848
@@ -798,4 +798,274 @@ definitions:
       Foot-and-Mouth Disease Virus (FMDV) causes an economically devastating disease of domestic livestock. The viral RNA is translated as a single polypeptide precursor and must be cleaved into functional proteins by virally encoded proteases. 10 of the 13 cleavages are performed by the highly conserved FMDV 3C Protease. Foot-and-Mouth Disease 3C Protease (this entry) catalyses 3 different reactions. It is an RNA polymerase, selectively cleaves Xaa-Gln and Xaa-Glu amide bonds and autocatalytically cleaves itself from the polyprotein of the foot-and-mouth disease virus by hydrolysis of a Lys-Gly amide bond. It can also cleave host cell initiation factor eIF-4G at amide bonds Gly-Arg and Lys-Arg.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of picornain 3C
+  description: Mechanism transcribed from M-CSA entry 763. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering only — no unique offset to the record's reference sequence could
+    be verified, so no UniProt position is asserted.
+  nodes:
+  - node_id: his46
+    label: catalytic His46 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P03306
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: asp84
+    label: catalytic Asp84 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P03306
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ala163
+    label: catalytic Ala163 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P03306
+    description: 'M-CSA roles: covalent catalysis.'
+  - node_id: ser182
+    label: catalytic Ser182 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P03306
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: Gln-Gly
+    node_type: CHEMICAL
+    grounding: CHEBI:73848
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: L-glutamine
+    node_type: CHEMICAL
+    grounding: CHEBI:18050
+  - node_id: product1
+    label: glycine
+    node_type: CHEMICAL
+    grounding: CHEBI:15428
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: "Foot-and-Mouth Disease Virus has a chymotrypsin-like fold and possesses a Cys-His-Asp\
+      \ catalytic triad, in a similar conformation to the Ser-His-Asp.  His 46 acts as a general base,\
+      \ deprotonating Cys 163. Cys 163 performs nucleophilic attack on the carbonyl carbon of the amide\
+      \ bond. 
+ This results in a tetrahedral transition state. Protonated His 46 is stabilised by\
+      \ electrostatic interactions with"
+  - node_id: active_site
+    label: picornain 3C catalytic site
+    node_type: MOTIF
+    grounding: MCSA:763
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.40.10.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.40.10.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: picornain 3C activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.22.28
+  edges:
+  - subject: his46
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His46 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/763/
+      snippet: "Foot-and-Mouth Disease Virus has a chymotrypsin-like fold and possesses a Cys-His-Asp\
+        \ catalytic triad, in a similar conformation to the Ser-His-Asp.  His 46 acts as a general base,\
+        \ deprotonating Cys 163. Cys 163 performs nucleophilic attack on the carbonyl carbon of the amide\
+        \ bond. 
+ This results in a tetrahedral transition state. Protonated His 46 is stabilised by\
+        \ electrostatic interactions with Asp 84. Ser 182 stabilises the conformation of Asp 84 
+ The\
+        \ tetrahedral transition state collapses, forming an acyl-enzyme and His 46 acts as a general\
+        \ acid, protonating the amide leaving group.
+  His 46 acts as a general base, deprotonating\
+        \ a water molecule. The activated water molecule performs nucleophilic attack upon the acyl enzyme,\
+        \ forming a tetrahedral transition state.
+  The tetrahedral transition state collapses, forming\
+        \ the acid component of the substrate and Cys 163. His 46 acts as a general acid, protonating\
+        \ the leaving group Cys 163."
+      notes: M-CSA entry 763, mechanism 1; M-CSA cites PMID:15654079; step 1
+  - subject: asp84
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp84 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/763/
+      snippet: "Foot-and-Mouth Disease Virus has a chymotrypsin-like fold and possesses a Cys-His-Asp\
+        \ catalytic triad, in a similar conformation to the Ser-His-Asp.  His 46 acts as a general base,\
+        \ deprotonating Cys 163. Cys 163 performs nucleophilic attack on the carbonyl carbon of the amide\
+        \ bond. 
+ This results in a tetrahedral transition state. Protonated His 46 is stabilised by\
+        \ electrostatic interactions with Asp 84. Ser 182 stabilises the conformation of Asp 84 
+ The\
+        \ tetrahedral transition state collapses, forming an acyl-enzyme and His 46 acts as a general\
+        \ acid, protonating the amide leaving group.
+  His 46 acts as a general base, deprotonating\
+        \ a water molecule. The activated water molecule performs nucleophilic attack upon the acyl enzyme,\
+        \ forming a tetrahedral transition state.
+  The tetrahedral transition state collapses, forming\
+        \ the acid component of the substrate and Cys 163. His 46 acts as a general acid, protonating\
+        \ the leaving group Cys 163."
+      notes: M-CSA entry 763, mechanism 1; M-CSA cites PMID:15654079; step 1
+  - subject: ser182
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser182 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/763/
+      snippet: "Foot-and-Mouth Disease Virus has a chymotrypsin-like fold and possesses a Cys-His-Asp\
+        \ catalytic triad, in a similar conformation to the Ser-His-Asp.  His 46 acts as a general base,\
+        \ deprotonating Cys 163. Cys 163 performs nucleophilic attack on the carbonyl carbon of the amide\
+        \ bond. 
+ This results in a tetrahedral transition state. Protonated His 46 is stabilised by\
+        \ electrostatic interactions with Asp 84. Ser 182 stabilises the conformation of Asp 84 
+ The\
+        \ tetrahedral transition state collapses, forming an acyl-enzyme and His 46 acts as a general\
+        \ acid, protonating the amide leaving group.
+  His 46 acts as a general base, deprotonating\
+        \ a water molecule. The activated water molecule performs nucleophilic attack upon the acyl enzyme,\
+        \ forming a tetrahedral transition state.
+  The tetrahedral transition state collapses, forming\
+        \ the acid component of the substrate and Cys 163. His 46 acts as a general acid, protonating\
+        \ the leaving group Cys 163."
+      notes: M-CSA entry 763, mechanism 1; M-CSA cites PMID:15654079; step 1
+  - subject: his46
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His46 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/763/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 763, mechanism 1; M-CSA cites PMID:15654079; M-CSA catalytic-residue roles for
+        His46
+  - subject: asp84
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp84 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/763/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 763, mechanism 1; M-CSA cites PMID:15654079; M-CSA catalytic-residue roles for
+        Asp84
+  - subject: ala163
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ala163 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/763/
+      snippet: covalent catalysis
+      notes: M-CSA entry 763, mechanism 1; M-CSA cites PMID:15654079; M-CSA catalytic-residue roles for
+        Ala163
+  - subject: ser182
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser182 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/763/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 763, mechanism 1; M-CSA cites PMID:15654079; M-CSA catalytic-residue roles for
+        Ser182
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/763/
+      snippet: "Foot-and-Mouth Disease Virus has a chymotrypsin-like fold and possesses a Cys-His-Asp\
+        \ catalytic triad, in a similar conformation to the Ser-His-Asp.  His 46 acts as a general base,\
+        \ deprotonating Cys 163. Cys 163 performs nucleophilic attack on the carbonyl carbon of the amide\
+        \ bond. 
+ This results in a tetrahedral transition state. Protonated His 46 is stabilised by\
+        \ electrostatic interactions with"
+      notes: M-CSA entry 763, mechanism 1; M-CSA cites PMID:15654079; CATH domain 2.40.10.10 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/763/
+      snippet: "Foot-and-Mouth Disease Virus has a chymotrypsin-like fold and possesses a Cys-His-Asp\
+        \ catalytic triad, in a similar conformation to the Ser-His-Asp.  His 46 acts as a general base,\
+        \ deprotonating Cys 163. Cys 163 performs nucleophilic attack on the carbonyl carbon of the amide\
+        \ bond. 
+ This results in a tetrahedral transition state. Protonated His 46 is stabilised by\
+        \ electrostatic interactions with"
+      notes: M-CSA entry 763, mechanism 1; M-CSA cites PMID:15654079; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/763/
+      snippet: "Foot-and-Mouth Disease Virus has a chymotrypsin-like fold and possesses a Cys-His-Asp\
+        \ catalytic triad, in a similar conformation to the Ser-His-Asp.  His 46 acts as a general base,\
+        \ deprotonating Cys 163. Cys 163 performs nucleophilic attack on the carbonyl carbon of the amide\
+        \ bond. 
+ This results in a tetrahedral transition state. Protonated His 46 is stabilised by\
+        \ electrostatic interactions with"
+      notes: M-CSA entry 763, mechanism 1; M-CSA cites PMID:15654079; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/763/
+      snippet: "Foot-and-Mouth Disease Virus has a chymotrypsin-like fold and possesses a Cys-His-Asp\
+        \ catalytic triad, in a similar conformation to the Ser-His-Asp.  His 46 acts as a general base,\
+        \ deprotonating Cys 163. Cys 163 performs nucleophilic attack on the carbonyl carbon of the amide\
+        \ bond. 
+ This results in a tetrahedral transition state. Protonated His 46 is stabilised by\
+        \ electrostatic interactions with"
+      notes: M-CSA entry 763, mechanism 1; M-CSA cites PMID:15654079; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/763/
+      snippet: "Foot-and-Mouth Disease Virus has a chymotrypsin-like fold and possesses a Cys-His-Asp\
+        \ catalytic triad, in a similar conformation to the Ser-His-Asp.  His 46 acts as a general base,\
+        \ deprotonating Cys 163. Cys 163 performs nucleophilic attack on the carbonyl carbon of the amide\
+        \ bond. 
+ This results in a tetrahedral transition state. Protonated His 46 is stabilised by\
+        \ electrostatic interactions with"
+      notes: M-CSA entry 763, mechanism 1; M-CSA cites PMID:15654079; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/763/
+      snippet: "Foot-and-Mouth Disease Virus has a chymotrypsin-like fold and possesses a Cys-His-Asp\
+        \ catalytic triad, in a similar conformation to the Ser-His-Asp.  His 46 acts as a general base,\
+        \ deprotonating Cys 163. Cys 163 performs nucleophilic attack on the carbonyl carbon of the amide\
+        \ bond. 
+ This results in a tetrahedral transition state. Protonated His 46 is stabilised by\
+        \ electrostatic interactions with"
+      notes: M-CSA entry 763, mechanism 1; M-CSA cites PMID:15654079; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 763;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

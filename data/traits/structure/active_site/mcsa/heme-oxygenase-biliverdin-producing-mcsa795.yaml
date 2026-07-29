@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.14.14.18
 - CHEBI:60344
@@ -139,4 +139,376 @@ definitions:
       Heme oxygenase (HO) catalyses the breakdown of heme to release biliverdin, CO, and free iron, and is found in mammals, plants and photosynthetic bacteria. The roles of the heme catabolism process are different in mammals and plants: whilst mammals use HO to degrade excess heme from red blood cells, plants and cyanobacteria use HO activity in order to generate the biliverdin needed for the production of light harvesting complexes. As a result, their is little sequence or structural homology between the mammalian and other forms, indicating that they may have evolved independently. However, the reaction seems to proceed via the same mechanism in both, with key active site residues being the same between the two groups. The bacterial form is described here, but the catalytic residues are the same in both the mammalian and plant forms of the enzyme.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of heme oxygenase (biliverdin-producing)
+  description: Mechanism transcribed from M-CSA entry 795. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering only — no unique offset to the record's reference sequence could
+    be verified, so no UniProt position is asserted.
+  nodes:
+  - node_id: his25
+    label: catalytic His25 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P71119
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: tyr53
+    label: catalytic Tyr53 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P71119
+    description: 'M-CSA roles: activator, electrostatic stabiliser.'
+  - node_id: val131
+    label: catalytic Val131 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P71119
+    description: 'M-CSA roles: activator.'
+  - node_id: arg132
+    label: catalytic Arg132 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P71119
+    description: 'M-CSA roles: activator.'
+  - node_id: gly135
+    label: catalytic Gly135 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P71119
+    description: 'M-CSA roles: steric role.'
+  - node_id: asn136
+    label: catalytic Asn136 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P71119
+    description: 'M-CSA roles: modifies pKa.'
+  - node_id: gly140
+    label: catalytic Gly140 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P71119
+    description: 'M-CSA roles: steric role.'
+  - node_id: reactant0
+    label: ferroheme b(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:60344
+  - node_id: reactant1
+    label: FMNH2(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57618
+  - node_id: reactant2
+    label: dioxygen
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+  - node_id: product0
+    label: iron(2+)
+    node_type: CHEMICAL
+    grounding: CHEBI:29033
+  - node_id: product1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product3
+    label: FMN(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58210
+  - node_id: product4
+    label: carbon monoxide
+    node_type: CHEMICAL
+    grounding: CHEBI:17245
+  - node_id: product5
+    label: biliverdin(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57991
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: The reaction proceeds via a series of reaction intermediates involving the heme iron
+      in different oxidation states. In the first stage of the reaction, dioxygen binds to the iron (III)
+      ion in heme, and accepts an electron from the surrounding environment causing heterolytic fission
+      of the pi bond. Concomitant protonation of the dioxygen by a water molecule, activated by Asp 136,
+      results in the for
+  - node_id: active_site
+    label: heme oxygenase (biliverdin-producing) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:795
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.20.910.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.20.910.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: heme oxygenase (biliverdin-producing) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.14.14.18
+  edges:
+  - subject: gly135
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Gly135 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/795/
+      snippet: The reaction proceeds via a series of reaction intermediates involving the heme iron in
+        different oxidation states. In the first stage of the reaction, dioxygen binds to the iron (III)
+        ion in heme, and accepts an electron from the surrounding environment causing heterolytic fission
+        of the pi bond. Concomitant protonation of the dioxygen by a water molecule, activated by Asp
+        136, results in the formation of an Fe-OOH species. The OH group then acts as a nucleophile, attacking
+        the alpha position of the porphyrin ring. Steric strain from Gly 135 and Gly 140 causes the destabilisation
+        of all the other possible positions, thus stabilising the alpha meso hydroxylated intermediate.
+        Binding of oxygen to this species liberates CO and forms Fe2+, which is then released when another
+        molecule of dioxygen binds to the heme and cleaves the central cycle to form the biliverdin product.
+        Thus the heme substrate acts as a cofactor in the reaction, by activating the dioxygen.
+      notes: M-CSA entry 795, mechanism 1; M-CSA cites PMID:11439033, PMID:12070167, PMID:12235152, PMID:12842469,
+        PMID:15528205, PMID:19154182; step 1
+  - subject: gly140
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Gly140 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/795/
+      snippet: The reaction proceeds via a series of reaction intermediates involving the heme iron in
+        different oxidation states. In the first stage of the reaction, dioxygen binds to the iron (III)
+        ion in heme, and accepts an electron from the surrounding environment causing heterolytic fission
+        of the pi bond. Concomitant protonation of the dioxygen by a water molecule, activated by Asp
+        136, results in the formation of an Fe-OOH species. The OH group then acts as a nucleophile, attacking
+        the alpha position of the porphyrin ring. Steric strain from Gly 135 and Gly 140 causes the destabilisation
+        of all the other possible positions, thus stabilising the alpha meso hydroxylated intermediate.
+        Binding of oxygen to this species liberates CO and forms Fe2+, which is then released when another
+        molecule of dioxygen binds to the heme and cleaves the central cycle to form the biliverdin product.
+        Thus the heme substrate acts as a cofactor in the reaction, by activating the dioxygen.
+      notes: M-CSA entry 795, mechanism 1; M-CSA cites PMID:11439033, PMID:12070167, PMID:12235152, PMID:12842469,
+        PMID:15528205, PMID:19154182; step 1
+  - subject: his25
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His25 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/795/
+      snippet: metal ligand
+      notes: M-CSA entry 795, mechanism 1; M-CSA cites PMID:11439033, PMID:12070167, PMID:12235152, PMID:12842469,
+        PMID:15528205, PMID:19154182; M-CSA catalytic-residue roles for His25
+  - subject: tyr53
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr53 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/795/
+      snippet: activator, electrostatic stabiliser
+      notes: M-CSA entry 795, mechanism 1; M-CSA cites PMID:11439033, PMID:12070167, PMID:12235152, PMID:12842469,
+        PMID:15528205, PMID:19154182; M-CSA catalytic-residue roles for Tyr53
+  - subject: val131
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Val131 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/795/
+      snippet: activator
+      notes: M-CSA entry 795, mechanism 1; M-CSA cites PMID:11439033, PMID:12070167, PMID:12235152, PMID:12842469,
+        PMID:15528205, PMID:19154182; M-CSA catalytic-residue roles for Val131
+  - subject: arg132
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg132 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/795/
+      snippet: activator
+      notes: M-CSA entry 795, mechanism 1; M-CSA cites PMID:11439033, PMID:12070167, PMID:12235152, PMID:12842469,
+        PMID:15528205, PMID:19154182; M-CSA catalytic-residue roles for Arg132
+  - subject: gly135
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly135 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/795/
+      snippet: steric role
+      notes: M-CSA entry 795, mechanism 1; M-CSA cites PMID:11439033, PMID:12070167, PMID:12235152, PMID:12842469,
+        PMID:15528205, PMID:19154182; M-CSA catalytic-residue roles for Gly135
+  - subject: asn136
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn136 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/795/
+      snippet: modifies pKa
+      notes: M-CSA entry 795, mechanism 1; M-CSA cites PMID:11439033, PMID:12070167, PMID:12235152, PMID:12842469,
+        PMID:15528205, PMID:19154182; M-CSA catalytic-residue roles for Asn136
+  - subject: gly140
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly140 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/795/
+      snippet: steric role
+      notes: M-CSA entry 795, mechanism 1; M-CSA cites PMID:11439033, PMID:12070167, PMID:12235152, PMID:12842469,
+        PMID:15528205, PMID:19154182; M-CSA catalytic-residue roles for Gly140
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/795/
+      snippet: The reaction proceeds via a series of reaction intermediates involving the heme iron in
+        different oxidation states. In the first stage of the reaction, dioxygen binds to the iron (III)
+        ion in heme, and accepts an electron from the surrounding environment causing heterolytic fission
+        of the pi bond. Concomitant protonation of the dioxygen by a water molecule, activated by Asp
+        136, results in the for
+      notes: M-CSA entry 795, mechanism 1; M-CSA cites PMID:11439033, PMID:12070167, PMID:12235152, PMID:12842469,
+        PMID:15528205, PMID:19154182; CATH domain 1.20.910.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/795/
+      snippet: The reaction proceeds via a series of reaction intermediates involving the heme iron in
+        different oxidation states. In the first stage of the reaction, dioxygen binds to the iron (III)
+        ion in heme, and accepts an electron from the surrounding environment causing heterolytic fission
+        of the pi bond. Concomitant protonation of the dioxygen by a water molecule, activated by Asp
+        136, results in the for
+      notes: M-CSA entry 795, mechanism 1; M-CSA cites PMID:11439033, PMID:12070167, PMID:12235152, PMID:12842469,
+        PMID:15528205, PMID:19154182; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/795/
+      snippet: The reaction proceeds via a series of reaction intermediates involving the heme iron in
+        different oxidation states. In the first stage of the reaction, dioxygen binds to the iron (III)
+        ion in heme, and accepts an electron from the surrounding environment causing heterolytic fission
+        of the pi bond. Concomitant protonation of the dioxygen by a water molecule, activated by Asp
+        136, results in the for
+      notes: M-CSA entry 795, mechanism 1; M-CSA cites PMID:11439033, PMID:12070167, PMID:12235152, PMID:12842469,
+        PMID:15528205, PMID:19154182; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/795/
+      snippet: The reaction proceeds via a series of reaction intermediates involving the heme iron in
+        different oxidation states. In the first stage of the reaction, dioxygen binds to the iron (III)
+        ion in heme, and accepts an electron from the surrounding environment causing heterolytic fission
+        of the pi bond. Concomitant protonation of the dioxygen by a water molecule, activated by Asp
+        136, results in the for
+      notes: M-CSA entry 795, mechanism 1; M-CSA cites PMID:11439033, PMID:12070167, PMID:12235152, PMID:12842469,
+        PMID:15528205, PMID:19154182; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/795/
+      snippet: The reaction proceeds via a series of reaction intermediates involving the heme iron in
+        different oxidation states. In the first stage of the reaction, dioxygen binds to the iron (III)
+        ion in heme, and accepts an electron from the surrounding environment causing heterolytic fission
+        of the pi bond. Concomitant protonation of the dioxygen by a water molecule, activated by Asp
+        136, results in the for
+      notes: M-CSA entry 795, mechanism 1; M-CSA cites PMID:11439033, PMID:12070167, PMID:12235152, PMID:12842469,
+        PMID:15528205, PMID:19154182; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/795/
+      snippet: The reaction proceeds via a series of reaction intermediates involving the heme iron in
+        different oxidation states. In the first stage of the reaction, dioxygen binds to the iron (III)
+        ion in heme, and accepts an electron from the surrounding environment causing heterolytic fission
+        of the pi bond. Concomitant protonation of the dioxygen by a water molecule, activated by Asp
+        136, results in the for
+      notes: M-CSA entry 795, mechanism 1; M-CSA cites PMID:11439033, PMID:12070167, PMID:12235152, PMID:12842469,
+        PMID:15528205, PMID:19154182; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/795/
+      snippet: The reaction proceeds via a series of reaction intermediates involving the heme iron in
+        different oxidation states. In the first stage of the reaction, dioxygen binds to the iron (III)
+        ion in heme, and accepts an electron from the surrounding environment causing heterolytic fission
+        of the pi bond. Concomitant protonation of the dioxygen by a water molecule, activated by Asp
+        136, results in the for
+      notes: M-CSA entry 795, mechanism 1; M-CSA cites PMID:11439033, PMID:12070167, PMID:12235152, PMID:12842469,
+        PMID:15528205, PMID:19154182; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/795/
+      snippet: The reaction proceeds via a series of reaction intermediates involving the heme iron in
+        different oxidation states. In the first stage of the reaction, dioxygen binds to the iron (III)
+        ion in heme, and accepts an electron from the surrounding environment causing heterolytic fission
+        of the pi bond. Concomitant protonation of the dioxygen by a water molecule, activated by Asp
+        136, results in the for
+      notes: M-CSA entry 795, mechanism 1; M-CSA cites PMID:11439033, PMID:12070167, PMID:12235152, PMID:12842469,
+        PMID:15528205, PMID:19154182; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product3
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/795/
+      snippet: The reaction proceeds via a series of reaction intermediates involving the heme iron in
+        different oxidation states. In the first stage of the reaction, dioxygen binds to the iron (III)
+        ion in heme, and accepts an electron from the surrounding environment causing heterolytic fission
+        of the pi bond. Concomitant protonation of the dioxygen by a water molecule, activated by Asp
+        136, results in the for
+      notes: M-CSA entry 795, mechanism 1; M-CSA cites PMID:11439033, PMID:12070167, PMID:12235152, PMID:12842469,
+        PMID:15528205, PMID:19154182; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product4
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/795/
+      snippet: The reaction proceeds via a series of reaction intermediates involving the heme iron in
+        different oxidation states. In the first stage of the reaction, dioxygen binds to the iron (III)
+        ion in heme, and accepts an electron from the surrounding environment causing heterolytic fission
+        of the pi bond. Concomitant protonation of the dioxygen by a water molecule, activated by Asp
+        136, results in the for
+      notes: M-CSA entry 795, mechanism 1; M-CSA cites PMID:11439033, PMID:12070167, PMID:12235152, PMID:12842469,
+        PMID:15528205, PMID:19154182; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product5
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/795/
+      snippet: The reaction proceeds via a series of reaction intermediates involving the heme iron in
+        different oxidation states. In the first stage of the reaction, dioxygen binds to the iron (III)
+        ion in heme, and accepts an electron from the surrounding environment causing heterolytic fission
+        of the pi bond. Concomitant protonation of the dioxygen by a water molecule, activated by Asp
+        136, results in the for
+      notes: M-CSA entry 795, mechanism 1; M-CSA cites PMID:11439033, PMID:12070167, PMID:12235152, PMID:12842469,
+        PMID:15528205, PMID:19154182; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (20 evidence-backed edges) transcribed from M-CSA entry 795;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

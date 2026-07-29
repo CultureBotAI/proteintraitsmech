@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:6.1.1.12
 - CHEBI:33019
@@ -383,4 +383,443 @@ definitions:
       Catalyzes the attachment of aspartmate to tRNA(Asp) in a two-step reaction: aspartate is first activated by ATP to form Asp-AMP and then transferred to the acceptor end of tRNA(Asp). Is specific for tRNA(Asp) since it aspartylates tRNA(Asn) 3 orders of magnitude less efficiently than tRNA(Asp). Aspartyl tRNA synthetase is an alpha2 dimer that belongs to class IIb. Structural analysis combined with mutagenesis and enzymology data on the yeast enzyme point to a tRNA binding process that starts by a recognition event between the tRNA anticodon loop and the synthetase anticodon binding module.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of aspartate---tRNA ligase
+  description: Mechanism transcribed from M-CSA entry 404. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: arg325
+    label: catalytic Arg325 (M-CSA/PDB numbering; UniProt residue 325)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04802
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu327
+    label: catalytic Glu327 (M-CSA/PDB numbering; UniProt residue 327)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04802
+    description: 'M-CSA roles: electrostatic stabiliser, metal ligand.'
+  - node_id: arg333
+    label: catalytic Arg333 (M-CSA/PDB numbering; UniProt residue 333)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04802
+    description: 'M-CSA roles: electrostatic stabiliser, steric role.'
+  - node_id: his334
+    label: catalytic His334 (M-CSA/PDB numbering; UniProt residue 334)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04802
+    description: 'M-CSA roles: electrostatic stabiliser, steric role.'
+  - node_id: glu478
+    label: catalytic Glu478 (M-CSA/PDB numbering; UniProt residue 478)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04802
+    description: 'M-CSA roles: electrostatic stabiliser, metal ligand.'
+  - node_id: ser481
+    label: catalytic Ser481 (M-CSA/PDB numbering; UniProt residue 481)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04802
+    description: 'M-CSA roles: electrostatic stabiliser, metal ligand.'
+  - node_id: arg531
+    label: catalytic Arg531 (M-CSA/PDB numbering; UniProt residue 531)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04802
+    description: 'M-CSA roles: electrostatic stabiliser, steric role.'
+  - node_id: reactant0
+    label: L-aspartate(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:29991
+  - node_id: reactant1
+    label: ATP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+  - node_id: reactant2
+    label: AMP 3'-end(1-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:78442
+  - node_id: product0
+    label: diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+  - node_id: product1
+    label: 3'-(L-aspartate)adenylyl(1-) group
+    node_type: CHEMICAL
+    grounding: CHEBI:78516
+  - node_id: product2
+    label: adenosine 5'-monophosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: "AspRS performs two sequential reactions. The first reaction is the formation of aspartyladenylate\
+      \ from the free amino acid and ATP, releasing pyrophosphate. The second reaction is the displacement\
+      \ of the adenylate moiety by the 3’-OH of the terminal adenosine of the tRNAAsp acceptor arm, yielding\
+      \ the covalently linked Asp-tRNAAsp. 
+<br/><br/>
+The first reaction occurs through an in-line\
+      \ mechanis"
+  - node_id: active_site
+    label: aspartate---tRNA ligase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:404
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.930.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.930.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: aspartate---tRNA ligase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:6.1.1.12
+  edges:
+  - subject: arg325
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg325 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/404/
+      snippet: "AspRS performs two sequential reactions. The first reaction is the formation of aspartyladenylate\
+        \ from the free amino acid and ATP, releasing pyrophosphate. The second reaction is the displacement\
+        \ of the adenylate moiety by the 3’-OH of the terminal adenosine of the tRNAAsp acceptor arm,\
+        \ yielding the covalently linked Asp-tRNAAsp. 
+<br/><br/>
+The first reaction occurs through\
+        \ an in-line mechanism with the inversion of configuration at the alpha-phosphorus (the reactive\
+        \ oxygen of the carboxylate group of aspartic acid is located at 2.4 Angstroms from the alpha-phosphate\
+        \ of ATP). This step proceeds via a trigonal bipyramidal pentacovalent  intermediate, with the\
+        \ entering and leaving groups occupying apical positions. Stabilization  of  this  reaction  intermediate\
+        \ requires a decrease  in  the  negative  charge  of  the alpha-phosphate. The positive charges\
+        \ carried by the guanidium groups of Arg333, Arg325 and Arg531, the imidazole ring of His334 and\
+        \ the magnesium ions altogether participate in the delocalization of the negative charges of the\
+        \ triphosphate moiety of ATP. The  binding  of  one substrate (ATP-Mg2+ or Asp) orients the side\
+        \ chains of the strictly conserved Arg325 and Ser481 such that their side chains are in positions\
+        \  favouring  their  interaction  with  the  second substrate. This results in a positive coupling\
+        \ which partly compensates for the electrostatic repulsion  between  the  negative  charges  of\
+        \  the  attacking carboxylate group and the receiving alpha-phosphoryl, thereby preparing the\
+        \ catalytic step and stabilising the transition states."
+      notes: M-CSA entry 404, mechanism 2; M-CSA cites PMID:10873455, PMID:11566892, PMID:16774919, PMID:17690095,
+        PMID:18076053, PMID:2047877, PMID:22731388, PMID:9724658; step 1
+  - subject: arg333
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg333 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/404/
+      snippet: "AspRS performs two sequential reactions. The first reaction is the formation of aspartyladenylate\
+        \ from the free amino acid and ATP, releasing pyrophosphate. The second reaction is the displacement\
+        \ of the adenylate moiety by the 3’-OH of the terminal adenosine of the tRNAAsp acceptor arm,\
+        \ yielding the covalently linked Asp-tRNAAsp. 
+<br/><br/>
+The first reaction occurs through\
+        \ an in-line mechanism with the inversion of configuration at the alpha-phosphorus (the reactive\
+        \ oxygen of the carboxylate group of aspartic acid is located at 2.4 Angstroms from the alpha-phosphate\
+        \ of ATP). This step proceeds via a trigonal bipyramidal pentacovalent  intermediate, with the\
+        \ entering and leaving groups occupying apical positions. Stabilization  of  this  reaction  intermediate\
+        \ requires a decrease  in  the  negative  charge  of  the alpha-phosphate. The positive charges\
+        \ carried by the guanidium groups of Arg333, Arg325 and Arg531, the imidazole ring of His334 and\
+        \ the magnesium ions altogether participate in the delocalization of the negative charges of the\
+        \ triphosphate moiety of ATP. The  binding  of  one substrate (ATP-Mg2+ or Asp) orients the side\
+        \ chains of the strictly conserved Arg325 and Ser481 such that their side chains are in positions\
+        \  favouring  their  interaction  with  the  second substrate. This results in a positive coupling\
+        \ which partly compensates for the electrostatic repulsion  between  the  negative  charges  of\
+        \  the  attacking carboxylate group and the receiving alpha-phosphoryl, thereby preparing the\
+        \ catalytic step and stabilising the transition states."
+      notes: M-CSA entry 404, mechanism 2; M-CSA cites PMID:10873455, PMID:11566892, PMID:16774919, PMID:17690095,
+        PMID:18076053, PMID:2047877, PMID:22731388, PMID:9724658; step 1
+  - subject: his334
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His334 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/404/
+      snippet: "AspRS performs two sequential reactions. The first reaction is the formation of aspartyladenylate\
+        \ from the free amino acid and ATP, releasing pyrophosphate. The second reaction is the displacement\
+        \ of the adenylate moiety by the 3’-OH of the terminal adenosine of the tRNAAsp acceptor arm,\
+        \ yielding the covalently linked Asp-tRNAAsp. 
+<br/><br/>
+The first reaction occurs through\
+        \ an in-line mechanism with the inversion of configuration at the alpha-phosphorus (the reactive\
+        \ oxygen of the carboxylate group of aspartic acid is located at 2.4 Angstroms from the alpha-phosphate\
+        \ of ATP). This step proceeds via a trigonal bipyramidal pentacovalent  intermediate, with the\
+        \ entering and leaving groups occupying apical positions. Stabilization  of  this  reaction  intermediate\
+        \ requires a decrease  in  the  negative  charge  of  the alpha-phosphate. The positive charges\
+        \ carried by the guanidium groups of Arg333, Arg325 and Arg531, the imidazole ring of His334 and\
+        \ the magnesium ions altogether participate in the delocalization of the negative charges of the\
+        \ triphosphate moiety of ATP. The  binding  of  one substrate (ATP-Mg2+ or Asp) orients the side\
+        \ chains of the strictly conserved Arg325 and Ser481 such that their side chains are in positions\
+        \  favouring  their  interaction  with  the  second substrate. This results in a positive coupling\
+        \ which partly compensates for the electrostatic repulsion  between  the  negative  charges  of\
+        \  the  attacking carboxylate group and the receiving alpha-phosphoryl, thereby preparing the\
+        \ catalytic step and stabilising the transition states."
+      notes: M-CSA entry 404, mechanism 2; M-CSA cites PMID:10873455, PMID:11566892, PMID:16774919, PMID:17690095,
+        PMID:18076053, PMID:2047877, PMID:22731388, PMID:9724658; step 1
+  - subject: ser481
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser481 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/404/
+      snippet: "AspRS performs two sequential reactions. The first reaction is the formation of aspartyladenylate\
+        \ from the free amino acid and ATP, releasing pyrophosphate. The second reaction is the displacement\
+        \ of the adenylate moiety by the 3’-OH of the terminal adenosine of the tRNAAsp acceptor arm,\
+        \ yielding the covalently linked Asp-tRNAAsp. 
+<br/><br/>
+The first reaction occurs through\
+        \ an in-line mechanism with the inversion of configuration at the alpha-phosphorus (the reactive\
+        \ oxygen of the carboxylate group of aspartic acid is located at 2.4 Angstroms from the alpha-phosphate\
+        \ of ATP). This step proceeds via a trigonal bipyramidal pentacovalent  intermediate, with the\
+        \ entering and leaving groups occupying apical positions. Stabilization  of  this  reaction  intermediate\
+        \ requires a decrease  in  the  negative  charge  of  the alpha-phosphate. The positive charges\
+        \ carried by the guanidium groups of Arg333, Arg325 and Arg531, the imidazole ring of His334 and\
+        \ the magnesium ions altogether participate in the delocalization of the negative charges of the\
+        \ triphosphate moiety of ATP. The  binding  of  one substrate (ATP-Mg2+ or Asp) orients the side\
+        \ chains of the strictly conserved Arg325 and Ser481 such that their side chains are in positions\
+        \  favouring  their  interaction  with  the  second substrate. This results in a positive coupling\
+        \ which partly compensates for the electrostatic repulsion  between  the  negative  charges  of\
+        \  the  attacking carboxylate group and the receiving alpha-phosphoryl, thereby preparing the\
+        \ catalytic step and stabilising the transition states."
+      notes: M-CSA entry 404, mechanism 2; M-CSA cites PMID:10873455, PMID:11566892, PMID:16774919, PMID:17690095,
+        PMID:18076053, PMID:2047877, PMID:22731388, PMID:9724658; step 1
+  - subject: arg531
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg531 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/404/
+      snippet: "AspRS performs two sequential reactions. The first reaction is the formation of aspartyladenylate\
+        \ from the free amino acid and ATP, releasing pyrophosphate. The second reaction is the displacement\
+        \ of the adenylate moiety by the 3’-OH of the terminal adenosine of the tRNAAsp acceptor arm,\
+        \ yielding the covalently linked Asp-tRNAAsp. 
+<br/><br/>
+The first reaction occurs through\
+        \ an in-line mechanism with the inversion of configuration at the alpha-phosphorus (the reactive\
+        \ oxygen of the carboxylate group of aspartic acid is located at 2.4 Angstroms from the alpha-phosphate\
+        \ of ATP). This step proceeds via a trigonal bipyramidal pentacovalent  intermediate, with the\
+        \ entering and leaving groups occupying apical positions. Stabilization  of  this  reaction  intermediate\
+        \ requires a decrease  in  the  negative  charge  of  the alpha-phosphate. The positive charges\
+        \ carried by the guanidium groups of Arg333, Arg325 and Arg531, the imidazole ring of His334 and\
+        \ the magnesium ions altogether participate in the delocalization of the negative charges of the\
+        \ triphosphate moiety of ATP. The  binding  of  one substrate (ATP-Mg2+ or Asp) orients the side\
+        \ chains of the strictly conserved Arg325 and Ser481 such that their side chains are in positions\
+        \  favouring  their  interaction  with  the  second substrate. This results in a positive coupling\
+        \ which partly compensates for the electrostatic repulsion  between  the  negative  charges  of\
+        \  the  attacking carboxylate group and the receiving alpha-phosphoryl, thereby preparing the\
+        \ catalytic step and stabilising the transition states."
+      notes: M-CSA entry 404, mechanism 2; M-CSA cites PMID:10873455, PMID:11566892, PMID:16774919, PMID:17690095,
+        PMID:18076053, PMID:2047877, PMID:22731388, PMID:9724658; step 1
+  - subject: arg325
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg325 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/404/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 404, mechanism 2; M-CSA cites PMID:10873455, PMID:11566892, PMID:16774919, PMID:17690095,
+        PMID:18076053, PMID:2047877, PMID:22731388, PMID:9724658; M-CSA catalytic-residue roles for Arg325
+  - subject: glu327
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu327 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/404/
+      snippet: electrostatic stabiliser, metal ligand
+      notes: M-CSA entry 404, mechanism 2; M-CSA cites PMID:10873455, PMID:11566892, PMID:16774919, PMID:17690095,
+        PMID:18076053, PMID:2047877, PMID:22731388, PMID:9724658; M-CSA catalytic-residue roles for Glu327
+  - subject: arg333
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg333 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/404/
+      snippet: electrostatic stabiliser, steric role
+      notes: M-CSA entry 404, mechanism 2; M-CSA cites PMID:10873455, PMID:11566892, PMID:16774919, PMID:17690095,
+        PMID:18076053, PMID:2047877, PMID:22731388, PMID:9724658; M-CSA catalytic-residue roles for Arg333
+  - subject: his334
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His334 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/404/
+      snippet: electrostatic stabiliser, steric role
+      notes: M-CSA entry 404, mechanism 2; M-CSA cites PMID:10873455, PMID:11566892, PMID:16774919, PMID:17690095,
+        PMID:18076053, PMID:2047877, PMID:22731388, PMID:9724658; M-CSA catalytic-residue roles for His334
+  - subject: glu478
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu478 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/404/
+      snippet: electrostatic stabiliser, metal ligand
+      notes: M-CSA entry 404, mechanism 2; M-CSA cites PMID:10873455, PMID:11566892, PMID:16774919, PMID:17690095,
+        PMID:18076053, PMID:2047877, PMID:22731388, PMID:9724658; M-CSA catalytic-residue roles for Glu478
+  - subject: ser481
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser481 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/404/
+      snippet: electrostatic stabiliser, metal ligand
+      notes: M-CSA entry 404, mechanism 2; M-CSA cites PMID:10873455, PMID:11566892, PMID:16774919, PMID:17690095,
+        PMID:18076053, PMID:2047877, PMID:22731388, PMID:9724658; M-CSA catalytic-residue roles for Ser481
+  - subject: arg531
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg531 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/404/
+      snippet: electrostatic stabiliser, steric role
+      notes: M-CSA entry 404, mechanism 2; M-CSA cites PMID:10873455, PMID:11566892, PMID:16774919, PMID:17690095,
+        PMID:18076053, PMID:2047877, PMID:22731388, PMID:9724658; M-CSA catalytic-residue roles for Arg531
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/404/
+      snippet: "AspRS performs two sequential reactions. The first reaction is the formation of aspartyladenylate\
+        \ from the free amino acid and ATP, releasing pyrophosphate. The second reaction is the displacement\
+        \ of the adenylate moiety by the 3’-OH of the terminal adenosine of the tRNAAsp acceptor arm,\
+        \ yielding the covalently linked Asp-tRNAAsp. 
+<br/><br/>
+The first reaction occurs through\
+        \ an in-line mechanis"
+      notes: M-CSA entry 404, mechanism 2; M-CSA cites PMID:10873455, PMID:11566892, PMID:16774919, PMID:17690095,
+        PMID:18076053, PMID:2047877, PMID:22731388, PMID:9724658; CATH domain 3.30.930.10 assigned to
+        the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/404/
+      snippet: "AspRS performs two sequential reactions. The first reaction is the formation of aspartyladenylate\
+        \ from the free amino acid and ATP, releasing pyrophosphate. The second reaction is the displacement\
+        \ of the adenylate moiety by the 3’-OH of the terminal adenosine of the tRNAAsp acceptor arm,\
+        \ yielding the covalently linked Asp-tRNAAsp. 
+<br/><br/>
+The first reaction occurs through\
+        \ an in-line mechanis"
+      notes: M-CSA entry 404, mechanism 2; M-CSA cites PMID:10873455, PMID:11566892, PMID:16774919, PMID:17690095,
+        PMID:18076053, PMID:2047877, PMID:22731388, PMID:9724658; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/404/
+      snippet: "AspRS performs two sequential reactions. The first reaction is the formation of aspartyladenylate\
+        \ from the free amino acid and ATP, releasing pyrophosphate. The second reaction is the displacement\
+        \ of the adenylate moiety by the 3’-OH of the terminal adenosine of the tRNAAsp acceptor arm,\
+        \ yielding the covalently linked Asp-tRNAAsp. 
+<br/><br/>
+The first reaction occurs through\
+        \ an in-line mechanis"
+      notes: M-CSA entry 404, mechanism 2; M-CSA cites PMID:10873455, PMID:11566892, PMID:16774919, PMID:17690095,
+        PMID:18076053, PMID:2047877, PMID:22731388, PMID:9724658; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/404/
+      snippet: "AspRS performs two sequential reactions. The first reaction is the formation of aspartyladenylate\
+        \ from the free amino acid and ATP, releasing pyrophosphate. The second reaction is the displacement\
+        \ of the adenylate moiety by the 3’-OH of the terminal adenosine of the tRNAAsp acceptor arm,\
+        \ yielding the covalently linked Asp-tRNAAsp. 
+<br/><br/>
+The first reaction occurs through\
+        \ an in-line mechanis"
+      notes: M-CSA entry 404, mechanism 2; M-CSA cites PMID:10873455, PMID:11566892, PMID:16774919, PMID:17690095,
+        PMID:18076053, PMID:2047877, PMID:22731388, PMID:9724658; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/404/
+      snippet: "AspRS performs two sequential reactions. The first reaction is the formation of aspartyladenylate\
+        \ from the free amino acid and ATP, releasing pyrophosphate. The second reaction is the displacement\
+        \ of the adenylate moiety by the 3’-OH of the terminal adenosine of the tRNAAsp acceptor arm,\
+        \ yielding the covalently linked Asp-tRNAAsp. 
+<br/><br/>
+The first reaction occurs through\
+        \ an in-line mechanis"
+      notes: M-CSA entry 404, mechanism 2; M-CSA cites PMID:10873455, PMID:11566892, PMID:16774919, PMID:17690095,
+        PMID:18076053, PMID:2047877, PMID:22731388, PMID:9724658; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/404/
+      snippet: "AspRS performs two sequential reactions. The first reaction is the formation of aspartyladenylate\
+        \ from the free amino acid and ATP, releasing pyrophosphate. The second reaction is the displacement\
+        \ of the adenylate moiety by the 3’-OH of the terminal adenosine of the tRNAAsp acceptor arm,\
+        \ yielding the covalently linked Asp-tRNAAsp. 
+<br/><br/>
+The first reaction occurs through\
+        \ an in-line mechanis"
+      notes: M-CSA entry 404, mechanism 2; M-CSA cites PMID:10873455, PMID:11566892, PMID:16774919, PMID:17690095,
+        PMID:18076053, PMID:2047877, PMID:22731388, PMID:9724658; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/404/
+      snippet: "AspRS performs two sequential reactions. The first reaction is the formation of aspartyladenylate\
+        \ from the free amino acid and ATP, releasing pyrophosphate. The second reaction is the displacement\
+        \ of the adenylate moiety by the 3’-OH of the terminal adenosine of the tRNAAsp acceptor arm,\
+        \ yielding the covalently linked Asp-tRNAAsp. 
+<br/><br/>
+The first reaction occurs through\
+        \ an in-line mechanis"
+      notes: M-CSA entry 404, mechanism 2; M-CSA cites PMID:10873455, PMID:11566892, PMID:16774919, PMID:17690095,
+        PMID:18076053, PMID:2047877, PMID:22731388, PMID:9724658; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/404/
+      snippet: "AspRS performs two sequential reactions. The first reaction is the formation of aspartyladenylate\
+        \ from the free amino acid and ATP, releasing pyrophosphate. The second reaction is the displacement\
+        \ of the adenylate moiety by the 3’-OH of the terminal adenosine of the tRNAAsp acceptor arm,\
+        \ yielding the covalently linked Asp-tRNAAsp. 
+<br/><br/>
+The first reaction occurs through\
+        \ an in-line mechanis"
+      notes: M-CSA entry 404, mechanism 2; M-CSA cites PMID:10873455, PMID:11566892, PMID:16774919, PMID:17690095,
+        PMID:18076053, PMID:2047877, PMID:22731388, PMID:9724658; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (20 evidence-backed edges) transcribed from M-CSA entry 404;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

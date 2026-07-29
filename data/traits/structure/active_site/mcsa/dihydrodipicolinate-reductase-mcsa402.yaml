@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.17.1.8
 - CHEBI:57945
@@ -262,4 +262,184 @@ definitions:
       Dihydrodipicolinate reductase catalyses the conversion of 4-hydroxy-tetrahydrodipicolinate (HTPA) to tetrahydrodipicolinate. It can use both NADH and NADPH as a reductant, with NADH being twice as effective as NADPH The enzyme is a component of the biosynthetic pathway that leads to diaminopimelate and lysine in bacteria and higher plants. Because these pathways are unique to microorganisms and plants, they may represent attractive targets for new antimicrobial or herbicidal compounds.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of dihydrodipicolinate reductase
+  description: Mechanism transcribed from M-CSA entry 402. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering only — no unique offset to the record's reference sequence could
+    be verified, so no UniProt position is asserted.
+  nodes:
+  - node_id: his159
+    label: catalytic His159 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04036
+    description: 'M-CSA roles: activator, proton shuttle (general acid/base).'
+  - node_id: lys163
+    label: catalytic Lys163 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04036
+    description: 'M-CSA roles: activator, electrostatic stabiliser, proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: NAD(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+  - node_id: reactant2
+    label: (S)-2,3,4,5-tetrahydrodipicolinate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:16845
+  - node_id: product0
+    label: NADH(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: (2S,4S)-4-hydroxy-2,3,4,5-tetrahydrodipicolinate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:67139
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: Lysine polarises the imine to promote hydride transfer from NADH, and then stabilises
+      the enemine intermediate. The intermediate then removes a proton from water, which is activated
+      by histidine.
+  - node_id: active_site
+    label: dihydrodipicolinate reductase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:402
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.360.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.360.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: dihydrodipicolinate reductase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.17.1.8
+  edges:
+  - subject: his159
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His159 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/402/
+      snippet: activator, proton shuttle (general acid/base)
+      notes: M-CSA entry 402, mechanism 2; M-CSA cites PMID:9398235; M-CSA catalytic-residue roles for
+        His159
+  - subject: lys163
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys163 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/402/
+      snippet: activator, electrostatic stabiliser, proton shuttle (general acid/base)
+      notes: M-CSA entry 402, mechanism 2; M-CSA cites PMID:9398235; M-CSA catalytic-residue roles for
+        Lys163
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/402/
+      snippet: Lysine polarises the imine to promote hydride transfer from NADH, and then stabilises the
+        enemine intermediate. The intermediate then removes a proton from water, which is activated by
+        histidine.
+      notes: M-CSA entry 402, mechanism 2; M-CSA cites PMID:9398235; CATH domain 3.30.360.10 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/402/
+      snippet: Lysine polarises the imine to promote hydride transfer from NADH, and then stabilises the
+        enemine intermediate. The intermediate then removes a proton from water, which is activated by
+        histidine.
+      notes: M-CSA entry 402, mechanism 2; M-CSA cites PMID:9398235; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/402/
+      snippet: Lysine polarises the imine to promote hydride transfer from NADH, and then stabilises the
+        enemine intermediate. The intermediate then removes a proton from water, which is activated by
+        histidine.
+      notes: M-CSA entry 402, mechanism 2; M-CSA cites PMID:9398235; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/402/
+      snippet: Lysine polarises the imine to promote hydride transfer from NADH, and then stabilises the
+        enemine intermediate. The intermediate then removes a proton from water, which is activated by
+        histidine.
+      notes: M-CSA entry 402, mechanism 2; M-CSA cites PMID:9398235; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/402/
+      snippet: Lysine polarises the imine to promote hydride transfer from NADH, and then stabilises the
+        enemine intermediate. The intermediate then removes a proton from water, which is activated by
+        histidine.
+      notes: M-CSA entry 402, mechanism 2; M-CSA cites PMID:9398235; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/402/
+      snippet: Lysine polarises the imine to promote hydride transfer from NADH, and then stabilises the
+        enemine intermediate. The intermediate then removes a proton from water, which is activated by
+        histidine.
+      notes: M-CSA entry 402, mechanism 2; M-CSA cites PMID:9398235; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/402/
+      snippet: Lysine polarises the imine to promote hydride transfer from NADH, and then stabilises the
+        enemine intermediate. The intermediate then removes a proton from water, which is activated by
+        histidine.
+      notes: M-CSA entry 402, mechanism 2; M-CSA cites PMID:9398235; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/402/
+      snippet: Lysine polarises the imine to promote hydride transfer from NADH, and then stabilises the
+        enemine intermediate. The intermediate then removes a proton from water, which is activated by
+        histidine.
+      notes: M-CSA entry 402, mechanism 2; M-CSA cites PMID:9398235; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (10 evidence-backed edges) transcribed from M-CSA entry 402;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

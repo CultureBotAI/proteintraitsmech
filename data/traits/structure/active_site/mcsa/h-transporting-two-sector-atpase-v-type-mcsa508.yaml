@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:7.1.2.2
 - CHEBI:15378
@@ -693,4 +693,447 @@ definitions:
       The homing endonuclease from S. cerevisiae, PI-SceI is able to catalyse the specific cleavage of double stranded DNA in order to allow the incorporation of a mobile intron into the allele. This enables non-mendelian propagation of certain introns without harming the target allele, as the introns are spliced out before functional mRNA is produced. It belongs to a large family of endonucleases all with the sequence LADLIDADG, and contains two active sites to allow simultaneous cleavage of both strands of DNA. The homing endonucleases in general are highly specific, and PI-SceI thus recognises a 31 base pair DNA sequence as its substrate, the longest specific sequence for a DNA binding protein yet discovered. This entry covers the active site which cleaves the top strand, running 5' to 3'.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of H+-transporting two-sector ATPase (V-type)
+  description: Mechanism transcribed from M-CSA entry 508. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering only — no unique offset to the record's reference sequence could
+    be verified, so no UniProt position is asserted.
+  nodes:
+  - node_id: cys1
+    label: catalytic Cys1 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P17255
+    description: 'M-CSA roles: covalent catalysis.'
+  - node_id: asn76
+    label: catalytic Asn76 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P17255
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: thr78
+    label: catalytic Thr78 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P17255
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his79
+    label: catalytic His79 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P17255
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: lys301
+    label: catalytic Lys301 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P17255
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: lys403
+    label: catalytic Lys403 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P17255
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: gly433
+    label: catalytic Gly433 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P17255
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ile434
+    label: catalytic Ile434 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P17255
+    description: 'M-CSA roles: activator.'
+  - node_id: asn454
+    label: catalytic Asn454 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P17255
+    description: 'M-CSA roles: covalent catalysis.'
+  - node_id: reactant0
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant2
+    label: ATP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+  - node_id: product0
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product1
+    label: ADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+  - node_id: product2
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: Protein splicing begins with an acyl rearrangement at the N-terminal junction where Cys
+      1 attacks the carbonyl carbon of the preceding residue forming a thioester intermediate. The nucleophilicity
+      of the cysteine residue is increased by polarisation by Asn 76, which acts as a general base catalyst,
+      and the transition state is stabilised by the backbone nitrogen of Gly 433. His 79 protonates the
+      am
+  - node_id: active_site
+    label: H+-transporting two-sector ATPase (V-type) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:508
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.170.16.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.170.16.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: H+-transporting two-sector ATPase (V-type) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:7.1.2.2
+  edges:
+  - subject: cys1
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys1 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/508/
+      snippet: Protein splicing begins with an acyl rearrangement at the N-terminal junction where Cys
+        1 attacks the carbonyl carbon of the preceding residue forming a thioester intermediate. The nucleophilicity
+        of the cysteine residue is increased by polarisation by Asn 76, which acts as a general base catalyst,
+        and the transition state is stabilised by the backbone nitrogen of Gly 433. His 79 protonates
+        the amide nitrogen of Cys 1 to promote breakdown of the tetrahedral intermediate to a thioester.
+        Cys 455, activated by a zinc ion, nucleophilically attacks the same carbonyl carbon as Cys 1 causing
+        release of Cys 1. Cyclisation of Asn 454 follows, with nucleophilic attack by the nitrogen activated
+        by the carbonyl oxygen of Ile 434 on the carbonyl carbon, with the transition state stabilised
+        by the zinc ion. On cleavage of the peptide bond His 453, activated by Zn, can act as a proton
+        donor to Cys 455. Stabilisation is also provided by Asn 76 and Thr 78.
+      notes: M-CSA entry 508, mechanism 1; M-CSA cites PMID:10601013, PMID:10828056, PMID:11123916, PMID:12219083,
+        PMID:7988548, PMID:8703028; step 1
+  - subject: asn76
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asn76 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/508/
+      snippet: Protein splicing begins with an acyl rearrangement at the N-terminal junction where Cys
+        1 attacks the carbonyl carbon of the preceding residue forming a thioester intermediate. The nucleophilicity
+        of the cysteine residue is increased by polarisation by Asn 76, which acts as a general base catalyst,
+        and the transition state is stabilised by the backbone nitrogen of Gly 433. His 79 protonates
+        the amide nitrogen of Cys 1 to promote breakdown of the tetrahedral intermediate to a thioester.
+        Cys 455, activated by a zinc ion, nucleophilically attacks the same carbonyl carbon as Cys 1 causing
+        release of Cys 1. Cyclisation of Asn 454 follows, with nucleophilic attack by the nitrogen activated
+        by the carbonyl oxygen of Ile 434 on the carbonyl carbon, with the transition state stabilised
+        by the zinc ion. On cleavage of the peptide bond His 453, activated by Zn, can act as a proton
+        donor to Cys 455. Stabilisation is also provided by Asn 76 and Thr 78.
+      notes: M-CSA entry 508, mechanism 1; M-CSA cites PMID:10601013, PMID:10828056, PMID:11123916, PMID:12219083,
+        PMID:7988548, PMID:8703028; step 1
+  - subject: thr78
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Thr78 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/508/
+      snippet: Protein splicing begins with an acyl rearrangement at the N-terminal junction where Cys
+        1 attacks the carbonyl carbon of the preceding residue forming a thioester intermediate. The nucleophilicity
+        of the cysteine residue is increased by polarisation by Asn 76, which acts as a general base catalyst,
+        and the transition state is stabilised by the backbone nitrogen of Gly 433. His 79 protonates
+        the amide nitrogen of Cys 1 to promote breakdown of the tetrahedral intermediate to a thioester.
+        Cys 455, activated by a zinc ion, nucleophilically attacks the same carbonyl carbon as Cys 1 causing
+        release of Cys 1. Cyclisation of Asn 454 follows, with nucleophilic attack by the nitrogen activated
+        by the carbonyl oxygen of Ile 434 on the carbonyl carbon, with the transition state stabilised
+        by the zinc ion. On cleavage of the peptide bond His 453, activated by Zn, can act as a proton
+        donor to Cys 455. Stabilisation is also provided by Asn 76 and Thr 78.
+      notes: M-CSA entry 508, mechanism 1; M-CSA cites PMID:10601013, PMID:10828056, PMID:11123916, PMID:12219083,
+        PMID:7988548, PMID:8703028; step 1
+  - subject: his79
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His79 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/508/
+      snippet: Protein splicing begins with an acyl rearrangement at the N-terminal junction where Cys
+        1 attacks the carbonyl carbon of the preceding residue forming a thioester intermediate. The nucleophilicity
+        of the cysteine residue is increased by polarisation by Asn 76, which acts as a general base catalyst,
+        and the transition state is stabilised by the backbone nitrogen of Gly 433. His 79 protonates
+        the amide nitrogen of Cys 1 to promote breakdown of the tetrahedral intermediate to a thioester.
+        Cys 455, activated by a zinc ion, nucleophilically attacks the same carbonyl carbon as Cys 1 causing
+        release of Cys 1. Cyclisation of Asn 454 follows, with nucleophilic attack by the nitrogen activated
+        by the carbonyl oxygen of Ile 434 on the carbonyl carbon, with the transition state stabilised
+        by the zinc ion. On cleavage of the peptide bond His 453, activated by Zn, can act as a proton
+        donor to Cys 455. Stabilisation is also provided by Asn 76 and Thr 78.
+      notes: M-CSA entry 508, mechanism 1; M-CSA cites PMID:10601013, PMID:10828056, PMID:11123916, PMID:12219083,
+        PMID:7988548, PMID:8703028; step 1
+  - subject: gly433
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Gly433 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/508/
+      snippet: Protein splicing begins with an acyl rearrangement at the N-terminal junction where Cys
+        1 attacks the carbonyl carbon of the preceding residue forming a thioester intermediate. The nucleophilicity
+        of the cysteine residue is increased by polarisation by Asn 76, which acts as a general base catalyst,
+        and the transition state is stabilised by the backbone nitrogen of Gly 433. His 79 protonates
+        the amide nitrogen of Cys 1 to promote breakdown of the tetrahedral intermediate to a thioester.
+        Cys 455, activated by a zinc ion, nucleophilically attacks the same carbonyl carbon as Cys 1 causing
+        release of Cys 1. Cyclisation of Asn 454 follows, with nucleophilic attack by the nitrogen activated
+        by the carbonyl oxygen of Ile 434 on the carbonyl carbon, with the transition state stabilised
+        by the zinc ion. On cleavage of the peptide bond His 453, activated by Zn, can act as a proton
+        donor to Cys 455. Stabilisation is also provided by Asn 76 and Thr 78.
+      notes: M-CSA entry 508, mechanism 1; M-CSA cites PMID:10601013, PMID:10828056, PMID:11123916, PMID:12219083,
+        PMID:7988548, PMID:8703028; step 1
+  - subject: ile434
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ile434 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/508/
+      snippet: Protein splicing begins with an acyl rearrangement at the N-terminal junction where Cys
+        1 attacks the carbonyl carbon of the preceding residue forming a thioester intermediate. The nucleophilicity
+        of the cysteine residue is increased by polarisation by Asn 76, which acts as a general base catalyst,
+        and the transition state is stabilised by the backbone nitrogen of Gly 433. His 79 protonates
+        the amide nitrogen of Cys 1 to promote breakdown of the tetrahedral intermediate to a thioester.
+        Cys 455, activated by a zinc ion, nucleophilically attacks the same carbonyl carbon as Cys 1 causing
+        release of Cys 1. Cyclisation of Asn 454 follows, with nucleophilic attack by the nitrogen activated
+        by the carbonyl oxygen of Ile 434 on the carbonyl carbon, with the transition state stabilised
+        by the zinc ion. On cleavage of the peptide bond His 453, activated by Zn, can act as a proton
+        donor to Cys 455. Stabilisation is also provided by Asn 76 and Thr 78.
+      notes: M-CSA entry 508, mechanism 1; M-CSA cites PMID:10601013, PMID:10828056, PMID:11123916, PMID:12219083,
+        PMID:7988548, PMID:8703028; step 1
+  - subject: asn454
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asn454 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/508/
+      snippet: Protein splicing begins with an acyl rearrangement at the N-terminal junction where Cys
+        1 attacks the carbonyl carbon of the preceding residue forming a thioester intermediate. The nucleophilicity
+        of the cysteine residue is increased by polarisation by Asn 76, which acts as a general base catalyst,
+        and the transition state is stabilised by the backbone nitrogen of Gly 433. His 79 protonates
+        the amide nitrogen of Cys 1 to promote breakdown of the tetrahedral intermediate to a thioester.
+        Cys 455, activated by a zinc ion, nucleophilically attacks the same carbonyl carbon as Cys 1 causing
+        release of Cys 1. Cyclisation of Asn 454 follows, with nucleophilic attack by the nitrogen activated
+        by the carbonyl oxygen of Ile 434 on the carbonyl carbon, with the transition state stabilised
+        by the zinc ion. On cleavage of the peptide bond His 453, activated by Zn, can act as a proton
+        donor to Cys 455. Stabilisation is also provided by Asn 76 and Thr 78.
+      notes: M-CSA entry 508, mechanism 1; M-CSA cites PMID:10601013, PMID:10828056, PMID:11123916, PMID:12219083,
+        PMID:7988548, PMID:8703028; step 1
+  - subject: cys1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys1 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/508/
+      snippet: covalent catalysis
+      notes: M-CSA entry 508, mechanism 1; M-CSA cites PMID:10601013, PMID:10828056, PMID:11123916, PMID:12219083,
+        PMID:7988548, PMID:8703028; M-CSA catalytic-residue roles for Cys1
+  - subject: asn76
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn76 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/508/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 508, mechanism 1; M-CSA cites PMID:10601013, PMID:10828056, PMID:11123916, PMID:12219083,
+        PMID:7988548, PMID:8703028; M-CSA catalytic-residue roles for Asn76
+  - subject: thr78
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr78 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/508/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 508, mechanism 1; M-CSA cites PMID:10601013, PMID:10828056, PMID:11123916, PMID:12219083,
+        PMID:7988548, PMID:8703028; M-CSA catalytic-residue roles for Thr78
+  - subject: his79
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His79 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/508/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 508, mechanism 1; M-CSA cites PMID:10601013, PMID:10828056, PMID:11123916, PMID:12219083,
+        PMID:7988548, PMID:8703028; M-CSA catalytic-residue roles for His79
+  - subject: lys301
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys301 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/508/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 508, mechanism 1; M-CSA cites PMID:10601013, PMID:10828056, PMID:11123916, PMID:12219083,
+        PMID:7988548, PMID:8703028; M-CSA catalytic-residue roles for Lys301
+  - subject: lys403
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys403 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/508/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 508, mechanism 1; M-CSA cites PMID:10601013, PMID:10828056, PMID:11123916, PMID:12219083,
+        PMID:7988548, PMID:8703028; M-CSA catalytic-residue roles for Lys403
+  - subject: gly433
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly433 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/508/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 508, mechanism 1; M-CSA cites PMID:10601013, PMID:10828056, PMID:11123916, PMID:12219083,
+        PMID:7988548, PMID:8703028; M-CSA catalytic-residue roles for Gly433
+  - subject: ile434
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ile434 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/508/
+      snippet: activator
+      notes: M-CSA entry 508, mechanism 1; M-CSA cites PMID:10601013, PMID:10828056, PMID:11123916, PMID:12219083,
+        PMID:7988548, PMID:8703028; M-CSA catalytic-residue roles for Ile434
+  - subject: asn454
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn454 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/508/
+      snippet: covalent catalysis
+      notes: M-CSA entry 508, mechanism 1; M-CSA cites PMID:10601013, PMID:10828056, PMID:11123916, PMID:12219083,
+        PMID:7988548, PMID:8703028; M-CSA catalytic-residue roles for Asn454
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/508/
+      snippet: Protein splicing begins with an acyl rearrangement at the N-terminal junction where Cys
+        1 attacks the carbonyl carbon of the preceding residue forming a thioester intermediate. The nucleophilicity
+        of the cysteine residue is increased by polarisation by Asn 76, which acts as a general base catalyst,
+        and the transition state is stabilised by the backbone nitrogen of Gly 433. His 79 protonates
+        the am
+      notes: M-CSA entry 508, mechanism 1; M-CSA cites PMID:10601013, PMID:10828056, PMID:11123916, PMID:12219083,
+        PMID:7988548, PMID:8703028; CATH domain 2.170.16.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/508/
+      snippet: Protein splicing begins with an acyl rearrangement at the N-terminal junction where Cys
+        1 attacks the carbonyl carbon of the preceding residue forming a thioester intermediate. The nucleophilicity
+        of the cysteine residue is increased by polarisation by Asn 76, which acts as a general base catalyst,
+        and the transition state is stabilised by the backbone nitrogen of Gly 433. His 79 protonates
+        the am
+      notes: M-CSA entry 508, mechanism 1; M-CSA cites PMID:10601013, PMID:10828056, PMID:11123916, PMID:12219083,
+        PMID:7988548, PMID:8703028; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/508/
+      snippet: Protein splicing begins with an acyl rearrangement at the N-terminal junction where Cys
+        1 attacks the carbonyl carbon of the preceding residue forming a thioester intermediate. The nucleophilicity
+        of the cysteine residue is increased by polarisation by Asn 76, which acts as a general base catalyst,
+        and the transition state is stabilised by the backbone nitrogen of Gly 433. His 79 protonates
+        the am
+      notes: M-CSA entry 508, mechanism 1; M-CSA cites PMID:10601013, PMID:10828056, PMID:11123916, PMID:12219083,
+        PMID:7988548, PMID:8703028; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/508/
+      snippet: Protein splicing begins with an acyl rearrangement at the N-terminal junction where Cys
+        1 attacks the carbonyl carbon of the preceding residue forming a thioester intermediate. The nucleophilicity
+        of the cysteine residue is increased by polarisation by Asn 76, which acts as a general base catalyst,
+        and the transition state is stabilised by the backbone nitrogen of Gly 433. His 79 protonates
+        the am
+      notes: M-CSA entry 508, mechanism 1; M-CSA cites PMID:10601013, PMID:10828056, PMID:11123916, PMID:12219083,
+        PMID:7988548, PMID:8703028; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/508/
+      snippet: Protein splicing begins with an acyl rearrangement at the N-terminal junction where Cys
+        1 attacks the carbonyl carbon of the preceding residue forming a thioester intermediate. The nucleophilicity
+        of the cysteine residue is increased by polarisation by Asn 76, which acts as a general base catalyst,
+        and the transition state is stabilised by the backbone nitrogen of Gly 433. His 79 protonates
+        the am
+      notes: M-CSA entry 508, mechanism 1; M-CSA cites PMID:10601013, PMID:10828056, PMID:11123916, PMID:12219083,
+        PMID:7988548, PMID:8703028; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/508/
+      snippet: Protein splicing begins with an acyl rearrangement at the N-terminal junction where Cys
+        1 attacks the carbonyl carbon of the preceding residue forming a thioester intermediate. The nucleophilicity
+        of the cysteine residue is increased by polarisation by Asn 76, which acts as a general base catalyst,
+        and the transition state is stabilised by the backbone nitrogen of Gly 433. His 79 protonates
+        the am
+      notes: M-CSA entry 508, mechanism 1; M-CSA cites PMID:10601013, PMID:10828056, PMID:11123916, PMID:12219083,
+        PMID:7988548, PMID:8703028; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/508/
+      snippet: Protein splicing begins with an acyl rearrangement at the N-terminal junction where Cys
+        1 attacks the carbonyl carbon of the preceding residue forming a thioester intermediate. The nucleophilicity
+        of the cysteine residue is increased by polarisation by Asn 76, which acts as a general base catalyst,
+        and the transition state is stabilised by the backbone nitrogen of Gly 433. His 79 protonates
+        the am
+      notes: M-CSA entry 508, mechanism 1; M-CSA cites PMID:10601013, PMID:10828056, PMID:11123916, PMID:12219083,
+        PMID:7988548, PMID:8703028; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/508/
+      snippet: Protein splicing begins with an acyl rearrangement at the N-terminal junction where Cys
+        1 attacks the carbonyl carbon of the preceding residue forming a thioester intermediate. The nucleophilicity
+        of the cysteine residue is increased by polarisation by Asn 76, which acts as a general base catalyst,
+        and the transition state is stabilised by the backbone nitrogen of Gly 433. His 79 protonates
+        the am
+      notes: M-CSA entry 508, mechanism 1; M-CSA cites PMID:10601013, PMID:10828056, PMID:11123916, PMID:12219083,
+        PMID:7988548, PMID:8703028; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (24 evidence-backed edges) transcribed from M-CSA entry 508;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

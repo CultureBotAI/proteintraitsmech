@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.7.1.14
 - CHEBI:29121
@@ -286,4 +286,300 @@ definitions:
       Cytochrome P450 nitric oxide reductase (P450nor) is involved in a dissimilatory reduction of nitrite. Acts as a nitric oxide reductase. Is able to reduce nitrate and nitrite to a gaseous form of N2O when oxygen supply is limited or discontinued. May function as a detoxification mechanism. This protein is found in denitrifying organisms such as Fusarium oxysporum. It is a member of the cytochrome P450 superfamily, which are heme-thiolate enzymes. There are two isoforms of P450nor in F. oxysporum, one of which uses NADH as cofactor exclusively, while the other uses NADH or NADPH. P450nor catalyses the NAD(P)H-dependent reduction of two molecules of the free radical, nitric oxide (NO), to nitrous oxide (N2O). The reaction is unusual because it involves direct electron transfer, in the form of a hydride, from NAD(P)H to a redox protein (heme) that contains only a one-electron redox centre. P450nor appears to have an important role in protecting the fungus from NO inhibition of mitochondria and other cellular damage that may result from the reaction of NO with other molecules such as oxygen or superoxide to form biologically hazardous compounds.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of NADP nitrous oxide-forming nitric oxide reductase
+  description: Mechanism transcribed from M-CSA entry 473. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: thr243
+    label: catalytic Thr243 (M-CSA/PDB numbering; UniProt residue 243)
+    node_type: RESIDUE
+    grounding: UniProtKB:P23295
+    description: 'M-CSA roles: steric role.'
+  - node_id: ser286
+    label: catalytic Ser286 (M-CSA/PDB numbering; UniProt residue 286)
+    node_type: RESIDUE
+    grounding: UniProtKB:P23295
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: cys352
+    label: catalytic Cys352 (M-CSA/PDB numbering; UniProt residue 352)
+    node_type: RESIDUE
+    grounding: UniProtKB:P23295
+    description: 'M-CSA roles: activator, metal ligand.'
+  - node_id: asp393
+    label: catalytic Asp393 (M-CSA/PDB numbering; UniProt residue 393)
+    node_type: RESIDUE
+    grounding: UniProtKB:P23295
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: dinitrogen oxide
+    node_type: CHEMICAL
+    grounding: CHEBI:17045
+  - node_id: reactant1
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15846
+  - node_id: reactant2
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: oxidonitrate(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:29121
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:16908
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: "A molecule of NO binds to the resting state enzyme, where the heme iron is in its ferric\
+      \ (Fe<sup>3+</sup>) state, to form an [Fe3+ NO] complex.   
+<br/><br/>
+This is reduced to\
+      \ form the intermediate thought to be [Fe<sup>3+</sup> NO 2H<sup>+</sup>]. Reduction occurs by hydride\
+      \ transfer from NAD(P)H, and the addition of a proton, derived from the bulk solvent and probably\
+      \ transferred via a hydrog"
+  - node_id: active_site
+    label: NADP nitrous oxide-forming nitric oxide reductase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:473
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.10.630.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.10.630.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: NADP nitrous oxide-forming nitric oxide reductase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.7.1.14
+  edges:
+  - subject: ser286
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser286 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/473/
+      snippet: "A molecule of NO binds to the resting state enzyme, where the heme iron is in its ferric\
+        \ (Fe<sup>3+</sup>) state, to form an [Fe3+ NO] complex.   
+<br/><br/>
+This is reduced to\
+        \ form the intermediate thought to be [Fe<sup>3+</sup> NO 2H<sup>+</sup>]. Reduction occurs by\
+        \ hydride transfer from NAD(P)H, and the addition of a proton, derived from the bulk solvent and\
+        \ probably transferred via a hydrogen bonding network involving [Solvent Water -- Asp393 -- Water\
+        \ --  Ser286 -- Water] to the heme.  
+<br/><br/>
+NAD(P)+ is rapidly released from the active\
+        \ site, and the intermediate reacts with another molecule of NO to regenerate the enzyme and form\
+        \ N<sub>2</sub>O and water."
+      notes: M-CSA entry 473, mechanism 2; M-CSA cites PMID:10671516, PMID:15313618, PMID:16788909, PMID:22095732,
+        PMID:22451104, PMID:24658055, PMID:7829493; step 1
+  - subject: asp393
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp393 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/473/
+      snippet: "A molecule of NO binds to the resting state enzyme, where the heme iron is in its ferric\
+        \ (Fe<sup>3+</sup>) state, to form an [Fe3+ NO] complex.   
+<br/><br/>
+This is reduced to\
+        \ form the intermediate thought to be [Fe<sup>3+</sup> NO 2H<sup>+</sup>]. Reduction occurs by\
+        \ hydride transfer from NAD(P)H, and the addition of a proton, derived from the bulk solvent and\
+        \ probably transferred via a hydrogen bonding network involving [Solvent Water -- Asp393 -- Water\
+        \ --  Ser286 -- Water] to the heme.  
+<br/><br/>
+NAD(P)+ is rapidly released from the active\
+        \ site, and the intermediate reacts with another molecule of NO to regenerate the enzyme and form\
+        \ N<sub>2</sub>O and water."
+      notes: M-CSA entry 473, mechanism 2; M-CSA cites PMID:10671516, PMID:15313618, PMID:16788909, PMID:22095732,
+        PMID:22451104, PMID:24658055, PMID:7829493; step 1
+  - subject: thr243
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr243 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/473/
+      snippet: steric role
+      notes: M-CSA entry 473, mechanism 2; M-CSA cites PMID:10671516, PMID:15313618, PMID:16788909, PMID:22095732,
+        PMID:22451104, PMID:24658055, PMID:7829493; M-CSA catalytic-residue roles for Thr243
+  - subject: ser286
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser286 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/473/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 473, mechanism 2; M-CSA cites PMID:10671516, PMID:15313618, PMID:16788909, PMID:22095732,
+        PMID:22451104, PMID:24658055, PMID:7829493; M-CSA catalytic-residue roles for Ser286
+  - subject: cys352
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys352 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/473/
+      snippet: activator, metal ligand
+      notes: M-CSA entry 473, mechanism 2; M-CSA cites PMID:10671516, PMID:15313618, PMID:16788909, PMID:22095732,
+        PMID:22451104, PMID:24658055, PMID:7829493; M-CSA catalytic-residue roles for Cys352
+  - subject: asp393
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp393 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/473/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 473, mechanism 2; M-CSA cites PMID:10671516, PMID:15313618, PMID:16788909, PMID:22095732,
+        PMID:22451104, PMID:24658055, PMID:7829493; M-CSA catalytic-residue roles for Asp393
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/473/
+      snippet: "A molecule of NO binds to the resting state enzyme, where the heme iron is in its ferric\
+        \ (Fe<sup>3+</sup>) state, to form an [Fe3+ NO] complex.   
+<br/><br/>
+This is reduced to\
+        \ form the intermediate thought to be [Fe<sup>3+</sup> NO 2H<sup>+</sup>]. Reduction occurs by\
+        \ hydride transfer from NAD(P)H, and the addition of a proton, derived from the bulk solvent and\
+        \ probably transferred via a hydrog"
+      notes: M-CSA entry 473, mechanism 2; M-CSA cites PMID:10671516, PMID:15313618, PMID:16788909, PMID:22095732,
+        PMID:22451104, PMID:24658055, PMID:7829493; CATH domain 1.10.630.10 assigned to the catalytic
+        chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/473/
+      snippet: "A molecule of NO binds to the resting state enzyme, where the heme iron is in its ferric\
+        \ (Fe<sup>3+</sup>) state, to form an [Fe3+ NO] complex.   
+<br/><br/>
+This is reduced to\
+        \ form the intermediate thought to be [Fe<sup>3+</sup> NO 2H<sup>+</sup>]. Reduction occurs by\
+        \ hydride transfer from NAD(P)H, and the addition of a proton, derived from the bulk solvent and\
+        \ probably transferred via a hydrog"
+      notes: M-CSA entry 473, mechanism 2; M-CSA cites PMID:10671516, PMID:15313618, PMID:16788909, PMID:22095732,
+        PMID:22451104, PMID:24658055, PMID:7829493; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/473/
+      snippet: "A molecule of NO binds to the resting state enzyme, where the heme iron is in its ferric\
+        \ (Fe<sup>3+</sup>) state, to form an [Fe3+ NO] complex.   
+<br/><br/>
+This is reduced to\
+        \ form the intermediate thought to be [Fe<sup>3+</sup> NO 2H<sup>+</sup>]. Reduction occurs by\
+        \ hydride transfer from NAD(P)H, and the addition of a proton, derived from the bulk solvent and\
+        \ probably transferred via a hydrog"
+      notes: M-CSA entry 473, mechanism 2; M-CSA cites PMID:10671516, PMID:15313618, PMID:16788909, PMID:22095732,
+        PMID:22451104, PMID:24658055, PMID:7829493; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/473/
+      snippet: "A molecule of NO binds to the resting state enzyme, where the heme iron is in its ferric\
+        \ (Fe<sup>3+</sup>) state, to form an [Fe3+ NO] complex.   
+<br/><br/>
+This is reduced to\
+        \ form the intermediate thought to be [Fe<sup>3+</sup> NO 2H<sup>+</sup>]. Reduction occurs by\
+        \ hydride transfer from NAD(P)H, and the addition of a proton, derived from the bulk solvent and\
+        \ probably transferred via a hydrog"
+      notes: M-CSA entry 473, mechanism 2; M-CSA cites PMID:10671516, PMID:15313618, PMID:16788909, PMID:22095732,
+        PMID:22451104, PMID:24658055, PMID:7829493; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/473/
+      snippet: "A molecule of NO binds to the resting state enzyme, where the heme iron is in its ferric\
+        \ (Fe<sup>3+</sup>) state, to form an [Fe3+ NO] complex.   
+<br/><br/>
+This is reduced to\
+        \ form the intermediate thought to be [Fe<sup>3+</sup> NO 2H<sup>+</sup>]. Reduction occurs by\
+        \ hydride transfer from NAD(P)H, and the addition of a proton, derived from the bulk solvent and\
+        \ probably transferred via a hydrog"
+      notes: M-CSA entry 473, mechanism 2; M-CSA cites PMID:10671516, PMID:15313618, PMID:16788909, PMID:22095732,
+        PMID:22451104, PMID:24658055, PMID:7829493; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/473/
+      snippet: "A molecule of NO binds to the resting state enzyme, where the heme iron is in its ferric\
+        \ (Fe<sup>3+</sup>) state, to form an [Fe3+ NO] complex.   
+<br/><br/>
+This is reduced to\
+        \ form the intermediate thought to be [Fe<sup>3+</sup> NO 2H<sup>+</sup>]. Reduction occurs by\
+        \ hydride transfer from NAD(P)H, and the addition of a proton, derived from the bulk solvent and\
+        \ probably transferred via a hydrog"
+      notes: M-CSA entry 473, mechanism 2; M-CSA cites PMID:10671516, PMID:15313618, PMID:16788909, PMID:22095732,
+        PMID:22451104, PMID:24658055, PMID:7829493; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/473/
+      snippet: "A molecule of NO binds to the resting state enzyme, where the heme iron is in its ferric\
+        \ (Fe<sup>3+</sup>) state, to form an [Fe3+ NO] complex.   
+<br/><br/>
+This is reduced to\
+        \ form the intermediate thought to be [Fe<sup>3+</sup> NO 2H<sup>+</sup>]. Reduction occurs by\
+        \ hydride transfer from NAD(P)H, and the addition of a proton, derived from the bulk solvent and\
+        \ probably transferred via a hydrog"
+      notes: M-CSA entry 473, mechanism 2; M-CSA cites PMID:10671516, PMID:15313618, PMID:16788909, PMID:22095732,
+        PMID:22451104, PMID:24658055, PMID:7829493; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/473/
+      snippet: "A molecule of NO binds to the resting state enzyme, where the heme iron is in its ferric\
+        \ (Fe<sup>3+</sup>) state, to form an [Fe3+ NO] complex.   
+<br/><br/>
+This is reduced to\
+        \ form the intermediate thought to be [Fe<sup>3+</sup> NO 2H<sup>+</sup>]. Reduction occurs by\
+        \ hydride transfer from NAD(P)H, and the addition of a proton, derived from the bulk solvent and\
+        \ probably transferred via a hydrog"
+      notes: M-CSA entry 473, mechanism 2; M-CSA cites PMID:10671516, PMID:15313618, PMID:16788909, PMID:22095732,
+        PMID:22451104, PMID:24658055, PMID:7829493; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (14 evidence-backed edges) transcribed from M-CSA entry 473;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

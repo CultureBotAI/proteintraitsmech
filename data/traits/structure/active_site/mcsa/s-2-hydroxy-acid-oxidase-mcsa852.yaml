@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.1.3.15
 - CHEBI:58123
@@ -316,4 +316,218 @@ definitions:
       Glycolate oxidase is a flavoenzyme, which contains a permanently bound FNN cofactor. It catalyses the oxidation of (S)-2-hydroxy-acid to 2-oxo acid. In green plants, glycolate oxidase is one of the key enzymes in photorespiration where it oxidizes glycolate to glyoxylate. Comparison of properties with the extensively studied L-lactate oxidase and the topography of the active site and the amino acids surrounding the prosthetic group FMN led to the proposal of a reaction mechanism.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of (S)-2-hydroxy-acid oxidase
+  description: Mechanism transcribed from M-CSA entry 852. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: ser106
+    label: catalytic Ser106 (M-CSA/PDB numbering; UniProt residue 106)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05414
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: tyr129
+    label: catalytic Tyr129 (M-CSA/PDB numbering; UniProt residue 129)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05414
+    description: 'M-CSA roles: electrostatic stabiliser, modifies pKa.'
+  - node_id: thr155
+    label: catalytic Thr155 (M-CSA/PDB numbering; UniProt residue 155)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05414
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: lys230
+    label: catalytic Lys230 (M-CSA/PDB numbering; UniProt residue 230)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05414
+    description: 'M-CSA roles: electrostatic stabiliser, enhance reactivity.'
+  - node_id: his254
+    label: catalytic His254 (M-CSA/PDB numbering; UniProt residue 254)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05414
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: (2S)-2-hydroxy monocarboxylic acid anion
+    node_type: CHEMICAL
+    grounding: CHEBI:58123
+  - node_id: reactant1
+    label: dioxygen
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+  - node_id: product0
+    label: hydrogen peroxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+  - node_id: product1
+    label: 2-oxo monocarboxylic acid anion
+    node_type: CHEMICAL
+    grounding: CHEBI:35179
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: The reaction proceeds via a ping-pong mechanism and the reduction of FMN is found to
+      be rate-limiting. In the first reductive step a proton is abstracted from the substance C2 carbon
+      atom producing a carbanion. This carbanion can subsequently attach to a N5 atom of FMN, via formation
+      of a covalent adduct, two electrons are then transferred to the isoalloxazine ring. The reduced
+      FMN is reoxidised b
+  - node_id: active_site
+    label: (S)-2-hydroxy-acid oxidase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:852
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.70 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.70
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: (S)-2-hydroxy-acid oxidase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.1.3.15
+  edges:
+  - subject: ser106
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser106 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/852/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 852, mechanism 1; M-CSA cites PMID:25416784, PMID:2644287, PMID:8504801, PMID:9144771;
+        M-CSA catalytic-residue roles for Ser106
+  - subject: tyr129
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr129 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/852/
+      snippet: electrostatic stabiliser, modifies pKa
+      notes: M-CSA entry 852, mechanism 1; M-CSA cites PMID:25416784, PMID:2644287, PMID:8504801, PMID:9144771;
+        M-CSA catalytic-residue roles for Tyr129
+  - subject: thr155
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr155 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/852/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 852, mechanism 1; M-CSA cites PMID:25416784, PMID:2644287, PMID:8504801, PMID:9144771;
+        M-CSA catalytic-residue roles for Thr155
+  - subject: lys230
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys230 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/852/
+      snippet: electrostatic stabiliser, enhance reactivity
+      notes: M-CSA entry 852, mechanism 1; M-CSA cites PMID:25416784, PMID:2644287, PMID:8504801, PMID:9144771;
+        M-CSA catalytic-residue roles for Lys230
+  - subject: his254
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His254 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/852/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 852, mechanism 1; M-CSA cites PMID:25416784, PMID:2644287, PMID:8504801, PMID:9144771;
+        M-CSA catalytic-residue roles for His254
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/852/
+      snippet: The reaction proceeds via a ping-pong mechanism and the reduction of FMN is found to be
+        rate-limiting. In the first reductive step a proton is abstracted from the substance C2 carbon
+        atom producing a carbanion. This carbanion can subsequently attach to a N5 atom of FMN, via formation
+        of a covalent adduct, two electrons are then transferred to the isoalloxazine ring. The reduced
+        FMN is reoxidised b
+      notes: M-CSA entry 852, mechanism 1; M-CSA cites PMID:25416784, PMID:2644287, PMID:8504801, PMID:9144771;
+        CATH domain 3.20.20.70 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/852/
+      snippet: The reaction proceeds via a ping-pong mechanism and the reduction of FMN is found to be
+        rate-limiting. In the first reductive step a proton is abstracted from the substance C2 carbon
+        atom producing a carbanion. This carbanion can subsequently attach to a N5 atom of FMN, via formation
+        of a covalent adduct, two electrons are then transferred to the isoalloxazine ring. The reduced
+        FMN is reoxidised b
+      notes: M-CSA entry 852, mechanism 1; M-CSA cites PMID:25416784, PMID:2644287, PMID:8504801, PMID:9144771;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/852/
+      snippet: The reaction proceeds via a ping-pong mechanism and the reduction of FMN is found to be
+        rate-limiting. In the first reductive step a proton is abstracted from the substance C2 carbon
+        atom producing a carbanion. This carbanion can subsequently attach to a N5 atom of FMN, via formation
+        of a covalent adduct, two electrons are then transferred to the isoalloxazine ring. The reduced
+        FMN is reoxidised b
+      notes: M-CSA entry 852, mechanism 1; M-CSA cites PMID:25416784, PMID:2644287, PMID:8504801, PMID:9144771;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/852/
+      snippet: The reaction proceeds via a ping-pong mechanism and the reduction of FMN is found to be
+        rate-limiting. In the first reductive step a proton is abstracted from the substance C2 carbon
+        atom producing a carbanion. This carbanion can subsequently attach to a N5 atom of FMN, via formation
+        of a covalent adduct, two electrons are then transferred to the isoalloxazine ring. The reduced
+        FMN is reoxidised b
+      notes: M-CSA entry 852, mechanism 1; M-CSA cites PMID:25416784, PMID:2644287, PMID:8504801, PMID:9144771;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/852/
+      snippet: The reaction proceeds via a ping-pong mechanism and the reduction of FMN is found to be
+        rate-limiting. In the first reductive step a proton is abstracted from the substance C2 carbon
+        atom producing a carbanion. This carbanion can subsequently attach to a N5 atom of FMN, via formation
+        of a covalent adduct, two electrons are then transferred to the isoalloxazine ring. The reduced
+        FMN is reoxidised b
+      notes: M-CSA entry 852, mechanism 1; M-CSA cites PMID:25416784, PMID:2644287, PMID:8504801, PMID:9144771;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/852/
+      snippet: The reaction proceeds via a ping-pong mechanism and the reduction of FMN is found to be
+        rate-limiting. In the first reductive step a proton is abstracted from the substance C2 carbon
+        atom producing a carbanion. This carbanion can subsequently attach to a N5 atom of FMN, via formation
+        of a covalent adduct, two electrons are then transferred to the isoalloxazine ring. The reduced
+        FMN is reoxidised b
+      notes: M-CSA entry 852, mechanism 1; M-CSA cites PMID:25416784, PMID:2644287, PMID:8504801, PMID:9144771;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (11 evidence-backed edges) transcribed from M-CSA entry 852;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

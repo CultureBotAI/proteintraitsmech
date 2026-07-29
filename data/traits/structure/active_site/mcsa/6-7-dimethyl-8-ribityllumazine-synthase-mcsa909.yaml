@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.5.1.78
 - CHEBI:58830
@@ -154,4 +154,199 @@ definitions:
       Riboflavin is biosynthesised in plants, fungi and certain microorganisms; as animals lack the necessary enzymes to produce this vitamin, they acquire it from dietary sources. The penultimate step in the biosynthesis of riboflavin (vitamin B2) involves the condensation of 3,4-dihydroxy-2-butanone 4-phosphate with 5-amino-6-ribitylamino-2,4(1H,3H)-pyrimidinedione, which is catalysed by 6,7-dimethyl-8-ribityllumazine synthase (lumazine synthase).
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 6,7-dimethyl-8-ribityllumazine synthase
+  description: Mechanism transcribed from M-CSA entry 909. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering only — no unique offset to the record's reference sequence could
+    be verified, so no UniProt position is asserted.
+  nodes:
+  - node_id: his88
+    label: catalytic His88 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11998
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: (2S)-2-hydroxy-3-oxobutyl phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58830
+  - node_id: reactant1
+    label: 5-amino-6-(D-ribitylamino)uracil
+    node_type: CHEMICAL
+    grounding: CHEBI:15934
+  - node_id: product0
+    label: 6,7-dimethyl-8-(1-D-ribityl)lumazine(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58201
+  - node_id: product1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product3
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: It has been proposed that the first step of the mechanism involves the formation of a
+      Schiff base intermediate between the two substrates. The position 7 hydrogen of the intermediate
+      is removed by His88, which facilitates the loss of the phosphate group. The intermediate then undergoes
+      tautomerisation and rotation of the enol motif. This positions the carbonyl group for the final
+      ring closure.
+  - node_id: active_site
+    label: 6,7-dimethyl-8-ribityllumazine synthase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:909
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.960 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.960
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: 6,7-dimethyl-8-ribityllumazine synthase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.5.1.78
+  edges:
+  - subject: his88
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His88 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/909/
+      snippet: It has been proposed that the first step of the mechanism involves the formation of a Schiff
+        base intermediate between the two substrates. The position 7 hydrogen of the intermediate is removed
+        by His88, which facilitates the loss of the phosphate group. The intermediate then undergoes tautomerisation
+        and rotation of the enol motif. This positions the carbonyl group for the final ring closure.
+      notes: M-CSA entry 909, mechanism 1; M-CSA cites PMID:10860731, PMID:11237620, PMID:12083520, PMID:12581640,
+        PMID:7473709; step 1
+  - subject: his88
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His88 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/909/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 909, mechanism 1; M-CSA cites PMID:10860731, PMID:11237620, PMID:12083520, PMID:12581640,
+        PMID:7473709; M-CSA catalytic-residue roles for His88
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/909/
+      snippet: It has been proposed that the first step of the mechanism involves the formation of a Schiff
+        base intermediate between the two substrates. The position 7 hydrogen of the intermediate is removed
+        by His88, which facilitates the loss of the phosphate group. The intermediate then undergoes tautomerisation
+        and rotation of the enol motif. This positions the carbonyl group for the final ring closure.
+      notes: M-CSA entry 909, mechanism 1; M-CSA cites PMID:10860731, PMID:11237620, PMID:12083520, PMID:12581640,
+        PMID:7473709; CATH domain 3.40.50.960 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/909/
+      snippet: It has been proposed that the first step of the mechanism involves the formation of a Schiff
+        base intermediate between the two substrates. The position 7 hydrogen of the intermediate is removed
+        by His88, which facilitates the loss of the phosphate group. The intermediate then undergoes tautomerisation
+        and rotation of the enol motif. This positions the carbonyl group for the final ring closure.
+      notes: M-CSA entry 909, mechanism 1; M-CSA cites PMID:10860731, PMID:11237620, PMID:12083520, PMID:12581640,
+        PMID:7473709; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/909/
+      snippet: It has been proposed that the first step of the mechanism involves the formation of a Schiff
+        base intermediate between the two substrates. The position 7 hydrogen of the intermediate is removed
+        by His88, which facilitates the loss of the phosphate group. The intermediate then undergoes tautomerisation
+        and rotation of the enol motif. This positions the carbonyl group for the final ring closure.
+      notes: M-CSA entry 909, mechanism 1; M-CSA cites PMID:10860731, PMID:11237620, PMID:12083520, PMID:12581640,
+        PMID:7473709; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/909/
+      snippet: It has been proposed that the first step of the mechanism involves the formation of a Schiff
+        base intermediate between the two substrates. The position 7 hydrogen of the intermediate is removed
+        by His88, which facilitates the loss of the phosphate group. The intermediate then undergoes tautomerisation
+        and rotation of the enol motif. This positions the carbonyl group for the final ring closure.
+      notes: M-CSA entry 909, mechanism 1; M-CSA cites PMID:10860731, PMID:11237620, PMID:12083520, PMID:12581640,
+        PMID:7473709; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/909/
+      snippet: It has been proposed that the first step of the mechanism involves the formation of a Schiff
+        base intermediate between the two substrates. The position 7 hydrogen of the intermediate is removed
+        by His88, which facilitates the loss of the phosphate group. The intermediate then undergoes tautomerisation
+        and rotation of the enol motif. This positions the carbonyl group for the final ring closure.
+      notes: M-CSA entry 909, mechanism 1; M-CSA cites PMID:10860731, PMID:11237620, PMID:12083520, PMID:12581640,
+        PMID:7473709; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/909/
+      snippet: It has been proposed that the first step of the mechanism involves the formation of a Schiff
+        base intermediate between the two substrates. The position 7 hydrogen of the intermediate is removed
+        by His88, which facilitates the loss of the phosphate group. The intermediate then undergoes tautomerisation
+        and rotation of the enol motif. This positions the carbonyl group for the final ring closure.
+      notes: M-CSA entry 909, mechanism 1; M-CSA cites PMID:10860731, PMID:11237620, PMID:12083520, PMID:12581640,
+        PMID:7473709; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/909/
+      snippet: It has been proposed that the first step of the mechanism involves the formation of a Schiff
+        base intermediate between the two substrates. The position 7 hydrogen of the intermediate is removed
+        by His88, which facilitates the loss of the phosphate group. The intermediate then undergoes tautomerisation
+        and rotation of the enol motif. This positions the carbonyl group for the final ring closure.
+      notes: M-CSA entry 909, mechanism 1; M-CSA cites PMID:10860731, PMID:11237620, PMID:12083520, PMID:12581640,
+        PMID:7473709; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product3
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/909/
+      snippet: It has been proposed that the first step of the mechanism involves the formation of a Schiff
+        base intermediate between the two substrates. The position 7 hydrogen of the intermediate is removed
+        by His88, which facilitates the loss of the phosphate group. The intermediate then undergoes tautomerisation
+        and rotation of the enol motif. This positions the carbonyl group for the final ring closure.
+      notes: M-CSA entry 909, mechanism 1; M-CSA cites PMID:10860731, PMID:11237620, PMID:12083520, PMID:12581640,
+        PMID:7473709; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (10 evidence-backed edges) transcribed from M-CSA entry 909;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

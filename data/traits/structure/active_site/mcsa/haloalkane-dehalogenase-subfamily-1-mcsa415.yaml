@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.8.1.5
 - CHEBI:15378
@@ -252,4 +252,269 @@ definitions:
       Catalyzes hydrolytic cleavage of carbon-halogen bonds in halogenated aliphatic compounds, leading to the formation of the corresponding primary alcohols, halide ions and protons. Has a broad substrate specificity, which includes terminally mono- and di- chlorinated and brominated alkanes (up to C4 only). The highest activity was found with 1,2-dichloroethane, 1,3-dichloropropane, and 1,2-dibromoethane.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of haloalkane dehalogenase (subfamily 1)
+  description: Mechanism transcribed from M-CSA entry 415. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: asp124
+    label: catalytic Asp124 (M-CSA/PDB numbering; UniProt residue 124)
+    node_type: RESIDUE
+    grounding: UniProtKB:P22643
+    description: 'M-CSA roles: covalent catalysis.'
+  - node_id: trp125
+    label: catalytic Trp125 (M-CSA/PDB numbering; UniProt residue 125)
+    node_type: RESIDUE
+    grounding: UniProtKB:P22643
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: trp175
+    label: catalytic Trp175 (M-CSA/PDB numbering; UniProt residue 175)
+    node_type: RESIDUE
+    grounding: UniProtKB:P22643
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp260
+    label: catalytic Asp260 (M-CSA/PDB numbering; UniProt residue 260)
+    node_type: RESIDUE
+    grounding: UniProtKB:P22643
+    description: 'M-CSA roles: activator, electrostatic stabiliser.'
+  - node_id: his289
+    label: catalytic His289 (M-CSA/PDB numbering; UniProt residue 289)
+    node_type: RESIDUE
+    grounding: UniProtKB:P22643
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: 1-haloalkane
+    node_type: CHEMICAL
+    grounding: CHEBI:18060
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product1
+    label: halide anion
+    node_type: CHEMICAL
+    grounding: CHEBI:16042
+  - node_id: product2
+    label: primary alcohol
+    node_type: CHEMICAL
+    grounding: CHEBI:15734
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: "Asp124 (activated through an Asp-His-HOH-Asp charge relay system) initiates a nucleophilic\
+      \ attack on the halide substrate, forming a covalent alkyl-enzyme intermediate with the halide ion\
+      \ being eliminated in an Sn2 reaction. 
+<br/><br/>
+The water in the Asp-His-HOH-Asp charge\
+      \ relay system is activated by the histidine, and initiates the cleavage of the alkyl-enzyme intermediate.\
+      \ It is thought th"
+  - node_id: active_site
+    label: haloalkane dehalogenase (subfamily 1) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:415
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1820 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1820
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: haloalkane dehalogenase (subfamily 1) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.8.1.5
+  edges:
+  - subject: asp124
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp124 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/415/
+      snippet: "Asp124 (activated through an Asp-His-HOH-Asp charge relay system) initiates a nucleophilic\
+        \ attack on the halide substrate, forming a covalent alkyl-enzyme intermediate with the halide\
+        \ ion being eliminated in an Sn2 reaction. 
+<br/><br/>
+The water in the Asp-His-HOH-Asp\
+        \ charge relay system is activated by the histidine, and initiates the cleavage of the alkyl-enzyme\
+        \ intermediate. It is thought that the halide remains in the active site until the reaction is\
+        \ complete."
+      notes: M-CSA entry 415, mechanism 2; M-CSA cites PMID:10393294, PMID:17084094, PMID:17645312; step
+        1
+  - subject: asp124
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp124 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/415/
+      snippet: covalent catalysis
+      notes: M-CSA entry 415, mechanism 2; M-CSA cites PMID:10393294, PMID:17084094, PMID:17645312; M-CSA
+        catalytic-residue roles for Asp124
+  - subject: trp125
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp125 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/415/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 415, mechanism 2; M-CSA cites PMID:10393294, PMID:17084094, PMID:17645312; M-CSA
+        catalytic-residue roles for Trp125
+  - subject: trp175
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp175 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/415/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 415, mechanism 2; M-CSA cites PMID:10393294, PMID:17084094, PMID:17645312; M-CSA
+        catalytic-residue roles for Trp175
+  - subject: asp260
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp260 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/415/
+      snippet: activator, electrostatic stabiliser
+      notes: M-CSA entry 415, mechanism 2; M-CSA cites PMID:10393294, PMID:17084094, PMID:17645312; M-CSA
+        catalytic-residue roles for Asp260
+  - subject: his289
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His289 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/415/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 415, mechanism 2; M-CSA cites PMID:10393294, PMID:17084094, PMID:17645312; M-CSA
+        catalytic-residue roles for His289
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/415/
+      snippet: "Asp124 (activated through an Asp-His-HOH-Asp charge relay system) initiates a nucleophilic\
+        \ attack on the halide substrate, forming a covalent alkyl-enzyme intermediate with the halide\
+        \ ion being eliminated in an Sn2 reaction. 
+<br/><br/>
+The water in the Asp-His-HOH-Asp\
+        \ charge relay system is activated by the histidine, and initiates the cleavage of the alkyl-enzyme\
+        \ intermediate. It is thought th"
+      notes: M-CSA entry 415, mechanism 2; M-CSA cites PMID:10393294, PMID:17084094, PMID:17645312; CATH
+        domain 3.40.50.1820 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/415/
+      snippet: "Asp124 (activated through an Asp-His-HOH-Asp charge relay system) initiates a nucleophilic\
+        \ attack on the halide substrate, forming a covalent alkyl-enzyme intermediate with the halide\
+        \ ion being eliminated in an Sn2 reaction. 
+<br/><br/>
+The water in the Asp-His-HOH-Asp\
+        \ charge relay system is activated by the histidine, and initiates the cleavage of the alkyl-enzyme\
+        \ intermediate. It is thought th"
+      notes: M-CSA entry 415, mechanism 2; M-CSA cites PMID:10393294, PMID:17084094, PMID:17645312; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/415/
+      snippet: "Asp124 (activated through an Asp-His-HOH-Asp charge relay system) initiates a nucleophilic\
+        \ attack on the halide substrate, forming a covalent alkyl-enzyme intermediate with the halide\
+        \ ion being eliminated in an Sn2 reaction. 
+<br/><br/>
+The water in the Asp-His-HOH-Asp\
+        \ charge relay system is activated by the histidine, and initiates the cleavage of the alkyl-enzyme\
+        \ intermediate. It is thought th"
+      notes: M-CSA entry 415, mechanism 2; M-CSA cites PMID:10393294, PMID:17084094, PMID:17645312; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/415/
+      snippet: "Asp124 (activated through an Asp-His-HOH-Asp charge relay system) initiates a nucleophilic\
+        \ attack on the halide substrate, forming a covalent alkyl-enzyme intermediate with the halide\
+        \ ion being eliminated in an Sn2 reaction. 
+<br/><br/>
+The water in the Asp-His-HOH-Asp\
+        \ charge relay system is activated by the histidine, and initiates the cleavage of the alkyl-enzyme\
+        \ intermediate. It is thought th"
+      notes: M-CSA entry 415, mechanism 2; M-CSA cites PMID:10393294, PMID:17084094, PMID:17645312; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/415/
+      snippet: "Asp124 (activated through an Asp-His-HOH-Asp charge relay system) initiates a nucleophilic\
+        \ attack on the halide substrate, forming a covalent alkyl-enzyme intermediate with the halide\
+        \ ion being eliminated in an Sn2 reaction. 
+<br/><br/>
+The water in the Asp-His-HOH-Asp\
+        \ charge relay system is activated by the histidine, and initiates the cleavage of the alkyl-enzyme\
+        \ intermediate. It is thought th"
+      notes: M-CSA entry 415, mechanism 2; M-CSA cites PMID:10393294, PMID:17084094, PMID:17645312; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/415/
+      snippet: "Asp124 (activated through an Asp-His-HOH-Asp charge relay system) initiates a nucleophilic\
+        \ attack on the halide substrate, forming a covalent alkyl-enzyme intermediate with the halide\
+        \ ion being eliminated in an Sn2 reaction. 
+<br/><br/>
+The water in the Asp-His-HOH-Asp\
+        \ charge relay system is activated by the histidine, and initiates the cleavage of the alkyl-enzyme\
+        \ intermediate. It is thought th"
+      notes: M-CSA entry 415, mechanism 2; M-CSA cites PMID:10393294, PMID:17084094, PMID:17645312; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/415/
+      snippet: "Asp124 (activated through an Asp-His-HOH-Asp charge relay system) initiates a nucleophilic\
+        \ attack on the halide substrate, forming a covalent alkyl-enzyme intermediate with the halide\
+        \ ion being eliminated in an Sn2 reaction. 
+<br/><br/>
+The water in the Asp-His-HOH-Asp\
+        \ charge relay system is activated by the histidine, and initiates the cleavage of the alkyl-enzyme\
+        \ intermediate. It is thought th"
+      notes: M-CSA entry 415, mechanism 2; M-CSA cites PMID:10393294, PMID:17084094, PMID:17645312; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 415;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

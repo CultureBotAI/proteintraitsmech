@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.13.21
 - CHEBI:15377
@@ -173,4 +173,243 @@ definitions:
       Aspartyl peptidase has unique substrate specificity for Asp-Xaa dipeptides and Asp-Gly-Gly tripeptide. Not classified in any known peptidase family. Convergent evolution accounts for catalytic triad His157, Ser120, Glu192. Found in bacteria and recently found to be present in isolated eukaryotes. This protein is a member of the MEROPS peptidase family S51 (dipeptidase E, clan PC).
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of dipeptidase E
+  description: Mechanism transcribed from M-CSA entry 599. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: gly88
+    label: catalytic Gly88 (M-CSA/PDB numbering; UniProt residue 88)
+    node_type: RESIDUE
+    grounding: UniProtKB:P36936
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ser120
+    label: catalytic Ser120 (M-CSA/PDB numbering; UniProt residue 120)
+    node_type: RESIDUE
+    grounding: UniProtKB:P36936
+    description: 'M-CSA roles: covalent catalysis.'
+  - node_id: ala121
+    label: catalytic Ala121 (M-CSA/PDB numbering; UniProt residue 121)
+    node_type: RESIDUE
+    grounding: UniProtKB:P36936
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his157
+    label: catalytic His157 (M-CSA/PDB numbering; UniProt residue 157)
+    node_type: RESIDUE
+    grounding: UniProtKB:P36936
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: glu192
+    label: catalytic Glu192 (M-CSA/PDB numbering; UniProt residue 192)
+    node_type: RESIDUE
+    grounding: UniProtKB:P36936
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: Asp-Gly
+    node_type: CHEMICAL
+    grounding: CHEBI:73450
+  - node_id: product0
+    label: L-aspartic acid
+    node_type: CHEMICAL
+    grounding: CHEBI:17053
+  - node_id: product1
+    label: glycine
+    node_type: CHEMICAL
+    grounding: CHEBI:15428
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: Nucleophilic attack by activated Ser120 on peptide bond. Protonation of leaving group
+      by His157. Transition state stabilisation by oxyanion hole (Ala121 and Gly88 main chain amides);
+      hydrolysis of acyl enzyme intermediate by His157 activated water molecule.
+  - node_id: active_site
+    label: dipeptidase E catalytic site
+    node_type: MOTIF
+    grounding: MCSA:599
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.880 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.880
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: dipeptidase E activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.13.21
+  edges:
+  - subject: gly88
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Gly88 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/599/
+      snippet: Nucleophilic attack by activated Ser120 on peptide bond. Protonation of leaving group by
+        His157. Transition state stabilisation by oxyanion hole (Ala121 and Gly88 main chain amides);
+        hydrolysis of acyl enzyme intermediate by His157 activated water molecule.
+      notes: M-CSA entry 599, mechanism 1; M-CSA cites PMID:10762256, PMID:11106384; step 1
+  - subject: ser120
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser120 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/599/
+      snippet: Nucleophilic attack by activated Ser120 on peptide bond. Protonation of leaving group by
+        His157. Transition state stabilisation by oxyanion hole (Ala121 and Gly88 main chain amides);
+        hydrolysis of acyl enzyme intermediate by His157 activated water molecule.
+      notes: M-CSA entry 599, mechanism 1; M-CSA cites PMID:10762256, PMID:11106384; step 1
+  - subject: ala121
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ala121 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/599/
+      snippet: Nucleophilic attack by activated Ser120 on peptide bond. Protonation of leaving group by
+        His157. Transition state stabilisation by oxyanion hole (Ala121 and Gly88 main chain amides);
+        hydrolysis of acyl enzyme intermediate by His157 activated water molecule.
+      notes: M-CSA entry 599, mechanism 1; M-CSA cites PMID:10762256, PMID:11106384; step 1
+  - subject: his157
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His157 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/599/
+      snippet: Nucleophilic attack by activated Ser120 on peptide bond. Protonation of leaving group by
+        His157. Transition state stabilisation by oxyanion hole (Ala121 and Gly88 main chain amides);
+        hydrolysis of acyl enzyme intermediate by His157 activated water molecule.
+      notes: M-CSA entry 599, mechanism 1; M-CSA cites PMID:10762256, PMID:11106384; step 1
+  - subject: gly88
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly88 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/599/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 599, mechanism 1; M-CSA cites PMID:10762256, PMID:11106384; M-CSA catalytic-residue
+        roles for Gly88
+  - subject: ser120
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser120 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/599/
+      snippet: covalent catalysis
+      notes: M-CSA entry 599, mechanism 1; M-CSA cites PMID:10762256, PMID:11106384; M-CSA catalytic-residue
+        roles for Ser120
+  - subject: ala121
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ala121 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/599/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 599, mechanism 1; M-CSA cites PMID:10762256, PMID:11106384; M-CSA catalytic-residue
+        roles for Ala121
+  - subject: his157
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His157 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/599/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 599, mechanism 1; M-CSA cites PMID:10762256, PMID:11106384; M-CSA catalytic-residue
+        roles for His157
+  - subject: glu192
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu192 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/599/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 599, mechanism 1; M-CSA cites PMID:10762256, PMID:11106384; M-CSA catalytic-residue
+        roles for Glu192
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/599/
+      snippet: Nucleophilic attack by activated Ser120 on peptide bond. Protonation of leaving group by
+        His157. Transition state stabilisation by oxyanion hole (Ala121 and Gly88 main chain amides);
+        hydrolysis of acyl enzyme intermediate by His157 activated water molecule.
+      notes: M-CSA entry 599, mechanism 1; M-CSA cites PMID:10762256, PMID:11106384; CATH domain 3.40.50.880
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/599/
+      snippet: Nucleophilic attack by activated Ser120 on peptide bond. Protonation of leaving group by
+        His157. Transition state stabilisation by oxyanion hole (Ala121 and Gly88 main chain amides);
+        hydrolysis of acyl enzyme intermediate by His157 activated water molecule.
+      notes: M-CSA entry 599, mechanism 1; M-CSA cites PMID:10762256, PMID:11106384; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/599/
+      snippet: Nucleophilic attack by activated Ser120 on peptide bond. Protonation of leaving group by
+        His157. Transition state stabilisation by oxyanion hole (Ala121 and Gly88 main chain amides);
+        hydrolysis of acyl enzyme intermediate by His157 activated water molecule.
+      notes: M-CSA entry 599, mechanism 1; M-CSA cites PMID:10762256, PMID:11106384; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/599/
+      snippet: Nucleophilic attack by activated Ser120 on peptide bond. Protonation of leaving group by
+        His157. Transition state stabilisation by oxyanion hole (Ala121 and Gly88 main chain amides);
+        hydrolysis of acyl enzyme intermediate by His157 activated water molecule.
+      notes: M-CSA entry 599, mechanism 1; M-CSA cites PMID:10762256, PMID:11106384; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/599/
+      snippet: Nucleophilic attack by activated Ser120 on peptide bond. Protonation of leaving group by
+        His157. Transition state stabilisation by oxyanion hole (Ala121 and Gly88 main chain amides);
+        hydrolysis of acyl enzyme intermediate by His157 activated water molecule.
+      notes: M-CSA entry 599, mechanism 1; M-CSA cites PMID:10762256, PMID:11106384; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/599/
+      snippet: Nucleophilic attack by activated Ser120 on peptide bond. Protonation of leaving group by
+        His157. Transition state stabilisation by oxyanion hole (Ala121 and Gly88 main chain amides);
+        hydrolysis of acyl enzyme intermediate by His157 activated water molecule.
+      notes: M-CSA entry 599, mechanism 1; M-CSA cites PMID:10762256, PMID:11106384; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 599;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

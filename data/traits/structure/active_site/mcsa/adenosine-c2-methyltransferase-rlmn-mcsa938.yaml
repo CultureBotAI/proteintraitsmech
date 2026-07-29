@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.1.1.192
 - CHEBI:59789
@@ -323,4 +323,384 @@ definitions:
       23S rRNA (adenine(2503)-C(2))-methyltransferase (RlmN) specifically methylates position 2 of adenine 2503 in 23S rRNA and position 2 of adenine 37 in tRNAs. m2A2503 modification seems to play a crucial role in the proofreading step occurring at the peptidyl transferase centre and thus would serve to optimise ribosomal fidelity. Unmodified tRNA is not a suitable substrate for RlmN, which suggests that RlmN works in a late step during tRNA maturation. RlmN is a member of the Radical SAM superfamily.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of adenosine C2 methyltransferase (RlmN)
+  description: Mechanism transcribed from M-CSA entry 938. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: glu105
+    label: catalytic Glu105 (M-CSA/PDB numbering; UniProt residue 105)
+    node_type: RESIDUE
+    grounding: UniProtKB:P36979
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: cys118
+    label: catalytic Cys118 (M-CSA/PDB numbering; UniProt residue 118)
+    node_type: RESIDUE
+    grounding: UniProtKB:P36979
+    description: 'M-CSA roles: covalent catalysis.'
+  - node_id: cys125
+    label: catalytic Cys125 (M-CSA/PDB numbering; UniProt residue 125)
+    node_type: RESIDUE
+    grounding: UniProtKB:P36979
+    description: 'M-CSA roles: activator, metal ligand.'
+  - node_id: cys129
+    label: catalytic Cys129 (M-CSA/PDB numbering; UniProt residue 129)
+    node_type: RESIDUE
+    grounding: UniProtKB:P36979
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: cys132
+    label: catalytic Cys132 (M-CSA/PDB numbering; UniProt residue 132)
+    node_type: RESIDUE
+    grounding: UniProtKB:P36979
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: cys355
+    label: catalytic Cys355 (M-CSA/PDB numbering; UniProt residue 355)
+    node_type: RESIDUE
+    grounding: UniProtKB:P36979
+    description: 'M-CSA roles: covalent catalysis.'
+  - node_id: reactant0
+    label: S-adenosyl-L-methionine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+  - node_id: reactant1
+    label: di-mu-sulfido-diiron(1+)
+    node_type: CHEMICAL
+    grounding: CHEBI:33738
+  - node_id: reactant2
+    label: adenosine 5'-monophosphate(1-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:74411
+  - node_id: reactant3
+    label: di-mu-sulfido-diiron(2+)
+    node_type: CHEMICAL
+    grounding: CHEBI:33737
+  - node_id: product0
+    label: 2-methyladenosine 5'-monophosphate(1-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:74497
+  - node_id: product1
+    label: 5'-deoxyadenosine
+    node_type: CHEMICAL
+    grounding: CHEBI:17319
+  - node_id: product2
+    label: S-adenosyl-L-homocysteine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+  - node_id: product3
+    label: L-methionine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57844
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: The first SAM molecule donates its methyl group to Cys355. SAH dissociates and a second
+      molecule of SAM binds. This second molecule binds at the apical iron of the [4Fe-4S]-cluster. SAM
+      binds at this free iron and undergoes homolytic cleavage to form the 5'-deoxyadenosyl radical essential
+      for the reaction. This radical then abstracts a hydrogen atom from the methyl group attached to
+      Cys355. RNA th
+  - node_id: active_site
+    label: adenosine C2 methyltransferase (RlmN) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:938
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.70 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.70
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: adenosine C2 methyltransferase (RlmN) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.1.1.192
+  edges:
+  - subject: glu105
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu105 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/938/
+      snippet: The first SAM molecule donates its methyl group to Cys355. SAH dissociates and a second
+        molecule of SAM binds. This second molecule binds at the apical iron of the [4Fe-4S]-cluster.
+        SAM binds at this free iron and undergoes homolytic cleavage to form the 5'-deoxyadenosyl radical
+        essential for the reaction. This radical then abstracts a hydrogen atom from the methyl group
+        attached to Cys355. RNA then binds, the methyl radical attacks the adenine base to form a new
+        radical species. Glu105 abstracts a proton from the adenine base and a single electron is lost
+        to ferredoxin. Cys118 then forms a disulfide bond with Cys355, eliminating the methylated RNA.
+        The anionic species formed then abstracts a proton from Glu105 to form the final species. The
+        enzyme's active site is regenerated through the reduction of  the disulfide bond with the gain
+        of two protons and loss of two electrons; the exact mechanism of this regeneration is currently
+        unclear.
+      notes: M-CSA entry 938, mechanism 2; M-CSA cites PMID:18025251, PMID:20184321, PMID:21368151, PMID:21415317,
+        PMID:21527678, PMID:21916495, PMID:22097883, PMID:22891362, PMID:23088750, PMID:23835516, PMID:24806349,
+        PMID:27081063; step 1
+  - subject: cys118
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys118 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/938/
+      snippet: The first SAM molecule donates its methyl group to Cys355. SAH dissociates and a second
+        molecule of SAM binds. This second molecule binds at the apical iron of the [4Fe-4S]-cluster.
+        SAM binds at this free iron and undergoes homolytic cleavage to form the 5'-deoxyadenosyl radical
+        essential for the reaction. This radical then abstracts a hydrogen atom from the methyl group
+        attached to Cys355. RNA then binds, the methyl radical attacks the adenine base to form a new
+        radical species. Glu105 abstracts a proton from the adenine base and a single electron is lost
+        to ferredoxin. Cys118 then forms a disulfide bond with Cys355, eliminating the methylated RNA.
+        The anionic species formed then abstracts a proton from Glu105 to form the final species. The
+        enzyme's active site is regenerated through the reduction of  the disulfide bond with the gain
+        of two protons and loss of two electrons; the exact mechanism of this regeneration is currently
+        unclear.
+      notes: M-CSA entry 938, mechanism 2; M-CSA cites PMID:18025251, PMID:20184321, PMID:21368151, PMID:21415317,
+        PMID:21527678, PMID:21916495, PMID:22097883, PMID:22891362, PMID:23088750, PMID:23835516, PMID:24806349,
+        PMID:27081063; step 1
+  - subject: cys355
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys355 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/938/
+      snippet: The first SAM molecule donates its methyl group to Cys355. SAH dissociates and a second
+        molecule of SAM binds. This second molecule binds at the apical iron of the [4Fe-4S]-cluster.
+        SAM binds at this free iron and undergoes homolytic cleavage to form the 5'-deoxyadenosyl radical
+        essential for the reaction. This radical then abstracts a hydrogen atom from the methyl group
+        attached to Cys355. RNA then binds, the methyl radical attacks the adenine base to form a new
+        radical species. Glu105 abstracts a proton from the adenine base and a single electron is lost
+        to ferredoxin. Cys118 then forms a disulfide bond with Cys355, eliminating the methylated RNA.
+        The anionic species formed then abstracts a proton from Glu105 to form the final species. The
+        enzyme's active site is regenerated through the reduction of  the disulfide bond with the gain
+        of two protons and loss of two electrons; the exact mechanism of this regeneration is currently
+        unclear.
+      notes: M-CSA entry 938, mechanism 2; M-CSA cites PMID:18025251, PMID:20184321, PMID:21368151, PMID:21415317,
+        PMID:21527678, PMID:21916495, PMID:22097883, PMID:22891362, PMID:23088750, PMID:23835516, PMID:24806349,
+        PMID:27081063; step 1
+  - subject: glu105
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu105 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/938/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 938, mechanism 2; M-CSA cites PMID:18025251, PMID:20184321, PMID:21368151, PMID:21415317,
+        PMID:21527678, PMID:21916495, PMID:22097883, PMID:22891362, PMID:23088750, PMID:23835516, PMID:24806349,
+        PMID:27081063; M-CSA catalytic-residue roles for Glu105
+  - subject: cys118
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys118 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/938/
+      snippet: covalent catalysis
+      notes: M-CSA entry 938, mechanism 2; M-CSA cites PMID:18025251, PMID:20184321, PMID:21368151, PMID:21415317,
+        PMID:21527678, PMID:21916495, PMID:22097883, PMID:22891362, PMID:23088750, PMID:23835516, PMID:24806349,
+        PMID:27081063; M-CSA catalytic-residue roles for Cys118
+  - subject: cys125
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys125 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/938/
+      snippet: activator, metal ligand
+      notes: M-CSA entry 938, mechanism 2; M-CSA cites PMID:18025251, PMID:20184321, PMID:21368151, PMID:21415317,
+        PMID:21527678, PMID:21916495, PMID:22097883, PMID:22891362, PMID:23088750, PMID:23835516, PMID:24806349,
+        PMID:27081063; M-CSA catalytic-residue roles for Cys125
+  - subject: cys129
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys129 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/938/
+      snippet: metal ligand
+      notes: M-CSA entry 938, mechanism 2; M-CSA cites PMID:18025251, PMID:20184321, PMID:21368151, PMID:21415317,
+        PMID:21527678, PMID:21916495, PMID:22097883, PMID:22891362, PMID:23088750, PMID:23835516, PMID:24806349,
+        PMID:27081063; M-CSA catalytic-residue roles for Cys129
+  - subject: cys132
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys132 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/938/
+      snippet: metal ligand
+      notes: M-CSA entry 938, mechanism 2; M-CSA cites PMID:18025251, PMID:20184321, PMID:21368151, PMID:21415317,
+        PMID:21527678, PMID:21916495, PMID:22097883, PMID:22891362, PMID:23088750, PMID:23835516, PMID:24806349,
+        PMID:27081063; M-CSA catalytic-residue roles for Cys132
+  - subject: cys355
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys355 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/938/
+      snippet: covalent catalysis
+      notes: M-CSA entry 938, mechanism 2; M-CSA cites PMID:18025251, PMID:20184321, PMID:21368151, PMID:21415317,
+        PMID:21527678, PMID:21916495, PMID:22097883, PMID:22891362, PMID:23088750, PMID:23835516, PMID:24806349,
+        PMID:27081063; M-CSA catalytic-residue roles for Cys355
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/938/
+      snippet: The first SAM molecule donates its methyl group to Cys355. SAH dissociates and a second
+        molecule of SAM binds. This second molecule binds at the apical iron of the [4Fe-4S]-cluster.
+        SAM binds at this free iron and undergoes homolytic cleavage to form the 5'-deoxyadenosyl radical
+        essential for the reaction. This radical then abstracts a hydrogen atom from the methyl group
+        attached to Cys355. RNA th
+      notes: M-CSA entry 938, mechanism 2; M-CSA cites PMID:18025251, PMID:20184321, PMID:21368151, PMID:21415317,
+        PMID:21527678, PMID:21916495, PMID:22097883, PMID:22891362, PMID:23088750, PMID:23835516, PMID:24806349,
+        PMID:27081063; CATH domain 3.20.20.70 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/938/
+      snippet: The first SAM molecule donates its methyl group to Cys355. SAH dissociates and a second
+        molecule of SAM binds. This second molecule binds at the apical iron of the [4Fe-4S]-cluster.
+        SAM binds at this free iron and undergoes homolytic cleavage to form the 5'-deoxyadenosyl radical
+        essential for the reaction. This radical then abstracts a hydrogen atom from the methyl group
+        attached to Cys355. RNA th
+      notes: M-CSA entry 938, mechanism 2; M-CSA cites PMID:18025251, PMID:20184321, PMID:21368151, PMID:21415317,
+        PMID:21527678, PMID:21916495, PMID:22097883, PMID:22891362, PMID:23088750, PMID:23835516, PMID:24806349,
+        PMID:27081063; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/938/
+      snippet: The first SAM molecule donates its methyl group to Cys355. SAH dissociates and a second
+        molecule of SAM binds. This second molecule binds at the apical iron of the [4Fe-4S]-cluster.
+        SAM binds at this free iron and undergoes homolytic cleavage to form the 5'-deoxyadenosyl radical
+        essential for the reaction. This radical then abstracts a hydrogen atom from the methyl group
+        attached to Cys355. RNA th
+      notes: M-CSA entry 938, mechanism 2; M-CSA cites PMID:18025251, PMID:20184321, PMID:21368151, PMID:21415317,
+        PMID:21527678, PMID:21916495, PMID:22097883, PMID:22891362, PMID:23088750, PMID:23835516, PMID:24806349,
+        PMID:27081063; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/938/
+      snippet: The first SAM molecule donates its methyl group to Cys355. SAH dissociates and a second
+        molecule of SAM binds. This second molecule binds at the apical iron of the [4Fe-4S]-cluster.
+        SAM binds at this free iron and undergoes homolytic cleavage to form the 5'-deoxyadenosyl radical
+        essential for the reaction. This radical then abstracts a hydrogen atom from the methyl group
+        attached to Cys355. RNA th
+      notes: M-CSA entry 938, mechanism 2; M-CSA cites PMID:18025251, PMID:20184321, PMID:21368151, PMID:21415317,
+        PMID:21527678, PMID:21916495, PMID:22097883, PMID:22891362, PMID:23088750, PMID:23835516, PMID:24806349,
+        PMID:27081063; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/938/
+      snippet: The first SAM molecule donates its methyl group to Cys355. SAH dissociates and a second
+        molecule of SAM binds. This second molecule binds at the apical iron of the [4Fe-4S]-cluster.
+        SAM binds at this free iron and undergoes homolytic cleavage to form the 5'-deoxyadenosyl radical
+        essential for the reaction. This radical then abstracts a hydrogen atom from the methyl group
+        attached to Cys355. RNA th
+      notes: M-CSA entry 938, mechanism 2; M-CSA cites PMID:18025251, PMID:20184321, PMID:21368151, PMID:21415317,
+        PMID:21527678, PMID:21916495, PMID:22097883, PMID:22891362, PMID:23088750, PMID:23835516, PMID:24806349,
+        PMID:27081063; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant3
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/938/
+      snippet: The first SAM molecule donates its methyl group to Cys355. SAH dissociates and a second
+        molecule of SAM binds. This second molecule binds at the apical iron of the [4Fe-4S]-cluster.
+        SAM binds at this free iron and undergoes homolytic cleavage to form the 5'-deoxyadenosyl radical
+        essential for the reaction. This radical then abstracts a hydrogen atom from the methyl group
+        attached to Cys355. RNA th
+      notes: M-CSA entry 938, mechanism 2; M-CSA cites PMID:18025251, PMID:20184321, PMID:21368151, PMID:21415317,
+        PMID:21527678, PMID:21916495, PMID:22097883, PMID:22891362, PMID:23088750, PMID:23835516, PMID:24806349,
+        PMID:27081063; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/938/
+      snippet: The first SAM molecule donates its methyl group to Cys355. SAH dissociates and a second
+        molecule of SAM binds. This second molecule binds at the apical iron of the [4Fe-4S]-cluster.
+        SAM binds at this free iron and undergoes homolytic cleavage to form the 5'-deoxyadenosyl radical
+        essential for the reaction. This radical then abstracts a hydrogen atom from the methyl group
+        attached to Cys355. RNA th
+      notes: M-CSA entry 938, mechanism 2; M-CSA cites PMID:18025251, PMID:20184321, PMID:21368151, PMID:21415317,
+        PMID:21527678, PMID:21916495, PMID:22097883, PMID:22891362, PMID:23088750, PMID:23835516, PMID:24806349,
+        PMID:27081063; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/938/
+      snippet: The first SAM molecule donates its methyl group to Cys355. SAH dissociates and a second
+        molecule of SAM binds. This second molecule binds at the apical iron of the [4Fe-4S]-cluster.
+        SAM binds at this free iron and undergoes homolytic cleavage to form the 5'-deoxyadenosyl radical
+        essential for the reaction. This radical then abstracts a hydrogen atom from the methyl group
+        attached to Cys355. RNA th
+      notes: M-CSA entry 938, mechanism 2; M-CSA cites PMID:18025251, PMID:20184321, PMID:21368151, PMID:21415317,
+        PMID:21527678, PMID:21916495, PMID:22097883, PMID:22891362, PMID:23088750, PMID:23835516, PMID:24806349,
+        PMID:27081063; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/938/
+      snippet: The first SAM molecule donates its methyl group to Cys355. SAH dissociates and a second
+        molecule of SAM binds. This second molecule binds at the apical iron of the [4Fe-4S]-cluster.
+        SAM binds at this free iron and undergoes homolytic cleavage to form the 5'-deoxyadenosyl radical
+        essential for the reaction. This radical then abstracts a hydrogen atom from the methyl group
+        attached to Cys355. RNA th
+      notes: M-CSA entry 938, mechanism 2; M-CSA cites PMID:18025251, PMID:20184321, PMID:21368151, PMID:21415317,
+        PMID:21527678, PMID:21916495, PMID:22097883, PMID:22891362, PMID:23088750, PMID:23835516, PMID:24806349,
+        PMID:27081063; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product3
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/938/
+      snippet: The first SAM molecule donates its methyl group to Cys355. SAH dissociates and a second
+        molecule of SAM binds. This second molecule binds at the apical iron of the [4Fe-4S]-cluster.
+        SAM binds at this free iron and undergoes homolytic cleavage to form the 5'-deoxyadenosyl radical
+        essential for the reaction. This radical then abstracts a hydrogen atom from the methyl group
+        attached to Cys355. RNA th
+      notes: M-CSA entry 938, mechanism 2; M-CSA cites PMID:18025251, PMID:20184321, PMID:21368151, PMID:21415317,
+        PMID:21527678, PMID:21916495, PMID:22097883, PMID:22891362, PMID:23088750, PMID:23835516, PMID:24806349,
+        PMID:27081063; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (19 evidence-backed edges) transcribed from M-CSA entry 938;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

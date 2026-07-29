@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.1.22
 - CHEBI:15377
@@ -297,4 +297,174 @@ definitions:
       alpha-galactosidase is a member of the glycoside hydrolase, family 27 and catalyses the hydrolysis of terminal, non-reducing alpha-D-galactose residues in alpha-D-galactosides, including galactose oligosaccharides, galactomannans and galactolipids such as raffinose, melibiose, and stachyose (in descending order of reactivity).
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of alpha-galactosidase
+  description: Mechanism transcribed from M-CSA entry 913. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering only — no unique offset to the record's reference sequence could
+    be verified, so no UniProt position is asserted.
+  nodes:
+  - node_id: asp130
+    label: catalytic Asp130 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9FXT4
+    description: 'M-CSA roles: covalent catalysis.'
+  - node_id: asp185
+    label: catalytic Asp185 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9FXT4
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: melibiose
+    node_type: CHEMICAL
+    grounding: CHEBI:28053
+  - node_id: product0
+    label: D-galactopyranose
+    node_type: CHEMICAL
+    grounding: CHEBI:4139
+  - node_id: product1
+    label: D-glucopyranose
+    node_type: CHEMICAL
+    grounding: CHEBI:4167
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: Glycoside hydrolase family 27 enzymes are all thought to proceed via a double displacement
+      mechanism with retention of sterochemistry at the anomeric carbon. In this mechanism, one of the
+      two catalytic aspartate residues acts as a nucleophile and becomes attached to the anomeric carbon
+      of the sugar substrate. The other aspartate acts as a general acid/base which activates the catalytic
+      water.
+  - node_id: active_site
+    label: alpha-galactosidase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:913
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.70 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.70
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: alpha-galactosidase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.1.22
+  edges:
+  - subject: asp130
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp130 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/913/
+      snippet: covalent catalysis
+      notes: M-CSA entry 913, mechanism 1; M-CSA cites PMID:12005440, PMID:12423882, PMID:12657636, PMID:15136043,
+        PMID:19940122, PMID:20592022, PMID:25353020; M-CSA catalytic-residue roles for Asp130
+  - subject: asp185
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp185 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/913/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 913, mechanism 1; M-CSA cites PMID:12005440, PMID:12423882, PMID:12657636, PMID:15136043,
+        PMID:19940122, PMID:20592022, PMID:25353020; M-CSA catalytic-residue roles for Asp185
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/913/
+      snippet: Glycoside hydrolase family 27 enzymes are all thought to proceed via a double displacement
+        mechanism with retention of sterochemistry at the anomeric carbon. In this mechanism, one of the
+        two catalytic aspartate residues acts as a nucleophile and becomes attached to the anomeric carbon
+        of the sugar substrate. The other aspartate acts as a general acid/base which activates the catalytic
+        water.
+      notes: M-CSA entry 913, mechanism 1; M-CSA cites PMID:12005440, PMID:12423882, PMID:12657636, PMID:15136043,
+        PMID:19940122, PMID:20592022, PMID:25353020; CATH domain 3.20.20.70 assigned to the catalytic
+        chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/913/
+      snippet: Glycoside hydrolase family 27 enzymes are all thought to proceed via a double displacement
+        mechanism with retention of sterochemistry at the anomeric carbon. In this mechanism, one of the
+        two catalytic aspartate residues acts as a nucleophile and becomes attached to the anomeric carbon
+        of the sugar substrate. The other aspartate acts as a general acid/base which activates the catalytic
+        water.
+      notes: M-CSA entry 913, mechanism 1; M-CSA cites PMID:12005440, PMID:12423882, PMID:12657636, PMID:15136043,
+        PMID:19940122, PMID:20592022, PMID:25353020; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/913/
+      snippet: Glycoside hydrolase family 27 enzymes are all thought to proceed via a double displacement
+        mechanism with retention of sterochemistry at the anomeric carbon. In this mechanism, one of the
+        two catalytic aspartate residues acts as a nucleophile and becomes attached to the anomeric carbon
+        of the sugar substrate. The other aspartate acts as a general acid/base which activates the catalytic
+        water.
+      notes: M-CSA entry 913, mechanism 1; M-CSA cites PMID:12005440, PMID:12423882, PMID:12657636, PMID:15136043,
+        PMID:19940122, PMID:20592022, PMID:25353020; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/913/
+      snippet: Glycoside hydrolase family 27 enzymes are all thought to proceed via a double displacement
+        mechanism with retention of sterochemistry at the anomeric carbon. In this mechanism, one of the
+        two catalytic aspartate residues acts as a nucleophile and becomes attached to the anomeric carbon
+        of the sugar substrate. The other aspartate acts as a general acid/base which activates the catalytic
+        water.
+      notes: M-CSA entry 913, mechanism 1; M-CSA cites PMID:12005440, PMID:12423882, PMID:12657636, PMID:15136043,
+        PMID:19940122, PMID:20592022, PMID:25353020; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/913/
+      snippet: Glycoside hydrolase family 27 enzymes are all thought to proceed via a double displacement
+        mechanism with retention of sterochemistry at the anomeric carbon. In this mechanism, one of the
+        two catalytic aspartate residues acts as a nucleophile and becomes attached to the anomeric carbon
+        of the sugar substrate. The other aspartate acts as a general acid/base which activates the catalytic
+        water.
+      notes: M-CSA entry 913, mechanism 1; M-CSA cites PMID:12005440, PMID:12423882, PMID:12657636, PMID:15136043,
+        PMID:19940122, PMID:20592022, PMID:25353020; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/913/
+      snippet: Glycoside hydrolase family 27 enzymes are all thought to proceed via a double displacement
+        mechanism with retention of sterochemistry at the anomeric carbon. In this mechanism, one of the
+        two catalytic aspartate residues acts as a nucleophile and becomes attached to the anomeric carbon
+        of the sugar substrate. The other aspartate acts as a general acid/base which activates the catalytic
+        water.
+      notes: M-CSA entry 913, mechanism 1; M-CSA cites PMID:12005440, PMID:12423882, PMID:12657636, PMID:15136043,
+        PMID:19940122, PMID:20592022, PMID:25353020; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (8 evidence-backed edges) transcribed from M-CSA entry 913;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

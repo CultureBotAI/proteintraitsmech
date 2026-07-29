@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.3.1.28
 - CHEBI:57288
@@ -160,4 +160,222 @@ definitions:
       Chloramphenicol acetyltransferase (CAT) [PMID:1867721] catalyses the acetyl-CoA dependent acetylation of chloramphenicol (Cm), an antibiotic which inhibits prokaryotic peptidyltransferase activity. Acetylation of Cm by CAT inactivates the antibiotic. A histidine residue, located in the C-terminal section of the enzyme, plays a central role in its catalytic mechanism. CAT enzymes are divided into three classes: CATI, CATII, and CATIII, with the enzymes of all three classes catalysing acetyl transfer to CAM to yield 3-O-acetyl-CAM. This entry represents the type III protein, although the mechanism is likely to be similar between the three classes.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of chloramphenicol O-acetyltransferase
+  description: Mechanism transcribed from M-CSA entry 934. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering only — no unique offset to the record's reference sequence could
+    be verified, so no UniProt position is asserted.
+  nodes:
+  - node_id: arg18
+    label: catalytic Arg18 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00484
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: thr174
+    label: catalytic Thr174 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00484
+    description: 'M-CSA roles: activator, transition state stabiliser.'
+  - node_id: his195
+    label: catalytic His195 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00484
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: asp199
+    label: catalytic Asp199 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00484
+    description: 'M-CSA roles: electrostatic stabiliser, modifies pKa.'
+  - node_id: reactant0
+    label: acetyl-CoA(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+  - node_id: reactant1
+    label: chloramphenicol
+    node_type: CHEMICAL
+    grounding: CHEBI:17698
+  - node_id: product0
+    label: chloramphenicol 3-acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:16730
+  - node_id: product1
+    label: coenzyme A(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: His195 abstracts the proton from the substrate hydroxyl group, which initiates a nucleophilic
+      attack on the carbonyl carbon of the acyl CoA molecule. The oxyanion formed is stabilises by a hydrogen
+      bonding network with a conserved water molecule and Thr174. The intermediate then collapses, forming
+      the final products.
+  - node_id: active_site
+    label: chloramphenicol O-acetyltransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:934
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.559.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.559.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: chloramphenicol O-acetyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.3.1.28
+  edges:
+  - subject: thr174
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Thr174 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/934/
+      snippet: His195 abstracts the proton from the substrate hydroxyl group, which initiates a nucleophilic
+        attack on the carbonyl carbon of the acyl CoA molecule. The oxyanion formed is stabilises by a
+        hydrogen bonding network with a conserved water molecule and Thr174. The intermediate then collapses,
+        forming the final products.
+      notes: M-CSA entry 934, mechanism 1; M-CSA cites PMID:2187098, PMID:7906544, PMID:8407936, PMID:9578552;
+        step 1
+  - subject: his195
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His195 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/934/
+      snippet: His195 abstracts the proton from the substrate hydroxyl group, which initiates a nucleophilic
+        attack on the carbonyl carbon of the acyl CoA molecule. The oxyanion formed is stabilises by a
+        hydrogen bonding network with a conserved water molecule and Thr174. The intermediate then collapses,
+        forming the final products.
+      notes: M-CSA entry 934, mechanism 1; M-CSA cites PMID:2187098, PMID:7906544, PMID:8407936, PMID:9578552;
+        step 1
+  - subject: arg18
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg18 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/934/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 934, mechanism 1; M-CSA cites PMID:2187098, PMID:7906544, PMID:8407936, PMID:9578552;
+        M-CSA catalytic-residue roles for Arg18
+  - subject: thr174
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr174 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/934/
+      snippet: activator, transition state stabiliser
+      notes: M-CSA entry 934, mechanism 1; M-CSA cites PMID:2187098, PMID:7906544, PMID:8407936, PMID:9578552;
+        M-CSA catalytic-residue roles for Thr174
+  - subject: his195
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His195 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/934/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 934, mechanism 1; M-CSA cites PMID:2187098, PMID:7906544, PMID:8407936, PMID:9578552;
+        M-CSA catalytic-residue roles for His195
+  - subject: asp199
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp199 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/934/
+      snippet: electrostatic stabiliser, modifies pKa
+      notes: M-CSA entry 934, mechanism 1; M-CSA cites PMID:2187098, PMID:7906544, PMID:8407936, PMID:9578552;
+        M-CSA catalytic-residue roles for Asp199
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/934/
+      snippet: His195 abstracts the proton from the substrate hydroxyl group, which initiates a nucleophilic
+        attack on the carbonyl carbon of the acyl CoA molecule. The oxyanion formed is stabilises by a
+        hydrogen bonding network with a conserved water molecule and Thr174. The intermediate then collapses,
+        forming the final products.
+      notes: M-CSA entry 934, mechanism 1; M-CSA cites PMID:2187098, PMID:7906544, PMID:8407936, PMID:9578552;
+        CATH domain 3.30.559.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/934/
+      snippet: His195 abstracts the proton from the substrate hydroxyl group, which initiates a nucleophilic
+        attack on the carbonyl carbon of the acyl CoA molecule. The oxyanion formed is stabilises by a
+        hydrogen bonding network with a conserved water molecule and Thr174. The intermediate then collapses,
+        forming the final products.
+      notes: M-CSA entry 934, mechanism 1; M-CSA cites PMID:2187098, PMID:7906544, PMID:8407936, PMID:9578552;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/934/
+      snippet: His195 abstracts the proton from the substrate hydroxyl group, which initiates a nucleophilic
+        attack on the carbonyl carbon of the acyl CoA molecule. The oxyanion formed is stabilises by a
+        hydrogen bonding network with a conserved water molecule and Thr174. The intermediate then collapses,
+        forming the final products.
+      notes: M-CSA entry 934, mechanism 1; M-CSA cites PMID:2187098, PMID:7906544, PMID:8407936, PMID:9578552;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/934/
+      snippet: His195 abstracts the proton from the substrate hydroxyl group, which initiates a nucleophilic
+        attack on the carbonyl carbon of the acyl CoA molecule. The oxyanion formed is stabilises by a
+        hydrogen bonding network with a conserved water molecule and Thr174. The intermediate then collapses,
+        forming the final products.
+      notes: M-CSA entry 934, mechanism 1; M-CSA cites PMID:2187098, PMID:7906544, PMID:8407936, PMID:9578552;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/934/
+      snippet: His195 abstracts the proton from the substrate hydroxyl group, which initiates a nucleophilic
+        attack on the carbonyl carbon of the acyl CoA molecule. The oxyanion formed is stabilises by a
+        hydrogen bonding network with a conserved water molecule and Thr174. The intermediate then collapses,
+        forming the final products.
+      notes: M-CSA entry 934, mechanism 1; M-CSA cites PMID:2187098, PMID:7906544, PMID:8407936, PMID:9578552;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/934/
+      snippet: His195 abstracts the proton from the substrate hydroxyl group, which initiates a nucleophilic
+        attack on the carbonyl carbon of the acyl CoA molecule. The oxyanion formed is stabilises by a
+        hydrogen bonding network with a conserved water molecule and Thr174. The intermediate then collapses,
+        forming the final products.
+      notes: M-CSA entry 934, mechanism 1; M-CSA cites PMID:2187098, PMID:7906544, PMID:8407936, PMID:9578552;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (12 evidence-backed edges) transcribed from M-CSA entry 934;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

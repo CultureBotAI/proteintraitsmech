@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.1.52
 - CHEBI:28681
@@ -329,4 +329,213 @@ definitions:
       Chitin, the second most abundant polysaccharide on earth, is degraded by chitinases and chitobiases. This entry represents the glycosidase family 20 chitobiase which digests the beta-1,4-glycosidic bonds in N-acetylglucosamine (GlcNAc) oligomers (mainly dimers). It has a retaining mechanism. Human beta-hexosaminidase A
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of beta-N-acetylhexosaminidase
+  description: Stepwise mechanism transcribed from M-CSA entry 899 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: asp322
+    label: catalytic Asp322 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06865
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu323
+    label: catalytic Glu323 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06865
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: asp539
+    label: catalytic Asp539 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06865
+    description: 'M-CSA roles: electrostatic stabiliser, modifies pKa, steric role.'
+  - node_id: glu540
+    label: catalytic Glu540 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06865
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: N,N'-diacetylchitobiose
+    node_type: CHEMICAL
+    grounding: CHEBI:28681
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: N-acetyl-D-glucosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:506227
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The acid-base residue Glu323 protonates the oxygen of the scissile glyosidic bond oxygen.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: An incoming water molecule attack the anomeric carbon and maintain the double displacement
+      mechanism.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Product is formed.
+  - node_id: active_site
+    label: beta-N-acetylhexosaminidase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:899
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.80 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.80
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: beta-N-acetylhexosaminidase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.1.52
+  edges:
+  - subject: glu323
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu323 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/899/
+      snippet: The acid-base residue Glu323 protonates the oxygen of the scissile glyosidic bond oxygen.
+      notes: M-CSA entry 899, mechanism 2; M-CSA cites PMID:10884356, PMID:8673609; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/899/
+      snippet: An incoming water molecule attack the anomeric carbon and maintain the double displacement
+        mechanism.
+      notes: M-CSA entry 899, mechanism 2; M-CSA cites PMID:10884356, PMID:8673609; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/899/
+      snippet: Product is formed.
+      notes: M-CSA entry 899, mechanism 2; M-CSA cites PMID:10884356, PMID:8673609; step 3
+  - subject: asp322
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp322 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/899/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 899, mechanism 2; M-CSA cites PMID:10884356, PMID:8673609; M-CSA catalytic-residue
+        roles for Asp322
+  - subject: glu323
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu323 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/899/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 899, mechanism 2; M-CSA cites PMID:10884356, PMID:8673609; M-CSA catalytic-residue
+        roles for Glu323
+  - subject: asp539
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp539 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/899/
+      snippet: electrostatic stabiliser, modifies pKa, steric role
+      notes: M-CSA entry 899, mechanism 2; M-CSA cites PMID:10884356, PMID:8673609; M-CSA catalytic-residue
+        roles for Asp539
+  - subject: glu540
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu540 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/899/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 899, mechanism 2; M-CSA cites PMID:10884356, PMID:8673609; M-CSA catalytic-residue
+        roles for Glu540
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/899/
+      snippet: Glu323 acts as a general acid, to protonate the glyosidic oxygen atom, the O1 atom, leading
+        to the transition state with oxocarbenium ion character. Asp322 provides a negative charge that
+        stablise the positive charge developed on the oxazinium ion. The O7 oxygen atom of the N-acetyl
+        group makes a nucleophilic attack on the C1 atom of the transition state. This nucleophilic substitution
+        seems to be
+      notes: M-CSA entry 899, mechanism 2; M-CSA cites PMID:10884356, PMID:8673609; CATH domain 3.20.20.80
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/899/
+      snippet: Glu323 acts as a general acid, to protonate the glyosidic oxygen atom, the O1 atom, leading
+        to the transition state with oxocarbenium ion character. Asp322 provides a negative charge that
+        stablise the positive charge developed on the oxazinium ion. The O7 oxygen atom of the N-acetyl
+        group makes a nucleophilic attack on the C1 atom of the transition state. This nucleophilic substitution
+        seems to be
+      notes: M-CSA entry 899, mechanism 2; M-CSA cites PMID:10884356, PMID:8673609; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/899/
+      snippet: Glu323 acts as a general acid, to protonate the glyosidic oxygen atom, the O1 atom, leading
+        to the transition state with oxocarbenium ion character. Asp322 provides a negative charge that
+        stablise the positive charge developed on the oxazinium ion. The O7 oxygen atom of the N-acetyl
+        group makes a nucleophilic attack on the C1 atom of the transition state. This nucleophilic substitution
+        seems to be
+      notes: M-CSA entry 899, mechanism 2; M-CSA cites PMID:10884356, PMID:8673609; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/899/
+      snippet: Glu323 acts as a general acid, to protonate the glyosidic oxygen atom, the O1 atom, leading
+        to the transition state with oxocarbenium ion character. Asp322 provides a negative charge that
+        stablise the positive charge developed on the oxazinium ion. The O7 oxygen atom of the N-acetyl
+        group makes a nucleophilic attack on the C1 atom of the transition state. This nucleophilic substitution
+        seems to be
+      notes: M-CSA entry 899, mechanism 2; M-CSA cites PMID:10884356, PMID:8673609; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/899/
+      snippet: Glu323 acts as a general acid, to protonate the glyosidic oxygen atom, the O1 atom, leading
+        to the transition state with oxocarbenium ion character. Asp322 provides a negative charge that
+        stablise the positive charge developed on the oxazinium ion. The O7 oxygen atom of the N-acetyl
+        group makes a nucleophilic attack on the C1 atom of the transition state. This nucleophilic substitution
+        seems to be
+      notes: M-CSA entry 899, mechanism 2; M-CSA cites PMID:10884356, PMID:8673609; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (12 evidence-backed edges) transcribed from M-CSA entry 899;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

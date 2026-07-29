@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.1.14
 - CHEBI:50670
@@ -356,4 +356,282 @@ definitions:
       Chitinase binds to chitin and randomly cleaves glycosidic linkages in chitin and chitodextrins in a non-processive mode, generating chitooligosaccharides and free ends on which exo-chitinases and exo-chitodextrinases can act. Chitin is a bio-polymer composed of 1,4-beta linked N-acetylglucosamine units, a major component of fungal cell walls and insect exoskeletons. The bacterial chitinase enzyme is an 18-family member, and is used by bacteria to catalyse the degradation of chitin to form products which are then used as a source of energy.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of chitinase (GH18, Class II)
+  description: Mechanism transcribed from M-CSA entry 478. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: asp311
+    label: catalytic Asp311 (M-CSA/PDB numbering; UniProt residue 311)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07254
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp313
+    label: catalytic Asp313 (M-CSA/PDB numbering; UniProt residue 313)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07254
+    description: 'M-CSA roles: steric role.'
+  - node_id: glu315
+    label: catalytic Glu315 (M-CSA/PDB numbering; UniProt residue 315)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07254
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: tyr390
+    label: catalytic Tyr390 (M-CSA/PDB numbering; UniProt residue 390)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07254
+    description: 'M-CSA roles: electrostatic destabiliser.'
+  - node_id: reactant0
+    label: N-acetyl-beta-D-glucosaminyl-(1->4)-N-acetyl-beta-D-glucosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:50670
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: N-acetyl-D-glucosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:506227
+  - node_id: product1
+    label: N-acetyl-D-glucosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:506227
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: Recent studies have shown the hydrolysis of 18-family chitinase to proceed through a
+      substrate assisted mechanism with retention of configuration in the product. A putative oxocarbonium
+      ion intermediate is stabilised by the anchimeric assistance of the sugar N-acetyl group after the
+      donation of a proton from the catalytic carboxylate to the departing N acetylglucosamine unit. The
+      anionic glutamate
+  - node_id: active_site
+    label: chitinase (GH18, Class II) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:478
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.80 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.80
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: chitinase (GH18, Class II) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.1.14
+  edges:
+  - subject: asp313
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp313 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/478/
+      snippet: "Recent studies have shown the hydrolysis of 18-family chitinase to proceed through a substrate\
+        \ assisted mechanism with retention of configuration in the product. A putative oxocarbonium ion\
+        \ intermediate is stabilised by the anchimeric assistance of the sugar N-acetyl group after the\
+        \ donation of a proton from the catalytic carboxylate to the departing N acetylglucosamine unit.\
+        \ The anionic glutamate activates a hydrolytic water by abstracting a proton, forming a hydroxide\
+        \ which kicks out the N-acyl group in a SN2 mechanism and forms the C1-OH group of the product.\
+        \ The active site is then restored.
+<br/><br/>
+Glu315 is protonated and poised to cleave\
+        \ the glycosidic linkage between −1 and +1 sugar residues. One water molecule is H-bonded to the\
+        \ phenol hydroxyl of Tyr390 and to the NH of the 2-N-acetyl group. The approach of acidic residue\
+        \ Asp313 toward Glu315 forces the acetamido group of the -1 sugar to rotate around its C2−N2 bond,\
+        \ thus displacing the water molecule into the vicinity of Glu315.  A proton from the water molecule\
+        \ will be taken up by the gamma carboxylate of Glu315 and the remaining hydroxide ion will be\
+        \ taken up by the anomeric C1 atom of the -1 sugar residue. Once hydrolysis is completed, the\
+        \ monosaccharide departs from subsite -1, and the disaccharide remains bound at the enzyme subsites\
+        \ +1, +2."
+      notes: M-CSA entry 478, mechanism 1; M-CSA cites PMID:10794597, PMID:11560481, PMID:11846790, PMID:12369923,
+        PMID:12554965, PMID:24730355, PMID:28230366; step 1
+  - subject: glu315
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu315 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/478/
+      snippet: "Recent studies have shown the hydrolysis of 18-family chitinase to proceed through a substrate\
+        \ assisted mechanism with retention of configuration in the product. A putative oxocarbonium ion\
+        \ intermediate is stabilised by the anchimeric assistance of the sugar N-acetyl group after the\
+        \ donation of a proton from the catalytic carboxylate to the departing N acetylglucosamine unit.\
+        \ The anionic glutamate activates a hydrolytic water by abstracting a proton, forming a hydroxide\
+        \ which kicks out the N-acyl group in a SN2 mechanism and forms the C1-OH group of the product.\
+        \ The active site is then restored.
+<br/><br/>
+Glu315 is protonated and poised to cleave\
+        \ the glycosidic linkage between −1 and +1 sugar residues. One water molecule is H-bonded to the\
+        \ phenol hydroxyl of Tyr390 and to the NH of the 2-N-acetyl group. The approach of acidic residue\
+        \ Asp313 toward Glu315 forces the acetamido group of the -1 sugar to rotate around its C2−N2 bond,\
+        \ thus displacing the water molecule into the vicinity of Glu315.  A proton from the water molecule\
+        \ will be taken up by the gamma carboxylate of Glu315 and the remaining hydroxide ion will be\
+        \ taken up by the anomeric C1 atom of the -1 sugar residue. Once hydrolysis is completed, the\
+        \ monosaccharide departs from subsite -1, and the disaccharide remains bound at the enzyme subsites\
+        \ +1, +2."
+      notes: M-CSA entry 478, mechanism 1; M-CSA cites PMID:10794597, PMID:11560481, PMID:11846790, PMID:12369923,
+        PMID:12554965, PMID:24730355, PMID:28230366; step 1
+  - subject: tyr390
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr390 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/478/
+      snippet: "Recent studies have shown the hydrolysis of 18-family chitinase to proceed through a substrate\
+        \ assisted mechanism with retention of configuration in the product. A putative oxocarbonium ion\
+        \ intermediate is stabilised by the anchimeric assistance of the sugar N-acetyl group after the\
+        \ donation of a proton from the catalytic carboxylate to the departing N acetylglucosamine unit.\
+        \ The anionic glutamate activates a hydrolytic water by abstracting a proton, forming a hydroxide\
+        \ which kicks out the N-acyl group in a SN2 mechanism and forms the C1-OH group of the product.\
+        \ The active site is then restored.
+<br/><br/>
+Glu315 is protonated and poised to cleave\
+        \ the glycosidic linkage between −1 and +1 sugar residues. One water molecule is H-bonded to the\
+        \ phenol hydroxyl of Tyr390 and to the NH of the 2-N-acetyl group. The approach of acidic residue\
+        \ Asp313 toward Glu315 forces the acetamido group of the -1 sugar to rotate around its C2−N2 bond,\
+        \ thus displacing the water molecule into the vicinity of Glu315.  A proton from the water molecule\
+        \ will be taken up by the gamma carboxylate of Glu315 and the remaining hydroxide ion will be\
+        \ taken up by the anomeric C1 atom of the -1 sugar residue. Once hydrolysis is completed, the\
+        \ monosaccharide departs from subsite -1, and the disaccharide remains bound at the enzyme subsites\
+        \ +1, +2."
+      notes: M-CSA entry 478, mechanism 1; M-CSA cites PMID:10794597, PMID:11560481, PMID:11846790, PMID:12369923,
+        PMID:12554965, PMID:24730355, PMID:28230366; step 1
+  - subject: asp311
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp311 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/478/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 478, mechanism 1; M-CSA cites PMID:10794597, PMID:11560481, PMID:11846790, PMID:12369923,
+        PMID:12554965, PMID:24730355, PMID:28230366; M-CSA catalytic-residue roles for Asp311
+  - subject: asp313
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp313 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/478/
+      snippet: steric role
+      notes: M-CSA entry 478, mechanism 1; M-CSA cites PMID:10794597, PMID:11560481, PMID:11846790, PMID:12369923,
+        PMID:12554965, PMID:24730355, PMID:28230366; M-CSA catalytic-residue roles for Asp313
+  - subject: glu315
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu315 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/478/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 478, mechanism 1; M-CSA cites PMID:10794597, PMID:11560481, PMID:11846790, PMID:12369923,
+        PMID:12554965, PMID:24730355, PMID:28230366; M-CSA catalytic-residue roles for Glu315
+  - subject: tyr390
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr390 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/478/
+      snippet: electrostatic destabiliser
+      notes: M-CSA entry 478, mechanism 1; M-CSA cites PMID:10794597, PMID:11560481, PMID:11846790, PMID:12369923,
+        PMID:12554965, PMID:24730355, PMID:28230366; M-CSA catalytic-residue roles for Tyr390
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/478/
+      snippet: Recent studies have shown the hydrolysis of 18-family chitinase to proceed through a substrate
+        assisted mechanism with retention of configuration in the product. A putative oxocarbonium ion
+        intermediate is stabilised by the anchimeric assistance of the sugar N-acetyl group after the
+        donation of a proton from the catalytic carboxylate to the departing N acetylglucosamine unit.
+        The anionic glutamate
+      notes: M-CSA entry 478, mechanism 1; M-CSA cites PMID:10794597, PMID:11560481, PMID:11846790, PMID:12369923,
+        PMID:12554965, PMID:24730355, PMID:28230366; CATH domain 3.20.20.80 assigned to the catalytic
+        chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/478/
+      snippet: Recent studies have shown the hydrolysis of 18-family chitinase to proceed through a substrate
+        assisted mechanism with retention of configuration in the product. A putative oxocarbonium ion
+        intermediate is stabilised by the anchimeric assistance of the sugar N-acetyl group after the
+        donation of a proton from the catalytic carboxylate to the departing N acetylglucosamine unit.
+        The anionic glutamate
+      notes: M-CSA entry 478, mechanism 1; M-CSA cites PMID:10794597, PMID:11560481, PMID:11846790, PMID:12369923,
+        PMID:12554965, PMID:24730355, PMID:28230366; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/478/
+      snippet: Recent studies have shown the hydrolysis of 18-family chitinase to proceed through a substrate
+        assisted mechanism with retention of configuration in the product. A putative oxocarbonium ion
+        intermediate is stabilised by the anchimeric assistance of the sugar N-acetyl group after the
+        donation of a proton from the catalytic carboxylate to the departing N acetylglucosamine unit.
+        The anionic glutamate
+      notes: M-CSA entry 478, mechanism 1; M-CSA cites PMID:10794597, PMID:11560481, PMID:11846790, PMID:12369923,
+        PMID:12554965, PMID:24730355, PMID:28230366; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/478/
+      snippet: Recent studies have shown the hydrolysis of 18-family chitinase to proceed through a substrate
+        assisted mechanism with retention of configuration in the product. A putative oxocarbonium ion
+        intermediate is stabilised by the anchimeric assistance of the sugar N-acetyl group after the
+        donation of a proton from the catalytic carboxylate to the departing N acetylglucosamine unit.
+        The anionic glutamate
+      notes: M-CSA entry 478, mechanism 1; M-CSA cites PMID:10794597, PMID:11560481, PMID:11846790, PMID:12369923,
+        PMID:12554965, PMID:24730355, PMID:28230366; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/478/
+      snippet: Recent studies have shown the hydrolysis of 18-family chitinase to proceed through a substrate
+        assisted mechanism with retention of configuration in the product. A putative oxocarbonium ion
+        intermediate is stabilised by the anchimeric assistance of the sugar N-acetyl group after the
+        donation of a proton from the catalytic carboxylate to the departing N acetylglucosamine unit.
+        The anionic glutamate
+      notes: M-CSA entry 478, mechanism 1; M-CSA cites PMID:10794597, PMID:11560481, PMID:11846790, PMID:12369923,
+        PMID:12554965, PMID:24730355, PMID:28230366; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/478/
+      snippet: Recent studies have shown the hydrolysis of 18-family chitinase to proceed through a substrate
+        assisted mechanism with retention of configuration in the product. A putative oxocarbonium ion
+        intermediate is stabilised by the anchimeric assistance of the sugar N-acetyl group after the
+        donation of a proton from the catalytic carboxylate to the departing N acetylglucosamine unit.
+        The anionic glutamate
+      notes: M-CSA entry 478, mechanism 1; M-CSA cites PMID:10794597, PMID:11560481, PMID:11846790, PMID:12369923,
+        PMID:12554965, PMID:24730355, PMID:28230366; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 478;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

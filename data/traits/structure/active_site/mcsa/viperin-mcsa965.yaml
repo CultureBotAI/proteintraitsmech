@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.-.-.-
 - CHEBI:17319
@@ -253,4 +253,226 @@ definitions:
       Viperin (Virus Inhibitory Protein, ER-associated, Iterferon-inducible) is a member of the radical S-adenosyl-l-methionine (SAM) superfamily of enzymes, which typically employ a 4Fe-4S cluster to reductively cleave SAM to initiate chemistry. It has been shown that expression of viperin causes an increase in the fluidity of lipid membranes so as to impede the budding of nascent viral particles from the membrane which inhibits the propagation of the infection. It is now known that viperin catalyses the reductive addition of a 5'-deoxyadenosyl radical to UDP-glucose in vitro.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of Viperin
+  description: Mechanism transcribed from M-CSA entry 965. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: cys84
+    label: catalytic Cys84 (M-CSA/PDB numbering; UniProt residue 84)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8CBB9
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: cys88
+    label: catalytic Cys88 (M-CSA/PDB numbering; UniProt residue 88)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8CBB9
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: cys91
+    label: catalytic Cys91 (M-CSA/PDB numbering; UniProt residue 91)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8CBB9
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: UDP-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:18066
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant2
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:15414
+  - node_id: product0
+    label: 5'-deoxyadenosine
+    node_type: CHEMICAL
+    grounding: CHEBI:17319
+  - node_id: product1
+    label: hydroxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16234
+  - node_id: product2
+    label: L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:16643
+  - node_id: product3
+    label: 5'-deoxyadenosyl-4-UDP glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:X00670
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: 'The exact product and hence mechanism of this enzyme is not yet known. The enzyme is
+      known to catalyse the reductive addition of a 5''-deoxyadenosyl radical to UDP-glucose (<i>in vitro</i>).
+      Performing the reaction in the presence of D2O shows that the hydrogen atom added to the UDP-glucose
+      substrate comes from the solvent. Two moles of SAM are required for activity and the crystal structure
+      shows '
+  - node_id: active_site
+    label: Viperin catalytic site
+    node_type: MOTIF
+    grounding: MCSA:965
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: activity
+    label: Viperin activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.-.-.-
+  edges:
+  - subject: cys84
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys84 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/965/
+      snippet: metal ligand
+      notes: M-CSA entry 965, mechanism 1; M-CSA cites PMID:20176015, PMID:22363738, PMID:24157441, PMID:27834682,
+        PMID:28607080, PMID:28615450, PMID:28708394, PMID:28752893; M-CSA catalytic-residue roles for
+        Cys84
+  - subject: cys88
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys88 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/965/
+      snippet: metal ligand
+      notes: M-CSA entry 965, mechanism 1; M-CSA cites PMID:20176015, PMID:22363738, PMID:24157441, PMID:27834682,
+        PMID:28607080, PMID:28615450, PMID:28708394, PMID:28752893; M-CSA catalytic-residue roles for
+        Cys88
+  - subject: cys91
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys91 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/965/
+      snippet: metal ligand
+      notes: M-CSA entry 965, mechanism 1; M-CSA cites PMID:20176015, PMID:22363738, PMID:24157441, PMID:27834682,
+        PMID:28607080, PMID:28615450, PMID:28708394, PMID:28752893; M-CSA catalytic-residue roles for
+        Cys91
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/965/
+      snippet: The exact product and hence mechanism of this enzyme is not yet known. The enzyme is known
+        to catalyse the reductive addition of a 5'-deoxyadenosyl radical to UDP-glucose (<i>in vitro</i>).
+        Performing the reaction in the presence of D2O shows that the hydrogen atom added to the UDP-glucose
+        substrate comes from the solvent. Two moles of SAM are required for activity and the crystal structure
+        shows
+      notes: M-CSA entry 965, mechanism 1; M-CSA cites PMID:20176015, PMID:22363738, PMID:24157441, PMID:27834682,
+        PMID:28607080, PMID:28615450, PMID:28708394, PMID:28752893; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/965/
+      snippet: The exact product and hence mechanism of this enzyme is not yet known. The enzyme is known
+        to catalyse the reductive addition of a 5'-deoxyadenosyl radical to UDP-glucose (<i>in vitro</i>).
+        Performing the reaction in the presence of D2O shows that the hydrogen atom added to the UDP-glucose
+        substrate comes from the solvent. Two moles of SAM are required for activity and the crystal structure
+        shows
+      notes: M-CSA entry 965, mechanism 1; M-CSA cites PMID:20176015, PMID:22363738, PMID:24157441, PMID:27834682,
+        PMID:28607080, PMID:28615450, PMID:28708394, PMID:28752893; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/965/
+      snippet: The exact product and hence mechanism of this enzyme is not yet known. The enzyme is known
+        to catalyse the reductive addition of a 5'-deoxyadenosyl radical to UDP-glucose (<i>in vitro</i>).
+        Performing the reaction in the presence of D2O shows that the hydrogen atom added to the UDP-glucose
+        substrate comes from the solvent. Two moles of SAM are required for activity and the crystal structure
+        shows
+      notes: M-CSA entry 965, mechanism 1; M-CSA cites PMID:20176015, PMID:22363738, PMID:24157441, PMID:27834682,
+        PMID:28607080, PMID:28615450, PMID:28708394, PMID:28752893; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/965/
+      snippet: The exact product and hence mechanism of this enzyme is not yet known. The enzyme is known
+        to catalyse the reductive addition of a 5'-deoxyadenosyl radical to UDP-glucose (<i>in vitro</i>).
+        Performing the reaction in the presence of D2O shows that the hydrogen atom added to the UDP-glucose
+        substrate comes from the solvent. Two moles of SAM are required for activity and the crystal structure
+        shows
+      notes: M-CSA entry 965, mechanism 1; M-CSA cites PMID:20176015, PMID:22363738, PMID:24157441, PMID:27834682,
+        PMID:28607080, PMID:28615450, PMID:28708394, PMID:28752893; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/965/
+      snippet: The exact product and hence mechanism of this enzyme is not yet known. The enzyme is known
+        to catalyse the reductive addition of a 5'-deoxyadenosyl radical to UDP-glucose (<i>in vitro</i>).
+        Performing the reaction in the presence of D2O shows that the hydrogen atom added to the UDP-glucose
+        substrate comes from the solvent. Two moles of SAM are required for activity and the crystal structure
+        shows
+      notes: M-CSA entry 965, mechanism 1; M-CSA cites PMID:20176015, PMID:22363738, PMID:24157441, PMID:27834682,
+        PMID:28607080, PMID:28615450, PMID:28708394, PMID:28752893; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/965/
+      snippet: The exact product and hence mechanism of this enzyme is not yet known. The enzyme is known
+        to catalyse the reductive addition of a 5'-deoxyadenosyl radical to UDP-glucose (<i>in vitro</i>).
+        Performing the reaction in the presence of D2O shows that the hydrogen atom added to the UDP-glucose
+        substrate comes from the solvent. Two moles of SAM are required for activity and the crystal structure
+        shows
+      notes: M-CSA entry 965, mechanism 1; M-CSA cites PMID:20176015, PMID:22363738, PMID:24157441, PMID:27834682,
+        PMID:28607080, PMID:28615450, PMID:28708394, PMID:28752893; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/965/
+      snippet: The exact product and hence mechanism of this enzyme is not yet known. The enzyme is known
+        to catalyse the reductive addition of a 5'-deoxyadenosyl radical to UDP-glucose (<i>in vitro</i>).
+        Performing the reaction in the presence of D2O shows that the hydrogen atom added to the UDP-glucose
+        substrate comes from the solvent. Two moles of SAM are required for activity and the crystal structure
+        shows
+      notes: M-CSA entry 965, mechanism 1; M-CSA cites PMID:20176015, PMID:22363738, PMID:24157441, PMID:27834682,
+        PMID:28607080, PMID:28615450, PMID:28708394, PMID:28752893; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product3
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/965/
+      snippet: The exact product and hence mechanism of this enzyme is not yet known. The enzyme is known
+        to catalyse the reductive addition of a 5'-deoxyadenosyl radical to UDP-glucose (<i>in vitro</i>).
+        Performing the reaction in the presence of D2O shows that the hydrogen atom added to the UDP-glucose
+        substrate comes from the solvent. Two moles of SAM are required for activity and the crystal structure
+        shows
+      notes: M-CSA entry 965, mechanism 1; M-CSA cites PMID:20176015, PMID:22363738, PMID:24157441, PMID:27834682,
+        PMID:28607080, PMID:28615450, PMID:28708394, PMID:28752893; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (11 evidence-backed edges) transcribed from M-CSA entry 965;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

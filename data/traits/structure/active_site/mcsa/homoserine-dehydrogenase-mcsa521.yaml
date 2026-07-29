@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.1.1.3
 - CHEBI:57476
@@ -367,4 +367,227 @@ definitions:
       Homoserine dehydrogenase belongs to the oxioreductase class of enzymes, although the residues implicated in catalysis are quite different from other enzymes within the class. It is involved in the NAD(P)H dependent reduction of L-aspartate semi-aldehyde to L homoserine, a pathway not found within the animal kingdom. The enzyme has therefore been targeted for the development of antimycotic drugs.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of homoserine dehydrogenase
+  description: Mechanism transcribed from M-CSA entry 521. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering only — no unique offset to the record's reference sequence could
+    be verified, so no UniProt position is asserted.
+  nodes:
+  - node_id: asp219
+    label: catalytic Asp219 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P31116
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: lys223
+    label: catalytic Lys223 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P31116
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: L-homoserine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57476
+  - node_id: reactant1
+    label: NAD(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+  - node_id: product0
+    label: L-aspartic acid 4-semialdehyde betaine
+    node_type: CHEMICAL
+    grounding: CHEBI:537519
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: NADH(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: The NAD(P)H dependent reduction of L aspartate semi-aldehyde proceeds via hydride transfer.
+      The hydride donating NAD(P)H cofactor is bound in the Rossmann fold, where enzyme-cofactor hydrogen
+      bond interactions exist between cofactor phosphate moieties and sugar hydroxyl groups and the enzyme
+      amide back bone groups. The amino substrate is thought to bind predominantly in the aldehyde rather
+      than th
+  - node_id: active_site
+    label: homoserine dehydrogenase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:521
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.360.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.360.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: homoserine dehydrogenase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.1.1.3
+  edges:
+  - subject: asp219
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp219 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/521/
+      snippet: The NAD(P)H dependent reduction of L aspartate semi-aldehyde proceeds via hydride transfer.
+        The hydride donating NAD(P)H cofactor is bound in the Rossmann fold, where enzyme-cofactor hydrogen
+        bond interactions exist between cofactor phosphate moieties and sugar hydroxyl groups and the
+        enzyme amide back bone groups. The amino substrate is thought to bind predominantly in the aldehyde
+        rather than the hydrate form through hydrogen bond interactions with Asp 214, Glu 208, and a water
+        molecule (460). The catalytic Lys 223 donates a proton to the developing alkoxide tetrahedral
+        intermediate during hydride transfer. Asp 219 is key in positioning the catalytic residue, while
+        the N terminal helix alpha J is important in stabilising the developing negative charge on the
+        substrate carbonyl.
+      notes: M-CSA entry 521, mechanism 1; M-CSA cites PMID:10700284, PMID:11341915, PMID:15210149; step
+        1
+  - subject: lys223
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys223 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/521/
+      snippet: The NAD(P)H dependent reduction of L aspartate semi-aldehyde proceeds via hydride transfer.
+        The hydride donating NAD(P)H cofactor is bound in the Rossmann fold, where enzyme-cofactor hydrogen
+        bond interactions exist between cofactor phosphate moieties and sugar hydroxyl groups and the
+        enzyme amide back bone groups. The amino substrate is thought to bind predominantly in the aldehyde
+        rather than the hydrate form through hydrogen bond interactions with Asp 214, Glu 208, and a water
+        molecule (460). The catalytic Lys 223 donates a proton to the developing alkoxide tetrahedral
+        intermediate during hydride transfer. Asp 219 is key in positioning the catalytic residue, while
+        the N terminal helix alpha J is important in stabilising the developing negative charge on the
+        substrate carbonyl.
+      notes: M-CSA entry 521, mechanism 1; M-CSA cites PMID:10700284, PMID:11341915, PMID:15210149; step
+        1
+  - subject: asp219
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp219 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/521/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 521, mechanism 1; M-CSA cites PMID:10700284, PMID:11341915, PMID:15210149; M-CSA
+        catalytic-residue roles for Asp219
+  - subject: lys223
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys223 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/521/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 521, mechanism 1; M-CSA cites PMID:10700284, PMID:11341915, PMID:15210149; M-CSA
+        catalytic-residue roles for Lys223
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/521/
+      snippet: The NAD(P)H dependent reduction of L aspartate semi-aldehyde proceeds via hydride transfer.
+        The hydride donating NAD(P)H cofactor is bound in the Rossmann fold, where enzyme-cofactor hydrogen
+        bond interactions exist between cofactor phosphate moieties and sugar hydroxyl groups and the
+        enzyme amide back bone groups. The amino substrate is thought to bind predominantly in the aldehyde
+        rather than th
+      notes: M-CSA entry 521, mechanism 1; M-CSA cites PMID:10700284, PMID:11341915, PMID:15210149; CATH
+        domain 3.30.360.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/521/
+      snippet: The NAD(P)H dependent reduction of L aspartate semi-aldehyde proceeds via hydride transfer.
+        The hydride donating NAD(P)H cofactor is bound in the Rossmann fold, where enzyme-cofactor hydrogen
+        bond interactions exist between cofactor phosphate moieties and sugar hydroxyl groups and the
+        enzyme amide back bone groups. The amino substrate is thought to bind predominantly in the aldehyde
+        rather than th
+      notes: M-CSA entry 521, mechanism 1; M-CSA cites PMID:10700284, PMID:11341915, PMID:15210149; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/521/
+      snippet: The NAD(P)H dependent reduction of L aspartate semi-aldehyde proceeds via hydride transfer.
+        The hydride donating NAD(P)H cofactor is bound in the Rossmann fold, where enzyme-cofactor hydrogen
+        bond interactions exist between cofactor phosphate moieties and sugar hydroxyl groups and the
+        enzyme amide back bone groups. The amino substrate is thought to bind predominantly in the aldehyde
+        rather than th
+      notes: M-CSA entry 521, mechanism 1; M-CSA cites PMID:10700284, PMID:11341915, PMID:15210149; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/521/
+      snippet: The NAD(P)H dependent reduction of L aspartate semi-aldehyde proceeds via hydride transfer.
+        The hydride donating NAD(P)H cofactor is bound in the Rossmann fold, where enzyme-cofactor hydrogen
+        bond interactions exist between cofactor phosphate moieties and sugar hydroxyl groups and the
+        enzyme amide back bone groups. The amino substrate is thought to bind predominantly in the aldehyde
+        rather than th
+      notes: M-CSA entry 521, mechanism 1; M-CSA cites PMID:10700284, PMID:11341915, PMID:15210149; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/521/
+      snippet: The NAD(P)H dependent reduction of L aspartate semi-aldehyde proceeds via hydride transfer.
+        The hydride donating NAD(P)H cofactor is bound in the Rossmann fold, where enzyme-cofactor hydrogen
+        bond interactions exist between cofactor phosphate moieties and sugar hydroxyl groups and the
+        enzyme amide back bone groups. The amino substrate is thought to bind predominantly in the aldehyde
+        rather than th
+      notes: M-CSA entry 521, mechanism 1; M-CSA cites PMID:10700284, PMID:11341915, PMID:15210149; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/521/
+      snippet: The NAD(P)H dependent reduction of L aspartate semi-aldehyde proceeds via hydride transfer.
+        The hydride donating NAD(P)H cofactor is bound in the Rossmann fold, where enzyme-cofactor hydrogen
+        bond interactions exist between cofactor phosphate moieties and sugar hydroxyl groups and the
+        enzyme amide back bone groups. The amino substrate is thought to bind predominantly in the aldehyde
+        rather than th
+      notes: M-CSA entry 521, mechanism 1; M-CSA cites PMID:10700284, PMID:11341915, PMID:15210149; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/521/
+      snippet: The NAD(P)H dependent reduction of L aspartate semi-aldehyde proceeds via hydride transfer.
+        The hydride donating NAD(P)H cofactor is bound in the Rossmann fold, where enzyme-cofactor hydrogen
+        bond interactions exist between cofactor phosphate moieties and sugar hydroxyl groups and the
+        enzyme amide back bone groups. The amino substrate is thought to bind predominantly in the aldehyde
+        rather than th
+      notes: M-CSA entry 521, mechanism 1; M-CSA cites PMID:10700284, PMID:11341915, PMID:15210149; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (11 evidence-backed edges) transcribed from M-CSA entry 521;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

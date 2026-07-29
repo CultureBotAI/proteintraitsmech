@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.30.1
 - CHEBI:15377
@@ -293,4 +293,307 @@ definitions:
       P1 nuclease is a 36 kDa glycoprotein that cleaves its substrate at every position yielding nucleoside 5' monophosphates, and it does not recognize or act on double-stranded DNA [PMID: 9726413]. It is useful at removing single stranded strands hanging off the end of double stranded DNA and at completely cleaving melted DNA for simple DNA composition analysis. The enzyme is a phosphodiesterase cleaving the P-O3' bond with inversion of configuration at the phosphorus, but also acts as a phosphomonesterase removing 3'-terminal phosphate groups. It has no apparent specificity for bases.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of nuclease P1
+  description: Mechanism transcribed from M-CSA entry 395. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: trp1
+    label: catalytic Trp1 (M-CSA/PDB numbering; UniProt residue 1)
+    node_type: RESIDUE
+    grounding: UniProtKB:P24289
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his6
+    label: catalytic His6 (M-CSA/PDB numbering; UniProt residue 6)
+    node_type: RESIDUE
+    grounding: UniProtKB:P24289
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp45
+    label: catalytic Asp45 (M-CSA/PDB numbering; UniProt residue 45)
+    node_type: RESIDUE
+    grounding: UniProtKB:P24289
+    description: 'M-CSA roles: activator, metal ligand.'
+  - node_id: arg48
+    label: catalytic Arg48 (M-CSA/PDB numbering; UniProt residue 48)
+    node_type: RESIDUE
+    grounding: UniProtKB:P24289
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his60
+    label: catalytic His60 (M-CSA/PDB numbering; UniProt residue 60)
+    node_type: RESIDUE
+    grounding: UniProtKB:P24289
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his116
+    label: catalytic His116 (M-CSA/PDB numbering; UniProt residue 116)
+    node_type: RESIDUE
+    grounding: UniProtKB:P24289
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp120
+    label: catalytic Asp120 (M-CSA/PDB numbering; UniProt residue 120)
+    node_type: RESIDUE
+    grounding: UniProtKB:P24289
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his126
+    label: catalytic His126 (M-CSA/PDB numbering; UniProt residue 126)
+    node_type: RESIDUE
+    grounding: UniProtKB:P24289
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his149
+    label: catalytic His149 (M-CSA/PDB numbering; UniProt residue 149)
+    node_type: RESIDUE
+    grounding: UniProtKB:P24289
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp153
+    label: catalytic Asp153 (M-CSA/PDB numbering; UniProt residue 153)
+    node_type: RESIDUE
+    grounding: UniProtKB:P24289
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: single-stranded DNA
+    node_type: CHEMICAL
+    grounding: CHEBI:9160
+  - node_id: product0
+    label: 5'-end 2'-deoxyribonucleotide(2-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:136412
+  - node_id: product1
+    label: 2'-deoxynucleoside 3'-monophosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:131705
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: Two zinc ions coordinate and activate a water molecule, with the help of Asp45, to attack
+      the phosphate in line with the P-O3' bond. Another zinc ion stabilises the leaving oxyanion, while
+      an arginine residue stabilises the negative charge of the transition state.
+  - node_id: active_site
+    label: nuclease P1 catalytic site
+    node_type: MOTIF
+    grounding: MCSA:395
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.10.575.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.10.575.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: nuclease P1 activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.30.1
+  edges:
+  - subject: asp45
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp45 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/395/
+      snippet: Two zinc ions coordinate and activate a water molecule, with the help of Asp45, to attack
+        the phosphate in line with the P-O3' bond. Another zinc ion stabilises the leaving oxyanion, while
+        an arginine residue stabilises the negative charge of the transition state.
+      notes: M-CSA entry 395, mechanism 2; M-CSA cites PMID:18524693, PMID:20604512, PMID:25157844, PMID:28036383,
+        PMID:9726413; step 1
+  - subject: trp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp1 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/395/
+      snippet: metal ligand
+      notes: M-CSA entry 395, mechanism 2; M-CSA cites PMID:18524693, PMID:20604512, PMID:25157844, PMID:28036383,
+        PMID:9726413; M-CSA catalytic-residue roles for Trp1
+  - subject: his6
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His6 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/395/
+      snippet: metal ligand
+      notes: M-CSA entry 395, mechanism 2; M-CSA cites PMID:18524693, PMID:20604512, PMID:25157844, PMID:28036383,
+        PMID:9726413; M-CSA catalytic-residue roles for His6
+  - subject: asp45
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp45 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/395/
+      snippet: activator, metal ligand
+      notes: M-CSA entry 395, mechanism 2; M-CSA cites PMID:18524693, PMID:20604512, PMID:25157844, PMID:28036383,
+        PMID:9726413; M-CSA catalytic-residue roles for Asp45
+  - subject: arg48
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg48 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/395/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 395, mechanism 2; M-CSA cites PMID:18524693, PMID:20604512, PMID:25157844, PMID:28036383,
+        PMID:9726413; M-CSA catalytic-residue roles for Arg48
+  - subject: his60
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His60 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/395/
+      snippet: metal ligand
+      notes: M-CSA entry 395, mechanism 2; M-CSA cites PMID:18524693, PMID:20604512, PMID:25157844, PMID:28036383,
+        PMID:9726413; M-CSA catalytic-residue roles for His60
+  - subject: his116
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His116 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/395/
+      snippet: metal ligand
+      notes: M-CSA entry 395, mechanism 2; M-CSA cites PMID:18524693, PMID:20604512, PMID:25157844, PMID:28036383,
+        PMID:9726413; M-CSA catalytic-residue roles for His116
+  - subject: asp120
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp120 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/395/
+      snippet: metal ligand
+      notes: M-CSA entry 395, mechanism 2; M-CSA cites PMID:18524693, PMID:20604512, PMID:25157844, PMID:28036383,
+        PMID:9726413; M-CSA catalytic-residue roles for Asp120
+  - subject: his126
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His126 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/395/
+      snippet: metal ligand
+      notes: M-CSA entry 395, mechanism 2; M-CSA cites PMID:18524693, PMID:20604512, PMID:25157844, PMID:28036383,
+        PMID:9726413; M-CSA catalytic-residue roles for His126
+  - subject: his149
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His149 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/395/
+      snippet: metal ligand
+      notes: M-CSA entry 395, mechanism 2; M-CSA cites PMID:18524693, PMID:20604512, PMID:25157844, PMID:28036383,
+        PMID:9726413; M-CSA catalytic-residue roles for His149
+  - subject: asp153
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp153 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/395/
+      snippet: metal ligand
+      notes: M-CSA entry 395, mechanism 2; M-CSA cites PMID:18524693, PMID:20604512, PMID:25157844, PMID:28036383,
+        PMID:9726413; M-CSA catalytic-residue roles for Asp153
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/395/
+      snippet: Two zinc ions coordinate and activate a water molecule, with the help of Asp45, to attack
+        the phosphate in line with the P-O3' bond. Another zinc ion stabilises the leaving oxyanion, while
+        an arginine residue stabilises the negative charge of the transition state.
+      notes: M-CSA entry 395, mechanism 2; M-CSA cites PMID:18524693, PMID:20604512, PMID:25157844, PMID:28036383,
+        PMID:9726413; CATH domain 1.10.575.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/395/
+      snippet: Two zinc ions coordinate and activate a water molecule, with the help of Asp45, to attack
+        the phosphate in line with the P-O3' bond. Another zinc ion stabilises the leaving oxyanion, while
+        an arginine residue stabilises the negative charge of the transition state.
+      notes: M-CSA entry 395, mechanism 2; M-CSA cites PMID:18524693, PMID:20604512, PMID:25157844, PMID:28036383,
+        PMID:9726413; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/395/
+      snippet: Two zinc ions coordinate and activate a water molecule, with the help of Asp45, to attack
+        the phosphate in line with the P-O3' bond. Another zinc ion stabilises the leaving oxyanion, while
+        an arginine residue stabilises the negative charge of the transition state.
+      notes: M-CSA entry 395, mechanism 2; M-CSA cites PMID:18524693, PMID:20604512, PMID:25157844, PMID:28036383,
+        PMID:9726413; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/395/
+      snippet: Two zinc ions coordinate and activate a water molecule, with the help of Asp45, to attack
+        the phosphate in line with the P-O3' bond. Another zinc ion stabilises the leaving oxyanion, while
+        an arginine residue stabilises the negative charge of the transition state.
+      notes: M-CSA entry 395, mechanism 2; M-CSA cites PMID:18524693, PMID:20604512, PMID:25157844, PMID:28036383,
+        PMID:9726413; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/395/
+      snippet: Two zinc ions coordinate and activate a water molecule, with the help of Asp45, to attack
+        the phosphate in line with the P-O3' bond. Another zinc ion stabilises the leaving oxyanion, while
+        an arginine residue stabilises the negative charge of the transition state.
+      notes: M-CSA entry 395, mechanism 2; M-CSA cites PMID:18524693, PMID:20604512, PMID:25157844, PMID:28036383,
+        PMID:9726413; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/395/
+      snippet: Two zinc ions coordinate and activate a water molecule, with the help of Asp45, to attack
+        the phosphate in line with the P-O3' bond. Another zinc ion stabilises the leaving oxyanion, while
+        an arginine residue stabilises the negative charge of the transition state.
+      notes: M-CSA entry 395, mechanism 2; M-CSA cites PMID:18524693, PMID:20604512, PMID:25157844, PMID:28036383,
+        PMID:9726413; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/395/
+      snippet: Two zinc ions coordinate and activate a water molecule, with the help of Asp45, to attack
+        the phosphate in line with the P-O3' bond. Another zinc ion stabilises the leaving oxyanion, while
+        an arginine residue stabilises the negative charge of the transition state.
+      notes: M-CSA entry 395, mechanism 2; M-CSA cites PMID:18524693, PMID:20604512, PMID:25157844, PMID:28036383,
+        PMID:9726413; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (18 evidence-backed edges) transcribed from M-CSA entry 395;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.21.4
 - CHEBI:9160
@@ -177,4 +177,237 @@ definitions:
       Type II restriction endonucleases (EC:3.1.21.4) are components of prokaryotic DNA restriction-modification mechanisms that protect the organism against invading foreign DNA. These site-specific deoxyribonucleases catalyse the endonucleolytic cleavage of DNA to give specific double-stranded fragments with terminal 5'-phosphates. This entry represents Cfr10I and Bse634I restriction endonucleases (IPR012415). They exhibit a conserved tetrameric architecture with two dimers arranged back-to-back with their putative DNA-binding clefts facing opposite directions. These clefts are formed between two monomers that interact, mainly via hydrophobic interactions supported by a few hydrogen bonds, to form a U-shaped dimer. Each monomer is folded to form a compact alpha-beta structure, whose core is made up of a five-stranded mixed beta-sheet. The monomer may be split into separate N-terminal and C-terminal subdomains at a hinge located in helix alpha3. Both Cfr10I and Bse634I recognise the double-stranded sequence RCCGGY and cleave after the purine R [PMID: 8568865].
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of type II site-specific deoxyribonuclease, Cfr10I/Bse634I
+  description: Mechanism transcribed from M-CSA entry 446. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: glu71
+    label: catalytic Glu71 (M-CSA/PDB numbering; UniProt residue 71)
+    node_type: RESIDUE
+    grounding: UniProtKB:P56200
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp134
+    label: catalytic Asp134 (M-CSA/PDB numbering; UniProt residue 134)
+    node_type: RESIDUE
+    grounding: UniProtKB:P56200
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: lys190
+    label: catalytic Lys190 (M-CSA/PDB numbering; UniProt residue 190)
+    node_type: RESIDUE
+    grounding: UniProtKB:P56200
+    description: 'M-CSA roles: electrostatic stabiliser, metal ligand.'
+  - node_id: glu204
+    label: catalytic Glu204 (M-CSA/PDB numbering; UniProt residue 204)
+    node_type: RESIDUE
+    grounding: UniProtKB:P56200
+    description: 'M-CSA roles: metal ligand, proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: single-stranded DNA
+    node_type: CHEMICAL
+    grounding: CHEBI:9160
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: 5'-end 2'-deoxyribonucleotide(2-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:136412
+  - node_id: product1
+    label: 2'-deoxynucleoside 3'-monophosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:131705
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: "There appears to still be much discussion on the exact mechanism of these enzymes, with\
+      \ a review from 2008 suggesting that they may work through many different mechanisms. Especially\
+      \ as there appears to be no set number of metal ions in the active site; some crystal structures\
+      \ show no divalent metal cations, some one, and others two.
+<br/><br/>
+However, it appears\
+      \ that the general two-metal mech"
+  - node_id: active_site
+    label: type II site-specific deoxyribonuclease, Cfr10I/Bse634I catalytic site
+    node_type: MOTIF
+    grounding: MCSA:446
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.91.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.91.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: type II site-specific deoxyribonuclease, Cfr10I/Bse634I activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.21.4
+  edges:
+  - subject: glu71
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu71 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/446/
+      snippet: metal ligand
+      notes: M-CSA entry 446, mechanism 1; M-CSA cites PMID:18261473, PMID:20347155, PMID:22495930, PMID:8568865,
+        PMID:9642051; M-CSA catalytic-residue roles for Glu71
+  - subject: asp134
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp134 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/446/
+      snippet: metal ligand
+      notes: M-CSA entry 446, mechanism 1; M-CSA cites PMID:18261473, PMID:20347155, PMID:22495930, PMID:8568865,
+        PMID:9642051; M-CSA catalytic-residue roles for Asp134
+  - subject: lys190
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys190 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/446/
+      snippet: electrostatic stabiliser, metal ligand
+      notes: M-CSA entry 446, mechanism 1; M-CSA cites PMID:18261473, PMID:20347155, PMID:22495930, PMID:8568865,
+        PMID:9642051; M-CSA catalytic-residue roles for Lys190
+  - subject: glu204
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu204 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/446/
+      snippet: metal ligand, proton shuttle (general acid/base)
+      notes: M-CSA entry 446, mechanism 1; M-CSA cites PMID:18261473, PMID:20347155, PMID:22495930, PMID:8568865,
+        PMID:9642051; M-CSA catalytic-residue roles for Glu204
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/446/
+      snippet: "There appears to still be much discussion on the exact mechanism of these enzymes, with\
+        \ a review from 2008 suggesting that they may work through many different mechanisms. Especially\
+        \ as there appears to be no set number of metal ions in the active site; some crystal structures\
+        \ show no divalent metal cations, some one, and others two.
+<br/><br/>
+However, it appears\
+        \ that the general two-metal mech"
+      notes: M-CSA entry 446, mechanism 1; M-CSA cites PMID:18261473, PMID:20347155, PMID:22495930, PMID:8568865,
+        PMID:9642051; CATH domain 3.40.91.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/446/
+      snippet: "There appears to still be much discussion on the exact mechanism of these enzymes, with\
+        \ a review from 2008 suggesting that they may work through many different mechanisms. Especially\
+        \ as there appears to be no set number of metal ions in the active site; some crystal structures\
+        \ show no divalent metal cations, some one, and others two.
+<br/><br/>
+However, it appears\
+        \ that the general two-metal mech"
+      notes: M-CSA entry 446, mechanism 1; M-CSA cites PMID:18261473, PMID:20347155, PMID:22495930, PMID:8568865,
+        PMID:9642051; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/446/
+      snippet: "There appears to still be much discussion on the exact mechanism of these enzymes, with\
+        \ a review from 2008 suggesting that they may work through many different mechanisms. Especially\
+        \ as there appears to be no set number of metal ions in the active site; some crystal structures\
+        \ show no divalent metal cations, some one, and others two.
+<br/><br/>
+However, it appears\
+        \ that the general two-metal mech"
+      notes: M-CSA entry 446, mechanism 1; M-CSA cites PMID:18261473, PMID:20347155, PMID:22495930, PMID:8568865,
+        PMID:9642051; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/446/
+      snippet: "There appears to still be much discussion on the exact mechanism of these enzymes, with\
+        \ a review from 2008 suggesting that they may work through many different mechanisms. Especially\
+        \ as there appears to be no set number of metal ions in the active site; some crystal structures\
+        \ show no divalent metal cations, some one, and others two.
+<br/><br/>
+However, it appears\
+        \ that the general two-metal mech"
+      notes: M-CSA entry 446, mechanism 1; M-CSA cites PMID:18261473, PMID:20347155, PMID:22495930, PMID:8568865,
+        PMID:9642051; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/446/
+      snippet: "There appears to still be much discussion on the exact mechanism of these enzymes, with\
+        \ a review from 2008 suggesting that they may work through many different mechanisms. Especially\
+        \ as there appears to be no set number of metal ions in the active site; some crystal structures\
+        \ show no divalent metal cations, some one, and others two.
+<br/><br/>
+However, it appears\
+        \ that the general two-metal mech"
+      notes: M-CSA entry 446, mechanism 1; M-CSA cites PMID:18261473, PMID:20347155, PMID:22495930, PMID:8568865,
+        PMID:9642051; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/446/
+      snippet: "There appears to still be much discussion on the exact mechanism of these enzymes, with\
+        \ a review from 2008 suggesting that they may work through many different mechanisms. Especially\
+        \ as there appears to be no set number of metal ions in the active site; some crystal structures\
+        \ show no divalent metal cations, some one, and others two.
+<br/><br/>
+However, it appears\
+        \ that the general two-metal mech"
+      notes: M-CSA entry 446, mechanism 1; M-CSA cites PMID:18261473, PMID:20347155, PMID:22495930, PMID:8568865,
+        PMID:9642051; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/446/
+      snippet: "There appears to still be much discussion on the exact mechanism of these enzymes, with\
+        \ a review from 2008 suggesting that they may work through many different mechanisms. Especially\
+        \ as there appears to be no set number of metal ions in the active site; some crystal structures\
+        \ show no divalent metal cations, some one, and others two.
+<br/><br/>
+However, it appears\
+        \ that the general two-metal mech"
+      notes: M-CSA entry 446, mechanism 1; M-CSA cites PMID:18261473, PMID:20347155, PMID:22495930, PMID:8568865,
+        PMID:9642051; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (11 evidence-backed edges) transcribed from M-CSA entry 446;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

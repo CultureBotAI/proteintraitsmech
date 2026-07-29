@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.1.1.6
 - CHEBI:59789
@@ -254,4 +254,242 @@ definitions:
       This entry represents a the catechol O-methyltransferases (COMT) found in eukaryotes. COMT, along with several other enzymes, degrades catecholamines such as dopamine, epinephrine and norepinephrine. It introduces a methyl group, donated by S-adenosyl methionine (SAM) to the catecholamine.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of catechol O-methyltransferase
+  description: Mechanism transcribed from M-CSA entry 915. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +43).
+  nodes:
+  - node_id: asp141
+    label: catalytic Asp141 (M-CSA/PDB numbering; UniProt residue 184)
+    node_type: RESIDUE
+    grounding: UniProtKB:P22734
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: lys144
+    label: catalytic Lys144 (M-CSA/PDB numbering; UniProt residue 187)
+    node_type: RESIDUE
+    grounding: UniProtKB:P22734
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: asp169
+    label: catalytic Asp169 (M-CSA/PDB numbering; UniProt residue 212)
+    node_type: RESIDUE
+    grounding: UniProtKB:P22734
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asn170
+    label: catalytic Asn170 (M-CSA/PDB numbering; UniProt residue 213)
+    node_type: RESIDUE
+    grounding: UniProtKB:P22734
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu199
+    label: catalytic Glu199 (M-CSA/PDB numbering; UniProt residue 242)
+    node_type: RESIDUE
+    grounding: UniProtKB:P22734
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: S-adenosyl-L-methionine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+  - node_id: reactant1
+    label: catechol
+    node_type: CHEMICAL
+    grounding: CHEBI:18135
+  - node_id: product0
+    label: S-adenosyl-L-homocysteine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+  - node_id: product1
+    label: guaiacol
+    node_type: CHEMICAL
+    grounding: CHEBI:28591
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: 'The kinetic mechanism of COMT is sequentially ordered: first, the Apo enzyme binds AdoMet,
+      second, an Mg(II) ion binds to the enzyme--AdoMet complex, and finally, the ligand binds to the
+      Holo enzyme. In the reaction, Lys144 abstracts a proton from the substrate. The negatively charged
+      catechol then abstracts the methyl group from SAM, forming the final products.'
+  - node_id: active_site
+    label: catechol O-methyltransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:915
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.150 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.150
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: catechol O-methyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.1.1.6
+  edges:
+  - subject: lys144
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys144 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/915/
+      snippet: 'The kinetic mechanism of COMT is sequentially ordered: first, the Apo enzyme binds AdoMet,
+        second, an Mg(II) ion binds to the enzyme--AdoMet complex, and finally, the ligand binds to the
+        Holo enzyme. In the reaction, Lys144 abstracts a proton from the substrate. The negatively charged
+        catechol then abstracts the methyl group from SAM, forming the final products.'
+      notes: M-CSA entry 915, mechanism 1; M-CSA cites PMID:12237326, PMID:16618795, PMID:19111934, PMID:21904625,
+        PMID:26797714, PMID:27564542, PMID:8127373; step 1
+  - subject: asp141
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp141 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/915/
+      snippet: metal ligand
+      notes: M-CSA entry 915, mechanism 1; M-CSA cites PMID:12237326, PMID:16618795, PMID:19111934, PMID:21904625,
+        PMID:26797714, PMID:27564542, PMID:8127373; M-CSA catalytic-residue roles for Asp141
+  - subject: lys144
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys144 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/915/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 915, mechanism 1; M-CSA cites PMID:12237326, PMID:16618795, PMID:19111934, PMID:21904625,
+        PMID:26797714, PMID:27564542, PMID:8127373; M-CSA catalytic-residue roles for Lys144
+  - subject: asp169
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp169 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/915/
+      snippet: metal ligand
+      notes: M-CSA entry 915, mechanism 1; M-CSA cites PMID:12237326, PMID:16618795, PMID:19111934, PMID:21904625,
+        PMID:26797714, PMID:27564542, PMID:8127373; M-CSA catalytic-residue roles for Asp169
+  - subject: asn170
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn170 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/915/
+      snippet: metal ligand
+      notes: M-CSA entry 915, mechanism 1; M-CSA cites PMID:12237326, PMID:16618795, PMID:19111934, PMID:21904625,
+        PMID:26797714, PMID:27564542, PMID:8127373; M-CSA catalytic-residue roles for Asn170
+  - subject: glu199
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu199 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/915/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 915, mechanism 1; M-CSA cites PMID:12237326, PMID:16618795, PMID:19111934, PMID:21904625,
+        PMID:26797714, PMID:27564542, PMID:8127373; M-CSA catalytic-residue roles for Glu199
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/915/
+      snippet: 'The kinetic mechanism of COMT is sequentially ordered: first, the Apo enzyme binds AdoMet,
+        second, an Mg(II) ion binds to the enzyme--AdoMet complex, and finally, the ligand binds to the
+        Holo enzyme. In the reaction, Lys144 abstracts a proton from the substrate. The negatively charged
+        catechol then abstracts the methyl group from SAM, forming the final products.'
+      notes: M-CSA entry 915, mechanism 1; M-CSA cites PMID:12237326, PMID:16618795, PMID:19111934, PMID:21904625,
+        PMID:26797714, PMID:27564542, PMID:8127373; CATH domain 3.40.50.150 assigned to the catalytic
+        chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/915/
+      snippet: 'The kinetic mechanism of COMT is sequentially ordered: first, the Apo enzyme binds AdoMet,
+        second, an Mg(II) ion binds to the enzyme--AdoMet complex, and finally, the ligand binds to the
+        Holo enzyme. In the reaction, Lys144 abstracts a proton from the substrate. The negatively charged
+        catechol then abstracts the methyl group from SAM, forming the final products.'
+      notes: M-CSA entry 915, mechanism 1; M-CSA cites PMID:12237326, PMID:16618795, PMID:19111934, PMID:21904625,
+        PMID:26797714, PMID:27564542, PMID:8127373; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/915/
+      snippet: 'The kinetic mechanism of COMT is sequentially ordered: first, the Apo enzyme binds AdoMet,
+        second, an Mg(II) ion binds to the enzyme--AdoMet complex, and finally, the ligand binds to the
+        Holo enzyme. In the reaction, Lys144 abstracts a proton from the substrate. The negatively charged
+        catechol then abstracts the methyl group from SAM, forming the final products.'
+      notes: M-CSA entry 915, mechanism 1; M-CSA cites PMID:12237326, PMID:16618795, PMID:19111934, PMID:21904625,
+        PMID:26797714, PMID:27564542, PMID:8127373; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/915/
+      snippet: 'The kinetic mechanism of COMT is sequentially ordered: first, the Apo enzyme binds AdoMet,
+        second, an Mg(II) ion binds to the enzyme--AdoMet complex, and finally, the ligand binds to the
+        Holo enzyme. In the reaction, Lys144 abstracts a proton from the substrate. The negatively charged
+        catechol then abstracts the methyl group from SAM, forming the final products.'
+      notes: M-CSA entry 915, mechanism 1; M-CSA cites PMID:12237326, PMID:16618795, PMID:19111934, PMID:21904625,
+        PMID:26797714, PMID:27564542, PMID:8127373; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/915/
+      snippet: 'The kinetic mechanism of COMT is sequentially ordered: first, the Apo enzyme binds AdoMet,
+        second, an Mg(II) ion binds to the enzyme--AdoMet complex, and finally, the ligand binds to the
+        Holo enzyme. In the reaction, Lys144 abstracts a proton from the substrate. The negatively charged
+        catechol then abstracts the methyl group from SAM, forming the final products.'
+      notes: M-CSA entry 915, mechanism 1; M-CSA cites PMID:12237326, PMID:16618795, PMID:19111934, PMID:21904625,
+        PMID:26797714, PMID:27564542, PMID:8127373; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/915/
+      snippet: 'The kinetic mechanism of COMT is sequentially ordered: first, the Apo enzyme binds AdoMet,
+        second, an Mg(II) ion binds to the enzyme--AdoMet complex, and finally, the ligand binds to the
+        Holo enzyme. In the reaction, Lys144 abstracts a proton from the substrate. The negatively charged
+        catechol then abstracts the methyl group from SAM, forming the final products.'
+      notes: M-CSA entry 915, mechanism 1; M-CSA cites PMID:12237326, PMID:16618795, PMID:19111934, PMID:21904625,
+        PMID:26797714, PMID:27564542, PMID:8127373; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/915/
+      snippet: 'The kinetic mechanism of COMT is sequentially ordered: first, the Apo enzyme binds AdoMet,
+        second, an Mg(II) ion binds to the enzyme--AdoMet complex, and finally, the ligand binds to the
+        Holo enzyme. In the reaction, Lys144 abstracts a proton from the substrate. The negatively charged
+        catechol then abstracts the methyl group from SAM, forming the final products.'
+      notes: M-CSA entry 915, mechanism 1; M-CSA cites PMID:12237326, PMID:16618795, PMID:19111934, PMID:21904625,
+        PMID:26797714, PMID:27564542, PMID:8127373; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 915;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

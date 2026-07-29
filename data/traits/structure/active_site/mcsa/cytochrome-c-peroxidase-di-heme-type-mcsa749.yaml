@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.11.1.5
 - CHEBI:29033
@@ -223,4 +223,199 @@ definitions:
       Cytochrome c peroxidase (CCP) catalyses the reduction of hydrogen peroxide to water, an important step in the cellular detoxification process. Two cytochrome c molecules serve as the electron donors. Di-heme CCPs are found in bacteria including Pseudomonas aeruginosa, Paracoccus denitrificans and Pseudomonas nautica. The overall reaction is: 2 cyt c (Fe2+) + H2O2 -> 2 cyt c (Fe3+) + 2 H2O. The enzyme has two heme cofactors, referred to as high and low potential hemes (HP heme and LP heme), located in the C and N terminal domains respectively. The enzyme requires Ca2+ for activation; calcium causes structural changes and removal of a heme ligand, allowing peroxide approach.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of cytochrome-c peroxidase (di-heme type)
+  description: Mechanism transcribed from M-CSA entry 749. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering only — no unique offset to the record's reference sequence could
+    be verified, so no UniProt position is asserted.
+  nodes:
+  - node_id: glu114
+    label: catalytic Glu114 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P83787
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: iron(2+)
+    node_type: CHEMICAL
+    grounding: CHEBI:29033
+  - node_id: reactant1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: reactant2
+    label: hydrogen peroxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+  - node_id: product0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product1
+    label: iron(3+)
+    node_type: CHEMICAL
+    grounding: CHEBI:29034
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: 'The mechanism is not yet clearly understood, but a mechanism using a oxo-ferryl intermediate
+      is consistent with spectroscopic, mutagenic and structural evidence. LP heme is the peroxidatic
+      heme, and HP heme is the route of electron transfer from the cytochromes to the LP heme. Trp 94
+      is likely to function as an electron transfer residue, connecting the propionate groups of the two
+      heme cofactors. '
+  - node_id: active_site
+    label: cytochrome-c peroxidase (di-heme type) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:749
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.10.760.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.10.760.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: cytochrome-c peroxidase (di-heme type) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.11.1.5
+  edges:
+  - subject: glu114
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu114 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/749/
+      snippet: 'The mechanism is not yet clearly understood, but a mechanism using a oxo-ferryl intermediate
+        is consistent with spectroscopic, mutagenic and structural evidence. LP heme is the peroxidatic
+        heme, and HP heme is the route of electron transfer from the cytochromes to the LP heme. Trp 94
+        is likely to function as an electron transfer residue, connecting the propionate groups of the
+        two heme cofactors. The most supported model for the redox mechanism is:  The inactive form of
+        the enzyme has no calcium, HP heme with Fe(III) in high / low spin equilibrium, and LP heme with
+        low spin Fe(III). Calcium binds; cytochrome c delivers an electron to HP heme which becomes low
+        spin with Fe(II). The enzyme is now activated.  Hydrogen peroxide binds to LP heme. Glu 114 acts
+        as an acid/base catalyst to transfer one of the protons of H2O2 to the other oxygen atom, thus
+        encouraging O-O bond cleavage and loss of water. An LP heme Fe(IV)=O oxo-ferryl species is formed.
+        HP heme is oxidised to Fe(III).  A second cytochrome c delivers an electron to LP heme (via HP
+        heme and Trp 94); along with two protons (method of proton delivery not known), this reduces the
+        Fe(IV)=O into Fe(III) and water. A third cytochrome c delivers an electron to HP heme, reducing
+        its Fe(III) into Fe(II). The enzyme is now back in the active mixed valence form.'
+      notes: M-CSA entry 749, mechanism 1; M-CSA cites PMID:15274917, PMID:16314410, PMID:2169873, PMID:23558243,
+        PMID:3036202, PMID:9406554; step 1
+  - subject: glu114
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu114 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/749/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 749, mechanism 1; M-CSA cites PMID:15274917, PMID:16314410, PMID:2169873, PMID:23558243,
+        PMID:3036202, PMID:9406554; M-CSA catalytic-residue roles for Glu114
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/749/
+      snippet: The mechanism is not yet clearly understood, but a mechanism using a oxo-ferryl intermediate
+        is consistent with spectroscopic, mutagenic and structural evidence. LP heme is the peroxidatic
+        heme, and HP heme is the route of electron transfer from the cytochromes to the LP heme. Trp 94
+        is likely to function as an electron transfer residue, connecting the propionate groups of the
+        two heme cofactors.
+      notes: M-CSA entry 749, mechanism 1; M-CSA cites PMID:15274917, PMID:16314410, PMID:2169873, PMID:23558243,
+        PMID:3036202, PMID:9406554; CATH domain 1.10.760.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/749/
+      snippet: The mechanism is not yet clearly understood, but a mechanism using a oxo-ferryl intermediate
+        is consistent with spectroscopic, mutagenic and structural evidence. LP heme is the peroxidatic
+        heme, and HP heme is the route of electron transfer from the cytochromes to the LP heme. Trp 94
+        is likely to function as an electron transfer residue, connecting the propionate groups of the
+        two heme cofactors.
+      notes: M-CSA entry 749, mechanism 1; M-CSA cites PMID:15274917, PMID:16314410, PMID:2169873, PMID:23558243,
+        PMID:3036202, PMID:9406554; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/749/
+      snippet: The mechanism is not yet clearly understood, but a mechanism using a oxo-ferryl intermediate
+        is consistent with spectroscopic, mutagenic and structural evidence. LP heme is the peroxidatic
+        heme, and HP heme is the route of electron transfer from the cytochromes to the LP heme. Trp 94
+        is likely to function as an electron transfer residue, connecting the propionate groups of the
+        two heme cofactors.
+      notes: M-CSA entry 749, mechanism 1; M-CSA cites PMID:15274917, PMID:16314410, PMID:2169873, PMID:23558243,
+        PMID:3036202, PMID:9406554; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/749/
+      snippet: The mechanism is not yet clearly understood, but a mechanism using a oxo-ferryl intermediate
+        is consistent with spectroscopic, mutagenic and structural evidence. LP heme is the peroxidatic
+        heme, and HP heme is the route of electron transfer from the cytochromes to the LP heme. Trp 94
+        is likely to function as an electron transfer residue, connecting the propionate groups of the
+        two heme cofactors.
+      notes: M-CSA entry 749, mechanism 1; M-CSA cites PMID:15274917, PMID:16314410, PMID:2169873, PMID:23558243,
+        PMID:3036202, PMID:9406554; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/749/
+      snippet: The mechanism is not yet clearly understood, but a mechanism using a oxo-ferryl intermediate
+        is consistent with spectroscopic, mutagenic and structural evidence. LP heme is the peroxidatic
+        heme, and HP heme is the route of electron transfer from the cytochromes to the LP heme. Trp 94
+        is likely to function as an electron transfer residue, connecting the propionate groups of the
+        two heme cofactors.
+      notes: M-CSA entry 749, mechanism 1; M-CSA cites PMID:15274917, PMID:16314410, PMID:2169873, PMID:23558243,
+        PMID:3036202, PMID:9406554; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/749/
+      snippet: The mechanism is not yet clearly understood, but a mechanism using a oxo-ferryl intermediate
+        is consistent with spectroscopic, mutagenic and structural evidence. LP heme is the peroxidatic
+        heme, and HP heme is the route of electron transfer from the cytochromes to the LP heme. Trp 94
+        is likely to function as an electron transfer residue, connecting the propionate groups of the
+        two heme cofactors.
+      notes: M-CSA entry 749, mechanism 1; M-CSA cites PMID:15274917, PMID:16314410, PMID:2169873, PMID:23558243,
+        PMID:3036202, PMID:9406554; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/749/
+      snippet: The mechanism is not yet clearly understood, but a mechanism using a oxo-ferryl intermediate
+        is consistent with spectroscopic, mutagenic and structural evidence. LP heme is the peroxidatic
+        heme, and HP heme is the route of electron transfer from the cytochromes to the LP heme. Trp 94
+        is likely to function as an electron transfer residue, connecting the propionate groups of the
+        two heme cofactors.
+      notes: M-CSA entry 749, mechanism 1; M-CSA cites PMID:15274917, PMID:16314410, PMID:2169873, PMID:23558243,
+        PMID:3036202, PMID:9406554; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (9 evidence-backed edges) transcribed from M-CSA entry 749;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

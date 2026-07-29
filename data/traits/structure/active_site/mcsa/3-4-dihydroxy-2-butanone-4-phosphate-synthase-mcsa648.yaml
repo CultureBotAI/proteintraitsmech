@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.1.99.12
 - CHEBI:58121
@@ -214,4 +214,328 @@ definitions:
       L-3,4-Dihydroxy-2-butanone-4-phosphate synthase catalyses the conversion of ribulose 5-phosphate to L-3,4-dihydroxy-2-butanone-4-phosphate (DHBP) and formate in riboflavin biosynthesis. The proposed mechanism shares features with many enzymes, including the sugar isomerases.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 3,4-dihydroxy-2-butanone-4-phosphate synthase
+  description: Mechanism transcribed from M-CSA entry 648. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering only — no unique offset to the record's reference sequence could
+    be verified, so no UniProt position is asserted.
+  nodes:
+  - node_id: asp30
+    label: catalytic Asp30 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q60364
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: cys55
+    label: catalytic Cys55 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q60364
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: tyr95
+    label: catalytic Tyr95 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q60364
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asn106
+    label: catalytic Asn106 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q60364
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ser147
+    label: catalytic Ser147 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q60364
+    description: 'M-CSA roles: electrostatic stabiliser, proton shuttle (general acid/base).'
+  - node_id: glu185
+    label: catalytic Glu185 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q60364
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: D-ribulose 5-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58121
+  - node_id: product0
+    label: (2S)-2-hydroxy-3-oxobutyl phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58830
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: formate
+    node_type: CHEMICAL
+    grounding: CHEBI:15740
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: 'A His-Asn dyad is central to the proposed mechanism of L-3,4-Dihydroxy-2-butanone-4-phosphate
+      synthase. An initial enolisation step is mediated by Glu 185 acting as a general base to abstract
+      the C3 proton in concert with the donation of a proton to the C2 carbonyl oxygen by His 147. Stabilisation
+      of the enolate occurs via His 147, Asn 106 and Tyr 95. Dehydration is assisted by Cys 55 acting
+      as a '
+  - node_id: active_site
+    label: 3,4-dihydroxy-2-butanone-4-phosphate synthase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:648
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.870.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.870.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: 3,4-dihydroxy-2-butanone-4-phosphate synthase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.1.99.12
+  edges:
+  - subject: asp30
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp30 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/648/
+      snippet: A His-Asn dyad is central to the proposed mechanism of L-3,4-Dihydroxy-2-butanone-4-phosphate
+        synthase. An initial enolisation step is mediated by Glu 185 acting as a general base to abstract
+        the C3 proton in concert with the donation of a proton to the C2 carbonyl oxygen by His 147. Stabilisation
+        of the enolate occurs via His 147, Asn 106 and Tyr 95. Dehydration is assisted by Cys 55 acting
+        as a general acid. The enol is ketonised by an acid-base process with the C2 hydroxyl deprotonated
+        by His 147 and a proton donated to C1 by Glu 185. A skeleton rearrangement is initiated by deprotonation
+        of the C4 hydroxyl by Asp 30. Hydration by a magnesium-associated water follows with proton donation
+        from His 147 yields the enolate intermediate, which binds to one magnesium only so that Glu 185
+        can deprotonate the C2 hydroxyl and the final product is generated by protonation by a magnesium-activated
+        water.
+      notes: M-CSA entry 648, mechanism 1; M-CSA cites PMID:11827524, PMID:12200440, PMID:12904291; step
+        1
+  - subject: cys55
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys55 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/648/
+      snippet: A His-Asn dyad is central to the proposed mechanism of L-3,4-Dihydroxy-2-butanone-4-phosphate
+        synthase. An initial enolisation step is mediated by Glu 185 acting as a general base to abstract
+        the C3 proton in concert with the donation of a proton to the C2 carbonyl oxygen by His 147. Stabilisation
+        of the enolate occurs via His 147, Asn 106 and Tyr 95. Dehydration is assisted by Cys 55 acting
+        as a general acid. The enol is ketonised by an acid-base process with the C2 hydroxyl deprotonated
+        by His 147 and a proton donated to C1 by Glu 185. A skeleton rearrangement is initiated by deprotonation
+        of the C4 hydroxyl by Asp 30. Hydration by a magnesium-associated water follows with proton donation
+        from His 147 yields the enolate intermediate, which binds to one magnesium only so that Glu 185
+        can deprotonate the C2 hydroxyl and the final product is generated by protonation by a magnesium-activated
+        water.
+      notes: M-CSA entry 648, mechanism 1; M-CSA cites PMID:11827524, PMID:12200440, PMID:12904291; step
+        1
+  - subject: tyr95
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr95 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/648/
+      snippet: A His-Asn dyad is central to the proposed mechanism of L-3,4-Dihydroxy-2-butanone-4-phosphate
+        synthase. An initial enolisation step is mediated by Glu 185 acting as a general base to abstract
+        the C3 proton in concert with the donation of a proton to the C2 carbonyl oxygen by His 147. Stabilisation
+        of the enolate occurs via His 147, Asn 106 and Tyr 95. Dehydration is assisted by Cys 55 acting
+        as a general acid. The enol is ketonised by an acid-base process with the C2 hydroxyl deprotonated
+        by His 147 and a proton donated to C1 by Glu 185. A skeleton rearrangement is initiated by deprotonation
+        of the C4 hydroxyl by Asp 30. Hydration by a magnesium-associated water follows with proton donation
+        from His 147 yields the enolate intermediate, which binds to one magnesium only so that Glu 185
+        can deprotonate the C2 hydroxyl and the final product is generated by protonation by a magnesium-activated
+        water.
+      notes: M-CSA entry 648, mechanism 1; M-CSA cites PMID:11827524, PMID:12200440, PMID:12904291; step
+        1
+  - subject: asn106
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asn106 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/648/
+      snippet: A His-Asn dyad is central to the proposed mechanism of L-3,4-Dihydroxy-2-butanone-4-phosphate
+        synthase. An initial enolisation step is mediated by Glu 185 acting as a general base to abstract
+        the C3 proton in concert with the donation of a proton to the C2 carbonyl oxygen by His 147. Stabilisation
+        of the enolate occurs via His 147, Asn 106 and Tyr 95. Dehydration is assisted by Cys 55 acting
+        as a general acid. The enol is ketonised by an acid-base process with the C2 hydroxyl deprotonated
+        by His 147 and a proton donated to C1 by Glu 185. A skeleton rearrangement is initiated by deprotonation
+        of the C4 hydroxyl by Asp 30. Hydration by a magnesium-associated water follows with proton donation
+        from His 147 yields the enolate intermediate, which binds to one magnesium only so that Glu 185
+        can deprotonate the C2 hydroxyl and the final product is generated by protonation by a magnesium-activated
+        water.
+      notes: M-CSA entry 648, mechanism 1; M-CSA cites PMID:11827524, PMID:12200440, PMID:12904291; step
+        1
+  - subject: glu185
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu185 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/648/
+      snippet: A His-Asn dyad is central to the proposed mechanism of L-3,4-Dihydroxy-2-butanone-4-phosphate
+        synthase. An initial enolisation step is mediated by Glu 185 acting as a general base to abstract
+        the C3 proton in concert with the donation of a proton to the C2 carbonyl oxygen by His 147. Stabilisation
+        of the enolate occurs via His 147, Asn 106 and Tyr 95. Dehydration is assisted by Cys 55 acting
+        as a general acid. The enol is ketonised by an acid-base process with the C2 hydroxyl deprotonated
+        by His 147 and a proton donated to C1 by Glu 185. A skeleton rearrangement is initiated by deprotonation
+        of the C4 hydroxyl by Asp 30. Hydration by a magnesium-associated water follows with proton donation
+        from His 147 yields the enolate intermediate, which binds to one magnesium only so that Glu 185
+        can deprotonate the C2 hydroxyl and the final product is generated by protonation by a magnesium-activated
+        water.
+      notes: M-CSA entry 648, mechanism 1; M-CSA cites PMID:11827524, PMID:12200440, PMID:12904291; step
+        1
+  - subject: asp30
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp30 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/648/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 648, mechanism 1; M-CSA cites PMID:11827524, PMID:12200440, PMID:12904291; M-CSA
+        catalytic-residue roles for Asp30
+  - subject: cys55
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys55 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/648/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 648, mechanism 1; M-CSA cites PMID:11827524, PMID:12200440, PMID:12904291; M-CSA
+        catalytic-residue roles for Cys55
+  - subject: tyr95
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr95 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/648/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 648, mechanism 1; M-CSA cites PMID:11827524, PMID:12200440, PMID:12904291; M-CSA
+        catalytic-residue roles for Tyr95
+  - subject: asn106
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn106 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/648/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 648, mechanism 1; M-CSA cites PMID:11827524, PMID:12200440, PMID:12904291; M-CSA
+        catalytic-residue roles for Asn106
+  - subject: ser147
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser147 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/648/
+      snippet: electrostatic stabiliser, proton shuttle (general acid/base)
+      notes: M-CSA entry 648, mechanism 1; M-CSA cites PMID:11827524, PMID:12200440, PMID:12904291; M-CSA
+        catalytic-residue roles for Ser147
+  - subject: glu185
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu185 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/648/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 648, mechanism 1; M-CSA cites PMID:11827524, PMID:12200440, PMID:12904291; M-CSA
+        catalytic-residue roles for Glu185
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/648/
+      snippet: A His-Asn dyad is central to the proposed mechanism of L-3,4-Dihydroxy-2-butanone-4-phosphate
+        synthase. An initial enolisation step is mediated by Glu 185 acting as a general base to abstract
+        the C3 proton in concert with the donation of a proton to the C2 carbonyl oxygen by His 147. Stabilisation
+        of the enolate occurs via His 147, Asn 106 and Tyr 95. Dehydration is assisted by Cys 55 acting
+        as a
+      notes: M-CSA entry 648, mechanism 1; M-CSA cites PMID:11827524, PMID:12200440, PMID:12904291; CATH
+        domain 3.90.870.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/648/
+      snippet: A His-Asn dyad is central to the proposed mechanism of L-3,4-Dihydroxy-2-butanone-4-phosphate
+        synthase. An initial enolisation step is mediated by Glu 185 acting as a general base to abstract
+        the C3 proton in concert with the donation of a proton to the C2 carbonyl oxygen by His 147. Stabilisation
+        of the enolate occurs via His 147, Asn 106 and Tyr 95. Dehydration is assisted by Cys 55 acting
+        as a
+      notes: M-CSA entry 648, mechanism 1; M-CSA cites PMID:11827524, PMID:12200440, PMID:12904291; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/648/
+      snippet: A His-Asn dyad is central to the proposed mechanism of L-3,4-Dihydroxy-2-butanone-4-phosphate
+        synthase. An initial enolisation step is mediated by Glu 185 acting as a general base to abstract
+        the C3 proton in concert with the donation of a proton to the C2 carbonyl oxygen by His 147. Stabilisation
+        of the enolate occurs via His 147, Asn 106 and Tyr 95. Dehydration is assisted by Cys 55 acting
+        as a
+      notes: M-CSA entry 648, mechanism 1; M-CSA cites PMID:11827524, PMID:12200440, PMID:12904291; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/648/
+      snippet: A His-Asn dyad is central to the proposed mechanism of L-3,4-Dihydroxy-2-butanone-4-phosphate
+        synthase. An initial enolisation step is mediated by Glu 185 acting as a general base to abstract
+        the C3 proton in concert with the donation of a proton to the C2 carbonyl oxygen by His 147. Stabilisation
+        of the enolate occurs via His 147, Asn 106 and Tyr 95. Dehydration is assisted by Cys 55 acting
+        as a
+      notes: M-CSA entry 648, mechanism 1; M-CSA cites PMID:11827524, PMID:12200440, PMID:12904291; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/648/
+      snippet: A His-Asn dyad is central to the proposed mechanism of L-3,4-Dihydroxy-2-butanone-4-phosphate
+        synthase. An initial enolisation step is mediated by Glu 185 acting as a general base to abstract
+        the C3 proton in concert with the donation of a proton to the C2 carbonyl oxygen by His 147. Stabilisation
+        of the enolate occurs via His 147, Asn 106 and Tyr 95. Dehydration is assisted by Cys 55 acting
+        as a
+      notes: M-CSA entry 648, mechanism 1; M-CSA cites PMID:11827524, PMID:12200440, PMID:12904291; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/648/
+      snippet: A His-Asn dyad is central to the proposed mechanism of L-3,4-Dihydroxy-2-butanone-4-phosphate
+        synthase. An initial enolisation step is mediated by Glu 185 acting as a general base to abstract
+        the C3 proton in concert with the donation of a proton to the C2 carbonyl oxygen by His 147. Stabilisation
+        of the enolate occurs via His 147, Asn 106 and Tyr 95. Dehydration is assisted by Cys 55 acting
+        as a
+      notes: M-CSA entry 648, mechanism 1; M-CSA cites PMID:11827524, PMID:12200440, PMID:12904291; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (17 evidence-backed edges) transcribed from M-CSA entry 648;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

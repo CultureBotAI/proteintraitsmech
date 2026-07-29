@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.21.100
 - CHEBI:60466
@@ -297,4 +297,241 @@ definitions:
       Sedolisins are proteolytic enzymes resembling subtilisin. They are a related family of serine-carboxyl peptidases with a unique Ser-Glu-Asp catalytic triad and require calcium ions to maintain structural integrity.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of sedolisin
+  description: Mechanism transcribed from M-CSA entry 380. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering only — no unique offset to the record's reference sequence could
+    be verified, so no UniProt position is asserted.
+  nodes:
+  - node_id: glu80
+    label: catalytic Glu80 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P42790
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: asp84
+    label: catalytic Asp84 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P42790
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: asp170
+    label: catalytic Asp170 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P42790
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ser287
+    label: catalytic Ser287 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P42790
+    description: 'M-CSA roles: covalent catalysis.'
+  - node_id: reactant0
+    label: peptide zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:60466
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: alpha-amino acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:78608
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: Ser 287 acts as a nucleophile to attack the scissile bond and form an acyl-enzyme intermediate.
+      Glu 80 interacts with Ser 287, and Asp 84 in turn with Glu 80. A chain of proton donors originates
+      with a bound water molecule interacting with protonated Asp 84. In turn, this residue interacts
+      with protonated Glu 80, which donates a proton to Ser 287. A water molecule accepts protons from
+      Ser 287, and
+  - node_id: active_site
+    label: sedolisin catalytic site
+    node_type: MOTIF
+    grounding: MCSA:380
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.200 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.200
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: sedolisin activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.21.100
+  edges:
+  - subject: glu80
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu80 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/380/
+      snippet: Ser 287 acts as a nucleophile to attack the scissile bond and form an acyl-enzyme intermediate.
+        Glu 80 interacts with Ser 287, and Asp 84 in turn with Glu 80. A chain of proton donors originates
+        with a bound water molecule interacting with protonated Asp 84. In turn, this residue interacts
+        with protonated Glu 80, which donates a proton to Ser 287. A water molecule accepts protons from
+        Ser 287, and protonated Asp 170 which forms the oxyanion hole stabilising the tetrahedral intermediate.
+      notes: M-CSA entry 380, mechanism 1; M-CSA cites PMID:10488127, PMID:11323721, PMID:12673349, PMID:1562589,
+        PMID:22016395; step 1
+  - subject: asp84
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp84 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/380/
+      snippet: Ser 287 acts as a nucleophile to attack the scissile bond and form an acyl-enzyme intermediate.
+        Glu 80 interacts with Ser 287, and Asp 84 in turn with Glu 80. A chain of proton donors originates
+        with a bound water molecule interacting with protonated Asp 84. In turn, this residue interacts
+        with protonated Glu 80, which donates a proton to Ser 287. A water molecule accepts protons from
+        Ser 287, and protonated Asp 170 which forms the oxyanion hole stabilising the tetrahedral intermediate.
+      notes: M-CSA entry 380, mechanism 1; M-CSA cites PMID:10488127, PMID:11323721, PMID:12673349, PMID:1562589,
+        PMID:22016395; step 1
+  - subject: asp170
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp170 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/380/
+      snippet: Ser 287 acts as a nucleophile to attack the scissile bond and form an acyl-enzyme intermediate.
+        Glu 80 interacts with Ser 287, and Asp 84 in turn with Glu 80. A chain of proton donors originates
+        with a bound water molecule interacting with protonated Asp 84. In turn, this residue interacts
+        with protonated Glu 80, which donates a proton to Ser 287. A water molecule accepts protons from
+        Ser 287, and protonated Asp 170 which forms the oxyanion hole stabilising the tetrahedral intermediate.
+      notes: M-CSA entry 380, mechanism 1; M-CSA cites PMID:10488127, PMID:11323721, PMID:12673349, PMID:1562589,
+        PMID:22016395; step 1
+  - subject: ser287
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser287 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/380/
+      snippet: Ser 287 acts as a nucleophile to attack the scissile bond and form an acyl-enzyme intermediate.
+        Glu 80 interacts with Ser 287, and Asp 84 in turn with Glu 80. A chain of proton donors originates
+        with a bound water molecule interacting with protonated Asp 84. In turn, this residue interacts
+        with protonated Glu 80, which donates a proton to Ser 287. A water molecule accepts protons from
+        Ser 287, and protonated Asp 170 which forms the oxyanion hole stabilising the tetrahedral intermediate.
+      notes: M-CSA entry 380, mechanism 1; M-CSA cites PMID:10488127, PMID:11323721, PMID:12673349, PMID:1562589,
+        PMID:22016395; step 1
+  - subject: glu80
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu80 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/380/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 380, mechanism 1; M-CSA cites PMID:10488127, PMID:11323721, PMID:12673349, PMID:1562589,
+        PMID:22016395; M-CSA catalytic-residue roles for Glu80
+  - subject: asp84
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp84 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/380/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 380, mechanism 1; M-CSA cites PMID:10488127, PMID:11323721, PMID:12673349, PMID:1562589,
+        PMID:22016395; M-CSA catalytic-residue roles for Asp84
+  - subject: asp170
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp170 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/380/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 380, mechanism 1; M-CSA cites PMID:10488127, PMID:11323721, PMID:12673349, PMID:1562589,
+        PMID:22016395; M-CSA catalytic-residue roles for Asp170
+  - subject: ser287
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser287 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/380/
+      snippet: covalent catalysis
+      notes: M-CSA entry 380, mechanism 1; M-CSA cites PMID:10488127, PMID:11323721, PMID:12673349, PMID:1562589,
+        PMID:22016395; M-CSA catalytic-residue roles for Ser287
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/380/
+      snippet: Ser 287 acts as a nucleophile to attack the scissile bond and form an acyl-enzyme intermediate.
+        Glu 80 interacts with Ser 287, and Asp 84 in turn with Glu 80. A chain of proton donors originates
+        with a bound water molecule interacting with protonated Asp 84. In turn, this residue interacts
+        with protonated Glu 80, which donates a proton to Ser 287. A water molecule accepts protons from
+        Ser 287, and
+      notes: M-CSA entry 380, mechanism 1; M-CSA cites PMID:10488127, PMID:11323721, PMID:12673349, PMID:1562589,
+        PMID:22016395; CATH domain 3.40.50.200 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/380/
+      snippet: Ser 287 acts as a nucleophile to attack the scissile bond and form an acyl-enzyme intermediate.
+        Glu 80 interacts with Ser 287, and Asp 84 in turn with Glu 80. A chain of proton donors originates
+        with a bound water molecule interacting with protonated Asp 84. In turn, this residue interacts
+        with protonated Glu 80, which donates a proton to Ser 287. A water molecule accepts protons from
+        Ser 287, and
+      notes: M-CSA entry 380, mechanism 1; M-CSA cites PMID:10488127, PMID:11323721, PMID:12673349, PMID:1562589,
+        PMID:22016395; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/380/
+      snippet: Ser 287 acts as a nucleophile to attack the scissile bond and form an acyl-enzyme intermediate.
+        Glu 80 interacts with Ser 287, and Asp 84 in turn with Glu 80. A chain of proton donors originates
+        with a bound water molecule interacting with protonated Asp 84. In turn, this residue interacts
+        with protonated Glu 80, which donates a proton to Ser 287. A water molecule accepts protons from
+        Ser 287, and
+      notes: M-CSA entry 380, mechanism 1; M-CSA cites PMID:10488127, PMID:11323721, PMID:12673349, PMID:1562589,
+        PMID:22016395; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/380/
+      snippet: Ser 287 acts as a nucleophile to attack the scissile bond and form an acyl-enzyme intermediate.
+        Glu 80 interacts with Ser 287, and Asp 84 in turn with Glu 80. A chain of proton donors originates
+        with a bound water molecule interacting with protonated Asp 84. In turn, this residue interacts
+        with protonated Glu 80, which donates a proton to Ser 287. A water molecule accepts protons from
+        Ser 287, and
+      notes: M-CSA entry 380, mechanism 1; M-CSA cites PMID:10488127, PMID:11323721, PMID:12673349, PMID:1562589,
+        PMID:22016395; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/380/
+      snippet: Ser 287 acts as a nucleophile to attack the scissile bond and form an acyl-enzyme intermediate.
+        Glu 80 interacts with Ser 287, and Asp 84 in turn with Glu 80. A chain of proton donors originates
+        with a bound water molecule interacting with protonated Asp 84. In turn, this residue interacts
+        with protonated Glu 80, which donates a proton to Ser 287. A water molecule accepts protons from
+        Ser 287, and
+      notes: M-CSA entry 380, mechanism 1; M-CSA cites PMID:10488127, PMID:11323721, PMID:12673349, PMID:1562589,
+        PMID:22016395; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 380;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

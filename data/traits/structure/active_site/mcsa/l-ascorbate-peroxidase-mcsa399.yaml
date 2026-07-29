@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.11.1.11
 - CHEBI:58539
@@ -221,4 +221,278 @@ definitions:
       L-ascorbate peroxidase (AP) is a heme peroxidase. This group of enzyme catalyse the reduction of hydrogen peroxide (H2O2) to water and the concurrent oxidisation of a range of substrates, in this case ascorbic acid. Ascorbic acid is a strong antioxidant that is effective in scavenging superoxide (O2-'), hydroxyl (OH') radicals and singlet oxygen. It can also remove H2O2 in the following reaction. AP is the main enzyme responsible for hydrogen peroxide removal in the chloroplasts and cytosol of higher plants.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of L-ascorbate peroxidase
+  description: Mechanism transcribed from M-CSA entry 399. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: arg38
+    label: catalytic Arg38 (M-CSA/PDB numbering; UniProt residue 38)
+    node_type: RESIDUE
+    grounding: UniProtKB:P48534
+    description: 'M-CSA roles: transition state stabiliser.'
+  - node_id: his42
+    label: catalytic His42 (M-CSA/PDB numbering; UniProt residue 42)
+    node_type: RESIDUE
+    grounding: UniProtKB:P48534
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: his163
+    label: catalytic His163 (M-CSA/PDB numbering; UniProt residue 163)
+    node_type: RESIDUE
+    grounding: UniProtKB:P48534
+    description: 'M-CSA roles: activator, metal ligand.'
+  - node_id: trp179
+    label: catalytic Trp179 (M-CSA/PDB numbering; UniProt residue 179)
+    node_type: RESIDUE
+    grounding: UniProtKB:P48534
+    description: 'M-CSA roles: radical stabiliser.'
+  - node_id: asp208
+    label: catalytic Asp208 (M-CSA/PDB numbering; UniProt residue 208)
+    node_type: RESIDUE
+    grounding: UniProtKB:P48534
+    description: 'M-CSA roles: activator.'
+  - node_id: reactant0
+    label: L-ascorbate
+    node_type: CHEMICAL
+    grounding: CHEBI:38290
+  - node_id: reactant1
+    label: hydrogen peroxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+  - node_id: product0
+    label: L-dehydroascorbate
+    node_type: CHEMICAL
+    grounding: CHEBI:58539
+  - node_id: product1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: "The mechanism can be broken down into four steps: 
+<ol>
+<li>Fe(III) + H2O2 = Compound\
+      \ I (Fe(IV) radical) + H2O. This first step is catalysed by residues on the distal side of the heme\
+      \ group. H2O2 enters the active site and binds to the heme Fe, His 42, and Arg 38. The oxygen of\
+      \ H2O2 that is bound to the Fe donates a proton to the NE of the histidine. The histidine then in\
+      \ turn donates the proton"
+  - node_id: active_site
+    label: L-ascorbate peroxidase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:399
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.10.520.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.10.520.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: L-ascorbate peroxidase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.11.1.11
+  edges:
+  - subject: arg38
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg38 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/399/
+      snippet: "The mechanism can be broken down into four steps: 
+<ol>
+<li>Fe(III) + H2O2 = Compound\
+        \ I (Fe(IV) radical) + H2O. This first step is catalysed by residues on the distal side of the\
+        \ heme group. H2O2 enters the active site and binds to the heme Fe, His 42, and Arg 38. The oxygen\
+        \ of H2O2 that is bound to the Fe donates a proton to the NE of the histidine. The histidine then\
+        \ in turn donates the proton to the other H2O2 oxygen bound to the arginine. This leaves water\
+        \ bound to arginine and the oxidised Compound I. This step is common to all heme peroxidases.</li>\
+        
+<li>Compound I (Fe(IV) radical) + L-ascorbate = Compound II (Fe(IV)) + monodehydro-L-ascorbate\
+        \ radical </li>
+<li>Compound II (Fe(IV)) + L-ascorbate = Peroxidase (Fe(III)) + monodehydro-L-ascorbate\
+        \ radical</li>
+<li>2 monodehydro-L-ascorbate radicals = L-ascorbate + L-dehydroascorbate.</li></ol>"
+      notes: M-CSA entry 399, mechanism 2; M-CSA cites PMID:12084058, PMID:12640445, PMID:22703594, PMID:7703247;
+        step 1
+  - subject: his42
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His42 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/399/
+      snippet: "The mechanism can be broken down into four steps: 
+<ol>
+<li>Fe(III) + H2O2 = Compound\
+        \ I (Fe(IV) radical) + H2O. This first step is catalysed by residues on the distal side of the\
+        \ heme group. H2O2 enters the active site and binds to the heme Fe, His 42, and Arg 38. The oxygen\
+        \ of H2O2 that is bound to the Fe donates a proton to the NE of the histidine. The histidine then\
+        \ in turn donates the proton to the other H2O2 oxygen bound to the arginine. This leaves water\
+        \ bound to arginine and the oxidised Compound I. This step is common to all heme peroxidases.</li>\
+        
+<li>Compound I (Fe(IV) radical) + L-ascorbate = Compound II (Fe(IV)) + monodehydro-L-ascorbate\
+        \ radical </li>
+<li>Compound II (Fe(IV)) + L-ascorbate = Peroxidase (Fe(III)) + monodehydro-L-ascorbate\
+        \ radical</li>
+<li>2 monodehydro-L-ascorbate radicals = L-ascorbate + L-dehydroascorbate.</li></ol>"
+      notes: M-CSA entry 399, mechanism 2; M-CSA cites PMID:12084058, PMID:12640445, PMID:22703594, PMID:7703247;
+        step 1
+  - subject: arg38
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg38 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/399/
+      snippet: transition state stabiliser
+      notes: M-CSA entry 399, mechanism 2; M-CSA cites PMID:12084058, PMID:12640445, PMID:22703594, PMID:7703247;
+        M-CSA catalytic-residue roles for Arg38
+  - subject: his42
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His42 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/399/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 399, mechanism 2; M-CSA cites PMID:12084058, PMID:12640445, PMID:22703594, PMID:7703247;
+        M-CSA catalytic-residue roles for His42
+  - subject: his163
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His163 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/399/
+      snippet: activator, metal ligand
+      notes: M-CSA entry 399, mechanism 2; M-CSA cites PMID:12084058, PMID:12640445, PMID:22703594, PMID:7703247;
+        M-CSA catalytic-residue roles for His163
+  - subject: trp179
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp179 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/399/
+      snippet: radical stabiliser
+      notes: M-CSA entry 399, mechanism 2; M-CSA cites PMID:12084058, PMID:12640445, PMID:22703594, PMID:7703247;
+        M-CSA catalytic-residue roles for Trp179
+  - subject: asp208
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp208 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/399/
+      snippet: activator
+      notes: M-CSA entry 399, mechanism 2; M-CSA cites PMID:12084058, PMID:12640445, PMID:22703594, PMID:7703247;
+        M-CSA catalytic-residue roles for Asp208
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/399/
+      snippet: "The mechanism can be broken down into four steps: 
+<ol>
+<li>Fe(III) + H2O2 = Compound\
+        \ I (Fe(IV) radical) + H2O. This first step is catalysed by residues on the distal side of the\
+        \ heme group. H2O2 enters the active site and binds to the heme Fe, His 42, and Arg 38. The oxygen\
+        \ of H2O2 that is bound to the Fe donates a proton to the NE of the histidine. The histidine then\
+        \ in turn donates the proton"
+      notes: M-CSA entry 399, mechanism 2; M-CSA cites PMID:12084058, PMID:12640445, PMID:22703594, PMID:7703247;
+        CATH domain 1.10.520.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/399/
+      snippet: "The mechanism can be broken down into four steps: 
+<ol>
+<li>Fe(III) + H2O2 = Compound\
+        \ I (Fe(IV) radical) + H2O. This first step is catalysed by residues on the distal side of the\
+        \ heme group. H2O2 enters the active site and binds to the heme Fe, His 42, and Arg 38. The oxygen\
+        \ of H2O2 that is bound to the Fe donates a proton to the NE of the histidine. The histidine then\
+        \ in turn donates the proton"
+      notes: M-CSA entry 399, mechanism 2; M-CSA cites PMID:12084058, PMID:12640445, PMID:22703594, PMID:7703247;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/399/
+      snippet: "The mechanism can be broken down into four steps: 
+<ol>
+<li>Fe(III) + H2O2 = Compound\
+        \ I (Fe(IV) radical) + H2O. This first step is catalysed by residues on the distal side of the\
+        \ heme group. H2O2 enters the active site and binds to the heme Fe, His 42, and Arg 38. The oxygen\
+        \ of H2O2 that is bound to the Fe donates a proton to the NE of the histidine. The histidine then\
+        \ in turn donates the proton"
+      notes: M-CSA entry 399, mechanism 2; M-CSA cites PMID:12084058, PMID:12640445, PMID:22703594, PMID:7703247;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/399/
+      snippet: "The mechanism can be broken down into four steps: 
+<ol>
+<li>Fe(III) + H2O2 = Compound\
+        \ I (Fe(IV) radical) + H2O. This first step is catalysed by residues on the distal side of the\
+        \ heme group. H2O2 enters the active site and binds to the heme Fe, His 42, and Arg 38. The oxygen\
+        \ of H2O2 that is bound to the Fe donates a proton to the NE of the histidine. The histidine then\
+        \ in turn donates the proton"
+      notes: M-CSA entry 399, mechanism 2; M-CSA cites PMID:12084058, PMID:12640445, PMID:22703594, PMID:7703247;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/399/
+      snippet: "The mechanism can be broken down into four steps: 
+<ol>
+<li>Fe(III) + H2O2 = Compound\
+        \ I (Fe(IV) radical) + H2O. This first step is catalysed by residues on the distal side of the\
+        \ heme group. H2O2 enters the active site and binds to the heme Fe, His 42, and Arg 38. The oxygen\
+        \ of H2O2 that is bound to the Fe donates a proton to the NE of the histidine. The histidine then\
+        \ in turn donates the proton"
+      notes: M-CSA entry 399, mechanism 2; M-CSA cites PMID:12084058, PMID:12640445, PMID:22703594, PMID:7703247;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/399/
+      snippet: "The mechanism can be broken down into four steps: 
+<ol>
+<li>Fe(III) + H2O2 = Compound\
+        \ I (Fe(IV) radical) + H2O. This first step is catalysed by residues on the distal side of the\
+        \ heme group. H2O2 enters the active site and binds to the heme Fe, His 42, and Arg 38. The oxygen\
+        \ of H2O2 that is bound to the Fe donates a proton to the NE of the histidine. The histidine then\
+        \ in turn donates the proton"
+      notes: M-CSA entry 399, mechanism 2; M-CSA cites PMID:12084058, PMID:12640445, PMID:22703594, PMID:7703247;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 399;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

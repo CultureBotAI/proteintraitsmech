@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.1.73
 - CHEBI:18167
@@ -241,4 +241,203 @@ definitions:
       Functions in plant cell wall hydrolysis ((1->4)-beta-D-glucosidic linkages in beta-D-glucans containing (1->3)- and (1->4)-bonds) during mobilization of the endosperm in germinating grain or during the growth of vegetative tissues. This protein is involved in the pathway beta-D-glucan degradation, which is part of Glycan metabolism.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of licheninase (glycosyl hydrolase 17 family)
+  description: Mechanism transcribed from M-CSA entry 400. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +6).
+  nodes:
+  - node_id: glu232
+    label: catalytic Glu232 (M-CSA/PDB numbering; UniProt residue 238)
+    node_type: RESIDUE
+    grounding: UniProtKB:P12257
+    description: 'M-CSA roles: covalent catalysis.'
+  - node_id: glu280
+    label: catalytic Glu280 (M-CSA/PDB numbering; UniProt residue 286)
+    node_type: RESIDUE
+    grounding: UniProtKB:P12257
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: lys283
+    label: catalytic Lys283 (M-CSA/PDB numbering; UniProt residue 289)
+    node_type: RESIDUE
+    grounding: UniProtKB:P12257
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu288
+    label: catalytic Glu288 (M-CSA/PDB numbering; UniProt residue 294)
+    node_type: RESIDUE
+    grounding: UniProtKB:P12257
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: alpha-maltose
+    node_type: CHEMICAL
+    grounding: CHEBI:18167
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: alpha-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:17925
+  - node_id: product1
+    label: alpha-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:17925
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: 'This is a retaining beta-glycosyl hydrolase: (1) Saccharide binds in a "twisted-boat"
+      conformation. (2) The beta-1,4 linkage is broken, leading to the formation of a transition state
+      with a slight positive charge at the anomeric carbon, in a "half-chair" conformation, which develops
+      a oxocarbenium-ion-like character. (3) An approach of the ionic species to the catalytic nucleophile
+      leads to the fo'
+  - node_id: active_site
+    label: licheninase (glycosyl hydrolase 17 family) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:400
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.80 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.80
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: licheninase (glycosyl hydrolase 17 family) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.1.73
+  edges:
+  - subject: glu232
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu232 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/400/
+      snippet: covalent catalysis
+      notes: M-CSA entry 400, mechanism 2; M-CSA cites PMID:12023973, PMID:20552664, PMID:8514770, PMID:9452466;
+        M-CSA catalytic-residue roles for Glu232
+  - subject: glu280
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu280 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/400/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 400, mechanism 2; M-CSA cites PMID:12023973, PMID:20552664, PMID:8514770, PMID:9452466;
+        M-CSA catalytic-residue roles for Glu280
+  - subject: lys283
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys283 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/400/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 400, mechanism 2; M-CSA cites PMID:12023973, PMID:20552664, PMID:8514770, PMID:9452466;
+        M-CSA catalytic-residue roles for Lys283
+  - subject: glu288
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu288 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/400/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 400, mechanism 2; M-CSA cites PMID:12023973, PMID:20552664, PMID:8514770, PMID:9452466;
+        M-CSA catalytic-residue roles for Glu288
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/400/
+      snippet: 'This is a retaining beta-glycosyl hydrolase: (1) Saccharide binds in a "twisted-boat"
+        conformation. (2) The beta-1,4 linkage is broken, leading to the formation of a transition state
+        with a slight positive charge at the anomeric carbon, in a "half-chair" conformation, which develops
+        a oxocarbenium-ion-like character. (3) An approach of the ionic species to the catalytic nucleophile
+        leads to the fo'
+      notes: M-CSA entry 400, mechanism 2; M-CSA cites PMID:12023973, PMID:20552664, PMID:8514770, PMID:9452466;
+        CATH domain 3.20.20.80 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/400/
+      snippet: 'This is a retaining beta-glycosyl hydrolase: (1) Saccharide binds in a "twisted-boat"
+        conformation. (2) The beta-1,4 linkage is broken, leading to the formation of a transition state
+        with a slight positive charge at the anomeric carbon, in a "half-chair" conformation, which develops
+        a oxocarbenium-ion-like character. (3) An approach of the ionic species to the catalytic nucleophile
+        leads to the fo'
+      notes: M-CSA entry 400, mechanism 2; M-CSA cites PMID:12023973, PMID:20552664, PMID:8514770, PMID:9452466;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/400/
+      snippet: 'This is a retaining beta-glycosyl hydrolase: (1) Saccharide binds in a "twisted-boat"
+        conformation. (2) The beta-1,4 linkage is broken, leading to the formation of a transition state
+        with a slight positive charge at the anomeric carbon, in a "half-chair" conformation, which develops
+        a oxocarbenium-ion-like character. (3) An approach of the ionic species to the catalytic nucleophile
+        leads to the fo'
+      notes: M-CSA entry 400, mechanism 2; M-CSA cites PMID:12023973, PMID:20552664, PMID:8514770, PMID:9452466;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/400/
+      snippet: 'This is a retaining beta-glycosyl hydrolase: (1) Saccharide binds in a "twisted-boat"
+        conformation. (2) The beta-1,4 linkage is broken, leading to the formation of a transition state
+        with a slight positive charge at the anomeric carbon, in a "half-chair" conformation, which develops
+        a oxocarbenium-ion-like character. (3) An approach of the ionic species to the catalytic nucleophile
+        leads to the fo'
+      notes: M-CSA entry 400, mechanism 2; M-CSA cites PMID:12023973, PMID:20552664, PMID:8514770, PMID:9452466;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/400/
+      snippet: 'This is a retaining beta-glycosyl hydrolase: (1) Saccharide binds in a "twisted-boat"
+        conformation. (2) The beta-1,4 linkage is broken, leading to the formation of a transition state
+        with a slight positive charge at the anomeric carbon, in a "half-chair" conformation, which develops
+        a oxocarbenium-ion-like character. (3) An approach of the ionic species to the catalytic nucleophile
+        leads to the fo'
+      notes: M-CSA entry 400, mechanism 2; M-CSA cites PMID:12023973, PMID:20552664, PMID:8514770, PMID:9452466;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/400/
+      snippet: 'This is a retaining beta-glycosyl hydrolase: (1) Saccharide binds in a "twisted-boat"
+        conformation. (2) The beta-1,4 linkage is broken, leading to the formation of a transition state
+        with a slight positive charge at the anomeric carbon, in a "half-chair" conformation, which develops
+        a oxocarbenium-ion-like character. (3) An approach of the ionic species to the catalytic nucleophile
+        leads to the fo'
+      notes: M-CSA entry 400, mechanism 2; M-CSA cites PMID:12023973, PMID:20552664, PMID:8514770, PMID:9452466;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (10 evidence-backed edges) transcribed from M-CSA entry 400;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

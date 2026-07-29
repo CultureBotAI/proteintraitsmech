@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.1.85
 - CHEBI:30879
@@ -336,4 +336,152 @@ definitions:
       This protein is involved in the first step of the subpathway that synthesises D-galactose 6-phosphate and beta-D-glucose from lactose 6-phosphate. It belongs to the glycosyl hydrolase 1 family.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 6-phospho-beta-galactosidase
+  description: Mechanism transcribed from M-CSA entry 877. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: glu160
+    label: catalytic Glu160 (M-CSA/PDB numbering; UniProt residue 160)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11546
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: glu375
+    label: catalytic Glu375 (M-CSA/PDB numbering; UniProt residue 375)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11546
+    description: 'M-CSA roles: covalent catalysis.'
+  - node_id: reactant0
+    label: 6-phospho-beta-D-galactoside(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58534
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: alcohol
+    node_type: CHEMICAL
+    grounding: CHEBI:30879
+  - node_id: product1
+    label: D-galactopyranose 6-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:91004
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: This enzyme functions via a retaining mechanism in which one of the catalytic glutamate
+      residues acts as a nucleophile and the other as a general acid/base.
+  - node_id: active_site
+    label: 6-phospho-beta-galactosidase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:877
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.80 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.80
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: 6-phospho-beta-galactosidase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.1.85
+  edges:
+  - subject: glu160
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu160 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/877/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 877, mechanism 1; M-CSA cites PMID:23580646, PMID:8535779, PMID:8535789, PMID:9223646;
+        M-CSA catalytic-residue roles for Glu160
+  - subject: glu375
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu375 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/877/
+      snippet: covalent catalysis
+      notes: M-CSA entry 877, mechanism 1; M-CSA cites PMID:23580646, PMID:8535779, PMID:8535789, PMID:9223646;
+        M-CSA catalytic-residue roles for Glu375
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/877/
+      snippet: This enzyme functions via a retaining mechanism in which one of the catalytic glutamate
+        residues acts as a nucleophile and the other as a general acid/base.
+      notes: M-CSA entry 877, mechanism 1; M-CSA cites PMID:23580646, PMID:8535779, PMID:8535789, PMID:9223646;
+        CATH domain 3.20.20.80 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/877/
+      snippet: This enzyme functions via a retaining mechanism in which one of the catalytic glutamate
+        residues acts as a nucleophile and the other as a general acid/base.
+      notes: M-CSA entry 877, mechanism 1; M-CSA cites PMID:23580646, PMID:8535779, PMID:8535789, PMID:9223646;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/877/
+      snippet: This enzyme functions via a retaining mechanism in which one of the catalytic glutamate
+        residues acts as a nucleophile and the other as a general acid/base.
+      notes: M-CSA entry 877, mechanism 1; M-CSA cites PMID:23580646, PMID:8535779, PMID:8535789, PMID:9223646;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/877/
+      snippet: This enzyme functions via a retaining mechanism in which one of the catalytic glutamate
+        residues acts as a nucleophile and the other as a general acid/base.
+      notes: M-CSA entry 877, mechanism 1; M-CSA cites PMID:23580646, PMID:8535779, PMID:8535789, PMID:9223646;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/877/
+      snippet: This enzyme functions via a retaining mechanism in which one of the catalytic glutamate
+        residues acts as a nucleophile and the other as a general acid/base.
+      notes: M-CSA entry 877, mechanism 1; M-CSA cites PMID:23580646, PMID:8535779, PMID:8535789, PMID:9223646;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/877/
+      snippet: This enzyme functions via a retaining mechanism in which one of the catalytic glutamate
+        residues acts as a nucleophile and the other as a general acid/base.
+      notes: M-CSA entry 877, mechanism 1; M-CSA cites PMID:23580646, PMID:8535779, PMID:8535789, PMID:9223646;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (8 evidence-backed edges) transcribed from M-CSA entry 877;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

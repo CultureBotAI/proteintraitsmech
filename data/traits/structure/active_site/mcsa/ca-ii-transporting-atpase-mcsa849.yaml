@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:7.2.2.10
 - CHEBI:15377
@@ -816,4 +816,274 @@ definitions:
       This enzyme is a key regulator of striated muscle performance by acting as the major Ca(II)-ATPase responsible for the reuptake of cytosolic Ca(II) into the sarcoplasmic reticulum. Catalyses the hydrolysis of ATP coupled with the translocation of calcium from the cytosol to the sarcoplasmic reticulum lumen. Contributes to calcium sequestration involved in muscular excitation/contraction.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of Ca(II)-transporting ATPase
+  description: Mechanism transcribed from M-CSA entry 849. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: asp351
+    label: catalytic Asp351 (M-CSA/PDB numbering; UniProt residue 351)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04191
+    description: 'M-CSA roles: covalent catalysis.'
+  - node_id: asp703
+    label: catalytic Asp703 (M-CSA/PDB numbering; UniProt residue 703)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04191
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp707
+    label: catalytic Asp707 (M-CSA/PDB numbering; UniProt residue 707)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04191
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: calcium(2+)
+    node_type: CHEMICAL
+    grounding: CHEBI:29108
+  - node_id: reactant2
+    label: ATP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+  - node_id: product0
+    label: calcium(2+)
+    node_type: CHEMICAL
+    grounding: CHEBI:29108
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: ADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+  - node_id: product3
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: "<p>The mechanism of the Ca(II)-ATPase is usually discussed in terms of the E1–E2 model\
+      \ developed from the Post-Albers scheme for the (Na+,K+)-ATPase. This model
+proposes that the\
+      \ Ca(II)-ATPase can exist in one of two distinct forms, E1 and E2. In the E1 conformation, the ATPase\
+      \ contains two high-affinity binding sites for Ca(II) that are exposed to the cytoplasm, whereas\
+      \ in the E2 conformation th"
+  - node_id: active_site
+    label: Ca(II)-transporting ATPase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:849
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1000 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1000
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: Ca(II)-transporting ATPase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:7.2.2.10
+  edges:
+  - subject: asp351
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp351 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/849/
+      snippet: "<p>The mechanism of the Ca(II)-ATPase is usually discussed in terms of the E1–E2 model\
+        \ developed from the Post-Albers scheme for the (Na+,K+)-ATPase. This model
+proposes that the\
+        \ Ca(II)-ATPase can exist in one of two distinct forms, E1 and E2. In the E1 conformation, the\
+        \ ATPase contains two high-affinity binding sites for Ca(II) that are exposed to the cytoplasm,\
+        \ whereas in the E2 conformation these two sites have been transformed into low-affinity sites\
+        \ exposed to the lumen of the SR</p>
+
+<p>Following the binding of MgATP to the Ca(II)-bound\
+        \ form of the ATPase, the ATPase is phosphorylated at Asp351 and undergoes a change in conformation\
+        \ to the E2 state. Following loss of Ca(II) to the lumen of the SR, the ATPase is dephosphorylated\
+        \ and is recycled to the E1 state.</p>"
+      notes: M-CSA entry 849, mechanism 1; M-CSA cites PMID:10864315, PMID:11389676, PMID:17890386, PMID:19242958,
+        PMID:20634056, PMID:22821874, PMID:24760008; step 1
+  - subject: asp351
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp351 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/849/
+      snippet: covalent catalysis
+      notes: M-CSA entry 849, mechanism 1; M-CSA cites PMID:10864315, PMID:11389676, PMID:17890386, PMID:19242958,
+        PMID:20634056, PMID:22821874, PMID:24760008; M-CSA catalytic-residue roles for Asp351
+  - subject: asp703
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp703 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/849/
+      snippet: metal ligand
+      notes: M-CSA entry 849, mechanism 1; M-CSA cites PMID:10864315, PMID:11389676, PMID:17890386, PMID:19242958,
+        PMID:20634056, PMID:22821874, PMID:24760008; M-CSA catalytic-residue roles for Asp703
+  - subject: asp707
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp707 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/849/
+      snippet: metal ligand
+      notes: M-CSA entry 849, mechanism 1; M-CSA cites PMID:10864315, PMID:11389676, PMID:17890386, PMID:19242958,
+        PMID:20634056, PMID:22821874, PMID:24760008; M-CSA catalytic-residue roles for Asp707
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/849/
+      snippet: "<p>The mechanism of the Ca(II)-ATPase is usually discussed in terms of the E1–E2 model\
+        \ developed from the Post-Albers scheme for the (Na+,K+)-ATPase. This model
+proposes that the\
+        \ Ca(II)-ATPase can exist in one of two distinct forms, E1 and E2. In the E1 conformation, the\
+        \ ATPase contains two high-affinity binding sites for Ca(II) that are exposed to the cytoplasm,\
+        \ whereas in the E2 conformation th"
+      notes: M-CSA entry 849, mechanism 1; M-CSA cites PMID:10864315, PMID:11389676, PMID:17890386, PMID:19242958,
+        PMID:20634056, PMID:22821874, PMID:24760008; CATH domain 3.40.50.1000 assigned to the catalytic
+        chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/849/
+      snippet: "<p>The mechanism of the Ca(II)-ATPase is usually discussed in terms of the E1–E2 model\
+        \ developed from the Post-Albers scheme for the (Na+,K+)-ATPase. This model
+proposes that the\
+        \ Ca(II)-ATPase can exist in one of two distinct forms, E1 and E2. In the E1 conformation, the\
+        \ ATPase contains two high-affinity binding sites for Ca(II) that are exposed to the cytoplasm,\
+        \ whereas in the E2 conformation th"
+      notes: M-CSA entry 849, mechanism 1; M-CSA cites PMID:10864315, PMID:11389676, PMID:17890386, PMID:19242958,
+        PMID:20634056, PMID:22821874, PMID:24760008; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/849/
+      snippet: "<p>The mechanism of the Ca(II)-ATPase is usually discussed in terms of the E1–E2 model\
+        \ developed from the Post-Albers scheme for the (Na+,K+)-ATPase. This model
+proposes that the\
+        \ Ca(II)-ATPase can exist in one of two distinct forms, E1 and E2. In the E1 conformation, the\
+        \ ATPase contains two high-affinity binding sites for Ca(II) that are exposed to the cytoplasm,\
+        \ whereas in the E2 conformation th"
+      notes: M-CSA entry 849, mechanism 1; M-CSA cites PMID:10864315, PMID:11389676, PMID:17890386, PMID:19242958,
+        PMID:20634056, PMID:22821874, PMID:24760008; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/849/
+      snippet: "<p>The mechanism of the Ca(II)-ATPase is usually discussed in terms of the E1–E2 model\
+        \ developed from the Post-Albers scheme for the (Na+,K+)-ATPase. This model
+proposes that the\
+        \ Ca(II)-ATPase can exist in one of two distinct forms, E1 and E2. In the E1 conformation, the\
+        \ ATPase contains two high-affinity binding sites for Ca(II) that are exposed to the cytoplasm,\
+        \ whereas in the E2 conformation th"
+      notes: M-CSA entry 849, mechanism 1; M-CSA cites PMID:10864315, PMID:11389676, PMID:17890386, PMID:19242958,
+        PMID:20634056, PMID:22821874, PMID:24760008; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/849/
+      snippet: "<p>The mechanism of the Ca(II)-ATPase is usually discussed in terms of the E1–E2 model\
+        \ developed from the Post-Albers scheme for the (Na+,K+)-ATPase. This model
+proposes that the\
+        \ Ca(II)-ATPase can exist in one of two distinct forms, E1 and E2. In the E1 conformation, the\
+        \ ATPase contains two high-affinity binding sites for Ca(II) that are exposed to the cytoplasm,\
+        \ whereas in the E2 conformation th"
+      notes: M-CSA entry 849, mechanism 1; M-CSA cites PMID:10864315, PMID:11389676, PMID:17890386, PMID:19242958,
+        PMID:20634056, PMID:22821874, PMID:24760008; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/849/
+      snippet: "<p>The mechanism of the Ca(II)-ATPase is usually discussed in terms of the E1–E2 model\
+        \ developed from the Post-Albers scheme for the (Na+,K+)-ATPase. This model
+proposes that the\
+        \ Ca(II)-ATPase can exist in one of two distinct forms, E1 and E2. In the E1 conformation, the\
+        \ ATPase contains two high-affinity binding sites for Ca(II) that are exposed to the cytoplasm,\
+        \ whereas in the E2 conformation th"
+      notes: M-CSA entry 849, mechanism 1; M-CSA cites PMID:10864315, PMID:11389676, PMID:17890386, PMID:19242958,
+        PMID:20634056, PMID:22821874, PMID:24760008; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/849/
+      snippet: "<p>The mechanism of the Ca(II)-ATPase is usually discussed in terms of the E1–E2 model\
+        \ developed from the Post-Albers scheme for the (Na+,K+)-ATPase. This model
+proposes that the\
+        \ Ca(II)-ATPase can exist in one of two distinct forms, E1 and E2. In the E1 conformation, the\
+        \ ATPase contains two high-affinity binding sites for Ca(II) that are exposed to the cytoplasm,\
+        \ whereas in the E2 conformation th"
+      notes: M-CSA entry 849, mechanism 1; M-CSA cites PMID:10864315, PMID:11389676, PMID:17890386, PMID:19242958,
+        PMID:20634056, PMID:22821874, PMID:24760008; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/849/
+      snippet: "<p>The mechanism of the Ca(II)-ATPase is usually discussed in terms of the E1–E2 model\
+        \ developed from the Post-Albers scheme for the (Na+,K+)-ATPase. This model
+proposes that the\
+        \ Ca(II)-ATPase can exist in one of two distinct forms, E1 and E2. In the E1 conformation, the\
+        \ ATPase contains two high-affinity binding sites for Ca(II) that are exposed to the cytoplasm,\
+        \ whereas in the E2 conformation th"
+      notes: M-CSA entry 849, mechanism 1; M-CSA cites PMID:10864315, PMID:11389676, PMID:17890386, PMID:19242958,
+        PMID:20634056, PMID:22821874, PMID:24760008; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product3
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/849/
+      snippet: "<p>The mechanism of the Ca(II)-ATPase is usually discussed in terms of the E1–E2 model\
+        \ developed from the Post-Albers scheme for the (Na+,K+)-ATPase. This model
+proposes that the\
+        \ Ca(II)-ATPase can exist in one of two distinct forms, E1 and E2. In the E1 conformation, the\
+        \ ATPase contains two high-affinity binding sites for Ca(II) that are exposed to the cytoplasm,\
+        \ whereas in the E2 conformation th"
+      notes: M-CSA entry 849, mechanism 1; M-CSA cites PMID:10864315, PMID:11389676, PMID:17890386, PMID:19242958,
+        PMID:20634056, PMID:22821874, PMID:24760008; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 849;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.1.135
 - CHEBI:27941
@@ -486,4 +486,253 @@ definitions:
       Neopullulanase is a member of the glycoside hydrolase family 13 (GH13) and is one of the family enzymes with a unique substrate specificity that hydrolyses pullulan to produce panose, maltose and glucose in a final molar ratio of 3:1:1. This enzyme hydrolyses alpha-1,4 and alpha-1,6-glucosidic linkages, and catalyses transglycosylation reactions to form both alpha-1,4 and alpha-1,6-glucosidic bonds. Neopullulanase (EC 3.2.1.135) is a special glycoside hydrolase that is able to catalyse several biochemical reactions, such as the hydrolysis of both alpha-1,4- and alpha-1,6-glucosidic linkages and their formation by transglycosylation. Neopullulanase is, in fact, nearly indistinguishable from the two closely related enzyme specificities, maltogenic amylase (EC 3.2.1.133) and cyclomaltodextrinase (EC 3.2.1.54). The three groups of enzymes contain ∼130 residues at the N terminus that are absent in the smaller alpha-amylases. They are known to bind Ca, but it is remote from the active site and not involved in the mechanism.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of neopullulanase
+  description: Mechanism transcribed from M-CSA entry 433. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: asp325
+    label: catalytic Asp325 (M-CSA/PDB numbering; UniProt residue 325)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q08751
+    description: 'M-CSA roles: covalent catalysis.'
+  - node_id: glu354
+    label: catalytic Glu354 (M-CSA/PDB numbering; UniProt residue 354)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q08751
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: asp421
+    label: catalytic Asp421 (M-CSA/PDB numbering; UniProt residue 421)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q08751
+    description: 'M-CSA roles: transition state stabiliser.'
+  - node_id: reactant0
+    label: pullulan
+    node_type: CHEMICAL
+    grounding: CHEBI:27941
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: panose
+    node_type: CHEMICAL
+    grounding: CHEBI:7912
+  - node_id: product1
+    label: pullulan
+    node_type: CHEMICAL
+    grounding: CHEBI:27941
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: "Has a very similar mechanism to other alpha-amylases: Asp325 acts as a nucleophile,\
+      \ whereas Glu354 acts as an acid-base. Asp421 stabilises the transition state.
+
+Glu354 initiates\
+      \ the reaction by protonating O4 atom, giving an oxocarbonium ion-like transition state. Asp325\
+      \ makes a nucleophilic attack on the C1 atom to form glycosyl-enzyme intermediate. Glu354 acts as\
+      \ a general base to activate a "
+  - node_id: active_site
+    label: neopullulanase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:433
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.80 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.80
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: neopullulanase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.1.135
+  edges:
+  - subject: asp325
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp325 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/433/
+      snippet: "Has a very similar mechanism to other alpha-amylases: Asp325 acts as a nucleophile, whereas\
+        \ Glu354 acts as an acid-base. Asp421 stabilises the transition state.
+
+Glu354 initiates\
+        \ the reaction by protonating O4 atom, giving an oxocarbonium ion-like transition state. Asp325\
+        \ makes a nucleophilic attack on the C1 atom to form glycosyl-enzyme intermediate. Glu354 acts\
+        \ as a general base to activate a water. The activated water attacks on the intermediate to complete\
+        \ the hydrolysis."
+      notes: M-CSA entry 433, mechanism 1; M-CSA cites PMID:11923309, PMID:12051850, PMID:15138257, PMID:21544166;
+        step 1
+  - subject: glu354
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu354 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/433/
+      snippet: "Has a very similar mechanism to other alpha-amylases: Asp325 acts as a nucleophile, whereas\
+        \ Glu354 acts as an acid-base. Asp421 stabilises the transition state.
+
+Glu354 initiates\
+        \ the reaction by protonating O4 atom, giving an oxocarbonium ion-like transition state. Asp325\
+        \ makes a nucleophilic attack on the C1 atom to form glycosyl-enzyme intermediate. Glu354 acts\
+        \ as a general base to activate a water. The activated water attacks on the intermediate to complete\
+        \ the hydrolysis."
+      notes: M-CSA entry 433, mechanism 1; M-CSA cites PMID:11923309, PMID:12051850, PMID:15138257, PMID:21544166;
+        step 1
+  - subject: asp421
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp421 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/433/
+      snippet: "Has a very similar mechanism to other alpha-amylases: Asp325 acts as a nucleophile, whereas\
+        \ Glu354 acts as an acid-base. Asp421 stabilises the transition state.
+
+Glu354 initiates\
+        \ the reaction by protonating O4 atom, giving an oxocarbonium ion-like transition state. Asp325\
+        \ makes a nucleophilic attack on the C1 atom to form glycosyl-enzyme intermediate. Glu354 acts\
+        \ as a general base to activate a water. The activated water attacks on the intermediate to complete\
+        \ the hydrolysis."
+      notes: M-CSA entry 433, mechanism 1; M-CSA cites PMID:11923309, PMID:12051850, PMID:15138257, PMID:21544166;
+        step 1
+  - subject: asp325
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp325 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/433/
+      snippet: covalent catalysis
+      notes: M-CSA entry 433, mechanism 1; M-CSA cites PMID:11923309, PMID:12051850, PMID:15138257, PMID:21544166;
+        M-CSA catalytic-residue roles for Asp325
+  - subject: glu354
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu354 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/433/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 433, mechanism 1; M-CSA cites PMID:11923309, PMID:12051850, PMID:15138257, PMID:21544166;
+        M-CSA catalytic-residue roles for Glu354
+  - subject: asp421
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp421 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/433/
+      snippet: transition state stabiliser
+      notes: M-CSA entry 433, mechanism 1; M-CSA cites PMID:11923309, PMID:12051850, PMID:15138257, PMID:21544166;
+        M-CSA catalytic-residue roles for Asp421
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/433/
+      snippet: "Has a very similar mechanism to other alpha-amylases: Asp325 acts as a nucleophile, whereas\
+        \ Glu354 acts as an acid-base. Asp421 stabilises the transition state.
+
+Glu354 initiates\
+        \ the reaction by protonating O4 atom, giving an oxocarbonium ion-like transition state. Asp325\
+        \ makes a nucleophilic attack on the C1 atom to form glycosyl-enzyme intermediate. Glu354 acts\
+        \ as a general base to activate a"
+      notes: M-CSA entry 433, mechanism 1; M-CSA cites PMID:11923309, PMID:12051850, PMID:15138257, PMID:21544166;
+        CATH domain 3.20.20.80 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/433/
+      snippet: "Has a very similar mechanism to other alpha-amylases: Asp325 acts as a nucleophile, whereas\
+        \ Glu354 acts as an acid-base. Asp421 stabilises the transition state.
+
+Glu354 initiates\
+        \ the reaction by protonating O4 atom, giving an oxocarbonium ion-like transition state. Asp325\
+        \ makes a nucleophilic attack on the C1 atom to form glycosyl-enzyme intermediate. Glu354 acts\
+        \ as a general base to activate a"
+      notes: M-CSA entry 433, mechanism 1; M-CSA cites PMID:11923309, PMID:12051850, PMID:15138257, PMID:21544166;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/433/
+      snippet: "Has a very similar mechanism to other alpha-amylases: Asp325 acts as a nucleophile, whereas\
+        \ Glu354 acts as an acid-base. Asp421 stabilises the transition state.
+
+Glu354 initiates\
+        \ the reaction by protonating O4 atom, giving an oxocarbonium ion-like transition state. Asp325\
+        \ makes a nucleophilic attack on the C1 atom to form glycosyl-enzyme intermediate. Glu354 acts\
+        \ as a general base to activate a"
+      notes: M-CSA entry 433, mechanism 1; M-CSA cites PMID:11923309, PMID:12051850, PMID:15138257, PMID:21544166;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/433/
+      snippet: "Has a very similar mechanism to other alpha-amylases: Asp325 acts as a nucleophile, whereas\
+        \ Glu354 acts as an acid-base. Asp421 stabilises the transition state.
+
+Glu354 initiates\
+        \ the reaction by protonating O4 atom, giving an oxocarbonium ion-like transition state. Asp325\
+        \ makes a nucleophilic attack on the C1 atom to form glycosyl-enzyme intermediate. Glu354 acts\
+        \ as a general base to activate a"
+      notes: M-CSA entry 433, mechanism 1; M-CSA cites PMID:11923309, PMID:12051850, PMID:15138257, PMID:21544166;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/433/
+      snippet: "Has a very similar mechanism to other alpha-amylases: Asp325 acts as a nucleophile, whereas\
+        \ Glu354 acts as an acid-base. Asp421 stabilises the transition state.
+
+Glu354 initiates\
+        \ the reaction by protonating O4 atom, giving an oxocarbonium ion-like transition state. Asp325\
+        \ makes a nucleophilic attack on the C1 atom to form glycosyl-enzyme intermediate. Glu354 acts\
+        \ as a general base to activate a"
+      notes: M-CSA entry 433, mechanism 1; M-CSA cites PMID:11923309, PMID:12051850, PMID:15138257, PMID:21544166;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/433/
+      snippet: "Has a very similar mechanism to other alpha-amylases: Asp325 acts as a nucleophile, whereas\
+        \ Glu354 acts as an acid-base. Asp421 stabilises the transition state.
+
+Glu354 initiates\
+        \ the reaction by protonating O4 atom, giving an oxocarbonium ion-like transition state. Asp325\
+        \ makes a nucleophilic attack on the C1 atom to form glycosyl-enzyme intermediate. Glu354 acts\
+        \ as a general base to activate a"
+      notes: M-CSA entry 433, mechanism 1; M-CSA cites PMID:11923309, PMID:12051850, PMID:15138257, PMID:21544166;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (12 evidence-backed edges) transcribed from M-CSA entry 433;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

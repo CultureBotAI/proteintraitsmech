@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.21.7
 - CHEBI:15377
@@ -827,4 +827,278 @@ definitions:
       Human Plasminogen is a serine protease, a member of the Trypsin superfamily. It is a zymogen that can be activated to give the serine protease plasmin. Plasmin hydrolyses fibrin and dissolves blood clots. Plasmin has broad specificity but preferentially cleaves Lys-Xaa to Arg-Xaa amide bonds and can not directly catalyse proteolytic activation of plasminogen - it activates activators instead. Under physiological conditions, activation is mediated by limited proteolysis carried out by urokinase and tissue-type plasminogen activator. Like most zymogens, plasminogen has an activation loop which is proteolytically cleaved between Arg 561 and Val 562 when the protein is activated, resulting in conformational changes, including formation of a new solvent-inaccessible salt bridge and a functional active site. Plasminogen activation is known to play a role in the activation of metalloproteinases and lipoxygenase and is linked to many physiological and pathological processes involved in cell migration such as cancer metastasis, angiogenesis, ovum maturation, embryogenesis, wound healing and pathogen invasion. The PDB code 1qrz refers to the inactive precursor plasminogen, which is activated by cleavage leading to the opening of the active site. The specificity pocket is similar to that of trypsin, with plasmin showing a preference for cleavage after aliphatic basic residues such as Lysine and Arginine.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of plasmin
+  description: Mechanism transcribed from M-CSA entry 425. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +19).
+  nodes:
+  - node_id: his603
+    label: catalytic His603 (M-CSA/PDB numbering; UniProt residue 622)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00747
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: asp646
+    label: catalytic Asp646 (M-CSA/PDB numbering; UniProt residue 665)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00747
+    description: 'M-CSA roles: electrostatic stabiliser, modifies pKa.'
+  - node_id: ser741
+    label: catalytic Ser741 (M-CSA/PDB numbering; UniProt residue 760)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00747
+    description: 'M-CSA roles: covalent catalysis, proton shuttle (general acid/base).'
+  - node_id: gly742
+    label: catalytic Gly742 (M-CSA/PDB numbering; UniProt residue 761)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00747
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: L-arginyl-L-amino acid
+    node_type: CHEMICAL
+    grounding: CHEBI:134262
+  - node_id: product0
+    label: L-arginine
+    node_type: CHEMICAL
+    grounding: CHEBI:16467
+  - node_id: product1
+    label: alpha-amino acid
+    node_type: CHEMICAL
+    grounding: CHEBI:33704
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: 'The reaction proceeds by initial nucleophilic attack on the peptide bond by Ser 741,
+      activated by deprotonation by His 603. This leads to the formation of a tetrahedral intermediate,
+      stabilised by Ser 741 and Gly 742. Subsequent collapse of this intermediate, assisted by protonation
+      of the leaving group by His 603 and Asp 646 leads to an acyl enzyme intermediate. Activation of
+      a water molecule by '
+  - node_id: active_site
+    label: plasmin catalytic site
+    node_type: MOTIF
+    grounding: MCSA:425
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.40.10.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.40.10.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: plasmin activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.21.7
+  edges:
+  - subject: his603
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His603 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/425/
+      snippet: The reaction proceeds by initial nucleophilic attack on the peptide bond by Ser 741, activated
+        by deprotonation by His 603. This leads to the formation of a tetrahedral intermediate, stabilised
+        by Ser 741 and Gly 742. Subsequent collapse of this intermediate, assisted by protonation of the
+        leaving group by His 603 and Asp 646 leads to an acyl enzyme intermediate. Activation of a water
+        molecule by His 603 and Asp 646 allows this intermediate to by hydrolysed, resulting in the reformation
+        of the catalytically active Serine residue and the release of the product.
+      notes: M-CSA entry 425, mechanism 2; M-CSA cites PMID:10390345, PMID:10460175, PMID:10656799, PMID:11823416,
+        PMID:12080056, PMID:14699093, PMID:15211511, PMID:19473980, PMID:20718867, PMID:21136135, PMID:2143188,
+        PMID:21726912, PMID:22049947, PMID:23335990, PMID:9783753; step 1
+  - subject: asp646
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp646 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/425/
+      snippet: The reaction proceeds by initial nucleophilic attack on the peptide bond by Ser 741, activated
+        by deprotonation by His 603. This leads to the formation of a tetrahedral intermediate, stabilised
+        by Ser 741 and Gly 742. Subsequent collapse of this intermediate, assisted by protonation of the
+        leaving group by His 603 and Asp 646 leads to an acyl enzyme intermediate. Activation of a water
+        molecule by His 603 and Asp 646 allows this intermediate to by hydrolysed, resulting in the reformation
+        of the catalytically active Serine residue and the release of the product.
+      notes: M-CSA entry 425, mechanism 2; M-CSA cites PMID:10390345, PMID:10460175, PMID:10656799, PMID:11823416,
+        PMID:12080056, PMID:14699093, PMID:15211511, PMID:19473980, PMID:20718867, PMID:21136135, PMID:2143188,
+        PMID:21726912, PMID:22049947, PMID:23335990, PMID:9783753; step 1
+  - subject: ser741
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser741 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/425/
+      snippet: The reaction proceeds by initial nucleophilic attack on the peptide bond by Ser 741, activated
+        by deprotonation by His 603. This leads to the formation of a tetrahedral intermediate, stabilised
+        by Ser 741 and Gly 742. Subsequent collapse of this intermediate, assisted by protonation of the
+        leaving group by His 603 and Asp 646 leads to an acyl enzyme intermediate. Activation of a water
+        molecule by His 603 and Asp 646 allows this intermediate to by hydrolysed, resulting in the reformation
+        of the catalytically active Serine residue and the release of the product.
+      notes: M-CSA entry 425, mechanism 2; M-CSA cites PMID:10390345, PMID:10460175, PMID:10656799, PMID:11823416,
+        PMID:12080056, PMID:14699093, PMID:15211511, PMID:19473980, PMID:20718867, PMID:21136135, PMID:2143188,
+        PMID:21726912, PMID:22049947, PMID:23335990, PMID:9783753; step 1
+  - subject: gly742
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Gly742 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/425/
+      snippet: The reaction proceeds by initial nucleophilic attack on the peptide bond by Ser 741, activated
+        by deprotonation by His 603. This leads to the formation of a tetrahedral intermediate, stabilised
+        by Ser 741 and Gly 742. Subsequent collapse of this intermediate, assisted by protonation of the
+        leaving group by His 603 and Asp 646 leads to an acyl enzyme intermediate. Activation of a water
+        molecule by His 603 and Asp 646 allows this intermediate to by hydrolysed, resulting in the reformation
+        of the catalytically active Serine residue and the release of the product.
+      notes: M-CSA entry 425, mechanism 2; M-CSA cites PMID:10390345, PMID:10460175, PMID:10656799, PMID:11823416,
+        PMID:12080056, PMID:14699093, PMID:15211511, PMID:19473980, PMID:20718867, PMID:21136135, PMID:2143188,
+        PMID:21726912, PMID:22049947, PMID:23335990, PMID:9783753; step 1
+  - subject: his603
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His603 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/425/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 425, mechanism 2; M-CSA cites PMID:10390345, PMID:10460175, PMID:10656799, PMID:11823416,
+        PMID:12080056, PMID:14699093, PMID:15211511, PMID:19473980, PMID:20718867, PMID:21136135, PMID:2143188,
+        PMID:21726912, PMID:22049947, PMID:23335990, PMID:9783753; M-CSA catalytic-residue roles for His603
+  - subject: asp646
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp646 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/425/
+      snippet: electrostatic stabiliser, modifies pKa
+      notes: M-CSA entry 425, mechanism 2; M-CSA cites PMID:10390345, PMID:10460175, PMID:10656799, PMID:11823416,
+        PMID:12080056, PMID:14699093, PMID:15211511, PMID:19473980, PMID:20718867, PMID:21136135, PMID:2143188,
+        PMID:21726912, PMID:22049947, PMID:23335990, PMID:9783753; M-CSA catalytic-residue roles for Asp646
+  - subject: ser741
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser741 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/425/
+      snippet: covalent catalysis, proton shuttle (general acid/base)
+      notes: M-CSA entry 425, mechanism 2; M-CSA cites PMID:10390345, PMID:10460175, PMID:10656799, PMID:11823416,
+        PMID:12080056, PMID:14699093, PMID:15211511, PMID:19473980, PMID:20718867, PMID:21136135, PMID:2143188,
+        PMID:21726912, PMID:22049947, PMID:23335990, PMID:9783753; M-CSA catalytic-residue roles for Ser741
+  - subject: gly742
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly742 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/425/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 425, mechanism 2; M-CSA cites PMID:10390345, PMID:10460175, PMID:10656799, PMID:11823416,
+        PMID:12080056, PMID:14699093, PMID:15211511, PMID:19473980, PMID:20718867, PMID:21136135, PMID:2143188,
+        PMID:21726912, PMID:22049947, PMID:23335990, PMID:9783753; M-CSA catalytic-residue roles for Gly742
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/425/
+      snippet: The reaction proceeds by initial nucleophilic attack on the peptide bond by Ser 741, activated
+        by deprotonation by His 603. This leads to the formation of a tetrahedral intermediate, stabilised
+        by Ser 741 and Gly 742. Subsequent collapse of this intermediate, assisted by protonation of the
+        leaving group by His 603 and Asp 646 leads to an acyl enzyme intermediate. Activation of a water
+        molecule by
+      notes: M-CSA entry 425, mechanism 2; M-CSA cites PMID:10390345, PMID:10460175, PMID:10656799, PMID:11823416,
+        PMID:12080056, PMID:14699093, PMID:15211511, PMID:19473980, PMID:20718867, PMID:21136135, PMID:2143188,
+        PMID:21726912, PMID:22049947, PMID:23335990, PMID:9783753; CATH domain 2.40.10.10 assigned to
+        the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/425/
+      snippet: The reaction proceeds by initial nucleophilic attack on the peptide bond by Ser 741, activated
+        by deprotonation by His 603. This leads to the formation of a tetrahedral intermediate, stabilised
+        by Ser 741 and Gly 742. Subsequent collapse of this intermediate, assisted by protonation of the
+        leaving group by His 603 and Asp 646 leads to an acyl enzyme intermediate. Activation of a water
+        molecule by
+      notes: M-CSA entry 425, mechanism 2; M-CSA cites PMID:10390345, PMID:10460175, PMID:10656799, PMID:11823416,
+        PMID:12080056, PMID:14699093, PMID:15211511, PMID:19473980, PMID:20718867, PMID:21136135, PMID:2143188,
+        PMID:21726912, PMID:22049947, PMID:23335990, PMID:9783753; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/425/
+      snippet: The reaction proceeds by initial nucleophilic attack on the peptide bond by Ser 741, activated
+        by deprotonation by His 603. This leads to the formation of a tetrahedral intermediate, stabilised
+        by Ser 741 and Gly 742. Subsequent collapse of this intermediate, assisted by protonation of the
+        leaving group by His 603 and Asp 646 leads to an acyl enzyme intermediate. Activation of a water
+        molecule by
+      notes: M-CSA entry 425, mechanism 2; M-CSA cites PMID:10390345, PMID:10460175, PMID:10656799, PMID:11823416,
+        PMID:12080056, PMID:14699093, PMID:15211511, PMID:19473980, PMID:20718867, PMID:21136135, PMID:2143188,
+        PMID:21726912, PMID:22049947, PMID:23335990, PMID:9783753; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/425/
+      snippet: The reaction proceeds by initial nucleophilic attack on the peptide bond by Ser 741, activated
+        by deprotonation by His 603. This leads to the formation of a tetrahedral intermediate, stabilised
+        by Ser 741 and Gly 742. Subsequent collapse of this intermediate, assisted by protonation of the
+        leaving group by His 603 and Asp 646 leads to an acyl enzyme intermediate. Activation of a water
+        molecule by
+      notes: M-CSA entry 425, mechanism 2; M-CSA cites PMID:10390345, PMID:10460175, PMID:10656799, PMID:11823416,
+        PMID:12080056, PMID:14699093, PMID:15211511, PMID:19473980, PMID:20718867, PMID:21136135, PMID:2143188,
+        PMID:21726912, PMID:22049947, PMID:23335990, PMID:9783753; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/425/
+      snippet: The reaction proceeds by initial nucleophilic attack on the peptide bond by Ser 741, activated
+        by deprotonation by His 603. This leads to the formation of a tetrahedral intermediate, stabilised
+        by Ser 741 and Gly 742. Subsequent collapse of this intermediate, assisted by protonation of the
+        leaving group by His 603 and Asp 646 leads to an acyl enzyme intermediate. Activation of a water
+        molecule by
+      notes: M-CSA entry 425, mechanism 2; M-CSA cites PMID:10390345, PMID:10460175, PMID:10656799, PMID:11823416,
+        PMID:12080056, PMID:14699093, PMID:15211511, PMID:19473980, PMID:20718867, PMID:21136135, PMID:2143188,
+        PMID:21726912, PMID:22049947, PMID:23335990, PMID:9783753; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/425/
+      snippet: The reaction proceeds by initial nucleophilic attack on the peptide bond by Ser 741, activated
+        by deprotonation by His 603. This leads to the formation of a tetrahedral intermediate, stabilised
+        by Ser 741 and Gly 742. Subsequent collapse of this intermediate, assisted by protonation of the
+        leaving group by His 603 and Asp 646 leads to an acyl enzyme intermediate. Activation of a water
+        molecule by
+      notes: M-CSA entry 425, mechanism 2; M-CSA cites PMID:10390345, PMID:10460175, PMID:10656799, PMID:11823416,
+        PMID:12080056, PMID:14699093, PMID:15211511, PMID:19473980, PMID:20718867, PMID:21136135, PMID:2143188,
+        PMID:21726912, PMID:22049947, PMID:23335990, PMID:9783753; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (14 evidence-backed edges) transcribed from M-CSA entry 425;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

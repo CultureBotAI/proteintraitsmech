@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.27.3
 - CHEBI:134204
@@ -70,4 +70,341 @@ definitions:
       Three different strains of Streptomyces aureofaciens produce the homologous ribonucleases Sa, Sa2 and Sa3. They are all guanylate endoribonucleases, highly specifically hydrolysing the phosphodiester bonds of RNA at the 3'-side of guanosine nucleotides. These enzymes belong to the prokaryotic subgroup of microbial ribonucleases, and are some of the smallest enzymes known.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of guanyl-specific ribonuclease Sa
+  description: Mechanism transcribed from M-CSA entry 459. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering only — no unique offset to the record's reference sequence could
+    be verified, so no UniProt position is asserted.
+  nodes:
+  - node_id: glu56
+    label: catalytic Glu56 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q53752
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: arg67
+    label: catalytic Arg67 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q53752
+    description: 'M-CSA roles: activator, transition state stabiliser.'
+  - node_id: arg71
+    label: catalytic Arg71 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q53752
+    description: 'M-CSA roles: activator, transition state stabiliser.'
+  - node_id: his86
+    label: catalytic His86 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q53752
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: guanylyl-(3'->5')-cytidine(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:134204
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product0
+    label: guanosine 3'-monophosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:28072
+  - node_id: product1
+    label: cytidine
+    node_type: CHEMICAL
+    grounding: CHEBI:17562
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: "The cleavage of substrate by ribonucleases is a two-step reaction: the first step is\
+      \ a transesterification of which a nucleophilic displacement at the phosphorus atom of the 5' leaving\
+      \ group by the 2' entering oxygen atom takes place, forming a guanosine 2',3'-cyclophosphate intermediate,\
+      \ which is hydrolysed in the second step to yield 3' guanylic acid. The mechanism proceeds as follows:<ol>\
+      \ 
+<li"
+  - node_id: active_site
+    label: guanyl-specific ribonuclease Sa catalytic site
+    node_type: MOTIF
+    grounding: MCSA:459
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.10.450.30 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.10.450.30
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: guanyl-specific ribonuclease Sa activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.27.3
+  edges:
+  - subject: glu56
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu56 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/459/
+      snippet: "The cleavage of substrate by ribonucleases is a two-step reaction: the first step is a\
+        \ transesterification of which a nucleophilic displacement at the phosphorus atom of the 5' leaving\
+        \ group by the 2' entering oxygen atom takes place, forming a guanosine 2',3'-cyclophosphate intermediate,\
+        \ which is hydrolysed in the second step to yield 3' guanylic acid. The mechanism proceeds as\
+        \ follows:<ol> 
+<li>The 2' hydroxyl group of the substrate is made more nucleophilic by deprotonation\
+        \ by Glu 56.</li>
+<li>The 2' hydroxyl attacks the phosphorus attached to the 3' carbon of the\
+        \ same ribose ring, displacing the 5' oxygen of the next nucleotide. The charge on the trigonal\
+        \ bipyramidal transition state is stabilised by Arg 67 and Arg 71.</li>
+<li>The 5' oxygen of\
+        \ the next nucleotide is made a better leaving group by protonation by His 86. </li>
+</ol>\
+        
+The product is a cyclophosphodiester between the 3' and 2' carbons of the guanosine nucleotide.\
+        \ This is hydrolysed in the second step of the reaction, which is the reverse of the first step\
+        \ with water as the nucleophile, displacing the 2' hydroxyl. His 86 activates water by deprotonation\
+        \ and Glu 56 protonates the 2' hydroxyl leaving group. Arg 67 and Arg 71 stabilise the transition\
+        \ state."
+      notes: M-CSA entry 459, mechanism 2; M-CSA cites PMID:14500895, PMID:15213380, PMID:19558492, PMID:4364371,
+        PMID:8396032; step 1
+  - subject: arg67
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg67 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/459/
+      snippet: "The cleavage of substrate by ribonucleases is a two-step reaction: the first step is a\
+        \ transesterification of which a nucleophilic displacement at the phosphorus atom of the 5' leaving\
+        \ group by the 2' entering oxygen atom takes place, forming a guanosine 2',3'-cyclophosphate intermediate,\
+        \ which is hydrolysed in the second step to yield 3' guanylic acid. The mechanism proceeds as\
+        \ follows:<ol> 
+<li>The 2' hydroxyl group of the substrate is made more nucleophilic by deprotonation\
+        \ by Glu 56.</li>
+<li>The 2' hydroxyl attacks the phosphorus attached to the 3' carbon of the\
+        \ same ribose ring, displacing the 5' oxygen of the next nucleotide. The charge on the trigonal\
+        \ bipyramidal transition state is stabilised by Arg 67 and Arg 71.</li>
+<li>The 5' oxygen of\
+        \ the next nucleotide is made a better leaving group by protonation by His 86. </li>
+</ol>\
+        
+The product is a cyclophosphodiester between the 3' and 2' carbons of the guanosine nucleotide.\
+        \ This is hydrolysed in the second step of the reaction, which is the reverse of the first step\
+        \ with water as the nucleophile, displacing the 2' hydroxyl. His 86 activates water by deprotonation\
+        \ and Glu 56 protonates the 2' hydroxyl leaving group. Arg 67 and Arg 71 stabilise the transition\
+        \ state."
+      notes: M-CSA entry 459, mechanism 2; M-CSA cites PMID:14500895, PMID:15213380, PMID:19558492, PMID:4364371,
+        PMID:8396032; step 1
+  - subject: arg71
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg71 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/459/
+      snippet: "The cleavage of substrate by ribonucleases is a two-step reaction: the first step is a\
+        \ transesterification of which a nucleophilic displacement at the phosphorus atom of the 5' leaving\
+        \ group by the 2' entering oxygen atom takes place, forming a guanosine 2',3'-cyclophosphate intermediate,\
+        \ which is hydrolysed in the second step to yield 3' guanylic acid. The mechanism proceeds as\
+        \ follows:<ol> 
+<li>The 2' hydroxyl group of the substrate is made more nucleophilic by deprotonation\
+        \ by Glu 56.</li>
+<li>The 2' hydroxyl attacks the phosphorus attached to the 3' carbon of the\
+        \ same ribose ring, displacing the 5' oxygen of the next nucleotide. The charge on the trigonal\
+        \ bipyramidal transition state is stabilised by Arg 67 and Arg 71.</li>
+<li>The 5' oxygen of\
+        \ the next nucleotide is made a better leaving group by protonation by His 86. </li>
+</ol>\
+        
+The product is a cyclophosphodiester between the 3' and 2' carbons of the guanosine nucleotide.\
+        \ This is hydrolysed in the second step of the reaction, which is the reverse of the first step\
+        \ with water as the nucleophile, displacing the 2' hydroxyl. His 86 activates water by deprotonation\
+        \ and Glu 56 protonates the 2' hydroxyl leaving group. Arg 67 and Arg 71 stabilise the transition\
+        \ state."
+      notes: M-CSA entry 459, mechanism 2; M-CSA cites PMID:14500895, PMID:15213380, PMID:19558492, PMID:4364371,
+        PMID:8396032; step 1
+  - subject: his86
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His86 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/459/
+      snippet: "The cleavage of substrate by ribonucleases is a two-step reaction: the first step is a\
+        \ transesterification of which a nucleophilic displacement at the phosphorus atom of the 5' leaving\
+        \ group by the 2' entering oxygen atom takes place, forming a guanosine 2',3'-cyclophosphate intermediate,\
+        \ which is hydrolysed in the second step to yield 3' guanylic acid. The mechanism proceeds as\
+        \ follows:<ol> 
+<li>The 2' hydroxyl group of the substrate is made more nucleophilic by deprotonation\
+        \ by Glu 56.</li>
+<li>The 2' hydroxyl attacks the phosphorus attached to the 3' carbon of the\
+        \ same ribose ring, displacing the 5' oxygen of the next nucleotide. The charge on the trigonal\
+        \ bipyramidal transition state is stabilised by Arg 67 and Arg 71.</li>
+<li>The 5' oxygen of\
+        \ the next nucleotide is made a better leaving group by protonation by His 86. </li>
+</ol>\
+        
+The product is a cyclophosphodiester between the 3' and 2' carbons of the guanosine nucleotide.\
+        \ This is hydrolysed in the second step of the reaction, which is the reverse of the first step\
+        \ with water as the nucleophile, displacing the 2' hydroxyl. His 86 activates water by deprotonation\
+        \ and Glu 56 protonates the 2' hydroxyl leaving group. Arg 67 and Arg 71 stabilise the transition\
+        \ state."
+      notes: M-CSA entry 459, mechanism 2; M-CSA cites PMID:14500895, PMID:15213380, PMID:19558492, PMID:4364371,
+        PMID:8396032; step 1
+  - subject: glu56
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu56 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/459/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 459, mechanism 2; M-CSA cites PMID:14500895, PMID:15213380, PMID:19558492, PMID:4364371,
+        PMID:8396032; M-CSA catalytic-residue roles for Glu56
+  - subject: arg67
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg67 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/459/
+      snippet: activator, transition state stabiliser
+      notes: M-CSA entry 459, mechanism 2; M-CSA cites PMID:14500895, PMID:15213380, PMID:19558492, PMID:4364371,
+        PMID:8396032; M-CSA catalytic-residue roles for Arg67
+  - subject: arg71
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg71 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/459/
+      snippet: activator, transition state stabiliser
+      notes: M-CSA entry 459, mechanism 2; M-CSA cites PMID:14500895, PMID:15213380, PMID:19558492, PMID:4364371,
+        PMID:8396032; M-CSA catalytic-residue roles for Arg71
+  - subject: his86
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His86 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/459/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 459, mechanism 2; M-CSA cites PMID:14500895, PMID:15213380, PMID:19558492, PMID:4364371,
+        PMID:8396032; M-CSA catalytic-residue roles for His86
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/459/
+      snippet: "The cleavage of substrate by ribonucleases is a two-step reaction: the first step is a\
+        \ transesterification of which a nucleophilic displacement at the phosphorus atom of the 5' leaving\
+        \ group by the 2' entering oxygen atom takes place, forming a guanosine 2',3'-cyclophosphate intermediate,\
+        \ which is hydrolysed in the second step to yield 3' guanylic acid. The mechanism proceeds as\
+        \ follows:<ol> 
+<li"
+      notes: M-CSA entry 459, mechanism 2; M-CSA cites PMID:14500895, PMID:15213380, PMID:19558492, PMID:4364371,
+        PMID:8396032; CATH domain 3.10.450.30 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/459/
+      snippet: "The cleavage of substrate by ribonucleases is a two-step reaction: the first step is a\
+        \ transesterification of which a nucleophilic displacement at the phosphorus atom of the 5' leaving\
+        \ group by the 2' entering oxygen atom takes place, forming a guanosine 2',3'-cyclophosphate intermediate,\
+        \ which is hydrolysed in the second step to yield 3' guanylic acid. The mechanism proceeds as\
+        \ follows:<ol> 
+<li"
+      notes: M-CSA entry 459, mechanism 2; M-CSA cites PMID:14500895, PMID:15213380, PMID:19558492, PMID:4364371,
+        PMID:8396032; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/459/
+      snippet: "The cleavage of substrate by ribonucleases is a two-step reaction: the first step is a\
+        \ transesterification of which a nucleophilic displacement at the phosphorus atom of the 5' leaving\
+        \ group by the 2' entering oxygen atom takes place, forming a guanosine 2',3'-cyclophosphate intermediate,\
+        \ which is hydrolysed in the second step to yield 3' guanylic acid. The mechanism proceeds as\
+        \ follows:<ol> 
+<li"
+      notes: M-CSA entry 459, mechanism 2; M-CSA cites PMID:14500895, PMID:15213380, PMID:19558492, PMID:4364371,
+        PMID:8396032; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/459/
+      snippet: "The cleavage of substrate by ribonucleases is a two-step reaction: the first step is a\
+        \ transesterification of which a nucleophilic displacement at the phosphorus atom of the 5' leaving\
+        \ group by the 2' entering oxygen atom takes place, forming a guanosine 2',3'-cyclophosphate intermediate,\
+        \ which is hydrolysed in the second step to yield 3' guanylic acid. The mechanism proceeds as\
+        \ follows:<ol> 
+<li"
+      notes: M-CSA entry 459, mechanism 2; M-CSA cites PMID:14500895, PMID:15213380, PMID:19558492, PMID:4364371,
+        PMID:8396032; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/459/
+      snippet: "The cleavage of substrate by ribonucleases is a two-step reaction: the first step is a\
+        \ transesterification of which a nucleophilic displacement at the phosphorus atom of the 5' leaving\
+        \ group by the 2' entering oxygen atom takes place, forming a guanosine 2',3'-cyclophosphate intermediate,\
+        \ which is hydrolysed in the second step to yield 3' guanylic acid. The mechanism proceeds as\
+        \ follows:<ol> 
+<li"
+      notes: M-CSA entry 459, mechanism 2; M-CSA cites PMID:14500895, PMID:15213380, PMID:19558492, PMID:4364371,
+        PMID:8396032; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/459/
+      snippet: "The cleavage of substrate by ribonucleases is a two-step reaction: the first step is a\
+        \ transesterification of which a nucleophilic displacement at the phosphorus atom of the 5' leaving\
+        \ group by the 2' entering oxygen atom takes place, forming a guanosine 2',3'-cyclophosphate intermediate,\
+        \ which is hydrolysed in the second step to yield 3' guanylic acid. The mechanism proceeds as\
+        \ follows:<ol> 
+<li"
+      notes: M-CSA entry 459, mechanism 2; M-CSA cites PMID:14500895, PMID:15213380, PMID:19558492, PMID:4364371,
+        PMID:8396032; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/459/
+      snippet: "The cleavage of substrate by ribonucleases is a two-step reaction: the first step is a\
+        \ transesterification of which a nucleophilic displacement at the phosphorus atom of the 5' leaving\
+        \ group by the 2' entering oxygen atom takes place, forming a guanosine 2',3'-cyclophosphate intermediate,\
+        \ which is hydrolysed in the second step to yield 3' guanylic acid. The mechanism proceeds as\
+        \ follows:<ol> 
+<li"
+      notes: M-CSA entry 459, mechanism 2; M-CSA cites PMID:14500895, PMID:15213380, PMID:19558492, PMID:4364371,
+        PMID:8396032; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 459;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

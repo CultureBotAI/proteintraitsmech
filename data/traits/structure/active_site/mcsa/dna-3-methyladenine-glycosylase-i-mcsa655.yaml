@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.2.20
 - CHEBI:15377
@@ -163,4 +163,257 @@ definitions:
       DNA glycosylases are able to remove bases from DNA by hydrolysing the glycosidic bond between the ribose sugar and the base. This enables specific glycosylases to correct particular defects in DNA such as mispairing or the insertion of a base analogue, making them of particular interest towards an understanding of DNA repair in cells. 3-methyladenine DNA glycosylase I is able to recognise the cationic base 3-methyladenine and remove it wherever it occurs in the sequence. As part of the HhH-GPD superfamily of DNA glycosylases, which includes well characterised members such as MutY, it works by a monofunctional mechanism to remove a purine, resulting in a relatively low rate enhancement of between 10 and 20 times the rate of spontaneous hydrolysis. Unlike other glycosylases that have a HhH motif, 3-methyladenine DNA glycosylase I does not have a conserved aspartate, indicating an alternative base excision mechanism is in place.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of DNA-3-methyladenine glycosylase I
+  description: Mechanism transcribed from M-CSA entry 655. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: tyr16
+    label: catalytic Tyr16 (M-CSA/PDB numbering; UniProt residue 16)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05100
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor.'
+  - node_id: glu38
+    label: catalytic Glu38 (M-CSA/PDB numbering; UniProt residue 38)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05100
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor.'
+  - node_id: trp46
+    label: catalytic Trp46 (M-CSA/PDB numbering; UniProt residue 46)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05100
+    description: 'M-CSA roles: electrostatic stabiliser, van der waals interaction.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: 3-methyladenine DNA
+    node_type: CHEMICAL
+    grounding: CHEBI:137218
+  - node_id: product0
+    label: 3-methyladenine
+    node_type: CHEMICAL
+    grounding: CHEBI:38635
+  - node_id: product1
+    label: DNA without the base
+    node_type: CHEMICAL
+    grounding: CHEBI:137219
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: The reaction proceeds via hydrolysis of the glycosidic bond by nucleophilic attack on
+      C1' of the ribose sugar, freeing the base from the sugar phosphate backbone. As the breaking of
+      the glycosidic bond results in a negative charge developing on the N9 of the base, the transition
+      state is overall neutral on the base. This distorts the structure of the base sufficiently so that
+      hydrogen bonds betwee
+  - node_id: active_site
+    label: DNA-3-methyladenine glycosylase I catalytic site
+    node_type: MOTIF
+    grounding: MCSA:655
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.10.340.30 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.10.340.30
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: DNA-3-methyladenine glycosylase I activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.2.20
+  edges:
+  - subject: tyr16
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr16 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/655/
+      snippet: The reaction proceeds via hydrolysis of the glycosidic bond by nucleophilic attack on C1'
+        of the ribose sugar, freeing the base from the sugar phosphate backbone. As the breaking of the
+        glycosidic bond results in a negative charge developing on the N9 of the base, the transition
+        state is overall neutral on the base. This distorts the structure of the base sufficiently so
+        that hydrogen bonds between Glu38 and the N6 and N7 of 3mA become optimal, as do bonds between
+        Tyr 16 and N1. Moreover, the distance between the base and Trp 46 becomes optimal for van der
+        waal's forces. This stabilisation of the transition state means that the glycosidic bond is weakened,
+        so hydrolysis is enhanced.
+      notes: M-CSA entry 655, mechanism 1; M-CSA cites PMID:13129925, PMID:15102448, PMID:17410210; step
+        1
+  - subject: glu38
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu38 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/655/
+      snippet: The reaction proceeds via hydrolysis of the glycosidic bond by nucleophilic attack on C1'
+        of the ribose sugar, freeing the base from the sugar phosphate backbone. As the breaking of the
+        glycosidic bond results in a negative charge developing on the N9 of the base, the transition
+        state is overall neutral on the base. This distorts the structure of the base sufficiently so
+        that hydrogen bonds between Glu38 and the N6 and N7 of 3mA become optimal, as do bonds between
+        Tyr 16 and N1. Moreover, the distance between the base and Trp 46 becomes optimal for van der
+        waal's forces. This stabilisation of the transition state means that the glycosidic bond is weakened,
+        so hydrolysis is enhanced.
+      notes: M-CSA entry 655, mechanism 1; M-CSA cites PMID:13129925, PMID:15102448, PMID:17410210; step
+        1
+  - subject: trp46
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Trp46 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/655/
+      snippet: The reaction proceeds via hydrolysis of the glycosidic bond by nucleophilic attack on C1'
+        of the ribose sugar, freeing the base from the sugar phosphate backbone. As the breaking of the
+        glycosidic bond results in a negative charge developing on the N9 of the base, the transition
+        state is overall neutral on the base. This distorts the structure of the base sufficiently so
+        that hydrogen bonds between Glu38 and the N6 and N7 of 3mA become optimal, as do bonds between
+        Tyr 16 and N1. Moreover, the distance between the base and Trp 46 becomes optimal for van der
+        waal's forces. This stabilisation of the transition state means that the glycosidic bond is weakened,
+        so hydrolysis is enhanced.
+      notes: M-CSA entry 655, mechanism 1; M-CSA cites PMID:13129925, PMID:15102448, PMID:17410210; step
+        1
+  - subject: tyr16
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr16 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/655/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor
+      notes: M-CSA entry 655, mechanism 1; M-CSA cites PMID:13129925, PMID:15102448, PMID:17410210; M-CSA
+        catalytic-residue roles for Tyr16
+  - subject: glu38
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu38 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/655/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor
+      notes: M-CSA entry 655, mechanism 1; M-CSA cites PMID:13129925, PMID:15102448, PMID:17410210; M-CSA
+        catalytic-residue roles for Glu38
+  - subject: trp46
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp46 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/655/
+      snippet: electrostatic stabiliser, van der waals interaction
+      notes: M-CSA entry 655, mechanism 1; M-CSA cites PMID:13129925, PMID:15102448, PMID:17410210; M-CSA
+        catalytic-residue roles for Trp46
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/655/
+      snippet: The reaction proceeds via hydrolysis of the glycosidic bond by nucleophilic attack on C1'
+        of the ribose sugar, freeing the base from the sugar phosphate backbone. As the breaking of the
+        glycosidic bond results in a negative charge developing on the N9 of the base, the transition
+        state is overall neutral on the base. This distorts the structure of the base sufficiently so
+        that hydrogen bonds betwee
+      notes: M-CSA entry 655, mechanism 1; M-CSA cites PMID:13129925, PMID:15102448, PMID:17410210; CATH
+        domain 1.10.340.30 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/655/
+      snippet: The reaction proceeds via hydrolysis of the glycosidic bond by nucleophilic attack on C1'
+        of the ribose sugar, freeing the base from the sugar phosphate backbone. As the breaking of the
+        glycosidic bond results in a negative charge developing on the N9 of the base, the transition
+        state is overall neutral on the base. This distorts the structure of the base sufficiently so
+        that hydrogen bonds betwee
+      notes: M-CSA entry 655, mechanism 1; M-CSA cites PMID:13129925, PMID:15102448, PMID:17410210; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/655/
+      snippet: The reaction proceeds via hydrolysis of the glycosidic bond by nucleophilic attack on C1'
+        of the ribose sugar, freeing the base from the sugar phosphate backbone. As the breaking of the
+        glycosidic bond results in a negative charge developing on the N9 of the base, the transition
+        state is overall neutral on the base. This distorts the structure of the base sufficiently so
+        that hydrogen bonds betwee
+      notes: M-CSA entry 655, mechanism 1; M-CSA cites PMID:13129925, PMID:15102448, PMID:17410210; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/655/
+      snippet: The reaction proceeds via hydrolysis of the glycosidic bond by nucleophilic attack on C1'
+        of the ribose sugar, freeing the base from the sugar phosphate backbone. As the breaking of the
+        glycosidic bond results in a negative charge developing on the N9 of the base, the transition
+        state is overall neutral on the base. This distorts the structure of the base sufficiently so
+        that hydrogen bonds betwee
+      notes: M-CSA entry 655, mechanism 1; M-CSA cites PMID:13129925, PMID:15102448, PMID:17410210; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/655/
+      snippet: The reaction proceeds via hydrolysis of the glycosidic bond by nucleophilic attack on C1'
+        of the ribose sugar, freeing the base from the sugar phosphate backbone. As the breaking of the
+        glycosidic bond results in a negative charge developing on the N9 of the base, the transition
+        state is overall neutral on the base. This distorts the structure of the base sufficiently so
+        that hydrogen bonds betwee
+      notes: M-CSA entry 655, mechanism 1; M-CSA cites PMID:13129925, PMID:15102448, PMID:17410210; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/655/
+      snippet: The reaction proceeds via hydrolysis of the glycosidic bond by nucleophilic attack on C1'
+        of the ribose sugar, freeing the base from the sugar phosphate backbone. As the breaking of the
+        glycosidic bond results in a negative charge developing on the N9 of the base, the transition
+        state is overall neutral on the base. This distorts the structure of the base sufficiently so
+        that hydrogen bonds betwee
+      notes: M-CSA entry 655, mechanism 1; M-CSA cites PMID:13129925, PMID:15102448, PMID:17410210; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/655/
+      snippet: The reaction proceeds via hydrolysis of the glycosidic bond by nucleophilic attack on C1'
+        of the ribose sugar, freeing the base from the sugar phosphate backbone. As the breaking of the
+        glycosidic bond results in a negative charge developing on the N9 of the base, the transition
+        state is overall neutral on the base. This distorts the structure of the base sufficiently so
+        that hydrogen bonds betwee
+      notes: M-CSA entry 655, mechanism 1; M-CSA cites PMID:13129925, PMID:15102448, PMID:17410210; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 655;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

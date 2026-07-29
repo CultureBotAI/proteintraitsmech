@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.11.1.1
 - CHEBI:16240
@@ -409,4 +409,298 @@ definitions:
       NADH peroxidase (Npx) catalysis the breakdown of peroxide to water. It is unusual in two respects, having a redox centre containing a key sulfenic acid and requiring NADH for activity. The critical and defining property of Npx relative to other FAD-dependent disulfide reductases concerns the absence of the redox-active protein disulfide.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of NADH peroxidase
+  description: Mechanism transcribed from M-CSA entry 895. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: his10
+    label: catalytic His10 (M-CSA/PDB numbering; UniProt residue 10)
+    node_type: RESIDUE
+    grounding: UniProtKB:P37062
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: ser41
+    label: catalytic Ser41 (M-CSA/PDB numbering; UniProt residue 41)
+    node_type: RESIDUE
+    grounding: UniProtKB:P37062
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: cys42
+    label: catalytic Cys42 (M-CSA/PDB numbering; UniProt residue 42)
+    node_type: RESIDUE
+    grounding: UniProtKB:P37062
+    description: 'M-CSA roles: covalent catalysis, proton shuttle (general acid/base).'
+  - node_id: arg303
+    label: catalytic Arg303 (M-CSA/PDB numbering; UniProt residue 303)
+    node_type: RESIDUE
+    grounding: UniProtKB:P37062
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: hydrogen peroxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+  - node_id: reactant1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: reactant2
+    label: NADH(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+  - node_id: product0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product1
+    label: NAD(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: <p>Initially, Cys42 is present as the thiolate S- ion which is catalytically competent.
+      The peroxide binds to the active site and is predicted to hydrogen bond via an oxygen to the His10
+      N-H group. As the thiolate anion performs nucleophilic attack on the O-O bond of peroxide, His10
+      donates a proton the the leaving hydroxide to form water. Simultaneously a proton is donated by
+      Arg303 to the second
+  - node_id: active_site
+    label: NADH peroxidase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:895
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.50.50.60 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.50.50.60
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: NADH peroxidase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.11.1.1
+  edges:
+  - subject: his10
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His10 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/895/
+      snippet: "<p>Initially, Cys42 is present as the thiolate S- ion which is catalytically competent.\
+        \ The peroxide binds to the active site and is predicted to hydrogen bond via an oxygen to the\
+        \ His10 N-H group. As the thiolate anion performs nucleophilic attack on the O-O bond of peroxide,\
+        \ His10 donates a proton the the leaving hydroxide to form water. Simultaneously a proton is donated\
+        \ by Arg303 to the second His10 nitrogen maintaining its neutral charge. As a result sulfenic\
+        \ acid is formed, which is then reduced to complete the catalytic cycle. </p>   
+
+<p>NADH\
+        \ binds parallel to FAD on the re face with C4 in a position such that a direct hydride transfer\
+        \ to N5 of FAD occurs. FAD is thus reduced to FADH2 with the aid of a proton. A hydride is then\
+        \ transferred to Cys-SOH, which lies parallel to the si face of FAD, causing lysis of the S-O\
+        \ bond and formation of a second water and thiolate, returning the enzyme to its initial state.</p>"
+      notes: M-CSA entry 895, mechanism 1; M-CSA cites PMID:10074352, PMID:10569923, PMID:10956025, PMID:11665489,
+        PMID:1942054, PMID:26506002, PMID:7766608, PMID:8425532, PMID:8652580, PMID:8756456, PMID:9214307,
+        PMID:9628741; step 1
+  - subject: cys42
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys42 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/895/
+      snippet: "<p>Initially, Cys42 is present as the thiolate S- ion which is catalytically competent.\
+        \ The peroxide binds to the active site and is predicted to hydrogen bond via an oxygen to the\
+        \ His10 N-H group. As the thiolate anion performs nucleophilic attack on the O-O bond of peroxide,\
+        \ His10 donates a proton the the leaving hydroxide to form water. Simultaneously a proton is donated\
+        \ by Arg303 to the second His10 nitrogen maintaining its neutral charge. As a result sulfenic\
+        \ acid is formed, which is then reduced to complete the catalytic cycle. </p>   
+
+<p>NADH\
+        \ binds parallel to FAD on the re face with C4 in a position such that a direct hydride transfer\
+        \ to N5 of FAD occurs. FAD is thus reduced to FADH2 with the aid of a proton. A hydride is then\
+        \ transferred to Cys-SOH, which lies parallel to the si face of FAD, causing lysis of the S-O\
+        \ bond and formation of a second water and thiolate, returning the enzyme to its initial state.</p>"
+      notes: M-CSA entry 895, mechanism 1; M-CSA cites PMID:10074352, PMID:10569923, PMID:10956025, PMID:11665489,
+        PMID:1942054, PMID:26506002, PMID:7766608, PMID:8425532, PMID:8652580, PMID:8756456, PMID:9214307,
+        PMID:9628741; step 1
+  - subject: arg303
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg303 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/895/
+      snippet: "<p>Initially, Cys42 is present as the thiolate S- ion which is catalytically competent.\
+        \ The peroxide binds to the active site and is predicted to hydrogen bond via an oxygen to the\
+        \ His10 N-H group. As the thiolate anion performs nucleophilic attack on the O-O bond of peroxide,\
+        \ His10 donates a proton the the leaving hydroxide to form water. Simultaneously a proton is donated\
+        \ by Arg303 to the second His10 nitrogen maintaining its neutral charge. As a result sulfenic\
+        \ acid is formed, which is then reduced to complete the catalytic cycle. </p>   
+
+<p>NADH\
+        \ binds parallel to FAD on the re face with C4 in a position such that a direct hydride transfer\
+        \ to N5 of FAD occurs. FAD is thus reduced to FADH2 with the aid of a proton. A hydride is then\
+        \ transferred to Cys-SOH, which lies parallel to the si face of FAD, causing lysis of the S-O\
+        \ bond and formation of a second water and thiolate, returning the enzyme to its initial state.</p>"
+      notes: M-CSA entry 895, mechanism 1; M-CSA cites PMID:10074352, PMID:10569923, PMID:10956025, PMID:11665489,
+        PMID:1942054, PMID:26506002, PMID:7766608, PMID:8425532, PMID:8652580, PMID:8756456, PMID:9214307,
+        PMID:9628741; step 1
+  - subject: his10
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His10 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/895/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 895, mechanism 1; M-CSA cites PMID:10074352, PMID:10569923, PMID:10956025, PMID:11665489,
+        PMID:1942054, PMID:26506002, PMID:7766608, PMID:8425532, PMID:8652580, PMID:8756456, PMID:9214307,
+        PMID:9628741; M-CSA catalytic-residue roles for His10
+  - subject: ser41
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser41 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/895/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 895, mechanism 1; M-CSA cites PMID:10074352, PMID:10569923, PMID:10956025, PMID:11665489,
+        PMID:1942054, PMID:26506002, PMID:7766608, PMID:8425532, PMID:8652580, PMID:8756456, PMID:9214307,
+        PMID:9628741; M-CSA catalytic-residue roles for Ser41
+  - subject: cys42
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys42 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/895/
+      snippet: covalent catalysis, proton shuttle (general acid/base)
+      notes: M-CSA entry 895, mechanism 1; M-CSA cites PMID:10074352, PMID:10569923, PMID:10956025, PMID:11665489,
+        PMID:1942054, PMID:26506002, PMID:7766608, PMID:8425532, PMID:8652580, PMID:8756456, PMID:9214307,
+        PMID:9628741; M-CSA catalytic-residue roles for Cys42
+  - subject: arg303
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg303 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/895/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 895, mechanism 1; M-CSA cites PMID:10074352, PMID:10569923, PMID:10956025, PMID:11665489,
+        PMID:1942054, PMID:26506002, PMID:7766608, PMID:8425532, PMID:8652580, PMID:8756456, PMID:9214307,
+        PMID:9628741; M-CSA catalytic-residue roles for Arg303
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/895/
+      snippet: <p>Initially, Cys42 is present as the thiolate S- ion which is catalytically competent.
+        The peroxide binds to the active site and is predicted to hydrogen bond via an oxygen to the His10
+        N-H group. As the thiolate anion performs nucleophilic attack on the O-O bond of peroxide, His10
+        donates a proton the the leaving hydroxide to form water. Simultaneously a proton is donated by
+        Arg303 to the second
+      notes: M-CSA entry 895, mechanism 1; M-CSA cites PMID:10074352, PMID:10569923, PMID:10956025, PMID:11665489,
+        PMID:1942054, PMID:26506002, PMID:7766608, PMID:8425532, PMID:8652580, PMID:8756456, PMID:9214307,
+        PMID:9628741; CATH domain 3.50.50.60 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/895/
+      snippet: <p>Initially, Cys42 is present as the thiolate S- ion which is catalytically competent.
+        The peroxide binds to the active site and is predicted to hydrogen bond via an oxygen to the His10
+        N-H group. As the thiolate anion performs nucleophilic attack on the O-O bond of peroxide, His10
+        donates a proton the the leaving hydroxide to form water. Simultaneously a proton is donated by
+        Arg303 to the second
+      notes: M-CSA entry 895, mechanism 1; M-CSA cites PMID:10074352, PMID:10569923, PMID:10956025, PMID:11665489,
+        PMID:1942054, PMID:26506002, PMID:7766608, PMID:8425532, PMID:8652580, PMID:8756456, PMID:9214307,
+        PMID:9628741; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/895/
+      snippet: <p>Initially, Cys42 is present as the thiolate S- ion which is catalytically competent.
+        The peroxide binds to the active site and is predicted to hydrogen bond via an oxygen to the His10
+        N-H group. As the thiolate anion performs nucleophilic attack on the O-O bond of peroxide, His10
+        donates a proton the the leaving hydroxide to form water. Simultaneously a proton is donated by
+        Arg303 to the second
+      notes: M-CSA entry 895, mechanism 1; M-CSA cites PMID:10074352, PMID:10569923, PMID:10956025, PMID:11665489,
+        PMID:1942054, PMID:26506002, PMID:7766608, PMID:8425532, PMID:8652580, PMID:8756456, PMID:9214307,
+        PMID:9628741; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/895/
+      snippet: <p>Initially, Cys42 is present as the thiolate S- ion which is catalytically competent.
+        The peroxide binds to the active site and is predicted to hydrogen bond via an oxygen to the His10
+        N-H group. As the thiolate anion performs nucleophilic attack on the O-O bond of peroxide, His10
+        donates a proton the the leaving hydroxide to form water. Simultaneously a proton is donated by
+        Arg303 to the second
+      notes: M-CSA entry 895, mechanism 1; M-CSA cites PMID:10074352, PMID:10569923, PMID:10956025, PMID:11665489,
+        PMID:1942054, PMID:26506002, PMID:7766608, PMID:8425532, PMID:8652580, PMID:8756456, PMID:9214307,
+        PMID:9628741; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/895/
+      snippet: <p>Initially, Cys42 is present as the thiolate S- ion which is catalytically competent.
+        The peroxide binds to the active site and is predicted to hydrogen bond via an oxygen to the His10
+        N-H group. As the thiolate anion performs nucleophilic attack on the O-O bond of peroxide, His10
+        donates a proton the the leaving hydroxide to form water. Simultaneously a proton is donated by
+        Arg303 to the second
+      notes: M-CSA entry 895, mechanism 1; M-CSA cites PMID:10074352, PMID:10569923, PMID:10956025, PMID:11665489,
+        PMID:1942054, PMID:26506002, PMID:7766608, PMID:8425532, PMID:8652580, PMID:8756456, PMID:9214307,
+        PMID:9628741; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/895/
+      snippet: <p>Initially, Cys42 is present as the thiolate S- ion which is catalytically competent.
+        The peroxide binds to the active site and is predicted to hydrogen bond via an oxygen to the His10
+        N-H group. As the thiolate anion performs nucleophilic attack on the O-O bond of peroxide, His10
+        donates a proton the the leaving hydroxide to form water. Simultaneously a proton is donated by
+        Arg303 to the second
+      notes: M-CSA entry 895, mechanism 1; M-CSA cites PMID:10074352, PMID:10569923, PMID:10956025, PMID:11665489,
+        PMID:1942054, PMID:26506002, PMID:7766608, PMID:8425532, PMID:8652580, PMID:8756456, PMID:9214307,
+        PMID:9628741; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/895/
+      snippet: <p>Initially, Cys42 is present as the thiolate S- ion which is catalytically competent.
+        The peroxide binds to the active site and is predicted to hydrogen bond via an oxygen to the His10
+        N-H group. As the thiolate anion performs nucleophilic attack on the O-O bond of peroxide, His10
+        donates a proton the the leaving hydroxide to form water. Simultaneously a proton is donated by
+        Arg303 to the second
+      notes: M-CSA entry 895, mechanism 1; M-CSA cites PMID:10074352, PMID:10569923, PMID:10956025, PMID:11665489,
+        PMID:1942054, PMID:26506002, PMID:7766608, PMID:8425532, PMID:8652580, PMID:8756456, PMID:9214307,
+        PMID:9628741; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (14 evidence-backed edges) transcribed from M-CSA entry 895;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

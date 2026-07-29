@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.1.1.80
 - CHEBI:59789
@@ -224,4 +224,159 @@ definitions:
       CheR is a methyltransferase involved in methylation of the membrane-bound methyl-accepting chemotaxis proteins (MCP) to form gamma-glutamyl methyl ester residues. This reaction is important for modulating a bacterium's response to a gradient of attractant or repellent.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of protein-glutamate O-methyltransferase
+  description: Mechanism transcribed from M-CSA entry 392. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: arg53
+    label: catalytic Arg53 (M-CSA/PDB numbering; UniProt residue 53)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07801
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp154
+    label: catalytic Asp154 (M-CSA/PDB numbering; UniProt residue 154)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07801
+    description: 'M-CSA roles: activator.'
+  - node_id: reactant0
+    label: S-adenosyl-L-methionine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+  - node_id: reactant1
+    label: L-glutamate residue
+    node_type: CHEMICAL
+    grounding: CHEBI:29973
+  - node_id: product0
+    label: S-adenosyl-L-homocysteine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+  - node_id: product1
+    label: gamma-methyl L-glutamate residue
+    node_type: CHEMICAL
+    grounding: CHEBI:82795
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: The methyl transfer from SAM to one of the glutamate residues of the substrate follows
+      an SN2 mechanism. The mechanism proceeds with little or no direct involvement of residues in the
+      active site, although the binding residues for SAM are known to be highly conserved.
+  - node_id: active_site
+    label: protein-glutamate O-methyltransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:392
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.10.155.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.10.155.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: protein-glutamate O-methyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.1.1.80
+  edges:
+  - subject: arg53
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg53 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/392/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 392, mechanism 2; M-CSA cites PMID:12101179, PMID:25799883, PMID:27544050; M-CSA
+        catalytic-residue roles for Arg53
+  - subject: asp154
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp154 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/392/
+      snippet: activator
+      notes: M-CSA entry 392, mechanism 2; M-CSA cites PMID:12101179, PMID:25799883, PMID:27544050; M-CSA
+        catalytic-residue roles for Asp154
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/392/
+      snippet: The methyl transfer from SAM to one of the glutamate residues of the substrate follows
+        an SN2 mechanism. The mechanism proceeds with little or no direct involvement of residues in the
+        active site, although the binding residues for SAM are known to be highly conserved.
+      notes: M-CSA entry 392, mechanism 2; M-CSA cites PMID:12101179, PMID:25799883, PMID:27544050; CATH
+        domain 1.10.155.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/392/
+      snippet: The methyl transfer from SAM to one of the glutamate residues of the substrate follows
+        an SN2 mechanism. The mechanism proceeds with little or no direct involvement of residues in the
+        active site, although the binding residues for SAM are known to be highly conserved.
+      notes: M-CSA entry 392, mechanism 2; M-CSA cites PMID:12101179, PMID:25799883, PMID:27544050; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/392/
+      snippet: The methyl transfer from SAM to one of the glutamate residues of the substrate follows
+        an SN2 mechanism. The mechanism proceeds with little or no direct involvement of residues in the
+        active site, although the binding residues for SAM are known to be highly conserved.
+      notes: M-CSA entry 392, mechanism 2; M-CSA cites PMID:12101179, PMID:25799883, PMID:27544050; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/392/
+      snippet: The methyl transfer from SAM to one of the glutamate residues of the substrate follows
+        an SN2 mechanism. The mechanism proceeds with little or no direct involvement of residues in the
+        active site, although the binding residues for SAM are known to be highly conserved.
+      notes: M-CSA entry 392, mechanism 2; M-CSA cites PMID:12101179, PMID:25799883, PMID:27544050; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/392/
+      snippet: The methyl transfer from SAM to one of the glutamate residues of the substrate follows
+        an SN2 mechanism. The mechanism proceeds with little or no direct involvement of residues in the
+        active site, although the binding residues for SAM are known to be highly conserved.
+      notes: M-CSA entry 392, mechanism 2; M-CSA cites PMID:12101179, PMID:25799883, PMID:27544050; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/392/
+      snippet: The methyl transfer from SAM to one of the glutamate residues of the substrate follows
+        an SN2 mechanism. The mechanism proceeds with little or no direct involvement of residues in the
+        active site, although the binding residues for SAM are known to be highly conserved.
+      notes: M-CSA entry 392, mechanism 2; M-CSA cites PMID:12101179, PMID:25799883, PMID:27544050; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (8 evidence-backed edges) transcribed from M-CSA entry 392;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

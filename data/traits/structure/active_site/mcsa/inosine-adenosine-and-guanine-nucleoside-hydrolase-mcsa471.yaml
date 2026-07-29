@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.2.1
 - CHEBI:15377
@@ -198,4 +198,466 @@ definitions:
       Nucleoside hydrolases (NH's) are members of the purine salvage pathway that tend to scavenge purines from their environment. The NH of of parasite, Trypanosoma vivax, catalyses the cleavage (hydrolysis) of the N-glycosidic bond between the anomeric carbon of ribose and the purine base in (specifically) inosine, adenosine, and guanine (an IAG-NH). This specificity is via an aromatic face-to-face stacking intercation, rather than general acid catalysis. IAG-NH's represent potential targets for antiobiotic development and cancer therapy.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of inosine, adenosine, and guanine nucleoside hydrolase
+  description: Mechanism transcribed from M-CSA entry 471. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: asp10
+    label: catalytic Asp10 (M-CSA/PDB numbering; UniProt residue 10)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9GPQ4
+    description: 'M-CSA roles: metal ligand, proton shuttle (general acid/base).'
+  - node_id: asp15
+    label: catalytic Asp15 (M-CSA/PDB numbering; UniProt residue 15)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9GPQ4
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp40
+    label: catalytic Asp40 (M-CSA/PDB numbering; UniProt residue 40)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9GPQ4
+    description: 'M-CSA roles: activator.'
+  - node_id: trp83
+    label: catalytic Trp83 (M-CSA/PDB numbering; UniProt residue 83)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9GPQ4
+    description: 'M-CSA roles: activator.'
+  - node_id: thr137
+    label: catalytic Thr137 (M-CSA/PDB numbering; UniProt residue 137)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9GPQ4
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asn186
+    label: catalytic Asn186 (M-CSA/PDB numbering; UniProt residue 186)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9GPQ4
+    description: 'M-CSA roles: activator, electrostatic stabiliser.'
+  - node_id: trp260
+    label: catalytic Trp260 (M-CSA/PDB numbering; UniProt residue 260)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9GPQ4
+    description: 'M-CSA roles: activator, electrostatic stabiliser.'
+  - node_id: asp261
+    label: catalytic Asp261 (M-CSA/PDB numbering; UniProt residue 261)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9GPQ4
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: inosine
+    node_type: CHEMICAL
+    grounding: CHEBI:17596
+  - node_id: product0
+    label: D-ribofuranose
+    node_type: CHEMICAL
+    grounding: CHEBI:47013
+  - node_id: product1
+    label: hypoxanthine
+    node_type: CHEMICAL
+    grounding: CHEBI:17368
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: "The catalytic reaction involves cleavage of the N-glycosidic bond between ribose and\
+      \ the purine base of the substrate. fast hydrolysis of the substrate scissile bond is followed by\
+      \ a slow, two-step release of ribose and a conformational change of the enzyme-ribose complex. \
+      \ 
+<br/><br/>
+The enzyme binds to the pyridine base of the substrate between the aromatic\
+      \ side chains of Trp 83 and Trp 260, "
+  - node_id: active_site
+    label: inosine, adenosine, and guanine nucleoside hydrolase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:471
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.245.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.245.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: inosine, adenosine, and guanine nucleoside hydrolase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.2.1
+  edges:
+  - subject: asp10
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp10 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/471/
+      snippet: "The catalytic reaction involves cleavage of the N-glycosidic bond between ribose and the\
+        \ purine base of the substrate. fast hydrolysis of the substrate scissile bond is followed by\
+        \ a slow, two-step release of ribose and a conformational change of the enzyme-ribose complex.\
+        \  
+<br/><br/>
+The enzyme binds to the pyridine base of the substrate between the aromatic\
+        \ side chains of Trp 83 and Trp 260, resulting in a face-to-face stacking arrangement. This raises\
+        \ the pKa of the aromatic substrate, and hence promotes protonation of the purine ring by elevating\
+        \ its basicity.  
+<br/><br/>
+N7 protonation of the substrate from bulk solvent occurs since\
+        \ the solvent water is hydrogen bonded to the substrate N7. This results in quaternization of\
+        \ N in the substrate, and induces a positive charge in the purine ring, giving a chemically activated\
+        \ leaving group. Therefore the water molecule acts as a general acid to protonate the departing\
+        \ nucleobase anion. The N7-bonded water is in turn hydrogen bonded to waters in a channel.   \
+        
+<br/><br/>
+The soft, electron rich indole ring of Trp 260 stabilises the positive charge\
+        \ on the N. 
+<br/><br/>
+The activated purine ring is now a good leaving group. A ribooxocarbenium\
+        \ ion-like transition state is formed. The hydrolysis of the scissile bond is by a calcium-bound\
+        \ water molecule, Wat 1, which is hydrogen bonded to the general base, Asp 10, and the amide group\
+        \ of Asn 186. 
+<br/><br/>
+The side chain of Asp 10 is hydrogen bonded to the nucleophilic\
+        \ water. This Asp 10 acts as a general base by abstracting a proton form Wat 1, activating it\
+        \ towards nucleophilic attack of the scissile bond. The Asn 186 side chain carbonyl stabilises\
+        \ the transition state by migrating closer to the O4' and its amide -NH hydrogen bonds to O3'\
+        \ of the substrate.  
+<br/><br/>
+Cleavage of the N-glycosidic bond occurs, and  there is\
+        \ a conformational change of the enzyme-ribose complex. 
+<br/><br/>
+The ribose product is\
+        \ released from the active site, regenerating the enzyme."
+      notes: M-CSA entry 471, mechanism 3; M-CSA cites PMID:11292348, PMID:11854281, PMID:15050818, PMID:15909995,
+        PMID:16630632, PMID:19281874, PMID:23897478, PMID:26575755; step 1
+  - subject: trp83
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Trp83 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/471/
+      snippet: "The catalytic reaction involves cleavage of the N-glycosidic bond between ribose and the\
+        \ purine base of the substrate. fast hydrolysis of the substrate scissile bond is followed by\
+        \ a slow, two-step release of ribose and a conformational change of the enzyme-ribose complex.\
+        \  
+<br/><br/>
+The enzyme binds to the pyridine base of the substrate between the aromatic\
+        \ side chains of Trp 83 and Trp 260, resulting in a face-to-face stacking arrangement. This raises\
+        \ the pKa of the aromatic substrate, and hence promotes protonation of the purine ring by elevating\
+        \ its basicity.  
+<br/><br/>
+N7 protonation of the substrate from bulk solvent occurs since\
+        \ the solvent water is hydrogen bonded to the substrate N7. This results in quaternization of\
+        \ N in the substrate, and induces a positive charge in the purine ring, giving a chemically activated\
+        \ leaving group. Therefore the water molecule acts as a general acid to protonate the departing\
+        \ nucleobase anion. The N7-bonded water is in turn hydrogen bonded to waters in a channel.   \
+        
+<br/><br/>
+The soft, electron rich indole ring of Trp 260 stabilises the positive charge\
+        \ on the N. 
+<br/><br/>
+The activated purine ring is now a good leaving group. A ribooxocarbenium\
+        \ ion-like transition state is formed. The hydrolysis of the scissile bond is by a calcium-bound\
+        \ water molecule, Wat 1, which is hydrogen bonded to the general base, Asp 10, and the amide group\
+        \ of Asn 186. 
+<br/><br/>
+The side chain of Asp 10 is hydrogen bonded to the nucleophilic\
+        \ water. This Asp 10 acts as a general base by abstracting a proton form Wat 1, activating it\
+        \ towards nucleophilic attack of the scissile bond. The Asn 186 side chain carbonyl stabilises\
+        \ the transition state by migrating closer to the O4' and its amide -NH hydrogen bonds to O3'\
+        \ of the substrate.  
+<br/><br/>
+Cleavage of the N-glycosidic bond occurs, and  there is\
+        \ a conformational change of the enzyme-ribose complex. 
+<br/><br/>
+The ribose product is\
+        \ released from the active site, regenerating the enzyme."
+      notes: M-CSA entry 471, mechanism 3; M-CSA cites PMID:11292348, PMID:11854281, PMID:15050818, PMID:15909995,
+        PMID:16630632, PMID:19281874, PMID:23897478, PMID:26575755; step 1
+  - subject: asn186
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asn186 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/471/
+      snippet: "The catalytic reaction involves cleavage of the N-glycosidic bond between ribose and the\
+        \ purine base of the substrate. fast hydrolysis of the substrate scissile bond is followed by\
+        \ a slow, two-step release of ribose and a conformational change of the enzyme-ribose complex.\
+        \  
+<br/><br/>
+The enzyme binds to the pyridine base of the substrate between the aromatic\
+        \ side chains of Trp 83 and Trp 260, resulting in a face-to-face stacking arrangement. This raises\
+        \ the pKa of the aromatic substrate, and hence promotes protonation of the purine ring by elevating\
+        \ its basicity.  
+<br/><br/>
+N7 protonation of the substrate from bulk solvent occurs since\
+        \ the solvent water is hydrogen bonded to the substrate N7. This results in quaternization of\
+        \ N in the substrate, and induces a positive charge in the purine ring, giving a chemically activated\
+        \ leaving group. Therefore the water molecule acts as a general acid to protonate the departing\
+        \ nucleobase anion. The N7-bonded water is in turn hydrogen bonded to waters in a channel.   \
+        
+<br/><br/>
+The soft, electron rich indole ring of Trp 260 stabilises the positive charge\
+        \ on the N. 
+<br/><br/>
+The activated purine ring is now a good leaving group. A ribooxocarbenium\
+        \ ion-like transition state is formed. The hydrolysis of the scissile bond is by a calcium-bound\
+        \ water molecule, Wat 1, which is hydrogen bonded to the general base, Asp 10, and the amide group\
+        \ of Asn 186. 
+<br/><br/>
+The side chain of Asp 10 is hydrogen bonded to the nucleophilic\
+        \ water. This Asp 10 acts as a general base by abstracting a proton form Wat 1, activating it\
+        \ towards nucleophilic attack of the scissile bond. The Asn 186 side chain carbonyl stabilises\
+        \ the transition state by migrating closer to the O4' and its amide -NH hydrogen bonds to O3'\
+        \ of the substrate.  
+<br/><br/>
+Cleavage of the N-glycosidic bond occurs, and  there is\
+        \ a conformational change of the enzyme-ribose complex. 
+<br/><br/>
+The ribose product is\
+        \ released from the active site, regenerating the enzyme."
+      notes: M-CSA entry 471, mechanism 3; M-CSA cites PMID:11292348, PMID:11854281, PMID:15050818, PMID:15909995,
+        PMID:16630632, PMID:19281874, PMID:23897478, PMID:26575755; step 1
+  - subject: trp260
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Trp260 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/471/
+      snippet: "The catalytic reaction involves cleavage of the N-glycosidic bond between ribose and the\
+        \ purine base of the substrate. fast hydrolysis of the substrate scissile bond is followed by\
+        \ a slow, two-step release of ribose and a conformational change of the enzyme-ribose complex.\
+        \  
+<br/><br/>
+The enzyme binds to the pyridine base of the substrate between the aromatic\
+        \ side chains of Trp 83 and Trp 260, resulting in a face-to-face stacking arrangement. This raises\
+        \ the pKa of the aromatic substrate, and hence promotes protonation of the purine ring by elevating\
+        \ its basicity.  
+<br/><br/>
+N7 protonation of the substrate from bulk solvent occurs since\
+        \ the solvent water is hydrogen bonded to the substrate N7. This results in quaternization of\
+        \ N in the substrate, and induces a positive charge in the purine ring, giving a chemically activated\
+        \ leaving group. Therefore the water molecule acts as a general acid to protonate the departing\
+        \ nucleobase anion. The N7-bonded water is in turn hydrogen bonded to waters in a channel.   \
+        
+<br/><br/>
+The soft, electron rich indole ring of Trp 260 stabilises the positive charge\
+        \ on the N. 
+<br/><br/>
+The activated purine ring is now a good leaving group. A ribooxocarbenium\
+        \ ion-like transition state is formed. The hydrolysis of the scissile bond is by a calcium-bound\
+        \ water molecule, Wat 1, which is hydrogen bonded to the general base, Asp 10, and the amide group\
+        \ of Asn 186. 
+<br/><br/>
+The side chain of Asp 10 is hydrogen bonded to the nucleophilic\
+        \ water. This Asp 10 acts as a general base by abstracting a proton form Wat 1, activating it\
+        \ towards nucleophilic attack of the scissile bond. The Asn 186 side chain carbonyl stabilises\
+        \ the transition state by migrating closer to the O4' and its amide -NH hydrogen bonds to O3'\
+        \ of the substrate.  
+<br/><br/>
+Cleavage of the N-glycosidic bond occurs, and  there is\
+        \ a conformational change of the enzyme-ribose complex. 
+<br/><br/>
+The ribose product is\
+        \ released from the active site, regenerating the enzyme."
+      notes: M-CSA entry 471, mechanism 3; M-CSA cites PMID:11292348, PMID:11854281, PMID:15050818, PMID:15909995,
+        PMID:16630632, PMID:19281874, PMID:23897478, PMID:26575755; step 1
+  - subject: asp10
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp10 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/471/
+      snippet: metal ligand, proton shuttle (general acid/base)
+      notes: M-CSA entry 471, mechanism 3; M-CSA cites PMID:11292348, PMID:11854281, PMID:15050818, PMID:15909995,
+        PMID:16630632, PMID:19281874, PMID:23897478, PMID:26575755; M-CSA catalytic-residue roles for
+        Asp10
+  - subject: asp15
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp15 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/471/
+      snippet: metal ligand
+      notes: M-CSA entry 471, mechanism 3; M-CSA cites PMID:11292348, PMID:11854281, PMID:15050818, PMID:15909995,
+        PMID:16630632, PMID:19281874, PMID:23897478, PMID:26575755; M-CSA catalytic-residue roles for
+        Asp15
+  - subject: asp40
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp40 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/471/
+      snippet: activator
+      notes: M-CSA entry 471, mechanism 3; M-CSA cites PMID:11292348, PMID:11854281, PMID:15050818, PMID:15909995,
+        PMID:16630632, PMID:19281874, PMID:23897478, PMID:26575755; M-CSA catalytic-residue roles for
+        Asp40
+  - subject: trp83
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp83 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/471/
+      snippet: activator
+      notes: M-CSA entry 471, mechanism 3; M-CSA cites PMID:11292348, PMID:11854281, PMID:15050818, PMID:15909995,
+        PMID:16630632, PMID:19281874, PMID:23897478, PMID:26575755; M-CSA catalytic-residue roles for
+        Trp83
+  - subject: thr137
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr137 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/471/
+      snippet: metal ligand
+      notes: M-CSA entry 471, mechanism 3; M-CSA cites PMID:11292348, PMID:11854281, PMID:15050818, PMID:15909995,
+        PMID:16630632, PMID:19281874, PMID:23897478, PMID:26575755; M-CSA catalytic-residue roles for
+        Thr137
+  - subject: asn186
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn186 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/471/
+      snippet: activator, electrostatic stabiliser
+      notes: M-CSA entry 471, mechanism 3; M-CSA cites PMID:11292348, PMID:11854281, PMID:15050818, PMID:15909995,
+        PMID:16630632, PMID:19281874, PMID:23897478, PMID:26575755; M-CSA catalytic-residue roles for
+        Asn186
+  - subject: trp260
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp260 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/471/
+      snippet: activator, electrostatic stabiliser
+      notes: M-CSA entry 471, mechanism 3; M-CSA cites PMID:11292348, PMID:11854281, PMID:15050818, PMID:15909995,
+        PMID:16630632, PMID:19281874, PMID:23897478, PMID:26575755; M-CSA catalytic-residue roles for
+        Trp260
+  - subject: asp261
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp261 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/471/
+      snippet: metal ligand
+      notes: M-CSA entry 471, mechanism 3; M-CSA cites PMID:11292348, PMID:11854281, PMID:15050818, PMID:15909995,
+        PMID:16630632, PMID:19281874, PMID:23897478, PMID:26575755; M-CSA catalytic-residue roles for
+        Asp261
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/471/
+      snippet: "The catalytic reaction involves cleavage of the N-glycosidic bond between ribose and the\
+        \ purine base of the substrate. fast hydrolysis of the substrate scissile bond is followed by\
+        \ a slow, two-step release of ribose and a conformational change of the enzyme-ribose complex.\
+        \  
+<br/><br/>
+The enzyme binds to the pyridine base of the substrate between the aromatic\
+        \ side chains of Trp 83 and Trp 260,"
+      notes: M-CSA entry 471, mechanism 3; M-CSA cites PMID:11292348, PMID:11854281, PMID:15050818, PMID:15909995,
+        PMID:16630632, PMID:19281874, PMID:23897478, PMID:26575755; CATH domain 3.90.245.10 assigned to
+        the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/471/
+      snippet: "The catalytic reaction involves cleavage of the N-glycosidic bond between ribose and the\
+        \ purine base of the substrate. fast hydrolysis of the substrate scissile bond is followed by\
+        \ a slow, two-step release of ribose and a conformational change of the enzyme-ribose complex.\
+        \  
+<br/><br/>
+The enzyme binds to the pyridine base of the substrate between the aromatic\
+        \ side chains of Trp 83 and Trp 260,"
+      notes: M-CSA entry 471, mechanism 3; M-CSA cites PMID:11292348, PMID:11854281, PMID:15050818, PMID:15909995,
+        PMID:16630632, PMID:19281874, PMID:23897478, PMID:26575755; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/471/
+      snippet: "The catalytic reaction involves cleavage of the N-glycosidic bond between ribose and the\
+        \ purine base of the substrate. fast hydrolysis of the substrate scissile bond is followed by\
+        \ a slow, two-step release of ribose and a conformational change of the enzyme-ribose complex.\
+        \  
+<br/><br/>
+The enzyme binds to the pyridine base of the substrate between the aromatic\
+        \ side chains of Trp 83 and Trp 260,"
+      notes: M-CSA entry 471, mechanism 3; M-CSA cites PMID:11292348, PMID:11854281, PMID:15050818, PMID:15909995,
+        PMID:16630632, PMID:19281874, PMID:23897478, PMID:26575755; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/471/
+      snippet: "The catalytic reaction involves cleavage of the N-glycosidic bond between ribose and the\
+        \ purine base of the substrate. fast hydrolysis of the substrate scissile bond is followed by\
+        \ a slow, two-step release of ribose and a conformational change of the enzyme-ribose complex.\
+        \  
+<br/><br/>
+The enzyme binds to the pyridine base of the substrate between the aromatic\
+        \ side chains of Trp 83 and Trp 260,"
+      notes: M-CSA entry 471, mechanism 3; M-CSA cites PMID:11292348, PMID:11854281, PMID:15050818, PMID:15909995,
+        PMID:16630632, PMID:19281874, PMID:23897478, PMID:26575755; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/471/
+      snippet: "The catalytic reaction involves cleavage of the N-glycosidic bond between ribose and the\
+        \ purine base of the substrate. fast hydrolysis of the substrate scissile bond is followed by\
+        \ a slow, two-step release of ribose and a conformational change of the enzyme-ribose complex.\
+        \  
+<br/><br/>
+The enzyme binds to the pyridine base of the substrate between the aromatic\
+        \ side chains of Trp 83 and Trp 260,"
+      notes: M-CSA entry 471, mechanism 3; M-CSA cites PMID:11292348, PMID:11854281, PMID:15050818, PMID:15909995,
+        PMID:16630632, PMID:19281874, PMID:23897478, PMID:26575755; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/471/
+      snippet: "The catalytic reaction involves cleavage of the N-glycosidic bond between ribose and the\
+        \ purine base of the substrate. fast hydrolysis of the substrate scissile bond is followed by\
+        \ a slow, two-step release of ribose and a conformational change of the enzyme-ribose complex.\
+        \  
+<br/><br/>
+The enzyme binds to the pyridine base of the substrate between the aromatic\
+        \ side chains of Trp 83 and Trp 260,"
+      notes: M-CSA entry 471, mechanism 3; M-CSA cites PMID:11292348, PMID:11854281, PMID:15050818, PMID:15909995,
+        PMID:16630632, PMID:19281874, PMID:23897478, PMID:26575755; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (18 evidence-backed edges) transcribed from M-CSA entry 471;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0
