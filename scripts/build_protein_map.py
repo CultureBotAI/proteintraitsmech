@@ -27,7 +27,11 @@ sits near the origin and packs together regardless of what those proteins are.
 The vocabulary is built over the whole corpus before any --sample.
 
 Points are coloured by organism and filterable by CATH structural class, so the
-"organism vs. structure" reading can be checked both ways in the browser.
+"organism vs. structure" reading can be checked both ways in the browser. They
+also carry an *annotation depth* facet — how many features actually place the
+protein — because the thinly annotated tail crowds together no matter how the
+matrix is weighted, and a reader needs to be able to tell that region apart from
+a real family rather than guess.
 
 Output schema matches embed_map.py so docs/map.html renders it unchanged, plus
 optional `group_label` / `colors` / `link` fields the page uses to label and
@@ -86,6 +90,13 @@ CATH_CLASS = {
     "6": "Special",
 }
 NO_FOLD = "No CATH fold assigned"
+
+# Ordered — the page renders them in this order rather than alphabetically, so
+# the facet reads as a scale. The first bin is the one worth naming: a protein
+# with a single placeable trait carries one bit of position, which is why those
+# proteins pile up rather than spreading (#74).
+DEPTH_BINS = ("1 trait (sparsely annotated)", "2–3 traits",
+              "4–7 traits", "8+ traits")
 
 # Traits that describe what a protein *is*. GO/EC describe what it does, and
 # their density tracks curation effort rather than biology — mouse averages 16.1
@@ -263,6 +274,17 @@ def main() -> int:
             return NO_FOLD
         return CATH_CLASS.get(cs[0].split(":")[1].split(".")[0], "Other class")
 
+    # How many features actually position this protein. The dense region left of
+    # centre is not a family — it is the proteins with almost nothing to place
+    # them by, and a reader has no way to tell those apart by eye. Shipping the
+    # count as a facet lets the map say so instead of leaving an unexplained
+    # blob. Counted over the vocabulary, not over raw traits, because a trait
+    # below --min-support contributes no coordinate.
+    def depth_bin(r):
+        n = sum(1 for t in r["_ts"] if t in pos)
+        return (DEPTH_BINS[0] if n <= 1 else DEPTH_BINS[1] if n <= 3
+                else DEPTH_BINS[2] if n <= 7 else DEPTH_BINS[3])
+
     groups = [d for d in ("Eukaryota", "Bacteria", "Archaea")
               if any(domain(r) == d for r in rows)]
     orgs = sorted({organism(r) for r in rows})
@@ -270,10 +292,11 @@ def main() -> int:
     cats = sorted({cath_class(r) for r in rows})
     g_pos = {g: i for i, g in enumerate(groups)}
     c_pos = {c: i for i, c in enumerate(cats)}
+    d_pos = {d: i for i, d in enumerate(DEPTH_BINS)}
 
     points = [[round(float(norm[i, 0]), 4), round(float(norm[i, 1]), 4),
                g_pos[domain(r)], r["accession"], c_pos[cath_class(r)],
-               o_pos[organism(r)]]
+               o_pos[organism(r)], d_pos[depth_bin(r)]]
               for i, r in enumerate(rows)]
 
     payload = {
@@ -281,6 +304,8 @@ def main() -> int:
         "axes": groups,                 # the page's grouping dimension
         "orgs": orgs,                   # per-point organism, shown on hover
         "cats": cats,
+        "depths": DEPTH_BINS,           # ordered, so the page keeps them ordered
+        "depth_label": "annotation depth",
         "n_total": n_corpus,
         "n_shown": len(points),
         "points": points,
@@ -307,6 +332,10 @@ def main() -> int:
     print("  organisms: " + ", ".join(f"{k} {v:,}" for k, v in by_org.most_common()),
           file=sys.stderr)
     print("  CATH class: " + ", ".join(f"{k} {v:,}" for k, v in by_cat.most_common()),
+          file=sys.stderr)
+    by_depth = collections.Counter(depth_bin(r) for r in rows)
+    print("  annotation depth: "
+          + ", ".join(f"{k} {by_depth[k]:,}" for k in DEPTH_BINS if by_depth[k]),
           file=sys.stderr)
     return 0
 
