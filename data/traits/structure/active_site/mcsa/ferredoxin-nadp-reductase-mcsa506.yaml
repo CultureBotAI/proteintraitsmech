@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.18.1.2
 - CHEBI:57783
@@ -314,4 +314,316 @@ definitions:
       Ferredoxin reductase (FNR) catalyses the final electron transport step of linear photosynthesis, receiving one electron from two electron carrier ferredoxin proteins and uses these electrons to convert NADP+ into NADPH via hydride transfer from atom N(5) of the FAD cofactor using two molecules of ferredoxin (Fd) as the source of the electrons. In chloroplasts and cyanobacteria the enzyme acts on plant-type [2Fe-2S] ferredoxins, but in other bacteria it can also reduce bacterial 2[4Fe-4S] ferredoxins and flavodoxin. FNR is a member of a large family of electron transport proteins containing NAD and FAD binding sites which form an FNR-like module.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of ferredoxin--NADP reductase
+  description: Mechanism transcribed from M-CSA entry 506. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +55).
+  nodes:
+  - node_id: tyr95
+    label: catalytic Tyr95 (M-CSA/PDB numbering; UniProt residue 150)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00455
+    description: 'M-CSA roles: alter redox potential, steric locator.'
+  - node_id: ser96
+    label: catalytic Ser96 (M-CSA/PDB numbering; UniProt residue 151)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00455
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: cys272
+    label: catalytic Cys272 (M-CSA/PDB numbering; UniProt residue 327)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00455
+    description: 'M-CSA roles: alter redox potential, electrostatic stabiliser.'
+  - node_id: glu312
+    label: catalytic Glu312 (M-CSA/PDB numbering; UniProt residue 367)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00455
+    description: 'M-CSA roles: alter redox potential, electrostatic stabiliser, proton shuttle (general
+      acid/base).'
+  - node_id: tyr314
+    label: catalytic Tyr314 (M-CSA/PDB numbering; UniProt residue 369)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00455
+    description: 'M-CSA roles: alter redox potential, steric locator.'
+  - node_id: reactant0
+    label: NADPH(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+  - node_id: reactant1
+    label: di-mu-sulfido-diiron(2+)
+    node_type: CHEMICAL
+    grounding: CHEBI:33737
+  - node_id: product0
+    label: di-mu-sulfido-diiron(1+)
+    node_type: CHEMICAL
+    grounding: CHEBI:33738
+  - node_id: product1
+    label: NADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: "The FAD cofactor is the functional catalytic group, however the residues around it are\
+      \ conserved and have roles in bonding, orientation, proton transfer and modification of the reduction\
+      \ potential at the FAD. 
+<br/><br/>
+Ferredoxin (Fd) transfers an electron to FAD via the pi-system\
+      \ of Phe65 of Fd. A proton is transferred from the hydroxyl group of Fd S54, through Glu312 and\
+      \ Ser96, to the isoall"
+  - node_id: active_site
+    label: ferredoxin--NADP reductase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:506
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.40.30.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.40.30.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: ferredoxin--NADP reductase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.18.1.2
+  edges:
+  - subject: ser96
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser96 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/506/
+      snippet: "The FAD cofactor is the functional catalytic group, however the residues around it are\
+        \ conserved and have roles in bonding, orientation, proton transfer and modification of the reduction\
+        \ potential at the FAD. 
+<br/><br/>
+Ferredoxin (Fd) transfers an electron to FAD via the\
+        \ pi-system of Phe65 of Fd. A proton is transferred from the hydroxyl group of Fd S54, through\
+        \ Glu312 and Ser96, to the isoalloxazine N5 position to produce neutral semiquinone. A second\
+        \ molecule of Fd transfers an electron to the semiquinone to produce anionic hydroquinone. A hydride\
+        \ is transferred from the N5 position of the hydroquinone to the C4 position of NADP+ to produce\
+        \ FAD and NADPH."
+      notes: M-CSA entry 506, mechanism 1; M-CSA cites PMID:10651039, PMID:11256611, PMID:12047373, PMID:12079352,
+        PMID:16216071, PMID:17224127, PMID:18279389, PMID:19583765, PMID:20163096, PMID:23181670, PMID:24200908,
+        PMID:24321506, PMID:7677850, PMID:7897656, PMID:8518283, PMID:8890910, PMID:9852055; step 1
+  - subject: glu312
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu312 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/506/
+      snippet: "The FAD cofactor is the functional catalytic group, however the residues around it are\
+        \ conserved and have roles in bonding, orientation, proton transfer and modification of the reduction\
+        \ potential at the FAD. 
+<br/><br/>
+Ferredoxin (Fd) transfers an electron to FAD via the\
+        \ pi-system of Phe65 of Fd. A proton is transferred from the hydroxyl group of Fd S54, through\
+        \ Glu312 and Ser96, to the isoalloxazine N5 position to produce neutral semiquinone. A second\
+        \ molecule of Fd transfers an electron to the semiquinone to produce anionic hydroquinone. A hydride\
+        \ is transferred from the N5 position of the hydroquinone to the C4 position of NADP+ to produce\
+        \ FAD and NADPH."
+      notes: M-CSA entry 506, mechanism 1; M-CSA cites PMID:10651039, PMID:11256611, PMID:12047373, PMID:12079352,
+        PMID:16216071, PMID:17224127, PMID:18279389, PMID:19583765, PMID:20163096, PMID:23181670, PMID:24200908,
+        PMID:24321506, PMID:7677850, PMID:7897656, PMID:8518283, PMID:8890910, PMID:9852055; step 1
+  - subject: tyr95
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr95 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/506/
+      snippet: alter redox potential, steric locator
+      notes: M-CSA entry 506, mechanism 1; M-CSA cites PMID:10651039, PMID:11256611, PMID:12047373, PMID:12079352,
+        PMID:16216071, PMID:17224127, PMID:18279389, PMID:19583765, PMID:20163096, PMID:23181670, PMID:24200908,
+        PMID:24321506, PMID:7677850, PMID:7897656, PMID:8518283, PMID:8890910, PMID:9852055; M-CSA catalytic-residue
+        roles for Tyr95
+  - subject: ser96
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser96 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/506/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 506, mechanism 1; M-CSA cites PMID:10651039, PMID:11256611, PMID:12047373, PMID:12079352,
+        PMID:16216071, PMID:17224127, PMID:18279389, PMID:19583765, PMID:20163096, PMID:23181670, PMID:24200908,
+        PMID:24321506, PMID:7677850, PMID:7897656, PMID:8518283, PMID:8890910, PMID:9852055; M-CSA catalytic-residue
+        roles for Ser96
+  - subject: cys272
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys272 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/506/
+      snippet: alter redox potential, electrostatic stabiliser
+      notes: M-CSA entry 506, mechanism 1; M-CSA cites PMID:10651039, PMID:11256611, PMID:12047373, PMID:12079352,
+        PMID:16216071, PMID:17224127, PMID:18279389, PMID:19583765, PMID:20163096, PMID:23181670, PMID:24200908,
+        PMID:24321506, PMID:7677850, PMID:7897656, PMID:8518283, PMID:8890910, PMID:9852055; M-CSA catalytic-residue
+        roles for Cys272
+  - subject: glu312
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu312 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/506/
+      snippet: alter redox potential, electrostatic stabiliser, proton shuttle (general acid/base)
+      notes: M-CSA entry 506, mechanism 1; M-CSA cites PMID:10651039, PMID:11256611, PMID:12047373, PMID:12079352,
+        PMID:16216071, PMID:17224127, PMID:18279389, PMID:19583765, PMID:20163096, PMID:23181670, PMID:24200908,
+        PMID:24321506, PMID:7677850, PMID:7897656, PMID:8518283, PMID:8890910, PMID:9852055; M-CSA catalytic-residue
+        roles for Glu312
+  - subject: tyr314
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr314 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/506/
+      snippet: alter redox potential, steric locator
+      notes: M-CSA entry 506, mechanism 1; M-CSA cites PMID:10651039, PMID:11256611, PMID:12047373, PMID:12079352,
+        PMID:16216071, PMID:17224127, PMID:18279389, PMID:19583765, PMID:20163096, PMID:23181670, PMID:24200908,
+        PMID:24321506, PMID:7677850, PMID:7897656, PMID:8518283, PMID:8890910, PMID:9852055; M-CSA catalytic-residue
+        roles for Tyr314
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/506/
+      snippet: "The FAD cofactor is the functional catalytic group, however the residues around it are\
+        \ conserved and have roles in bonding, orientation, proton transfer and modification of the reduction\
+        \ potential at the FAD. 
+<br/><br/>
+Ferredoxin (Fd) transfers an electron to FAD via the\
+        \ pi-system of Phe65 of Fd. A proton is transferred from the hydroxyl group of Fd S54, through\
+        \ Glu312 and Ser96, to the isoall"
+      notes: M-CSA entry 506, mechanism 1; M-CSA cites PMID:10651039, PMID:11256611, PMID:12047373, PMID:12079352,
+        PMID:16216071, PMID:17224127, PMID:18279389, PMID:19583765, PMID:20163096, PMID:23181670, PMID:24200908,
+        PMID:24321506, PMID:7677850, PMID:7897656, PMID:8518283, PMID:8890910, PMID:9852055; CATH domain
+        2.40.30.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/506/
+      snippet: "The FAD cofactor is the functional catalytic group, however the residues around it are\
+        \ conserved and have roles in bonding, orientation, proton transfer and modification of the reduction\
+        \ potential at the FAD. 
+<br/><br/>
+Ferredoxin (Fd) transfers an electron to FAD via the\
+        \ pi-system of Phe65 of Fd. A proton is transferred from the hydroxyl group of Fd S54, through\
+        \ Glu312 and Ser96, to the isoall"
+      notes: M-CSA entry 506, mechanism 1; M-CSA cites PMID:10651039, PMID:11256611, PMID:12047373, PMID:12079352,
+        PMID:16216071, PMID:17224127, PMID:18279389, PMID:19583765, PMID:20163096, PMID:23181670, PMID:24200908,
+        PMID:24321506, PMID:7677850, PMID:7897656, PMID:8518283, PMID:8890910, PMID:9852055; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/506/
+      snippet: "The FAD cofactor is the functional catalytic group, however the residues around it are\
+        \ conserved and have roles in bonding, orientation, proton transfer and modification of the reduction\
+        \ potential at the FAD. 
+<br/><br/>
+Ferredoxin (Fd) transfers an electron to FAD via the\
+        \ pi-system of Phe65 of Fd. A proton is transferred from the hydroxyl group of Fd S54, through\
+        \ Glu312 and Ser96, to the isoall"
+      notes: M-CSA entry 506, mechanism 1; M-CSA cites PMID:10651039, PMID:11256611, PMID:12047373, PMID:12079352,
+        PMID:16216071, PMID:17224127, PMID:18279389, PMID:19583765, PMID:20163096, PMID:23181670, PMID:24200908,
+        PMID:24321506, PMID:7677850, PMID:7897656, PMID:8518283, PMID:8890910, PMID:9852055; M-CSA reaction
+        reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/506/
+      snippet: "The FAD cofactor is the functional catalytic group, however the residues around it are\
+        \ conserved and have roles in bonding, orientation, proton transfer and modification of the reduction\
+        \ potential at the FAD. 
+<br/><br/>
+Ferredoxin (Fd) transfers an electron to FAD via the\
+        \ pi-system of Phe65 of Fd. A proton is transferred from the hydroxyl group of Fd S54, through\
+        \ Glu312 and Ser96, to the isoall"
+      notes: M-CSA entry 506, mechanism 1; M-CSA cites PMID:10651039, PMID:11256611, PMID:12047373, PMID:12079352,
+        PMID:16216071, PMID:17224127, PMID:18279389, PMID:19583765, PMID:20163096, PMID:23181670, PMID:24200908,
+        PMID:24321506, PMID:7677850, PMID:7897656, PMID:8518283, PMID:8890910, PMID:9852055; M-CSA reaction
+        reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/506/
+      snippet: "The FAD cofactor is the functional catalytic group, however the residues around it are\
+        \ conserved and have roles in bonding, orientation, proton transfer and modification of the reduction\
+        \ potential at the FAD. 
+<br/><br/>
+Ferredoxin (Fd) transfers an electron to FAD via the\
+        \ pi-system of Phe65 of Fd. A proton is transferred from the hydroxyl group of Fd S54, through\
+        \ Glu312 and Ser96, to the isoall"
+      notes: M-CSA entry 506, mechanism 1; M-CSA cites PMID:10651039, PMID:11256611, PMID:12047373, PMID:12079352,
+        PMID:16216071, PMID:17224127, PMID:18279389, PMID:19583765, PMID:20163096, PMID:23181670, PMID:24200908,
+        PMID:24321506, PMID:7677850, PMID:7897656, PMID:8518283, PMID:8890910, PMID:9852055; M-CSA reaction
+        products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/506/
+      snippet: "The FAD cofactor is the functional catalytic group, however the residues around it are\
+        \ conserved and have roles in bonding, orientation, proton transfer and modification of the reduction\
+        \ potential at the FAD. 
+<br/><br/>
+Ferredoxin (Fd) transfers an electron to FAD via the\
+        \ pi-system of Phe65 of Fd. A proton is transferred from the hydroxyl group of Fd S54, through\
+        \ Glu312 and Ser96, to the isoall"
+      notes: M-CSA entry 506, mechanism 1; M-CSA cites PMID:10651039, PMID:11256611, PMID:12047373, PMID:12079352,
+        PMID:16216071, PMID:17224127, PMID:18279389, PMID:19583765, PMID:20163096, PMID:23181670, PMID:24200908,
+        PMID:24321506, PMID:7677850, PMID:7897656, PMID:8518283, PMID:8890910, PMID:9852055; M-CSA reaction
+        products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/506/
+      snippet: "The FAD cofactor is the functional catalytic group, however the residues around it are\
+        \ conserved and have roles in bonding, orientation, proton transfer and modification of the reduction\
+        \ potential at the FAD. 
+<br/><br/>
+Ferredoxin (Fd) transfers an electron to FAD via the\
+        \ pi-system of Phe65 of Fd. A proton is transferred from the hydroxyl group of Fd S54, through\
+        \ Glu312 and Ser96, to the isoall"
+      notes: M-CSA entry 506, mechanism 1; M-CSA cites PMID:10651039, PMID:11256611, PMID:12047373, PMID:12079352,
+        PMID:16216071, PMID:17224127, PMID:18279389, PMID:19583765, PMID:20163096, PMID:23181670, PMID:24200908,
+        PMID:24321506, PMID:7677850, PMID:7897656, PMID:8518283, PMID:8890910, PMID:9852055; M-CSA reaction
+        products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (14 evidence-backed edges) transcribed from M-CSA entry 506;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

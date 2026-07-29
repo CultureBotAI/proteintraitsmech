@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.4.2.29
 - CHEBI:16235
@@ -335,4 +335,249 @@ definitions:
       A variety of modified bases are found in RNAs and around 1 % of the Escherichia coli genome codes for proteins involved in tRNA modification. The hypermodified base quenine, a 7-deazaguanine derivative, replaces guanine-34 at the wobble position of tRNAs specific for Asn, Asp, His and Tyr. In vitro and in vivo studies showed that quenine in tRNAs affects codon selection and prevents stop codon readthrough of tobacco mosaic virus RNA in a codon context-dependent manner. However, its general function remains not very well understood [PMID:8654383]. Quenine is synthesised de novo in prokaryotes, whereas it is a nutrient for eukaryotes. In prokaryotes, the quenine biosynthesis requires several steps, not all of them yet known [PMID:8654383]. The biosynthesis begins outside of the tRNA with the conversion of GTP to the quenine precursor 7-aminomethyl-7-deazaguanine (preQ1). tRNA-guanine transglycosylase (TGT) replaces the guanine-34 at the wobble position of the cognate tRNAs with preQ1. tRNA-preQ1 is modified further by the S-adenosylmethionine-requiring enzyme QueA and an unknown vitamin B12-dependent enzyme leading to quenine [PMID:8654383].
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of tRNA-guanine transglycosylase
+  description: Mechanism transcribed from M-CSA entry 881. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: asp102
+    label: catalytic Asp102 (M-CSA/PDB numbering; UniProt residue 102)
+    node_type: RESIDUE
+    grounding: UniProtKB:P28720
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: asp280
+    label: catalytic Asp280 (M-CSA/PDB numbering; UniProt residue 280)
+    node_type: RESIDUE
+    grounding: UniProtKB:P28720
+    description: 'M-CSA roles: covalent catalysis.'
+  - node_id: cys318
+    label: catalytic Cys318 (M-CSA/PDB numbering; UniProt residue 318)
+    node_type: RESIDUE
+    grounding: UniProtKB:P28720
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: cys320
+    label: catalytic Cys320 (M-CSA/PDB numbering; UniProt residue 320)
+    node_type: RESIDUE
+    grounding: UniProtKB:P28720
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: cys323
+    label: catalytic Cys323 (M-CSA/PDB numbering; UniProt residue 323)
+    node_type: RESIDUE
+    grounding: UniProtKB:P28720
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his349
+    label: catalytic His349 (M-CSA/PDB numbering; UniProt residue 349)
+    node_type: RESIDUE
+    grounding: UniProtKB:P28720
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: queuine(1+)
+    node_type: CHEMICAL
+    grounding: CHEBI:77674
+  - node_id: reactant1
+    label: guanosine 5'-monophosphate(1-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:74269
+  - node_id: product0
+    label: guanine
+    node_type: CHEMICAL
+    grounding: CHEBI:16235
+  - node_id: product1
+    label: queuosine 5'-phosphate zwitterion residue
+    node_type: CHEMICAL
+    grounding: CHEBI:82831
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: 'The catalytic mechanism proposed on the basis of the crystal structure determination
+      of TGT: (1) The carboxylate group of Asp 280 first attacks the wobble guanosine at the C1'' atom,
+      leading to guanine release and formation of a covalent bond between the aspartate side chain and
+      the ribose in an alpha-configuration. (2) The second reaction catalysed by TGT is the substitution
+      of the aspartate 280 b'
+  - node_id: active_site
+    label: tRNA-guanine transglycosylase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:881
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.105 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.105
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: tRNA-guanine transglycosylase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.4.2.29
+  edges:
+  - subject: asp280
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp280 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/881/
+      snippet: 'The catalytic mechanism proposed on the basis of the crystal structure determination of
+        TGT: (1) The carboxylate group of Asp 280 first attacks the wobble guanosine at the C1'' atom,
+        leading to guanine release and formation of a covalent bond between the aspartate side chain and
+        the ribose in an alpha-configuration. (2) The second reaction catalysed by TGT is the substitution
+        of the aspartate 280 by preQ1, leading to the formation of the final preQ1-modified tRNA. It has
+        been proposed that deprotonation of preQ1 nitrogen N9 occurs before it attacks the C1'' atom.'
+      notes: M-CSA entry 881, mechanism 1; M-CSA cites PMID:10413112, PMID:12949492, PMID:14523925, PMID:16206323,
+        PMID:23704982, PMID:25483606, PMID:8654383, PMID:8961936; step 1
+  - subject: asp102
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp102 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/881/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 881, mechanism 1; M-CSA cites PMID:10413112, PMID:12949492, PMID:14523925, PMID:16206323,
+        PMID:23704982, PMID:25483606, PMID:8654383, PMID:8961936; M-CSA catalytic-residue roles for Asp102
+  - subject: asp280
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp280 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/881/
+      snippet: covalent catalysis
+      notes: M-CSA entry 881, mechanism 1; M-CSA cites PMID:10413112, PMID:12949492, PMID:14523925, PMID:16206323,
+        PMID:23704982, PMID:25483606, PMID:8654383, PMID:8961936; M-CSA catalytic-residue roles for Asp280
+  - subject: cys318
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys318 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/881/
+      snippet: metal ligand
+      notes: M-CSA entry 881, mechanism 1; M-CSA cites PMID:10413112, PMID:12949492, PMID:14523925, PMID:16206323,
+        PMID:23704982, PMID:25483606, PMID:8654383, PMID:8961936; M-CSA catalytic-residue roles for Cys318
+  - subject: cys320
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys320 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/881/
+      snippet: metal ligand
+      notes: M-CSA entry 881, mechanism 1; M-CSA cites PMID:10413112, PMID:12949492, PMID:14523925, PMID:16206323,
+        PMID:23704982, PMID:25483606, PMID:8654383, PMID:8961936; M-CSA catalytic-residue roles for Cys320
+  - subject: cys323
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys323 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/881/
+      snippet: metal ligand
+      notes: M-CSA entry 881, mechanism 1; M-CSA cites PMID:10413112, PMID:12949492, PMID:14523925, PMID:16206323,
+        PMID:23704982, PMID:25483606, PMID:8654383, PMID:8961936; M-CSA catalytic-residue roles for Cys323
+  - subject: his349
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His349 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/881/
+      snippet: metal ligand
+      notes: M-CSA entry 881, mechanism 1; M-CSA cites PMID:10413112, PMID:12949492, PMID:14523925, PMID:16206323,
+        PMID:23704982, PMID:25483606, PMID:8654383, PMID:8961936; M-CSA catalytic-residue roles for His349
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/881/
+      snippet: 'The catalytic mechanism proposed on the basis of the crystal structure determination of
+        TGT: (1) The carboxylate group of Asp 280 first attacks the wobble guanosine at the C1'' atom,
+        leading to guanine release and formation of a covalent bond between the aspartate side chain and
+        the ribose in an alpha-configuration. (2) The second reaction catalysed by TGT is the substitution
+        of the aspartate 280 b'
+      notes: M-CSA entry 881, mechanism 1; M-CSA cites PMID:10413112, PMID:12949492, PMID:14523925, PMID:16206323,
+        PMID:23704982, PMID:25483606, PMID:8654383, PMID:8961936; CATH domain 3.20.20.105 assigned to
+        the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/881/
+      snippet: 'The catalytic mechanism proposed on the basis of the crystal structure determination of
+        TGT: (1) The carboxylate group of Asp 280 first attacks the wobble guanosine at the C1'' atom,
+        leading to guanine release and formation of a covalent bond between the aspartate side chain and
+        the ribose in an alpha-configuration. (2) The second reaction catalysed by TGT is the substitution
+        of the aspartate 280 b'
+      notes: M-CSA entry 881, mechanism 1; M-CSA cites PMID:10413112, PMID:12949492, PMID:14523925, PMID:16206323,
+        PMID:23704982, PMID:25483606, PMID:8654383, PMID:8961936; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/881/
+      snippet: 'The catalytic mechanism proposed on the basis of the crystal structure determination of
+        TGT: (1) The carboxylate group of Asp 280 first attacks the wobble guanosine at the C1'' atom,
+        leading to guanine release and formation of a covalent bond between the aspartate side chain and
+        the ribose in an alpha-configuration. (2) The second reaction catalysed by TGT is the substitution
+        of the aspartate 280 b'
+      notes: M-CSA entry 881, mechanism 1; M-CSA cites PMID:10413112, PMID:12949492, PMID:14523925, PMID:16206323,
+        PMID:23704982, PMID:25483606, PMID:8654383, PMID:8961936; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/881/
+      snippet: 'The catalytic mechanism proposed on the basis of the crystal structure determination of
+        TGT: (1) The carboxylate group of Asp 280 first attacks the wobble guanosine at the C1'' atom,
+        leading to guanine release and formation of a covalent bond between the aspartate side chain and
+        the ribose in an alpha-configuration. (2) The second reaction catalysed by TGT is the substitution
+        of the aspartate 280 b'
+      notes: M-CSA entry 881, mechanism 1; M-CSA cites PMID:10413112, PMID:12949492, PMID:14523925, PMID:16206323,
+        PMID:23704982, PMID:25483606, PMID:8654383, PMID:8961936; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/881/
+      snippet: 'The catalytic mechanism proposed on the basis of the crystal structure determination of
+        TGT: (1) The carboxylate group of Asp 280 first attacks the wobble guanosine at the C1'' atom,
+        leading to guanine release and formation of a covalent bond between the aspartate side chain and
+        the ribose in an alpha-configuration. (2) The second reaction catalysed by TGT is the substitution
+        of the aspartate 280 b'
+      notes: M-CSA entry 881, mechanism 1; M-CSA cites PMID:10413112, PMID:12949492, PMID:14523925, PMID:16206323,
+        PMID:23704982, PMID:25483606, PMID:8654383, PMID:8961936; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/881/
+      snippet: 'The catalytic mechanism proposed on the basis of the crystal structure determination of
+        TGT: (1) The carboxylate group of Asp 280 first attacks the wobble guanosine at the C1'' atom,
+        leading to guanine release and formation of a covalent bond between the aspartate side chain and
+        the ribose in an alpha-configuration. (2) The second reaction catalysed by TGT is the substitution
+        of the aspartate 280 b'
+      notes: M-CSA entry 881, mechanism 1; M-CSA cites PMID:10413112, PMID:12949492, PMID:14523925, PMID:16206323,
+        PMID:23704982, PMID:25483606, PMID:8654383, PMID:8961936; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 881;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

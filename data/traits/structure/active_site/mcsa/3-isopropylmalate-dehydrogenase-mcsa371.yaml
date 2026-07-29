@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.1.1.85
 - CHEBI:15378
@@ -309,4 +309,301 @@ definitions:
       Isocitrate dehydrogenase has long been known to be a key enzyme in the Krebs cycle, and isozymes are found in both the mitochondrial matrix and the cytosol of eukaryotes, and in bacteria. In addition to the usual NADP dependent form (EC 1.1.1.42), eukaryotes have an NAD dependent isozyme (EC 1.1.1.41). More recently, two other NAD dependent enzymes - isopropylmalate dehydrogenase (EC 1.1.1.85) and tartrate dehydrogenase (EC 1.1.1.93) have been recognised to be related by sequence and mechanism to isocitrate dehydrogenase - the unusual feature being that all of them decarboxylate the substrate which they oxidise. These are both found in micro-organisms and are involved in leucine biosynthesis and glyoxylate metabolism respectively. All require an Mg2+ ion for catalysis.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 3-isopropylmalate dehydrogenase
+  description: Mechanism transcribed from M-CSA entry 371. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: tyr140
+    label: catalytic Tyr140 (M-CSA/PDB numbering; UniProt residue 140)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q56268
+    description: 'M-CSA roles: electron shuttle.'
+  - node_id: lys190
+    label: catalytic Lys190 (M-CSA/PDB numbering; UniProt residue 190)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q56268
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: asp222
+    label: catalytic Asp222 (M-CSA/PDB numbering; UniProt residue 222)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q56268
+    description: 'M-CSA roles: metal ligand, proton shuttle (general acid/base).'
+  - node_id: asp246
+    label: catalytic Asp246 (M-CSA/PDB numbering; UniProt residue 246)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q56268
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp250
+    label: catalytic Asp250 (M-CSA/PDB numbering; UniProt residue 250)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q56268
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: NAD(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+  - node_id: reactant1
+    label: (2R,3S)-3-isopropylmalate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:35121
+  - node_id: product0
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product1
+    label: NADH(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+  - node_id: product2
+    label: (2S)-2-isopropyl-3-oxosuccinate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:17214
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: 'The oxidation reaction is believed to occur in two steps - dehydrogenation at the alpha-carbon
+      to form a carbonyl and decarboxylation at the beta-carbon. First, Asp 222 B deprotonates the 2-hydroxy
+      oxygen, followed by the formation of a double bond forcing hydride transfer from C2 to NAD(P). In
+      the case of isocitrate dehydrogenase, the intermediate so formed is oxalosuccinate and is stable
+      enough '
+  - node_id: active_site
+    label: 3-isopropylmalate dehydrogenase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:371
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.718.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.718.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: 3-isopropylmalate dehydrogenase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.1.1.85
+  edges:
+  - subject: tyr140
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr140 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/371/
+      snippet: The oxidation reaction is believed to occur in two steps - dehydrogenation at the alpha-carbon
+        to form a carbonyl and decarboxylation at the beta-carbon. First, Asp 222 B deprotonates the 2-hydroxy
+        oxygen, followed by the formation of a double bond forcing hydride transfer from C2 to NAD(P).
+        In the case of isocitrate dehydrogenase, the intermediate so formed is oxalosuccinate and is stable
+        enough to be isolated. In vivo, however, the beta-carboxylate group is rapidly lost and C3 is
+        stereospecifically protonated to form the product. Lys 190 B is vital for the decarboxylation
+        step in providing the proton, and the Tyr 140 A hydroxyl is very important for the oxidation step
+        in participating in hydride transfer. Magnesium stabilises the negative charge on the hydroxyl
+        oxygen during the dehydrogenation and decarboxylation steps.
+      notes: M-CSA entry 371, mechanism 2; M-CSA cites PMID:12855708, PMID:16767773, PMID:17634983, PMID:1888729,
+        PMID:7819221, PMID:8405446, PMID:8535253, PMID:9086278, PMID:9498551, PMID:9739088; step 1
+  - subject: lys190
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys190 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/371/
+      snippet: The oxidation reaction is believed to occur in two steps - dehydrogenation at the alpha-carbon
+        to form a carbonyl and decarboxylation at the beta-carbon. First, Asp 222 B deprotonates the 2-hydroxy
+        oxygen, followed by the formation of a double bond forcing hydride transfer from C2 to NAD(P).
+        In the case of isocitrate dehydrogenase, the intermediate so formed is oxalosuccinate and is stable
+        enough to be isolated. In vivo, however, the beta-carboxylate group is rapidly lost and C3 is
+        stereospecifically protonated to form the product. Lys 190 B is vital for the decarboxylation
+        step in providing the proton, and the Tyr 140 A hydroxyl is very important for the oxidation step
+        in participating in hydride transfer. Magnesium stabilises the negative charge on the hydroxyl
+        oxygen during the dehydrogenation and decarboxylation steps.
+      notes: M-CSA entry 371, mechanism 2; M-CSA cites PMID:12855708, PMID:16767773, PMID:17634983, PMID:1888729,
+        PMID:7819221, PMID:8405446, PMID:8535253, PMID:9086278, PMID:9498551, PMID:9739088; step 1
+  - subject: asp222
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp222 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/371/
+      snippet: The oxidation reaction is believed to occur in two steps - dehydrogenation at the alpha-carbon
+        to form a carbonyl and decarboxylation at the beta-carbon. First, Asp 222 B deprotonates the 2-hydroxy
+        oxygen, followed by the formation of a double bond forcing hydride transfer from C2 to NAD(P).
+        In the case of isocitrate dehydrogenase, the intermediate so formed is oxalosuccinate and is stable
+        enough to be isolated. In vivo, however, the beta-carboxylate group is rapidly lost and C3 is
+        stereospecifically protonated to form the product. Lys 190 B is vital for the decarboxylation
+        step in providing the proton, and the Tyr 140 A hydroxyl is very important for the oxidation step
+        in participating in hydride transfer. Magnesium stabilises the negative charge on the hydroxyl
+        oxygen during the dehydrogenation and decarboxylation steps.
+      notes: M-CSA entry 371, mechanism 2; M-CSA cites PMID:12855708, PMID:16767773, PMID:17634983, PMID:1888729,
+        PMID:7819221, PMID:8405446, PMID:8535253, PMID:9086278, PMID:9498551, PMID:9739088; step 1
+  - subject: tyr140
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr140 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/371/
+      snippet: electron shuttle
+      notes: M-CSA entry 371, mechanism 2; M-CSA cites PMID:12855708, PMID:16767773, PMID:17634983, PMID:1888729,
+        PMID:7819221, PMID:8405446, PMID:8535253, PMID:9086278, PMID:9498551, PMID:9739088; M-CSA catalytic-residue
+        roles for Tyr140
+  - subject: lys190
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys190 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/371/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 371, mechanism 2; M-CSA cites PMID:12855708, PMID:16767773, PMID:17634983, PMID:1888729,
+        PMID:7819221, PMID:8405446, PMID:8535253, PMID:9086278, PMID:9498551, PMID:9739088; M-CSA catalytic-residue
+        roles for Lys190
+  - subject: asp222
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp222 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/371/
+      snippet: metal ligand, proton shuttle (general acid/base)
+      notes: M-CSA entry 371, mechanism 2; M-CSA cites PMID:12855708, PMID:16767773, PMID:17634983, PMID:1888729,
+        PMID:7819221, PMID:8405446, PMID:8535253, PMID:9086278, PMID:9498551, PMID:9739088; M-CSA catalytic-residue
+        roles for Asp222
+  - subject: asp246
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp246 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/371/
+      snippet: metal ligand
+      notes: M-CSA entry 371, mechanism 2; M-CSA cites PMID:12855708, PMID:16767773, PMID:17634983, PMID:1888729,
+        PMID:7819221, PMID:8405446, PMID:8535253, PMID:9086278, PMID:9498551, PMID:9739088; M-CSA catalytic-residue
+        roles for Asp246
+  - subject: asp250
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp250 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/371/
+      snippet: metal ligand
+      notes: M-CSA entry 371, mechanism 2; M-CSA cites PMID:12855708, PMID:16767773, PMID:17634983, PMID:1888729,
+        PMID:7819221, PMID:8405446, PMID:8535253, PMID:9086278, PMID:9498551, PMID:9739088; M-CSA catalytic-residue
+        roles for Asp250
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/371/
+      snippet: The oxidation reaction is believed to occur in two steps - dehydrogenation at the alpha-carbon
+        to form a carbonyl and decarboxylation at the beta-carbon. First, Asp 222 B deprotonates the 2-hydroxy
+        oxygen, followed by the formation of a double bond forcing hydride transfer from C2 to NAD(P).
+        In the case of isocitrate dehydrogenase, the intermediate so formed is oxalosuccinate and is stable
+        enough
+      notes: M-CSA entry 371, mechanism 2; M-CSA cites PMID:12855708, PMID:16767773, PMID:17634983, PMID:1888729,
+        PMID:7819221, PMID:8405446, PMID:8535253, PMID:9086278, PMID:9498551, PMID:9739088; CATH domain
+        3.40.718.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/371/
+      snippet: The oxidation reaction is believed to occur in two steps - dehydrogenation at the alpha-carbon
+        to form a carbonyl and decarboxylation at the beta-carbon. First, Asp 222 B deprotonates the 2-hydroxy
+        oxygen, followed by the formation of a double bond forcing hydride transfer from C2 to NAD(P).
+        In the case of isocitrate dehydrogenase, the intermediate so formed is oxalosuccinate and is stable
+        enough
+      notes: M-CSA entry 371, mechanism 2; M-CSA cites PMID:12855708, PMID:16767773, PMID:17634983, PMID:1888729,
+        PMID:7819221, PMID:8405446, PMID:8535253, PMID:9086278, PMID:9498551, PMID:9739088; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/371/
+      snippet: The oxidation reaction is believed to occur in two steps - dehydrogenation at the alpha-carbon
+        to form a carbonyl and decarboxylation at the beta-carbon. First, Asp 222 B deprotonates the 2-hydroxy
+        oxygen, followed by the formation of a double bond forcing hydride transfer from C2 to NAD(P).
+        In the case of isocitrate dehydrogenase, the intermediate so formed is oxalosuccinate and is stable
+        enough
+      notes: M-CSA entry 371, mechanism 2; M-CSA cites PMID:12855708, PMID:16767773, PMID:17634983, PMID:1888729,
+        PMID:7819221, PMID:8405446, PMID:8535253, PMID:9086278, PMID:9498551, PMID:9739088; M-CSA reaction
+        reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/371/
+      snippet: The oxidation reaction is believed to occur in two steps - dehydrogenation at the alpha-carbon
+        to form a carbonyl and decarboxylation at the beta-carbon. First, Asp 222 B deprotonates the 2-hydroxy
+        oxygen, followed by the formation of a double bond forcing hydride transfer from C2 to NAD(P).
+        In the case of isocitrate dehydrogenase, the intermediate so formed is oxalosuccinate and is stable
+        enough
+      notes: M-CSA entry 371, mechanism 2; M-CSA cites PMID:12855708, PMID:16767773, PMID:17634983, PMID:1888729,
+        PMID:7819221, PMID:8405446, PMID:8535253, PMID:9086278, PMID:9498551, PMID:9739088; M-CSA reaction
+        reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/371/
+      snippet: The oxidation reaction is believed to occur in two steps - dehydrogenation at the alpha-carbon
+        to form a carbonyl and decarboxylation at the beta-carbon. First, Asp 222 B deprotonates the 2-hydroxy
+        oxygen, followed by the formation of a double bond forcing hydride transfer from C2 to NAD(P).
+        In the case of isocitrate dehydrogenase, the intermediate so formed is oxalosuccinate and is stable
+        enough
+      notes: M-CSA entry 371, mechanism 2; M-CSA cites PMID:12855708, PMID:16767773, PMID:17634983, PMID:1888729,
+        PMID:7819221, PMID:8405446, PMID:8535253, PMID:9086278, PMID:9498551, PMID:9739088; M-CSA reaction
+        products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/371/
+      snippet: The oxidation reaction is believed to occur in two steps - dehydrogenation at the alpha-carbon
+        to form a carbonyl and decarboxylation at the beta-carbon. First, Asp 222 B deprotonates the 2-hydroxy
+        oxygen, followed by the formation of a double bond forcing hydride transfer from C2 to NAD(P).
+        In the case of isocitrate dehydrogenase, the intermediate so formed is oxalosuccinate and is stable
+        enough
+      notes: M-CSA entry 371, mechanism 2; M-CSA cites PMID:12855708, PMID:16767773, PMID:17634983, PMID:1888729,
+        PMID:7819221, PMID:8405446, PMID:8535253, PMID:9086278, PMID:9498551, PMID:9739088; M-CSA reaction
+        products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/371/
+      snippet: The oxidation reaction is believed to occur in two steps - dehydrogenation at the alpha-carbon
+        to form a carbonyl and decarboxylation at the beta-carbon. First, Asp 222 B deprotonates the 2-hydroxy
+        oxygen, followed by the formation of a double bond forcing hydride transfer from C2 to NAD(P).
+        In the case of isocitrate dehydrogenase, the intermediate so formed is oxalosuccinate and is stable
+        enough
+      notes: M-CSA entry 371, mechanism 2; M-CSA cites PMID:12855708, PMID:16767773, PMID:17634983, PMID:1888729,
+        PMID:7819221, PMID:8405446, PMID:8535253, PMID:9086278, PMID:9498551, PMID:9739088; M-CSA reaction
+        products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 371;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.1.91
 - CHEBI:15377
@@ -555,4 +555,303 @@ definitions:
       Cellobiohydrolase enzymes depolymerise cellulose into its fundamental repeating unit of two glucose molecules (cellobiose). These enzymes are key components of fungal cellulase multienzyme systems; together with randomly-acting endo-1,4-beta-glucanases (which cut internal beta-1,4-glucosidic bonds) they hydrolyse cellulose via a processive mechanism, forming cellobiose as a major product. Cellobiose is then converted by beta-glucosidases to glucose; the latter product may further be fermented to ethanol or other liquid fuels and chemicals. These enzymes suffer from inhibition by this product, which lingers in the enzymes’ active sites and thus delays their catalytic cycles. Cellobiose accumulates over the course of the reaction unless removed by an enzyme such as beta-glucosidase, which cleaves cellobiose yielding two glucose molecules. This entry represents the Glycoside hydrolase, family 7 (GH7).
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of cellulose 1,4-beta-cellobiosidase (non-reducing end)
+  description: Mechanism transcribed from M-CSA entry 444. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +17).
+  nodes:
+  - node_id: glu212
+    label: catalytic Glu212 (M-CSA/PDB numbering; UniProt residue 229)
+    node_type: RESIDUE
+    grounding: UniProtKB:P62694
+    description: 'M-CSA roles: covalent catalysis.'
+  - node_id: asp214
+    label: catalytic Asp214 (M-CSA/PDB numbering; UniProt residue 231)
+    node_type: RESIDUE
+    grounding: UniProtKB:P62694
+    description: 'M-CSA roles: modifies pKa.'
+  - node_id: glu217
+    label: catalytic Glu217 (M-CSA/PDB numbering; UniProt residue 234)
+    node_type: RESIDUE
+    grounding: UniProtKB:P62694
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: his228
+    label: catalytic His228 (M-CSA/PDB numbering; UniProt residue 245)
+    node_type: RESIDUE
+    grounding: UniProtKB:P62694
+    description: 'M-CSA roles: modifies pKa.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: cellotetraose
+    node_type: CHEMICAL
+    grounding: CHEBI:62974
+  - node_id: product0
+    label: cellobiose
+    node_type: CHEMICAL
+    grounding: CHEBI:17057
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: "Mechanism thought to be similar (but not identical) to that of the non-homologous alpha-amylase.\
+      
+<br/><br/>
+The two glutamate residues act as the catalytic nucleophile (Glu212) and general\
+      \ acid/base (Glu217), whereas the aspartate and histidine are thought to modulate the pKa of the\
+      \ catalytic nucleophile. It has been determined that Asp214 and His228 are also critical in shuttling\
+      \ the catalytic "
+  - node_id: active_site
+    label: cellulose 1,4-beta-cellobiosidase (non-reducing end) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:444
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.70.100.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.70.100.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: cellulose 1,4-beta-cellobiosidase (non-reducing end) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.1.91
+  edges:
+  - subject: glu212
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu212 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/444/
+      snippet: "Mechanism thought to be similar (but not identical) to that of the non-homologous alpha-amylase.\
+        
+<br/><br/>
+The two glutamate residues act as the catalytic nucleophile (Glu212) and general\
+        \ acid/base (Glu217), whereas the aspartate and histidine are thought to modulate the pKa of the\
+        \ catalytic nucleophile. It has been determined that Asp214 and His228 are also critical in shuttling\
+        \ the catalytic water molecule from the bulk solvent into the active site. The water channel has\
+        \ been shown to involve Glu212, Asp214, Thr226, and His228.
+<br/><br/>
+In the protein's\
+        \ ground state, Glu212 is negatively charged; Asp214 and Glu217 are protonated."
+      notes: M-CSA entry 444, mechanism 1; M-CSA cites PMID:11114249, PMID:12603317, PMID:16001418, PMID:19858200,
+        PMID:21784865, PMID:23114223, PMID:23532843, PMID:24747898, PMID:25271162, PMID:25615982, PMID:26301455,
+        PMID:26302366, PMID:26636743, PMID:27696356, PMID:27943301, PMID:8036495, PMID:8951380, PMID:9466911;
+        step 1
+  - subject: asp214
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp214 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/444/
+      snippet: "Mechanism thought to be similar (but not identical) to that of the non-homologous alpha-amylase.\
+        
+<br/><br/>
+The two glutamate residues act as the catalytic nucleophile (Glu212) and general\
+        \ acid/base (Glu217), whereas the aspartate and histidine are thought to modulate the pKa of the\
+        \ catalytic nucleophile. It has been determined that Asp214 and His228 are also critical in shuttling\
+        \ the catalytic water molecule from the bulk solvent into the active site. The water channel has\
+        \ been shown to involve Glu212, Asp214, Thr226, and His228.
+<br/><br/>
+In the protein's\
+        \ ground state, Glu212 is negatively charged; Asp214 and Glu217 are protonated."
+      notes: M-CSA entry 444, mechanism 1; M-CSA cites PMID:11114249, PMID:12603317, PMID:16001418, PMID:19858200,
+        PMID:21784865, PMID:23114223, PMID:23532843, PMID:24747898, PMID:25271162, PMID:25615982, PMID:26301455,
+        PMID:26302366, PMID:26636743, PMID:27696356, PMID:27943301, PMID:8036495, PMID:8951380, PMID:9466911;
+        step 1
+  - subject: glu217
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu217 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/444/
+      snippet: "Mechanism thought to be similar (but not identical) to that of the non-homologous alpha-amylase.\
+        
+<br/><br/>
+The two glutamate residues act as the catalytic nucleophile (Glu212) and general\
+        \ acid/base (Glu217), whereas the aspartate and histidine are thought to modulate the pKa of the\
+        \ catalytic nucleophile. It has been determined that Asp214 and His228 are also critical in shuttling\
+        \ the catalytic water molecule from the bulk solvent into the active site. The water channel has\
+        \ been shown to involve Glu212, Asp214, Thr226, and His228.
+<br/><br/>
+In the protein's\
+        \ ground state, Glu212 is negatively charged; Asp214 and Glu217 are protonated."
+      notes: M-CSA entry 444, mechanism 1; M-CSA cites PMID:11114249, PMID:12603317, PMID:16001418, PMID:19858200,
+        PMID:21784865, PMID:23114223, PMID:23532843, PMID:24747898, PMID:25271162, PMID:25615982, PMID:26301455,
+        PMID:26302366, PMID:26636743, PMID:27696356, PMID:27943301, PMID:8036495, PMID:8951380, PMID:9466911;
+        step 1
+  - subject: his228
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His228 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/444/
+      snippet: "Mechanism thought to be similar (but not identical) to that of the non-homologous alpha-amylase.\
+        
+<br/><br/>
+The two glutamate residues act as the catalytic nucleophile (Glu212) and general\
+        \ acid/base (Glu217), whereas the aspartate and histidine are thought to modulate the pKa of the\
+        \ catalytic nucleophile. It has been determined that Asp214 and His228 are also critical in shuttling\
+        \ the catalytic water molecule from the bulk solvent into the active site. The water channel has\
+        \ been shown to involve Glu212, Asp214, Thr226, and His228.
+<br/><br/>
+In the protein's\
+        \ ground state, Glu212 is negatively charged; Asp214 and Glu217 are protonated."
+      notes: M-CSA entry 444, mechanism 1; M-CSA cites PMID:11114249, PMID:12603317, PMID:16001418, PMID:19858200,
+        PMID:21784865, PMID:23114223, PMID:23532843, PMID:24747898, PMID:25271162, PMID:25615982, PMID:26301455,
+        PMID:26302366, PMID:26636743, PMID:27696356, PMID:27943301, PMID:8036495, PMID:8951380, PMID:9466911;
+        step 1
+  - subject: glu212
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu212 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/444/
+      snippet: covalent catalysis
+      notes: M-CSA entry 444, mechanism 1; M-CSA cites PMID:11114249, PMID:12603317, PMID:16001418, PMID:19858200,
+        PMID:21784865, PMID:23114223, PMID:23532843, PMID:24747898, PMID:25271162, PMID:25615982, PMID:26301455,
+        PMID:26302366, PMID:26636743, PMID:27696356, PMID:27943301, PMID:8036495, PMID:8951380, PMID:9466911;
+        M-CSA catalytic-residue roles for Glu212
+  - subject: asp214
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp214 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/444/
+      snippet: modifies pKa
+      notes: M-CSA entry 444, mechanism 1; M-CSA cites PMID:11114249, PMID:12603317, PMID:16001418, PMID:19858200,
+        PMID:21784865, PMID:23114223, PMID:23532843, PMID:24747898, PMID:25271162, PMID:25615982, PMID:26301455,
+        PMID:26302366, PMID:26636743, PMID:27696356, PMID:27943301, PMID:8036495, PMID:8951380, PMID:9466911;
+        M-CSA catalytic-residue roles for Asp214
+  - subject: glu217
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu217 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/444/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 444, mechanism 1; M-CSA cites PMID:11114249, PMID:12603317, PMID:16001418, PMID:19858200,
+        PMID:21784865, PMID:23114223, PMID:23532843, PMID:24747898, PMID:25271162, PMID:25615982, PMID:26301455,
+        PMID:26302366, PMID:26636743, PMID:27696356, PMID:27943301, PMID:8036495, PMID:8951380, PMID:9466911;
+        M-CSA catalytic-residue roles for Glu217
+  - subject: his228
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His228 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/444/
+      snippet: modifies pKa
+      notes: M-CSA entry 444, mechanism 1; M-CSA cites PMID:11114249, PMID:12603317, PMID:16001418, PMID:19858200,
+        PMID:21784865, PMID:23114223, PMID:23532843, PMID:24747898, PMID:25271162, PMID:25615982, PMID:26301455,
+        PMID:26302366, PMID:26636743, PMID:27696356, PMID:27943301, PMID:8036495, PMID:8951380, PMID:9466911;
+        M-CSA catalytic-residue roles for His228
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/444/
+      snippet: "Mechanism thought to be similar (but not identical) to that of the non-homologous alpha-amylase.\
+        
+<br/><br/>
+The two glutamate residues act as the catalytic nucleophile (Glu212) and general\
+        \ acid/base (Glu217), whereas the aspartate and histidine are thought to modulate the pKa of the\
+        \ catalytic nucleophile. It has been determined that Asp214 and His228 are also critical in shuttling\
+        \ the catalytic"
+      notes: M-CSA entry 444, mechanism 1; M-CSA cites PMID:11114249, PMID:12603317, PMID:16001418, PMID:19858200,
+        PMID:21784865, PMID:23114223, PMID:23532843, PMID:24747898, PMID:25271162, PMID:25615982, PMID:26301455,
+        PMID:26302366, PMID:26636743, PMID:27696356, PMID:27943301, PMID:8036495, PMID:8951380, PMID:9466911;
+        CATH domain 2.70.100.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/444/
+      snippet: "Mechanism thought to be similar (but not identical) to that of the non-homologous alpha-amylase.\
+        
+<br/><br/>
+The two glutamate residues act as the catalytic nucleophile (Glu212) and general\
+        \ acid/base (Glu217), whereas the aspartate and histidine are thought to modulate the pKa of the\
+        \ catalytic nucleophile. It has been determined that Asp214 and His228 are also critical in shuttling\
+        \ the catalytic"
+      notes: M-CSA entry 444, mechanism 1; M-CSA cites PMID:11114249, PMID:12603317, PMID:16001418, PMID:19858200,
+        PMID:21784865, PMID:23114223, PMID:23532843, PMID:24747898, PMID:25271162, PMID:25615982, PMID:26301455,
+        PMID:26302366, PMID:26636743, PMID:27696356, PMID:27943301, PMID:8036495, PMID:8951380, PMID:9466911;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/444/
+      snippet: "Mechanism thought to be similar (but not identical) to that of the non-homologous alpha-amylase.\
+        
+<br/><br/>
+The two glutamate residues act as the catalytic nucleophile (Glu212) and general\
+        \ acid/base (Glu217), whereas the aspartate and histidine are thought to modulate the pKa of the\
+        \ catalytic nucleophile. It has been determined that Asp214 and His228 are also critical in shuttling\
+        \ the catalytic"
+      notes: M-CSA entry 444, mechanism 1; M-CSA cites PMID:11114249, PMID:12603317, PMID:16001418, PMID:19858200,
+        PMID:21784865, PMID:23114223, PMID:23532843, PMID:24747898, PMID:25271162, PMID:25615982, PMID:26301455,
+        PMID:26302366, PMID:26636743, PMID:27696356, PMID:27943301, PMID:8036495, PMID:8951380, PMID:9466911;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/444/
+      snippet: "Mechanism thought to be similar (but not identical) to that of the non-homologous alpha-amylase.\
+        
+<br/><br/>
+The two glutamate residues act as the catalytic nucleophile (Glu212) and general\
+        \ acid/base (Glu217), whereas the aspartate and histidine are thought to modulate the pKa of the\
+        \ catalytic nucleophile. It has been determined that Asp214 and His228 are also critical in shuttling\
+        \ the catalytic"
+      notes: M-CSA entry 444, mechanism 1; M-CSA cites PMID:11114249, PMID:12603317, PMID:16001418, PMID:19858200,
+        PMID:21784865, PMID:23114223, PMID:23532843, PMID:24747898, PMID:25271162, PMID:25615982, PMID:26301455,
+        PMID:26302366, PMID:26636743, PMID:27696356, PMID:27943301, PMID:8036495, PMID:8951380, PMID:9466911;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/444/
+      snippet: "Mechanism thought to be similar (but not identical) to that of the non-homologous alpha-amylase.\
+        
+<br/><br/>
+The two glutamate residues act as the catalytic nucleophile (Glu212) and general\
+        \ acid/base (Glu217), whereas the aspartate and histidine are thought to modulate the pKa of the\
+        \ catalytic nucleophile. It has been determined that Asp214 and His228 are also critical in shuttling\
+        \ the catalytic"
+      notes: M-CSA entry 444, mechanism 1; M-CSA cites PMID:11114249, PMID:12603317, PMID:16001418, PMID:19858200,
+        PMID:21784865, PMID:23114223, PMID:23532843, PMID:24747898, PMID:25271162, PMID:25615982, PMID:26301455,
+        PMID:26302366, PMID:26636743, PMID:27696356, PMID:27943301, PMID:8036495, PMID:8951380, PMID:9466911;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 444;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

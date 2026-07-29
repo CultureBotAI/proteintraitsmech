@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.6.5.-
 - CHEBI:37565
@@ -270,4 +270,174 @@ definitions:
       The GTP dependent protein Arl-2 is part of a family of close relatives of the Arf proteins. Although the function of the Arf proteins themselves has been determined (they are involved in regulating vesicular transport) the function of the Arl family has not yet been determined. The protein Arl-2 interacts with PDEdelta which is a relative of the important signalling protein Rho, thus suggesting Arl-2 regulates transport by PDEdelta. As Ras interacts with Rho, it is not surprising that the mechanism of GTP hydrolysis employed by Arl-2 is similar to that found in Ras. Therefore study of this protein may shed insight into an area of highly important cancer research.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of small GTPase superfamily, ARF type
+  description: Mechanism transcribed from M-CSA entry 628. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering only — no unique offset to the record's reference sequence could
+    be verified, so no UniProt position is asserted.
+  nodes:
+  - node_id: gln70
+    label: catalytic Gln70 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9D0J4
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: GTP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:37565
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: GDP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58189
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: GTP hydrolysis is achieved through the activation of a conserved water molecule W13 in
+      the active site by Gln 70. The water molecule thus can act as a nucleophile to attack the gamma
+      phosphate of GTP, releasing GDP and Pi. This reaction passes through a pentavalent phosphate intermediate
+      which is stabilised by Mg2+ at the active site.
+  - node_id: active_site
+    label: small GTPase superfamily, ARF type catalytic site
+    node_type: MOTIF
+    grounding: MCSA:628
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.300 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.300
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: small GTPase superfamily, ARF type activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.6.5.-
+  edges:
+  - subject: gln70
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Gln70 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/628/
+      snippet: GTP hydrolysis is achieved through the activation of a conserved water molecule W13 in
+        the active site by Gln 70. The water molecule thus can act as a nucleophile to attack the gamma
+        phosphate of GTP, releasing GDP and Pi. This reaction passes through a pentavalent phosphate intermediate
+        which is stabilised by Mg2+ at the active site.
+      notes: M-CSA entry 628, mechanism 1; M-CSA cites PMID:11980706; step 1
+  - subject: gln70
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln70 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/628/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 628, mechanism 1; M-CSA cites PMID:11980706; M-CSA catalytic-residue roles for
+        Gln70
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/628/
+      snippet: GTP hydrolysis is achieved through the activation of a conserved water molecule W13 in
+        the active site by Gln 70. The water molecule thus can act as a nucleophile to attack the gamma
+        phosphate of GTP, releasing GDP and Pi. This reaction passes through a pentavalent phosphate intermediate
+        which is stabilised by Mg2+ at the active site.
+      notes: M-CSA entry 628, mechanism 1; M-CSA cites PMID:11980706; CATH domain 3.40.50.300 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/628/
+      snippet: GTP hydrolysis is achieved through the activation of a conserved water molecule W13 in
+        the active site by Gln 70. The water molecule thus can act as a nucleophile to attack the gamma
+        phosphate of GTP, releasing GDP and Pi. This reaction passes through a pentavalent phosphate intermediate
+        which is stabilised by Mg2+ at the active site.
+      notes: M-CSA entry 628, mechanism 1; M-CSA cites PMID:11980706; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/628/
+      snippet: GTP hydrolysis is achieved through the activation of a conserved water molecule W13 in
+        the active site by Gln 70. The water molecule thus can act as a nucleophile to attack the gamma
+        phosphate of GTP, releasing GDP and Pi. This reaction passes through a pentavalent phosphate intermediate
+        which is stabilised by Mg2+ at the active site.
+      notes: M-CSA entry 628, mechanism 1; M-CSA cites PMID:11980706; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/628/
+      snippet: GTP hydrolysis is achieved through the activation of a conserved water molecule W13 in
+        the active site by Gln 70. The water molecule thus can act as a nucleophile to attack the gamma
+        phosphate of GTP, releasing GDP and Pi. This reaction passes through a pentavalent phosphate intermediate
+        which is stabilised by Mg2+ at the active site.
+      notes: M-CSA entry 628, mechanism 1; M-CSA cites PMID:11980706; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/628/
+      snippet: GTP hydrolysis is achieved through the activation of a conserved water molecule W13 in
+        the active site by Gln 70. The water molecule thus can act as a nucleophile to attack the gamma
+        phosphate of GTP, releasing GDP and Pi. This reaction passes through a pentavalent phosphate intermediate
+        which is stabilised by Mg2+ at the active site.
+      notes: M-CSA entry 628, mechanism 1; M-CSA cites PMID:11980706; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/628/
+      snippet: GTP hydrolysis is achieved through the activation of a conserved water molecule W13 in
+        the active site by Gln 70. The water molecule thus can act as a nucleophile to attack the gamma
+        phosphate of GTP, releasing GDP and Pi. This reaction passes through a pentavalent phosphate intermediate
+        which is stabilised by Mg2+ at the active site.
+      notes: M-CSA entry 628, mechanism 1; M-CSA cites PMID:11980706; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/628/
+      snippet: GTP hydrolysis is achieved through the activation of a conserved water molecule W13 in
+        the active site by Gln 70. The water molecule thus can act as a nucleophile to attack the gamma
+        phosphate of GTP, releasing GDP and Pi. This reaction passes through a pentavalent phosphate intermediate
+        which is stabilised by Mg2+ at the active site.
+      notes: M-CSA entry 628, mechanism 1; M-CSA cites PMID:11980706; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (9 evidence-backed edges) transcribed from M-CSA entry 628;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

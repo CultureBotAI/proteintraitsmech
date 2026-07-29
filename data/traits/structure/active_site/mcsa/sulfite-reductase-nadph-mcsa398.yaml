@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.8.1.2
 - CHEBI:15377
@@ -383,4 +383,479 @@ definitions:
       The E. coli enzyme sulphite reductase, SiR, is a multimeric hemoflavoprotein that catalyses the six-electron reduction of sulphite (SO3-) to sulphide (HS-) and of nitrite (NO2-) to ammonia (NH4+) using electrons from NADPH. The complex consists of two types of subunit: the flavoprotein SiRFP and the hemoprotein SiRHP. Recent studies have suggested that the complex contains 8 subunits of SiRFP and 8 of SiRHP, rather than 8 of SiRFP and 4 of SiRHP as previously assumed. Electrons are transferred from NADPH to FAD in SiRFP and then to FMN in SiRFP. Next they are transferred to a 4Fe4S centre in SiRHP, which is linked to a sirohaem via a common cysteine ligand. Electrons are ultimately transferred to the substrate that is coordinated to the sirohaem iron. This entry deals only with the SiRHP component of the complex.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of sulfite reductase (NADPH)
+  description: Mechanism transcribed from M-CSA entry 398. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: arg83
+    label: catalytic Arg83 (M-CSA/PDB numbering; UniProt residue 83)
+    node_type: RESIDUE
+    grounding: UniProtKB:P17846
+    description: 'M-CSA roles: activator.'
+  - node_id: arg153
+    label: catalytic Arg153 (M-CSA/PDB numbering; UniProt residue 153)
+    node_type: RESIDUE
+    grounding: UniProtKB:P17846
+    description: 'M-CSA roles: activator.'
+  - node_id: lys215
+    label: catalytic Lys215 (M-CSA/PDB numbering; UniProt residue 215)
+    node_type: RESIDUE
+    grounding: UniProtKB:P17846
+    description: 'M-CSA roles: activator.'
+  - node_id: lys217
+    label: catalytic Lys217 (M-CSA/PDB numbering; UniProt residue 217)
+    node_type: RESIDUE
+    grounding: UniProtKB:P17846
+    description: 'M-CSA roles: activator.'
+  - node_id: cys434
+    label: catalytic Cys434 (M-CSA/PDB numbering; UniProt residue 434)
+    node_type: RESIDUE
+    grounding: UniProtKB:P17846
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: cys440
+    label: catalytic Cys440 (M-CSA/PDB numbering; UniProt residue 440)
+    node_type: RESIDUE
+    grounding: UniProtKB:P17846
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: cys479
+    label: catalytic Cys479 (M-CSA/PDB numbering; UniProt residue 479)
+    node_type: RESIDUE
+    grounding: UniProtKB:P17846
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: cys483
+    label: catalytic Cys483 (M-CSA/PDB numbering; UniProt residue 483)
+    node_type: RESIDUE
+    grounding: UniProtKB:P17846
+    description: 'M-CSA roles: electron shuttle, metal ligand.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:18009
+  - node_id: reactant2
+    label: hydrogen sulfide
+    node_type: CHEMICAL
+    grounding: CHEBI:16136
+  - node_id: product0
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product1
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:16908
+  - node_id: product2
+    label: hydrogensulfite
+    node_type: CHEMICAL
+    grounding: CHEBI:17137
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: The resting state of SiRHP is assumed to contain oxidised cofactors, i.e. Fe(III) in
+      the sirohaem and [4Fe4S]2+, with inorganic phosphate coordinating the sixth position of the sirohaem
+      iron. The first step of the reaction involves reduction of the two cofactors (to Fe(II) and [4Fe4S]+
+      by transfer of electrons from the FMN in the SiRFP subunits of the complex to the 4Fe4S centre.
+      Electron transfer
+  - node_id: active_site
+    label: sulfite reductase (NADPH) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:398
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.480.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.480.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: sulfite reductase (NADPH) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.8.1.2
+  edges:
+  - subject: arg83
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg83 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/398/
+      snippet: "The resting state of SiRHP is assumed to contain oxidised cofactors, i.e. Fe(III) in the\
+        \ sirohaem and [4Fe4S]2+, with inorganic phosphate coordinating the sixth position of the sirohaem\
+        \ iron. The first step of the reaction involves reduction of the two cofactors (to Fe(II) and\
+        \ [4Fe4S]+ by transfer of electrons from the FMN in the SiRFP subunits of the complex to the 4Fe4S\
+        \ centre. Electron transfer between the 4Fe4S centre and the sirohaem is facilitated by Cys 483,\
+        \ the side chain thiol of which is a ligand to both. The details of electron transfer from FMN\
+        \ in SiRFP to the 4Fe4S centre are not yet well understood.   
+<br/><br/>
+Reduction of the\
+        \ cofactors is followed by dissociation of the phosphate. Sulphite now binds to the sirohaem iron\
+        \ as HSO3-. It receives two electrons from the reduced cofactors, takes up a proton from a water\
+        \ molecule, and releases its O3 oxygen as water. Movement of electrons onto the sulphite is promoted\
+        \ by the positively charged residues Arg 83, Arg 153, Lys 215 and Lys 217; these 'pull' negative\
+        \ charge onto the substrate while the electron-rich cofactors 'push' electrons onto it. The oxidised\
+        \ cofactors are now re-reduced by SiRFP, and can then transfer two more electrons to the substrate.\
+        \ Uptake of two protons, probably from water molecules, and release of a second water molecule\
+        \ from the substrate leaves a mono-oxygenated sulphur species. Transfer of another pair of electrons\
+        \ and protons in the same way with loss of a water molecule leaves sulphide, S2-, which takes\
+        \ up a proton and dissociates from the sirohaem as HS- (sulphide is a poor sirohaem ligand). Conformational\
+        \ changes of the positively charged active site residues, particularly Arg 153, occur at specific\
+        \ points during the catalytic cycle; this is important in maintaining interactions with the substrate\
+        \ as the reduction proceeds and oxygen atoms are lost from it.  
+<br/><br/>
+Reduction of\
+        \ nitrite to ammonia is thought to occur in a similar way, with NO2- initially binding to the\
+        \ sirohaem and coordinated NO and hydroxylamine as possible intermediates. As with sulphite reduction,\
+        \ the exact timing of electron and proton transfers to the substrate remains to be established."
+      notes: M-CSA entry 398, mechanism 2; M-CSA cites PMID:10984484, PMID:15966732, PMID:7569952, PMID:9315848,
+        PMID:9315849; step 1
+  - subject: arg153
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg153 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/398/
+      snippet: "The resting state of SiRHP is assumed to contain oxidised cofactors, i.e. Fe(III) in the\
+        \ sirohaem and [4Fe4S]2+, with inorganic phosphate coordinating the sixth position of the sirohaem\
+        \ iron. The first step of the reaction involves reduction of the two cofactors (to Fe(II) and\
+        \ [4Fe4S]+ by transfer of electrons from the FMN in the SiRFP subunits of the complex to the 4Fe4S\
+        \ centre. Electron transfer between the 4Fe4S centre and the sirohaem is facilitated by Cys 483,\
+        \ the side chain thiol of which is a ligand to both. The details of electron transfer from FMN\
+        \ in SiRFP to the 4Fe4S centre are not yet well understood.   
+<br/><br/>
+Reduction of the\
+        \ cofactors is followed by dissociation of the phosphate. Sulphite now binds to the sirohaem iron\
+        \ as HSO3-. It receives two electrons from the reduced cofactors, takes up a proton from a water\
+        \ molecule, and releases its O3 oxygen as water. Movement of electrons onto the sulphite is promoted\
+        \ by the positively charged residues Arg 83, Arg 153, Lys 215 and Lys 217; these 'pull' negative\
+        \ charge onto the substrate while the electron-rich cofactors 'push' electrons onto it. The oxidised\
+        \ cofactors are now re-reduced by SiRFP, and can then transfer two more electrons to the substrate.\
+        \ Uptake of two protons, probably from water molecules, and release of a second water molecule\
+        \ from the substrate leaves a mono-oxygenated sulphur species. Transfer of another pair of electrons\
+        \ and protons in the same way with loss of a water molecule leaves sulphide, S2-, which takes\
+        \ up a proton and dissociates from the sirohaem as HS- (sulphide is a poor sirohaem ligand). Conformational\
+        \ changes of the positively charged active site residues, particularly Arg 153, occur at specific\
+        \ points during the catalytic cycle; this is important in maintaining interactions with the substrate\
+        \ as the reduction proceeds and oxygen atoms are lost from it.  
+<br/><br/>
+Reduction of\
+        \ nitrite to ammonia is thought to occur in a similar way, with NO2- initially binding to the\
+        \ sirohaem and coordinated NO and hydroxylamine as possible intermediates. As with sulphite reduction,\
+        \ the exact timing of electron and proton transfers to the substrate remains to be established."
+      notes: M-CSA entry 398, mechanism 2; M-CSA cites PMID:10984484, PMID:15966732, PMID:7569952, PMID:9315848,
+        PMID:9315849; step 1
+  - subject: lys215
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys215 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/398/
+      snippet: "The resting state of SiRHP is assumed to contain oxidised cofactors, i.e. Fe(III) in the\
+        \ sirohaem and [4Fe4S]2+, with inorganic phosphate coordinating the sixth position of the sirohaem\
+        \ iron. The first step of the reaction involves reduction of the two cofactors (to Fe(II) and\
+        \ [4Fe4S]+ by transfer of electrons from the FMN in the SiRFP subunits of the complex to the 4Fe4S\
+        \ centre. Electron transfer between the 4Fe4S centre and the sirohaem is facilitated by Cys 483,\
+        \ the side chain thiol of which is a ligand to both. The details of electron transfer from FMN\
+        \ in SiRFP to the 4Fe4S centre are not yet well understood.   
+<br/><br/>
+Reduction of the\
+        \ cofactors is followed by dissociation of the phosphate. Sulphite now binds to the sirohaem iron\
+        \ as HSO3-. It receives two electrons from the reduced cofactors, takes up a proton from a water\
+        \ molecule, and releases its O3 oxygen as water. Movement of electrons onto the sulphite is promoted\
+        \ by the positively charged residues Arg 83, Arg 153, Lys 215 and Lys 217; these 'pull' negative\
+        \ charge onto the substrate while the electron-rich cofactors 'push' electrons onto it. The oxidised\
+        \ cofactors are now re-reduced by SiRFP, and can then transfer two more electrons to the substrate.\
+        \ Uptake of two protons, probably from water molecules, and release of a second water molecule\
+        \ from the substrate leaves a mono-oxygenated sulphur species. Transfer of another pair of electrons\
+        \ and protons in the same way with loss of a water molecule leaves sulphide, S2-, which takes\
+        \ up a proton and dissociates from the sirohaem as HS- (sulphide is a poor sirohaem ligand). Conformational\
+        \ changes of the positively charged active site residues, particularly Arg 153, occur at specific\
+        \ points during the catalytic cycle; this is important in maintaining interactions with the substrate\
+        \ as the reduction proceeds and oxygen atoms are lost from it.  
+<br/><br/>
+Reduction of\
+        \ nitrite to ammonia is thought to occur in a similar way, with NO2- initially binding to the\
+        \ sirohaem and coordinated NO and hydroxylamine as possible intermediates. As with sulphite reduction,\
+        \ the exact timing of electron and proton transfers to the substrate remains to be established."
+      notes: M-CSA entry 398, mechanism 2; M-CSA cites PMID:10984484, PMID:15966732, PMID:7569952, PMID:9315848,
+        PMID:9315849; step 1
+  - subject: lys217
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys217 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/398/
+      snippet: "The resting state of SiRHP is assumed to contain oxidised cofactors, i.e. Fe(III) in the\
+        \ sirohaem and [4Fe4S]2+, with inorganic phosphate coordinating the sixth position of the sirohaem\
+        \ iron. The first step of the reaction involves reduction of the two cofactors (to Fe(II) and\
+        \ [4Fe4S]+ by transfer of electrons from the FMN in the SiRFP subunits of the complex to the 4Fe4S\
+        \ centre. Electron transfer between the 4Fe4S centre and the sirohaem is facilitated by Cys 483,\
+        \ the side chain thiol of which is a ligand to both. The details of electron transfer from FMN\
+        \ in SiRFP to the 4Fe4S centre are not yet well understood.   
+<br/><br/>
+Reduction of the\
+        \ cofactors is followed by dissociation of the phosphate. Sulphite now binds to the sirohaem iron\
+        \ as HSO3-. It receives two electrons from the reduced cofactors, takes up a proton from a water\
+        \ molecule, and releases its O3 oxygen as water. Movement of electrons onto the sulphite is promoted\
+        \ by the positively charged residues Arg 83, Arg 153, Lys 215 and Lys 217; these 'pull' negative\
+        \ charge onto the substrate while the electron-rich cofactors 'push' electrons onto it. The oxidised\
+        \ cofactors are now re-reduced by SiRFP, and can then transfer two more electrons to the substrate.\
+        \ Uptake of two protons, probably from water molecules, and release of a second water molecule\
+        \ from the substrate leaves a mono-oxygenated sulphur species. Transfer of another pair of electrons\
+        \ and protons in the same way with loss of a water molecule leaves sulphide, S2-, which takes\
+        \ up a proton and dissociates from the sirohaem as HS- (sulphide is a poor sirohaem ligand). Conformational\
+        \ changes of the positively charged active site residues, particularly Arg 153, occur at specific\
+        \ points during the catalytic cycle; this is important in maintaining interactions with the substrate\
+        \ as the reduction proceeds and oxygen atoms are lost from it.  
+<br/><br/>
+Reduction of\
+        \ nitrite to ammonia is thought to occur in a similar way, with NO2- initially binding to the\
+        \ sirohaem and coordinated NO and hydroxylamine as possible intermediates. As with sulphite reduction,\
+        \ the exact timing of electron and proton transfers to the substrate remains to be established."
+      notes: M-CSA entry 398, mechanism 2; M-CSA cites PMID:10984484, PMID:15966732, PMID:7569952, PMID:9315848,
+        PMID:9315849; step 1
+  - subject: cys483
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys483 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/398/
+      snippet: "The resting state of SiRHP is assumed to contain oxidised cofactors, i.e. Fe(III) in the\
+        \ sirohaem and [4Fe4S]2+, with inorganic phosphate coordinating the sixth position of the sirohaem\
+        \ iron. The first step of the reaction involves reduction of the two cofactors (to Fe(II) and\
+        \ [4Fe4S]+ by transfer of electrons from the FMN in the SiRFP subunits of the complex to the 4Fe4S\
+        \ centre. Electron transfer between the 4Fe4S centre and the sirohaem is facilitated by Cys 483,\
+        \ the side chain thiol of which is a ligand to both. The details of electron transfer from FMN\
+        \ in SiRFP to the 4Fe4S centre are not yet well understood.   
+<br/><br/>
+Reduction of the\
+        \ cofactors is followed by dissociation of the phosphate. Sulphite now binds to the sirohaem iron\
+        \ as HSO3-. It receives two electrons from the reduced cofactors, takes up a proton from a water\
+        \ molecule, and releases its O3 oxygen as water. Movement of electrons onto the sulphite is promoted\
+        \ by the positively charged residues Arg 83, Arg 153, Lys 215 and Lys 217; these 'pull' negative\
+        \ charge onto the substrate while the electron-rich cofactors 'push' electrons onto it. The oxidised\
+        \ cofactors are now re-reduced by SiRFP, and can then transfer two more electrons to the substrate.\
+        \ Uptake of two protons, probably from water molecules, and release of a second water molecule\
+        \ from the substrate leaves a mono-oxygenated sulphur species. Transfer of another pair of electrons\
+        \ and protons in the same way with loss of a water molecule leaves sulphide, S2-, which takes\
+        \ up a proton and dissociates from the sirohaem as HS- (sulphide is a poor sirohaem ligand). Conformational\
+        \ changes of the positively charged active site residues, particularly Arg 153, occur at specific\
+        \ points during the catalytic cycle; this is important in maintaining interactions with the substrate\
+        \ as the reduction proceeds and oxygen atoms are lost from it.  
+<br/><br/>
+Reduction of\
+        \ nitrite to ammonia is thought to occur in a similar way, with NO2- initially binding to the\
+        \ sirohaem and coordinated NO and hydroxylamine as possible intermediates. As with sulphite reduction,\
+        \ the exact timing of electron and proton transfers to the substrate remains to be established."
+      notes: M-CSA entry 398, mechanism 2; M-CSA cites PMID:10984484, PMID:15966732, PMID:7569952, PMID:9315848,
+        PMID:9315849; step 1
+  - subject: arg83
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg83 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/398/
+      snippet: activator
+      notes: M-CSA entry 398, mechanism 2; M-CSA cites PMID:10984484, PMID:15966732, PMID:7569952, PMID:9315848,
+        PMID:9315849; M-CSA catalytic-residue roles for Arg83
+  - subject: arg153
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg153 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/398/
+      snippet: activator
+      notes: M-CSA entry 398, mechanism 2; M-CSA cites PMID:10984484, PMID:15966732, PMID:7569952, PMID:9315848,
+        PMID:9315849; M-CSA catalytic-residue roles for Arg153
+  - subject: lys215
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys215 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/398/
+      snippet: activator
+      notes: M-CSA entry 398, mechanism 2; M-CSA cites PMID:10984484, PMID:15966732, PMID:7569952, PMID:9315848,
+        PMID:9315849; M-CSA catalytic-residue roles for Lys215
+  - subject: lys217
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys217 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/398/
+      snippet: activator
+      notes: M-CSA entry 398, mechanism 2; M-CSA cites PMID:10984484, PMID:15966732, PMID:7569952, PMID:9315848,
+        PMID:9315849; M-CSA catalytic-residue roles for Lys217
+  - subject: cys434
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys434 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/398/
+      snippet: metal ligand
+      notes: M-CSA entry 398, mechanism 2; M-CSA cites PMID:10984484, PMID:15966732, PMID:7569952, PMID:9315848,
+        PMID:9315849; M-CSA catalytic-residue roles for Cys434
+  - subject: cys440
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys440 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/398/
+      snippet: metal ligand
+      notes: M-CSA entry 398, mechanism 2; M-CSA cites PMID:10984484, PMID:15966732, PMID:7569952, PMID:9315848,
+        PMID:9315849; M-CSA catalytic-residue roles for Cys440
+  - subject: cys479
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys479 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/398/
+      snippet: metal ligand
+      notes: M-CSA entry 398, mechanism 2; M-CSA cites PMID:10984484, PMID:15966732, PMID:7569952, PMID:9315848,
+        PMID:9315849; M-CSA catalytic-residue roles for Cys479
+  - subject: cys483
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys483 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/398/
+      snippet: electron shuttle, metal ligand
+      notes: M-CSA entry 398, mechanism 2; M-CSA cites PMID:10984484, PMID:15966732, PMID:7569952, PMID:9315848,
+        PMID:9315849; M-CSA catalytic-residue roles for Cys483
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/398/
+      snippet: The resting state of SiRHP is assumed to contain oxidised cofactors, i.e. Fe(III) in the
+        sirohaem and [4Fe4S]2+, with inorganic phosphate coordinating the sixth position of the sirohaem
+        iron. The first step of the reaction involves reduction of the two cofactors (to Fe(II) and [4Fe4S]+
+        by transfer of electrons from the FMN in the SiRFP subunits of the complex to the 4Fe4S centre.
+        Electron transfer
+      notes: M-CSA entry 398, mechanism 2; M-CSA cites PMID:10984484, PMID:15966732, PMID:7569952, PMID:9315848,
+        PMID:9315849; CATH domain 3.90.480.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/398/
+      snippet: The resting state of SiRHP is assumed to contain oxidised cofactors, i.e. Fe(III) in the
+        sirohaem and [4Fe4S]2+, with inorganic phosphate coordinating the sixth position of the sirohaem
+        iron. The first step of the reaction involves reduction of the two cofactors (to Fe(II) and [4Fe4S]+
+        by transfer of electrons from the FMN in the SiRFP subunits of the complex to the 4Fe4S centre.
+        Electron transfer
+      notes: M-CSA entry 398, mechanism 2; M-CSA cites PMID:10984484, PMID:15966732, PMID:7569952, PMID:9315848,
+        PMID:9315849; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/398/
+      snippet: The resting state of SiRHP is assumed to contain oxidised cofactors, i.e. Fe(III) in the
+        sirohaem and [4Fe4S]2+, with inorganic phosphate coordinating the sixth position of the sirohaem
+        iron. The first step of the reaction involves reduction of the two cofactors (to Fe(II) and [4Fe4S]+
+        by transfer of electrons from the FMN in the SiRFP subunits of the complex to the 4Fe4S centre.
+        Electron transfer
+      notes: M-CSA entry 398, mechanism 2; M-CSA cites PMID:10984484, PMID:15966732, PMID:7569952, PMID:9315848,
+        PMID:9315849; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/398/
+      snippet: The resting state of SiRHP is assumed to contain oxidised cofactors, i.e. Fe(III) in the
+        sirohaem and [4Fe4S]2+, with inorganic phosphate coordinating the sixth position of the sirohaem
+        iron. The first step of the reaction involves reduction of the two cofactors (to Fe(II) and [4Fe4S]+
+        by transfer of electrons from the FMN in the SiRFP subunits of the complex to the 4Fe4S centre.
+        Electron transfer
+      notes: M-CSA entry 398, mechanism 2; M-CSA cites PMID:10984484, PMID:15966732, PMID:7569952, PMID:9315848,
+        PMID:9315849; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/398/
+      snippet: The resting state of SiRHP is assumed to contain oxidised cofactors, i.e. Fe(III) in the
+        sirohaem and [4Fe4S]2+, with inorganic phosphate coordinating the sixth position of the sirohaem
+        iron. The first step of the reaction involves reduction of the two cofactors (to Fe(II) and [4Fe4S]+
+        by transfer of electrons from the FMN in the SiRFP subunits of the complex to the 4Fe4S centre.
+        Electron transfer
+      notes: M-CSA entry 398, mechanism 2; M-CSA cites PMID:10984484, PMID:15966732, PMID:7569952, PMID:9315848,
+        PMID:9315849; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/398/
+      snippet: The resting state of SiRHP is assumed to contain oxidised cofactors, i.e. Fe(III) in the
+        sirohaem and [4Fe4S]2+, with inorganic phosphate coordinating the sixth position of the sirohaem
+        iron. The first step of the reaction involves reduction of the two cofactors (to Fe(II) and [4Fe4S]+
+        by transfer of electrons from the FMN in the SiRFP subunits of the complex to the 4Fe4S centre.
+        Electron transfer
+      notes: M-CSA entry 398, mechanism 2; M-CSA cites PMID:10984484, PMID:15966732, PMID:7569952, PMID:9315848,
+        PMID:9315849; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/398/
+      snippet: The resting state of SiRHP is assumed to contain oxidised cofactors, i.e. Fe(III) in the
+        sirohaem and [4Fe4S]2+, with inorganic phosphate coordinating the sixth position of the sirohaem
+        iron. The first step of the reaction involves reduction of the two cofactors (to Fe(II) and [4Fe4S]+
+        by transfer of electrons from the FMN in the SiRFP subunits of the complex to the 4Fe4S centre.
+        Electron transfer
+      notes: M-CSA entry 398, mechanism 2; M-CSA cites PMID:10984484, PMID:15966732, PMID:7569952, PMID:9315848,
+        PMID:9315849; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/398/
+      snippet: The resting state of SiRHP is assumed to contain oxidised cofactors, i.e. Fe(III) in the
+        sirohaem and [4Fe4S]2+, with inorganic phosphate coordinating the sixth position of the sirohaem
+        iron. The first step of the reaction involves reduction of the two cofactors (to Fe(II) and [4Fe4S]+
+        by transfer of electrons from the FMN in the SiRFP subunits of the complex to the 4Fe4S centre.
+        Electron transfer
+      notes: M-CSA entry 398, mechanism 2; M-CSA cites PMID:10984484, PMID:15966732, PMID:7569952, PMID:9315848,
+        PMID:9315849; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (21 evidence-backed edges) transcribed from M-CSA entry 398;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

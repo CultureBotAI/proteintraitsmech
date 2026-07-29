@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.2.1.8
 - CHEBI:83834
@@ -207,4 +207,242 @@ definitions:
       Prolyl isomerase is able to convert the cis and trans forms of peptide bonds involving proline. This alters the 3d structure of the target proteins, which activates them or deactivates them so that they can take part in signal pathways inside the cell. The human prolyl isomerase hPin1 targets many important proteins after they have been phosphorylated by ser/thr kinases, being involved specifically in G2/M transitions in the cell cycle. As a result, mutations to the protein have been implicated in many forms of cancer.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of peptidylprolyl isomerase (PpiC-type)
+  description: Mechanism transcribed from M-CSA entry 511. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: his59
+    label: catalytic His59 (M-CSA/PDB numbering; UniProt residue 59)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q13526
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: cys113
+    label: catalytic Cys113 (M-CSA/PDB numbering; UniProt residue 113)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q13526
+    description: 'M-CSA roles: covalently attached, electrostatic stabiliser.'
+  - node_id: gln131
+    label: catalytic Gln131 (M-CSA/PDB numbering; UniProt residue 131)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q13526
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ser154
+    label: catalytic Ser154 (M-CSA/PDB numbering; UniProt residue 154)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q13526
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his157
+    label: catalytic His157 (M-CSA/PDB numbering; UniProt residue 157)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q13526
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: peptidylproline (omega=180) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:83834
+  - node_id: product0
+    label: peptidylproline (omega=0) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:83833
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: Pin 1 catalyzes the cis-trans isomerization of proline amide bonds and is higly selective
+      for proline residues with a phosphorylated threonine or serine immediately proceeding it.  The main
+      effect of Pin1 on the isomerization reaction is the reduction of the free energy barrier. This is
+      accomplished by a combined rotation of the ψ backbone angle of the threonine residue and the amide
+      bond. The enz
+  - node_id: active_site
+    label: peptidylprolyl isomerase (PpiC-type) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:511
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.10.50.40 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.10.50.40
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: peptidylprolyl isomerase (PpiC-type) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.2.1.8
+  edges:
+  - subject: cys113
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys113 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/511/
+      snippet: "Pin 1 catalyzes the cis-trans isomerization of proline amide bonds and is higly selective\
+        \ for proline residues with a phosphorylated threonine or serine immediately proceeding it.  The\
+        \ main effect of Pin1 on the isomerization reaction is the reduction of the free energy barrier.\
+        \ This is accomplished by a combined rotation of the ψ backbone angle of the threonine residue\
+        \ and the amide bond. The enzyme works via the electrostatic stabilization of the phosphate group\
+        \ of the threonine residue through the basic triad and the hydrogen bonds between the enzyme Gln\
+        \ 131 and the peptide which fix one part of the peptide in the catalytic site, hindering its rotation.\
+        
+Cys 113 has a minor role in the stabilization of the cis form and stabilizes the carbonyl group\
+        \ during the initial rotation. 
+Ser 154 is likely to interact with the phosphate group and\
+        \ may even stabilize the transition state via hydrogen bonding to the carbonyl oxygen in the trans\
+        \ form and to the phosphate of a threonine residue in the cis form."
+      notes: M-CSA entry 511, mechanism 2; M-CSA cites PMID:25059768; step 1
+  - subject: gln131
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Gln131 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/511/
+      snippet: "Pin 1 catalyzes the cis-trans isomerization of proline amide bonds and is higly selective\
+        \ for proline residues with a phosphorylated threonine or serine immediately proceeding it.  The\
+        \ main effect of Pin1 on the isomerization reaction is the reduction of the free energy barrier.\
+        \ This is accomplished by a combined rotation of the ψ backbone angle of the threonine residue\
+        \ and the amide bond. The enzyme works via the electrostatic stabilization of the phosphate group\
+        \ of the threonine residue through the basic triad and the hydrogen bonds between the enzyme Gln\
+        \ 131 and the peptide which fix one part of the peptide in the catalytic site, hindering its rotation.\
+        
+Cys 113 has a minor role in the stabilization of the cis form and stabilizes the carbonyl group\
+        \ during the initial rotation. 
+Ser 154 is likely to interact with the phosphate group and\
+        \ may even stabilize the transition state via hydrogen bonding to the carbonyl oxygen in the trans\
+        \ form and to the phosphate of a threonine residue in the cis form."
+      notes: M-CSA entry 511, mechanism 2; M-CSA cites PMID:25059768; step 1
+  - subject: ser154
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser154 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/511/
+      snippet: "Pin 1 catalyzes the cis-trans isomerization of proline amide bonds and is higly selective\
+        \ for proline residues with a phosphorylated threonine or serine immediately proceeding it.  The\
+        \ main effect of Pin1 on the isomerization reaction is the reduction of the free energy barrier.\
+        \ This is accomplished by a combined rotation of the ψ backbone angle of the threonine residue\
+        \ and the amide bond. The enzyme works via the electrostatic stabilization of the phosphate group\
+        \ of the threonine residue through the basic triad and the hydrogen bonds between the enzyme Gln\
+        \ 131 and the peptide which fix one part of the peptide in the catalytic site, hindering its rotation.\
+        
+Cys 113 has a minor role in the stabilization of the cis form and stabilizes the carbonyl group\
+        \ during the initial rotation. 
+Ser 154 is likely to interact with the phosphate group and\
+        \ may even stabilize the transition state via hydrogen bonding to the carbonyl oxygen in the trans\
+        \ form and to the phosphate of a threonine residue in the cis form."
+      notes: M-CSA entry 511, mechanism 2; M-CSA cites PMID:25059768; step 1
+  - subject: his59
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His59 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/511/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 511, mechanism 2; M-CSA cites PMID:25059768; M-CSA catalytic-residue roles for
+        His59
+  - subject: cys113
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys113 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/511/
+      snippet: covalently attached, electrostatic stabiliser
+      notes: M-CSA entry 511, mechanism 2; M-CSA cites PMID:25059768; M-CSA catalytic-residue roles for
+        Cys113
+  - subject: gln131
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln131 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/511/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 511, mechanism 2; M-CSA cites PMID:25059768; M-CSA catalytic-residue roles for
+        Gln131
+  - subject: ser154
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser154 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/511/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 511, mechanism 2; M-CSA cites PMID:25059768; M-CSA catalytic-residue roles for
+        Ser154
+  - subject: his157
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His157 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/511/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 511, mechanism 2; M-CSA cites PMID:25059768; M-CSA catalytic-residue roles for
+        His157
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/511/
+      snippet: Pin 1 catalyzes the cis-trans isomerization of proline amide bonds and is higly selective
+        for proline residues with a phosphorylated threonine or serine immediately proceeding it.  The
+        main effect of Pin1 on the isomerization reaction is the reduction of the free energy barrier.
+        This is accomplished by a combined rotation of the ψ backbone angle of the threonine residue and
+        the amide bond. The enz
+      notes: M-CSA entry 511, mechanism 2; M-CSA cites PMID:25059768; CATH domain 3.10.50.40 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/511/
+      snippet: Pin 1 catalyzes the cis-trans isomerization of proline amide bonds and is higly selective
+        for proline residues with a phosphorylated threonine or serine immediately proceeding it.  The
+        main effect of Pin1 on the isomerization reaction is the reduction of the free energy barrier.
+        This is accomplished by a combined rotation of the ψ backbone angle of the threonine residue and
+        the amide bond. The enz
+      notes: M-CSA entry 511, mechanism 2; M-CSA cites PMID:25059768; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/511/
+      snippet: Pin 1 catalyzes the cis-trans isomerization of proline amide bonds and is higly selective
+        for proline residues with a phosphorylated threonine or serine immediately proceeding it.  The
+        main effect of Pin1 on the isomerization reaction is the reduction of the free energy barrier.
+        This is accomplished by a combined rotation of the ψ backbone angle of the threonine residue and
+        the amide bond. The enz
+      notes: M-CSA entry 511, mechanism 2; M-CSA cites PMID:25059768; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/511/
+      snippet: Pin 1 catalyzes the cis-trans isomerization of proline amide bonds and is higly selective
+        for proline residues with a phosphorylated threonine or serine immediately proceeding it.  The
+        main effect of Pin1 on the isomerization reaction is the reduction of the free energy barrier.
+        This is accomplished by a combined rotation of the ψ backbone angle of the threonine residue and
+        the amide bond. The enz
+      notes: M-CSA entry 511, mechanism 2; M-CSA cites PMID:25059768; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (12 evidence-backed edges) transcribed from M-CSA entry 511;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

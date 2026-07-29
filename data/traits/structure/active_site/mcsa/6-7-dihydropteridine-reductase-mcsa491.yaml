@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.5.1.34
 - CHEBI:28889
@@ -204,4 +204,186 @@ definitions:
       Dihydropteridine reductase catalyses the NADH-mediated reduction of quinoid dihydrobioptertin to give tetrahydrobiopterin, which functions as an essential cofactor in the biosynthetic reactions that convert phenylalanine to tyrosine, tyrosine to dihydroxyphenylalanine and tryptophan to dihydroxytryptophan. These reactions are essential to the generation of the catecholamines. These reactions are found predominantly in nerve, liver and adrenal tissue, where the function of tetrahydrobiopterin has been clearly defined. However, the presence of tetrahydrobiopterin in other tissues is yet to be determined.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 6,7-dihydropteridine reductase
+  description: Mechanism transcribed from M-CSA entry 491. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +1).
+  nodes:
+  - node_id: tyr146
+    label: catalytic Tyr146 (M-CSA/PDB numbering; UniProt residue 147)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11348
+    description: 'M-CSA roles: electrostatic stabiliser, proton shuttle (general acid/base).'
+  - node_id: lys150
+    label: catalytic Lys150 (M-CSA/PDB numbering; UniProt residue 151)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11348
+    description: 'M-CSA roles: electrostatic stabiliser, proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: 5,6,7,8-tetrahydropteridine
+    node_type: CHEMICAL
+    grounding: CHEBI:28889
+  - node_id: reactant1
+    label: NAD(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+  - node_id: product0
+    label: 6,7-dihydropteridine
+    node_type: CHEMICAL
+    grounding: CHEBI:30156
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: NADH(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: One possible reduction mechanism first begins with proton transfer from Tyr146 hydroxyl
+      to the substrate carbonyl, followed by rapid hydride transfer to pteridine N(5) position from NADH.
+  - node_id: active_site
+    label: 6,7-dihydropteridine reductase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:491
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.720 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.720
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: 6,7-dihydropteridine reductase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.5.1.34
+  edges:
+  - subject: tyr146
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr146 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/491/
+      snippet: One possible reduction mechanism first begins with proton transfer from Tyr146 hydroxyl
+        to the substrate carbonyl, followed by rapid hydride transfer to pteridine N(5) position from
+        NADH.
+      notes: M-CSA entry 491, mechanism 1; M-CSA cites PMID:11976334, PMID:8202530, PMID:8631945; step
+        1
+  - subject: tyr146
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr146 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/491/
+      snippet: electrostatic stabiliser, proton shuttle (general acid/base)
+      notes: M-CSA entry 491, mechanism 1; M-CSA cites PMID:11976334, PMID:8202530, PMID:8631945; M-CSA
+        catalytic-residue roles for Tyr146
+  - subject: lys150
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys150 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/491/
+      snippet: electrostatic stabiliser, proton shuttle (general acid/base)
+      notes: M-CSA entry 491, mechanism 1; M-CSA cites PMID:11976334, PMID:8202530, PMID:8631945; M-CSA
+        catalytic-residue roles for Lys150
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/491/
+      snippet: One possible reduction mechanism first begins with proton transfer from Tyr146 hydroxyl
+        to the substrate carbonyl, followed by rapid hydride transfer to pteridine N(5) position from
+        NADH.
+      notes: M-CSA entry 491, mechanism 1; M-CSA cites PMID:11976334, PMID:8202530, PMID:8631945; CATH
+        domain 3.40.50.720 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/491/
+      snippet: One possible reduction mechanism first begins with proton transfer from Tyr146 hydroxyl
+        to the substrate carbonyl, followed by rapid hydride transfer to pteridine N(5) position from
+        NADH.
+      notes: M-CSA entry 491, mechanism 1; M-CSA cites PMID:11976334, PMID:8202530, PMID:8631945; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/491/
+      snippet: One possible reduction mechanism first begins with proton transfer from Tyr146 hydroxyl
+        to the substrate carbonyl, followed by rapid hydride transfer to pteridine N(5) position from
+        NADH.
+      notes: M-CSA entry 491, mechanism 1; M-CSA cites PMID:11976334, PMID:8202530, PMID:8631945; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/491/
+      snippet: One possible reduction mechanism first begins with proton transfer from Tyr146 hydroxyl
+        to the substrate carbonyl, followed by rapid hydride transfer to pteridine N(5) position from
+        NADH.
+      notes: M-CSA entry 491, mechanism 1; M-CSA cites PMID:11976334, PMID:8202530, PMID:8631945; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/491/
+      snippet: One possible reduction mechanism first begins with proton transfer from Tyr146 hydroxyl
+        to the substrate carbonyl, followed by rapid hydride transfer to pteridine N(5) position from
+        NADH.
+      notes: M-CSA entry 491, mechanism 1; M-CSA cites PMID:11976334, PMID:8202530, PMID:8631945; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/491/
+      snippet: One possible reduction mechanism first begins with proton transfer from Tyr146 hydroxyl
+        to the substrate carbonyl, followed by rapid hydride transfer to pteridine N(5) position from
+        NADH.
+      notes: M-CSA entry 491, mechanism 1; M-CSA cites PMID:11976334, PMID:8202530, PMID:8631945; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/491/
+      snippet: One possible reduction mechanism first begins with proton transfer from Tyr146 hydroxyl
+        to the substrate carbonyl, followed by rapid hydride transfer to pteridine N(5) position from
+        NADH.
+      notes: M-CSA entry 491, mechanism 1; M-CSA cites PMID:11976334, PMID:8202530, PMID:8631945; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (10 evidence-backed edges) transcribed from M-CSA entry 491;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

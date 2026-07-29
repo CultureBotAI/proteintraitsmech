@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.22.16
 - CHEBI:15377
@@ -250,4 +250,166 @@ definitions:
       Cathepsin H is a lysosomal cysteine protease, involved in intracellular protein degradation. It is the only known mono-aminopeptidase in the papain-like family and is reported to be involved in tumor metastasis. The enzyme is a relatively abundant protease involved in intracellular protein degradation. It has been proposed that the levels of Cathepsin increase during disease states. Cathepsin H is an aminopeptidase, cleaving a single N-terminal residue from a polypeptide chain. It has been shown that Cathepsin H also exhibits endopeptidase activity. The mature protein consists of three fragments; the N-terminal heavy and C-terminal light chains, and an octapeptide called the mini-chain.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of cathepsin H
+  description: Mechanism transcribed from M-CSA entry 682. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering only — no unique offset to the record's reference sequence could
+    be verified, so no UniProt position is asserted.
+  nodes:
+  - node_id: gln19
+    label: catalytic Gln19 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:O46427
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: cys25
+    label: catalytic Cys25 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:O46427
+    description: 'M-CSA roles: covalent catalysis, proton shuttle (general acid/base).'
+  - node_id: his159
+    label: catalytic His159 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:O46427
+    description: 'M-CSA roles: electrostatic stabiliser, proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: dipeptide zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:90799
+  - node_id: product0
+    label: L-alpha-amino acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:59869
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: The active site triad ( CYS 25, HIS 159, GLN 19) is found in a cleft found running across
+      the top of the molecule. The backbone and sidechains of the catalytic residues are found at positions
+      usual for a papain-like enzyme. The only exception is the HIS 159 imidazole ring which in contrasts
+      to all other known structures of cysteine proteases - does not form a thiolate-imidazolium ion pair
+      with CYS
+  - node_id: active_site
+    label: cathepsin H catalytic site
+    node_type: MOTIF
+    grounding: MCSA:682
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.70.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.70.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: cathepsin H activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.22.16
+  edges:
+  - subject: gln19
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln19 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/682/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 682, mechanism 1; M-CSA cites PMID:22024571, PMID:9493267; M-CSA catalytic-residue
+        roles for Gln19
+  - subject: cys25
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys25 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/682/
+      snippet: covalent catalysis, proton shuttle (general acid/base)
+      notes: M-CSA entry 682, mechanism 1; M-CSA cites PMID:22024571, PMID:9493267; M-CSA catalytic-residue
+        roles for Cys25
+  - subject: his159
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His159 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/682/
+      snippet: electrostatic stabiliser, proton shuttle (general acid/base)
+      notes: M-CSA entry 682, mechanism 1; M-CSA cites PMID:22024571, PMID:9493267; M-CSA catalytic-residue
+        roles for His159
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/682/
+      snippet: The active site triad ( CYS 25, HIS 159, GLN 19) is found in a cleft found running across
+        the top of the molecule. The backbone and sidechains of the catalytic residues are found at positions
+        usual for a papain-like enzyme. The only exception is the HIS 159 imidazole ring which in contrasts
+        to all other known structures of cysteine proteases - does not form a thiolate-imidazolium ion
+        pair with CYS
+      notes: M-CSA entry 682, mechanism 1; M-CSA cites PMID:22024571, PMID:9493267; CATH domain 3.90.70.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/682/
+      snippet: The active site triad ( CYS 25, HIS 159, GLN 19) is found in a cleft found running across
+        the top of the molecule. The backbone and sidechains of the catalytic residues are found at positions
+        usual for a papain-like enzyme. The only exception is the HIS 159 imidazole ring which in contrasts
+        to all other known structures of cysteine proteases - does not form a thiolate-imidazolium ion
+        pair with CYS
+      notes: M-CSA entry 682, mechanism 1; M-CSA cites PMID:22024571, PMID:9493267; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/682/
+      snippet: The active site triad ( CYS 25, HIS 159, GLN 19) is found in a cleft found running across
+        the top of the molecule. The backbone and sidechains of the catalytic residues are found at positions
+        usual for a papain-like enzyme. The only exception is the HIS 159 imidazole ring which in contrasts
+        to all other known structures of cysteine proteases - does not form a thiolate-imidazolium ion
+        pair with CYS
+      notes: M-CSA entry 682, mechanism 1; M-CSA cites PMID:22024571, PMID:9493267; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/682/
+      snippet: The active site triad ( CYS 25, HIS 159, GLN 19) is found in a cleft found running across
+        the top of the molecule. The backbone and sidechains of the catalytic residues are found at positions
+        usual for a papain-like enzyme. The only exception is the HIS 159 imidazole ring which in contrasts
+        to all other known structures of cysteine proteases - does not form a thiolate-imidazolium ion
+        pair with CYS
+      notes: M-CSA entry 682, mechanism 1; M-CSA cites PMID:22024571, PMID:9493267; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/682/
+      snippet: The active site triad ( CYS 25, HIS 159, GLN 19) is found in a cleft found running across
+        the top of the molecule. The backbone and sidechains of the catalytic residues are found at positions
+        usual for a papain-like enzyme. The only exception is the HIS 159 imidazole ring which in contrasts
+        to all other known structures of cysteine proteases - does not form a thiolate-imidazolium ion
+        pair with CYS
+      notes: M-CSA entry 682, mechanism 1; M-CSA cites PMID:22024571, PMID:9493267; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (8 evidence-backed edges) transcribed from M-CSA entry 682;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

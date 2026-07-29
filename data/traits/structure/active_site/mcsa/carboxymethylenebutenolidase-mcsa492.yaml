@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.1.45
 - CHEBI:57263
@@ -151,4 +151,262 @@ definitions:
       Dienelactone hydrolase (DLHase) catalyses the hydrolysis of dienelactone to maleylacetate. This reaction is part of the beta-ketoadipate pathway used in bacteria and fungi to degrade aromatic compounds. Bacteria which utilise this pathway play an important role in the detoxification of many toxic halogenated aromatic compounds produced in industry. DLHase is a member of the alpha/beta hydrolase superfamily, although it does not possess a Ser-Hys-Asp catalytic triad and instead uses a triad of Cys-His-Asp.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of carboxymethylenebutenolidase
+  description: Mechanism transcribed from M-CSA entry 492. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: glu36
+    label: catalytic Glu36 (M-CSA/PDB numbering; UniProt residue 36)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A115
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: ile37
+    label: catalytic Ile37 (M-CSA/PDB numbering; UniProt residue 37)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A115
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: tyr85
+    label: catalytic Tyr85 (M-CSA/PDB numbering; UniProt residue 85)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A115
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: cys123
+    label: catalytic Cys123 (M-CSA/PDB numbering; UniProt residue 123)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A115
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: leu124
+    label: catalytic Leu124 (M-CSA/PDB numbering; UniProt residue 124)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A115
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp171
+    label: catalytic Asp171 (M-CSA/PDB numbering; UniProt residue 171)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A115
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his202
+    label: catalytic His202 (M-CSA/PDB numbering; UniProt residue 202)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A115
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: 4-carboxylatomethylenebut-2-en-4-olide
+    node_type: CHEMICAL
+    grounding: CHEBI:57263
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: 4-oxohex-2-enedioate
+    node_type: CHEMICAL
+    grounding: CHEBI:12040
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: DLHase uses a Cys-His-Asp catalytic triad. The acyl carbon of dienelactone is attacked
+      by the nucleophilic Cys123 to form the first enzyme-substrate tetrahedral intermediate. This collapses,
+      resulting in ring cleavage and expulsion of the heterocyclic oxygen to give an enolate intermediate.
+      The enolate is protonated to give an acyl intermediate. The enzyme is deacylated by hydrolytic attack
+      and ge
+  - node_id: active_site
+    label: carboxymethylenebutenolidase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:492
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1820 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1820
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: carboxymethylenebutenolidase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.1.45
+  edges:
+  - subject: cys123
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys123 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/492/
+      snippet: DLHase uses a Cys-His-Asp catalytic triad. The acyl carbon of dienelactone is attacked
+        by the nucleophilic Cys123 to form the first enzyme-substrate tetrahedral intermediate. This collapses,
+        resulting in ring cleavage and expulsion of the heterocyclic oxygen to give an enolate intermediate.
+        The enolate is protonated to give an acyl intermediate. The enzyme is deacylated by hydrolytic
+        attack and general base catalysis, leading to release of the product.
+      notes: M-CSA entry 492, mechanism 1; M-CSA cites PMID:15983415, PMID:1866431, PMID:22761053, PMID:8497485,
+        PMID:9440530; step 1
+  - subject: glu36
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu36 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/492/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 492, mechanism 1; M-CSA cites PMID:15983415, PMID:1866431, PMID:22761053, PMID:8497485,
+        PMID:9440530; M-CSA catalytic-residue roles for Glu36
+  - subject: ile37
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ile37 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/492/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 492, mechanism 1; M-CSA cites PMID:15983415, PMID:1866431, PMID:22761053, PMID:8497485,
+        PMID:9440530; M-CSA catalytic-residue roles for Ile37
+  - subject: tyr85
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr85 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/492/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 492, mechanism 1; M-CSA cites PMID:15983415, PMID:1866431, PMID:22761053, PMID:8497485,
+        PMID:9440530; M-CSA catalytic-residue roles for Tyr85
+  - subject: cys123
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys123 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/492/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 492, mechanism 1; M-CSA cites PMID:15983415, PMID:1866431, PMID:22761053, PMID:8497485,
+        PMID:9440530; M-CSA catalytic-residue roles for Cys123
+  - subject: leu124
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Leu124 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/492/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 492, mechanism 1; M-CSA cites PMID:15983415, PMID:1866431, PMID:22761053, PMID:8497485,
+        PMID:9440530; M-CSA catalytic-residue roles for Leu124
+  - subject: asp171
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp171 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/492/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 492, mechanism 1; M-CSA cites PMID:15983415, PMID:1866431, PMID:22761053, PMID:8497485,
+        PMID:9440530; M-CSA catalytic-residue roles for Asp171
+  - subject: his202
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His202 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/492/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 492, mechanism 1; M-CSA cites PMID:15983415, PMID:1866431, PMID:22761053, PMID:8497485,
+        PMID:9440530; M-CSA catalytic-residue roles for His202
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/492/
+      snippet: DLHase uses a Cys-His-Asp catalytic triad. The acyl carbon of dienelactone is attacked
+        by the nucleophilic Cys123 to form the first enzyme-substrate tetrahedral intermediate. This collapses,
+        resulting in ring cleavage and expulsion of the heterocyclic oxygen to give an enolate intermediate.
+        The enolate is protonated to give an acyl intermediate. The enzyme is deacylated by hydrolytic
+        attack and ge
+      notes: M-CSA entry 492, mechanism 1; M-CSA cites PMID:15983415, PMID:1866431, PMID:22761053, PMID:8497485,
+        PMID:9440530; CATH domain 3.40.50.1820 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/492/
+      snippet: DLHase uses a Cys-His-Asp catalytic triad. The acyl carbon of dienelactone is attacked
+        by the nucleophilic Cys123 to form the first enzyme-substrate tetrahedral intermediate. This collapses,
+        resulting in ring cleavage and expulsion of the heterocyclic oxygen to give an enolate intermediate.
+        The enolate is protonated to give an acyl intermediate. The enzyme is deacylated by hydrolytic
+        attack and ge
+      notes: M-CSA entry 492, mechanism 1; M-CSA cites PMID:15983415, PMID:1866431, PMID:22761053, PMID:8497485,
+        PMID:9440530; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/492/
+      snippet: DLHase uses a Cys-His-Asp catalytic triad. The acyl carbon of dienelactone is attacked
+        by the nucleophilic Cys123 to form the first enzyme-substrate tetrahedral intermediate. This collapses,
+        resulting in ring cleavage and expulsion of the heterocyclic oxygen to give an enolate intermediate.
+        The enolate is protonated to give an acyl intermediate. The enzyme is deacylated by hydrolytic
+        attack and ge
+      notes: M-CSA entry 492, mechanism 1; M-CSA cites PMID:15983415, PMID:1866431, PMID:22761053, PMID:8497485,
+        PMID:9440530; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/492/
+      snippet: DLHase uses a Cys-His-Asp catalytic triad. The acyl carbon of dienelactone is attacked
+        by the nucleophilic Cys123 to form the first enzyme-substrate tetrahedral intermediate. This collapses,
+        resulting in ring cleavage and expulsion of the heterocyclic oxygen to give an enolate intermediate.
+        The enolate is protonated to give an acyl intermediate. The enzyme is deacylated by hydrolytic
+        attack and ge
+      notes: M-CSA entry 492, mechanism 1; M-CSA cites PMID:15983415, PMID:1866431, PMID:22761053, PMID:8497485,
+        PMID:9440530; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/492/
+      snippet: DLHase uses a Cys-His-Asp catalytic triad. The acyl carbon of dienelactone is attacked
+        by the nucleophilic Cys123 to form the first enzyme-substrate tetrahedral intermediate. This collapses,
+        resulting in ring cleavage and expulsion of the heterocyclic oxygen to give an enolate intermediate.
+        The enolate is protonated to give an acyl intermediate. The enzyme is deacylated by hydrolytic
+        attack and ge
+      notes: M-CSA entry 492, mechanism 1; M-CSA cites PMID:15983415, PMID:1866431, PMID:22761053, PMID:8497485,
+        PMID:9440530; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/492/
+      snippet: DLHase uses a Cys-His-Asp catalytic triad. The acyl carbon of dienelactone is attacked
+        by the nucleophilic Cys123 to form the first enzyme-substrate tetrahedral intermediate. This collapses,
+        resulting in ring cleavage and expulsion of the heterocyclic oxygen to give an enolate intermediate.
+        The enolate is protonated to give an acyl intermediate. The enzyme is deacylated by hydrolytic
+        attack and ge
+      notes: M-CSA entry 492, mechanism 1; M-CSA cites PMID:15983415, PMID:1866431, PMID:22761053, PMID:8497485,
+        PMID:9440530; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (14 evidence-backed edges) transcribed from M-CSA entry 492;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

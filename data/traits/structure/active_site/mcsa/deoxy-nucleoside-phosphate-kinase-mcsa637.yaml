@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.7.4.13
 - CHEBI:65317
@@ -254,4 +254,202 @@ definitions:
       The deoxynucleotide kinase from phage T4 is able to catalyse the phosphorylation of GMP, methyl-CMP and TMP to the corresponding nucleotide diphosphate using ATP as the phosphate donor. This process is of particular interest because of the diverse specificity of the enzyme: most species deoxynucleotide kinases are only able to phosphorylate one dNMP, but owing to the selective pressure on the phage to have as small a genome as possible to allow easier infection of the bacteria, a wider specificity has developed. The sequence of the enzyme displays no homology to any other kinases, but does include the triphosphate binding consensus sequence.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of (deoxy)nucleoside-phosphate kinase
+  description: Mechanism transcribed from M-CSA entry 637. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: asp15
+    label: catalytic Asp15 (M-CSA/PDB numbering; UniProt residue 15)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04531
+  - node_id: arg68
+    label: catalytic Arg68 (M-CSA/PDB numbering; UniProt residue 68)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04531
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his206
+    label: catalytic His206 (M-CSA/PDB numbering; UniProt residue 206)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04531
+    description: 'M-CSA roles: electrostatic stabiliser, metal ligand.'
+  - node_id: reactant0
+    label: 2'-deoxynucleoside 5'-monophosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:65317
+  - node_id: reactant1
+    label: ATP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+  - node_id: product0
+    label: ADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+  - node_id: product1
+    label: 2'-deoxyribonucleoside 5'-diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:73316
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: In line nucleophilic attack from the dNMP on the gamma phosphate of ATP seems the most
+      likely mechanism for the reaction. This proceeds via a pentavalent phosphate transition state, stabilised
+      by catalytic residues Arg68, His 206 and a catalytic Mg2+ ion whose location in the enzyme has not
+      been confirmed.
+  - node_id: active_site
+    label: (deoxy)nucleoside-phosphate kinase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:637
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.300 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.300
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: (deoxy)nucleoside-phosphate kinase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.7.4.13
+  edges:
+  - subject: arg68
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg68 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/637/
+      snippet: In line nucleophilic attack from the dNMP on the gamma phosphate of ATP seems the most
+        likely mechanism for the reaction. This proceeds via a pentavalent phosphate transition state,
+        stabilised by catalytic residues Arg68, His 206 and a catalytic Mg2+ ion whose location in the
+        enzyme has not been confirmed.
+      notes: M-CSA entry 637, mechanism 1; M-CSA cites PMID:8670851; step 1
+  - subject: his206
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His206 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/637/
+      snippet: In line nucleophilic attack from the dNMP on the gamma phosphate of ATP seems the most
+        likely mechanism for the reaction. This proceeds via a pentavalent phosphate transition state,
+        stabilised by catalytic residues Arg68, His 206 and a catalytic Mg2+ ion whose location in the
+        enzyme has not been confirmed.
+      notes: M-CSA entry 637, mechanism 1; M-CSA cites PMID:8670851; step 1
+  - subject: asp15
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp15 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/637/
+      snippet: In line nucleophilic attack from the dNMP on the gamma phosphate of ATP seems the most
+        likely mechanism for the reaction. This proceeds via a pentavalent phosphate transition state,
+        stabilised by catalytic residues Arg68, His 206 and a catalytic Mg2+ ion whose location in the
+        enzyme has not been confirmed.
+      notes: M-CSA entry 637, mechanism 1; M-CSA cites PMID:8670851; M-CSA catalytic-residue roles for
+        Asp15
+  - subject: arg68
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg68 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/637/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 637, mechanism 1; M-CSA cites PMID:8670851; M-CSA catalytic-residue roles for
+        Arg68
+  - subject: his206
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His206 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/637/
+      snippet: electrostatic stabiliser, metal ligand
+      notes: M-CSA entry 637, mechanism 1; M-CSA cites PMID:8670851; M-CSA catalytic-residue roles for
+        His206
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/637/
+      snippet: In line nucleophilic attack from the dNMP on the gamma phosphate of ATP seems the most
+        likely mechanism for the reaction. This proceeds via a pentavalent phosphate transition state,
+        stabilised by catalytic residues Arg68, His 206 and a catalytic Mg2+ ion whose location in the
+        enzyme has not been confirmed.
+      notes: M-CSA entry 637, mechanism 1; M-CSA cites PMID:8670851; CATH domain 3.40.50.300 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/637/
+      snippet: In line nucleophilic attack from the dNMP on the gamma phosphate of ATP seems the most
+        likely mechanism for the reaction. This proceeds via a pentavalent phosphate transition state,
+        stabilised by catalytic residues Arg68, His 206 and a catalytic Mg2+ ion whose location in the
+        enzyme has not been confirmed.
+      notes: M-CSA entry 637, mechanism 1; M-CSA cites PMID:8670851; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/637/
+      snippet: In line nucleophilic attack from the dNMP on the gamma phosphate of ATP seems the most
+        likely mechanism for the reaction. This proceeds via a pentavalent phosphate transition state,
+        stabilised by catalytic residues Arg68, His 206 and a catalytic Mg2+ ion whose location in the
+        enzyme has not been confirmed.
+      notes: M-CSA entry 637, mechanism 1; M-CSA cites PMID:8670851; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/637/
+      snippet: In line nucleophilic attack from the dNMP on the gamma phosphate of ATP seems the most
+        likely mechanism for the reaction. This proceeds via a pentavalent phosphate transition state,
+        stabilised by catalytic residues Arg68, His 206 and a catalytic Mg2+ ion whose location in the
+        enzyme has not been confirmed.
+      notes: M-CSA entry 637, mechanism 1; M-CSA cites PMID:8670851; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/637/
+      snippet: In line nucleophilic attack from the dNMP on the gamma phosphate of ATP seems the most
+        likely mechanism for the reaction. This proceeds via a pentavalent phosphate transition state,
+        stabilised by catalytic residues Arg68, His 206 and a catalytic Mg2+ ion whose location in the
+        enzyme has not been confirmed.
+      notes: M-CSA entry 637, mechanism 1; M-CSA cites PMID:8670851; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/637/
+      snippet: In line nucleophilic attack from the dNMP on the gamma phosphate of ATP seems the most
+        likely mechanism for the reaction. This proceeds via a pentavalent phosphate transition state,
+        stabilised by catalytic residues Arg68, His 206 and a catalytic Mg2+ ion whose location in the
+        enzyme has not been confirmed.
+      notes: M-CSA entry 637, mechanism 1; M-CSA cites PMID:8670851; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (11 evidence-backed edges) transcribed from M-CSA entry 637;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

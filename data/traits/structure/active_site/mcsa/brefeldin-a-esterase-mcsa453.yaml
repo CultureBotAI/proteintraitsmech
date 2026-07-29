@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.1.-
 - CHEBI:48080
@@ -57,4 +57,281 @@ definitions:
       Brefeldin A esterase (BFAE), a detoxifying enzyme isolated from Bacillus subtilis, hydrolyses and inactivates BFA, a potent fungal inhibitor of intracellular vesicle-dependent secretory transport and poliovirus RNA replication. BFAE has high sequence homology to the mammalian hormone sensitive lipase (HSL), thus is thought to be a member of the HSL family.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of Brefeldin A esterase
+  description: Mechanism transcribed from M-CSA entry 453. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: gly127
+    label: catalytic Gly127 (M-CSA/PDB numbering; UniProt residue 127)
+    node_type: RESIDUE
+    grounding: UniProtKB:O68884
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: gly128
+    label: catalytic Gly128 (M-CSA/PDB numbering; UniProt residue 128)
+    node_type: RESIDUE
+    grounding: UniProtKB:O68884
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ser202
+    label: catalytic Ser202 (M-CSA/PDB numbering; UniProt residue 202)
+    node_type: RESIDUE
+    grounding: UniProtKB:O68884
+    description: 'M-CSA roles: covalent catalysis, proton shuttle (general acid/base).'
+  - node_id: tyr233
+    label: catalytic Tyr233 (M-CSA/PDB numbering; UniProt residue 233)
+    node_type: RESIDUE
+    grounding: UniProtKB:O68884
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: tyr238
+    label: catalytic Tyr238 (M-CSA/PDB numbering; UniProt residue 238)
+    node_type: RESIDUE
+    grounding: UniProtKB:O68884
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp308
+    label: catalytic Asp308 (M-CSA/PDB numbering; UniProt residue 308)
+    node_type: RESIDUE
+    grounding: UniProtKB:O68884
+    description: 'M-CSA roles: electrostatic stabiliser, modifies pKa.'
+  - node_id: his338
+    label: catalytic His338 (M-CSA/PDB numbering; UniProt residue 338)
+    node_type: RESIDUE
+    grounding: UniProtKB:O68884
+    description: 'M-CSA roles: electrostatic stabiliser, proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: brefeldin A
+    node_type: CHEMICAL
+    grounding: CHEBI:48080
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: TX-1875
+    node_type: CHEMICAL
+    grounding: CHEBI:134260
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: The enzyme contains a catalytic triad Ser202-His338-Asp308. The mechanism is believed
+      to follow that of a typical esterase. Ser202 is deprotonated by His338 and subsequently attacks
+      the carbonyl moiety in the ester linkage. The tetrahedral intermediate collapses and the negatively
+      charged oxygen deprotonates His338 to form an alcohol functional group. His338 then deprotonates
+      a water molecule to f
+  - node_id: active_site
+    label: Brefeldin A esterase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:453
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1820 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1820
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: Brefeldin A esterase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.1.-
+  edges:
+  - subject: ser202
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser202 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/453/
+      snippet: The enzyme contains a catalytic triad Ser202-His338-Asp308. The mechanism is believed to
+        follow that of a typical esterase. Ser202 is deprotonated by His338 and subsequently attacks the
+        carbonyl moiety in the ester linkage. The tetrahedral intermediate collapses and the negatively
+        charged oxygen deprotonates His338 to form an alcohol functional group. His338 then deprotonates
+        a water molecule to form a nucleophile, which subsequently attacks the carbonyl moiety, forming
+        a second tetrahedral intermediate. The collapse of this results in Ser202 being eliminated as
+        a leaving group and a carboxylic acid function group being formed resulting in the products of
+        hydrolysis.
+      notes: M-CSA entry 453, mechanism 2; M-CSA cites PMID:10201402, PMID:11061974, PMID:17625021, PMID:27328716,
+        PMID:27991516; step 1
+  - subject: asp308
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp308 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/453/
+      snippet: The enzyme contains a catalytic triad Ser202-His338-Asp308. The mechanism is believed to
+        follow that of a typical esterase. Ser202 is deprotonated by His338 and subsequently attacks the
+        carbonyl moiety in the ester linkage. The tetrahedral intermediate collapses and the negatively
+        charged oxygen deprotonates His338 to form an alcohol functional group. His338 then deprotonates
+        a water molecule to form a nucleophile, which subsequently attacks the carbonyl moiety, forming
+        a second tetrahedral intermediate. The collapse of this results in Ser202 being eliminated as
+        a leaving group and a carboxylic acid function group being formed resulting in the products of
+        hydrolysis.
+      notes: M-CSA entry 453, mechanism 2; M-CSA cites PMID:10201402, PMID:11061974, PMID:17625021, PMID:27328716,
+        PMID:27991516; step 1
+  - subject: his338
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His338 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/453/
+      snippet: The enzyme contains a catalytic triad Ser202-His338-Asp308. The mechanism is believed to
+        follow that of a typical esterase. Ser202 is deprotonated by His338 and subsequently attacks the
+        carbonyl moiety in the ester linkage. The tetrahedral intermediate collapses and the negatively
+        charged oxygen deprotonates His338 to form an alcohol functional group. His338 then deprotonates
+        a water molecule to form a nucleophile, which subsequently attacks the carbonyl moiety, forming
+        a second tetrahedral intermediate. The collapse of this results in Ser202 being eliminated as
+        a leaving group and a carboxylic acid function group being formed resulting in the products of
+        hydrolysis.
+      notes: M-CSA entry 453, mechanism 2; M-CSA cites PMID:10201402, PMID:11061974, PMID:17625021, PMID:27328716,
+        PMID:27991516; step 1
+  - subject: gly127
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly127 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/453/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 453, mechanism 2; M-CSA cites PMID:10201402, PMID:11061974, PMID:17625021, PMID:27328716,
+        PMID:27991516; M-CSA catalytic-residue roles for Gly127
+  - subject: gly128
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly128 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/453/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 453, mechanism 2; M-CSA cites PMID:10201402, PMID:11061974, PMID:17625021, PMID:27328716,
+        PMID:27991516; M-CSA catalytic-residue roles for Gly128
+  - subject: ser202
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser202 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/453/
+      snippet: covalent catalysis, proton shuttle (general acid/base)
+      notes: M-CSA entry 453, mechanism 2; M-CSA cites PMID:10201402, PMID:11061974, PMID:17625021, PMID:27328716,
+        PMID:27991516; M-CSA catalytic-residue roles for Ser202
+  - subject: tyr233
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr233 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/453/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 453, mechanism 2; M-CSA cites PMID:10201402, PMID:11061974, PMID:17625021, PMID:27328716,
+        PMID:27991516; M-CSA catalytic-residue roles for Tyr233
+  - subject: tyr238
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr238 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/453/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 453, mechanism 2; M-CSA cites PMID:10201402, PMID:11061974, PMID:17625021, PMID:27328716,
+        PMID:27991516; M-CSA catalytic-residue roles for Tyr238
+  - subject: asp308
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp308 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/453/
+      snippet: electrostatic stabiliser, modifies pKa
+      notes: M-CSA entry 453, mechanism 2; M-CSA cites PMID:10201402, PMID:11061974, PMID:17625021, PMID:27328716,
+        PMID:27991516; M-CSA catalytic-residue roles for Asp308
+  - subject: his338
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His338 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/453/
+      snippet: electrostatic stabiliser, proton shuttle (general acid/base)
+      notes: M-CSA entry 453, mechanism 2; M-CSA cites PMID:10201402, PMID:11061974, PMID:17625021, PMID:27328716,
+        PMID:27991516; M-CSA catalytic-residue roles for His338
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/453/
+      snippet: The enzyme contains a catalytic triad Ser202-His338-Asp308. The mechanism is believed to
+        follow that of a typical esterase. Ser202 is deprotonated by His338 and subsequently attacks the
+        carbonyl moiety in the ester linkage. The tetrahedral intermediate collapses and the negatively
+        charged oxygen deprotonates His338 to form an alcohol functional group. His338 then deprotonates
+        a water molecule to f
+      notes: M-CSA entry 453, mechanism 2; M-CSA cites PMID:10201402, PMID:11061974, PMID:17625021, PMID:27328716,
+        PMID:27991516; CATH domain 3.40.50.1820 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/453/
+      snippet: The enzyme contains a catalytic triad Ser202-His338-Asp308. The mechanism is believed to
+        follow that of a typical esterase. Ser202 is deprotonated by His338 and subsequently attacks the
+        carbonyl moiety in the ester linkage. The tetrahedral intermediate collapses and the negatively
+        charged oxygen deprotonates His338 to form an alcohol functional group. His338 then deprotonates
+        a water molecule to f
+      notes: M-CSA entry 453, mechanism 2; M-CSA cites PMID:10201402, PMID:11061974, PMID:17625021, PMID:27328716,
+        PMID:27991516; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/453/
+      snippet: The enzyme contains a catalytic triad Ser202-His338-Asp308. The mechanism is believed to
+        follow that of a typical esterase. Ser202 is deprotonated by His338 and subsequently attacks the
+        carbonyl moiety in the ester linkage. The tetrahedral intermediate collapses and the negatively
+        charged oxygen deprotonates His338 to form an alcohol functional group. His338 then deprotonates
+        a water molecule to f
+      notes: M-CSA entry 453, mechanism 2; M-CSA cites PMID:10201402, PMID:11061974, PMID:17625021, PMID:27328716,
+        PMID:27991516; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/453/
+      snippet: The enzyme contains a catalytic triad Ser202-His338-Asp308. The mechanism is believed to
+        follow that of a typical esterase. Ser202 is deprotonated by His338 and subsequently attacks the
+        carbonyl moiety in the ester linkage. The tetrahedral intermediate collapses and the negatively
+        charged oxygen deprotonates His338 to form an alcohol functional group. His338 then deprotonates
+        a water molecule to f
+      notes: M-CSA entry 453, mechanism 2; M-CSA cites PMID:10201402, PMID:11061974, PMID:17625021, PMID:27328716,
+        PMID:27991516; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/453/
+      snippet: The enzyme contains a catalytic triad Ser202-His338-Asp308. The mechanism is believed to
+        follow that of a typical esterase. Ser202 is deprotonated by His338 and subsequently attacks the
+        carbonyl moiety in the ester linkage. The tetrahedral intermediate collapses and the negatively
+        charged oxygen deprotonates His338 to form an alcohol functional group. His338 then deprotonates
+        a water molecule to f
+      notes: M-CSA entry 453, mechanism 2; M-CSA cites PMID:10201402, PMID:11061974, PMID:17625021, PMID:27328716,
+        PMID:27991516; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 453;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

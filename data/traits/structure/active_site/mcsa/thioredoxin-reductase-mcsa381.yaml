@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.8.1.9
 - CHEBI:29950
@@ -243,4 +243,200 @@ definitions:
       Thioredoxin reductase contains FAD and NADPH binding domains that are structurally similar to the corresponding domains of the related enzyme glutathione reductase. The relative orientation of these domains is, however, very different in the two enzymes: when the FAD domains of thioredoxin and glutathione reductases are superimposed, the NADPH domain of one is rotated by 66 degrees with respect to the other. The observed binding mode of NADP+ in thioredoxin reductase is non-productive in that the nicotinamide ring is more than 17 A from the flavin ring system. Thioredoxin reductase belongs to the class-II pyridine nucleotide-disulfide oxidoreductase family.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of Thioredoxin reductase
+  description: Mechanism transcribed from M-CSA entry 381. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +1).
+  nodes:
+  - node_id: cys135
+    label: catalytic Cys135 (M-CSA/PDB numbering; UniProt residue 136)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A9P4
+    description: 'M-CSA roles: covalent catalysis, proton shuttle (general acid/base).'
+  - node_id: cys138
+    label: catalytic Cys138 (M-CSA/PDB numbering; UniProt residue 139)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A9P4
+    description: 'M-CSA roles: covalent catalysis, proton shuttle (general acid/base).'
+  - node_id: asp139
+    label: catalytic Asp139 (M-CSA/PDB numbering; UniProt residue 140)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A9P4
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: L-cysteine residue
+    node_type: CHEMICAL
+    grounding: CHEBI:29950
+  - node_id: reactant1
+    label: NADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+  - node_id: product0
+    label: L-cystine residue
+    node_type: CHEMICAL
+    grounding: CHEBI:50058
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: NADPH(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: The most direct pathway for reducing equivalents in turnover would require a ternary
+      complex in which the flavin is reduced by NADPH while thioredoxin is being reduced by the active
+      site dithiol when the enzyme is in the proposed FR conformation (allows flavin reduction by pyridine
+      nucleotide). Following the reversal of rotation, the nascent active site disulfide could be reduced
+      by the newly redu
+  - node_id: active_site
+    label: Thioredoxin reductase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:381
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.50.50.60 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.50.50.60
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: Thioredoxin reductase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.8.1.9
+  edges:
+  - subject: cys135
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys135 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/381/
+      snippet: covalent catalysis, proton shuttle (general acid/base)
+      notes: M-CSA entry 381, mechanism 1; M-CSA cites PMID:7557016, PMID:8664260; M-CSA catalytic-residue
+        roles for Cys135
+  - subject: cys138
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys138 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/381/
+      snippet: covalent catalysis, proton shuttle (general acid/base)
+      notes: M-CSA entry 381, mechanism 1; M-CSA cites PMID:7557016, PMID:8664260; M-CSA catalytic-residue
+        roles for Cys138
+  - subject: asp139
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp139 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/381/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 381, mechanism 1; M-CSA cites PMID:7557016, PMID:8664260; M-CSA catalytic-residue
+        roles for Asp139
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/381/
+      snippet: The most direct pathway for reducing equivalents in turnover would require a ternary complex
+        in which the flavin is reduced by NADPH while thioredoxin is being reduced by the active site
+        dithiol when the enzyme is in the proposed FR conformation (allows flavin reduction by pyridine
+        nucleotide). Following the reversal of rotation, the nascent active site disulfide could be reduced
+        by the newly redu
+      notes: M-CSA entry 381, mechanism 1; M-CSA cites PMID:7557016, PMID:8664260; CATH domain 3.50.50.60
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/381/
+      snippet: The most direct pathway for reducing equivalents in turnover would require a ternary complex
+        in which the flavin is reduced by NADPH while thioredoxin is being reduced by the active site
+        dithiol when the enzyme is in the proposed FR conformation (allows flavin reduction by pyridine
+        nucleotide). Following the reversal of rotation, the nascent active site disulfide could be reduced
+        by the newly redu
+      notes: M-CSA entry 381, mechanism 1; M-CSA cites PMID:7557016, PMID:8664260; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/381/
+      snippet: The most direct pathway for reducing equivalents in turnover would require a ternary complex
+        in which the flavin is reduced by NADPH while thioredoxin is being reduced by the active site
+        dithiol when the enzyme is in the proposed FR conformation (allows flavin reduction by pyridine
+        nucleotide). Following the reversal of rotation, the nascent active site disulfide could be reduced
+        by the newly redu
+      notes: M-CSA entry 381, mechanism 1; M-CSA cites PMID:7557016, PMID:8664260; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/381/
+      snippet: The most direct pathway for reducing equivalents in turnover would require a ternary complex
+        in which the flavin is reduced by NADPH while thioredoxin is being reduced by the active site
+        dithiol when the enzyme is in the proposed FR conformation (allows flavin reduction by pyridine
+        nucleotide). Following the reversal of rotation, the nascent active site disulfide could be reduced
+        by the newly redu
+      notes: M-CSA entry 381, mechanism 1; M-CSA cites PMID:7557016, PMID:8664260; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/381/
+      snippet: The most direct pathway for reducing equivalents in turnover would require a ternary complex
+        in which the flavin is reduced by NADPH while thioredoxin is being reduced by the active site
+        dithiol when the enzyme is in the proposed FR conformation (allows flavin reduction by pyridine
+        nucleotide). Following the reversal of rotation, the nascent active site disulfide could be reduced
+        by the newly redu
+      notes: M-CSA entry 381, mechanism 1; M-CSA cites PMID:7557016, PMID:8664260; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/381/
+      snippet: The most direct pathway for reducing equivalents in turnover would require a ternary complex
+        in which the flavin is reduced by NADPH while thioredoxin is being reduced by the active site
+        dithiol when the enzyme is in the proposed FR conformation (allows flavin reduction by pyridine
+        nucleotide). Following the reversal of rotation, the nascent active site disulfide could be reduced
+        by the newly redu
+      notes: M-CSA entry 381, mechanism 1; M-CSA cites PMID:7557016, PMID:8664260; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/381/
+      snippet: The most direct pathway for reducing equivalents in turnover would require a ternary complex
+        in which the flavin is reduced by NADPH while thioredoxin is being reduced by the active site
+        dithiol when the enzyme is in the proposed FR conformation (allows flavin reduction by pyridine
+        nucleotide). Following the reversal of rotation, the nascent active site disulfide could be reduced
+        by the newly redu
+      notes: M-CSA entry 381, mechanism 1; M-CSA cites PMID:7557016, PMID:8664260; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (10 evidence-backed edges) transcribed from M-CSA entry 381;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

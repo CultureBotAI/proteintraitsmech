@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.5.3.1
 - CHEBI:15377
@@ -299,4 +299,278 @@ definitions:
       Arginase (L-arginine amidinohydrolase, E.C. 3.5.3.1) is a metal ion dependent enzyme that catalyzes the hydrolysis of L-arginine to L-ornithine and urea. The enzyme is widely distributed throughout the evolutionary spectrum in organisms as diverse as bacteria, yeast, plants and animals Arginase catalyses the divalent cation-dependent hydrolysis of L-arginine to form the non-proteinogenic amino acid L-ornithine and urea. Arginase is a manganese-dependent enzyme that catalyzes the hydrolysis of L-arginine to L-ornithine and urea. In ureotelic animals arginase is the final enzyme of the urea cycle, but in many species it has a wider role controlling the use of arginine for other metabolic purposes, including the production of creatine, polyamines, proline and nitric oxide. Arginase activity is regulated by various small molecules, including the product L-ornithine.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of arginase
+  description: Mechanism transcribed from M-CSA entry 445. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: his99
+    label: catalytic His99 (M-CSA/PDB numbering; UniProt residue 99)
+    node_type: RESIDUE
+    grounding: UniProtKB:P53608
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp122
+    label: catalytic Asp122 (M-CSA/PDB numbering; UniProt residue 122)
+    node_type: RESIDUE
+    grounding: UniProtKB:P53608
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his124
+    label: catalytic His124 (M-CSA/PDB numbering; UniProt residue 124)
+    node_type: RESIDUE
+    grounding: UniProtKB:P53608
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp126
+    label: catalytic Asp126 (M-CSA/PDB numbering; UniProt residue 126)
+    node_type: RESIDUE
+    grounding: UniProtKB:P53608
+    description: 'M-CSA roles: metal ligand, modifies pKa, proton shuttle (general acid/base).'
+  - node_id: his139
+    label: catalytic His139 (M-CSA/PDB numbering; UniProt residue 139)
+    node_type: RESIDUE
+    grounding: UniProtKB:P53608
+    description: 'M-CSA roles: proton shuttle (general acid/base), steric role.'
+  - node_id: asp226
+    label: catalytic Asp226 (M-CSA/PDB numbering; UniProt residue 226)
+    node_type: RESIDUE
+    grounding: UniProtKB:P53608
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp228
+    label: catalytic Asp228 (M-CSA/PDB numbering; UniProt residue 228)
+    node_type: RESIDUE
+    grounding: UniProtKB:P53608
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu271
+    label: catalytic Glu271 (M-CSA/PDB numbering; UniProt residue 271)
+    node_type: RESIDUE
+    grounding: UniProtKB:P53608
+    description: 'M-CSA roles: electrostatic stabiliser, steric role.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: L-argininium(1+)
+    node_type: CHEMICAL
+    grounding: CHEBI:32682
+  - node_id: product0
+    label: L-ornithinium(1+)
+    node_type: CHEMICAL
+    grounding: CHEBI:46911
+  - node_id: product1
+    label: urea
+    node_type: CHEMICAL
+    grounding: CHEBI:16199
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: The substrate L-arginine binds to the active site, but does not coordinate to the metal
+      ion centres directly. The metal-bridging hydroxide then initiates a nucleophilic attack on the substrate's
+      guanidinium group, which leads to the formation of a tetrahedral intermediate. Following a proton
+      transfer to the leaving amino group mediated by Asp-128, the collapse of the tetrahedral intermediate
+      yield
+  - node_id: active_site
+    label: arginase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:445
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.800.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.800.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: arginase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.5.3.1
+  edges:
+  - subject: his99
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His99 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/445/
+      snippet: metal ligand
+      notes: M-CSA entry 445, mechanism 1; M-CSA cites PMID:10527864, PMID:10542097, PMID:10545206, PMID:10693141,
+        PMID:11258879, PMID:11258880, PMID:15766238, PMID:19288480, PMID:21053939, PMID:23454280, PMID:25447142,
+        PMID:8849731, PMID:9265637, PMID:9622506; M-CSA catalytic-residue roles for His99
+  - subject: asp122
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp122 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/445/
+      snippet: metal ligand
+      notes: M-CSA entry 445, mechanism 1; M-CSA cites PMID:10527864, PMID:10542097, PMID:10545206, PMID:10693141,
+        PMID:11258879, PMID:11258880, PMID:15766238, PMID:19288480, PMID:21053939, PMID:23454280, PMID:25447142,
+        PMID:8849731, PMID:9265637, PMID:9622506; M-CSA catalytic-residue roles for Asp122
+  - subject: his124
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His124 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/445/
+      snippet: metal ligand
+      notes: M-CSA entry 445, mechanism 1; M-CSA cites PMID:10527864, PMID:10542097, PMID:10545206, PMID:10693141,
+        PMID:11258879, PMID:11258880, PMID:15766238, PMID:19288480, PMID:21053939, PMID:23454280, PMID:25447142,
+        PMID:8849731, PMID:9265637, PMID:9622506; M-CSA catalytic-residue roles for His124
+  - subject: asp126
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp126 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/445/
+      snippet: metal ligand, modifies pKa, proton shuttle (general acid/base)
+      notes: M-CSA entry 445, mechanism 1; M-CSA cites PMID:10527864, PMID:10542097, PMID:10545206, PMID:10693141,
+        PMID:11258879, PMID:11258880, PMID:15766238, PMID:19288480, PMID:21053939, PMID:23454280, PMID:25447142,
+        PMID:8849731, PMID:9265637, PMID:9622506; M-CSA catalytic-residue roles for Asp126
+  - subject: his139
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His139 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/445/
+      snippet: proton shuttle (general acid/base), steric role
+      notes: M-CSA entry 445, mechanism 1; M-CSA cites PMID:10527864, PMID:10542097, PMID:10545206, PMID:10693141,
+        PMID:11258879, PMID:11258880, PMID:15766238, PMID:19288480, PMID:21053939, PMID:23454280, PMID:25447142,
+        PMID:8849731, PMID:9265637, PMID:9622506; M-CSA catalytic-residue roles for His139
+  - subject: asp226
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp226 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/445/
+      snippet: metal ligand
+      notes: M-CSA entry 445, mechanism 1; M-CSA cites PMID:10527864, PMID:10542097, PMID:10545206, PMID:10693141,
+        PMID:11258879, PMID:11258880, PMID:15766238, PMID:19288480, PMID:21053939, PMID:23454280, PMID:25447142,
+        PMID:8849731, PMID:9265637, PMID:9622506; M-CSA catalytic-residue roles for Asp226
+  - subject: asp228
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp228 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/445/
+      snippet: metal ligand
+      notes: M-CSA entry 445, mechanism 1; M-CSA cites PMID:10527864, PMID:10542097, PMID:10545206, PMID:10693141,
+        PMID:11258879, PMID:11258880, PMID:15766238, PMID:19288480, PMID:21053939, PMID:23454280, PMID:25447142,
+        PMID:8849731, PMID:9265637, PMID:9622506; M-CSA catalytic-residue roles for Asp228
+  - subject: glu271
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu271 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/445/
+      snippet: electrostatic stabiliser, steric role
+      notes: M-CSA entry 445, mechanism 1; M-CSA cites PMID:10527864, PMID:10542097, PMID:10545206, PMID:10693141,
+        PMID:11258879, PMID:11258880, PMID:15766238, PMID:19288480, PMID:21053939, PMID:23454280, PMID:25447142,
+        PMID:8849731, PMID:9265637, PMID:9622506; M-CSA catalytic-residue roles for Glu271
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/445/
+      snippet: The substrate L-arginine binds to the active site, but does not coordinate to the metal
+        ion centres directly. The metal-bridging hydroxide then initiates a nucleophilic attack on the
+        substrate's guanidinium group, which leads to the formation of a tetrahedral intermediate. Following
+        a proton transfer to the leaving amino group mediated by Asp-128, the collapse of the tetrahedral
+        intermediate yield
+      notes: M-CSA entry 445, mechanism 1; M-CSA cites PMID:10527864, PMID:10542097, PMID:10545206, PMID:10693141,
+        PMID:11258879, PMID:11258880, PMID:15766238, PMID:19288480, PMID:21053939, PMID:23454280, PMID:25447142,
+        PMID:8849731, PMID:9265637, PMID:9622506; CATH domain 3.40.800.10 assigned to the catalytic chain
+        by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/445/
+      snippet: The substrate L-arginine binds to the active site, but does not coordinate to the metal
+        ion centres directly. The metal-bridging hydroxide then initiates a nucleophilic attack on the
+        substrate's guanidinium group, which leads to the formation of a tetrahedral intermediate. Following
+        a proton transfer to the leaving amino group mediated by Asp-128, the collapse of the tetrahedral
+        intermediate yield
+      notes: M-CSA entry 445, mechanism 1; M-CSA cites PMID:10527864, PMID:10542097, PMID:10545206, PMID:10693141,
+        PMID:11258879, PMID:11258880, PMID:15766238, PMID:19288480, PMID:21053939, PMID:23454280, PMID:25447142,
+        PMID:8849731, PMID:9265637, PMID:9622506; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/445/
+      snippet: The substrate L-arginine binds to the active site, but does not coordinate to the metal
+        ion centres directly. The metal-bridging hydroxide then initiates a nucleophilic attack on the
+        substrate's guanidinium group, which leads to the formation of a tetrahedral intermediate. Following
+        a proton transfer to the leaving amino group mediated by Asp-128, the collapse of the tetrahedral
+        intermediate yield
+      notes: M-CSA entry 445, mechanism 1; M-CSA cites PMID:10527864, PMID:10542097, PMID:10545206, PMID:10693141,
+        PMID:11258879, PMID:11258880, PMID:15766238, PMID:19288480, PMID:21053939, PMID:23454280, PMID:25447142,
+        PMID:8849731, PMID:9265637, PMID:9622506; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/445/
+      snippet: The substrate L-arginine binds to the active site, but does not coordinate to the metal
+        ion centres directly. The metal-bridging hydroxide then initiates a nucleophilic attack on the
+        substrate's guanidinium group, which leads to the formation of a tetrahedral intermediate. Following
+        a proton transfer to the leaving amino group mediated by Asp-128, the collapse of the tetrahedral
+        intermediate yield
+      notes: M-CSA entry 445, mechanism 1; M-CSA cites PMID:10527864, PMID:10542097, PMID:10545206, PMID:10693141,
+        PMID:11258879, PMID:11258880, PMID:15766238, PMID:19288480, PMID:21053939, PMID:23454280, PMID:25447142,
+        PMID:8849731, PMID:9265637, PMID:9622506; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/445/
+      snippet: The substrate L-arginine binds to the active site, but does not coordinate to the metal
+        ion centres directly. The metal-bridging hydroxide then initiates a nucleophilic attack on the
+        substrate's guanidinium group, which leads to the formation of a tetrahedral intermediate. Following
+        a proton transfer to the leaving amino group mediated by Asp-128, the collapse of the tetrahedral
+        intermediate yield
+      notes: M-CSA entry 445, mechanism 1; M-CSA cites PMID:10527864, PMID:10542097, PMID:10545206, PMID:10693141,
+        PMID:11258879, PMID:11258880, PMID:15766238, PMID:19288480, PMID:21053939, PMID:23454280, PMID:25447142,
+        PMID:8849731, PMID:9265637, PMID:9622506; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/445/
+      snippet: The substrate L-arginine binds to the active site, but does not coordinate to the metal
+        ion centres directly. The metal-bridging hydroxide then initiates a nucleophilic attack on the
+        substrate's guanidinium group, which leads to the formation of a tetrahedral intermediate. Following
+        a proton transfer to the leaving amino group mediated by Asp-128, the collapse of the tetrahedral
+        intermediate yield
+      notes: M-CSA entry 445, mechanism 1; M-CSA cites PMID:10527864, PMID:10542097, PMID:10545206, PMID:10693141,
+        PMID:11258879, PMID:11258880, PMID:15766238, PMID:19288480, PMID:21053939, PMID:23454280, PMID:25447142,
+        PMID:8849731, PMID:9265637, PMID:9622506; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (14 evidence-backed edges) transcribed from M-CSA entry 445;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

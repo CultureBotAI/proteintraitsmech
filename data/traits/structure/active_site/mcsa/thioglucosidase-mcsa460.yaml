@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.1.147
 - CHEBI:15377
@@ -429,4 +429,500 @@ definitions:
       Myronase is the enzyme responsible for the hydrolysis of a variety of plant anionic-1-thio-beta-glucosides, called glucosinolates. Sinapsis alba myrosinase is a 499 amino acid S-glucosidase which hydrolyses an S-glycosidic bond, and is closely related to the O-glucosidases. Upon hydrolysis, configuration at the anomeric centre is retained. Myrosinases are thought to be involved in defence systems developed by plants The protein fold into a (beta/alpha)8 barrel structure, forming a dimer which is stabilised by a Zn ion, and is heavily glycosylated. It is a member of the glycoside hydrolase family 1 (GH1).
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of thioglucosidase
+  description: Mechanism transcribed from M-CSA entry 460. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: arg95
+    label: catalytic Arg95 (M-CSA/PDB numbering; UniProt residue 95)
+    node_type: RESIDUE
+    grounding: UniProtKB:P29736
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: gln187
+    label: catalytic Gln187 (M-CSA/PDB numbering; UniProt residue 187)
+    node_type: RESIDUE
+    grounding: UniProtKB:P29736
+    description: 'M-CSA roles: electrostatic stabiliser, modifies pKa, steric role.'
+  - node_id: ser190
+    label: catalytic Ser190 (M-CSA/PDB numbering; UniProt residue 190)
+    node_type: RESIDUE
+    grounding: UniProtKB:P29736
+    description: 'M-CSA roles: electrostatic stabiliser, steric role.'
+  - node_id: asn328
+    label: catalytic Asn328 (M-CSA/PDB numbering; UniProt residue 328)
+    node_type: RESIDUE
+    grounding: UniProtKB:P29736
+    description: 'M-CSA roles: electrostatic stabiliser, steric role.'
+  - node_id: tyr330
+    label: catalytic Tyr330 (M-CSA/PDB numbering; UniProt residue 330)
+    node_type: RESIDUE
+    grounding: UniProtKB:P29736
+    description: 'M-CSA roles: transition state stabiliser.'
+  - node_id: glu409
+    label: catalytic Glu409 (M-CSA/PDB numbering; UniProt residue 409)
+    node_type: RESIDUE
+    grounding: UniProtKB:P29736
+    description: 'M-CSA roles: covalently attached, electrostatic stabiliser.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: thioglucoside
+    node_type: CHEMICAL
+    grounding: CHEBI:9553
+  - node_id: product0
+    label: D-glucopyranose
+    node_type: CHEMICAL
+    grounding: CHEBI:4167
+  - node_id: product1
+    label: thiol
+    node_type: CHEMICAL
+    grounding: CHEBI:29256
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: "The catalytic mechanism is a two-step process: (a) The glycosylation step- formation\
+      \ of the gycosyl-enzyme complex with aglycon departure. (b) Deglycosylation - hydrolysis of the\
+      \ glycosyl-enzyme complex by a nucleophilic water molecule. The mechanism proceeds as follows:\
+      
+<ol>
+<li>The substrate binds to the enzyme in the hydrophobic pocket by glucosinolate hydrophobic\
+      \ side chains, and with two ar"
+  - node_id: active_site
+    label: thioglucosidase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:460
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.80 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.80
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: thioglucosidase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.1.147
+  edges:
+  - subject: arg95
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg95 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/460/
+      snippet: "The catalytic mechanism is a two-step process: (a) The glycosylation step- formation of\
+        \ the gycosyl-enzyme complex with aglycon departure. (b) Deglycosylation - hydrolysis of the glycosyl-enzyme\
+        \ complex by a nucleophilic water molecule. The mechanism proceeds as follows:
+<ol>
+<li>The\
+        \ substrate binds to the enzyme in the hydrophobic pocket by glucosinolate hydrophobic side chains,\
+        \ and with two arginine residues positioned appropriately for interaction with the substrate sulphate\
+        \ group. This is via nucleophilic attack of Glu 409 on the substrate anomeric carbon, with aglycon\
+        \ departure. Ser 190 defines Glu 409 position and stabilises the glycosyl-enzyme complex by hydrogen\
+        \ bonding to the substrate sulphate group. Gln 187 activates a water molecule to assist acglycon\
+        \ departure, rather than acting as an acidic residue itself. </li>
+
+<li>The sugar ring is\
+        \ bound to the enzyme via an alpha-glycosidic linkage to the Glu 409 residue, the catalytic nucleophile.</li>\
+        
+
+<li>Upon formation of the glycosyl-enzyme complex, the salt bridge between Glu 409 and Arg\
+        \ 95 is disrupted, and the side chain of Glu 409 aletrs its conformation. </li>
+
+<li>A water\
+        \ molecule hydrogen bonds to the Arg 95, whose charge becomes buried. </li>
+
+<li>Formation\
+        \ of the glycosyl-enzyme complex is also accompanied by the change in position of Tyr 330, whose\
+        \ hydroxyl group points towards the sugar ring O. </li>
+
+<li>hydrolysis of the glycosyl-enzyme\
+        \ intermediate by water. During the earlier nucleophilic attack, the water molecule moves closer\
+        \ to the C1 of the gly-enzyme complex by hydrogen bonding to the Oe1 of Gln 187. The Gln 187 position\
+        \ is defined by hydrogen bonds between Ser 190 gamma-O and Ne2 of Gln 187, and also between N-delta\
+        \ -2 of Asn 328 with Oe1 of Gln 187. This ensures precise positioning of the nucleophilic water\
+        \ molecule that is required for hydrolysis. If ascorbate is present, then this can activate the\
+        \ nucleophilic water <i>via</i> proton abstraction.</li>"
+      notes: M-CSA entry 460, mechanism 1; M-CSA cites PMID:10978344, PMID:15889170, PMID:16291087, PMID:19703694,
+        PMID:21236711, PMID:26703735, PMID:8952475, PMID:9195886; step 1
+  - subject: gln187
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Gln187 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/460/
+      snippet: "The catalytic mechanism is a two-step process: (a) The glycosylation step- formation of\
+        \ the gycosyl-enzyme complex with aglycon departure. (b) Deglycosylation - hydrolysis of the glycosyl-enzyme\
+        \ complex by a nucleophilic water molecule. The mechanism proceeds as follows:
+<ol>
+<li>The\
+        \ substrate binds to the enzyme in the hydrophobic pocket by glucosinolate hydrophobic side chains,\
+        \ and with two arginine residues positioned appropriately for interaction with the substrate sulphate\
+        \ group. This is via nucleophilic attack of Glu 409 on the substrate anomeric carbon, with aglycon\
+        \ departure. Ser 190 defines Glu 409 position and stabilises the glycosyl-enzyme complex by hydrogen\
+        \ bonding to the substrate sulphate group. Gln 187 activates a water molecule to assist acglycon\
+        \ departure, rather than acting as an acidic residue itself. </li>
+
+<li>The sugar ring is\
+        \ bound to the enzyme via an alpha-glycosidic linkage to the Glu 409 residue, the catalytic nucleophile.</li>\
+        
+
+<li>Upon formation of the glycosyl-enzyme complex, the salt bridge between Glu 409 and Arg\
+        \ 95 is disrupted, and the side chain of Glu 409 aletrs its conformation. </li>
+
+<li>A water\
+        \ molecule hydrogen bonds to the Arg 95, whose charge becomes buried. </li>
+
+<li>Formation\
+        \ of the glycosyl-enzyme complex is also accompanied by the change in position of Tyr 330, whose\
+        \ hydroxyl group points towards the sugar ring O. </li>
+
+<li>hydrolysis of the glycosyl-enzyme\
+        \ intermediate by water. During the earlier nucleophilic attack, the water molecule moves closer\
+        \ to the C1 of the gly-enzyme complex by hydrogen bonding to the Oe1 of Gln 187. The Gln 187 position\
+        \ is defined by hydrogen bonds between Ser 190 gamma-O and Ne2 of Gln 187, and also between N-delta\
+        \ -2 of Asn 328 with Oe1 of Gln 187. This ensures precise positioning of the nucleophilic water\
+        \ molecule that is required for hydrolysis. If ascorbate is present, then this can activate the\
+        \ nucleophilic water <i>via</i> proton abstraction.</li>"
+      notes: M-CSA entry 460, mechanism 1; M-CSA cites PMID:10978344, PMID:15889170, PMID:16291087, PMID:19703694,
+        PMID:21236711, PMID:26703735, PMID:8952475, PMID:9195886; step 1
+  - subject: ser190
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser190 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/460/
+      snippet: "The catalytic mechanism is a two-step process: (a) The glycosylation step- formation of\
+        \ the gycosyl-enzyme complex with aglycon departure. (b) Deglycosylation - hydrolysis of the glycosyl-enzyme\
+        \ complex by a nucleophilic water molecule. The mechanism proceeds as follows:
+<ol>
+<li>The\
+        \ substrate binds to the enzyme in the hydrophobic pocket by glucosinolate hydrophobic side chains,\
+        \ and with two arginine residues positioned appropriately for interaction with the substrate sulphate\
+        \ group. This is via nucleophilic attack of Glu 409 on the substrate anomeric carbon, with aglycon\
+        \ departure. Ser 190 defines Glu 409 position and stabilises the glycosyl-enzyme complex by hydrogen\
+        \ bonding to the substrate sulphate group. Gln 187 activates a water molecule to assist acglycon\
+        \ departure, rather than acting as an acidic residue itself. </li>
+
+<li>The sugar ring is\
+        \ bound to the enzyme via an alpha-glycosidic linkage to the Glu 409 residue, the catalytic nucleophile.</li>\
+        
+
+<li>Upon formation of the glycosyl-enzyme complex, the salt bridge between Glu 409 and Arg\
+        \ 95 is disrupted, and the side chain of Glu 409 aletrs its conformation. </li>
+
+<li>A water\
+        \ molecule hydrogen bonds to the Arg 95, whose charge becomes buried. </li>
+
+<li>Formation\
+        \ of the glycosyl-enzyme complex is also accompanied by the change in position of Tyr 330, whose\
+        \ hydroxyl group points towards the sugar ring O. </li>
+
+<li>hydrolysis of the glycosyl-enzyme\
+        \ intermediate by water. During the earlier nucleophilic attack, the water molecule moves closer\
+        \ to the C1 of the gly-enzyme complex by hydrogen bonding to the Oe1 of Gln 187. The Gln 187 position\
+        \ is defined by hydrogen bonds between Ser 190 gamma-O and Ne2 of Gln 187, and also between N-delta\
+        \ -2 of Asn 328 with Oe1 of Gln 187. This ensures precise positioning of the nucleophilic water\
+        \ molecule that is required for hydrolysis. If ascorbate is present, then this can activate the\
+        \ nucleophilic water <i>via</i> proton abstraction.</li>"
+      notes: M-CSA entry 460, mechanism 1; M-CSA cites PMID:10978344, PMID:15889170, PMID:16291087, PMID:19703694,
+        PMID:21236711, PMID:26703735, PMID:8952475, PMID:9195886; step 1
+  - subject: asn328
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asn328 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/460/
+      snippet: "The catalytic mechanism is a two-step process: (a) The glycosylation step- formation of\
+        \ the gycosyl-enzyme complex with aglycon departure. (b) Deglycosylation - hydrolysis of the glycosyl-enzyme\
+        \ complex by a nucleophilic water molecule. The mechanism proceeds as follows:
+<ol>
+<li>The\
+        \ substrate binds to the enzyme in the hydrophobic pocket by glucosinolate hydrophobic side chains,\
+        \ and with two arginine residues positioned appropriately for interaction with the substrate sulphate\
+        \ group. This is via nucleophilic attack of Glu 409 on the substrate anomeric carbon, with aglycon\
+        \ departure. Ser 190 defines Glu 409 position and stabilises the glycosyl-enzyme complex by hydrogen\
+        \ bonding to the substrate sulphate group. Gln 187 activates a water molecule to assist acglycon\
+        \ departure, rather than acting as an acidic residue itself. </li>
+
+<li>The sugar ring is\
+        \ bound to the enzyme via an alpha-glycosidic linkage to the Glu 409 residue, the catalytic nucleophile.</li>\
+        
+
+<li>Upon formation of the glycosyl-enzyme complex, the salt bridge between Glu 409 and Arg\
+        \ 95 is disrupted, and the side chain of Glu 409 aletrs its conformation. </li>
+
+<li>A water\
+        \ molecule hydrogen bonds to the Arg 95, whose charge becomes buried. </li>
+
+<li>Formation\
+        \ of the glycosyl-enzyme complex is also accompanied by the change in position of Tyr 330, whose\
+        \ hydroxyl group points towards the sugar ring O. </li>
+
+<li>hydrolysis of the glycosyl-enzyme\
+        \ intermediate by water. During the earlier nucleophilic attack, the water molecule moves closer\
+        \ to the C1 of the gly-enzyme complex by hydrogen bonding to the Oe1 of Gln 187. The Gln 187 position\
+        \ is defined by hydrogen bonds between Ser 190 gamma-O and Ne2 of Gln 187, and also between N-delta\
+        \ -2 of Asn 328 with Oe1 of Gln 187. This ensures precise positioning of the nucleophilic water\
+        \ molecule that is required for hydrolysis. If ascorbate is present, then this can activate the\
+        \ nucleophilic water <i>via</i> proton abstraction.</li>"
+      notes: M-CSA entry 460, mechanism 1; M-CSA cites PMID:10978344, PMID:15889170, PMID:16291087, PMID:19703694,
+        PMID:21236711, PMID:26703735, PMID:8952475, PMID:9195886; step 1
+  - subject: tyr330
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr330 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/460/
+      snippet: "The catalytic mechanism is a two-step process: (a) The glycosylation step- formation of\
+        \ the gycosyl-enzyme complex with aglycon departure. (b) Deglycosylation - hydrolysis of the glycosyl-enzyme\
+        \ complex by a nucleophilic water molecule. The mechanism proceeds as follows:
+<ol>
+<li>The\
+        \ substrate binds to the enzyme in the hydrophobic pocket by glucosinolate hydrophobic side chains,\
+        \ and with two arginine residues positioned appropriately for interaction with the substrate sulphate\
+        \ group. This is via nucleophilic attack of Glu 409 on the substrate anomeric carbon, with aglycon\
+        \ departure. Ser 190 defines Glu 409 position and stabilises the glycosyl-enzyme complex by hydrogen\
+        \ bonding to the substrate sulphate group. Gln 187 activates a water molecule to assist acglycon\
+        \ departure, rather than acting as an acidic residue itself. </li>
+
+<li>The sugar ring is\
+        \ bound to the enzyme via an alpha-glycosidic linkage to the Glu 409 residue, the catalytic nucleophile.</li>\
+        
+
+<li>Upon formation of the glycosyl-enzyme complex, the salt bridge between Glu 409 and Arg\
+        \ 95 is disrupted, and the side chain of Glu 409 aletrs its conformation. </li>
+
+<li>A water\
+        \ molecule hydrogen bonds to the Arg 95, whose charge becomes buried. </li>
+
+<li>Formation\
+        \ of the glycosyl-enzyme complex is also accompanied by the change in position of Tyr 330, whose\
+        \ hydroxyl group points towards the sugar ring O. </li>
+
+<li>hydrolysis of the glycosyl-enzyme\
+        \ intermediate by water. During the earlier nucleophilic attack, the water molecule moves closer\
+        \ to the C1 of the gly-enzyme complex by hydrogen bonding to the Oe1 of Gln 187. The Gln 187 position\
+        \ is defined by hydrogen bonds between Ser 190 gamma-O and Ne2 of Gln 187, and also between N-delta\
+        \ -2 of Asn 328 with Oe1 of Gln 187. This ensures precise positioning of the nucleophilic water\
+        \ molecule that is required for hydrolysis. If ascorbate is present, then this can activate the\
+        \ nucleophilic water <i>via</i> proton abstraction.</li>"
+      notes: M-CSA entry 460, mechanism 1; M-CSA cites PMID:10978344, PMID:15889170, PMID:16291087, PMID:19703694,
+        PMID:21236711, PMID:26703735, PMID:8952475, PMID:9195886; step 1
+  - subject: glu409
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu409 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/460/
+      snippet: "The catalytic mechanism is a two-step process: (a) The glycosylation step- formation of\
+        \ the gycosyl-enzyme complex with aglycon departure. (b) Deglycosylation - hydrolysis of the glycosyl-enzyme\
+        \ complex by a nucleophilic water molecule. The mechanism proceeds as follows:
+<ol>
+<li>The\
+        \ substrate binds to the enzyme in the hydrophobic pocket by glucosinolate hydrophobic side chains,\
+        \ and with two arginine residues positioned appropriately for interaction with the substrate sulphate\
+        \ group. This is via nucleophilic attack of Glu 409 on the substrate anomeric carbon, with aglycon\
+        \ departure. Ser 190 defines Glu 409 position and stabilises the glycosyl-enzyme complex by hydrogen\
+        \ bonding to the substrate sulphate group. Gln 187 activates a water molecule to assist acglycon\
+        \ departure, rather than acting as an acidic residue itself. </li>
+
+<li>The sugar ring is\
+        \ bound to the enzyme via an alpha-glycosidic linkage to the Glu 409 residue, the catalytic nucleophile.</li>\
+        
+
+<li>Upon formation of the glycosyl-enzyme complex, the salt bridge between Glu 409 and Arg\
+        \ 95 is disrupted, and the side chain of Glu 409 aletrs its conformation. </li>
+
+<li>A water\
+        \ molecule hydrogen bonds to the Arg 95, whose charge becomes buried. </li>
+
+<li>Formation\
+        \ of the glycosyl-enzyme complex is also accompanied by the change in position of Tyr 330, whose\
+        \ hydroxyl group points towards the sugar ring O. </li>
+
+<li>hydrolysis of the glycosyl-enzyme\
+        \ intermediate by water. During the earlier nucleophilic attack, the water molecule moves closer\
+        \ to the C1 of the gly-enzyme complex by hydrogen bonding to the Oe1 of Gln 187. The Gln 187 position\
+        \ is defined by hydrogen bonds between Ser 190 gamma-O and Ne2 of Gln 187, and also between N-delta\
+        \ -2 of Asn 328 with Oe1 of Gln 187. This ensures precise positioning of the nucleophilic water\
+        \ molecule that is required for hydrolysis. If ascorbate is present, then this can activate the\
+        \ nucleophilic water <i>via</i> proton abstraction.</li>"
+      notes: M-CSA entry 460, mechanism 1; M-CSA cites PMID:10978344, PMID:15889170, PMID:16291087, PMID:19703694,
+        PMID:21236711, PMID:26703735, PMID:8952475, PMID:9195886; step 1
+  - subject: arg95
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg95 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/460/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 460, mechanism 1; M-CSA cites PMID:10978344, PMID:15889170, PMID:16291087, PMID:19703694,
+        PMID:21236711, PMID:26703735, PMID:8952475, PMID:9195886; M-CSA catalytic-residue roles for Arg95
+  - subject: gln187
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln187 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/460/
+      snippet: electrostatic stabiliser, modifies pKa, steric role
+      notes: M-CSA entry 460, mechanism 1; M-CSA cites PMID:10978344, PMID:15889170, PMID:16291087, PMID:19703694,
+        PMID:21236711, PMID:26703735, PMID:8952475, PMID:9195886; M-CSA catalytic-residue roles for Gln187
+  - subject: ser190
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser190 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/460/
+      snippet: electrostatic stabiliser, steric role
+      notes: M-CSA entry 460, mechanism 1; M-CSA cites PMID:10978344, PMID:15889170, PMID:16291087, PMID:19703694,
+        PMID:21236711, PMID:26703735, PMID:8952475, PMID:9195886; M-CSA catalytic-residue roles for Ser190
+  - subject: asn328
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn328 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/460/
+      snippet: electrostatic stabiliser, steric role
+      notes: M-CSA entry 460, mechanism 1; M-CSA cites PMID:10978344, PMID:15889170, PMID:16291087, PMID:19703694,
+        PMID:21236711, PMID:26703735, PMID:8952475, PMID:9195886; M-CSA catalytic-residue roles for Asn328
+  - subject: tyr330
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr330 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/460/
+      snippet: transition state stabiliser
+      notes: M-CSA entry 460, mechanism 1; M-CSA cites PMID:10978344, PMID:15889170, PMID:16291087, PMID:19703694,
+        PMID:21236711, PMID:26703735, PMID:8952475, PMID:9195886; M-CSA catalytic-residue roles for Tyr330
+  - subject: glu409
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu409 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/460/
+      snippet: covalently attached, electrostatic stabiliser
+      notes: M-CSA entry 460, mechanism 1; M-CSA cites PMID:10978344, PMID:15889170, PMID:16291087, PMID:19703694,
+        PMID:21236711, PMID:26703735, PMID:8952475, PMID:9195886; M-CSA catalytic-residue roles for Glu409
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/460/
+      snippet: "The catalytic mechanism is a two-step process: (a) The glycosylation step- formation of\
+        \ the gycosyl-enzyme complex with aglycon departure. (b) Deglycosylation - hydrolysis of the glycosyl-enzyme\
+        \ complex by a nucleophilic water molecule. The mechanism proceeds as follows:
+<ol>
+<li>The\
+        \ substrate binds to the enzyme in the hydrophobic pocket by glucosinolate hydrophobic side chains,\
+        \ and with two ar"
+      notes: M-CSA entry 460, mechanism 1; M-CSA cites PMID:10978344, PMID:15889170, PMID:16291087, PMID:19703694,
+        PMID:21236711, PMID:26703735, PMID:8952475, PMID:9195886; CATH domain 3.20.20.80 assigned to the
+        catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/460/
+      snippet: "The catalytic mechanism is a two-step process: (a) The glycosylation step- formation of\
+        \ the gycosyl-enzyme complex with aglycon departure. (b) Deglycosylation - hydrolysis of the glycosyl-enzyme\
+        \ complex by a nucleophilic water molecule. The mechanism proceeds as follows:
+<ol>
+<li>The\
+        \ substrate binds to the enzyme in the hydrophobic pocket by glucosinolate hydrophobic side chains,\
+        \ and with two ar"
+      notes: M-CSA entry 460, mechanism 1; M-CSA cites PMID:10978344, PMID:15889170, PMID:16291087, PMID:19703694,
+        PMID:21236711, PMID:26703735, PMID:8952475, PMID:9195886; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/460/
+      snippet: "The catalytic mechanism is a two-step process: (a) The glycosylation step- formation of\
+        \ the gycosyl-enzyme complex with aglycon departure. (b) Deglycosylation - hydrolysis of the glycosyl-enzyme\
+        \ complex by a nucleophilic water molecule. The mechanism proceeds as follows:
+<ol>
+<li>The\
+        \ substrate binds to the enzyme in the hydrophobic pocket by glucosinolate hydrophobic side chains,\
+        \ and with two ar"
+      notes: M-CSA entry 460, mechanism 1; M-CSA cites PMID:10978344, PMID:15889170, PMID:16291087, PMID:19703694,
+        PMID:21236711, PMID:26703735, PMID:8952475, PMID:9195886; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/460/
+      snippet: "The catalytic mechanism is a two-step process: (a) The glycosylation step- formation of\
+        \ the gycosyl-enzyme complex with aglycon departure. (b) Deglycosylation - hydrolysis of the glycosyl-enzyme\
+        \ complex by a nucleophilic water molecule. The mechanism proceeds as follows:
+<ol>
+<li>The\
+        \ substrate binds to the enzyme in the hydrophobic pocket by glucosinolate hydrophobic side chains,\
+        \ and with two ar"
+      notes: M-CSA entry 460, mechanism 1; M-CSA cites PMID:10978344, PMID:15889170, PMID:16291087, PMID:19703694,
+        PMID:21236711, PMID:26703735, PMID:8952475, PMID:9195886; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/460/
+      snippet: "The catalytic mechanism is a two-step process: (a) The glycosylation step- formation of\
+        \ the gycosyl-enzyme complex with aglycon departure. (b) Deglycosylation - hydrolysis of the glycosyl-enzyme\
+        \ complex by a nucleophilic water molecule. The mechanism proceeds as follows:
+<ol>
+<li>The\
+        \ substrate binds to the enzyme in the hydrophobic pocket by glucosinolate hydrophobic side chains,\
+        \ and with two ar"
+      notes: M-CSA entry 460, mechanism 1; M-CSA cites PMID:10978344, PMID:15889170, PMID:16291087, PMID:19703694,
+        PMID:21236711, PMID:26703735, PMID:8952475, PMID:9195886; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/460/
+      snippet: "The catalytic mechanism is a two-step process: (a) The glycosylation step- formation of\
+        \ the gycosyl-enzyme complex with aglycon departure. (b) Deglycosylation - hydrolysis of the glycosyl-enzyme\
+        \ complex by a nucleophilic water molecule. The mechanism proceeds as follows:
+<ol>
+<li>The\
+        \ substrate binds to the enzyme in the hydrophobic pocket by glucosinolate hydrophobic side chains,\
+        \ and with two ar"
+      notes: M-CSA entry 460, mechanism 1; M-CSA cites PMID:10978344, PMID:15889170, PMID:16291087, PMID:19703694,
+        PMID:21236711, PMID:26703735, PMID:8952475, PMID:9195886; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (18 evidence-backed edges) transcribed from M-CSA entry 460;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

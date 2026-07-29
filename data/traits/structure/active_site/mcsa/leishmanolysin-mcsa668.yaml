@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.24.36
 - CHEBI:15377
@@ -427,4 +427,212 @@ definitions:
       Leishmania is a protozoan parasite transmitted from sandfly vector to human and other mammalian hosts causing chronic infections. It exists as extracellular promastigotes within sandflies and intracellular amastigotes within macrophage cells of mammals. Leishmanolysin is the major protein component of the Leishmania promastigote surface. It is characterised as a zinc metalloproteinase containing a glycosyl phosphatidyl inositol membrane anchor. It is an endopeptidase cleaving a variety of substrate. Its role in the life cycle Leishmania remains to be established.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of leishmanolysin
+  description: Mechanism transcribed from M-CSA entry 668. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: his264
+    label: catalytic His264 (M-CSA/PDB numbering; UniProt residue 264)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08148
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu265
+    label: catalytic Glu265 (M-CSA/PDB numbering; UniProt residue 265)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08148
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: his268
+    label: catalytic His268 (M-CSA/PDB numbering; UniProt residue 268)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08148
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his334
+    label: catalytic His334 (M-CSA/PDB numbering; UniProt residue 334)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08148
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: Tyr-Leu
+    node_type: CHEMICAL
+    grounding: CHEBI:75003
+  - node_id: product0
+    label: tyrosine
+    node_type: CHEMICAL
+    grounding: CHEBI:18186
+  - node_id: product1
+    label: leucine
+    node_type: CHEMICAL
+    grounding: CHEBI:25017
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: Leishmanolysin consists of HEXXH motif which is common in all zinc metalloproteinase,
+      so it was proposed that it shares the same mechanism as the other zinc metalloproteinases such as
+      thermolysin. Glu265, acting in conjunction with Zn2+ ion to deprotonate and activate a water molecule.
+      The activated water molecule acts as a nucleophile to attack the carbonyl of the peptide bond. Zn2+
+      stabilises th
+  - node_id: active_site
+    label: leishmanolysin catalytic site
+    node_type: MOTIF
+    grounding: MCSA:668
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.10.170.20 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.10.170.20
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: leishmanolysin activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.24.36
+  edges:
+  - subject: glu265
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu265 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/668/
+      snippet: Leishmanolysin consists of HEXXH motif which is common in all zinc metalloproteinase, so
+        it was proposed that it shares the same mechanism as the other zinc metalloproteinases such as
+        thermolysin. Glu265, acting in conjunction with Zn2+ ion to deprotonate and activate a water molecule.
+        The activated water molecule acts as a nucleophile to attack the carbonyl of the peptide bond.
+        Zn2+ stabilises the transition state by interacting with the negative charged carbonyl oxygen
+        atom of the tetrahedral intermediate.
+      notes: M-CSA entry 668, mechanism 1; M-CSA cites PMID:8519803, PMID:9739094; step 1
+  - subject: his264
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His264 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/668/
+      snippet: metal ligand
+      notes: M-CSA entry 668, mechanism 1; M-CSA cites PMID:8519803, PMID:9739094; M-CSA catalytic-residue
+        roles for His264
+  - subject: glu265
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu265 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/668/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 668, mechanism 1; M-CSA cites PMID:8519803, PMID:9739094; M-CSA catalytic-residue
+        roles for Glu265
+  - subject: his268
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His268 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/668/
+      snippet: metal ligand
+      notes: M-CSA entry 668, mechanism 1; M-CSA cites PMID:8519803, PMID:9739094; M-CSA catalytic-residue
+        roles for His268
+  - subject: his334
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His334 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/668/
+      snippet: metal ligand
+      notes: M-CSA entry 668, mechanism 1; M-CSA cites PMID:8519803, PMID:9739094; M-CSA catalytic-residue
+        roles for His334
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/668/
+      snippet: Leishmanolysin consists of HEXXH motif which is common in all zinc metalloproteinase, so
+        it was proposed that it shares the same mechanism as the other zinc metalloproteinases such as
+        thermolysin. Glu265, acting in conjunction with Zn2+ ion to deprotonate and activate a water molecule.
+        The activated water molecule acts as a nucleophile to attack the carbonyl of the peptide bond.
+        Zn2+ stabilises th
+      notes: M-CSA entry 668, mechanism 1; M-CSA cites PMID:8519803, PMID:9739094; CATH domain 3.10.170.20
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/668/
+      snippet: Leishmanolysin consists of HEXXH motif which is common in all zinc metalloproteinase, so
+        it was proposed that it shares the same mechanism as the other zinc metalloproteinases such as
+        thermolysin. Glu265, acting in conjunction with Zn2+ ion to deprotonate and activate a water molecule.
+        The activated water molecule acts as a nucleophile to attack the carbonyl of the peptide bond.
+        Zn2+ stabilises th
+      notes: M-CSA entry 668, mechanism 1; M-CSA cites PMID:8519803, PMID:9739094; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/668/
+      snippet: Leishmanolysin consists of HEXXH motif which is common in all zinc metalloproteinase, so
+        it was proposed that it shares the same mechanism as the other zinc metalloproteinases such as
+        thermolysin. Glu265, acting in conjunction with Zn2+ ion to deprotonate and activate a water molecule.
+        The activated water molecule acts as a nucleophile to attack the carbonyl of the peptide bond.
+        Zn2+ stabilises th
+      notes: M-CSA entry 668, mechanism 1; M-CSA cites PMID:8519803, PMID:9739094; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/668/
+      snippet: Leishmanolysin consists of HEXXH motif which is common in all zinc metalloproteinase, so
+        it was proposed that it shares the same mechanism as the other zinc metalloproteinases such as
+        thermolysin. Glu265, acting in conjunction with Zn2+ ion to deprotonate and activate a water molecule.
+        The activated water molecule acts as a nucleophile to attack the carbonyl of the peptide bond.
+        Zn2+ stabilises th
+      notes: M-CSA entry 668, mechanism 1; M-CSA cites PMID:8519803, PMID:9739094; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/668/
+      snippet: Leishmanolysin consists of HEXXH motif which is common in all zinc metalloproteinase, so
+        it was proposed that it shares the same mechanism as the other zinc metalloproteinases such as
+        thermolysin. Glu265, acting in conjunction with Zn2+ ion to deprotonate and activate a water molecule.
+        The activated water molecule acts as a nucleophile to attack the carbonyl of the peptide bond.
+        Zn2+ stabilises th
+      notes: M-CSA entry 668, mechanism 1; M-CSA cites PMID:8519803, PMID:9739094; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/668/
+      snippet: Leishmanolysin consists of HEXXH motif which is common in all zinc metalloproteinase, so
+        it was proposed that it shares the same mechanism as the other zinc metalloproteinases such as
+        thermolysin. Glu265, acting in conjunction with Zn2+ ion to deprotonate and activate a water molecule.
+        The activated water molecule acts as a nucleophile to attack the carbonyl of the peptide bond.
+        Zn2+ stabilises th
+      notes: M-CSA entry 668, mechanism 1; M-CSA cites PMID:8519803, PMID:9739094; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (11 evidence-backed edges) transcribed from M-CSA entry 668;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

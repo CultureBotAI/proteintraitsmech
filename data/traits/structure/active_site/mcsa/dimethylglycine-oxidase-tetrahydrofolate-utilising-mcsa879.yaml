@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.5.3.-
 - CHEBI:58251
@@ -601,4 +601,285 @@ definitions:
       Catalyses the oxidative demethylation of N,N-dimethylglycine to yield sarcosine, 5,10-methylenetetrahydrofolate and hydrogen peroxide. The oxidation of dimethylglycine is coupled to the synthesis of 5,10-methylenetetrahydrofolate through an unusual substrate channelling mechanism. This channelling occurs by non-biased diffusion of the iminium intermediate through a large solvent cavity connecting active site 1 (N-terminus) and active site 2 (C-terminus). The synthesis of 5,10-methylenetetrahydrofolate (at active site 2) prevents the accumulation of formaldehyde (not shown), formed by hydrolysis of the iminium intermediate product (at active site 1).
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of dimethylglycine oxidase (tetrahydrofolate utilising)
+  description: Mechanism transcribed from M-CSA entry 879. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: his225
+    label: catalytic His225 (M-CSA/PDB numbering; UniProt residue 225)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9AGP8
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: tyr259
+    label: catalytic Tyr259 (M-CSA/PDB numbering; UniProt residue 259)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9AGP8
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: asp552
+    label: catalytic Asp552 (M-CSA/PDB numbering; UniProt residue 552)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9AGP8
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: N,N-dimethylglycine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:58251
+  - node_id: reactant1
+    label: dioxygen
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+  - node_id: reactant2
+    label: (6S)-5,6,7,8-tetrahydrofolate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57453
+  - node_id: product0
+    label: (6R)-5,10-methylenetetrahydrofolate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:15636
+  - node_id: product1
+    label: sarcosinate
+    node_type: CHEMICAL
+    grounding: CHEBI:46915
+  - node_id: product2
+    label: hydrogen peroxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+  - node_id: product3
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: The initial deprotonation of the substrate amine by the His225–Tyr259 catalytic dyad
+      is followed by the attack of the substrate on the FAD C4 position. A proton is abstracted from the
+      covalent intermediate methyl group by the N5, with concomitant reduction of the isoalloxazine ring
+      and release of the dimethylglycine iminium ion. The imminium ion is then transferred to the second
+      active site. Here,
+  - node_id: active_site
+    label: dimethylglycine oxidase (tetrahydrofolate utilising) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:879
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.9.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.9.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: dimethylglycine oxidase (tetrahydrofolate utilising) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.5.3.-
+  edges:
+  - subject: his225
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His225 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/879/
+      snippet: The initial deprotonation of the substrate amine by the His225–Tyr259 catalytic dyad is
+        followed by the attack of the substrate on the FAD C4 position. A proton is abstracted from the
+        covalent intermediate methyl group by the N5, with concomitant reduction of the isoalloxazine
+        ring and release of the dimethylglycine iminium ion. The imminium ion is then transferred to the
+        second active site. Here, the bound THF attacks the iminium ion via the nucleophilic N10 group
+        with concomitant proton abstraction by Asp552. The next step involves the attack by the N5 group
+        on the covalent intermediate with concomitant deprotonation of the N5 by the nascent sarcosine.
+        An alternative possibility is that the N5 position attacks first and donates a proton to the covalent
+        intermediate, followed by the nucleophilic attack of the N10 group with release of sarcosine.
+      notes: M-CSA entry 879, mechanism 1; M-CSA cites PMID:12912903, PMID:19369258; step 1
+  - subject: tyr259
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr259 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/879/
+      snippet: The initial deprotonation of the substrate amine by the His225–Tyr259 catalytic dyad is
+        followed by the attack of the substrate on the FAD C4 position. A proton is abstracted from the
+        covalent intermediate methyl group by the N5, with concomitant reduction of the isoalloxazine
+        ring and release of the dimethylglycine iminium ion. The imminium ion is then transferred to the
+        second active site. Here, the bound THF attacks the iminium ion via the nucleophilic N10 group
+        with concomitant proton abstraction by Asp552. The next step involves the attack by the N5 group
+        on the covalent intermediate with concomitant deprotonation of the N5 by the nascent sarcosine.
+        An alternative possibility is that the N5 position attacks first and donates a proton to the covalent
+        intermediate, followed by the nucleophilic attack of the N10 group with release of sarcosine.
+      notes: M-CSA entry 879, mechanism 1; M-CSA cites PMID:12912903, PMID:19369258; step 1
+  - subject: asp552
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp552 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/879/
+      snippet: The initial deprotonation of the substrate amine by the His225–Tyr259 catalytic dyad is
+        followed by the attack of the substrate on the FAD C4 position. A proton is abstracted from the
+        covalent intermediate methyl group by the N5, with concomitant reduction of the isoalloxazine
+        ring and release of the dimethylglycine iminium ion. The imminium ion is then transferred to the
+        second active site. Here, the bound THF attacks the iminium ion via the nucleophilic N10 group
+        with concomitant proton abstraction by Asp552. The next step involves the attack by the N5 group
+        on the covalent intermediate with concomitant deprotonation of the N5 by the nascent sarcosine.
+        An alternative possibility is that the N5 position attacks first and donates a proton to the covalent
+        intermediate, followed by the nucleophilic attack of the N10 group with release of sarcosine.
+      notes: M-CSA entry 879, mechanism 1; M-CSA cites PMID:12912903, PMID:19369258; step 1
+  - subject: his225
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His225 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/879/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 879, mechanism 1; M-CSA cites PMID:12912903, PMID:19369258; M-CSA catalytic-residue
+        roles for His225
+  - subject: tyr259
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr259 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/879/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 879, mechanism 1; M-CSA cites PMID:12912903, PMID:19369258; M-CSA catalytic-residue
+        roles for Tyr259
+  - subject: asp552
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp552 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/879/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 879, mechanism 1; M-CSA cites PMID:12912903, PMID:19369258; M-CSA catalytic-residue
+        roles for Asp552
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/879/
+      snippet: The initial deprotonation of the substrate amine by the His225–Tyr259 catalytic dyad is
+        followed by the attack of the substrate on the FAD C4 position. A proton is abstracted from the
+        covalent intermediate methyl group by the N5, with concomitant reduction of the isoalloxazine
+        ring and release of the dimethylglycine iminium ion. The imminium ion is then transferred to the
+        second active site. Here,
+      notes: M-CSA entry 879, mechanism 1; M-CSA cites PMID:12912903, PMID:19369258; CATH domain 3.30.9.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/879/
+      snippet: The initial deprotonation of the substrate amine by the His225–Tyr259 catalytic dyad is
+        followed by the attack of the substrate on the FAD C4 position. A proton is abstracted from the
+        covalent intermediate methyl group by the N5, with concomitant reduction of the isoalloxazine
+        ring and release of the dimethylglycine iminium ion. The imminium ion is then transferred to the
+        second active site. Here,
+      notes: M-CSA entry 879, mechanism 1; M-CSA cites PMID:12912903, PMID:19369258; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/879/
+      snippet: The initial deprotonation of the substrate amine by the His225–Tyr259 catalytic dyad is
+        followed by the attack of the substrate on the FAD C4 position. A proton is abstracted from the
+        covalent intermediate methyl group by the N5, with concomitant reduction of the isoalloxazine
+        ring and release of the dimethylglycine iminium ion. The imminium ion is then transferred to the
+        second active site. Here,
+      notes: M-CSA entry 879, mechanism 1; M-CSA cites PMID:12912903, PMID:19369258; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/879/
+      snippet: The initial deprotonation of the substrate amine by the His225–Tyr259 catalytic dyad is
+        followed by the attack of the substrate on the FAD C4 position. A proton is abstracted from the
+        covalent intermediate methyl group by the N5, with concomitant reduction of the isoalloxazine
+        ring and release of the dimethylglycine iminium ion. The imminium ion is then transferred to the
+        second active site. Here,
+      notes: M-CSA entry 879, mechanism 1; M-CSA cites PMID:12912903, PMID:19369258; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/879/
+      snippet: The initial deprotonation of the substrate amine by the His225–Tyr259 catalytic dyad is
+        followed by the attack of the substrate on the FAD C4 position. A proton is abstracted from the
+        covalent intermediate methyl group by the N5, with concomitant reduction of the isoalloxazine
+        ring and release of the dimethylglycine iminium ion. The imminium ion is then transferred to the
+        second active site. Here,
+      notes: M-CSA entry 879, mechanism 1; M-CSA cites PMID:12912903, PMID:19369258; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/879/
+      snippet: The initial deprotonation of the substrate amine by the His225–Tyr259 catalytic dyad is
+        followed by the attack of the substrate on the FAD C4 position. A proton is abstracted from the
+        covalent intermediate methyl group by the N5, with concomitant reduction of the isoalloxazine
+        ring and release of the dimethylglycine iminium ion. The imminium ion is then transferred to the
+        second active site. Here,
+      notes: M-CSA entry 879, mechanism 1; M-CSA cites PMID:12912903, PMID:19369258; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/879/
+      snippet: The initial deprotonation of the substrate amine by the His225–Tyr259 catalytic dyad is
+        followed by the attack of the substrate on the FAD C4 position. A proton is abstracted from the
+        covalent intermediate methyl group by the N5, with concomitant reduction of the isoalloxazine
+        ring and release of the dimethylglycine iminium ion. The imminium ion is then transferred to the
+        second active site. Here,
+      notes: M-CSA entry 879, mechanism 1; M-CSA cites PMID:12912903, PMID:19369258; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/879/
+      snippet: The initial deprotonation of the substrate amine by the His225–Tyr259 catalytic dyad is
+        followed by the attack of the substrate on the FAD C4 position. A proton is abstracted from the
+        covalent intermediate methyl group by the N5, with concomitant reduction of the isoalloxazine
+        ring and release of the dimethylglycine iminium ion. The imminium ion is then transferred to the
+        second active site. Here,
+      notes: M-CSA entry 879, mechanism 1; M-CSA cites PMID:12912903, PMID:19369258; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product3
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/879/
+      snippet: The initial deprotonation of the substrate amine by the His225–Tyr259 catalytic dyad is
+        followed by the attack of the substrate on the FAD C4 position. A proton is abstracted from the
+        covalent intermediate methyl group by the N5, with concomitant reduction of the isoalloxazine
+        ring and release of the dimethylglycine iminium ion. The imminium ion is then transferred to the
+        second active site. Here,
+      notes: M-CSA entry 879, mechanism 1; M-CSA cites PMID:12912903, PMID:19369258; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 879;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

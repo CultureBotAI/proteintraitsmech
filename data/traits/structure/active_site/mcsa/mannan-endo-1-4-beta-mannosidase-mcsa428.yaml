@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.1.78
 - CHEBI:15377
@@ -62,4 +62,251 @@ definitions:
       Catalyses the random hydrolysis of (1-4)-beta-D-mannosidic linkages in mannans, galactomannans and glucomannans.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of mannan endo-1,4-beta-mannosidase
+  description: Mechanism transcribed from M-CSA entry 428. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset -2).
+  nodes:
+  - node_id: arg50
+    label: catalytic Arg50 (M-CSA/PDB numbering; UniProt residue 48)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9ZF13
+    description: 'M-CSA roles: modifies pKa.'
+  - node_id: asn127
+    label: catalytic Asn127 (M-CSA/PDB numbering; UniProt residue 125)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9ZF13
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu128
+    label: catalytic Glu128 (M-CSA/PDB numbering; UniProt residue 126)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9ZF13
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: his196
+    label: catalytic His196 (M-CSA/PDB numbering; UniProt residue 194)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9ZF13
+    description: 'M-CSA roles: modifies pKa.'
+  - node_id: tyr198
+    label: catalytic Tyr198 (M-CSA/PDB numbering; UniProt residue 196)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9ZF13
+    description: 'M-CSA roles: modifies pKa.'
+  - node_id: glu225
+    label: catalytic Glu225 (M-CSA/PDB numbering; UniProt residue 223)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9ZF13
+    description: 'M-CSA roles: covalent catalysis.'
+  - node_id: trp254
+    label: catalytic Trp254 (M-CSA/PDB numbering; UniProt residue 252)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9ZF13
+    description: 'M-CSA roles: activator, electrostatic stabiliser.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: beta-mannobiose
+    node_type: CHEMICAL
+    grounding: CHEBI:28085
+  - node_id: product0
+    label: beta-D-mannose
+    node_type: CHEMICAL
+    grounding: CHEBI:28563
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: This is a retaining mannanase, in which the glycosidic oxygen is protonated by Glu128
+      (proton donor) and the anomeric carbon atom is attacked by Glu225 (nucleophile). The resulting mannosyl–mannanase
+      intermediate is then hydrolysed by a water molecule, generating a product with the same anomeric
+      configuration as the substrate.
+  - node_id: active_site
+    label: mannan endo-1,4-beta-mannosidase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:428
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.80 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.80
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: mannan endo-1,4-beta-mannosidase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.1.78
+  edges:
+  - subject: glu128
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu128 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/428/
+      snippet: This is a retaining mannanase, in which the glycosidic oxygen is protonated by Glu128 (proton
+        donor) and the anomeric carbon atom is attacked by Glu225 (nucleophile). The resulting mannosyl–mannanase
+        intermediate is then hydrolysed by a water molecule, generating a product with the same anomeric
+        configuration as the substrate.
+      notes: M-CSA entry 428, mechanism 2; M-CSA cites PMID:10666621, PMID:15840830, PMID:16487541, PMID:19441796,
+        PMID:22992189, PMID:23009928, PMID:27447091, PMID:9817845; step 1
+  - subject: glu225
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu225 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/428/
+      snippet: This is a retaining mannanase, in which the glycosidic oxygen is protonated by Glu128 (proton
+        donor) and the anomeric carbon atom is attacked by Glu225 (nucleophile). The resulting mannosyl–mannanase
+        intermediate is then hydrolysed by a water molecule, generating a product with the same anomeric
+        configuration as the substrate.
+      notes: M-CSA entry 428, mechanism 2; M-CSA cites PMID:10666621, PMID:15840830, PMID:16487541, PMID:19441796,
+        PMID:22992189, PMID:23009928, PMID:27447091, PMID:9817845; step 1
+  - subject: arg50
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg50 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/428/
+      snippet: modifies pKa
+      notes: M-CSA entry 428, mechanism 2; M-CSA cites PMID:10666621, PMID:15840830, PMID:16487541, PMID:19441796,
+        PMID:22992189, PMID:23009928, PMID:27447091, PMID:9817845; M-CSA catalytic-residue roles for Arg50
+  - subject: asn127
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn127 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/428/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 428, mechanism 2; M-CSA cites PMID:10666621, PMID:15840830, PMID:16487541, PMID:19441796,
+        PMID:22992189, PMID:23009928, PMID:27447091, PMID:9817845; M-CSA catalytic-residue roles for Asn127
+  - subject: glu128
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu128 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/428/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 428, mechanism 2; M-CSA cites PMID:10666621, PMID:15840830, PMID:16487541, PMID:19441796,
+        PMID:22992189, PMID:23009928, PMID:27447091, PMID:9817845; M-CSA catalytic-residue roles for Glu128
+  - subject: his196
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His196 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/428/
+      snippet: modifies pKa
+      notes: M-CSA entry 428, mechanism 2; M-CSA cites PMID:10666621, PMID:15840830, PMID:16487541, PMID:19441796,
+        PMID:22992189, PMID:23009928, PMID:27447091, PMID:9817845; M-CSA catalytic-residue roles for His196
+  - subject: tyr198
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr198 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/428/
+      snippet: modifies pKa
+      notes: M-CSA entry 428, mechanism 2; M-CSA cites PMID:10666621, PMID:15840830, PMID:16487541, PMID:19441796,
+        PMID:22992189, PMID:23009928, PMID:27447091, PMID:9817845; M-CSA catalytic-residue roles for Tyr198
+  - subject: glu225
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu225 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/428/
+      snippet: covalent catalysis
+      notes: M-CSA entry 428, mechanism 2; M-CSA cites PMID:10666621, PMID:15840830, PMID:16487541, PMID:19441796,
+        PMID:22992189, PMID:23009928, PMID:27447091, PMID:9817845; M-CSA catalytic-residue roles for Glu225
+  - subject: trp254
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp254 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/428/
+      snippet: activator, electrostatic stabiliser
+      notes: M-CSA entry 428, mechanism 2; M-CSA cites PMID:10666621, PMID:15840830, PMID:16487541, PMID:19441796,
+        PMID:22992189, PMID:23009928, PMID:27447091, PMID:9817845; M-CSA catalytic-residue roles for Trp254
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/428/
+      snippet: This is a retaining mannanase, in which the glycosidic oxygen is protonated by Glu128 (proton
+        donor) and the anomeric carbon atom is attacked by Glu225 (nucleophile). The resulting mannosyl–mannanase
+        intermediate is then hydrolysed by a water molecule, generating a product with the same anomeric
+        configuration as the substrate.
+      notes: M-CSA entry 428, mechanism 2; M-CSA cites PMID:10666621, PMID:15840830, PMID:16487541, PMID:19441796,
+        PMID:22992189, PMID:23009928, PMID:27447091, PMID:9817845; CATH domain 3.20.20.80 assigned to
+        the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/428/
+      snippet: This is a retaining mannanase, in which the glycosidic oxygen is protonated by Glu128 (proton
+        donor) and the anomeric carbon atom is attacked by Glu225 (nucleophile). The resulting mannosyl–mannanase
+        intermediate is then hydrolysed by a water molecule, generating a product with the same anomeric
+        configuration as the substrate.
+      notes: M-CSA entry 428, mechanism 2; M-CSA cites PMID:10666621, PMID:15840830, PMID:16487541, PMID:19441796,
+        PMID:22992189, PMID:23009928, PMID:27447091, PMID:9817845; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/428/
+      snippet: This is a retaining mannanase, in which the glycosidic oxygen is protonated by Glu128 (proton
+        donor) and the anomeric carbon atom is attacked by Glu225 (nucleophile). The resulting mannosyl–mannanase
+        intermediate is then hydrolysed by a water molecule, generating a product with the same anomeric
+        configuration as the substrate.
+      notes: M-CSA entry 428, mechanism 2; M-CSA cites PMID:10666621, PMID:15840830, PMID:16487541, PMID:19441796,
+        PMID:22992189, PMID:23009928, PMID:27447091, PMID:9817845; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/428/
+      snippet: This is a retaining mannanase, in which the glycosidic oxygen is protonated by Glu128 (proton
+        donor) and the anomeric carbon atom is attacked by Glu225 (nucleophile). The resulting mannosyl–mannanase
+        intermediate is then hydrolysed by a water molecule, generating a product with the same anomeric
+        configuration as the substrate.
+      notes: M-CSA entry 428, mechanism 2; M-CSA cites PMID:10666621, PMID:15840830, PMID:16487541, PMID:19441796,
+        PMID:22992189, PMID:23009928, PMID:27447091, PMID:9817845; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/428/
+      snippet: This is a retaining mannanase, in which the glycosidic oxygen is protonated by Glu128 (proton
+        donor) and the anomeric carbon atom is attacked by Glu225 (nucleophile). The resulting mannosyl–mannanase
+        intermediate is then hydrolysed by a water molecule, generating a product with the same anomeric
+        configuration as the substrate.
+      notes: M-CSA entry 428, mechanism 2; M-CSA cites PMID:10666621, PMID:15840830, PMID:16487541, PMID:19441796,
+        PMID:22992189, PMID:23009928, PMID:27447091, PMID:9817845; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (14 evidence-backed edges) transcribed from M-CSA entry 428;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

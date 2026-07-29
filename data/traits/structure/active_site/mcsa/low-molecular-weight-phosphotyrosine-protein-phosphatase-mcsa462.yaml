@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.3.48
 - CHEBI:15377
@@ -160,4 +160,376 @@ definitions:
       Acts on tyrosine phosphorylated proteins, low-MW aryl phosphates and natural and synthetic acyl phosphates. It is part of the PTPase superfamily. Has high homology to the Saccharomyces cerevisiae protein. Has conserved catalytic components, in particular the CXXXXXRS/T 'P loop'. The mechanism is therefore thought to be the same as that of the rest of the superfamily.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of low molecular weight phosphotyrosine protein phosphatase
+  description: Mechanism transcribed from M-CSA entry 462. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +1).
+  nodes:
+  - node_id: cys12
+    label: catalytic Cys12 (M-CSA/PDB numbering; UniProt residue 13)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11064
+    description: 'M-CSA roles: covalent catalysis.'
+  - node_id: asn15
+    label: catalytic Asn15 (M-CSA/PDB numbering; UniProt residue 16)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11064
+    description: 'M-CSA roles: activator, electrostatic stabiliser.'
+  - node_id: cys17
+    label: catalytic Cys17 (M-CSA/PDB numbering; UniProt residue 18)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11064
+    description: 'M-CSA roles: steric role.'
+  - node_id: arg18
+    label: catalytic Arg18 (M-CSA/PDB numbering; UniProt residue 19)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11064
+    description: 'M-CSA roles: transition state stabiliser.'
+  - node_id: ser19
+    label: catalytic Ser19 (M-CSA/PDB numbering; UniProt residue 20)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11064
+    description: 'M-CSA roles: activator, electrostatic stabiliser.'
+  - node_id: asp129
+    label: catalytic Asp129 (M-CSA/PDB numbering; UniProt residue 130)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11064
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: L-tyrosine-O-phosphate(2-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:82620
+  - node_id: product0
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: product1
+    label: L-tyrosine residue
+    node_type: CHEMICAL
+    grounding: CHEBI:46858
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: "The mechanism is thought to be primarily dissociative, with more catalytic importance\
+      \ placed on stabilising the negative charge on the leaving group, rather than activation of the\
+      \ nucleophile. Phosphoryl transfer occurs in a single step, with an inline displacement mechanism.\
+      \  <ol>
+<li>Ser 20 hydrogen bonds to Cys 13, lowering Cys 13's pKa and stabilising a thiolate\
+      \ anion on this residue.</li>
+<"
+  - node_id: active_site
+    label: low molecular weight phosphotyrosine protein phosphatase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:462
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.2300 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.2300
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: low molecular weight phosphotyrosine protein phosphatase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.3.48
+  edges:
+  - subject: cys12
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys12 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/462/
+      snippet: "The mechanism is thought to be primarily dissociative, with more catalytic importance\
+        \ placed on stabilising the negative charge on the leaving group, rather than activation of the\
+        \ nucleophile. Phosphoryl transfer occurs in a single step, with an inline displacement mechanism.\
+        \  <ol>
+<li>Ser 20 hydrogen bonds to Cys 13, lowering Cys 13's pKa and stabilising a thiolate\
+        \ anion on this residue.</li>
+<li>Asp 132 is protonated, and acts as a general acid to protonate\
+        \ the substrate tyrosine residue, promoting phosphoryl transfer.</li>
+<li>The trigonal bipyramid\
+        \ transition state is stabilised by Arg 19.</li>
+<li>Cys 13 becomes phosphorylated. The substrate\
+        \ is released and water enters the active site.</li>
+<li>Asp 132 activates the water molecule\
+        \ by hydrogen bonding.</li>
+<li>During phosphoryl transfer, Ser 19 stabilises the growing negative\
+        \ charge on the thiolate of Cys 12. Arg 18 again stabilises the transition state.</li>
+<li>Inorganic\
+        \ phosphate is formed, with Asp 129 deprotonating the nucleophilic water to regenerate its protonated\
+        \ state.</li>
+</ol>
+There is computational evidence that suggests that, for low molecular\
+        \ weight PTPs, Cys 12 is protonated in the ground state, and transfers its proton to the phosphoryl\
+        \ group (i.e. substrate assisted catalysis) before nucleophilic attack."
+      notes: M-CSA entry 462, mechanism 2; M-CSA cites PMID:10409830, PMID:10684639, PMID:12882518, PMID:17975835,
+        PMID:21988196, PMID:27676368, PMID:8132604, PMID:8993313; step 1
+  - subject: arg18
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg18 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/462/
+      snippet: "The mechanism is thought to be primarily dissociative, with more catalytic importance\
+        \ placed on stabilising the negative charge on the leaving group, rather than activation of the\
+        \ nucleophile. Phosphoryl transfer occurs in a single step, with an inline displacement mechanism.\
+        \  <ol>
+<li>Ser 20 hydrogen bonds to Cys 13, lowering Cys 13's pKa and stabilising a thiolate\
+        \ anion on this residue.</li>
+<li>Asp 132 is protonated, and acts as a general acid to protonate\
+        \ the substrate tyrosine residue, promoting phosphoryl transfer.</li>
+<li>The trigonal bipyramid\
+        \ transition state is stabilised by Arg 19.</li>
+<li>Cys 13 becomes phosphorylated. The substrate\
+        \ is released and water enters the active site.</li>
+<li>Asp 132 activates the water molecule\
+        \ by hydrogen bonding.</li>
+<li>During phosphoryl transfer, Ser 19 stabilises the growing negative\
+        \ charge on the thiolate of Cys 12. Arg 18 again stabilises the transition state.</li>
+<li>Inorganic\
+        \ phosphate is formed, with Asp 129 deprotonating the nucleophilic water to regenerate its protonated\
+        \ state.</li>
+</ol>
+There is computational evidence that suggests that, for low molecular\
+        \ weight PTPs, Cys 12 is protonated in the ground state, and transfers its proton to the phosphoryl\
+        \ group (i.e. substrate assisted catalysis) before nucleophilic attack."
+      notes: M-CSA entry 462, mechanism 2; M-CSA cites PMID:10409830, PMID:10684639, PMID:12882518, PMID:17975835,
+        PMID:21988196, PMID:27676368, PMID:8132604, PMID:8993313; step 1
+  - subject: ser19
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser19 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/462/
+      snippet: "The mechanism is thought to be primarily dissociative, with more catalytic importance\
+        \ placed on stabilising the negative charge on the leaving group, rather than activation of the\
+        \ nucleophile. Phosphoryl transfer occurs in a single step, with an inline displacement mechanism.\
+        \  <ol>
+<li>Ser 20 hydrogen bonds to Cys 13, lowering Cys 13's pKa and stabilising a thiolate\
+        \ anion on this residue.</li>
+<li>Asp 132 is protonated, and acts as a general acid to protonate\
+        \ the substrate tyrosine residue, promoting phosphoryl transfer.</li>
+<li>The trigonal bipyramid\
+        \ transition state is stabilised by Arg 19.</li>
+<li>Cys 13 becomes phosphorylated. The substrate\
+        \ is released and water enters the active site.</li>
+<li>Asp 132 activates the water molecule\
+        \ by hydrogen bonding.</li>
+<li>During phosphoryl transfer, Ser 19 stabilises the growing negative\
+        \ charge on the thiolate of Cys 12. Arg 18 again stabilises the transition state.</li>
+<li>Inorganic\
+        \ phosphate is formed, with Asp 129 deprotonating the nucleophilic water to regenerate its protonated\
+        \ state.</li>
+</ol>
+There is computational evidence that suggests that, for low molecular\
+        \ weight PTPs, Cys 12 is protonated in the ground state, and transfers its proton to the phosphoryl\
+        \ group (i.e. substrate assisted catalysis) before nucleophilic attack."
+      notes: M-CSA entry 462, mechanism 2; M-CSA cites PMID:10409830, PMID:10684639, PMID:12882518, PMID:17975835,
+        PMID:21988196, PMID:27676368, PMID:8132604, PMID:8993313; step 1
+  - subject: asp129
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp129 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/462/
+      snippet: "The mechanism is thought to be primarily dissociative, with more catalytic importance\
+        \ placed on stabilising the negative charge on the leaving group, rather than activation of the\
+        \ nucleophile. Phosphoryl transfer occurs in a single step, with an inline displacement mechanism.\
+        \  <ol>
+<li>Ser 20 hydrogen bonds to Cys 13, lowering Cys 13's pKa and stabilising a thiolate\
+        \ anion on this residue.</li>
+<li>Asp 132 is protonated, and acts as a general acid to protonate\
+        \ the substrate tyrosine residue, promoting phosphoryl transfer.</li>
+<li>The trigonal bipyramid\
+        \ transition state is stabilised by Arg 19.</li>
+<li>Cys 13 becomes phosphorylated. The substrate\
+        \ is released and water enters the active site.</li>
+<li>Asp 132 activates the water molecule\
+        \ by hydrogen bonding.</li>
+<li>During phosphoryl transfer, Ser 19 stabilises the growing negative\
+        \ charge on the thiolate of Cys 12. Arg 18 again stabilises the transition state.</li>
+<li>Inorganic\
+        \ phosphate is formed, with Asp 129 deprotonating the nucleophilic water to regenerate its protonated\
+        \ state.</li>
+</ol>
+There is computational evidence that suggests that, for low molecular\
+        \ weight PTPs, Cys 12 is protonated in the ground state, and transfers its proton to the phosphoryl\
+        \ group (i.e. substrate assisted catalysis) before nucleophilic attack."
+      notes: M-CSA entry 462, mechanism 2; M-CSA cites PMID:10409830, PMID:10684639, PMID:12882518, PMID:17975835,
+        PMID:21988196, PMID:27676368, PMID:8132604, PMID:8993313; step 1
+  - subject: cys12
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys12 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/462/
+      snippet: covalent catalysis
+      notes: M-CSA entry 462, mechanism 2; M-CSA cites PMID:10409830, PMID:10684639, PMID:12882518, PMID:17975835,
+        PMID:21988196, PMID:27676368, PMID:8132604, PMID:8993313; M-CSA catalytic-residue roles for Cys12
+  - subject: asn15
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn15 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/462/
+      snippet: activator, electrostatic stabiliser
+      notes: M-CSA entry 462, mechanism 2; M-CSA cites PMID:10409830, PMID:10684639, PMID:12882518, PMID:17975835,
+        PMID:21988196, PMID:27676368, PMID:8132604, PMID:8993313; M-CSA catalytic-residue roles for Asn15
+  - subject: cys17
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys17 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/462/
+      snippet: steric role
+      notes: M-CSA entry 462, mechanism 2; M-CSA cites PMID:10409830, PMID:10684639, PMID:12882518, PMID:17975835,
+        PMID:21988196, PMID:27676368, PMID:8132604, PMID:8993313; M-CSA catalytic-residue roles for Cys17
+  - subject: arg18
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg18 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/462/
+      snippet: transition state stabiliser
+      notes: M-CSA entry 462, mechanism 2; M-CSA cites PMID:10409830, PMID:10684639, PMID:12882518, PMID:17975835,
+        PMID:21988196, PMID:27676368, PMID:8132604, PMID:8993313; M-CSA catalytic-residue roles for Arg18
+  - subject: ser19
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser19 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/462/
+      snippet: activator, electrostatic stabiliser
+      notes: M-CSA entry 462, mechanism 2; M-CSA cites PMID:10409830, PMID:10684639, PMID:12882518, PMID:17975835,
+        PMID:21988196, PMID:27676368, PMID:8132604, PMID:8993313; M-CSA catalytic-residue roles for Ser19
+  - subject: asp129
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp129 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/462/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 462, mechanism 2; M-CSA cites PMID:10409830, PMID:10684639, PMID:12882518, PMID:17975835,
+        PMID:21988196, PMID:27676368, PMID:8132604, PMID:8993313; M-CSA catalytic-residue roles for Asp129
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/462/
+      snippet: "The mechanism is thought to be primarily dissociative, with more catalytic importance\
+        \ placed on stabilising the negative charge on the leaving group, rather than activation of the\
+        \ nucleophile. Phosphoryl transfer occurs in a single step, with an inline displacement mechanism.\
+        \  <ol>
+<li>Ser 20 hydrogen bonds to Cys 13, lowering Cys 13's pKa and stabilising a thiolate\
+        \ anion on this residue.</li>
+<"
+      notes: M-CSA entry 462, mechanism 2; M-CSA cites PMID:10409830, PMID:10684639, PMID:12882518, PMID:17975835,
+        PMID:21988196, PMID:27676368, PMID:8132604, PMID:8993313; CATH domain 3.40.50.2300 assigned to
+        the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/462/
+      snippet: "The mechanism is thought to be primarily dissociative, with more catalytic importance\
+        \ placed on stabilising the negative charge on the leaving group, rather than activation of the\
+        \ nucleophile. Phosphoryl transfer occurs in a single step, with an inline displacement mechanism.\
+        \  <ol>
+<li>Ser 20 hydrogen bonds to Cys 13, lowering Cys 13's pKa and stabilising a thiolate\
+        \ anion on this residue.</li>
+<"
+      notes: M-CSA entry 462, mechanism 2; M-CSA cites PMID:10409830, PMID:10684639, PMID:12882518, PMID:17975835,
+        PMID:21988196, PMID:27676368, PMID:8132604, PMID:8993313; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/462/
+      snippet: "The mechanism is thought to be primarily dissociative, with more catalytic importance\
+        \ placed on stabilising the negative charge on the leaving group, rather than activation of the\
+        \ nucleophile. Phosphoryl transfer occurs in a single step, with an inline displacement mechanism.\
+        \  <ol>
+<li>Ser 20 hydrogen bonds to Cys 13, lowering Cys 13's pKa and stabilising a thiolate\
+        \ anion on this residue.</li>
+<"
+      notes: M-CSA entry 462, mechanism 2; M-CSA cites PMID:10409830, PMID:10684639, PMID:12882518, PMID:17975835,
+        PMID:21988196, PMID:27676368, PMID:8132604, PMID:8993313; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/462/
+      snippet: "The mechanism is thought to be primarily dissociative, with more catalytic importance\
+        \ placed on stabilising the negative charge on the leaving group, rather than activation of the\
+        \ nucleophile. Phosphoryl transfer occurs in a single step, with an inline displacement mechanism.\
+        \  <ol>
+<li>Ser 20 hydrogen bonds to Cys 13, lowering Cys 13's pKa and stabilising a thiolate\
+        \ anion on this residue.</li>
+<"
+      notes: M-CSA entry 462, mechanism 2; M-CSA cites PMID:10409830, PMID:10684639, PMID:12882518, PMID:17975835,
+        PMID:21988196, PMID:27676368, PMID:8132604, PMID:8993313; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/462/
+      snippet: "The mechanism is thought to be primarily dissociative, with more catalytic importance\
+        \ placed on stabilising the negative charge on the leaving group, rather than activation of the\
+        \ nucleophile. Phosphoryl transfer occurs in a single step, with an inline displacement mechanism.\
+        \  <ol>
+<li>Ser 20 hydrogen bonds to Cys 13, lowering Cys 13's pKa and stabilising a thiolate\
+        \ anion on this residue.</li>
+<"
+      notes: M-CSA entry 462, mechanism 2; M-CSA cites PMID:10409830, PMID:10684639, PMID:12882518, PMID:17975835,
+        PMID:21988196, PMID:27676368, PMID:8132604, PMID:8993313; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/462/
+      snippet: "The mechanism is thought to be primarily dissociative, with more catalytic importance\
+        \ placed on stabilising the negative charge on the leaving group, rather than activation of the\
+        \ nucleophile. Phosphoryl transfer occurs in a single step, with an inline displacement mechanism.\
+        \  <ol>
+<li>Ser 20 hydrogen bonds to Cys 13, lowering Cys 13's pKa and stabilising a thiolate\
+        \ anion on this residue.</li>
+<"
+      notes: M-CSA entry 462, mechanism 2; M-CSA cites PMID:10409830, PMID:10684639, PMID:12882518, PMID:17975835,
+        PMID:21988196, PMID:27676368, PMID:8132604, PMID:8993313; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (16 evidence-backed edges) transcribed from M-CSA entry 462;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

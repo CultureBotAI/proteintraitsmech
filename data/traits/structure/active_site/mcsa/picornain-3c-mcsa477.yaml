@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.22.28
 - CHEBI:73848
@@ -949,4 +949,233 @@ definitions:
       The human rhinovirus 3C is a cysteine protease that is essential for the processing of the viral precursor polyprotein and release of RNA replication proteins. In UniProtKB P04936, the protease 3C portion of the chain is responsible for the cleavage of the sites: 330 - 331992 - 9931409 - 14101486 - 14871507 - 15081690 - 1691 The 3C portion of the enzyme is related by amino acid sequence to the trypsin-like serine proteases, and is a member of a novel group of cysteine proteases with a serine protease-like fold.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of picornain 3C
+  description: Mechanism transcribed from M-CSA entry 477. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering only — no unique offset to the record's reference sequence could
+    be verified, so no UniProt position is asserted.
+  nodes:
+  - node_id: his40
+    label: catalytic His40 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04936
+    description: 'M-CSA roles: electrostatic stabiliser, proton shuttle (general acid/base).'
+  - node_id: glu71
+    label: catalytic Glu71 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04936
+    description: 'M-CSA roles: electrostatic stabiliser, modifies pKa.'
+  - node_id: gly145
+    label: catalytic Gly145 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04936
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: cys147
+    label: catalytic Cys147 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04936
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: Gln-Gly
+    node_type: CHEMICAL
+    grounding: CHEBI:73848
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: L-glutamine
+    node_type: CHEMICAL
+    grounding: CHEBI:18050
+  - node_id: product1
+    label: glycine
+    node_type: CHEMICAL
+    grounding: CHEBI:15428
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: In rhinovirus 3C, the catalytically important residues Cys147, His50 and Glu71 form a
+      triad related to that of the serine proteases. The highly conserved sequence Gly-X-Cys-Gly-Gly in
+      viral C3 proteases serves to orientate the Cys147 for nucleophilic attack at the substrate carbonyl.
+      Residue backbone amide groups are positioned to stabilise the anionic tetrahedral intermediate as
+      part of an oxyani
+  - node_id: active_site
+    label: picornain 3C catalytic site
+    node_type: MOTIF
+    grounding: MCSA:477
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.40.10.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.40.10.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: picornain 3C activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.22.28
+  edges:
+  - subject: glu71
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu71 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/477/
+      snippet: In rhinovirus 3C, the catalytically important residues Cys147, His50 and Glu71 form a triad
+        related to that of the serine proteases. The highly conserved sequence Gly-X-Cys-Gly-Gly in viral
+        C3 proteases serves to orientate the Cys147 for nucleophilic attack at the substrate carbonyl.
+        Residue backbone amide groups are positioned to stabilise the anionic tetrahedral intermediate
+        as part of an oxyanion hole. This resembles the mechanism of the serine protease family, suggesting
+        more closely related mechanism to this class of enzymes, rather than that of the cysteine proteases.
+      notes: M-CSA entry 477, mechanism 1; M-CSA cites PMID:10500114, PMID:17944485, PMID:19464175, PMID:21128685,
+        PMID:7515772, PMID:9060667; step 1
+  - subject: cys147
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys147 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/477/
+      snippet: In rhinovirus 3C, the catalytically important residues Cys147, His50 and Glu71 form a triad
+        related to that of the serine proteases. The highly conserved sequence Gly-X-Cys-Gly-Gly in viral
+        C3 proteases serves to orientate the Cys147 for nucleophilic attack at the substrate carbonyl.
+        Residue backbone amide groups are positioned to stabilise the anionic tetrahedral intermediate
+        as part of an oxyanion hole. This resembles the mechanism of the serine protease family, suggesting
+        more closely related mechanism to this class of enzymes, rather than that of the cysteine proteases.
+      notes: M-CSA entry 477, mechanism 1; M-CSA cites PMID:10500114, PMID:17944485, PMID:19464175, PMID:21128685,
+        PMID:7515772, PMID:9060667; step 1
+  - subject: his40
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His40 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/477/
+      snippet: electrostatic stabiliser, proton shuttle (general acid/base)
+      notes: M-CSA entry 477, mechanism 1; M-CSA cites PMID:10500114, PMID:17944485, PMID:19464175, PMID:21128685,
+        PMID:7515772, PMID:9060667; M-CSA catalytic-residue roles for His40
+  - subject: glu71
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu71 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/477/
+      snippet: electrostatic stabiliser, modifies pKa
+      notes: M-CSA entry 477, mechanism 1; M-CSA cites PMID:10500114, PMID:17944485, PMID:19464175, PMID:21128685,
+        PMID:7515772, PMID:9060667; M-CSA catalytic-residue roles for Glu71
+  - subject: gly145
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly145 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/477/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 477, mechanism 1; M-CSA cites PMID:10500114, PMID:17944485, PMID:19464175, PMID:21128685,
+        PMID:7515772, PMID:9060667; M-CSA catalytic-residue roles for Gly145
+  - subject: cys147
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys147 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/477/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 477, mechanism 1; M-CSA cites PMID:10500114, PMID:17944485, PMID:19464175, PMID:21128685,
+        PMID:7515772, PMID:9060667; M-CSA catalytic-residue roles for Cys147
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/477/
+      snippet: In rhinovirus 3C, the catalytically important residues Cys147, His50 and Glu71 form a triad
+        related to that of the serine proteases. The highly conserved sequence Gly-X-Cys-Gly-Gly in viral
+        C3 proteases serves to orientate the Cys147 for nucleophilic attack at the substrate carbonyl.
+        Residue backbone amide groups are positioned to stabilise the anionic tetrahedral intermediate
+        as part of an oxyani
+      notes: M-CSA entry 477, mechanism 1; M-CSA cites PMID:10500114, PMID:17944485, PMID:19464175, PMID:21128685,
+        PMID:7515772, PMID:9060667; CATH domain 2.40.10.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/477/
+      snippet: In rhinovirus 3C, the catalytically important residues Cys147, His50 and Glu71 form a triad
+        related to that of the serine proteases. The highly conserved sequence Gly-X-Cys-Gly-Gly in viral
+        C3 proteases serves to orientate the Cys147 for nucleophilic attack at the substrate carbonyl.
+        Residue backbone amide groups are positioned to stabilise the anionic tetrahedral intermediate
+        as part of an oxyani
+      notes: M-CSA entry 477, mechanism 1; M-CSA cites PMID:10500114, PMID:17944485, PMID:19464175, PMID:21128685,
+        PMID:7515772, PMID:9060667; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/477/
+      snippet: In rhinovirus 3C, the catalytically important residues Cys147, His50 and Glu71 form a triad
+        related to that of the serine proteases. The highly conserved sequence Gly-X-Cys-Gly-Gly in viral
+        C3 proteases serves to orientate the Cys147 for nucleophilic attack at the substrate carbonyl.
+        Residue backbone amide groups are positioned to stabilise the anionic tetrahedral intermediate
+        as part of an oxyani
+      notes: M-CSA entry 477, mechanism 1; M-CSA cites PMID:10500114, PMID:17944485, PMID:19464175, PMID:21128685,
+        PMID:7515772, PMID:9060667; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/477/
+      snippet: In rhinovirus 3C, the catalytically important residues Cys147, His50 and Glu71 form a triad
+        related to that of the serine proteases. The highly conserved sequence Gly-X-Cys-Gly-Gly in viral
+        C3 proteases serves to orientate the Cys147 for nucleophilic attack at the substrate carbonyl.
+        Residue backbone amide groups are positioned to stabilise the anionic tetrahedral intermediate
+        as part of an oxyani
+      notes: M-CSA entry 477, mechanism 1; M-CSA cites PMID:10500114, PMID:17944485, PMID:19464175, PMID:21128685,
+        PMID:7515772, PMID:9060667; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/477/
+      snippet: In rhinovirus 3C, the catalytically important residues Cys147, His50 and Glu71 form a triad
+        related to that of the serine proteases. The highly conserved sequence Gly-X-Cys-Gly-Gly in viral
+        C3 proteases serves to orientate the Cys147 for nucleophilic attack at the substrate carbonyl.
+        Residue backbone amide groups are positioned to stabilise the anionic tetrahedral intermediate
+        as part of an oxyani
+      notes: M-CSA entry 477, mechanism 1; M-CSA cites PMID:10500114, PMID:17944485, PMID:19464175, PMID:21128685,
+        PMID:7515772, PMID:9060667; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/477/
+      snippet: In rhinovirus 3C, the catalytically important residues Cys147, His50 and Glu71 form a triad
+        related to that of the serine proteases. The highly conserved sequence Gly-X-Cys-Gly-Gly in viral
+        C3 proteases serves to orientate the Cys147 for nucleophilic attack at the substrate carbonyl.
+        Residue backbone amide groups are positioned to stabilise the anionic tetrahedral intermediate
+        as part of an oxyani
+      notes: M-CSA entry 477, mechanism 1; M-CSA cites PMID:10500114, PMID:17944485, PMID:19464175, PMID:21128685,
+        PMID:7515772, PMID:9060667; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (12 evidence-backed edges) transcribed from M-CSA entry 477;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.17.1.4
 - CHEBI:15377
@@ -304,4 +304,250 @@ definitions:
       Rhodobacter capsulatus xanthine dehydrogenase (RcXDH), a cytoplasmic enzyme, catalyses the hydroxylation of a wide variety of purine, pyrimidine, pterin, and aldehyde substrates. Oxidation of the substrate occurs in the molybdenum centre, and the reduced enzyme is reoxidised by the oxidant substrate, NAD+ or molecular oxygen, through FAD. The cofactors of this enzyme are located on different polypeptides. The FAD and the two different [2Fe-2S] iron-sulphur clusters are found on the XDHA subunit, while the molybdenum cofactor (Moco), with a bicyclic pterin and monocyclic pyran coordinated to it, is bound to the XDHB subunit.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of xanthine dehydrogenase (bacterial)
+  description: Mechanism transcribed from M-CSA entry 698. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering only — no unique offset to the record's reference sequence could
+    be verified, so no UniProt position is asserted.
+  nodes:
+  - node_id: arg310
+    label: catalytic Arg310 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:O54050
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu730
+    label: catalytic Glu730 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:O54050
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: NAD(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+  - node_id: reactant2
+    label: 9H-xanthine
+    node_type: CHEMICAL
+    grounding: CHEBI:17712
+  - node_id: product0
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product1
+    label: NADH(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+  - node_id: product2
+    label: 7,9-dihydro-1H-purine-2,6,8(3H)-trione
+    node_type: CHEMICAL
+    grounding: CHEBI:17775
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: XDH cycles between mainly 2-electron and 4-electron reduced states during enzyme turnover.  Catalysis
+      is initiated by the abstraction of a proton from the Mo-OH group by Glu730, followed by a nucleophilic
+      attack on the carbon centre to be hydroxylated (the C-8 position of the substrate) and the concomitant
+      hydride transfer from the C-8 carbon centre to the Mo(VI)=S of the molybdenum centre. This y
+  - node_id: active_site
+    label: xanthine dehydrogenase (bacterial) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:698
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.365.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.365.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: xanthine dehydrogenase (bacterial) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.17.1.4
+  edges:
+  - subject: arg310
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg310 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/698/
+      snippet: XDH cycles between mainly 2-electron and 4-electron reduced states during enzyme turnover.  Catalysis
+        is initiated by the abstraction of a proton from the Mo-OH group by Glu730, followed by a nucleophilic
+        attack on the carbon centre to be hydroxylated (the C-8 position of the substrate) and the concomitant
+        hydride transfer from the C-8 carbon centre to the Mo(VI)=S of the molybdenum centre. This yields
+        an LMo(IV)(SH)(OR) transition state intermediate, with L representing a unique pyranopterin cofactor
+        coordinated to the metal via an enedithiolate sidechain, and OR representing the now hydroxylated
+        product coordinated to the molybdenum via the newly introduced hydroxyl group. The accumulation
+        of negative charge on the transition state is stabilised by Arg310. The bound product is displaced
+        from the molybdenum coordination sphere by hydroxide from the solvent, electron transfer out of
+        the molybdenum centre to FAD via the iron-sulphur centres, and deprotonation of the Mo-SH to regenerate
+        the original, oxidised LMo(VI)OS(OH). The iron-sulphur centres, as well as providing an electron
+        transfer pathway from molybdenum to FAD, also act as electron sinks, storing reducing equivalents
+        during catalysis, and so control the reactivity of FAD by way of its one-electron-reduced or fully-reduced
+        state. Electron transfer to FAD from the iron-sulphur centre occurs by one-electron steps, followed
+        by a two-electron transfer to react with NAD+. After binding of NAD+, fully reduced FAD is oxidised
+        concomitantly with the reduction of NAD+.
+      notes: M-CSA entry 698, mechanism 1; M-CSA cites PMID:15265866, PMID:17327224, PMID:25258317, PMID:4367215,
+        PMID:9988690; step 1
+  - subject: glu730
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu730 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/698/
+      snippet: XDH cycles between mainly 2-electron and 4-electron reduced states during enzyme turnover.  Catalysis
+        is initiated by the abstraction of a proton from the Mo-OH group by Glu730, followed by a nucleophilic
+        attack on the carbon centre to be hydroxylated (the C-8 position of the substrate) and the concomitant
+        hydride transfer from the C-8 carbon centre to the Mo(VI)=S of the molybdenum centre. This yields
+        an LMo(IV)(SH)(OR) transition state intermediate, with L representing a unique pyranopterin cofactor
+        coordinated to the metal via an enedithiolate sidechain, and OR representing the now hydroxylated
+        product coordinated to the molybdenum via the newly introduced hydroxyl group. The accumulation
+        of negative charge on the transition state is stabilised by Arg310. The bound product is displaced
+        from the molybdenum coordination sphere by hydroxide from the solvent, electron transfer out of
+        the molybdenum centre to FAD via the iron-sulphur centres, and deprotonation of the Mo-SH to regenerate
+        the original, oxidised LMo(VI)OS(OH). The iron-sulphur centres, as well as providing an electron
+        transfer pathway from molybdenum to FAD, also act as electron sinks, storing reducing equivalents
+        during catalysis, and so control the reactivity of FAD by way of its one-electron-reduced or fully-reduced
+        state. Electron transfer to FAD from the iron-sulphur centre occurs by one-electron steps, followed
+        by a two-electron transfer to react with NAD+. After binding of NAD+, fully reduced FAD is oxidised
+        concomitantly with the reduction of NAD+.
+      notes: M-CSA entry 698, mechanism 1; M-CSA cites PMID:15265866, PMID:17327224, PMID:25258317, PMID:4367215,
+        PMID:9988690; step 1
+  - subject: arg310
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg310 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/698/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 698, mechanism 1; M-CSA cites PMID:15265866, PMID:17327224, PMID:25258317, PMID:4367215,
+        PMID:9988690; M-CSA catalytic-residue roles for Arg310
+  - subject: glu730
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu730 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/698/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 698, mechanism 1; M-CSA cites PMID:15265866, PMID:17327224, PMID:25258317, PMID:4367215,
+        PMID:9988690; M-CSA catalytic-residue roles for Glu730
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/698/
+      snippet: XDH cycles between mainly 2-electron and 4-electron reduced states during enzyme turnover.  Catalysis
+        is initiated by the abstraction of a proton from the Mo-OH group by Glu730, followed by a nucleophilic
+        attack on the carbon centre to be hydroxylated (the C-8 position of the substrate) and the concomitant
+        hydride transfer from the C-8 carbon centre to the Mo(VI)=S of the molybdenum centre. This y
+      notes: M-CSA entry 698, mechanism 1; M-CSA cites PMID:15265866, PMID:17327224, PMID:25258317, PMID:4367215,
+        PMID:9988690; CATH domain 3.30.365.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/698/
+      snippet: XDH cycles between mainly 2-electron and 4-electron reduced states during enzyme turnover.  Catalysis
+        is initiated by the abstraction of a proton from the Mo-OH group by Glu730, followed by a nucleophilic
+        attack on the carbon centre to be hydroxylated (the C-8 position of the substrate) and the concomitant
+        hydride transfer from the C-8 carbon centre to the Mo(VI)=S of the molybdenum centre. This y
+      notes: M-CSA entry 698, mechanism 1; M-CSA cites PMID:15265866, PMID:17327224, PMID:25258317, PMID:4367215,
+        PMID:9988690; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/698/
+      snippet: XDH cycles between mainly 2-electron and 4-electron reduced states during enzyme turnover.  Catalysis
+        is initiated by the abstraction of a proton from the Mo-OH group by Glu730, followed by a nucleophilic
+        attack on the carbon centre to be hydroxylated (the C-8 position of the substrate) and the concomitant
+        hydride transfer from the C-8 carbon centre to the Mo(VI)=S of the molybdenum centre. This y
+      notes: M-CSA entry 698, mechanism 1; M-CSA cites PMID:15265866, PMID:17327224, PMID:25258317, PMID:4367215,
+        PMID:9988690; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/698/
+      snippet: XDH cycles between mainly 2-electron and 4-electron reduced states during enzyme turnover.  Catalysis
+        is initiated by the abstraction of a proton from the Mo-OH group by Glu730, followed by a nucleophilic
+        attack on the carbon centre to be hydroxylated (the C-8 position of the substrate) and the concomitant
+        hydride transfer from the C-8 carbon centre to the Mo(VI)=S of the molybdenum centre. This y
+      notes: M-CSA entry 698, mechanism 1; M-CSA cites PMID:15265866, PMID:17327224, PMID:25258317, PMID:4367215,
+        PMID:9988690; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/698/
+      snippet: XDH cycles between mainly 2-electron and 4-electron reduced states during enzyme turnover.  Catalysis
+        is initiated by the abstraction of a proton from the Mo-OH group by Glu730, followed by a nucleophilic
+        attack on the carbon centre to be hydroxylated (the C-8 position of the substrate) and the concomitant
+        hydride transfer from the C-8 carbon centre to the Mo(VI)=S of the molybdenum centre. This y
+      notes: M-CSA entry 698, mechanism 1; M-CSA cites PMID:15265866, PMID:17327224, PMID:25258317, PMID:4367215,
+        PMID:9988690; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/698/
+      snippet: XDH cycles between mainly 2-electron and 4-electron reduced states during enzyme turnover.  Catalysis
+        is initiated by the abstraction of a proton from the Mo-OH group by Glu730, followed by a nucleophilic
+        attack on the carbon centre to be hydroxylated (the C-8 position of the substrate) and the concomitant
+        hydride transfer from the C-8 carbon centre to the Mo(VI)=S of the molybdenum centre. This y
+      notes: M-CSA entry 698, mechanism 1; M-CSA cites PMID:15265866, PMID:17327224, PMID:25258317, PMID:4367215,
+        PMID:9988690; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/698/
+      snippet: XDH cycles between mainly 2-electron and 4-electron reduced states during enzyme turnover.  Catalysis
+        is initiated by the abstraction of a proton from the Mo-OH group by Glu730, followed by a nucleophilic
+        attack on the carbon centre to be hydroxylated (the C-8 position of the substrate) and the concomitant
+        hydride transfer from the C-8 carbon centre to the Mo(VI)=S of the molybdenum centre. This y
+      notes: M-CSA entry 698, mechanism 1; M-CSA cites PMID:15265866, PMID:17327224, PMID:25258317, PMID:4367215,
+        PMID:9988690; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/698/
+      snippet: XDH cycles between mainly 2-electron and 4-electron reduced states during enzyme turnover.  Catalysis
+        is initiated by the abstraction of a proton from the Mo-OH group by Glu730, followed by a nucleophilic
+        attack on the carbon centre to be hydroxylated (the C-8 position of the substrate) and the concomitant
+        hydride transfer from the C-8 carbon centre to the Mo(VI)=S of the molybdenum centre. This y
+      notes: M-CSA entry 698, mechanism 1; M-CSA cites PMID:15265866, PMID:17327224, PMID:25258317, PMID:4367215,
+        PMID:9988690; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (12 evidence-backed edges) transcribed from M-CSA entry 698;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

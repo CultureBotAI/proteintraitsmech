@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.1.23
 - CHEBI:17716
@@ -745,4 +745,296 @@ definitions:
       Catalyses the hydrolysis of terminal non-reducing beta-D-galactose residues in beta-D-galactoside. Belongs to the glycosyl hydrolase 2 family.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of beta-galactosidase
+  description: Mechanism transcribed from M-CSA entry 422. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +1).
+  nodes:
+  - node_id: asp201
+    label: catalytic Asp201 (M-CSA/PDB numbering; UniProt residue 202)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00722
+  - node_id: his357
+    label: catalytic His357 (M-CSA/PDB numbering; UniProt residue 358)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00722
+  - node_id: his391
+    label: catalytic His391 (M-CSA/PDB numbering; UniProt residue 392)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00722
+  - node_id: glu416
+    label: catalytic Glu416 (M-CSA/PDB numbering; UniProt residue 417)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00722
+  - node_id: his418
+    label: catalytic His418 (M-CSA/PDB numbering; UniProt residue 419)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00722
+  - node_id: glu461
+    label: catalytic Glu461 (M-CSA/PDB numbering; UniProt residue 462)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00722
+  - node_id: glu537
+    label: catalytic Glu537 (M-CSA/PDB numbering; UniProt residue 538)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00722
+  - node_id: asn597
+    label: catalytic Asn597 (M-CSA/PDB numbering; UniProt residue 598)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00722
+  - node_id: phe601
+    label: catalytic Phe601 (M-CSA/PDB numbering; UniProt residue 602)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00722
+  - node_id: asn604
+    label: catalytic Asn604 (M-CSA/PDB numbering; UniProt residue 605)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00722
+  - node_id: reactant0
+    label: lactose
+    node_type: CHEMICAL
+    grounding: CHEBI:17716
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: D-galactopyranose
+    node_type: CHEMICAL
+    grounding: CHEBI:4139
+  - node_id: product1
+    label: D-glucopyranose
+    node_type: CHEMICAL
+    grounding: CHEBI:4167
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: Glu537 initiates a nucleophilic attack on the substrate, which eliminates the first product.
+      Glu461 activates the catalytic water, which attacks the enzyme-substrate adduct, eliminating the
+      final product and returning the enzyme to its native state.
+  - node_id: active_site
+    label: beta-galactosidase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:422
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: activity
+    label: beta-galactosidase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.1.23
+  edges:
+  - subject: glu461
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu461 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/422/
+      snippet: Glu537 initiates a nucleophilic attack on the substrate, which eliminates the first product.
+        Glu461 activates the catalytic water, which attacks the enzyme-substrate adduct, eliminating the
+        final product and returning the enzyme to its native state.
+      notes: M-CSA entry 422, mechanism 2; M-CSA cites PMID:11045615, PMID:1350782, PMID:15060622, PMID:19472413,
+        PMID:8535779, PMID:9665715; step 1
+  - subject: glu537
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu537 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/422/
+      snippet: Glu537 initiates a nucleophilic attack on the substrate, which eliminates the first product.
+        Glu461 activates the catalytic water, which attacks the enzyme-substrate adduct, eliminating the
+        final product and returning the enzyme to its native state.
+      notes: M-CSA entry 422, mechanism 2; M-CSA cites PMID:11045615, PMID:1350782, PMID:15060622, PMID:19472413,
+        PMID:8535779, PMID:9665715; step 1
+  - subject: asp201
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp201 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/422/
+      snippet: Glu537 initiates a nucleophilic attack on the substrate, which eliminates the first product.
+        Glu461 activates the catalytic water, which attacks the enzyme-substrate adduct, eliminating the
+        final product and returning the enzyme to its native state.
+      notes: M-CSA entry 422, mechanism 2; M-CSA cites PMID:11045615, PMID:1350782, PMID:15060622, PMID:19472413,
+        PMID:8535779, PMID:9665715; M-CSA catalytic-residue roles for Asp201
+  - subject: his357
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His357 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/422/
+      snippet: Glu537 initiates a nucleophilic attack on the substrate, which eliminates the first product.
+        Glu461 activates the catalytic water, which attacks the enzyme-substrate adduct, eliminating the
+        final product and returning the enzyme to its native state.
+      notes: M-CSA entry 422, mechanism 2; M-CSA cites PMID:11045615, PMID:1350782, PMID:15060622, PMID:19472413,
+        PMID:8535779, PMID:9665715; M-CSA catalytic-residue roles for His357
+  - subject: his391
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His391 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/422/
+      snippet: Glu537 initiates a nucleophilic attack on the substrate, which eliminates the first product.
+        Glu461 activates the catalytic water, which attacks the enzyme-substrate adduct, eliminating the
+        final product and returning the enzyme to its native state.
+      notes: M-CSA entry 422, mechanism 2; M-CSA cites PMID:11045615, PMID:1350782, PMID:15060622, PMID:19472413,
+        PMID:8535779, PMID:9665715; M-CSA catalytic-residue roles for His391
+  - subject: glu416
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu416 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/422/
+      snippet: Glu537 initiates a nucleophilic attack on the substrate, which eliminates the first product.
+        Glu461 activates the catalytic water, which attacks the enzyme-substrate adduct, eliminating the
+        final product and returning the enzyme to its native state.
+      notes: M-CSA entry 422, mechanism 2; M-CSA cites PMID:11045615, PMID:1350782, PMID:15060622, PMID:19472413,
+        PMID:8535779, PMID:9665715; M-CSA catalytic-residue roles for Glu416
+  - subject: his418
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His418 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/422/
+      snippet: Glu537 initiates a nucleophilic attack on the substrate, which eliminates the first product.
+        Glu461 activates the catalytic water, which attacks the enzyme-substrate adduct, eliminating the
+        final product and returning the enzyme to its native state.
+      notes: M-CSA entry 422, mechanism 2; M-CSA cites PMID:11045615, PMID:1350782, PMID:15060622, PMID:19472413,
+        PMID:8535779, PMID:9665715; M-CSA catalytic-residue roles for His418
+  - subject: glu461
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu461 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/422/
+      snippet: Glu537 initiates a nucleophilic attack on the substrate, which eliminates the first product.
+        Glu461 activates the catalytic water, which attacks the enzyme-substrate adduct, eliminating the
+        final product and returning the enzyme to its native state.
+      notes: M-CSA entry 422, mechanism 2; M-CSA cites PMID:11045615, PMID:1350782, PMID:15060622, PMID:19472413,
+        PMID:8535779, PMID:9665715; M-CSA catalytic-residue roles for Glu461
+  - subject: glu537
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu537 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/422/
+      snippet: Glu537 initiates a nucleophilic attack on the substrate, which eliminates the first product.
+        Glu461 activates the catalytic water, which attacks the enzyme-substrate adduct, eliminating the
+        final product and returning the enzyme to its native state.
+      notes: M-CSA entry 422, mechanism 2; M-CSA cites PMID:11045615, PMID:1350782, PMID:15060622, PMID:19472413,
+        PMID:8535779, PMID:9665715; M-CSA catalytic-residue roles for Glu537
+  - subject: asn597
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn597 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/422/
+      snippet: Glu537 initiates a nucleophilic attack on the substrate, which eliminates the first product.
+        Glu461 activates the catalytic water, which attacks the enzyme-substrate adduct, eliminating the
+        final product and returning the enzyme to its native state.
+      notes: M-CSA entry 422, mechanism 2; M-CSA cites PMID:11045615, PMID:1350782, PMID:15060622, PMID:19472413,
+        PMID:8535779, PMID:9665715; M-CSA catalytic-residue roles for Asn597
+  - subject: phe601
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Phe601 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/422/
+      snippet: Glu537 initiates a nucleophilic attack on the substrate, which eliminates the first product.
+        Glu461 activates the catalytic water, which attacks the enzyme-substrate adduct, eliminating the
+        final product and returning the enzyme to its native state.
+      notes: M-CSA entry 422, mechanism 2; M-CSA cites PMID:11045615, PMID:1350782, PMID:15060622, PMID:19472413,
+        PMID:8535779, PMID:9665715; M-CSA catalytic-residue roles for Phe601
+  - subject: asn604
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn604 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/422/
+      snippet: Glu537 initiates a nucleophilic attack on the substrate, which eliminates the first product.
+        Glu461 activates the catalytic water, which attacks the enzyme-substrate adduct, eliminating the
+        final product and returning the enzyme to its native state.
+      notes: M-CSA entry 422, mechanism 2; M-CSA cites PMID:11045615, PMID:1350782, PMID:15060622, PMID:19472413,
+        PMID:8535779, PMID:9665715; M-CSA catalytic-residue roles for Asn604
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/422/
+      snippet: Glu537 initiates a nucleophilic attack on the substrate, which eliminates the first product.
+        Glu461 activates the catalytic water, which attacks the enzyme-substrate adduct, eliminating the
+        final product and returning the enzyme to its native state.
+      notes: M-CSA entry 422, mechanism 2; M-CSA cites PMID:11045615, PMID:1350782, PMID:15060622, PMID:19472413,
+        PMID:8535779, PMID:9665715; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/422/
+      snippet: Glu537 initiates a nucleophilic attack on the substrate, which eliminates the first product.
+        Glu461 activates the catalytic water, which attacks the enzyme-substrate adduct, eliminating the
+        final product and returning the enzyme to its native state.
+      notes: M-CSA entry 422, mechanism 2; M-CSA cites PMID:11045615, PMID:1350782, PMID:15060622, PMID:19472413,
+        PMID:8535779, PMID:9665715; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/422/
+      snippet: Glu537 initiates a nucleophilic attack on the substrate, which eliminates the first product.
+        Glu461 activates the catalytic water, which attacks the enzyme-substrate adduct, eliminating the
+        final product and returning the enzyme to its native state.
+      notes: M-CSA entry 422, mechanism 2; M-CSA cites PMID:11045615, PMID:1350782, PMID:15060622, PMID:19472413,
+        PMID:8535779, PMID:9665715; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/422/
+      snippet: Glu537 initiates a nucleophilic attack on the substrate, which eliminates the first product.
+        Glu461 activates the catalytic water, which attacks the enzyme-substrate adduct, eliminating the
+        final product and returning the enzyme to its native state.
+      notes: M-CSA entry 422, mechanism 2; M-CSA cites PMID:11045615, PMID:1350782, PMID:15060622, PMID:19472413,
+        PMID:8535779, PMID:9665715; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/422/
+      snippet: Glu537 initiates a nucleophilic attack on the substrate, which eliminates the first product.
+        Glu461 activates the catalytic water, which attacks the enzyme-substrate adduct, eliminating the
+        final product and returning the enzyme to its native state.
+      notes: M-CSA entry 422, mechanism 2; M-CSA cites PMID:11045615, PMID:1350782, PMID:15060622, PMID:19472413,
+        PMID:8535779, PMID:9665715; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (17 evidence-backed edges) transcribed from M-CSA entry 422;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

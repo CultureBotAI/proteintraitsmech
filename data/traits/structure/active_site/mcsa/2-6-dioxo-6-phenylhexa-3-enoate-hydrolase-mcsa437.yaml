@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.7.1.8
 - CHEBI:15378
@@ -63,4 +63,422 @@ definitions:
       2-Hydroxyl-6-oxo-6-phenylhexa-2,4-dienoic acid hydrolase (BphD) hydrolyses an unusual C-C bond of 2-hydroxy-6-oxo-6-phenylhexa-2,4-dienoic acid (HOPDA) to produce benzoic acid and 2-hydroxy-2,4-pentadienoic acid (HPD). HOPDA is an aromatic compound generated in a biphenyl/polychlorinated biphenyl (PCB) degradation pathway of bacteria. It is a member of the alpha/beta hydrolase superfamily and has the canonical Ser-His-Asp triad. There has been a lot of debate as to the exact mechanism of this enzyme.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 2,6-dioxo-6-phenylhexa-3-enoate hydrolase
+  description: Mechanism transcribed from M-CSA entry 437. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +1).
+  nodes:
+  - node_id: gly40
+    label: catalytic Gly40 (M-CSA/PDB numbering; UniProt residue 41)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q75WN8
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asn109
+    label: catalytic Asn109 (M-CSA/PDB numbering; UniProt residue 110)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q75WN8
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ser110
+    label: catalytic Ser110 (M-CSA/PDB numbering; UniProt residue 111)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q75WN8
+    description: 'M-CSA roles: covalent catalysis, electrostatic stabiliser, proton shuttle (general acid/base).'
+  - node_id: met111
+    label: catalytic Met111 (M-CSA/PDB numbering; UniProt residue 112)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q75WN8
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: arg186
+    label: catalytic Arg186 (M-CSA/PDB numbering; UniProt residue 187)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q75WN8
+    description: 'M-CSA roles: electrostatic destabiliser, steric role.'
+  - node_id: asp235
+    label: catalytic Asp235 (M-CSA/PDB numbering; UniProt residue 236)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q75WN8
+    description: 'M-CSA roles: modifies pKa.'
+  - node_id: his263
+    label: catalytic His263 (M-CSA/PDB numbering; UniProt residue 264)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q75WN8
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: trp264
+    label: catalytic Trp264 (M-CSA/PDB numbering; UniProt residue 265)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q75WN8
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: 2,6-dioxo-6-phenylhexa-3-enoate(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:64675
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product1
+    label: benzoate
+    node_type: CHEMICAL
+    grounding: CHEBI:16150
+  - node_id: product2
+    label: 2-oxopent-4-enoate
+    node_type: CHEMICAL
+    grounding: CHEBI:11641
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: "The exact mechanism is currently unclear and two proposals have been put forward. \
+      
+<br/><br/>
+The first (shown here) suggests that the Ser-His-Asp triad of the alpha/beta hydrolase\
+      \ fold superfamily members performs in the traditional way, with a covalent intermediate being formed\
+      \ between the serine and substrate.
+<br/><br/>
+In this mechanism, the free enzyme (E) binds\
+      \ and the 2-hydroxy-6-oxo-6"
+  - node_id: active_site
+    label: 2,6-dioxo-6-phenylhexa-3-enoate hydrolase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:437
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1820 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1820
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: 2,6-dioxo-6-phenylhexa-3-enoate hydrolase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.7.1.8
+  edges:
+  - subject: gly40
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Gly40 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/437/
+      snippet: "The exact mechanism is currently unclear and two proposals have been put forward. 
+\
+        <br/><br/>
+The first (shown here) suggests that the Ser-His-Asp triad of the alpha/beta hydrolase\
+        \ fold superfamily members performs in the traditional way, with a covalent intermediate being\
+        \ formed between the serine and substrate.
+<br/><br/>
+In this mechanism, the free enzyme\
+        \ (E) binds and the 2-hydroxy-6-oxo-6-phenylhexa-2,4-dienoic acid substrate undergoes keto-enol\
+        \ tautomerisation (<i>via</i> His263-catalysed transfer of a proton to the proS position at C-5),\
+        \ generating the first intermediate. Nucleophilic attack of Ser110 on this intermediate generates\
+        \ the first tetrahedral (covalently bound) intermediate, the negative charge of which is stabilised\
+        \ by the main chain amide protons of the 'oxyanion hole' residues, Met111 and Gly40. Collapse\
+        \ of this intermediate involves C-C fragmentation onto the re face of the double bond, generating\
+        \ the acyl-enzyme intermediate, and releasing 2-hydroxy-penta-2,4-dienoic acid with the inserted\
+        \ proton at the H-5E position. His263 activates water to attack at the acyl-enzyme carbonyl, generating\
+        \ the second tetrahedral intermediate, collapse of which releases benzoate and regenerates free\
+        \ enzyme."
+      notes: M-CSA entry 437, mechanism 1; M-CSA cites PMID:11399084, PMID:16964968, PMID:17442675, PMID:17932031,
+        PMID:22339283, PMID:22747426, PMID:24067021; step 1
+  - subject: ser110
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser110 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/437/
+      snippet: "The exact mechanism is currently unclear and two proposals have been put forward. 
+\
+        <br/><br/>
+The first (shown here) suggests that the Ser-His-Asp triad of the alpha/beta hydrolase\
+        \ fold superfamily members performs in the traditional way, with a covalent intermediate being\
+        \ formed between the serine and substrate.
+<br/><br/>
+In this mechanism, the free enzyme\
+        \ (E) binds and the 2-hydroxy-6-oxo-6-phenylhexa-2,4-dienoic acid substrate undergoes keto-enol\
+        \ tautomerisation (<i>via</i> His263-catalysed transfer of a proton to the proS position at C-5),\
+        \ generating the first intermediate. Nucleophilic attack of Ser110 on this intermediate generates\
+        \ the first tetrahedral (covalently bound) intermediate, the negative charge of which is stabilised\
+        \ by the main chain amide protons of the 'oxyanion hole' residues, Met111 and Gly40. Collapse\
+        \ of this intermediate involves C-C fragmentation onto the re face of the double bond, generating\
+        \ the acyl-enzyme intermediate, and releasing 2-hydroxy-penta-2,4-dienoic acid with the inserted\
+        \ proton at the H-5E position. His263 activates water to attack at the acyl-enzyme carbonyl, generating\
+        \ the second tetrahedral intermediate, collapse of which releases benzoate and regenerates free\
+        \ enzyme."
+      notes: M-CSA entry 437, mechanism 1; M-CSA cites PMID:11399084, PMID:16964968, PMID:17442675, PMID:17932031,
+        PMID:22339283, PMID:22747426, PMID:24067021; step 1
+  - subject: met111
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Met111 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/437/
+      snippet: "The exact mechanism is currently unclear and two proposals have been put forward. 
+\
+        <br/><br/>
+The first (shown here) suggests that the Ser-His-Asp triad of the alpha/beta hydrolase\
+        \ fold superfamily members performs in the traditional way, with a covalent intermediate being\
+        \ formed between the serine and substrate.
+<br/><br/>
+In this mechanism, the free enzyme\
+        \ (E) binds and the 2-hydroxy-6-oxo-6-phenylhexa-2,4-dienoic acid substrate undergoes keto-enol\
+        \ tautomerisation (<i>via</i> His263-catalysed transfer of a proton to the proS position at C-5),\
+        \ generating the first intermediate. Nucleophilic attack of Ser110 on this intermediate generates\
+        \ the first tetrahedral (covalently bound) intermediate, the negative charge of which is stabilised\
+        \ by the main chain amide protons of the 'oxyanion hole' residues, Met111 and Gly40. Collapse\
+        \ of this intermediate involves C-C fragmentation onto the re face of the double bond, generating\
+        \ the acyl-enzyme intermediate, and releasing 2-hydroxy-penta-2,4-dienoic acid with the inserted\
+        \ proton at the H-5E position. His263 activates water to attack at the acyl-enzyme carbonyl, generating\
+        \ the second tetrahedral intermediate, collapse of which releases benzoate and regenerates free\
+        \ enzyme."
+      notes: M-CSA entry 437, mechanism 1; M-CSA cites PMID:11399084, PMID:16964968, PMID:17442675, PMID:17932031,
+        PMID:22339283, PMID:22747426, PMID:24067021; step 1
+  - subject: his263
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His263 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/437/
+      snippet: "The exact mechanism is currently unclear and two proposals have been put forward. 
+\
+        <br/><br/>
+The first (shown here) suggests that the Ser-His-Asp triad of the alpha/beta hydrolase\
+        \ fold superfamily members performs in the traditional way, with a covalent intermediate being\
+        \ formed between the serine and substrate.
+<br/><br/>
+In this mechanism, the free enzyme\
+        \ (E) binds and the 2-hydroxy-6-oxo-6-phenylhexa-2,4-dienoic acid substrate undergoes keto-enol\
+        \ tautomerisation (<i>via</i> His263-catalysed transfer of a proton to the proS position at C-5),\
+        \ generating the first intermediate. Nucleophilic attack of Ser110 on this intermediate generates\
+        \ the first tetrahedral (covalently bound) intermediate, the negative charge of which is stabilised\
+        \ by the main chain amide protons of the 'oxyanion hole' residues, Met111 and Gly40. Collapse\
+        \ of this intermediate involves C-C fragmentation onto the re face of the double bond, generating\
+        \ the acyl-enzyme intermediate, and releasing 2-hydroxy-penta-2,4-dienoic acid with the inserted\
+        \ proton at the H-5E position. His263 activates water to attack at the acyl-enzyme carbonyl, generating\
+        \ the second tetrahedral intermediate, collapse of which releases benzoate and regenerates free\
+        \ enzyme."
+      notes: M-CSA entry 437, mechanism 1; M-CSA cites PMID:11399084, PMID:16964968, PMID:17442675, PMID:17932031,
+        PMID:22339283, PMID:22747426, PMID:24067021; step 1
+  - subject: gly40
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly40 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/437/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 437, mechanism 1; M-CSA cites PMID:11399084, PMID:16964968, PMID:17442675, PMID:17932031,
+        PMID:22339283, PMID:22747426, PMID:24067021; M-CSA catalytic-residue roles for Gly40
+  - subject: asn109
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn109 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/437/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 437, mechanism 1; M-CSA cites PMID:11399084, PMID:16964968, PMID:17442675, PMID:17932031,
+        PMID:22339283, PMID:22747426, PMID:24067021; M-CSA catalytic-residue roles for Asn109
+  - subject: ser110
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser110 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/437/
+      snippet: covalent catalysis, electrostatic stabiliser, proton shuttle (general acid/base)
+      notes: M-CSA entry 437, mechanism 1; M-CSA cites PMID:11399084, PMID:16964968, PMID:17442675, PMID:17932031,
+        PMID:22339283, PMID:22747426, PMID:24067021; M-CSA catalytic-residue roles for Ser110
+  - subject: met111
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Met111 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/437/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 437, mechanism 1; M-CSA cites PMID:11399084, PMID:16964968, PMID:17442675, PMID:17932031,
+        PMID:22339283, PMID:22747426, PMID:24067021; M-CSA catalytic-residue roles for Met111
+  - subject: arg186
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg186 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/437/
+      snippet: electrostatic destabiliser, steric role
+      notes: M-CSA entry 437, mechanism 1; M-CSA cites PMID:11399084, PMID:16964968, PMID:17442675, PMID:17932031,
+        PMID:22339283, PMID:22747426, PMID:24067021; M-CSA catalytic-residue roles for Arg186
+  - subject: asp235
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp235 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/437/
+      snippet: modifies pKa
+      notes: M-CSA entry 437, mechanism 1; M-CSA cites PMID:11399084, PMID:16964968, PMID:17442675, PMID:17932031,
+        PMID:22339283, PMID:22747426, PMID:24067021; M-CSA catalytic-residue roles for Asp235
+  - subject: his263
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His263 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/437/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 437, mechanism 1; M-CSA cites PMID:11399084, PMID:16964968, PMID:17442675, PMID:17932031,
+        PMID:22339283, PMID:22747426, PMID:24067021; M-CSA catalytic-residue roles for His263
+  - subject: trp264
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp264 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/437/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 437, mechanism 1; M-CSA cites PMID:11399084, PMID:16964968, PMID:17442675, PMID:17932031,
+        PMID:22339283, PMID:22747426, PMID:24067021; M-CSA catalytic-residue roles for Trp264
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/437/
+      snippet: "The exact mechanism is currently unclear and two proposals have been put forward. 
+\
+        <br/><br/>
+The first (shown here) suggests that the Ser-His-Asp triad of the alpha/beta hydrolase\
+        \ fold superfamily members performs in the traditional way, with a covalent intermediate being\
+        \ formed between the serine and substrate.
+<br/><br/>
+In this mechanism, the free enzyme\
+        \ (E) binds and the 2-hydroxy-6-oxo-6"
+      notes: M-CSA entry 437, mechanism 1; M-CSA cites PMID:11399084, PMID:16964968, PMID:17442675, PMID:17932031,
+        PMID:22339283, PMID:22747426, PMID:24067021; CATH domain 3.40.50.1820 assigned to the catalytic
+        chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/437/
+      snippet: "The exact mechanism is currently unclear and two proposals have been put forward. 
+\
+        <br/><br/>
+The first (shown here) suggests that the Ser-His-Asp triad of the alpha/beta hydrolase\
+        \ fold superfamily members performs in the traditional way, with a covalent intermediate being\
+        \ formed between the serine and substrate.
+<br/><br/>
+In this mechanism, the free enzyme\
+        \ (E) binds and the 2-hydroxy-6-oxo-6"
+      notes: M-CSA entry 437, mechanism 1; M-CSA cites PMID:11399084, PMID:16964968, PMID:17442675, PMID:17932031,
+        PMID:22339283, PMID:22747426, PMID:24067021; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/437/
+      snippet: "The exact mechanism is currently unclear and two proposals have been put forward. 
+\
+        <br/><br/>
+The first (shown here) suggests that the Ser-His-Asp triad of the alpha/beta hydrolase\
+        \ fold superfamily members performs in the traditional way, with a covalent intermediate being\
+        \ formed between the serine and substrate.
+<br/><br/>
+In this mechanism, the free enzyme\
+        \ (E) binds and the 2-hydroxy-6-oxo-6"
+      notes: M-CSA entry 437, mechanism 1; M-CSA cites PMID:11399084, PMID:16964968, PMID:17442675, PMID:17932031,
+        PMID:22339283, PMID:22747426, PMID:24067021; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/437/
+      snippet: "The exact mechanism is currently unclear and two proposals have been put forward. 
+\
+        <br/><br/>
+The first (shown here) suggests that the Ser-His-Asp triad of the alpha/beta hydrolase\
+        \ fold superfamily members performs in the traditional way, with a covalent intermediate being\
+        \ formed between the serine and substrate.
+<br/><br/>
+In this mechanism, the free enzyme\
+        \ (E) binds and the 2-hydroxy-6-oxo-6"
+      notes: M-CSA entry 437, mechanism 1; M-CSA cites PMID:11399084, PMID:16964968, PMID:17442675, PMID:17932031,
+        PMID:22339283, PMID:22747426, PMID:24067021; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/437/
+      snippet: "The exact mechanism is currently unclear and two proposals have been put forward. 
+\
+        <br/><br/>
+The first (shown here) suggests that the Ser-His-Asp triad of the alpha/beta hydrolase\
+        \ fold superfamily members performs in the traditional way, with a covalent intermediate being\
+        \ formed between the serine and substrate.
+<br/><br/>
+In this mechanism, the free enzyme\
+        \ (E) binds and the 2-hydroxy-6-oxo-6"
+      notes: M-CSA entry 437, mechanism 1; M-CSA cites PMID:11399084, PMID:16964968, PMID:17442675, PMID:17932031,
+        PMID:22339283, PMID:22747426, PMID:24067021; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/437/
+      snippet: "The exact mechanism is currently unclear and two proposals have been put forward. 
+\
+        <br/><br/>
+The first (shown here) suggests that the Ser-His-Asp triad of the alpha/beta hydrolase\
+        \ fold superfamily members performs in the traditional way, with a covalent intermediate being\
+        \ formed between the serine and substrate.
+<br/><br/>
+In this mechanism, the free enzyme\
+        \ (E) binds and the 2-hydroxy-6-oxo-6"
+      notes: M-CSA entry 437, mechanism 1; M-CSA cites PMID:11399084, PMID:16964968, PMID:17442675, PMID:17932031,
+        PMID:22339283, PMID:22747426, PMID:24067021; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/437/
+      snippet: "The exact mechanism is currently unclear and two proposals have been put forward. 
+\
+        <br/><br/>
+The first (shown here) suggests that the Ser-His-Asp triad of the alpha/beta hydrolase\
+        \ fold superfamily members performs in the traditional way, with a covalent intermediate being\
+        \ formed between the serine and substrate.
+<br/><br/>
+In this mechanism, the free enzyme\
+        \ (E) binds and the 2-hydroxy-6-oxo-6"
+      notes: M-CSA entry 437, mechanism 1; M-CSA cites PMID:11399084, PMID:16964968, PMID:17442675, PMID:17932031,
+        PMID:22339283, PMID:22747426, PMID:24067021; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (19 evidence-backed edges) transcribed from M-CSA entry 437;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

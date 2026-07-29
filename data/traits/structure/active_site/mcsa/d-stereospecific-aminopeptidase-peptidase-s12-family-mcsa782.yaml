@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.11.19
 - CHEBI:15377
@@ -352,4 +352,269 @@ definitions:
       Antibiotic resistance to the beta lactam family of antibiotics, which includes penicillin, is often conferred to bacteria by serine beta lactamases which can break down the inhibitor to harmless products. They are believed to have evolved from D amino peptidases, which hydrolyse the peptide bond between two D amino acids after the N terminal residue. DAP from Othrobacrum anthropi is one such peptidase, and is inhibited by beta lactams. Study of this protein will thus reveal details of how the antibiotic resistance conferring peptidases work. It is found to show significant active site homology with other penicillin binding proteins, including the serine beta lactamases, but very low sequence identity with either group, suggesting that it is part of a novel family which may have given rise to the resistance-conferring enzymes.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of D-stereospecific aminopeptidase (peptidase S12 family)
+  description: Mechanism transcribed from M-CSA entry 782. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: ser62
+    label: catalytic Ser62 (M-CSA/PDB numbering; UniProt residue 62)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9ZBA9
+    description: 'M-CSA roles: covalently attached.'
+  - node_id: lys65
+    label: catalytic Lys65 (M-CSA/PDB numbering; UniProt residue 65)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9ZBA9
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: tyr153
+    label: catalytic Tyr153 (M-CSA/PDB numbering; UniProt residue 153)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9ZBA9
+    description: 'M-CSA roles: electrostatic stabiliser, proton shuttle (general acid/base).'
+  - node_id: asn155
+    label: catalytic Asn155 (M-CSA/PDB numbering; UniProt residue 155)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9ZBA9
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his287
+    label: catalytic His287 (M-CSA/PDB numbering; UniProt residue 287)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9ZBA9
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: D-alanyl-D-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:16576
+  - node_id: product0
+    label: D-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:15570
+  - node_id: product1
+    label: D-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:15570
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: The reaction proceeds via nucleophilic attack by Ser 62 on the peptide substrate, activated
+      by proton abstraction by Lys 62. Lys 62's pKa is lowered sufficiently for it to carry out this role
+      by contacts with Tyr 153 and Asn 155. This forms a tetrahedral intermediate, which collapses, assisted
+      by protonation of the leaving group by Lys 65 to form an acyl enzyme intermediate. Hydrolysis of
+      this int
+  - node_id: active_site
+    label: D-stereospecific aminopeptidase (peptidase S12 family) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:782
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.710.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.710.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: D-stereospecific aminopeptidase (peptidase S12 family) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.11.19
+  edges:
+  - subject: ser62
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser62 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/782/
+      snippet: The reaction proceeds via nucleophilic attack by Ser 62 on the peptide substrate, activated
+        by proton abstraction by Lys 62. Lys 62's pKa is lowered sufficiently for it to carry out this
+        role by contacts with Tyr 153 and Asn 155. This forms a tetrahedral intermediate, which collapses,
+        assisted by protonation of the leaving group by Lys 65 to form an acyl enzyme intermediate. Hydrolysis
+        of this intermediate by a water molecule, activated by deprotonation by Tyr 153 leads to the products
+        of the peptidase reaction.
+      notes: M-CSA entry 782, mechanism 1; M-CSA cites PMID:10986464, PMID:26513520; step 1
+  - subject: lys65
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys65 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/782/
+      snippet: The reaction proceeds via nucleophilic attack by Ser 62 on the peptide substrate, activated
+        by proton abstraction by Lys 62. Lys 62's pKa is lowered sufficiently for it to carry out this
+        role by contacts with Tyr 153 and Asn 155. This forms a tetrahedral intermediate, which collapses,
+        assisted by protonation of the leaving group by Lys 65 to form an acyl enzyme intermediate. Hydrolysis
+        of this intermediate by a water molecule, activated by deprotonation by Tyr 153 leads to the products
+        of the peptidase reaction.
+      notes: M-CSA entry 782, mechanism 1; M-CSA cites PMID:10986464, PMID:26513520; step 1
+  - subject: tyr153
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr153 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/782/
+      snippet: The reaction proceeds via nucleophilic attack by Ser 62 on the peptide substrate, activated
+        by proton abstraction by Lys 62. Lys 62's pKa is lowered sufficiently for it to carry out this
+        role by contacts with Tyr 153 and Asn 155. This forms a tetrahedral intermediate, which collapses,
+        assisted by protonation of the leaving group by Lys 65 to form an acyl enzyme intermediate. Hydrolysis
+        of this intermediate by a water molecule, activated by deprotonation by Tyr 153 leads to the products
+        of the peptidase reaction.
+      notes: M-CSA entry 782, mechanism 1; M-CSA cites PMID:10986464, PMID:26513520; step 1
+  - subject: asn155
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asn155 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/782/
+      snippet: The reaction proceeds via nucleophilic attack by Ser 62 on the peptide substrate, activated
+        by proton abstraction by Lys 62. Lys 62's pKa is lowered sufficiently for it to carry out this
+        role by contacts with Tyr 153 and Asn 155. This forms a tetrahedral intermediate, which collapses,
+        assisted by protonation of the leaving group by Lys 65 to form an acyl enzyme intermediate. Hydrolysis
+        of this intermediate by a water molecule, activated by deprotonation by Tyr 153 leads to the products
+        of the peptidase reaction.
+      notes: M-CSA entry 782, mechanism 1; M-CSA cites PMID:10986464, PMID:26513520; step 1
+  - subject: ser62
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser62 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/782/
+      snippet: covalently attached
+      notes: M-CSA entry 782, mechanism 1; M-CSA cites PMID:10986464, PMID:26513520; M-CSA catalytic-residue
+        roles for Ser62
+  - subject: lys65
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys65 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/782/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 782, mechanism 1; M-CSA cites PMID:10986464, PMID:26513520; M-CSA catalytic-residue
+        roles for Lys65
+  - subject: tyr153
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr153 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/782/
+      snippet: electrostatic stabiliser, proton shuttle (general acid/base)
+      notes: M-CSA entry 782, mechanism 1; M-CSA cites PMID:10986464, PMID:26513520; M-CSA catalytic-residue
+        roles for Tyr153
+  - subject: asn155
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn155 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/782/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 782, mechanism 1; M-CSA cites PMID:10986464, PMID:26513520; M-CSA catalytic-residue
+        roles for Asn155
+  - subject: his287
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His287 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/782/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 782, mechanism 1; M-CSA cites PMID:10986464, PMID:26513520; M-CSA catalytic-residue
+        roles for His287
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/782/
+      snippet: The reaction proceeds via nucleophilic attack by Ser 62 on the peptide substrate, activated
+        by proton abstraction by Lys 62. Lys 62's pKa is lowered sufficiently for it to carry out this
+        role by contacts with Tyr 153 and Asn 155. This forms a tetrahedral intermediate, which collapses,
+        assisted by protonation of the leaving group by Lys 65 to form an acyl enzyme intermediate. Hydrolysis
+        of this int
+      notes: M-CSA entry 782, mechanism 1; M-CSA cites PMID:10986464, PMID:26513520; CATH domain 3.40.710.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/782/
+      snippet: The reaction proceeds via nucleophilic attack by Ser 62 on the peptide substrate, activated
+        by proton abstraction by Lys 62. Lys 62's pKa is lowered sufficiently for it to carry out this
+        role by contacts with Tyr 153 and Asn 155. This forms a tetrahedral intermediate, which collapses,
+        assisted by protonation of the leaving group by Lys 65 to form an acyl enzyme intermediate. Hydrolysis
+        of this int
+      notes: M-CSA entry 782, mechanism 1; M-CSA cites PMID:10986464, PMID:26513520; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/782/
+      snippet: The reaction proceeds via nucleophilic attack by Ser 62 on the peptide substrate, activated
+        by proton abstraction by Lys 62. Lys 62's pKa is lowered sufficiently for it to carry out this
+        role by contacts with Tyr 153 and Asn 155. This forms a tetrahedral intermediate, which collapses,
+        assisted by protonation of the leaving group by Lys 65 to form an acyl enzyme intermediate. Hydrolysis
+        of this int
+      notes: M-CSA entry 782, mechanism 1; M-CSA cites PMID:10986464, PMID:26513520; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/782/
+      snippet: The reaction proceeds via nucleophilic attack by Ser 62 on the peptide substrate, activated
+        by proton abstraction by Lys 62. Lys 62's pKa is lowered sufficiently for it to carry out this
+        role by contacts with Tyr 153 and Asn 155. This forms a tetrahedral intermediate, which collapses,
+        assisted by protonation of the leaving group by Lys 65 to form an acyl enzyme intermediate. Hydrolysis
+        of this int
+      notes: M-CSA entry 782, mechanism 1; M-CSA cites PMID:10986464, PMID:26513520; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/782/
+      snippet: The reaction proceeds via nucleophilic attack by Ser 62 on the peptide substrate, activated
+        by proton abstraction by Lys 62. Lys 62's pKa is lowered sufficiently for it to carry out this
+        role by contacts with Tyr 153 and Asn 155. This forms a tetrahedral intermediate, which collapses,
+        assisted by protonation of the leaving group by Lys 65 to form an acyl enzyme intermediate. Hydrolysis
+        of this int
+      notes: M-CSA entry 782, mechanism 1; M-CSA cites PMID:10986464, PMID:26513520; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/782/
+      snippet: The reaction proceeds via nucleophilic attack by Ser 62 on the peptide substrate, activated
+        by proton abstraction by Lys 62. Lys 62's pKa is lowered sufficiently for it to carry out this
+        role by contacts with Tyr 153 and Asn 155. This forms a tetrahedral intermediate, which collapses,
+        assisted by protonation of the leaving group by Lys 65 to form an acyl enzyme intermediate. Hydrolysis
+        of this int
+      notes: M-CSA entry 782, mechanism 1; M-CSA cites PMID:10986464, PMID:26513520; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 782;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.21.4
 - CHEBI:15377
@@ -138,4 +138,211 @@ definitions:
       Catalyses the endonucleolytic cleavage of DNA to give specific double-stranded fragments with terminal 5'-phosphates. This class recognises the double-stranded sequence CAGCTG and cleaves after G-3.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of type II site-specific deoxyribonuclease PvuII
+  description: Mechanism transcribed from M-CSA entry 897. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: asp58
+    label: catalytic Asp58 (M-CSA/PDB numbering; UniProt residue 58)
+    node_type: RESIDUE
+    grounding: UniProtKB:P23657
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu68
+    label: catalytic Glu68 (M-CSA/PDB numbering; UniProt residue 68)
+    node_type: RESIDUE
+    grounding: UniProtKB:P23657
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: lys70
+    label: catalytic Lys70 (M-CSA/PDB numbering; UniProt residue 70)
+    node_type: RESIDUE
+    grounding: UniProtKB:P23657
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: single-stranded DNA
+    node_type: CHEMICAL
+    grounding: CHEBI:9160
+  - node_id: product0
+    label: 2'-deoxynucleoside 3'-monophosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:131705
+  - node_id: product1
+    label: 5'-end 2'-deoxyribonucleotide(2-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:136412
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: This restriction enzyme functions with two metal ions. Mg(II) ion at site 1 could help
+      to activate the attacking water molecule, a Mg(II) at site 2 helps to stabilise the negative charge
+      on the 3' oxyanion leaving group, and both ions are involved in stabilising the pentacovalent transition
+      state. Lys70 is thought to act as a general acid/base.
+  - node_id: active_site
+    label: type II site-specific deoxyribonuclease PvuII catalytic site
+    node_type: MOTIF
+    grounding: MCSA:897
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.210.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.210.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: type II site-specific deoxyribonuclease PvuII activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.21.4
+  edges:
+  - subject: lys70
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys70 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/897/
+      snippet: This restriction enzyme functions with two metal ions. Mg(II) ion at site 1 could help
+        to activate the attacking water molecule, a Mg(II) at site 2 helps to stabilise the negative charge
+        on the 3' oxyanion leaving group, and both ions are involved in stabilising the pentacovalent
+        transition state. Lys70 is thought to act as a general acid/base.
+      notes: M-CSA entry 897, mechanism 1; M-CSA cites PMID:10903853, PMID:11557805, PMID:9878366; step
+        1
+  - subject: asp58
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp58 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/897/
+      snippet: metal ligand
+      notes: M-CSA entry 897, mechanism 1; M-CSA cites PMID:10903853, PMID:11557805, PMID:9878366; M-CSA
+        catalytic-residue roles for Asp58
+  - subject: glu68
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu68 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/897/
+      snippet: metal ligand
+      notes: M-CSA entry 897, mechanism 1; M-CSA cites PMID:10903853, PMID:11557805, PMID:9878366; M-CSA
+        catalytic-residue roles for Glu68
+  - subject: lys70
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys70 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/897/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 897, mechanism 1; M-CSA cites PMID:10903853, PMID:11557805, PMID:9878366; M-CSA
+        catalytic-residue roles for Lys70
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/897/
+      snippet: This restriction enzyme functions with two metal ions. Mg(II) ion at site 1 could help
+        to activate the attacking water molecule, a Mg(II) at site 2 helps to stabilise the negative charge
+        on the 3' oxyanion leaving group, and both ions are involved in stabilising the pentacovalent
+        transition state. Lys70 is thought to act as a general acid/base.
+      notes: M-CSA entry 897, mechanism 1; M-CSA cites PMID:10903853, PMID:11557805, PMID:9878366; CATH
+        domain 3.40.210.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/897/
+      snippet: This restriction enzyme functions with two metal ions. Mg(II) ion at site 1 could help
+        to activate the attacking water molecule, a Mg(II) at site 2 helps to stabilise the negative charge
+        on the 3' oxyanion leaving group, and both ions are involved in stabilising the pentacovalent
+        transition state. Lys70 is thought to act as a general acid/base.
+      notes: M-CSA entry 897, mechanism 1; M-CSA cites PMID:10903853, PMID:11557805, PMID:9878366; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/897/
+      snippet: This restriction enzyme functions with two metal ions. Mg(II) ion at site 1 could help
+        to activate the attacking water molecule, a Mg(II) at site 2 helps to stabilise the negative charge
+        on the 3' oxyanion leaving group, and both ions are involved in stabilising the pentacovalent
+        transition state. Lys70 is thought to act as a general acid/base.
+      notes: M-CSA entry 897, mechanism 1; M-CSA cites PMID:10903853, PMID:11557805, PMID:9878366; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/897/
+      snippet: This restriction enzyme functions with two metal ions. Mg(II) ion at site 1 could help
+        to activate the attacking water molecule, a Mg(II) at site 2 helps to stabilise the negative charge
+        on the 3' oxyanion leaving group, and both ions are involved in stabilising the pentacovalent
+        transition state. Lys70 is thought to act as a general acid/base.
+      notes: M-CSA entry 897, mechanism 1; M-CSA cites PMID:10903853, PMID:11557805, PMID:9878366; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/897/
+      snippet: This restriction enzyme functions with two metal ions. Mg(II) ion at site 1 could help
+        to activate the attacking water molecule, a Mg(II) at site 2 helps to stabilise the negative charge
+        on the 3' oxyanion leaving group, and both ions are involved in stabilising the pentacovalent
+        transition state. Lys70 is thought to act as a general acid/base.
+      notes: M-CSA entry 897, mechanism 1; M-CSA cites PMID:10903853, PMID:11557805, PMID:9878366; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/897/
+      snippet: This restriction enzyme functions with two metal ions. Mg(II) ion at site 1 could help
+        to activate the attacking water molecule, a Mg(II) at site 2 helps to stabilise the negative charge
+        on the 3' oxyanion leaving group, and both ions are involved in stabilising the pentacovalent
+        transition state. Lys70 is thought to act as a general acid/base.
+      notes: M-CSA entry 897, mechanism 1; M-CSA cites PMID:10903853, PMID:11557805, PMID:9878366; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/897/
+      snippet: This restriction enzyme functions with two metal ions. Mg(II) ion at site 1 could help
+        to activate the attacking water molecule, a Mg(II) at site 2 helps to stabilise the negative charge
+        on the 3' oxyanion leaving group, and both ions are involved in stabilising the pentacovalent
+        transition state. Lys70 is thought to act as a general acid/base.
+      notes: M-CSA entry 897, mechanism 1; M-CSA cites PMID:10903853, PMID:11557805, PMID:9878366; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (11 evidence-backed edges) transcribed from M-CSA entry 897;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

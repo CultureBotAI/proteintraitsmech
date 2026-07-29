@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.2.2.1
 - CHEBI:132153
@@ -575,4 +575,289 @@ definitions:
       Bacterial hyaluronan lyases (Hyal) belong to the polysaccharide lyase 8 family and degrade hyaluronan. Hyaluronan is an important component of the extracellular matrix, and involved in microbial spread. Hyal inhibitors may serve as tools to study the role of the enzyme, its substrates and products in the course of bacterial infections. Moreover, such enzyme inhibitors are potential candidates for antibacterial combination therapy. Hyal catalyse the degradation of hyaluronan by a beta-elimination reaction. Also acts on chondroitin. Ultimately, they break the polysaccharide down to its constituent parts, more systematically known as 3-(4-deoxy-alpha-L-threo-hex-4-enopyranosyluronic acid)-2-acetamido-2-deoxy-D-glucose.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of hyaluronate lyase
+  description: Mechanism transcribed from M-CSA entry 439. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering only — no unique offset to the record's reference sequence could
+    be verified, so no UniProt position is asserted.
+  nodes:
+  - node_id: asn349
+    label: catalytic Asn349 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q54873
+    description: 'M-CSA roles: modifies pKa.'
+  - node_id: his399
+    label: catalytic His399 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q54873
+    description: 'M-CSA roles: modifies pKa.'
+  - node_id: tyr408
+    label: catalytic Tyr408 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q54873
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: arg462
+    label: catalytic Arg462 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q54873
+    description: 'M-CSA roles: modifies pKa.'
+  - node_id: reactant0
+    label: hyaluronate
+    node_type: CHEMICAL
+    grounding: CHEBI:132153
+  - node_id: product0
+    label: beta-D-4-deoxy-Delta(4)-GlcpA-(1->3)-D-GlcpNAc(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:132151
+  - node_id: product1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: "Binding of the enzyme utilises its largely positive cleft to the negatively charged\
+      \ hyaluronan substrate and the precise relative positioning of HA and the enzyme by the hydrophobic\
+      \ patch residues Trp371, Trp372, and Phe423 interacting with hydrophobic sugar rings of HA. 
+\
+      <br/><br/>
+In the active center, Asn349 attracts electrons on the carboxylate group of glucuronic\
+      \ acid, making the C5 proton "
+  - node_id: active_site
+    label: hyaluronate lyase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:439
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.50.10.100 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.50.10.100
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: hyaluronate lyase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.2.2.1
+  edges:
+  - subject: asn349
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asn349 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/439/
+      snippet: "Binding of the enzyme utilises its largely positive cleft to the negatively charged hyaluronan\
+        \ substrate and the precise relative positioning of HA and the enzyme by the hydrophobic patch\
+        \ residues Trp371, Trp372, and Phe423 interacting with hydrophobic sugar rings of HA. 
+<br/><br/>\
+        
+In the active center, Asn349 attracts electrons on the carboxylate group of glucuronic acid,\
+        \ making the C5 proton more acidic. This is followed by the removal of a relatively acidic C5\
+        \ proton by the Tyr408 side chain, which is negatively charged in the enzyme ground state thoruhg\
+        \ its interactions with His399 and Arg362. This results in the formation of an unsaturated C4–C5\
+        \ bond and elimination of the product which abstracts a proton from Tyr408, regenerating the active\
+        \ site.
+<br/><br/>
+The consecutive release of the generated disaccharide product from the\
+        \ cleft uses the electrostatic repulsion of the negative product from the residues of the negative\
+        \ patch Glu468, Asp478, and Thr480. The final step is the translocation of the remaining truncated\
+        \ HA substrate in the cleft by one disaccharide unit in the direction of the reducing end of HA."
+      notes: M-CSA entry 439, mechanism 1; M-CSA cites PMID:10716923, PMID:11527972, PMID:11991948, PMID:12130645,
+        PMID:12446724, PMID:12719417, PMID:14523022, PMID:16854993, PMID:19089975, PMID:21803461, PMID:22916709,
+        PMID:23944739, PMID:24375830, PMID:25100731, PMID:26169310; step 1
+  - subject: his399
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His399 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/439/
+      snippet: "Binding of the enzyme utilises its largely positive cleft to the negatively charged hyaluronan\
+        \ substrate and the precise relative positioning of HA and the enzyme by the hydrophobic patch\
+        \ residues Trp371, Trp372, and Phe423 interacting with hydrophobic sugar rings of HA. 
+<br/><br/>\
+        
+In the active center, Asn349 attracts electrons on the carboxylate group of glucuronic acid,\
+        \ making the C5 proton more acidic. This is followed by the removal of a relatively acidic C5\
+        \ proton by the Tyr408 side chain, which is negatively charged in the enzyme ground state thoruhg\
+        \ its interactions with His399 and Arg362. This results in the formation of an unsaturated C4–C5\
+        \ bond and elimination of the product which abstracts a proton from Tyr408, regenerating the active\
+        \ site.
+<br/><br/>
+The consecutive release of the generated disaccharide product from the\
+        \ cleft uses the electrostatic repulsion of the negative product from the residues of the negative\
+        \ patch Glu468, Asp478, and Thr480. The final step is the translocation of the remaining truncated\
+        \ HA substrate in the cleft by one disaccharide unit in the direction of the reducing end of HA."
+      notes: M-CSA entry 439, mechanism 1; M-CSA cites PMID:10716923, PMID:11527972, PMID:11991948, PMID:12130645,
+        PMID:12446724, PMID:12719417, PMID:14523022, PMID:16854993, PMID:19089975, PMID:21803461, PMID:22916709,
+        PMID:23944739, PMID:24375830, PMID:25100731, PMID:26169310; step 1
+  - subject: tyr408
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr408 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/439/
+      snippet: "Binding of the enzyme utilises its largely positive cleft to the negatively charged hyaluronan\
+        \ substrate and the precise relative positioning of HA and the enzyme by the hydrophobic patch\
+        \ residues Trp371, Trp372, and Phe423 interacting with hydrophobic sugar rings of HA. 
+<br/><br/>\
+        
+In the active center, Asn349 attracts electrons on the carboxylate group of glucuronic acid,\
+        \ making the C5 proton more acidic. This is followed by the removal of a relatively acidic C5\
+        \ proton by the Tyr408 side chain, which is negatively charged in the enzyme ground state thoruhg\
+        \ its interactions with His399 and Arg362. This results in the formation of an unsaturated C4–C5\
+        \ bond and elimination of the product which abstracts a proton from Tyr408, regenerating the active\
+        \ site.
+<br/><br/>
+The consecutive release of the generated disaccharide product from the\
+        \ cleft uses the electrostatic repulsion of the negative product from the residues of the negative\
+        \ patch Glu468, Asp478, and Thr480. The final step is the translocation of the remaining truncated\
+        \ HA substrate in the cleft by one disaccharide unit in the direction of the reducing end of HA."
+      notes: M-CSA entry 439, mechanism 1; M-CSA cites PMID:10716923, PMID:11527972, PMID:11991948, PMID:12130645,
+        PMID:12446724, PMID:12719417, PMID:14523022, PMID:16854993, PMID:19089975, PMID:21803461, PMID:22916709,
+        PMID:23944739, PMID:24375830, PMID:25100731, PMID:26169310; step 1
+  - subject: asn349
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn349 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/439/
+      snippet: modifies pKa
+      notes: M-CSA entry 439, mechanism 1; M-CSA cites PMID:10716923, PMID:11527972, PMID:11991948, PMID:12130645,
+        PMID:12446724, PMID:12719417, PMID:14523022, PMID:16854993, PMID:19089975, PMID:21803461, PMID:22916709,
+        PMID:23944739, PMID:24375830, PMID:25100731, PMID:26169310; M-CSA catalytic-residue roles for
+        Asn349
+  - subject: his399
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His399 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/439/
+      snippet: modifies pKa
+      notes: M-CSA entry 439, mechanism 1; M-CSA cites PMID:10716923, PMID:11527972, PMID:11991948, PMID:12130645,
+        PMID:12446724, PMID:12719417, PMID:14523022, PMID:16854993, PMID:19089975, PMID:21803461, PMID:22916709,
+        PMID:23944739, PMID:24375830, PMID:25100731, PMID:26169310; M-CSA catalytic-residue roles for
+        His399
+  - subject: tyr408
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr408 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/439/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 439, mechanism 1; M-CSA cites PMID:10716923, PMID:11527972, PMID:11991948, PMID:12130645,
+        PMID:12446724, PMID:12719417, PMID:14523022, PMID:16854993, PMID:19089975, PMID:21803461, PMID:22916709,
+        PMID:23944739, PMID:24375830, PMID:25100731, PMID:26169310; M-CSA catalytic-residue roles for
+        Tyr408
+  - subject: arg462
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg462 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/439/
+      snippet: modifies pKa
+      notes: M-CSA entry 439, mechanism 1; M-CSA cites PMID:10716923, PMID:11527972, PMID:11991948, PMID:12130645,
+        PMID:12446724, PMID:12719417, PMID:14523022, PMID:16854993, PMID:19089975, PMID:21803461, PMID:22916709,
+        PMID:23944739, PMID:24375830, PMID:25100731, PMID:26169310; M-CSA catalytic-residue roles for
+        Arg462
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/439/
+      snippet: "Binding of the enzyme utilises its largely positive cleft to the negatively charged hyaluronan\
+        \ substrate and the precise relative positioning of HA and the enzyme by the hydrophobic patch\
+        \ residues Trp371, Trp372, and Phe423 interacting with hydrophobic sugar rings of HA. 
+<br/><br/>\
+        
+In the active center, Asn349 attracts electrons on the carboxylate group of glucuronic acid,\
+        \ making the C5 proton"
+      notes: M-CSA entry 439, mechanism 1; M-CSA cites PMID:10716923, PMID:11527972, PMID:11991948, PMID:12130645,
+        PMID:12446724, PMID:12719417, PMID:14523022, PMID:16854993, PMID:19089975, PMID:21803461, PMID:22916709,
+        PMID:23944739, PMID:24375830, PMID:25100731, PMID:26169310; CATH domain 1.50.10.100 assigned to
+        the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/439/
+      snippet: "Binding of the enzyme utilises its largely positive cleft to the negatively charged hyaluronan\
+        \ substrate and the precise relative positioning of HA and the enzyme by the hydrophobic patch\
+        \ residues Trp371, Trp372, and Phe423 interacting with hydrophobic sugar rings of HA. 
+<br/><br/>\
+        
+In the active center, Asn349 attracts electrons on the carboxylate group of glucuronic acid,\
+        \ making the C5 proton"
+      notes: M-CSA entry 439, mechanism 1; M-CSA cites PMID:10716923, PMID:11527972, PMID:11991948, PMID:12130645,
+        PMID:12446724, PMID:12719417, PMID:14523022, PMID:16854993, PMID:19089975, PMID:21803461, PMID:22916709,
+        PMID:23944739, PMID:24375830, PMID:25100731, PMID:26169310; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/439/
+      snippet: "Binding of the enzyme utilises its largely positive cleft to the negatively charged hyaluronan\
+        \ substrate and the precise relative positioning of HA and the enzyme by the hydrophobic patch\
+        \ residues Trp371, Trp372, and Phe423 interacting with hydrophobic sugar rings of HA. 
+<br/><br/>\
+        
+In the active center, Asn349 attracts electrons on the carboxylate group of glucuronic acid,\
+        \ making the C5 proton"
+      notes: M-CSA entry 439, mechanism 1; M-CSA cites PMID:10716923, PMID:11527972, PMID:11991948, PMID:12130645,
+        PMID:12446724, PMID:12719417, PMID:14523022, PMID:16854993, PMID:19089975, PMID:21803461, PMID:22916709,
+        PMID:23944739, PMID:24375830, PMID:25100731, PMID:26169310; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/439/
+      snippet: "Binding of the enzyme utilises its largely positive cleft to the negatively charged hyaluronan\
+        \ substrate and the precise relative positioning of HA and the enzyme by the hydrophobic patch\
+        \ residues Trp371, Trp372, and Phe423 interacting with hydrophobic sugar rings of HA. 
+<br/><br/>\
+        
+In the active center, Asn349 attracts electrons on the carboxylate group of glucuronic acid,\
+        \ making the C5 proton"
+      notes: M-CSA entry 439, mechanism 1; M-CSA cites PMID:10716923, PMID:11527972, PMID:11991948, PMID:12130645,
+        PMID:12446724, PMID:12719417, PMID:14523022, PMID:16854993, PMID:19089975, PMID:21803461, PMID:22916709,
+        PMID:23944739, PMID:24375830, PMID:25100731, PMID:26169310; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/439/
+      snippet: "Binding of the enzyme utilises its largely positive cleft to the negatively charged hyaluronan\
+        \ substrate and the precise relative positioning of HA and the enzyme by the hydrophobic patch\
+        \ residues Trp371, Trp372, and Phe423 interacting with hydrophobic sugar rings of HA. 
+<br/><br/>\
+        
+In the active center, Asn349 attracts electrons on the carboxylate group of glucuronic acid,\
+        \ making the C5 proton"
+      notes: M-CSA entry 439, mechanism 1; M-CSA cites PMID:10716923, PMID:11527972, PMID:11991948, PMID:12130645,
+        PMID:12446724, PMID:12719417, PMID:14523022, PMID:16854993, PMID:19089975, PMID:21803461, PMID:22916709,
+        PMID:23944739, PMID:24375830, PMID:25100731, PMID:26169310; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (12 evidence-backed edges) transcribed from M-CSA entry 439;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

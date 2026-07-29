@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.2.1.144
 - CHEBI:71963
@@ -229,4 +229,283 @@ definitions:
       Catalyzes the dehydration and aromatization of 5-amino- 5-deoxy-3-dehydroshikimate (aminoDHS) to 3-amino-5-hydroxybenzoate (AHBA), a compound that then serves as the starter unit for the assembly of a polyketide during the biosynthesis of rifamycin B and other ansamycin antibiotics. Cannot utilize 5-deoxy-5-amino-3- dehydroquinate (aminoDHQ), 5-deoxy-5-aminoshikimate (aminoSA), quinate, 3-dehydroquinate, or 3-dehydroshikimate (DHS) as substrate. In a complex with RifL, RifK may have a second function in the AHBA pathway, acting as a transaminase introducing the nitrogen into the first pathway intermediate, UDP-3-keto-D-glucose, to give UDP-kanosamine. Appears to use glutamine as the nitrogen donor; NH4+ or asparagine are 30% less effective as nitrogen donors and neither glutamate nor aspartate show activity.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 3-amino-5-hydroxybenzoate synthase
+  description: Mechanism transcribed from M-CSA entry 419. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: phe88
+    label: catalytic Phe88 (M-CSA/PDB numbering; UniProt residue 88)
+    node_type: RESIDUE
+    grounding: UniProtKB:O52552
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp159
+    label: catalytic Asp159 (M-CSA/PDB numbering; UniProt residue 159)
+    node_type: RESIDUE
+    grounding: UniProtKB:O52552
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his162
+    label: catalytic His162 (M-CSA/PDB numbering; UniProt residue 162)
+    node_type: RESIDUE
+    grounding: UniProtKB:O52552
+    description: 'M-CSA roles: steric role.'
+  - node_id: gln185
+    label: catalytic Gln185 (M-CSA/PDB numbering; UniProt residue 185)
+    node_type: RESIDUE
+    grounding: UniProtKB:O52552
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: lys188
+    label: catalytic Lys188 (M-CSA/PDB numbering; UniProt residue 188)
+    node_type: RESIDUE
+    grounding: UniProtKB:O52552
+    description: 'M-CSA roles: covalent catalysis, proton shuttle (general acid/base).'
+  - node_id: arg219
+    label: catalytic Arg219 (M-CSA/PDB numbering; UniProt residue 219)
+    node_type: RESIDUE
+    grounding: UniProtKB:O52552
+    description: 'M-CSA roles: steric role.'
+  - node_id: tyr226
+    label: catalytic Tyr226 (M-CSA/PDB numbering; UniProt residue 226)
+    node_type: RESIDUE
+    grounding: UniProtKB:O52552
+    description: 'M-CSA roles: steric role.'
+  - node_id: arg236
+    label: catalytic Arg236 (M-CSA/PDB numbering; UniProt residue 236)
+    node_type: RESIDUE
+    grounding: UniProtKB:O52552
+    description: 'M-CSA roles: steric role.'
+  - node_id: reactant0
+    label: 5-amino-5-deoxy-3-dehydroshikimic acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:71963
+  - node_id: product0
+    label: 3-amino-5-hydroxybenzoate
+    node_type: CHEMICAL
+    grounding: CHEBI:71959
+  - node_id: product1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: The aromatization of aminoDHS to AHBA involves the formation of a Schiff base between
+      the substrate and PLP (and eventually between Lys188 and PLP to eliminate the final product), and
+      several proton transfer steps; that is, (1) abstraction of the C-5 proton, (2) protonation of 4-OH
+      to make it a better leaving group, (3) protonation of the C-3 carbonyl group as part of the enolisation
+      and (4) abstr
+  - node_id: active_site
+    label: 3-amino-5-hydroxybenzoate synthase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:419
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.640.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.640.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: 3-amino-5-hydroxybenzoate synthase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.2.1.144
+  edges:
+  - subject: lys188
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys188 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/419/
+      snippet: The aromatization of aminoDHS to AHBA involves the formation of a Schiff base between the
+        substrate and PLP (and eventually between Lys188 and PLP to eliminate the final product), and
+        several proton transfer steps; that is, (1) abstraction of the C-5 proton, (2) protonation of
+        4-OH to make it a better leaving group, (3) protonation of the C-3 carbonyl group as part of the
+        enolisation and (4) abstraction of the pro-6S proton. A modelled structure of AHBA synthase with
+        bound substrate shows that the Lys-188 eta-amino group is positioned in proximity to 4-OH, H-5
+        and H-6S, and it is proposed that this residue mediates sequentially the steps (1), (2) and (4).
+        However, it is too far removed from 3-O to catalyse step (3) and no other amino acid is close
+        enough to catalyse this protonation directly. Instead, it is proposed that Q185 assists in the
+        elimination of the protonated 4-OH as water and then the transfer of a proton from this water
+        molecule to 3-O in a relay mechanism.
+      notes: M-CSA entry 419, mechanism 2; M-CSA cites PMID:10433690, PMID:21081954, PMID:9497318; step
+        1
+  - subject: phe88
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Phe88 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/419/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 419, mechanism 2; M-CSA cites PMID:10433690, PMID:21081954, PMID:9497318; M-CSA
+        catalytic-residue roles for Phe88
+  - subject: asp159
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp159 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/419/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 419, mechanism 2; M-CSA cites PMID:10433690, PMID:21081954, PMID:9497318; M-CSA
+        catalytic-residue roles for Asp159
+  - subject: his162
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His162 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/419/
+      snippet: steric role
+      notes: M-CSA entry 419, mechanism 2; M-CSA cites PMID:10433690, PMID:21081954, PMID:9497318; M-CSA
+        catalytic-residue roles for His162
+  - subject: gln185
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln185 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/419/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 419, mechanism 2; M-CSA cites PMID:10433690, PMID:21081954, PMID:9497318; M-CSA
+        catalytic-residue roles for Gln185
+  - subject: lys188
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys188 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/419/
+      snippet: covalent catalysis, proton shuttle (general acid/base)
+      notes: M-CSA entry 419, mechanism 2; M-CSA cites PMID:10433690, PMID:21081954, PMID:9497318; M-CSA
+        catalytic-residue roles for Lys188
+  - subject: arg219
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg219 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/419/
+      snippet: steric role
+      notes: M-CSA entry 419, mechanism 2; M-CSA cites PMID:10433690, PMID:21081954, PMID:9497318; M-CSA
+        catalytic-residue roles for Arg219
+  - subject: tyr226
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr226 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/419/
+      snippet: steric role
+      notes: M-CSA entry 419, mechanism 2; M-CSA cites PMID:10433690, PMID:21081954, PMID:9497318; M-CSA
+        catalytic-residue roles for Tyr226
+  - subject: arg236
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg236 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/419/
+      snippet: steric role
+      notes: M-CSA entry 419, mechanism 2; M-CSA cites PMID:10433690, PMID:21081954, PMID:9497318; M-CSA
+        catalytic-residue roles for Arg236
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/419/
+      snippet: The aromatization of aminoDHS to AHBA involves the formation of a Schiff base between the
+        substrate and PLP (and eventually between Lys188 and PLP to eliminate the final product), and
+        several proton transfer steps; that is, (1) abstraction of the C-5 proton, (2) protonation of
+        4-OH to make it a better leaving group, (3) protonation of the C-3 carbonyl group as part of the
+        enolisation and (4) abstr
+      notes: M-CSA entry 419, mechanism 2; M-CSA cites PMID:10433690, PMID:21081954, PMID:9497318; CATH
+        domain 3.40.640.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/419/
+      snippet: The aromatization of aminoDHS to AHBA involves the formation of a Schiff base between the
+        substrate and PLP (and eventually between Lys188 and PLP to eliminate the final product), and
+        several proton transfer steps; that is, (1) abstraction of the C-5 proton, (2) protonation of
+        4-OH to make it a better leaving group, (3) protonation of the C-3 carbonyl group as part of the
+        enolisation and (4) abstr
+      notes: M-CSA entry 419, mechanism 2; M-CSA cites PMID:10433690, PMID:21081954, PMID:9497318; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/419/
+      snippet: The aromatization of aminoDHS to AHBA involves the formation of a Schiff base between the
+        substrate and PLP (and eventually between Lys188 and PLP to eliminate the final product), and
+        several proton transfer steps; that is, (1) abstraction of the C-5 proton, (2) protonation of
+        4-OH to make it a better leaving group, (3) protonation of the C-3 carbonyl group as part of the
+        enolisation and (4) abstr
+      notes: M-CSA entry 419, mechanism 2; M-CSA cites PMID:10433690, PMID:21081954, PMID:9497318; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/419/
+      snippet: The aromatization of aminoDHS to AHBA involves the formation of a Schiff base between the
+        substrate and PLP (and eventually between Lys188 and PLP to eliminate the final product), and
+        several proton transfer steps; that is, (1) abstraction of the C-5 proton, (2) protonation of
+        4-OH to make it a better leaving group, (3) protonation of the C-3 carbonyl group as part of the
+        enolisation and (4) abstr
+      notes: M-CSA entry 419, mechanism 2; M-CSA cites PMID:10433690, PMID:21081954, PMID:9497318; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/419/
+      snippet: The aromatization of aminoDHS to AHBA involves the formation of a Schiff base between the
+        substrate and PLP (and eventually between Lys188 and PLP to eliminate the final product), and
+        several proton transfer steps; that is, (1) abstraction of the C-5 proton, (2) protonation of
+        4-OH to make it a better leaving group, (3) protonation of the C-3 carbonyl group as part of the
+        enolisation and (4) abstr
+      notes: M-CSA entry 419, mechanism 2; M-CSA cites PMID:10433690, PMID:21081954, PMID:9497318; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/419/
+      snippet: The aromatization of aminoDHS to AHBA involves the formation of a Schiff base between the
+        substrate and PLP (and eventually between Lys188 and PLP to eliminate the final product), and
+        several proton transfer steps; that is, (1) abstraction of the C-5 proton, (2) protonation of
+        4-OH to make it a better leaving group, (3) protonation of the C-3 carbonyl group as part of the
+        enolisation and (4) abstr
+      notes: M-CSA entry 419, mechanism 2; M-CSA cites PMID:10433690, PMID:21081954, PMID:9497318; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 419;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.24.16
 - CHEBI:15377
@@ -368,4 +368,235 @@ definitions:
       Neurolysin is a zinc metalloprotease which plays a key role in processing ogliopeptides in the nervous system thus degrading peptide hormones and terminating signals. Rat neurolysin shows the classic sequence motif shared by all zinc binding proteases: His-Glu-X-X-His. It also shows structural homology to thermolysin, a well studied member of the class, but little structural identity towards neprilysin despite a similar physiological role.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of neurolysin
+  description: Mechanism transcribed from M-CSA entry 638. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +23).
+  nodes:
+  - node_id: his474
+    label: catalytic His474 (M-CSA/PDB numbering; UniProt residue 497)
+    node_type: RESIDUE
+    grounding: UniProtKB:P42676
+  - node_id: glu475
+    label: catalytic Glu475 (M-CSA/PDB numbering; UniProt residue 498)
+    node_type: RESIDUE
+    grounding: UniProtKB:P42676
+  - node_id: his478
+    label: catalytic His478 (M-CSA/PDB numbering; UniProt residue 501)
+    node_type: RESIDUE
+    grounding: UniProtKB:P42676
+  - node_id: glu503
+    label: catalytic Glu503 (M-CSA/PDB numbering; UniProt residue 526)
+    node_type: RESIDUE
+    grounding: UniProtKB:P42676
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: tyr613
+    label: catalytic Tyr613 (M-CSA/PDB numbering; UniProt residue 636)
+    node_type: RESIDUE
+    grounding: UniProtKB:P42676
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: Pro-Tyr
+    node_type: CHEMICAL
+    grounding: CHEBI:74799
+  - node_id: product0
+    label: proline
+    node_type: CHEMICAL
+    grounding: CHEBI:26271
+  - node_id: product1
+    label: L-tyrosine
+    node_type: CHEMICAL
+    grounding: CHEBI:17895
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: Glu498 and the Zinc ion act together to activate water by deprotonation so that it can
+      act as a nucleophile and attack the peptide bond. This will form a tetrahedral intermediate, which
+      is stabilised by the oxyanion hole, made up of the Zinc ion and the OH group of Tyr613. Subsequent
+      protonation of the leaving group by Glu498 results in the collapse of the intermediate and the formation
+      of product
+  - node_id: active_site
+    label: neurolysin catalytic site
+    node_type: MOTIF
+    grounding: MCSA:638
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.390.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.390.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: neurolysin activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.24.16
+  edges:
+  - subject: tyr613
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr613 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/638/
+      snippet: Glu498 and the Zinc ion act together to activate water by deprotonation so that it can
+        act as a nucleophile and attack the peptide bond. This will form a tetrahedral intermediate, which
+        is stabilised by the oxyanion hole, made up of the Zinc ion and the OH group of Tyr613. Subsequent
+        protonation of the leaving group by Glu498 results in the collapse of the intermediate and the
+        formation of products.
+      notes: M-CSA entry 638, mechanism 1; M-CSA cites PMID:11248043, PMID:29183787; step 1
+  - subject: his474
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His474 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/638/
+      snippet: Glu498 and the Zinc ion act together to activate water by deprotonation so that it can
+        act as a nucleophile and attack the peptide bond. This will form a tetrahedral intermediate, which
+        is stabilised by the oxyanion hole, made up of the Zinc ion and the OH group of Tyr613. Subsequent
+        protonation of the leaving group by Glu498 results in the collapse of the intermediate and the
+        formation of product
+      notes: M-CSA entry 638, mechanism 1; M-CSA cites PMID:11248043, PMID:29183787; M-CSA catalytic-residue
+        roles for His474
+  - subject: glu475
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu475 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/638/
+      snippet: Glu498 and the Zinc ion act together to activate water by deprotonation so that it can
+        act as a nucleophile and attack the peptide bond. This will form a tetrahedral intermediate, which
+        is stabilised by the oxyanion hole, made up of the Zinc ion and the OH group of Tyr613. Subsequent
+        protonation of the leaving group by Glu498 results in the collapse of the intermediate and the
+        formation of product
+      notes: M-CSA entry 638, mechanism 1; M-CSA cites PMID:11248043, PMID:29183787; M-CSA catalytic-residue
+        roles for Glu475
+  - subject: his478
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His478 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/638/
+      snippet: Glu498 and the Zinc ion act together to activate water by deprotonation so that it can
+        act as a nucleophile and attack the peptide bond. This will form a tetrahedral intermediate, which
+        is stabilised by the oxyanion hole, made up of the Zinc ion and the OH group of Tyr613. Subsequent
+        protonation of the leaving group by Glu498 results in the collapse of the intermediate and the
+        formation of product
+      notes: M-CSA entry 638, mechanism 1; M-CSA cites PMID:11248043, PMID:29183787; M-CSA catalytic-residue
+        roles for His478
+  - subject: glu503
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu503 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/638/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 638, mechanism 1; M-CSA cites PMID:11248043, PMID:29183787; M-CSA catalytic-residue
+        roles for Glu503
+  - subject: tyr613
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr613 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/638/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 638, mechanism 1; M-CSA cites PMID:11248043, PMID:29183787; M-CSA catalytic-residue
+        roles for Tyr613
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/638/
+      snippet: Glu498 and the Zinc ion act together to activate water by deprotonation so that it can
+        act as a nucleophile and attack the peptide bond. This will form a tetrahedral intermediate, which
+        is stabilised by the oxyanion hole, made up of the Zinc ion and the OH group of Tyr613. Subsequent
+        protonation of the leaving group by Glu498 results in the collapse of the intermediate and the
+        formation of product
+      notes: M-CSA entry 638, mechanism 1; M-CSA cites PMID:11248043, PMID:29183787; CATH domain 3.40.390.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/638/
+      snippet: Glu498 and the Zinc ion act together to activate water by deprotonation so that it can
+        act as a nucleophile and attack the peptide bond. This will form a tetrahedral intermediate, which
+        is stabilised by the oxyanion hole, made up of the Zinc ion and the OH group of Tyr613. Subsequent
+        protonation of the leaving group by Glu498 results in the collapse of the intermediate and the
+        formation of product
+      notes: M-CSA entry 638, mechanism 1; M-CSA cites PMID:11248043, PMID:29183787; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/638/
+      snippet: Glu498 and the Zinc ion act together to activate water by deprotonation so that it can
+        act as a nucleophile and attack the peptide bond. This will form a tetrahedral intermediate, which
+        is stabilised by the oxyanion hole, made up of the Zinc ion and the OH group of Tyr613. Subsequent
+        protonation of the leaving group by Glu498 results in the collapse of the intermediate and the
+        formation of product
+      notes: M-CSA entry 638, mechanism 1; M-CSA cites PMID:11248043, PMID:29183787; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/638/
+      snippet: Glu498 and the Zinc ion act together to activate water by deprotonation so that it can
+        act as a nucleophile and attack the peptide bond. This will form a tetrahedral intermediate, which
+        is stabilised by the oxyanion hole, made up of the Zinc ion and the OH group of Tyr613. Subsequent
+        protonation of the leaving group by Glu498 results in the collapse of the intermediate and the
+        formation of product
+      notes: M-CSA entry 638, mechanism 1; M-CSA cites PMID:11248043, PMID:29183787; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/638/
+      snippet: Glu498 and the Zinc ion act together to activate water by deprotonation so that it can
+        act as a nucleophile and attack the peptide bond. This will form a tetrahedral intermediate, which
+        is stabilised by the oxyanion hole, made up of the Zinc ion and the OH group of Tyr613. Subsequent
+        protonation of the leaving group by Glu498 results in the collapse of the intermediate and the
+        formation of product
+      notes: M-CSA entry 638, mechanism 1; M-CSA cites PMID:11248043, PMID:29183787; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/638/
+      snippet: Glu498 and the Zinc ion act together to activate water by deprotonation so that it can
+        act as a nucleophile and attack the peptide bond. This will form a tetrahedral intermediate, which
+        is stabilised by the oxyanion hole, made up of the Zinc ion and the OH group of Tyr613. Subsequent
+        protonation of the leaving group by Glu498 results in the collapse of the intermediate and the
+        formation of product
+      notes: M-CSA entry 638, mechanism 1; M-CSA cites PMID:11248043, PMID:29183787; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (12 evidence-backed edges) transcribed from M-CSA entry 638;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

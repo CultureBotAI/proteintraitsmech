@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.11.1.6
 - CHEBI:16240
@@ -465,4 +465,193 @@ definitions:
       Catalase is a heme containing enzyme which catalyses the breakdown of hydrogen peroxide to water and molecular oxygen. It also has a peroxidase activity where the reduction of hydrogen peroxide is accompanied by the oxidation of another compound. Catalase is present in all aerobic cells. Its main function is to protect cells from the toxic effects of hydrogen peroxide. In eukaryotic organisms and in some prokaryotes catalase is a molecule composed of four identical subunits. Each of the subunits binds one protoheme IX group. Catalase HPII from Escherichia Coli is the largest known catalase. A unique covalent bond between the Cb of the essential Tyr415 and the Nd of His392 has been noted.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of catalase (HPII)
+  description: Mechanism transcribed from M-CSA entry 573. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: his128
+    label: catalytic His128 (M-CSA/PDB numbering; UniProt residue 128)
+    node_type: RESIDUE
+    grounding: UniProtKB:P21179
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: asn201
+    label: catalytic Asn201 (M-CSA/PDB numbering; UniProt residue 201)
+    node_type: RESIDUE
+    grounding: UniProtKB:P21179
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his392
+    label: catalytic His392 (M-CSA/PDB numbering; UniProt residue 392)
+    node_type: RESIDUE
+    grounding: UniProtKB:P21179
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: hydrogen peroxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+  - node_id: product0
+    label: dioxygen
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+  - node_id: product1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: The mechanism proceeds via a two step process. In the first step, the enzyme is oxidised
+      by hydrogen peroxide to an intermediate, Compound I, which in the second stage is reduced back to
+      the original resting state releasing water and molecular oxygen. The total reaction is 2 moles of
+      hydrogen peroxide gives 2 moles of water and one mole of oxygen.  H2O2 enters the active site and
+      binds to the heme
+  - node_id: active_site
+    label: catalase (HPII) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:573
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.40.180.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.40.180.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: catalase (HPII) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.11.1.6
+  edges:
+  - subject: his392
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His392 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/573/
+      snippet: The mechanism proceeds via a two step process. In the first step, the enzyme is oxidised
+        by hydrogen peroxide to an intermediate, Compound I, which in the second stage is reduced back
+        to the original resting state releasing water and molecular oxygen. The total reaction is 2 moles
+        of hydrogen peroxide gives 2 moles of water and one mole of oxygen.  H2O2 enters the active site
+        and binds to the heme Fe, histidine 128, and asparagine 201. The oxygen of H2O2 that is bound
+        to the Fe donates a proton to the NE of histidine 128. Histidine 128 then in turn donates the
+        proton to the other H2O2 oxygen bound to asparagine 201. This leaves water bound to asparagine
+        which can then leave and the oxidised heme iron. A second molecule of hydrogen peroxide enters
+        the active site and there is now an enzyme-compound 1-H2O2 complex, which evolves spontaneously
+        to a compound II-like species in which formally a hydrogen atom has transferred (proton transfer
+        to the oxoferryl oxygen and porphyrin radical of Compound I). In concert with this step a hydrogen
+        atom is donated to His392 forming a positively charged imidazolium ring. This then acts as a general
+        acid and donates it to the iron-bound hydroxide group, which leaves as water. Restoring the enzyme
+        back to it's original state and releasing molecular oxygen and water.
+      notes: M-CSA entry 573, mechanism 1; M-CSA cites PMID:10022351, PMID:8399141, PMID:9144772; step
+        1
+  - subject: his128
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His128 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/573/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 573, mechanism 1; M-CSA cites PMID:10022351, PMID:8399141, PMID:9144772; M-CSA
+        catalytic-residue roles for His128
+  - subject: asn201
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn201 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/573/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 573, mechanism 1; M-CSA cites PMID:10022351, PMID:8399141, PMID:9144772; M-CSA
+        catalytic-residue roles for Asn201
+  - subject: his392
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His392 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/573/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 573, mechanism 1; M-CSA cites PMID:10022351, PMID:8399141, PMID:9144772; M-CSA
+        catalytic-residue roles for His392
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/573/
+      snippet: The mechanism proceeds via a two step process. In the first step, the enzyme is oxidised
+        by hydrogen peroxide to an intermediate, Compound I, which in the second stage is reduced back
+        to the original resting state releasing water and molecular oxygen. The total reaction is 2 moles
+        of hydrogen peroxide gives 2 moles of water and one mole of oxygen.  H2O2 enters the active site
+        and binds to the heme
+      notes: M-CSA entry 573, mechanism 1; M-CSA cites PMID:10022351, PMID:8399141, PMID:9144772; CATH
+        domain 2.40.180.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/573/
+      snippet: The mechanism proceeds via a two step process. In the first step, the enzyme is oxidised
+        by hydrogen peroxide to an intermediate, Compound I, which in the second stage is reduced back
+        to the original resting state releasing water and molecular oxygen. The total reaction is 2 moles
+        of hydrogen peroxide gives 2 moles of water and one mole of oxygen.  H2O2 enters the active site
+        and binds to the heme
+      notes: M-CSA entry 573, mechanism 1; M-CSA cites PMID:10022351, PMID:8399141, PMID:9144772; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/573/
+      snippet: The mechanism proceeds via a two step process. In the first step, the enzyme is oxidised
+        by hydrogen peroxide to an intermediate, Compound I, which in the second stage is reduced back
+        to the original resting state releasing water and molecular oxygen. The total reaction is 2 moles
+        of hydrogen peroxide gives 2 moles of water and one mole of oxygen.  H2O2 enters the active site
+        and binds to the heme
+      notes: M-CSA entry 573, mechanism 1; M-CSA cites PMID:10022351, PMID:8399141, PMID:9144772; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/573/
+      snippet: The mechanism proceeds via a two step process. In the first step, the enzyme is oxidised
+        by hydrogen peroxide to an intermediate, Compound I, which in the second stage is reduced back
+        to the original resting state releasing water and molecular oxygen. The total reaction is 2 moles
+        of hydrogen peroxide gives 2 moles of water and one mole of oxygen.  H2O2 enters the active site
+        and binds to the heme
+      notes: M-CSA entry 573, mechanism 1; M-CSA cites PMID:10022351, PMID:8399141, PMID:9144772; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/573/
+      snippet: The mechanism proceeds via a two step process. In the first step, the enzyme is oxidised
+        by hydrogen peroxide to an intermediate, Compound I, which in the second stage is reduced back
+        to the original resting state releasing water and molecular oxygen. The total reaction is 2 moles
+        of hydrogen peroxide gives 2 moles of water and one mole of oxygen.  H2O2 enters the active site
+        and binds to the heme
+      notes: M-CSA entry 573, mechanism 1; M-CSA cites PMID:10022351, PMID:8399141, PMID:9144772; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (9 evidence-backed edges) transcribed from M-CSA entry 573;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

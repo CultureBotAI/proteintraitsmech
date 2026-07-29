@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.3.2.1
 - CHEBI:15377
@@ -64,4 +64,180 @@ definitions:
       Isochorismatase, also known as 2,3 dihydro-2,3 dihydroxybenzoate synthase, catalyses the conversion of isochorismate, in the presence of water, to 2,3-dihydroxybenzoate and pyruvate, via the hydrolysis of a vinyl ether, an uncommon reaction in biological systems. Isochorismatase is part of the phenazine biosynthesis pathway. Phenazines are antimicrobial compounds that provide the competitive advantage for certain bacteria.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of isochorismatase
+  description: Mechanism transcribed from M-CSA entry 859. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: his37
+    label: catalytic His37 (M-CSA/PDB numbering; UniProt residue 37)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0DPB9
+    description: 'M-CSA roles: electrostatic stabiliser, steric role.'
+  - node_id: asp38
+    label: catalytic Asp38 (M-CSA/PDB numbering; UniProt residue 38)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0DPB9
+    description: 'M-CSA roles: electrostatic stabiliser, proton shuttle (general acid/base).'
+  - node_id: lys122
+    label: catalytic Lys122 (M-CSA/PDB numbering; UniProt residue 122)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0DPB9
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: isochorismate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:29780
+  - node_id: product0
+    label: (2S,3S)-2,3-dihydroxy-2,3-dihydrobenzoate
+    node_type: CHEMICAL
+    grounding: CHEBI:58764
+  - node_id: product1
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: The carboxylate of Asp38 acts as a general acid to protonate the substrate, yielding
+      a carbocation/oxocarbonium ion that is then rapidly hydrated to form a hemiketal intermediate, which
+      then decomposes spontaneously to products.
+  - node_id: active_site
+    label: isochorismatase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:859
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.850 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.850
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: isochorismatase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.3.2.1
+  edges:
+  - subject: asp38
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp38 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/859/
+      snippet: The carboxylate of Asp38 acts as a general acid to protonate the substrate, yielding a
+        carbocation/oxocarbonium ion that is then rapidly hydrated to form a hemiketal intermediate, which
+        then decomposes spontaneously to products.
+      notes: M-CSA entry 859, mechanism 1; M-CSA cites PMID:12741825; step 1
+  - subject: his37
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His37 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/859/
+      snippet: electrostatic stabiliser, steric role
+      notes: M-CSA entry 859, mechanism 1; M-CSA cites PMID:12741825; M-CSA catalytic-residue roles for
+        His37
+  - subject: asp38
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp38 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/859/
+      snippet: electrostatic stabiliser, proton shuttle (general acid/base)
+      notes: M-CSA entry 859, mechanism 1; M-CSA cites PMID:12741825; M-CSA catalytic-residue roles for
+        Asp38
+  - subject: lys122
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys122 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/859/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 859, mechanism 1; M-CSA cites PMID:12741825; M-CSA catalytic-residue roles for
+        Lys122
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/859/
+      snippet: The carboxylate of Asp38 acts as a general acid to protonate the substrate, yielding a
+        carbocation/oxocarbonium ion that is then rapidly hydrated to form a hemiketal intermediate, which
+        then decomposes spontaneously to products.
+      notes: M-CSA entry 859, mechanism 1; M-CSA cites PMID:12741825; CATH domain 3.40.50.850 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/859/
+      snippet: The carboxylate of Asp38 acts as a general acid to protonate the substrate, yielding a
+        carbocation/oxocarbonium ion that is then rapidly hydrated to form a hemiketal intermediate, which
+        then decomposes spontaneously to products.
+      notes: M-CSA entry 859, mechanism 1; M-CSA cites PMID:12741825; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/859/
+      snippet: The carboxylate of Asp38 acts as a general acid to protonate the substrate, yielding a
+        carbocation/oxocarbonium ion that is then rapidly hydrated to form a hemiketal intermediate, which
+        then decomposes spontaneously to products.
+      notes: M-CSA entry 859, mechanism 1; M-CSA cites PMID:12741825; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/859/
+      snippet: The carboxylate of Asp38 acts as a general acid to protonate the substrate, yielding a
+        carbocation/oxocarbonium ion that is then rapidly hydrated to form a hemiketal intermediate, which
+        then decomposes spontaneously to products.
+      notes: M-CSA entry 859, mechanism 1; M-CSA cites PMID:12741825; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/859/
+      snippet: The carboxylate of Asp38 acts as a general acid to protonate the substrate, yielding a
+        carbocation/oxocarbonium ion that is then rapidly hydrated to form a hemiketal intermediate, which
+        then decomposes spontaneously to products.
+      notes: M-CSA entry 859, mechanism 1; M-CSA cites PMID:12741825; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/859/
+      snippet: The carboxylate of Asp38 acts as a general acid to protonate the substrate, yielding a
+        carbocation/oxocarbonium ion that is then rapidly hydrated to form a hemiketal intermediate, which
+        then decomposes spontaneously to products.
+      notes: M-CSA entry 859, mechanism 1; M-CSA cites PMID:12741825; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (10 evidence-backed edges) transcribed from M-CSA entry 859;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.27.3
 - CHEBI:15378
@@ -138,4 +138,237 @@ definitions:
       Ribonuclease T1 is an extracellular enzyme from Aspergillus oryzae that catalyses the hydrolysis of RNA at guanylyl residues yielding new guanosine 3'-phosphate and 5'-OH ends. It enhances the rate of GpC cleavage by about 10^11-fold. This stable, low molecular weight, monomeric endonuclease is the leading representative of a family of related fungal/bacterial proteins that share sequence and three-dimensional structural similarities.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of ribonuclease T1
+  description: Mechanism transcribed from M-CSA entry 414. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +26).
+  nodes:
+  - node_id: tyr38
+    label: catalytic Tyr38 (M-CSA/PDB numbering; UniProt residue 64)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00651
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his40
+    label: catalytic His40 (M-CSA/PDB numbering; UniProt residue 66)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00651
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: glu58
+    label: catalytic Glu58 (M-CSA/PDB numbering; UniProt residue 84)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00651
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: arg77
+    label: catalytic Arg77 (M-CSA/PDB numbering; UniProt residue 103)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00651
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his92
+    label: catalytic His92 (M-CSA/PDB numbering; UniProt residue 118)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00651
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: phe100
+    label: catalytic Phe100 (M-CSA/PDB numbering; UniProt residue 126)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00651
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant2
+    label: guanylyl-(3'->5')-cytidine(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:134204
+  - node_id: product0
+    label: cytidine
+    node_type: CHEMICAL
+    grounding: CHEBI:17562
+  - node_id: product1
+    label: guanosine 3'-monophosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:28072
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: The reaction occurs in a two-step process with cleavage of the RNA chain by transesterification
+      of a 5'-phosphoester bond to form a guanosine 2',3'-cyclic phosphate terminus in the first step,
+      followed by hydrolysis of the cyclic phosphate to form a guanosine 3'-phosphate in a second, independent
+      step.
+  - node_id: active_site
+    label: ribonuclease T1 catalytic site
+    node_type: MOTIF
+    grounding: MCSA:414
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.10.450.30 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.10.450.30
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: ribonuclease T1 activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.27.3
+  edges:
+  - subject: tyr38
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr38 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/414/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 414, mechanism 1; M-CSA cites PMID:10029539, PMID:20088566; M-CSA catalytic-residue
+        roles for Tyr38
+  - subject: his40
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His40 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/414/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 414, mechanism 1; M-CSA cites PMID:10029539, PMID:20088566; M-CSA catalytic-residue
+        roles for His40
+  - subject: glu58
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu58 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/414/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 414, mechanism 1; M-CSA cites PMID:10029539, PMID:20088566; M-CSA catalytic-residue
+        roles for Glu58
+  - subject: arg77
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg77 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/414/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 414, mechanism 1; M-CSA cites PMID:10029539, PMID:20088566; M-CSA catalytic-residue
+        roles for Arg77
+  - subject: his92
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His92 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/414/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 414, mechanism 1; M-CSA cites PMID:10029539, PMID:20088566; M-CSA catalytic-residue
+        roles for His92
+  - subject: phe100
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Phe100 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/414/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 414, mechanism 1; M-CSA cites PMID:10029539, PMID:20088566; M-CSA catalytic-residue
+        roles for Phe100
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/414/
+      snippet: The reaction occurs in a two-step process with cleavage of the RNA chain by transesterification
+        of a 5'-phosphoester bond to form a guanosine 2',3'-cyclic phosphate terminus in the first step,
+        followed by hydrolysis of the cyclic phosphate to form a guanosine 3'-phosphate in a second, independent
+        step.
+      notes: M-CSA entry 414, mechanism 1; M-CSA cites PMID:10029539, PMID:20088566; CATH domain 3.10.450.30
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/414/
+      snippet: The reaction occurs in a two-step process with cleavage of the RNA chain by transesterification
+        of a 5'-phosphoester bond to form a guanosine 2',3'-cyclic phosphate terminus in the first step,
+        followed by hydrolysis of the cyclic phosphate to form a guanosine 3'-phosphate in a second, independent
+        step.
+      notes: M-CSA entry 414, mechanism 1; M-CSA cites PMID:10029539, PMID:20088566; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/414/
+      snippet: The reaction occurs in a two-step process with cleavage of the RNA chain by transesterification
+        of a 5'-phosphoester bond to form a guanosine 2',3'-cyclic phosphate terminus in the first step,
+        followed by hydrolysis of the cyclic phosphate to form a guanosine 3'-phosphate in a second, independent
+        step.
+      notes: M-CSA entry 414, mechanism 1; M-CSA cites PMID:10029539, PMID:20088566; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/414/
+      snippet: The reaction occurs in a two-step process with cleavage of the RNA chain by transesterification
+        of a 5'-phosphoester bond to form a guanosine 2',3'-cyclic phosphate terminus in the first step,
+        followed by hydrolysis of the cyclic phosphate to form a guanosine 3'-phosphate in a second, independent
+        step.
+      notes: M-CSA entry 414, mechanism 1; M-CSA cites PMID:10029539, PMID:20088566; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/414/
+      snippet: The reaction occurs in a two-step process with cleavage of the RNA chain by transesterification
+        of a 5'-phosphoester bond to form a guanosine 2',3'-cyclic phosphate terminus in the first step,
+        followed by hydrolysis of the cyclic phosphate to form a guanosine 3'-phosphate in a second, independent
+        step.
+      notes: M-CSA entry 414, mechanism 1; M-CSA cites PMID:10029539, PMID:20088566; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/414/
+      snippet: The reaction occurs in a two-step process with cleavage of the RNA chain by transesterification
+        of a 5'-phosphoester bond to form a guanosine 2',3'-cyclic phosphate terminus in the first step,
+        followed by hydrolysis of the cyclic phosphate to form a guanosine 3'-phosphate in a second, independent
+        step.
+      notes: M-CSA entry 414, mechanism 1; M-CSA cites PMID:10029539, PMID:20088566; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/414/
+      snippet: The reaction occurs in a two-step process with cleavage of the RNA chain by transesterification
+        of a 5'-phosphoester bond to form a guanosine 2',3'-cyclic phosphate terminus in the first step,
+        followed by hydrolysis of the cyclic phosphate to form a guanosine 3'-phosphate in a second, independent
+        step.
+      notes: M-CSA entry 414, mechanism 1; M-CSA cites PMID:10029539, PMID:20088566; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 414;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

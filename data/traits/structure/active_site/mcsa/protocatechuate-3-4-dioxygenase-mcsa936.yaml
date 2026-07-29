@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.13.11.3
 - CHEBI:15379
@@ -364,4 +364,218 @@ definitions:
       Protocatechuate dioxygenase breaks open the ring of catechol by adding molecular oxygen to the bond between two hydroxyl groups. It is important in the detoxification and breakdown of aromatic compounds by bacteria. It also has a role in the pathway of phenylalanine metabolism.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of protocatechuate 3,4-dioxygenase
+  description: Mechanism transcribed from M-CSA entry 936. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering only — no unique offset to the record's reference sequence could
+    be verified, so no UniProt position is asserted.
+  nodes:
+  - node_id: tyr408
+    label: catalytic Tyr408 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00436
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: tyr447
+    label: catalytic Tyr447 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00436
+    description: 'M-CSA roles: metal ligand, proton shuttle (general acid/base).'
+  - node_id: arg457
+    label: catalytic Arg457 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00436
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his460
+    label: catalytic His460 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00436
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his462
+    label: catalytic His462 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00436
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: dioxygen
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+  - node_id: reactant1
+    label: 3,4-dihydroxybenzoate
+    node_type: CHEMICAL
+    grounding: CHEBI:36241
+  - node_id: product0
+    label: 3-carboxy-cis,cis-muconate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57496
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: The catalytic iron ion directly chelates the two hydroxyl groups on the catechol aromatic
+      ring. This process displaces the hydroxyl and tyrosine 447, which then act as bases in extracting
+      protons from both the hydroxyl groups. Addition of molecular oxygen then takes place across the
+      bond between the hydroxyls, The tyrosine 447 and water molecule then act as acids and donate protons
+      back to the oxy
+  - node_id: active_site
+    label: protocatechuate 3,4-dioxygenase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:936
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.60.130.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.60.130.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: protocatechuate 3,4-dioxygenase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.13.11.3
+  edges:
+  - subject: tyr408
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr408 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/936/
+      snippet: metal ligand
+      notes: M-CSA entry 936, mechanism 1; M-CSA cites PMID:11848838, PMID:25548185, PMID:9254599, PMID:9254600;
+        M-CSA catalytic-residue roles for Tyr408
+  - subject: tyr447
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr447 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/936/
+      snippet: metal ligand, proton shuttle (general acid/base)
+      notes: M-CSA entry 936, mechanism 1; M-CSA cites PMID:11848838, PMID:25548185, PMID:9254599, PMID:9254600;
+        M-CSA catalytic-residue roles for Tyr447
+  - subject: arg457
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg457 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/936/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 936, mechanism 1; M-CSA cites PMID:11848838, PMID:25548185, PMID:9254599, PMID:9254600;
+        M-CSA catalytic-residue roles for Arg457
+  - subject: his460
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His460 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/936/
+      snippet: metal ligand
+      notes: M-CSA entry 936, mechanism 1; M-CSA cites PMID:11848838, PMID:25548185, PMID:9254599, PMID:9254600;
+        M-CSA catalytic-residue roles for His460
+  - subject: his462
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His462 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/936/
+      snippet: metal ligand
+      notes: M-CSA entry 936, mechanism 1; M-CSA cites PMID:11848838, PMID:25548185, PMID:9254599, PMID:9254600;
+        M-CSA catalytic-residue roles for His462
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/936/
+      snippet: The catalytic iron ion directly chelates the two hydroxyl groups on the catechol aromatic
+        ring. This process displaces the hydroxyl and tyrosine 447, which then act as bases in extracting
+        protons from both the hydroxyl groups. Addition of molecular oxygen then takes place across the
+        bond between the hydroxyls, The tyrosine 447 and water molecule then act as acids and donate protons
+        back to the oxy
+      notes: M-CSA entry 936, mechanism 1; M-CSA cites PMID:11848838, PMID:25548185, PMID:9254599, PMID:9254600;
+        CATH domain 2.60.130.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/936/
+      snippet: The catalytic iron ion directly chelates the two hydroxyl groups on the catechol aromatic
+        ring. This process displaces the hydroxyl and tyrosine 447, which then act as bases in extracting
+        protons from both the hydroxyl groups. Addition of molecular oxygen then takes place across the
+        bond between the hydroxyls, The tyrosine 447 and water molecule then act as acids and donate protons
+        back to the oxy
+      notes: M-CSA entry 936, mechanism 1; M-CSA cites PMID:11848838, PMID:25548185, PMID:9254599, PMID:9254600;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/936/
+      snippet: The catalytic iron ion directly chelates the two hydroxyl groups on the catechol aromatic
+        ring. This process displaces the hydroxyl and tyrosine 447, which then act as bases in extracting
+        protons from both the hydroxyl groups. Addition of molecular oxygen then takes place across the
+        bond between the hydroxyls, The tyrosine 447 and water molecule then act as acids and donate protons
+        back to the oxy
+      notes: M-CSA entry 936, mechanism 1; M-CSA cites PMID:11848838, PMID:25548185, PMID:9254599, PMID:9254600;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/936/
+      snippet: The catalytic iron ion directly chelates the two hydroxyl groups on the catechol aromatic
+        ring. This process displaces the hydroxyl and tyrosine 447, which then act as bases in extracting
+        protons from both the hydroxyl groups. Addition of molecular oxygen then takes place across the
+        bond between the hydroxyls, The tyrosine 447 and water molecule then act as acids and donate protons
+        back to the oxy
+      notes: M-CSA entry 936, mechanism 1; M-CSA cites PMID:11848838, PMID:25548185, PMID:9254599, PMID:9254600;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/936/
+      snippet: The catalytic iron ion directly chelates the two hydroxyl groups on the catechol aromatic
+        ring. This process displaces the hydroxyl and tyrosine 447, which then act as bases in extracting
+        protons from both the hydroxyl groups. Addition of molecular oxygen then takes place across the
+        bond between the hydroxyls, The tyrosine 447 and water molecule then act as acids and donate protons
+        back to the oxy
+      notes: M-CSA entry 936, mechanism 1; M-CSA cites PMID:11848838, PMID:25548185, PMID:9254599, PMID:9254600;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/936/
+      snippet: The catalytic iron ion directly chelates the two hydroxyl groups on the catechol aromatic
+        ring. This process displaces the hydroxyl and tyrosine 447, which then act as bases in extracting
+        protons from both the hydroxyl groups. Addition of molecular oxygen then takes place across the
+        bond between the hydroxyls, The tyrosine 447 and water molecule then act as acids and donate protons
+        back to the oxy
+      notes: M-CSA entry 936, mechanism 1; M-CSA cites PMID:11848838, PMID:25548185, PMID:9254599, PMID:9254600;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (11 evidence-backed edges) transcribed from M-CSA entry 936;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.6.1.13
 - CHEBI:35179
@@ -352,4 +352,188 @@ definitions:
       Ornithine aminotransferase catalyses the conversion of L-ornithine and a 2-oxo acid to L-glutamate 5-semialdehyde and an L-amino acid. This enzyme is found in low-GC bacteria, where it is responsible for the fourth step in arginine biosynthesis, and in the mitochondrial matrix of eukaryotes, where it controls L-ornithine levels in tissues. In human hereditary ornithine aminotransferase deficiency, the elevated levels of intraocular concentrations of ornithine are responsible for gyrate atrophy, which affects the CNS and peripheral nervous system [PMID:12221166].
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of ornithine aminotransferase
+  description: Mechanism transcribed from M-CSA entry 929. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering only — no unique offset to the record's reference sequence could
+    be verified, so no UniProt position is asserted.
+  nodes:
+  - node_id: phe177
+    label: catalytic Phe177 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04181
+    description: 'M-CSA roles: steric role.'
+  - node_id: asp263
+    label: catalytic Asp263 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04181
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: lys292
+    label: catalytic Lys292 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04181
+    description: 'M-CSA roles: covalent catalysis, proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: 2-oxo monocarboxylic acid anion
+    node_type: CHEMICAL
+    grounding: CHEBI:35179
+  - node_id: reactant1
+    label: L-ornithinium(1+)
+    node_type: CHEMICAL
+    grounding: CHEBI:46911
+  - node_id: product0
+    label: L-glutamic 5-semialdehyde zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:58066
+  - node_id: product1
+    label: L-alpha-amino acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:59869
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: This PLP-dependent reaction proceeds via a ping-pong mechanism that requires two half-reactions
+      to complete one cycle of transamination. In the first half-reaction the catalytic lysine is displaced
+      from the PLP-cofactor by the ornithine substrate. This substrate is then deamminated to form the
+      L-glutamate-gamma-semialdehyde. In the second half-reaction, the 2-oxoglutarate enters the active
+      site an
+  - node_id: active_site
+    label: ornithine aminotransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:929
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.640.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.640.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: ornithine aminotransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.6.1.13
+  edges:
+  - subject: phe177
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Phe177 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/929/
+      snippet: steric role
+      notes: M-CSA entry 929, mechanism 1; M-CSA cites PMID:12221166, PMID:16096275, PMID:25145640, PMID:9514741,
+        PMID:9878407; M-CSA catalytic-residue roles for Phe177
+  - subject: asp263
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp263 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/929/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 929, mechanism 1; M-CSA cites PMID:12221166, PMID:16096275, PMID:25145640, PMID:9514741,
+        PMID:9878407; M-CSA catalytic-residue roles for Asp263
+  - subject: lys292
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys292 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/929/
+      snippet: covalent catalysis, proton shuttle (general acid/base)
+      notes: M-CSA entry 929, mechanism 1; M-CSA cites PMID:12221166, PMID:16096275, PMID:25145640, PMID:9514741,
+        PMID:9878407; M-CSA catalytic-residue roles for Lys292
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/929/
+      snippet: This PLP-dependent reaction proceeds via a ping-pong mechanism that requires two half-reactions
+        to complete one cycle of transamination. In the first half-reaction the catalytic lysine is displaced
+        from the PLP-cofactor by the ornithine substrate. This substrate is then deamminated to form the
+        L-glutamate-gamma-semialdehyde. In the second half-reaction, the 2-oxoglutarate enters the active
+        site an
+      notes: M-CSA entry 929, mechanism 1; M-CSA cites PMID:12221166, PMID:16096275, PMID:25145640, PMID:9514741,
+        PMID:9878407; CATH domain 3.40.640.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/929/
+      snippet: This PLP-dependent reaction proceeds via a ping-pong mechanism that requires two half-reactions
+        to complete one cycle of transamination. In the first half-reaction the catalytic lysine is displaced
+        from the PLP-cofactor by the ornithine substrate. This substrate is then deamminated to form the
+        L-glutamate-gamma-semialdehyde. In the second half-reaction, the 2-oxoglutarate enters the active
+        site an
+      notes: M-CSA entry 929, mechanism 1; M-CSA cites PMID:12221166, PMID:16096275, PMID:25145640, PMID:9514741,
+        PMID:9878407; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/929/
+      snippet: This PLP-dependent reaction proceeds via a ping-pong mechanism that requires two half-reactions
+        to complete one cycle of transamination. In the first half-reaction the catalytic lysine is displaced
+        from the PLP-cofactor by the ornithine substrate. This substrate is then deamminated to form the
+        L-glutamate-gamma-semialdehyde. In the second half-reaction, the 2-oxoglutarate enters the active
+        site an
+      notes: M-CSA entry 929, mechanism 1; M-CSA cites PMID:12221166, PMID:16096275, PMID:25145640, PMID:9514741,
+        PMID:9878407; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/929/
+      snippet: This PLP-dependent reaction proceeds via a ping-pong mechanism that requires two half-reactions
+        to complete one cycle of transamination. In the first half-reaction the catalytic lysine is displaced
+        from the PLP-cofactor by the ornithine substrate. This substrate is then deamminated to form the
+        L-glutamate-gamma-semialdehyde. In the second half-reaction, the 2-oxoglutarate enters the active
+        site an
+      notes: M-CSA entry 929, mechanism 1; M-CSA cites PMID:12221166, PMID:16096275, PMID:25145640, PMID:9514741,
+        PMID:9878407; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/929/
+      snippet: This PLP-dependent reaction proceeds via a ping-pong mechanism that requires two half-reactions
+        to complete one cycle of transamination. In the first half-reaction the catalytic lysine is displaced
+        from the PLP-cofactor by the ornithine substrate. This substrate is then deamminated to form the
+        L-glutamate-gamma-semialdehyde. In the second half-reaction, the 2-oxoglutarate enters the active
+        site an
+      notes: M-CSA entry 929, mechanism 1; M-CSA cites PMID:12221166, PMID:16096275, PMID:25145640, PMID:9514741,
+        PMID:9878407; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/929/
+      snippet: This PLP-dependent reaction proceeds via a ping-pong mechanism that requires two half-reactions
+        to complete one cycle of transamination. In the first half-reaction the catalytic lysine is displaced
+        from the PLP-cofactor by the ornithine substrate. This substrate is then deamminated to form the
+        L-glutamate-gamma-semialdehyde. In the second half-reaction, the 2-oxoglutarate enters the active
+        site an
+      notes: M-CSA entry 929, mechanism 1; M-CSA cites PMID:12221166, PMID:16096275, PMID:25145640, PMID:9514741,
+        PMID:9878407; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (9 evidence-backed edges) transcribed from M-CSA entry 929;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

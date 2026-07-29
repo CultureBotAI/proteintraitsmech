@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.24.20
 - CHEBI:10053
@@ -162,4 +162,230 @@ definitions:
       Metalloendopeptidases such as the zinc endopeptidases often have the potential for tissue destruction or pathogenic bacterial infections and so are targets for drug design.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of peptidyl-Lys metalloendopeptidase
+  description: Mechanism transcribed from M-CSA entry 786. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering only — no unique offset to the record's reference sequence could
+    be verified, so no UniProt position is asserted.
+  nodes:
+  - node_id: his117
+    label: catalytic His117 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P81054
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu118
+    label: catalytic Glu118 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P81054
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: his121
+    label: catalytic His121 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P81054
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp130
+    label: catalytic Asp130 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P81054
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: tyr133
+    label: catalytic Tyr133 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P81054
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: Xaa-Lys
+    node_type: CHEMICAL
+    grounding: CHEBI:10053
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: L-alpha-amino acid
+    node_type: CHEMICAL
+    grounding: CHEBI:15705
+  - node_id: product1
+    label: L-lysine
+    node_type: CHEMICAL
+    grounding: CHEBI:18019
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: The zinc peptidase catalyses hydrolysis of proteins. Glu 118 and Zn together act to activate
+      a water molecule so that it can act as a nucleophile to attack the peptide substrate. This forms
+      a tetrahedral intermediate, stabilised by "proton donation" by Tyr 133, which then collapses to
+      release the products.
+  - node_id: active_site
+    label: peptidyl-Lys metalloendopeptidase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:786
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.390.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.390.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: peptidyl-Lys metalloendopeptidase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.24.20
+  edges:
+  - subject: glu118
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu118 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/786/
+      snippet: The zinc peptidase catalyses hydrolysis of proteins. Glu 118 and Zn together act to activate
+        a water molecule so that it can act as a nucleophile to attack the peptide substrate. This forms
+        a tetrahedral intermediate, stabilised by "proton donation" by Tyr 133, which then collapses to
+        release the products.
+      notes: M-CSA entry 786, mechanism 1; M-CSA cites PMID:11223512, PMID:26572161; step 1
+  - subject: tyr133
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr133 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/786/
+      snippet: The zinc peptidase catalyses hydrolysis of proteins. Glu 118 and Zn together act to activate
+        a water molecule so that it can act as a nucleophile to attack the peptide substrate. This forms
+        a tetrahedral intermediate, stabilised by "proton donation" by Tyr 133, which then collapses to
+        release the products.
+      notes: M-CSA entry 786, mechanism 1; M-CSA cites PMID:11223512, PMID:26572161; step 1
+  - subject: his117
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His117 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/786/
+      snippet: metal ligand
+      notes: M-CSA entry 786, mechanism 1; M-CSA cites PMID:11223512, PMID:26572161; M-CSA catalytic-residue
+        roles for His117
+  - subject: glu118
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu118 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/786/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 786, mechanism 1; M-CSA cites PMID:11223512, PMID:26572161; M-CSA catalytic-residue
+        roles for Glu118
+  - subject: his121
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His121 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/786/
+      snippet: metal ligand
+      notes: M-CSA entry 786, mechanism 1; M-CSA cites PMID:11223512, PMID:26572161; M-CSA catalytic-residue
+        roles for His121
+  - subject: asp130
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp130 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/786/
+      snippet: metal ligand
+      notes: M-CSA entry 786, mechanism 1; M-CSA cites PMID:11223512, PMID:26572161; M-CSA catalytic-residue
+        roles for Asp130
+  - subject: tyr133
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr133 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/786/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 786, mechanism 1; M-CSA cites PMID:11223512, PMID:26572161; M-CSA catalytic-residue
+        roles for Tyr133
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/786/
+      snippet: The zinc peptidase catalyses hydrolysis of proteins. Glu 118 and Zn together act to activate
+        a water molecule so that it can act as a nucleophile to attack the peptide substrate. This forms
+        a tetrahedral intermediate, stabilised by "proton donation" by Tyr 133, which then collapses to
+        release the products.
+      notes: M-CSA entry 786, mechanism 1; M-CSA cites PMID:11223512, PMID:26572161; CATH domain 3.40.390.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/786/
+      snippet: The zinc peptidase catalyses hydrolysis of proteins. Glu 118 and Zn together act to activate
+        a water molecule so that it can act as a nucleophile to attack the peptide substrate. This forms
+        a tetrahedral intermediate, stabilised by "proton donation" by Tyr 133, which then collapses to
+        release the products.
+      notes: M-CSA entry 786, mechanism 1; M-CSA cites PMID:11223512, PMID:26572161; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/786/
+      snippet: The zinc peptidase catalyses hydrolysis of proteins. Glu 118 and Zn together act to activate
+        a water molecule so that it can act as a nucleophile to attack the peptide substrate. This forms
+        a tetrahedral intermediate, stabilised by "proton donation" by Tyr 133, which then collapses to
+        release the products.
+      notes: M-CSA entry 786, mechanism 1; M-CSA cites PMID:11223512, PMID:26572161; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/786/
+      snippet: The zinc peptidase catalyses hydrolysis of proteins. Glu 118 and Zn together act to activate
+        a water molecule so that it can act as a nucleophile to attack the peptide substrate. This forms
+        a tetrahedral intermediate, stabilised by "proton donation" by Tyr 133, which then collapses to
+        release the products.
+      notes: M-CSA entry 786, mechanism 1; M-CSA cites PMID:11223512, PMID:26572161; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/786/
+      snippet: The zinc peptidase catalyses hydrolysis of proteins. Glu 118 and Zn together act to activate
+        a water molecule so that it can act as a nucleophile to attack the peptide substrate. This forms
+        a tetrahedral intermediate, stabilised by "proton donation" by Tyr 133, which then collapses to
+        release the products.
+      notes: M-CSA entry 786, mechanism 1; M-CSA cites PMID:11223512, PMID:26572161; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/786/
+      snippet: The zinc peptidase catalyses hydrolysis of proteins. Glu 118 and Zn together act to activate
+        a water molecule so that it can act as a nucleophile to attack the peptide substrate. This forms
+        a tetrahedral intermediate, stabilised by "proton donation" by Tyr 133, which then collapses to
+        release the products.
+      notes: M-CSA entry 786, mechanism 1; M-CSA cites PMID:11223512, PMID:26572161; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 786;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

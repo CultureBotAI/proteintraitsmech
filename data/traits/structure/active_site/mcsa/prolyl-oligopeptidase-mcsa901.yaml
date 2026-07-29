@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.21.26
 - CHEBI:15377
@@ -516,4 +516,188 @@ definitions:
       This group of serine peptidases belong to MEROPS peptidase family S9 (clan SC), subfamily S9A (prolyl oligopeptidase). The active site of members of this clan consists of a linear arrangement of serine, histidine and threonine catalytic residues [PMID:7845208]. Prolyl oligopeptidases are either located in the cytosol or they are membrane bound, where they cleave peptide bonds with prolyl P1 specificities (but cleavage of alanyl bonds has been detected). The proline must adopt a trans configuration within the chain. Peptides of up to 30 residues are cleaved [PMID:7845208].
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of prolyl oligopeptidase
+  description: Mechanism transcribed from M-CSA entry 901. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: tyr473
+    label: catalytic Tyr473 (M-CSA/PDB numbering; UniProt residue 473)
+    node_type: RESIDUE
+    grounding: UniProtKB:P23687
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ser554
+    label: catalytic Ser554 (M-CSA/PDB numbering; UniProt residue 554)
+    node_type: RESIDUE
+    grounding: UniProtKB:P23687
+    description: 'M-CSA roles: covalent catalysis, proton shuttle (general acid/base).'
+  - node_id: asp641
+    label: catalytic Asp641 (M-CSA/PDB numbering; UniProt residue 641)
+    node_type: RESIDUE
+    grounding: UniProtKB:P23687
+    description: 'M-CSA roles: electrostatic stabiliser, modifies pKa.'
+  - node_id: his680
+    label: catalytic His680 (M-CSA/PDB numbering; UniProt residue 680)
+    node_type: RESIDUE
+    grounding: UniProtKB:P23687
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: dipeptide zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:90799
+  - node_id: product0
+    label: L-alpha-amino acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:59869
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: This peptidase functions in much the same way as other serine peptidases. The Ser-His-Asp
+      catalytic triad activates the serine through general acid/base catalysis. The serine then attacks
+      the carbonyl group of the peptide bond, cleaving the C-N bond. Water is activated by the histidine
+      of the triad and then cleaves the remaining product from the enzyme.
+  - node_id: active_site
+    label: prolyl oligopeptidase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:901
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1820 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1820
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: prolyl oligopeptidase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.21.26
+  edges:
+  - subject: tyr473
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr473 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/901/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 901, mechanism 1; M-CSA cites PMID:10716187, PMID:11915948, PMID:12202494, PMID:12228249,
+        PMID:14514675, PMID:15210359, PMID:15738423, PMID:20024801, PMID:22132071, PMID:22484394, PMID:22940581,
+        PMID:7845208, PMID:9695945; M-CSA catalytic-residue roles for Tyr473
+  - subject: ser554
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser554 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/901/
+      snippet: covalent catalysis, proton shuttle (general acid/base)
+      notes: M-CSA entry 901, mechanism 1; M-CSA cites PMID:10716187, PMID:11915948, PMID:12202494, PMID:12228249,
+        PMID:14514675, PMID:15210359, PMID:15738423, PMID:20024801, PMID:22132071, PMID:22484394, PMID:22940581,
+        PMID:7845208, PMID:9695945; M-CSA catalytic-residue roles for Ser554
+  - subject: asp641
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp641 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/901/
+      snippet: electrostatic stabiliser, modifies pKa
+      notes: M-CSA entry 901, mechanism 1; M-CSA cites PMID:10716187, PMID:11915948, PMID:12202494, PMID:12228249,
+        PMID:14514675, PMID:15210359, PMID:15738423, PMID:20024801, PMID:22132071, PMID:22484394, PMID:22940581,
+        PMID:7845208, PMID:9695945; M-CSA catalytic-residue roles for Asp641
+  - subject: his680
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His680 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/901/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 901, mechanism 1; M-CSA cites PMID:10716187, PMID:11915948, PMID:12202494, PMID:12228249,
+        PMID:14514675, PMID:15210359, PMID:15738423, PMID:20024801, PMID:22132071, PMID:22484394, PMID:22940581,
+        PMID:7845208, PMID:9695945; M-CSA catalytic-residue roles for His680
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/901/
+      snippet: This peptidase functions in much the same way as other serine peptidases. The Ser-His-Asp
+        catalytic triad activates the serine through general acid/base catalysis. The serine then attacks
+        the carbonyl group of the peptide bond, cleaving the C-N bond. Water is activated by the histidine
+        of the triad and then cleaves the remaining product from the enzyme.
+      notes: M-CSA entry 901, mechanism 1; M-CSA cites PMID:10716187, PMID:11915948, PMID:12202494, PMID:12228249,
+        PMID:14514675, PMID:15210359, PMID:15738423, PMID:20024801, PMID:22132071, PMID:22484394, PMID:22940581,
+        PMID:7845208, PMID:9695945; CATH domain 3.40.50.1820 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/901/
+      snippet: This peptidase functions in much the same way as other serine peptidases. The Ser-His-Asp
+        catalytic triad activates the serine through general acid/base catalysis. The serine then attacks
+        the carbonyl group of the peptide bond, cleaving the C-N bond. Water is activated by the histidine
+        of the triad and then cleaves the remaining product from the enzyme.
+      notes: M-CSA entry 901, mechanism 1; M-CSA cites PMID:10716187, PMID:11915948, PMID:12202494, PMID:12228249,
+        PMID:14514675, PMID:15210359, PMID:15738423, PMID:20024801, PMID:22132071, PMID:22484394, PMID:22940581,
+        PMID:7845208, PMID:9695945; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/901/
+      snippet: This peptidase functions in much the same way as other serine peptidases. The Ser-His-Asp
+        catalytic triad activates the serine through general acid/base catalysis. The serine then attacks
+        the carbonyl group of the peptide bond, cleaving the C-N bond. Water is activated by the histidine
+        of the triad and then cleaves the remaining product from the enzyme.
+      notes: M-CSA entry 901, mechanism 1; M-CSA cites PMID:10716187, PMID:11915948, PMID:12202494, PMID:12228249,
+        PMID:14514675, PMID:15210359, PMID:15738423, PMID:20024801, PMID:22132071, PMID:22484394, PMID:22940581,
+        PMID:7845208, PMID:9695945; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/901/
+      snippet: This peptidase functions in much the same way as other serine peptidases. The Ser-His-Asp
+        catalytic triad activates the serine through general acid/base catalysis. The serine then attacks
+        the carbonyl group of the peptide bond, cleaving the C-N bond. Water is activated by the histidine
+        of the triad and then cleaves the remaining product from the enzyme.
+      notes: M-CSA entry 901, mechanism 1; M-CSA cites PMID:10716187, PMID:11915948, PMID:12202494, PMID:12228249,
+        PMID:14514675, PMID:15210359, PMID:15738423, PMID:20024801, PMID:22132071, PMID:22484394, PMID:22940581,
+        PMID:7845208, PMID:9695945; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/901/
+      snippet: This peptidase functions in much the same way as other serine peptidases. The Ser-His-Asp
+        catalytic triad activates the serine through general acid/base catalysis. The serine then attacks
+        the carbonyl group of the peptide bond, cleaving the C-N bond. Water is activated by the histidine
+        of the triad and then cleaves the remaining product from the enzyme.
+      notes: M-CSA entry 901, mechanism 1; M-CSA cites PMID:10716187, PMID:11915948, PMID:12202494, PMID:12228249,
+        PMID:14514675, PMID:15210359, PMID:15738423, PMID:20024801, PMID:22132071, PMID:22484394, PMID:22940581,
+        PMID:7845208, PMID:9695945; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (9 evidence-backed edges) transcribed from M-CSA entry 901;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.1.99.28
 - CHEBI:16217
@@ -272,4 +272,201 @@ definitions:
       Glucose-fructose oxidoreductase catalyses both the reduction of fructose and the oxidation of glucose simultaneously, reactions which allow certain bacteria to tolerate high sugar concentrations. The gluconolactone produced is subsequently converted to ethanol whilst the sorbital is not metabolised further. The biotechnological interest in an efficient microbial production of ethanol production had lead to a huge interest in enzymes such as these. It is located in the periplasmic space of the bacterial cells where its biological function is to protect the bacterium from osmotic stress caused by high sugar concentrations.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of glucose-fructose oxidoreductase
+  description: Mechanism transcribed from M-CSA entry 868. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +52).
+  nodes:
+  - node_id: lys129
+    label: catalytic Lys129 (M-CSA/PDB numbering; UniProt residue 181)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q07982
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: tyr217
+    label: catalytic Tyr217 (M-CSA/PDB numbering; UniProt residue 269)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q07982
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: D-fructofuranose
+    node_type: CHEMICAL
+    grounding: CHEBI:37721
+  - node_id: reactant1
+    label: D-glucopyranose
+    node_type: CHEMICAL
+    grounding: CHEBI:4167
+  - node_id: product0
+    label: D-glucono-1,5-lactone
+    node_type: CHEMICAL
+    grounding: CHEBI:16217
+  - node_id: product1
+    label: D-glucitol
+    node_type: CHEMICAL
+    grounding: CHEBI:17924
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: Catalysis is achieved by a ping pong mechanism where one of its substrates binds and
+      forms a product that dissociates before the second product binds. The residues involved are yet
+      to be identified conclusively but there is some speculation. Tyr217 is the most likely residue to
+      act as a proton donor/acceptor. Lys129 is thought to hydrogen bond to the adjacent Tyr217 and facilitate
+      proton transfer.
+  - node_id: active_site
+    label: glucose-fructose oxidoreductase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:868
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.720 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.720
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: glucose-fructose oxidoreductase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.1.99.28
+  edges:
+  - subject: lys129
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys129 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/868/
+      snippet: Catalysis is achieved by a ping pong mechanism where one of its substrates binds and forms
+        a product that dissociates before the second product binds. The residues involved are yet to be
+        identified conclusively but there is some speculation. Tyr217 is the most likely residue to act
+        as a proton donor/acceptor. Lys129 is thought to hydrogen bond to the adjacent Tyr217 and facilitate
+        proton transfer.
+      notes: M-CSA entry 868, mechanism 1; M-CSA cites PMID:11099381, PMID:11705375, PMID:26749496, PMID:8994968;
+        step 1
+  - subject: tyr217
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr217 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/868/
+      snippet: Catalysis is achieved by a ping pong mechanism where one of its substrates binds and forms
+        a product that dissociates before the second product binds. The residues involved are yet to be
+        identified conclusively but there is some speculation. Tyr217 is the most likely residue to act
+        as a proton donor/acceptor. Lys129 is thought to hydrogen bond to the adjacent Tyr217 and facilitate
+        proton transfer.
+      notes: M-CSA entry 868, mechanism 1; M-CSA cites PMID:11099381, PMID:11705375, PMID:26749496, PMID:8994968;
+        step 1
+  - subject: lys129
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys129 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/868/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 868, mechanism 1; M-CSA cites PMID:11099381, PMID:11705375, PMID:26749496, PMID:8994968;
+        M-CSA catalytic-residue roles for Lys129
+  - subject: tyr217
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr217 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/868/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 868, mechanism 1; M-CSA cites PMID:11099381, PMID:11705375, PMID:26749496, PMID:8994968;
+        M-CSA catalytic-residue roles for Tyr217
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/868/
+      snippet: Catalysis is achieved by a ping pong mechanism where one of its substrates binds and forms
+        a product that dissociates before the second product binds. The residues involved are yet to be
+        identified conclusively but there is some speculation. Tyr217 is the most likely residue to act
+        as a proton donor/acceptor. Lys129 is thought to hydrogen bond to the adjacent Tyr217 and facilitate
+        proton transfer.
+      notes: M-CSA entry 868, mechanism 1; M-CSA cites PMID:11099381, PMID:11705375, PMID:26749496, PMID:8994968;
+        CATH domain 3.40.50.720 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/868/
+      snippet: Catalysis is achieved by a ping pong mechanism where one of its substrates binds and forms
+        a product that dissociates before the second product binds. The residues involved are yet to be
+        identified conclusively but there is some speculation. Tyr217 is the most likely residue to act
+        as a proton donor/acceptor. Lys129 is thought to hydrogen bond to the adjacent Tyr217 and facilitate
+        proton transfer.
+      notes: M-CSA entry 868, mechanism 1; M-CSA cites PMID:11099381, PMID:11705375, PMID:26749496, PMID:8994968;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/868/
+      snippet: Catalysis is achieved by a ping pong mechanism where one of its substrates binds and forms
+        a product that dissociates before the second product binds. The residues involved are yet to be
+        identified conclusively but there is some speculation. Tyr217 is the most likely residue to act
+        as a proton donor/acceptor. Lys129 is thought to hydrogen bond to the adjacent Tyr217 and facilitate
+        proton transfer.
+      notes: M-CSA entry 868, mechanism 1; M-CSA cites PMID:11099381, PMID:11705375, PMID:26749496, PMID:8994968;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/868/
+      snippet: Catalysis is achieved by a ping pong mechanism where one of its substrates binds and forms
+        a product that dissociates before the second product binds. The residues involved are yet to be
+        identified conclusively but there is some speculation. Tyr217 is the most likely residue to act
+        as a proton donor/acceptor. Lys129 is thought to hydrogen bond to the adjacent Tyr217 and facilitate
+        proton transfer.
+      notes: M-CSA entry 868, mechanism 1; M-CSA cites PMID:11099381, PMID:11705375, PMID:26749496, PMID:8994968;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/868/
+      snippet: Catalysis is achieved by a ping pong mechanism where one of its substrates binds and forms
+        a product that dissociates before the second product binds. The residues involved are yet to be
+        identified conclusively but there is some speculation. Tyr217 is the most likely residue to act
+        as a proton donor/acceptor. Lys129 is thought to hydrogen bond to the adjacent Tyr217 and facilitate
+        proton transfer.
+      notes: M-CSA entry 868, mechanism 1; M-CSA cites PMID:11099381, PMID:11705375, PMID:26749496, PMID:8994968;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/868/
+      snippet: Catalysis is achieved by a ping pong mechanism where one of its substrates binds and forms
+        a product that dissociates before the second product binds. The residues involved are yet to be
+        identified conclusively but there is some speculation. Tyr217 is the most likely residue to act
+        as a proton donor/acceptor. Lys129 is thought to hydrogen bond to the adjacent Tyr217 and facilitate
+        proton transfer.
+      notes: M-CSA entry 868, mechanism 1; M-CSA cites PMID:11099381, PMID:11705375, PMID:26749496, PMID:8994968;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (10 evidence-backed edges) transcribed from M-CSA entry 868;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

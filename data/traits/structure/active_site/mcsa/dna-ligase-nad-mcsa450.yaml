@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:6.5.1.2
 - CHEBI:83828
@@ -403,4 +403,328 @@ definitions:
       DNA ligases catalyse the formation of phosphodiester bonds at single-strand breaks in double stranded DNA and are required in DNA replication, repair and recombination. DNA ligases are also used extensively for in vitro DNA manipulation and cloning techniques. Eukaryotic, viral and achaebacteria encoded enzyme al require ATP, where as NAD+ requiring DNA ligases are found exclusively in eubacteria.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of DNA ligase (NAD+)
+  description: Mechanism transcribed from M-CSA entry 450. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering only — no unique offset to the record's reference sequence could
+    be verified, so no UniProt position is asserted.
+  nodes:
+  - node_id: glu114
+    label: catalytic Glu114 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9ZHI0
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: lys116
+    label: catalytic Lys116 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9ZHI0
+    description: 'M-CSA roles: covalent catalysis.'
+  - node_id: asp118
+    label: catalytic Asp118 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9ZHI0
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: tyr221
+    label: catalytic Tyr221 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9ZHI0
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: lys312
+    label: catalytic Lys312 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9ZHI0
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: cys406
+    label: catalytic Cys406 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9ZHI0
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: cys409
+    label: catalytic Cys409 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9ZHI0
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: cys422
+    label: catalytic Cys422 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9ZHI0
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: cys427
+    label: catalytic Cys427 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9ZHI0
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: DNA polyanion
+    node_type: CHEMICAL
+    grounding: CHEBI:83828
+  - node_id: reactant1
+    label: DNA polyanion
+    node_type: CHEMICAL
+    grounding: CHEBI:83828
+  - node_id: reactant2
+    label: NAD(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+  - node_id: product0
+    label: DNA polyanion
+    node_type: CHEMICAL
+    grounding: CHEBI:83828
+  - node_id: product1
+    label: NMN(-)
+    node_type: CHEMICAL
+    grounding: CHEBI:14649
+  - node_id: product2
+    label: adenosine 5'-monophosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: The overall mechanism involves three reversible steps. The nicked DNA substrate is formed
+      by annealing two short oligonucleotides to a longer complementary oligonucleotide. First, a covalently
+      adenylated enzyme intermediate is formed by the transfer of the adenylate group of NAD+ to the E-amino
+      group of Lys116. Second, the adenylate moiety is transferred from the enzyme to the 5'-terminal
+      phosphat
+  - node_id: active_site
+    label: DNA ligase (NAD+) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:450
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.1490.70 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.1490.70
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: DNA ligase (NAD+) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:6.5.1.2
+  edges:
+  - subject: lys116
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys116 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/450/
+      snippet: "The overall mechanism involves three reversible steps. The nicked DNA substrate is formed\
+        \ by annealing two short oligonucleotides to a longer complementary oligonucleotide. First, a\
+        \ covalently adenylated enzyme intermediate is formed by the transfer of the adenylate group of\
+        \ NAD+ to the E-amino group of Lys116. Second, the adenylate moiety is transferred from the enzyme\
+        \ to the 5'-terminal phosphate on one of the oligomers (oligomer A). Finally, a phosphodiester\
+        \ bond is formed by a nucleophilic attack of the 3'-hydroxyl terminus of the other oligomer (oligomer\
+        \ B) on the activated 5'-phosphoryl group of oligomer A in an Sn2 like mechanism with a pentavalent\
+        \ phosphorous transition state. 
+
+Two Mg(2+) binding sites have been identified within the\
+        \ catalytic site (although the metals are not present in the pdb 1dgs) . The positive charge stabilises\
+        \ the developing negative charge of the pentavalent transition state and also the charged reaction\
+        \ intermediates."
+      notes: M-CSA entry 450, mechanism 2; M-CSA cites PMID:11058099, PMID:8760897; step 1
+  - subject: glu114
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu114 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/450/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 450, mechanism 2; M-CSA cites PMID:11058099, PMID:8760897; M-CSA catalytic-residue
+        roles for Glu114
+  - subject: lys116
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys116 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/450/
+      snippet: covalent catalysis
+      notes: M-CSA entry 450, mechanism 2; M-CSA cites PMID:11058099, PMID:8760897; M-CSA catalytic-residue
+        roles for Lys116
+  - subject: asp118
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp118 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/450/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 450, mechanism 2; M-CSA cites PMID:11058099, PMID:8760897; M-CSA catalytic-residue
+        roles for Asp118
+  - subject: tyr221
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr221 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/450/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 450, mechanism 2; M-CSA cites PMID:11058099, PMID:8760897; M-CSA catalytic-residue
+        roles for Tyr221
+  - subject: lys312
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys312 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/450/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 450, mechanism 2; M-CSA cites PMID:11058099, PMID:8760897; M-CSA catalytic-residue
+        roles for Lys312
+  - subject: cys406
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys406 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/450/
+      snippet: metal ligand
+      notes: M-CSA entry 450, mechanism 2; M-CSA cites PMID:11058099, PMID:8760897; M-CSA catalytic-residue
+        roles for Cys406
+  - subject: cys409
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys409 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/450/
+      snippet: metal ligand
+      notes: M-CSA entry 450, mechanism 2; M-CSA cites PMID:11058099, PMID:8760897; M-CSA catalytic-residue
+        roles for Cys409
+  - subject: cys422
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys422 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/450/
+      snippet: metal ligand
+      notes: M-CSA entry 450, mechanism 2; M-CSA cites PMID:11058099, PMID:8760897; M-CSA catalytic-residue
+        roles for Cys422
+  - subject: cys427
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys427 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/450/
+      snippet: metal ligand
+      notes: M-CSA entry 450, mechanism 2; M-CSA cites PMID:11058099, PMID:8760897; M-CSA catalytic-residue
+        roles for Cys427
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/450/
+      snippet: The overall mechanism involves three reversible steps. The nicked DNA substrate is formed
+        by annealing two short oligonucleotides to a longer complementary oligonucleotide. First, a covalently
+        adenylated enzyme intermediate is formed by the transfer of the adenylate group of NAD+ to the
+        E-amino group of Lys116. Second, the adenylate moiety is transferred from the enzyme to the 5'-terminal
+        phosphat
+      notes: M-CSA entry 450, mechanism 2; M-CSA cites PMID:11058099, PMID:8760897; CATH domain 3.30.1490.70
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/450/
+      snippet: The overall mechanism involves three reversible steps. The nicked DNA substrate is formed
+        by annealing two short oligonucleotides to a longer complementary oligonucleotide. First, a covalently
+        adenylated enzyme intermediate is formed by the transfer of the adenylate group of NAD+ to the
+        E-amino group of Lys116. Second, the adenylate moiety is transferred from the enzyme to the 5'-terminal
+        phosphat
+      notes: M-CSA entry 450, mechanism 2; M-CSA cites PMID:11058099, PMID:8760897; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/450/
+      snippet: The overall mechanism involves three reversible steps. The nicked DNA substrate is formed
+        by annealing two short oligonucleotides to a longer complementary oligonucleotide. First, a covalently
+        adenylated enzyme intermediate is formed by the transfer of the adenylate group of NAD+ to the
+        E-amino group of Lys116. Second, the adenylate moiety is transferred from the enzyme to the 5'-terminal
+        phosphat
+      notes: M-CSA entry 450, mechanism 2; M-CSA cites PMID:11058099, PMID:8760897; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/450/
+      snippet: The overall mechanism involves three reversible steps. The nicked DNA substrate is formed
+        by annealing two short oligonucleotides to a longer complementary oligonucleotide. First, a covalently
+        adenylated enzyme intermediate is formed by the transfer of the adenylate group of NAD+ to the
+        E-amino group of Lys116. Second, the adenylate moiety is transferred from the enzyme to the 5'-terminal
+        phosphat
+      notes: M-CSA entry 450, mechanism 2; M-CSA cites PMID:11058099, PMID:8760897; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/450/
+      snippet: The overall mechanism involves three reversible steps. The nicked DNA substrate is formed
+        by annealing two short oligonucleotides to a longer complementary oligonucleotide. First, a covalently
+        adenylated enzyme intermediate is formed by the transfer of the adenylate group of NAD+ to the
+        E-amino group of Lys116. Second, the adenylate moiety is transferred from the enzyme to the 5'-terminal
+        phosphat
+      notes: M-CSA entry 450, mechanism 2; M-CSA cites PMID:11058099, PMID:8760897; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/450/
+      snippet: The overall mechanism involves three reversible steps. The nicked DNA substrate is formed
+        by annealing two short oligonucleotides to a longer complementary oligonucleotide. First, a covalently
+        adenylated enzyme intermediate is formed by the transfer of the adenylate group of NAD+ to the
+        E-amino group of Lys116. Second, the adenylate moiety is transferred from the enzyme to the 5'-terminal
+        phosphat
+      notes: M-CSA entry 450, mechanism 2; M-CSA cites PMID:11058099, PMID:8760897; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/450/
+      snippet: The overall mechanism involves three reversible steps. The nicked DNA substrate is formed
+        by annealing two short oligonucleotides to a longer complementary oligonucleotide. First, a covalently
+        adenylated enzyme intermediate is formed by the transfer of the adenylate group of NAD+ to the
+        E-amino group of Lys116. Second, the adenylate moiety is transferred from the enzyme to the 5'-terminal
+        phosphat
+      notes: M-CSA entry 450, mechanism 2; M-CSA cites PMID:11058099, PMID:8760897; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/450/
+      snippet: The overall mechanism involves three reversible steps. The nicked DNA substrate is formed
+        by annealing two short oligonucleotides to a longer complementary oligonucleotide. First, a covalently
+        adenylated enzyme intermediate is formed by the transfer of the adenylate group of NAD+ to the
+        E-amino group of Lys116. Second, the adenylate moiety is transferred from the enzyme to the 5'-terminal
+        phosphat
+      notes: M-CSA entry 450, mechanism 2; M-CSA cites PMID:11058099, PMID:8760897; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (18 evidence-backed edges) transcribed from M-CSA entry 450;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

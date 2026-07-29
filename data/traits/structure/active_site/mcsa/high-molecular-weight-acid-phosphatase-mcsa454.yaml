@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.3.2
 - CHEBI:15377
@@ -325,4 +325,267 @@ definitions:
       High molecular weight acid phosphatases (HAPs) form a subclass of phosphomonoesterases which are found in locations as diverse as wheat germ, mammalian prostate tissue, and as extracellular or periplasmic enzymes in fungi and bacteria. These proteins act as non-specific tyrosine phosphatase that dephosphorylate a diverse number of substrates under acidic conditions (pH 4-6) including alkyl, aryl, and acyl orthophosphate monoesters and phosphorylated proteins. They have also been shown to have lipid phosphatase activity. In mammals they have been shown to inactivate lysophosphatidic acid in seminal plasma. In the fungus Aspergillus ficuum the homologous phytase is essential in metabolising phytate, the major phosphorous storage form in plant seeds. The HAPs have a distinct mechanism from other acid phosphatases; they retain the configuration of the substrate phosphorous atom while the purple acid phosphatases reverse it, and use a phospho-histidine intermediate. Evidently nature has 'discovered' multiple ways of catalysing this important reaction.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of high molecular weight acid phosphatase
+  description: Mechanism transcribed from M-CSA entry 454. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +31).
+  nodes:
+  - node_id: arg11
+    label: catalytic Arg11 (M-CSA/PDB numbering; UniProt residue 42)
+    node_type: RESIDUE
+    grounding: UniProtKB:P20646
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his12
+    label: catalytic His12 (M-CSA/PDB numbering; UniProt residue 43)
+    node_type: RESIDUE
+    grounding: UniProtKB:P20646
+    description: 'M-CSA roles: covalent catalysis.'
+  - node_id: arg15
+    label: catalytic Arg15 (M-CSA/PDB numbering; UniProt residue 46)
+    node_type: RESIDUE
+    grounding: UniProtKB:P20646
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: arg79
+    label: catalytic Arg79 (M-CSA/PDB numbering; UniProt residue 110)
+    node_type: RESIDUE
+    grounding: UniProtKB:P20646
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his257
+    label: catalytic His257 (M-CSA/PDB numbering; UniProt residue 288)
+    node_type: RESIDUE
+    grounding: UniProtKB:P20646
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp258
+    label: catalytic Asp258 (M-CSA/PDB numbering; UniProt residue 289)
+    node_type: RESIDUE
+    grounding: UniProtKB:P20646
+    description: 'M-CSA roles: electrostatic stabiliser, proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: phosphate monoester dianion
+    node_type: CHEMICAL
+    grounding: CHEBI:67140
+  - node_id: product0
+    label: alcohol
+    node_type: CHEMICAL
+    grounding: CHEBI:30879
+  - node_id: product1
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: Hydrolysis is effected in two steps, starting with a nucleophilic attack of the enzyme
+      on the phosphate group of the substrate to produce an enzyme-phosphate adduct. The phosphorylated
+      residue has been identified as His12 (numbering from rat enzyme) and Asp258 protonates the leaving
+      group of the substrate. The second step involves the attack of water on the phosphorous atom to
+      release inorganic ph
+  - node_id: active_site
+    label: high molecular weight acid phosphatase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:454
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1240 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1240
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: high molecular weight acid phosphatase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.3.2
+  edges:
+  - subject: his12
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His12 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/454/
+      snippet: Hydrolysis is effected in two steps, starting with a nucleophilic attack of the enzyme
+        on the phosphate group of the substrate to produce an enzyme-phosphate adduct. The phosphorylated
+        residue has been identified as His12 (numbering from rat enzyme) and Asp258 protonates the leaving
+        group of the substrate. The second step involves the attack of water on the phosphorous atom to
+        release inorganic phosphate from the enzyme, in such a way as to return to the original configuration
+        of the phosphorous atom. Crystal structures with vanadate, a believed transition state analogue,
+        indicate that positively charged His and Arg residues in the active site are involved in correctly
+        orientating the phosphate group and transition state stabilisation.
+      notes: M-CSA entry 454, mechanism 2; M-CSA cites PMID:19836403, PMID:23565972, PMID:8168503, PMID:8334986,
+        PMID:9164457; step 1
+  - subject: asp258
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp258 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/454/
+      snippet: Hydrolysis is effected in two steps, starting with a nucleophilic attack of the enzyme
+        on the phosphate group of the substrate to produce an enzyme-phosphate adduct. The phosphorylated
+        residue has been identified as His12 (numbering from rat enzyme) and Asp258 protonates the leaving
+        group of the substrate. The second step involves the attack of water on the phosphorous atom to
+        release inorganic phosphate from the enzyme, in such a way as to return to the original configuration
+        of the phosphorous atom. Crystal structures with vanadate, a believed transition state analogue,
+        indicate that positively charged His and Arg residues in the active site are involved in correctly
+        orientating the phosphate group and transition state stabilisation.
+      notes: M-CSA entry 454, mechanism 2; M-CSA cites PMID:19836403, PMID:23565972, PMID:8168503, PMID:8334986,
+        PMID:9164457; step 1
+  - subject: arg11
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg11 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/454/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 454, mechanism 2; M-CSA cites PMID:19836403, PMID:23565972, PMID:8168503, PMID:8334986,
+        PMID:9164457; M-CSA catalytic-residue roles for Arg11
+  - subject: his12
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His12 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/454/
+      snippet: covalent catalysis
+      notes: M-CSA entry 454, mechanism 2; M-CSA cites PMID:19836403, PMID:23565972, PMID:8168503, PMID:8334986,
+        PMID:9164457; M-CSA catalytic-residue roles for His12
+  - subject: arg15
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg15 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/454/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 454, mechanism 2; M-CSA cites PMID:19836403, PMID:23565972, PMID:8168503, PMID:8334986,
+        PMID:9164457; M-CSA catalytic-residue roles for Arg15
+  - subject: arg79
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg79 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/454/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 454, mechanism 2; M-CSA cites PMID:19836403, PMID:23565972, PMID:8168503, PMID:8334986,
+        PMID:9164457; M-CSA catalytic-residue roles for Arg79
+  - subject: his257
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His257 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/454/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 454, mechanism 2; M-CSA cites PMID:19836403, PMID:23565972, PMID:8168503, PMID:8334986,
+        PMID:9164457; M-CSA catalytic-residue roles for His257
+  - subject: asp258
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp258 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/454/
+      snippet: electrostatic stabiliser, proton shuttle (general acid/base)
+      notes: M-CSA entry 454, mechanism 2; M-CSA cites PMID:19836403, PMID:23565972, PMID:8168503, PMID:8334986,
+        PMID:9164457; M-CSA catalytic-residue roles for Asp258
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/454/
+      snippet: Hydrolysis is effected in two steps, starting with a nucleophilic attack of the enzyme
+        on the phosphate group of the substrate to produce an enzyme-phosphate adduct. The phosphorylated
+        residue has been identified as His12 (numbering from rat enzyme) and Asp258 protonates the leaving
+        group of the substrate. The second step involves the attack of water on the phosphorous atom to
+        release inorganic ph
+      notes: M-CSA entry 454, mechanism 2; M-CSA cites PMID:19836403, PMID:23565972, PMID:8168503, PMID:8334986,
+        PMID:9164457; CATH domain 3.40.50.1240 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/454/
+      snippet: Hydrolysis is effected in two steps, starting with a nucleophilic attack of the enzyme
+        on the phosphate group of the substrate to produce an enzyme-phosphate adduct. The phosphorylated
+        residue has been identified as His12 (numbering from rat enzyme) and Asp258 protonates the leaving
+        group of the substrate. The second step involves the attack of water on the phosphorous atom to
+        release inorganic ph
+      notes: M-CSA entry 454, mechanism 2; M-CSA cites PMID:19836403, PMID:23565972, PMID:8168503, PMID:8334986,
+        PMID:9164457; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/454/
+      snippet: Hydrolysis is effected in two steps, starting with a nucleophilic attack of the enzyme
+        on the phosphate group of the substrate to produce an enzyme-phosphate adduct. The phosphorylated
+        residue has been identified as His12 (numbering from rat enzyme) and Asp258 protonates the leaving
+        group of the substrate. The second step involves the attack of water on the phosphorous atom to
+        release inorganic ph
+      notes: M-CSA entry 454, mechanism 2; M-CSA cites PMID:19836403, PMID:23565972, PMID:8168503, PMID:8334986,
+        PMID:9164457; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/454/
+      snippet: Hydrolysis is effected in two steps, starting with a nucleophilic attack of the enzyme
+        on the phosphate group of the substrate to produce an enzyme-phosphate adduct. The phosphorylated
+        residue has been identified as His12 (numbering from rat enzyme) and Asp258 protonates the leaving
+        group of the substrate. The second step involves the attack of water on the phosphorous atom to
+        release inorganic ph
+      notes: M-CSA entry 454, mechanism 2; M-CSA cites PMID:19836403, PMID:23565972, PMID:8168503, PMID:8334986,
+        PMID:9164457; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/454/
+      snippet: Hydrolysis is effected in two steps, starting with a nucleophilic attack of the enzyme
+        on the phosphate group of the substrate to produce an enzyme-phosphate adduct. The phosphorylated
+        residue has been identified as His12 (numbering from rat enzyme) and Asp258 protonates the leaving
+        group of the substrate. The second step involves the attack of water on the phosphorous atom to
+        release inorganic ph
+      notes: M-CSA entry 454, mechanism 2; M-CSA cites PMID:19836403, PMID:23565972, PMID:8168503, PMID:8334986,
+        PMID:9164457; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/454/
+      snippet: Hydrolysis is effected in two steps, starting with a nucleophilic attack of the enzyme
+        on the phosphate group of the substrate to produce an enzyme-phosphate adduct. The phosphorylated
+        residue has been identified as His12 (numbering from rat enzyme) and Asp258 protonates the leaving
+        group of the substrate. The second step involves the attack of water on the phosphorous atom to
+        release inorganic ph
+      notes: M-CSA entry 454, mechanism 2; M-CSA cites PMID:19836403, PMID:23565972, PMID:8168503, PMID:8334986,
+        PMID:9164457; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (14 evidence-backed edges) transcribed from M-CSA entry 454;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

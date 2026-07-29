@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.24.39
 - CHEBI:15377
@@ -165,4 +165,221 @@ definitions:
       Deuterolysin is a zinc metalloproteinase, part of a novel family of zinc metalloproteinases which have an Asp residue as the third zinc binding ligand in addition to the general sequence HEXXH found in all zinc metalloproteinases. It shows a preference for basic protein substrates such as histones, and is of particular importance in the Japanese fermentation industry.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of deuterolysin
+  description: Mechanism transcribed from M-CSA entry 596. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering only — no unique offset to the record's reference sequence could
+    be verified, so no UniProt position is asserted.
+  nodes:
+  - node_id: tyr106
+    label: catalytic Tyr106 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P46076
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his128
+    label: catalytic His128 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P46076
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu129
+    label: catalytic Glu129 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P46076
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his132
+    label: catalytic His132 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P46076
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp143
+    label: catalytic Asp143 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P46076
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: Asn-Gln
+    node_type: CHEMICAL
+    grounding: CHEBI:73421
+  - node_id: product0
+    label: L-asparagine
+    node_type: CHEMICAL
+    grounding: CHEBI:17196
+  - node_id: product1
+    label: L-glutamine
+    node_type: CHEMICAL
+    grounding: CHEBI:18050
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: Glu 129 and Zn together act to activate a water molecule so that it can act as a nucleophile
+      to attack the peptide substrate. This forms a tetrahedral intermediate, stabilised by proton donation
+      by Tyr 106, which then collapses to release the products.
+  - node_id: active_site
+    label: deuterolysin catalytic site
+    node_type: MOTIF
+    grounding: MCSA:596
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.390.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.390.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: deuterolysin activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.24.39
+  edges:
+  - subject: tyr106
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr106 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/596/
+      snippet: Glu 129 and Zn together act to activate a water molecule so that it can act as a nucleophile
+        to attack the peptide substrate. This forms a tetrahedral intermediate, stabilised by proton donation
+        by Tyr 106, which then collapses to release the products.
+      notes: M-CSA entry 596, mechanism 1; M-CSA cites PMID:10446194, PMID:11679721; step 1
+  - subject: glu129
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu129 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/596/
+      snippet: Glu 129 and Zn together act to activate a water molecule so that it can act as a nucleophile
+        to attack the peptide substrate. This forms a tetrahedral intermediate, stabilised by proton donation
+        by Tyr 106, which then collapses to release the products.
+      notes: M-CSA entry 596, mechanism 1; M-CSA cites PMID:10446194, PMID:11679721; step 1
+  - subject: tyr106
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr106 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/596/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 596, mechanism 1; M-CSA cites PMID:10446194, PMID:11679721; M-CSA catalytic-residue
+        roles for Tyr106
+  - subject: his128
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His128 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/596/
+      snippet: metal ligand
+      notes: M-CSA entry 596, mechanism 1; M-CSA cites PMID:10446194, PMID:11679721; M-CSA catalytic-residue
+        roles for His128
+  - subject: glu129
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu129 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/596/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 596, mechanism 1; M-CSA cites PMID:10446194, PMID:11679721; M-CSA catalytic-residue
+        roles for Glu129
+  - subject: his132
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His132 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/596/
+      snippet: metal ligand
+      notes: M-CSA entry 596, mechanism 1; M-CSA cites PMID:10446194, PMID:11679721; M-CSA catalytic-residue
+        roles for His132
+  - subject: asp143
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp143 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/596/
+      snippet: metal ligand
+      notes: M-CSA entry 596, mechanism 1; M-CSA cites PMID:10446194, PMID:11679721; M-CSA catalytic-residue
+        roles for Asp143
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/596/
+      snippet: Glu 129 and Zn together act to activate a water molecule so that it can act as a nucleophile
+        to attack the peptide substrate. This forms a tetrahedral intermediate, stabilised by proton donation
+        by Tyr 106, which then collapses to release the products.
+      notes: M-CSA entry 596, mechanism 1; M-CSA cites PMID:10446194, PMID:11679721; CATH domain 3.40.390.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/596/
+      snippet: Glu 129 and Zn together act to activate a water molecule so that it can act as a nucleophile
+        to attack the peptide substrate. This forms a tetrahedral intermediate, stabilised by proton donation
+        by Tyr 106, which then collapses to release the products.
+      notes: M-CSA entry 596, mechanism 1; M-CSA cites PMID:10446194, PMID:11679721; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/596/
+      snippet: Glu 129 and Zn together act to activate a water molecule so that it can act as a nucleophile
+        to attack the peptide substrate. This forms a tetrahedral intermediate, stabilised by proton donation
+        by Tyr 106, which then collapses to release the products.
+      notes: M-CSA entry 596, mechanism 1; M-CSA cites PMID:10446194, PMID:11679721; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/596/
+      snippet: Glu 129 and Zn together act to activate a water molecule so that it can act as a nucleophile
+        to attack the peptide substrate. This forms a tetrahedral intermediate, stabilised by proton donation
+        by Tyr 106, which then collapses to release the products.
+      notes: M-CSA entry 596, mechanism 1; M-CSA cites PMID:10446194, PMID:11679721; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/596/
+      snippet: Glu 129 and Zn together act to activate a water molecule so that it can act as a nucleophile
+        to attack the peptide substrate. This forms a tetrahedral intermediate, stabilised by proton donation
+        by Tyr 106, which then collapses to release the products.
+      notes: M-CSA entry 596, mechanism 1; M-CSA cites PMID:10446194, PMID:11679721; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/596/
+      snippet: Glu 129 and Zn together act to activate a water molecule so that it can act as a nucleophile
+        to attack the peptide substrate. This forms a tetrahedral intermediate, stabilised by proton donation
+        by Tyr 106, which then collapses to release the products.
+      notes: M-CSA entry 596, mechanism 1; M-CSA cites PMID:10446194, PMID:11679721; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 596;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

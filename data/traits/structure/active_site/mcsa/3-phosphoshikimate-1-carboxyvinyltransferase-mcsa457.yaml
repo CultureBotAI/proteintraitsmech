@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.5.1.19
 - CHEBI:145989
@@ -400,4 +400,296 @@ definitions:
       Enolpyruvylshikimate 3-phosphate synthase (EPSP synthase) catalyses the sixth step in aromatic amino acid biosynthesis in bacteria, plants and some parasites. It forms EPSP from shikimate 3-phosphate and phospho-enolpyruvate in an addition/elimination reaction the proceeds through a tetrahedral intermediate. Because this biosynthetic pathway is absent in animals, the enzyme is a potential antibacterial target with knock-out strains being avirulent.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 3-phosphoshikimate 1-carboxyvinyltransferase
+  description: Mechanism transcribed from M-CSA entry 457. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: asp49
+    label: catalytic Asp49 (M-CSA/PDB numbering; UniProt residue 49)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A6D3
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asn94
+    label: catalytic Asn94 (M-CSA/PDB numbering; UniProt residue 94)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A6D3
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp313
+    label: catalytic Asp313 (M-CSA/PDB numbering; UniProt residue 313)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A6D3
+    description: 'M-CSA roles: electrostatic stabiliser, proton shuttle (general acid/base).'
+  - node_id: glu341
+    label: catalytic Glu341 (M-CSA/PDB numbering; UniProt residue 341)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A6D3
+    description: 'M-CSA roles: electrostatic stabiliser, metal ligand, proton shuttle (general acid/base).'
+  - node_id: his385
+    label: catalytic His385 (M-CSA/PDB numbering; UniProt residue 385)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A6D3
+    description: 'M-CSA roles: steric role.'
+  - node_id: arg386
+    label: catalytic Arg386 (M-CSA/PDB numbering; UniProt residue 386)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A6D3
+    description: 'M-CSA roles: transition state stabiliser.'
+  - node_id: lys411
+    label: catalytic Lys411 (M-CSA/PDB numbering; UniProt residue 411)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A6D3
+    description: 'M-CSA roles: steric role.'
+  - node_id: reactant0
+    label: 3-phosphonatoshikimate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:145989
+  - node_id: reactant1
+    label: phosphonatoenolpyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:58702
+  - node_id: product0
+    label: 5-O-(1-carboxylatovinyl)-3-phosphonatoshikimate
+    node_type: CHEMICAL
+    grounding: CHEBI:57701
+  - node_id: product1
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: An aspartate residue deprotonates the 5-OH of the shikimate 3-phosphate, activating the
+      oxygen to attack at the C2 of  phospho-enolpyruvate with concomitant protonation at C3 by Glu341.
+      A tetrahedral intermediate is formed. Glu341 is then thought to act as a general base at C3, initiating
+      the collapse of the intermediate, elimination of phosphate and the formation of enolpyruvylshikimate
+      3-phospha
+  - node_id: active_site
+    label: 3-phosphoshikimate 1-carboxyvinyltransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:457
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.65.10.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.65.10.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: 3-phosphoshikimate 1-carboxyvinyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.5.1.19
+  edges:
+  - subject: asp313
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp313 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/457/
+      snippet: "An aspartate residue deprotonates the 5-OH of the shikimate 3-phosphate, activating the\
+        \ oxygen to attack at the C2 of  phospho-enolpyruvate with concomitant protonation at C3 by Glu341.\
+        \ A tetrahedral intermediate is formed. Glu341 is then thought to act as a general base at C3,\
+        \ initiating the collapse of the intermediate, elimination of phosphate and the formation of enolpyruvylshikimate\
+        \ 3-phosphate.   
+<br/><br/>
+The most recent work suggests a hybrid acid/base- electrostatic\
+        \ reaction, with catalytic residues optimised for acid/base and electrostatic roles. Glu341 is\
+        \ thought to act as both a general acid, protonating C3 in the addition step, and a general base,\
+        \ deprotonating C3 in the elimination step while also stabilising the cationic intermediate. This\
+        \ is achieved by the formation of  an electrostatic 'sandwich' with Asp313."
+      notes: M-CSA entry 457, mechanism 2; M-CSA cites PMID:10601870, PMID:11171958, PMID:13129913, PMID:18325563,
+        PMID:19271774, PMID:22765168, PMID:22765279, PMID:26813771; step 1
+  - subject: glu341
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu341 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/457/
+      snippet: "An aspartate residue deprotonates the 5-OH of the shikimate 3-phosphate, activating the\
+        \ oxygen to attack at the C2 of  phospho-enolpyruvate with concomitant protonation at C3 by Glu341.\
+        \ A tetrahedral intermediate is formed. Glu341 is then thought to act as a general base at C3,\
+        \ initiating the collapse of the intermediate, elimination of phosphate and the formation of enolpyruvylshikimate\
+        \ 3-phosphate.   
+<br/><br/>
+The most recent work suggests a hybrid acid/base- electrostatic\
+        \ reaction, with catalytic residues optimised for acid/base and electrostatic roles. Glu341 is\
+        \ thought to act as both a general acid, protonating C3 in the addition step, and a general base,\
+        \ deprotonating C3 in the elimination step while also stabilising the cationic intermediate. This\
+        \ is achieved by the formation of  an electrostatic 'sandwich' with Asp313."
+      notes: M-CSA entry 457, mechanism 2; M-CSA cites PMID:10601870, PMID:11171958, PMID:13129913, PMID:18325563,
+        PMID:19271774, PMID:22765168, PMID:22765279, PMID:26813771; step 1
+  - subject: asp49
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp49 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/457/
+      snippet: metal ligand
+      notes: M-CSA entry 457, mechanism 2; M-CSA cites PMID:10601870, PMID:11171958, PMID:13129913, PMID:18325563,
+        PMID:19271774, PMID:22765168, PMID:22765279, PMID:26813771; M-CSA catalytic-residue roles for
+        Asp49
+  - subject: asn94
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn94 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/457/
+      snippet: metal ligand
+      notes: M-CSA entry 457, mechanism 2; M-CSA cites PMID:10601870, PMID:11171958, PMID:13129913, PMID:18325563,
+        PMID:19271774, PMID:22765168, PMID:22765279, PMID:26813771; M-CSA catalytic-residue roles for
+        Asn94
+  - subject: asp313
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp313 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/457/
+      snippet: electrostatic stabiliser, proton shuttle (general acid/base)
+      notes: M-CSA entry 457, mechanism 2; M-CSA cites PMID:10601870, PMID:11171958, PMID:13129913, PMID:18325563,
+        PMID:19271774, PMID:22765168, PMID:22765279, PMID:26813771; M-CSA catalytic-residue roles for
+        Asp313
+  - subject: glu341
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu341 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/457/
+      snippet: electrostatic stabiliser, metal ligand, proton shuttle (general acid/base)
+      notes: M-CSA entry 457, mechanism 2; M-CSA cites PMID:10601870, PMID:11171958, PMID:13129913, PMID:18325563,
+        PMID:19271774, PMID:22765168, PMID:22765279, PMID:26813771; M-CSA catalytic-residue roles for
+        Glu341
+  - subject: his385
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His385 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/457/
+      snippet: steric role
+      notes: M-CSA entry 457, mechanism 2; M-CSA cites PMID:10601870, PMID:11171958, PMID:13129913, PMID:18325563,
+        PMID:19271774, PMID:22765168, PMID:22765279, PMID:26813771; M-CSA catalytic-residue roles for
+        His385
+  - subject: arg386
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg386 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/457/
+      snippet: transition state stabiliser
+      notes: M-CSA entry 457, mechanism 2; M-CSA cites PMID:10601870, PMID:11171958, PMID:13129913, PMID:18325563,
+        PMID:19271774, PMID:22765168, PMID:22765279, PMID:26813771; M-CSA catalytic-residue roles for
+        Arg386
+  - subject: lys411
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys411 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/457/
+      snippet: steric role
+      notes: M-CSA entry 457, mechanism 2; M-CSA cites PMID:10601870, PMID:11171958, PMID:13129913, PMID:18325563,
+        PMID:19271774, PMID:22765168, PMID:22765279, PMID:26813771; M-CSA catalytic-residue roles for
+        Lys411
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/457/
+      snippet: An aspartate residue deprotonates the 5-OH of the shikimate 3-phosphate, activating the
+        oxygen to attack at the C2 of  phospho-enolpyruvate with concomitant protonation at C3 by Glu341.
+        A tetrahedral intermediate is formed. Glu341 is then thought to act as a general base at C3, initiating
+        the collapse of the intermediate, elimination of phosphate and the formation of enolpyruvylshikimate
+        3-phospha
+      notes: M-CSA entry 457, mechanism 2; M-CSA cites PMID:10601870, PMID:11171958, PMID:13129913, PMID:18325563,
+        PMID:19271774, PMID:22765168, PMID:22765279, PMID:26813771; CATH domain 3.65.10.10 assigned to
+        the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/457/
+      snippet: An aspartate residue deprotonates the 5-OH of the shikimate 3-phosphate, activating the
+        oxygen to attack at the C2 of  phospho-enolpyruvate with concomitant protonation at C3 by Glu341.
+        A tetrahedral intermediate is formed. Glu341 is then thought to act as a general base at C3, initiating
+        the collapse of the intermediate, elimination of phosphate and the formation of enolpyruvylshikimate
+        3-phospha
+      notes: M-CSA entry 457, mechanism 2; M-CSA cites PMID:10601870, PMID:11171958, PMID:13129913, PMID:18325563,
+        PMID:19271774, PMID:22765168, PMID:22765279, PMID:26813771; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/457/
+      snippet: An aspartate residue deprotonates the 5-OH of the shikimate 3-phosphate, activating the
+        oxygen to attack at the C2 of  phospho-enolpyruvate with concomitant protonation at C3 by Glu341.
+        A tetrahedral intermediate is formed. Glu341 is then thought to act as a general base at C3, initiating
+        the collapse of the intermediate, elimination of phosphate and the formation of enolpyruvylshikimate
+        3-phospha
+      notes: M-CSA entry 457, mechanism 2; M-CSA cites PMID:10601870, PMID:11171958, PMID:13129913, PMID:18325563,
+        PMID:19271774, PMID:22765168, PMID:22765279, PMID:26813771; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/457/
+      snippet: An aspartate residue deprotonates the 5-OH of the shikimate 3-phosphate, activating the
+        oxygen to attack at the C2 of  phospho-enolpyruvate with concomitant protonation at C3 by Glu341.
+        A tetrahedral intermediate is formed. Glu341 is then thought to act as a general base at C3, initiating
+        the collapse of the intermediate, elimination of phosphate and the formation of enolpyruvylshikimate
+        3-phospha
+      notes: M-CSA entry 457, mechanism 2; M-CSA cites PMID:10601870, PMID:11171958, PMID:13129913, PMID:18325563,
+        PMID:19271774, PMID:22765168, PMID:22765279, PMID:26813771; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/457/
+      snippet: An aspartate residue deprotonates the 5-OH of the shikimate 3-phosphate, activating the
+        oxygen to attack at the C2 of  phospho-enolpyruvate with concomitant protonation at C3 by Glu341.
+        A tetrahedral intermediate is formed. Glu341 is then thought to act as a general base at C3, initiating
+        the collapse of the intermediate, elimination of phosphate and the formation of enolpyruvylshikimate
+        3-phospha
+      notes: M-CSA entry 457, mechanism 2; M-CSA cites PMID:10601870, PMID:11171958, PMID:13129913, PMID:18325563,
+        PMID:19271774, PMID:22765168, PMID:22765279, PMID:26813771; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/457/
+      snippet: An aspartate residue deprotonates the 5-OH of the shikimate 3-phosphate, activating the
+        oxygen to attack at the C2 of  phospho-enolpyruvate with concomitant protonation at C3 by Glu341.
+        A tetrahedral intermediate is formed. Glu341 is then thought to act as a general base at C3, initiating
+        the collapse of the intermediate, elimination of phosphate and the formation of enolpyruvylshikimate
+        3-phospha
+      notes: M-CSA entry 457, mechanism 2; M-CSA cites PMID:10601870, PMID:11171958, PMID:13129913, PMID:18325563,
+        PMID:19271774, PMID:22765168, PMID:22765279, PMID:26813771; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 457;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

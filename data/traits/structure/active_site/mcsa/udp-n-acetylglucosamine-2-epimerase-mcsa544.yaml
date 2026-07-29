@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.1.3.14
 - CHEBI:57705
@@ -284,4 +284,212 @@ definitions:
       The non-hydrolysing bacterial UDP-N-acetylglucosamine 2-epimerase catalyses the conversion of UDP-N-acetylglucosamine to UDP-N-acetylmannosamine, an intermediate in the biosynthesis of several cell surface polysaccarides. The enzyme is allosterically regulated by its substrate, UDP-N-acetylglucosamine, a reaction feature specific to the bacterial form of the enzyme. The structure of the enzyme shows homology with the glycosyl transferases.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of UDP-N-acetylglucosamine 2-epimerase
+  description: Mechanism transcribed from M-CSA entry 544. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: asp95
+    label: catalytic Asp95 (M-CSA/PDB numbering; UniProt residue 95)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27828
+    description: 'M-CSA roles: electrostatic stabiliser, proton acceptor.'
+  - node_id: glu117
+    label: catalytic Glu117 (M-CSA/PDB numbering; UniProt residue 117)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27828
+    description: 'M-CSA roles: electrostatic stabiliser, proton shuttle (general acid/base).'
+  - node_id: glu131
+    label: catalytic Glu131 (M-CSA/PDB numbering; UniProt residue 131)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27828
+    description: 'M-CSA roles: electrostatic stabiliser, proton shuttle (general acid/base).'
+  - node_id: his213
+    label: catalytic His213 (M-CSA/PDB numbering; UniProt residue 213)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27828
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: arg215
+    label: catalytic Arg215 (M-CSA/PDB numbering; UniProt residue 215)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27828
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his246
+    label: catalytic His246 (M-CSA/PDB numbering; UniProt residue 246)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27828
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: UDP-N-acetyl-alpha-D-glucosamine(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57705
+  - node_id: product0
+    label: UDP-N-acetyl-alpha-D-mannosamine(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:68623
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: The binding of  UDP-N-acetylglucosamine to one subunit induces a conformationa change
+      across the dimer interface that converts the dimer partner to the catalytically active form. It
+      has been suggested that the anit-elimination occurs by an E2 character E1 mechanism, with the transition
+      state showing significant oxocarbenium ion character. His 213 is a good candidate for acting as
+      a general acid to
+  - node_id: active_site
+    label: UDP-N-acetylglucosamine 2-epimerase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:544
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.2000 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.2000
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: UDP-N-acetylglucosamine 2-epimerase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.1.3.14
+  edges:
+  - subject: his213
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His213 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/544/
+      snippet: The binding of  UDP-N-acetylglucosamine to one subunit induces a conformationa change across
+        the dimer interface that converts the dimer partner to the catalytically active form. It has been
+        suggested that the anit-elimination occurs by an E2 character E1 mechanism, with the transition
+        state showing significant oxocarbenium ion character. His 213 is a good candidate for acting as
+        a general acid to the departing UDP, generating an intermediate 2-acetamidoglucal. The subsequent
+        syn re-addition of UDP gives the UDP-N-acetylmannosamine product.
+      notes: M-CSA entry 544, mechanism 1; M-CSA cites PMID:11106477, PMID:15210128, PMID:15518580, PMID:18188181,
+        PMID:26980148; step 1
+  - subject: asp95
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp95 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/544/
+      snippet: electrostatic stabiliser, proton acceptor
+      notes: M-CSA entry 544, mechanism 1; M-CSA cites PMID:11106477, PMID:15210128, PMID:15518580, PMID:18188181,
+        PMID:26980148; M-CSA catalytic-residue roles for Asp95
+  - subject: glu117
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu117 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/544/
+      snippet: electrostatic stabiliser, proton shuttle (general acid/base)
+      notes: M-CSA entry 544, mechanism 1; M-CSA cites PMID:11106477, PMID:15210128, PMID:15518580, PMID:18188181,
+        PMID:26980148; M-CSA catalytic-residue roles for Glu117
+  - subject: glu131
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu131 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/544/
+      snippet: electrostatic stabiliser, proton shuttle (general acid/base)
+      notes: M-CSA entry 544, mechanism 1; M-CSA cites PMID:11106477, PMID:15210128, PMID:15518580, PMID:18188181,
+        PMID:26980148; M-CSA catalytic-residue roles for Glu131
+  - subject: his213
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His213 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/544/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 544, mechanism 1; M-CSA cites PMID:11106477, PMID:15210128, PMID:15518580, PMID:18188181,
+        PMID:26980148; M-CSA catalytic-residue roles for His213
+  - subject: arg215
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg215 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/544/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 544, mechanism 1; M-CSA cites PMID:11106477, PMID:15210128, PMID:15518580, PMID:18188181,
+        PMID:26980148; M-CSA catalytic-residue roles for Arg215
+  - subject: his246
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His246 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/544/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 544, mechanism 1; M-CSA cites PMID:11106477, PMID:15210128, PMID:15518580, PMID:18188181,
+        PMID:26980148; M-CSA catalytic-residue roles for His246
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/544/
+      snippet: The binding of  UDP-N-acetylglucosamine to one subunit induces a conformationa change across
+        the dimer interface that converts the dimer partner to the catalytically active form. It has been
+        suggested that the anit-elimination occurs by an E2 character E1 mechanism, with the transition
+        state showing significant oxocarbenium ion character. His 213 is a good candidate for acting as
+        a general acid to
+      notes: M-CSA entry 544, mechanism 1; M-CSA cites PMID:11106477, PMID:15210128, PMID:15518580, PMID:18188181,
+        PMID:26980148; CATH domain 3.40.50.2000 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/544/
+      snippet: The binding of  UDP-N-acetylglucosamine to one subunit induces a conformationa change across
+        the dimer interface that converts the dimer partner to the catalytically active form. It has been
+        suggested that the anit-elimination occurs by an E2 character E1 mechanism, with the transition
+        state showing significant oxocarbenium ion character. His 213 is a good candidate for acting as
+        a general acid to
+      notes: M-CSA entry 544, mechanism 1; M-CSA cites PMID:11106477, PMID:15210128, PMID:15518580, PMID:18188181,
+        PMID:26980148; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/544/
+      snippet: The binding of  UDP-N-acetylglucosamine to one subunit induces a conformationa change across
+        the dimer interface that converts the dimer partner to the catalytically active form. It has been
+        suggested that the anit-elimination occurs by an E2 character E1 mechanism, with the transition
+        state showing significant oxocarbenium ion character. His 213 is a good candidate for acting as
+        a general acid to
+      notes: M-CSA entry 544, mechanism 1; M-CSA cites PMID:11106477, PMID:15210128, PMID:15518580, PMID:18188181,
+        PMID:26980148; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/544/
+      snippet: The binding of  UDP-N-acetylglucosamine to one subunit induces a conformationa change across
+        the dimer interface that converts the dimer partner to the catalytically active form. It has been
+        suggested that the anit-elimination occurs by an E2 character E1 mechanism, with the transition
+        state showing significant oxocarbenium ion character. His 213 is a good candidate for acting as
+        a general acid to
+      notes: M-CSA entry 544, mechanism 1; M-CSA cites PMID:11106477, PMID:15210128, PMID:15518580, PMID:18188181,
+        PMID:26980148; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (11 evidence-backed edges) transcribed from M-CSA entry 544;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

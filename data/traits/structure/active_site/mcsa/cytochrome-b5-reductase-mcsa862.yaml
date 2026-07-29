@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.6.2.2
 - CHEBI:15378
@@ -278,4 +278,265 @@ definitions:
       NADH:cytochrome b5 reductase (CBR) serves as electron donor for cytochrome b5, a ubiquitous electron carrier, thus participating in a variety of metabolic pathways (including steroid biosynthesis, desaturation and elongation of fatty acids, P450-dependent reactions, methaemoglobin reduction, etc.).
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of cytochrome-b5 reductase
+  description: Mechanism transcribed from M-CSA entry 862. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: his49
+    label: catalytic His49 (M-CSA/PDB numbering; UniProt residue 49)
+    node_type: RESIDUE
+    grounding: UniProtKB:P83686
+    description: 'M-CSA roles: proton shuttle (general acid/base), single electron shuttle.'
+  - node_id: tyr65
+    label: catalytic Tyr65 (M-CSA/PDB numbering; UniProt residue 65)
+    node_type: RESIDUE
+    grounding: UniProtKB:P83686
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: thr66
+    label: catalytic Thr66 (M-CSA/PDB numbering; UniProt residue 66)
+    node_type: RESIDUE
+    grounding: UniProtKB:P83686
+    description: 'M-CSA roles: proton shuttle (general acid/base), single electron shuttle.'
+  - node_id: cys245
+    label: catalytic Cys245 (M-CSA/PDB numbering; UniProt residue 245)
+    node_type: RESIDUE
+    grounding: UniProtKB:P83686
+    description: 'M-CSA roles: alter redox potential.'
+  - node_id: reactant0
+    label: iron(3+)
+    node_type: CHEMICAL
+    grounding: CHEBI:29034
+  - node_id: reactant1
+    label: NADH(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+  - node_id: product0
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product1
+    label: NAD(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+  - node_id: product2
+    label: iron(2+)
+    node_type: CHEMICAL
+    grounding: CHEBI:29033
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: "<p>The binding of NADH induces domain motion. Thr66 moves close to the N5 atom of FAD\
+      \ upon domain orientation rearrangement and forms a hydrogen-bonding network from N5 to His49. This\
+      \ pathway is essential for the rapid proton emission from FAD and in the conversion from the blue\
+      \ to the red semiquinone forms.</p>
+<p>In the first step of the reaction, a hydride is transferred\
+      \ from NADH to the flavi"
+  - node_id: active_site
+    label: cytochrome-b5 reductase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:862
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.40.30.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.40.30.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: cytochrome-b5 reductase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.6.2.2
+  edges:
+  - subject: his49
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His49 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/862/
+      snippet: "<p>The binding of NADH induces domain motion. Thr66 moves close to the N5 atom of FAD\
+        \ upon domain orientation rearrangement and forms a hydrogen-bonding network from N5 to His49.\
+        \ This pathway is essential for the rapid proton emission from FAD and in the conversion from\
+        \ the blue to the red semiquinone forms.</p>
+<p>In the first step of the reaction, a hydride\
+        \ is transferred from NADH to the flavin cofactor. A single electron is then transferred to the\
+        \ b5 substrate (probably via the Thr66-His49 pathway). The product proton is then lost from the\
+        \ flavin, followed by a second single electron transfer. NAD+ is then released from the protein,\
+        \ regenerating the active site for another round of catalysis.</p>"
+      notes: M-CSA entry 862, mechanism 1; M-CSA cites PMID:12459552, PMID:15709757, PMID:23831226, PMID:28225078,
+        PMID:7893687; step 1
+  - subject: thr66
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Thr66 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/862/
+      snippet: "<p>The binding of NADH induces domain motion. Thr66 moves close to the N5 atom of FAD\
+        \ upon domain orientation rearrangement and forms a hydrogen-bonding network from N5 to His49.\
+        \ This pathway is essential for the rapid proton emission from FAD and in the conversion from\
+        \ the blue to the red semiquinone forms.</p>
+<p>In the first step of the reaction, a hydride\
+        \ is transferred from NADH to the flavin cofactor. A single electron is then transferred to the\
+        \ b5 substrate (probably via the Thr66-His49 pathway). The product proton is then lost from the\
+        \ flavin, followed by a second single electron transfer. NAD+ is then released from the protein,\
+        \ regenerating the active site for another round of catalysis.</p>"
+      notes: M-CSA entry 862, mechanism 1; M-CSA cites PMID:12459552, PMID:15709757, PMID:23831226, PMID:28225078,
+        PMID:7893687; step 1
+  - subject: his49
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His49 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/862/
+      snippet: proton shuttle (general acid/base), single electron shuttle
+      notes: M-CSA entry 862, mechanism 1; M-CSA cites PMID:12459552, PMID:15709757, PMID:23831226, PMID:28225078,
+        PMID:7893687; M-CSA catalytic-residue roles for His49
+  - subject: tyr65
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr65 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/862/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 862, mechanism 1; M-CSA cites PMID:12459552, PMID:15709757, PMID:23831226, PMID:28225078,
+        PMID:7893687; M-CSA catalytic-residue roles for Tyr65
+  - subject: thr66
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr66 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/862/
+      snippet: proton shuttle (general acid/base), single electron shuttle
+      notes: M-CSA entry 862, mechanism 1; M-CSA cites PMID:12459552, PMID:15709757, PMID:23831226, PMID:28225078,
+        PMID:7893687; M-CSA catalytic-residue roles for Thr66
+  - subject: cys245
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys245 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/862/
+      snippet: alter redox potential
+      notes: M-CSA entry 862, mechanism 1; M-CSA cites PMID:12459552, PMID:15709757, PMID:23831226, PMID:28225078,
+        PMID:7893687; M-CSA catalytic-residue roles for Cys245
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/862/
+      snippet: "<p>The binding of NADH induces domain motion. Thr66 moves close to the N5 atom of FAD\
+        \ upon domain orientation rearrangement and forms a hydrogen-bonding network from N5 to His49.\
+        \ This pathway is essential for the rapid proton emission from FAD and in the conversion from\
+        \ the blue to the red semiquinone forms.</p>
+<p>In the first step of the reaction, a hydride\
+        \ is transferred from NADH to the flavi"
+      notes: M-CSA entry 862, mechanism 1; M-CSA cites PMID:12459552, PMID:15709757, PMID:23831226, PMID:28225078,
+        PMID:7893687; CATH domain 2.40.30.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/862/
+      snippet: "<p>The binding of NADH induces domain motion. Thr66 moves close to the N5 atom of FAD\
+        \ upon domain orientation rearrangement and forms a hydrogen-bonding network from N5 to His49.\
+        \ This pathway is essential for the rapid proton emission from FAD and in the conversion from\
+        \ the blue to the red semiquinone forms.</p>
+<p>In the first step of the reaction, a hydride\
+        \ is transferred from NADH to the flavi"
+      notes: M-CSA entry 862, mechanism 1; M-CSA cites PMID:12459552, PMID:15709757, PMID:23831226, PMID:28225078,
+        PMID:7893687; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/862/
+      snippet: "<p>The binding of NADH induces domain motion. Thr66 moves close to the N5 atom of FAD\
+        \ upon domain orientation rearrangement and forms a hydrogen-bonding network from N5 to His49.\
+        \ This pathway is essential for the rapid proton emission from FAD and in the conversion from\
+        \ the blue to the red semiquinone forms.</p>
+<p>In the first step of the reaction, a hydride\
+        \ is transferred from NADH to the flavi"
+      notes: M-CSA entry 862, mechanism 1; M-CSA cites PMID:12459552, PMID:15709757, PMID:23831226, PMID:28225078,
+        PMID:7893687; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/862/
+      snippet: "<p>The binding of NADH induces domain motion. Thr66 moves close to the N5 atom of FAD\
+        \ upon domain orientation rearrangement and forms a hydrogen-bonding network from N5 to His49.\
+        \ This pathway is essential for the rapid proton emission from FAD and in the conversion from\
+        \ the blue to the red semiquinone forms.</p>
+<p>In the first step of the reaction, a hydride\
+        \ is transferred from NADH to the flavi"
+      notes: M-CSA entry 862, mechanism 1; M-CSA cites PMID:12459552, PMID:15709757, PMID:23831226, PMID:28225078,
+        PMID:7893687; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/862/
+      snippet: "<p>The binding of NADH induces domain motion. Thr66 moves close to the N5 atom of FAD\
+        \ upon domain orientation rearrangement and forms a hydrogen-bonding network from N5 to His49.\
+        \ This pathway is essential for the rapid proton emission from FAD and in the conversion from\
+        \ the blue to the red semiquinone forms.</p>
+<p>In the first step of the reaction, a hydride\
+        \ is transferred from NADH to the flavi"
+      notes: M-CSA entry 862, mechanism 1; M-CSA cites PMID:12459552, PMID:15709757, PMID:23831226, PMID:28225078,
+        PMID:7893687; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/862/
+      snippet: "<p>The binding of NADH induces domain motion. Thr66 moves close to the N5 atom of FAD\
+        \ upon domain orientation rearrangement and forms a hydrogen-bonding network from N5 to His49.\
+        \ This pathway is essential for the rapid proton emission from FAD and in the conversion from\
+        \ the blue to the red semiquinone forms.</p>
+<p>In the first step of the reaction, a hydride\
+        \ is transferred from NADH to the flavi"
+      notes: M-CSA entry 862, mechanism 1; M-CSA cites PMID:12459552, PMID:15709757, PMID:23831226, PMID:28225078,
+        PMID:7893687; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/862/
+      snippet: "<p>The binding of NADH induces domain motion. Thr66 moves close to the N5 atom of FAD\
+        \ upon domain orientation rearrangement and forms a hydrogen-bonding network from N5 to His49.\
+        \ This pathway is essential for the rapid proton emission from FAD and in the conversion from\
+        \ the blue to the red semiquinone forms.</p>
+<p>In the first step of the reaction, a hydride\
+        \ is transferred from NADH to the flavi"
+      notes: M-CSA entry 862, mechanism 1; M-CSA cites PMID:12459552, PMID:15709757, PMID:23831226, PMID:28225078,
+        PMID:7893687; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 862;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.3.1.117
 - CHEBI:57292
@@ -182,4 +182,225 @@ definitions:
       2,3,4,5-tetrahydropyridine-2,6-dicarboxylate N-succinyltransferase (also known as tetrahydrodipicolinate N-succinyltransferase or DapD) is part of the succinyl route of of lysine/diaminopimelic acid (DAP) biosynthesis. DAP biosynthesis is one of the two lysine biosynthesis pathways that are known to have evolved.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 2,3,4,5-tetrahydropyridine-2,6-dicarboxylate N-succinyltransferase
+  description: Mechanism transcribed from M-CSA entry 932. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: asp141
+    label: catalytic Asp141 (M-CSA/PDB numbering; UniProt residue 141)
+    node_type: RESIDUE
+    grounding: UniProtKB:P56220
+    description: 'M-CSA roles: covalent catalysis.'
+  - node_id: gly166
+    label: catalytic Gly166 (M-CSA/PDB numbering; UniProt residue 166)
+    node_type: RESIDUE
+    grounding: UniProtKB:P56220
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu189
+    label: catalytic Glu189 (M-CSA/PDB numbering; UniProt residue 189)
+    node_type: RESIDUE
+    grounding: UniProtKB:P56220
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: succinyl-CoA(5-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57292
+  - node_id: reactant1
+    label: (S)-2,3,4,5-tetrahydrodipicolinate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:16845
+  - node_id: reactant2
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: coenzyme A(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+  - node_id: product1
+    label: L-2-succinylamino-6-oxoheptanedioate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:15685
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: The mechanism of this protein is still unresolved, with some debate as to the exact role
+      of Asp141A. It catalyses the conversion of the cyclic tetrahydrodipicolinate (THDP) into the acyclic
+      compound N-succinyl L-2-amino-6-oxopimelate using succinyl-CoA. It is known to be activated by divalent
+      metal ions, but it is still unclear if these are catalytic or not. A mechanism has been postulated
+      where i
+  - node_id: active_site
+    label: 2,3,4,5-tetrahydropyridine-2,6-dicarboxylate N-succinyltransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:932
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.160.10.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.160.10.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: 2,3,4,5-tetrahydropyridine-2,6-dicarboxylate N-succinyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.3.1.117
+  edges:
+  - subject: asp141
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp141 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/932/
+      snippet: "The mechanism of this protein is still unresolved, with some debate as to the exact role\
+        \ of Asp141A. It catalyses the conversion of the cyclic tetrahydrodipicolinate (THDP) into the\
+        \ acyclic compound N-succinyl L-2-amino-6-oxopimelate using succinyl-CoA. It is known to be activated\
+        \ by divalent metal ions, but it is still unclear if these are catalytic or not. A mechanism has\
+        \ been postulated where in a first step of the reaction succinyl-CoA delivers the succinyl group\
+        \ to the active site residue Asp141, which would become succinylated by
+forming an anhydride\
+        \ species. In a second step, the succinyl group is transferred onto the substrate THDP. It is\
+        \ also unclear whether the cyclic substrate THDP is hydrolysed before or concomitant with the\
+        \ transfer of the succinyl group."
+      notes: M-CSA entry 932, mechanism 1; M-CSA cites PMID:11910040, PMID:19394346, PMID:22359568, PMID:9671504;
+        step 1
+  - subject: asp141
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp141 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/932/
+      snippet: covalent catalysis
+      notes: M-CSA entry 932, mechanism 1; M-CSA cites PMID:11910040, PMID:19394346, PMID:22359568, PMID:9671504;
+        M-CSA catalytic-residue roles for Asp141
+  - subject: gly166
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly166 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/932/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 932, mechanism 1; M-CSA cites PMID:11910040, PMID:19394346, PMID:22359568, PMID:9671504;
+        M-CSA catalytic-residue roles for Gly166
+  - subject: glu189
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu189 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/932/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 932, mechanism 1; M-CSA cites PMID:11910040, PMID:19394346, PMID:22359568, PMID:9671504;
+        M-CSA catalytic-residue roles for Glu189
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/932/
+      snippet: The mechanism of this protein is still unresolved, with some debate as to the exact role
+        of Asp141A. It catalyses the conversion of the cyclic tetrahydrodipicolinate (THDP) into the acyclic
+        compound N-succinyl L-2-amino-6-oxopimelate using succinyl-CoA. It is known to be activated by
+        divalent metal ions, but it is still unclear if these are catalytic or not. A mechanism has been
+        postulated where i
+      notes: M-CSA entry 932, mechanism 1; M-CSA cites PMID:11910040, PMID:19394346, PMID:22359568, PMID:9671504;
+        CATH domain 2.160.10.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/932/
+      snippet: The mechanism of this protein is still unresolved, with some debate as to the exact role
+        of Asp141A. It catalyses the conversion of the cyclic tetrahydrodipicolinate (THDP) into the acyclic
+        compound N-succinyl L-2-amino-6-oxopimelate using succinyl-CoA. It is known to be activated by
+        divalent metal ions, but it is still unclear if these are catalytic or not. A mechanism has been
+        postulated where i
+      notes: M-CSA entry 932, mechanism 1; M-CSA cites PMID:11910040, PMID:19394346, PMID:22359568, PMID:9671504;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/932/
+      snippet: The mechanism of this protein is still unresolved, with some debate as to the exact role
+        of Asp141A. It catalyses the conversion of the cyclic tetrahydrodipicolinate (THDP) into the acyclic
+        compound N-succinyl L-2-amino-6-oxopimelate using succinyl-CoA. It is known to be activated by
+        divalent metal ions, but it is still unclear if these are catalytic or not. A mechanism has been
+        postulated where i
+      notes: M-CSA entry 932, mechanism 1; M-CSA cites PMID:11910040, PMID:19394346, PMID:22359568, PMID:9671504;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/932/
+      snippet: The mechanism of this protein is still unresolved, with some debate as to the exact role
+        of Asp141A. It catalyses the conversion of the cyclic tetrahydrodipicolinate (THDP) into the acyclic
+        compound N-succinyl L-2-amino-6-oxopimelate using succinyl-CoA. It is known to be activated by
+        divalent metal ions, but it is still unclear if these are catalytic or not. A mechanism has been
+        postulated where i
+      notes: M-CSA entry 932, mechanism 1; M-CSA cites PMID:11910040, PMID:19394346, PMID:22359568, PMID:9671504;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/932/
+      snippet: The mechanism of this protein is still unresolved, with some debate as to the exact role
+        of Asp141A. It catalyses the conversion of the cyclic tetrahydrodipicolinate (THDP) into the acyclic
+        compound N-succinyl L-2-amino-6-oxopimelate using succinyl-CoA. It is known to be activated by
+        divalent metal ions, but it is still unclear if these are catalytic or not. A mechanism has been
+        postulated where i
+      notes: M-CSA entry 932, mechanism 1; M-CSA cites PMID:11910040, PMID:19394346, PMID:22359568, PMID:9671504;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/932/
+      snippet: The mechanism of this protein is still unresolved, with some debate as to the exact role
+        of Asp141A. It catalyses the conversion of the cyclic tetrahydrodipicolinate (THDP) into the acyclic
+        compound N-succinyl L-2-amino-6-oxopimelate using succinyl-CoA. It is known to be activated by
+        divalent metal ions, but it is still unclear if these are catalytic or not. A mechanism has been
+        postulated where i
+      notes: M-CSA entry 932, mechanism 1; M-CSA cites PMID:11910040, PMID:19394346, PMID:22359568, PMID:9671504;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/932/
+      snippet: The mechanism of this protein is still unresolved, with some debate as to the exact role
+        of Asp141A. It catalyses the conversion of the cyclic tetrahydrodipicolinate (THDP) into the acyclic
+        compound N-succinyl L-2-amino-6-oxopimelate using succinyl-CoA. It is known to be activated by
+        divalent metal ions, but it is still unclear if these are catalytic or not. A mechanism has been
+        postulated where i
+      notes: M-CSA entry 932, mechanism 1; M-CSA cites PMID:11910040, PMID:19394346, PMID:22359568, PMID:9671504;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (11 evidence-backed edges) transcribed from M-CSA entry 932;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

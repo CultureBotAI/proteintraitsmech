@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.4.2.9
 - CHEBI:33019
@@ -230,4 +230,184 @@ definitions:
       Catalyses the conversion of uracil and 5-phospho-alpha-D-ribose 1-diphosphate (PRPP) to UMP and diphosphate.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of uracil phosphoribosyltransferase
+  description: Mechanism transcribed from M-CSA entry 420. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: arg137
+    label: catalytic Arg137 (M-CSA/PDB numbering; UniProt residue 137)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q26998
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: thr141
+    label: catalytic Thr141 (M-CSA/PDB numbering; UniProt residue 141)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q26998
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp235
+    label: catalytic Asp235 (M-CSA/PDB numbering; UniProt residue 235)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q26998
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp238
+    label: catalytic Asp238 (M-CSA/PDB numbering; UniProt residue 238)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q26998
+    description: 'M-CSA roles: modifies pKa.'
+  - node_id: reactant0
+    label: diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+  - node_id: reactant1
+    label: uridine 5'-monophosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57865
+  - node_id: product0
+    label: uracil
+    node_type: CHEMICAL
+    grounding: CHEBI:17568
+  - node_id: product1
+    label: 5-O-phosphonato-alpha-D-ribofuranosyl diphosphate(5-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58017
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: A phosphoribosyl group is transferred from alpha‐d‐5‐phosphoribosyl‐1‐pyrophosphate (PRPP)
+      to the N1 nitrogen of uracil, resulting in the formation of uridine‐5‐monophosphate (UMP) and pyrophosphate
+      (PPi). The inferred transition state is an oxocarbonium species.
+  - node_id: active_site
+    label: uracil phosphoribosyltransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:420
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.2020 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.2020
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: uracil phosphoribosyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.4.2.9
+  edges:
+  - subject: arg137
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg137 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/420/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 420, mechanism 2; M-CSA cites PMID:11773618, PMID:9628859; M-CSA catalytic-residue
+        roles for Arg137
+  - subject: thr141
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr141 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/420/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 420, mechanism 2; M-CSA cites PMID:11773618, PMID:9628859; M-CSA catalytic-residue
+        roles for Thr141
+  - subject: asp235
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp235 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/420/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 420, mechanism 2; M-CSA cites PMID:11773618, PMID:9628859; M-CSA catalytic-residue
+        roles for Asp235
+  - subject: asp238
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp238 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/420/
+      snippet: modifies pKa
+      notes: M-CSA entry 420, mechanism 2; M-CSA cites PMID:11773618, PMID:9628859; M-CSA catalytic-residue
+        roles for Asp238
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/420/
+      snippet: A phosphoribosyl group is transferred from alpha‐d‐5‐phosphoribosyl‐1‐pyrophosphate (PRPP)
+        to the N1 nitrogen of uracil, resulting in the formation of uridine‐5‐monophosphate (UMP) and
+        pyrophosphate (PPi). The inferred transition state is an oxocarbonium species.
+      notes: M-CSA entry 420, mechanism 2; M-CSA cites PMID:11773618, PMID:9628859; CATH domain 3.40.50.2020
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/420/
+      snippet: A phosphoribosyl group is transferred from alpha‐d‐5‐phosphoribosyl‐1‐pyrophosphate (PRPP)
+        to the N1 nitrogen of uracil, resulting in the formation of uridine‐5‐monophosphate (UMP) and
+        pyrophosphate (PPi). The inferred transition state is an oxocarbonium species.
+      notes: M-CSA entry 420, mechanism 2; M-CSA cites PMID:11773618, PMID:9628859; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/420/
+      snippet: A phosphoribosyl group is transferred from alpha‐d‐5‐phosphoribosyl‐1‐pyrophosphate (PRPP)
+        to the N1 nitrogen of uracil, resulting in the formation of uridine‐5‐monophosphate (UMP) and
+        pyrophosphate (PPi). The inferred transition state is an oxocarbonium species.
+      notes: M-CSA entry 420, mechanism 2; M-CSA cites PMID:11773618, PMID:9628859; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/420/
+      snippet: A phosphoribosyl group is transferred from alpha‐d‐5‐phosphoribosyl‐1‐pyrophosphate (PRPP)
+        to the N1 nitrogen of uracil, resulting in the formation of uridine‐5‐monophosphate (UMP) and
+        pyrophosphate (PPi). The inferred transition state is an oxocarbonium species.
+      notes: M-CSA entry 420, mechanism 2; M-CSA cites PMID:11773618, PMID:9628859; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/420/
+      snippet: A phosphoribosyl group is transferred from alpha‐d‐5‐phosphoribosyl‐1‐pyrophosphate (PRPP)
+        to the N1 nitrogen of uracil, resulting in the formation of uridine‐5‐monophosphate (UMP) and
+        pyrophosphate (PPi). The inferred transition state is an oxocarbonium species.
+      notes: M-CSA entry 420, mechanism 2; M-CSA cites PMID:11773618, PMID:9628859; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/420/
+      snippet: A phosphoribosyl group is transferred from alpha‐d‐5‐phosphoribosyl‐1‐pyrophosphate (PRPP)
+        to the N1 nitrogen of uracil, resulting in the formation of uridine‐5‐monophosphate (UMP) and
+        pyrophosphate (PPi). The inferred transition state is an oxocarbonium species.
+      notes: M-CSA entry 420, mechanism 2; M-CSA cites PMID:11773618, PMID:9628859; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (10 evidence-backed edges) transcribed from M-CSA entry 420;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

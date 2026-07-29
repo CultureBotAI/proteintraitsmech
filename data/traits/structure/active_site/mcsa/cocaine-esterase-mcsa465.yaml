@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.1.84
 - CHEBI:60056
@@ -362,4 +362,443 @@ definitions:
       Cocaine esterase (CocE) is from a Rhodococcus strain that lives in the soil of the cocaine producing plant Erythroxylum coca, which is able to use cocaine as its sole carbon and nitrogen source for growth. CocE hydrolyses cocaine to benzoate and ecgonine methyl ester. Also efficiently hydrolyses cocaethylene, a more potent cocaine metabolite that has been observed in patients who concurrently abuse cocaine and alcohol. Is able to prevent cocaine-induced convulsions and lethality in rat. Hence, CocE is of interest as a cocaine antagonist in acute overdose cases. CocE belongs to the alpha/beta hydrolase fold superfamily, specifically the CocE/Serine esterase Family. The amino acid sequence of cocaine esterase has a region of similarity with the active serine consensus of X-prolyl dipeptidyl aminopeptidases, suggesting that the cocaine esterase is a serine esterase.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of cocaine esterase
+  description: Mechanism transcribed from M-CSA entry 465. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: tyr44
+    label: catalytic Tyr44 (M-CSA/PDB numbering; UniProt residue 44)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9L9D7
+    description: 'M-CSA roles: transition state stabiliser.'
+  - node_id: ser117
+    label: catalytic Ser117 (M-CSA/PDB numbering; UniProt residue 117)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9L9D7
+    description: 'M-CSA roles: covalent catalysis, proton shuttle (general acid/base).'
+  - node_id: tyr118
+    label: catalytic Tyr118 (M-CSA/PDB numbering; UniProt residue 118)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9L9D7
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: trp166
+    label: catalytic Trp166 (M-CSA/PDB numbering; UniProt residue 166)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9L9D7
+    description: 'M-CSA roles: activator.'
+  - node_id: asp259
+    label: catalytic Asp259 (M-CSA/PDB numbering; UniProt residue 259)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9L9D7
+    description: 'M-CSA roles: activator, electrostatic stabiliser.'
+  - node_id: his287
+    label: catalytic His287 (M-CSA/PDB numbering; UniProt residue 287)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9L9D7
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: cocaine(1+)
+    node_type: CHEMICAL
+    grounding: CHEBI:60056
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: benzoate
+    node_type: CHEMICAL
+    grounding: CHEBI:16150
+  - node_id: product1
+    label: ecgoninium methyl ester(1+)
+    node_type: CHEMICAL
+    grounding: CHEBI:59908
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: "CocE is a serine hydrolase employing a chymotrypsin-like Ser-His-Asp catalytic triad\
+      \ and mechanism; the residues are Ser 117, His 287 and Asp 259. The oxyanion hole is formed by Tyr\
+      \ 44 and Tyr 118 main chain. The mechanism occurs as follows:
+<ol>
+<li>Asp 259 hydrogen bonds\
+      \ to His 287, increasing His 287 pKa. His 287 can then activate Ser 117 as a nucleophile by deprotonation.</li>\
+      
+<li>Trp 166 h"
+  - node_id: active_site
+    label: cocaine esterase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:465
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1820 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1820
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: cocaine esterase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.1.84
+  edges:
+  - subject: tyr44
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr44 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/465/
+      snippet: "CocE is a serine hydrolase employing a chymotrypsin-like Ser-His-Asp catalytic triad and\
+        \ mechanism; the residues are Ser 117, His 287 and Asp 259. The oxyanion hole is formed by Tyr\
+        \ 44 and Tyr 118 main chain. The mechanism occurs as follows:
+<ol>
+<li>Asp 259 hydrogen\
+        \ bonds to His 287, increasing His 287 pKa. His 287 can then activate Ser 117 as a nucleophile\
+        \ by deprotonation.</li>
+<li>Trp 166 hydrogen bonds to Tyr 44, increasing Tyr 44 pKa. Tyr 44\
+        \ can then activate the substrate ester bond as an electrophile, along with the main chain amide\
+        \ of Tyr 117 and the helix dipole.</li>
+<li>Ser 117 attacks the carbon of the substrate benzoyl\
+        \ ester. A tetrahedral transition state is formed. Tyr 44 and Tyr 117 stabilise the charge on\
+        \ this transition state.</li>
+<li>The transition state collapses, acylating Ser 117 with a\
+        \ benzoyl group. The hydroxyl leaving group is presumably protonated by the proton belonging to\
+        \ Ser 117.</li>
+<li>Deacylation of the acyl-enzyme is by hydrolysis, the catalytic residues\
+        \ playing the same roles as they did in the acylation steps.</li>
+</ol>"
+      notes: M-CSA entry 465, mechanism 2; M-CSA cites PMID:11742345, PMID:12369817, PMID:16011362, PMID:17131989;
+        step 1
+  - subject: ser117
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser117 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/465/
+      snippet: "CocE is a serine hydrolase employing a chymotrypsin-like Ser-His-Asp catalytic triad and\
+        \ mechanism; the residues are Ser 117, His 287 and Asp 259. The oxyanion hole is formed by Tyr\
+        \ 44 and Tyr 118 main chain. The mechanism occurs as follows:
+<ol>
+<li>Asp 259 hydrogen\
+        \ bonds to His 287, increasing His 287 pKa. His 287 can then activate Ser 117 as a nucleophile\
+        \ by deprotonation.</li>
+<li>Trp 166 hydrogen bonds to Tyr 44, increasing Tyr 44 pKa. Tyr 44\
+        \ can then activate the substrate ester bond as an electrophile, along with the main chain amide\
+        \ of Tyr 117 and the helix dipole.</li>
+<li>Ser 117 attacks the carbon of the substrate benzoyl\
+        \ ester. A tetrahedral transition state is formed. Tyr 44 and Tyr 117 stabilise the charge on\
+        \ this transition state.</li>
+<li>The transition state collapses, acylating Ser 117 with a\
+        \ benzoyl group. The hydroxyl leaving group is presumably protonated by the proton belonging to\
+        \ Ser 117.</li>
+<li>Deacylation of the acyl-enzyme is by hydrolysis, the catalytic residues\
+        \ playing the same roles as they did in the acylation steps.</li>
+</ol>"
+      notes: M-CSA entry 465, mechanism 2; M-CSA cites PMID:11742345, PMID:12369817, PMID:16011362, PMID:17131989;
+        step 1
+  - subject: tyr118
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr118 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/465/
+      snippet: "CocE is a serine hydrolase employing a chymotrypsin-like Ser-His-Asp catalytic triad and\
+        \ mechanism; the residues are Ser 117, His 287 and Asp 259. The oxyanion hole is formed by Tyr\
+        \ 44 and Tyr 118 main chain. The mechanism occurs as follows:
+<ol>
+<li>Asp 259 hydrogen\
+        \ bonds to His 287, increasing His 287 pKa. His 287 can then activate Ser 117 as a nucleophile\
+        \ by deprotonation.</li>
+<li>Trp 166 hydrogen bonds to Tyr 44, increasing Tyr 44 pKa. Tyr 44\
+        \ can then activate the substrate ester bond as an electrophile, along with the main chain amide\
+        \ of Tyr 117 and the helix dipole.</li>
+<li>Ser 117 attacks the carbon of the substrate benzoyl\
+        \ ester. A tetrahedral transition state is formed. Tyr 44 and Tyr 117 stabilise the charge on\
+        \ this transition state.</li>
+<li>The transition state collapses, acylating Ser 117 with a\
+        \ benzoyl group. The hydroxyl leaving group is presumably protonated by the proton belonging to\
+        \ Ser 117.</li>
+<li>Deacylation of the acyl-enzyme is by hydrolysis, the catalytic residues\
+        \ playing the same roles as they did in the acylation steps.</li>
+</ol>"
+      notes: M-CSA entry 465, mechanism 2; M-CSA cites PMID:11742345, PMID:12369817, PMID:16011362, PMID:17131989;
+        step 1
+  - subject: trp166
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Trp166 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/465/
+      snippet: "CocE is a serine hydrolase employing a chymotrypsin-like Ser-His-Asp catalytic triad and\
+        \ mechanism; the residues are Ser 117, His 287 and Asp 259. The oxyanion hole is formed by Tyr\
+        \ 44 and Tyr 118 main chain. The mechanism occurs as follows:
+<ol>
+<li>Asp 259 hydrogen\
+        \ bonds to His 287, increasing His 287 pKa. His 287 can then activate Ser 117 as a nucleophile\
+        \ by deprotonation.</li>
+<li>Trp 166 hydrogen bonds to Tyr 44, increasing Tyr 44 pKa. Tyr 44\
+        \ can then activate the substrate ester bond as an electrophile, along with the main chain amide\
+        \ of Tyr 117 and the helix dipole.</li>
+<li>Ser 117 attacks the carbon of the substrate benzoyl\
+        \ ester. A tetrahedral transition state is formed. Tyr 44 and Tyr 117 stabilise the charge on\
+        \ this transition state.</li>
+<li>The transition state collapses, acylating Ser 117 with a\
+        \ benzoyl group. The hydroxyl leaving group is presumably protonated by the proton belonging to\
+        \ Ser 117.</li>
+<li>Deacylation of the acyl-enzyme is by hydrolysis, the catalytic residues\
+        \ playing the same roles as they did in the acylation steps.</li>
+</ol>"
+      notes: M-CSA entry 465, mechanism 2; M-CSA cites PMID:11742345, PMID:12369817, PMID:16011362, PMID:17131989;
+        step 1
+  - subject: asp259
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp259 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/465/
+      snippet: "CocE is a serine hydrolase employing a chymotrypsin-like Ser-His-Asp catalytic triad and\
+        \ mechanism; the residues are Ser 117, His 287 and Asp 259. The oxyanion hole is formed by Tyr\
+        \ 44 and Tyr 118 main chain. The mechanism occurs as follows:
+<ol>
+<li>Asp 259 hydrogen\
+        \ bonds to His 287, increasing His 287 pKa. His 287 can then activate Ser 117 as a nucleophile\
+        \ by deprotonation.</li>
+<li>Trp 166 hydrogen bonds to Tyr 44, increasing Tyr 44 pKa. Tyr 44\
+        \ can then activate the substrate ester bond as an electrophile, along with the main chain amide\
+        \ of Tyr 117 and the helix dipole.</li>
+<li>Ser 117 attacks the carbon of the substrate benzoyl\
+        \ ester. A tetrahedral transition state is formed. Tyr 44 and Tyr 117 stabilise the charge on\
+        \ this transition state.</li>
+<li>The transition state collapses, acylating Ser 117 with a\
+        \ benzoyl group. The hydroxyl leaving group is presumably protonated by the proton belonging to\
+        \ Ser 117.</li>
+<li>Deacylation of the acyl-enzyme is by hydrolysis, the catalytic residues\
+        \ playing the same roles as they did in the acylation steps.</li>
+</ol>"
+      notes: M-CSA entry 465, mechanism 2; M-CSA cites PMID:11742345, PMID:12369817, PMID:16011362, PMID:17131989;
+        step 1
+  - subject: his287
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His287 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/465/
+      snippet: "CocE is a serine hydrolase employing a chymotrypsin-like Ser-His-Asp catalytic triad and\
+        \ mechanism; the residues are Ser 117, His 287 and Asp 259. The oxyanion hole is formed by Tyr\
+        \ 44 and Tyr 118 main chain. The mechanism occurs as follows:
+<ol>
+<li>Asp 259 hydrogen\
+        \ bonds to His 287, increasing His 287 pKa. His 287 can then activate Ser 117 as a nucleophile\
+        \ by deprotonation.</li>
+<li>Trp 166 hydrogen bonds to Tyr 44, increasing Tyr 44 pKa. Tyr 44\
+        \ can then activate the substrate ester bond as an electrophile, along with the main chain amide\
+        \ of Tyr 117 and the helix dipole.</li>
+<li>Ser 117 attacks the carbon of the substrate benzoyl\
+        \ ester. A tetrahedral transition state is formed. Tyr 44 and Tyr 117 stabilise the charge on\
+        \ this transition state.</li>
+<li>The transition state collapses, acylating Ser 117 with a\
+        \ benzoyl group. The hydroxyl leaving group is presumably protonated by the proton belonging to\
+        \ Ser 117.</li>
+<li>Deacylation of the acyl-enzyme is by hydrolysis, the catalytic residues\
+        \ playing the same roles as they did in the acylation steps.</li>
+</ol>"
+      notes: M-CSA entry 465, mechanism 2; M-CSA cites PMID:11742345, PMID:12369817, PMID:16011362, PMID:17131989;
+        step 1
+  - subject: tyr44
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr44 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/465/
+      snippet: transition state stabiliser
+      notes: M-CSA entry 465, mechanism 2; M-CSA cites PMID:11742345, PMID:12369817, PMID:16011362, PMID:17131989;
+        M-CSA catalytic-residue roles for Tyr44
+  - subject: ser117
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser117 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/465/
+      snippet: covalent catalysis, proton shuttle (general acid/base)
+      notes: M-CSA entry 465, mechanism 2; M-CSA cites PMID:11742345, PMID:12369817, PMID:16011362, PMID:17131989;
+        M-CSA catalytic-residue roles for Ser117
+  - subject: tyr118
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr118 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/465/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 465, mechanism 2; M-CSA cites PMID:11742345, PMID:12369817, PMID:16011362, PMID:17131989;
+        M-CSA catalytic-residue roles for Tyr118
+  - subject: trp166
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp166 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/465/
+      snippet: activator
+      notes: M-CSA entry 465, mechanism 2; M-CSA cites PMID:11742345, PMID:12369817, PMID:16011362, PMID:17131989;
+        M-CSA catalytic-residue roles for Trp166
+  - subject: asp259
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp259 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/465/
+      snippet: activator, electrostatic stabiliser
+      notes: M-CSA entry 465, mechanism 2; M-CSA cites PMID:11742345, PMID:12369817, PMID:16011362, PMID:17131989;
+        M-CSA catalytic-residue roles for Asp259
+  - subject: his287
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His287 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/465/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 465, mechanism 2; M-CSA cites PMID:11742345, PMID:12369817, PMID:16011362, PMID:17131989;
+        M-CSA catalytic-residue roles for His287
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/465/
+      snippet: "CocE is a serine hydrolase employing a chymotrypsin-like Ser-His-Asp catalytic triad and\
+        \ mechanism; the residues are Ser 117, His 287 and Asp 259. The oxyanion hole is formed by Tyr\
+        \ 44 and Tyr 118 main chain. The mechanism occurs as follows:
+<ol>
+<li>Asp 259 hydrogen\
+        \ bonds to His 287, increasing His 287 pKa. His 287 can then activate Ser 117 as a nucleophile\
+        \ by deprotonation.</li>
+<li>Trp 166 h"
+      notes: M-CSA entry 465, mechanism 2; M-CSA cites PMID:11742345, PMID:12369817, PMID:16011362, PMID:17131989;
+        CATH domain 3.40.50.1820 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/465/
+      snippet: "CocE is a serine hydrolase employing a chymotrypsin-like Ser-His-Asp catalytic triad and\
+        \ mechanism; the residues are Ser 117, His 287 and Asp 259. The oxyanion hole is formed by Tyr\
+        \ 44 and Tyr 118 main chain. The mechanism occurs as follows:
+<ol>
+<li>Asp 259 hydrogen\
+        \ bonds to His 287, increasing His 287 pKa. His 287 can then activate Ser 117 as a nucleophile\
+        \ by deprotonation.</li>
+<li>Trp 166 h"
+      notes: M-CSA entry 465, mechanism 2; M-CSA cites PMID:11742345, PMID:12369817, PMID:16011362, PMID:17131989;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/465/
+      snippet: "CocE is a serine hydrolase employing a chymotrypsin-like Ser-His-Asp catalytic triad and\
+        \ mechanism; the residues are Ser 117, His 287 and Asp 259. The oxyanion hole is formed by Tyr\
+        \ 44 and Tyr 118 main chain. The mechanism occurs as follows:
+<ol>
+<li>Asp 259 hydrogen\
+        \ bonds to His 287, increasing His 287 pKa. His 287 can then activate Ser 117 as a nucleophile\
+        \ by deprotonation.</li>
+<li>Trp 166 h"
+      notes: M-CSA entry 465, mechanism 2; M-CSA cites PMID:11742345, PMID:12369817, PMID:16011362, PMID:17131989;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/465/
+      snippet: "CocE is a serine hydrolase employing a chymotrypsin-like Ser-His-Asp catalytic triad and\
+        \ mechanism; the residues are Ser 117, His 287 and Asp 259. The oxyanion hole is formed by Tyr\
+        \ 44 and Tyr 118 main chain. The mechanism occurs as follows:
+<ol>
+<li>Asp 259 hydrogen\
+        \ bonds to His 287, increasing His 287 pKa. His 287 can then activate Ser 117 as a nucleophile\
+        \ by deprotonation.</li>
+<li>Trp 166 h"
+      notes: M-CSA entry 465, mechanism 2; M-CSA cites PMID:11742345, PMID:12369817, PMID:16011362, PMID:17131989;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/465/
+      snippet: "CocE is a serine hydrolase employing a chymotrypsin-like Ser-His-Asp catalytic triad and\
+        \ mechanism; the residues are Ser 117, His 287 and Asp 259. The oxyanion hole is formed by Tyr\
+        \ 44 and Tyr 118 main chain. The mechanism occurs as follows:
+<ol>
+<li>Asp 259 hydrogen\
+        \ bonds to His 287, increasing His 287 pKa. His 287 can then activate Ser 117 as a nucleophile\
+        \ by deprotonation.</li>
+<li>Trp 166 h"
+      notes: M-CSA entry 465, mechanism 2; M-CSA cites PMID:11742345, PMID:12369817, PMID:16011362, PMID:17131989;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/465/
+      snippet: "CocE is a serine hydrolase employing a chymotrypsin-like Ser-His-Asp catalytic triad and\
+        \ mechanism; the residues are Ser 117, His 287 and Asp 259. The oxyanion hole is formed by Tyr\
+        \ 44 and Tyr 118 main chain. The mechanism occurs as follows:
+<ol>
+<li>Asp 259 hydrogen\
+        \ bonds to His 287, increasing His 287 pKa. His 287 can then activate Ser 117 as a nucleophile\
+        \ by deprotonation.</li>
+<li>Trp 166 h"
+      notes: M-CSA entry 465, mechanism 2; M-CSA cites PMID:11742345, PMID:12369817, PMID:16011362, PMID:17131989;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/465/
+      snippet: "CocE is a serine hydrolase employing a chymotrypsin-like Ser-His-Asp catalytic triad and\
+        \ mechanism; the residues are Ser 117, His 287 and Asp 259. The oxyanion hole is formed by Tyr\
+        \ 44 and Tyr 118 main chain. The mechanism occurs as follows:
+<ol>
+<li>Asp 259 hydrogen\
+        \ bonds to His 287, increasing His 287 pKa. His 287 can then activate Ser 117 as a nucleophile\
+        \ by deprotonation.</li>
+<li>Trp 166 h"
+      notes: M-CSA entry 465, mechanism 2; M-CSA cites PMID:11742345, PMID:12369817, PMID:16011362, PMID:17131989;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (19 evidence-backed edges) transcribed from M-CSA entry 465;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

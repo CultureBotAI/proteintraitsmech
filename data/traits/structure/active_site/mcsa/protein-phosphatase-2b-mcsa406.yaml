@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.3.16
 - CHEBI:83421
@@ -632,4 +632,300 @@ definitions:
       Protein phosphatase 2B (also known as calcineurin) is a Ca(II)- and calmodulin-stimulated protein serine/threonine phosphatase. Many of the substrates contain a PxIxIT motif. This catalytic subunit (represented by UniProtKB Q08209) may have a role in the calmodulin activation of calcineurin. UniProtKB P63098 represents the regulatory subunit of calcineurin and confers calcium sensitivity. This protein plays an important role in numerous calcium-dependent biological processes, including neurodevelopment and memory, immune response, cardiac hypertrophy, signal transduction, and muscle development.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of protein phosphatase 2B
+  description: Mechanism transcribed from M-CSA entry 406. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: asp90
+    label: catalytic Asp90 (M-CSA/PDB numbering; UniProt residue 90)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q08209
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his92
+    label: catalytic His92 (M-CSA/PDB numbering; UniProt residue 92)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q08209
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp118
+    label: catalytic Asp118 (M-CSA/PDB numbering; UniProt residue 118)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q08209
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp121
+    label: catalytic Asp121 (M-CSA/PDB numbering; UniProt residue 121)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q08209
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: arg122
+    label: catalytic Arg122 (M-CSA/PDB numbering; UniProt residue 122)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q08209
+    description: 'M-CSA roles: transition state stabiliser.'
+  - node_id: asn150
+    label: catalytic Asn150 (M-CSA/PDB numbering; UniProt residue 150)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q08209
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his151
+    label: catalytic His151 (M-CSA/PDB numbering; UniProt residue 151)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q08209
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: his199
+    label: catalytic His199 (M-CSA/PDB numbering; UniProt residue 199)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q08209
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: arg254
+    label: catalytic Arg254 (M-CSA/PDB numbering; UniProt residue 254)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q08209
+    description: 'M-CSA roles: transition state stabiliser.'
+  - node_id: his281
+    label: catalytic His281 (M-CSA/PDB numbering; UniProt residue 281)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q08209
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: O-phospho-L-serine(2-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:83421
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: L-serine residue
+    node_type: CHEMICAL
+    grounding: CHEBI:29999
+  - node_id: product1
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: "An iron-activated water molecule is deprotonated by histidine and carries out a nucleophilic\
+      \ attack on the substrate (a phosphorylated serine or threonine residue). The histidine then donates\
+      \ the proton to the amino acid leaving group.   
+<br/><br/>
+The 'Asp-His-(OH)-Fe' tetrad is\
+      \ very similar to the 'Asp-His-Ser' triad of serine proteases."
+  - node_id: active_site
+    label: protein phosphatase 2B catalytic site
+    node_type: MOTIF
+    grounding: MCSA:406
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.60.21.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.60.21.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: protein phosphatase 2B activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.3.16
+  edges:
+  - subject: asp90
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp90 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/406/
+      snippet: metal ligand
+      notes: M-CSA entry 406, mechanism 2; M-CSA cites PMID:11015619, PMID:21115349, PMID:23937612, PMID:8524402;
+        M-CSA catalytic-residue roles for Asp90
+  - subject: his92
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His92 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/406/
+      snippet: metal ligand
+      notes: M-CSA entry 406, mechanism 2; M-CSA cites PMID:11015619, PMID:21115349, PMID:23937612, PMID:8524402;
+        M-CSA catalytic-residue roles for His92
+  - subject: asp118
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp118 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/406/
+      snippet: metal ligand
+      notes: M-CSA entry 406, mechanism 2; M-CSA cites PMID:11015619, PMID:21115349, PMID:23937612, PMID:8524402;
+        M-CSA catalytic-residue roles for Asp118
+  - subject: asp121
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp121 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/406/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 406, mechanism 2; M-CSA cites PMID:11015619, PMID:21115349, PMID:23937612, PMID:8524402;
+        M-CSA catalytic-residue roles for Asp121
+  - subject: arg122
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg122 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/406/
+      snippet: transition state stabiliser
+      notes: M-CSA entry 406, mechanism 2; M-CSA cites PMID:11015619, PMID:21115349, PMID:23937612, PMID:8524402;
+        M-CSA catalytic-residue roles for Arg122
+  - subject: asn150
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn150 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/406/
+      snippet: metal ligand
+      notes: M-CSA entry 406, mechanism 2; M-CSA cites PMID:11015619, PMID:21115349, PMID:23937612, PMID:8524402;
+        M-CSA catalytic-residue roles for Asn150
+  - subject: his151
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His151 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/406/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 406, mechanism 2; M-CSA cites PMID:11015619, PMID:21115349, PMID:23937612, PMID:8524402;
+        M-CSA catalytic-residue roles for His151
+  - subject: his199
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His199 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/406/
+      snippet: metal ligand
+      notes: M-CSA entry 406, mechanism 2; M-CSA cites PMID:11015619, PMID:21115349, PMID:23937612, PMID:8524402;
+        M-CSA catalytic-residue roles for His199
+  - subject: arg254
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg254 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/406/
+      snippet: transition state stabiliser
+      notes: M-CSA entry 406, mechanism 2; M-CSA cites PMID:11015619, PMID:21115349, PMID:23937612, PMID:8524402;
+        M-CSA catalytic-residue roles for Arg254
+  - subject: his281
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His281 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/406/
+      snippet: metal ligand
+      notes: M-CSA entry 406, mechanism 2; M-CSA cites PMID:11015619, PMID:21115349, PMID:23937612, PMID:8524402;
+        M-CSA catalytic-residue roles for His281
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/406/
+      snippet: "An iron-activated water molecule is deprotonated by histidine and carries out a nucleophilic\
+        \ attack on the substrate (a phosphorylated serine or threonine residue). The histidine then donates\
+        \ the proton to the amino acid leaving group.   
+<br/><br/>
+The 'Asp-His-(OH)-Fe' tetrad\
+        \ is very similar to the 'Asp-His-Ser' triad of serine proteases."
+      notes: M-CSA entry 406, mechanism 2; M-CSA cites PMID:11015619, PMID:21115349, PMID:23937612, PMID:8524402;
+        CATH domain 3.60.21.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/406/
+      snippet: "An iron-activated water molecule is deprotonated by histidine and carries out a nucleophilic\
+        \ attack on the substrate (a phosphorylated serine or threonine residue). The histidine then donates\
+        \ the proton to the amino acid leaving group.   
+<br/><br/>
+The 'Asp-His-(OH)-Fe' tetrad\
+        \ is very similar to the 'Asp-His-Ser' triad of serine proteases."
+      notes: M-CSA entry 406, mechanism 2; M-CSA cites PMID:11015619, PMID:21115349, PMID:23937612, PMID:8524402;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/406/
+      snippet: "An iron-activated water molecule is deprotonated by histidine and carries out a nucleophilic\
+        \ attack on the substrate (a phosphorylated serine or threonine residue). The histidine then donates\
+        \ the proton to the amino acid leaving group.   
+<br/><br/>
+The 'Asp-His-(OH)-Fe' tetrad\
+        \ is very similar to the 'Asp-His-Ser' triad of serine proteases."
+      notes: M-CSA entry 406, mechanism 2; M-CSA cites PMID:11015619, PMID:21115349, PMID:23937612, PMID:8524402;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/406/
+      snippet: "An iron-activated water molecule is deprotonated by histidine and carries out a nucleophilic\
+        \ attack on the substrate (a phosphorylated serine or threonine residue). The histidine then donates\
+        \ the proton to the amino acid leaving group.   
+<br/><br/>
+The 'Asp-His-(OH)-Fe' tetrad\
+        \ is very similar to the 'Asp-His-Ser' triad of serine proteases."
+      notes: M-CSA entry 406, mechanism 2; M-CSA cites PMID:11015619, PMID:21115349, PMID:23937612, PMID:8524402;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/406/
+      snippet: "An iron-activated water molecule is deprotonated by histidine and carries out a nucleophilic\
+        \ attack on the substrate (a phosphorylated serine or threonine residue). The histidine then donates\
+        \ the proton to the amino acid leaving group.   
+<br/><br/>
+The 'Asp-His-(OH)-Fe' tetrad\
+        \ is very similar to the 'Asp-His-Ser' triad of serine proteases."
+      notes: M-CSA entry 406, mechanism 2; M-CSA cites PMID:11015619, PMID:21115349, PMID:23937612, PMID:8524402;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/406/
+      snippet: "An iron-activated water molecule is deprotonated by histidine and carries out a nucleophilic\
+        \ attack on the substrate (a phosphorylated serine or threonine residue). The histidine then donates\
+        \ the proton to the amino acid leaving group.   
+<br/><br/>
+The 'Asp-His-(OH)-Fe' tetrad\
+        \ is very similar to the 'Asp-His-Ser' triad of serine proteases."
+      notes: M-CSA entry 406, mechanism 2; M-CSA cites PMID:11015619, PMID:21115349, PMID:23937612, PMID:8524402;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (16 evidence-backed edges) transcribed from M-CSA entry 406;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

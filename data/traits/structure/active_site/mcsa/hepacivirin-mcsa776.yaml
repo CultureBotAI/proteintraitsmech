@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.21.98
 - CHEBI:15377
@@ -1665,4 +1665,245 @@ definitions:
       Hepatitis C virus has an RNA genome encoding a single polyprotein. This polyprotein includes a serine protease, NS3, which is required for processing of part of the polyprotein. Specifically, NS3 catalyses cleavage of the NS3/NS4A, NS4A/NS4B, NS4B/NS5A, and NS5A/NS5B segment junctions; NS3/NS4A cleavage probably occurs in cis with the remaining cleavages occurring in trans. The NS3 protease associates with the NS4A polypeptide which functions to activate the protease activity.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of hepacivirin
+  description: Mechanism transcribed from M-CSA entry 776. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering only — no unique offset to the record's reference sequence could
+    be verified, so no UniProt position is asserted.
+  nodes:
+  - node_id: his60
+    label: catalytic His60 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27958
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: asp84
+    label: catalytic Asp84 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27958
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: gly140
+    label: catalytic Gly140 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27958
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ser142
+    label: catalytic Ser142 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27958
+    description: 'M-CSA roles: covalently attached, electrostatic stabiliser.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: dipeptide zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:90799
+  - node_id: product0
+    label: L-alpha-amino acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:59869
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: Hepatitis C virus NS3 protease employs a classical serine protease mechanism. Ser 142
+      acts as a nucleophile to attack the peptide bond and form a tetrahedral intermediate that is stabilised
+      by the backbone NH of Ser 142 and Gly 140. His 60 promotes the nucleophilic attack by deprotonating
+      Ser 142, while Asp 84 functions to modify the pKa of His 60. Collapse of the tetrahedral intermediate
+      with pro
+  - node_id: active_site
+    label: hepacivirin catalytic site
+    node_type: MOTIF
+    grounding: MCSA:776
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.40.10.120 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.40.10.120
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: hepacivirin activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.21.98
+  edges:
+  - subject: his60
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His60 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/776/
+      snippet: Hepatitis C virus NS3 protease employs a classical serine protease mechanism. Ser 142 acts
+        as a nucleophile to attack the peptide bond and form a tetrahedral intermediate that is stabilised
+        by the backbone NH of Ser 142 and Gly 140. His 60 promotes the nucleophilic attack by deprotonating
+        Ser 142, while Asp 84 functions to modify the pKa of His 60. Collapse of the tetrahedral intermediate
+        with protonation of the departing amine leaving group by His 60 generates an acyl-enzyme intermediate.
+        This is then hydrolysed by a water molecule that is deprotonated by His 60.
+      notes: M-CSA entry 776, mechanism 1; M-CSA cites PMID:10702283, PMID:14984200, PMID:8861917; step
+        1
+  - subject: asp84
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp84 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/776/
+      snippet: Hepatitis C virus NS3 protease employs a classical serine protease mechanism. Ser 142 acts
+        as a nucleophile to attack the peptide bond and form a tetrahedral intermediate that is stabilised
+        by the backbone NH of Ser 142 and Gly 140. His 60 promotes the nucleophilic attack by deprotonating
+        Ser 142, while Asp 84 functions to modify the pKa of His 60. Collapse of the tetrahedral intermediate
+        with protonation of the departing amine leaving group by His 60 generates an acyl-enzyme intermediate.
+        This is then hydrolysed by a water molecule that is deprotonated by His 60.
+      notes: M-CSA entry 776, mechanism 1; M-CSA cites PMID:10702283, PMID:14984200, PMID:8861917; step
+        1
+  - subject: gly140
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Gly140 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/776/
+      snippet: Hepatitis C virus NS3 protease employs a classical serine protease mechanism. Ser 142 acts
+        as a nucleophile to attack the peptide bond and form a tetrahedral intermediate that is stabilised
+        by the backbone NH of Ser 142 and Gly 140. His 60 promotes the nucleophilic attack by deprotonating
+        Ser 142, while Asp 84 functions to modify the pKa of His 60. Collapse of the tetrahedral intermediate
+        with protonation of the departing amine leaving group by His 60 generates an acyl-enzyme intermediate.
+        This is then hydrolysed by a water molecule that is deprotonated by His 60.
+      notes: M-CSA entry 776, mechanism 1; M-CSA cites PMID:10702283, PMID:14984200, PMID:8861917; step
+        1
+  - subject: ser142
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser142 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/776/
+      snippet: Hepatitis C virus NS3 protease employs a classical serine protease mechanism. Ser 142 acts
+        as a nucleophile to attack the peptide bond and form a tetrahedral intermediate that is stabilised
+        by the backbone NH of Ser 142 and Gly 140. His 60 promotes the nucleophilic attack by deprotonating
+        Ser 142, while Asp 84 functions to modify the pKa of His 60. Collapse of the tetrahedral intermediate
+        with protonation of the departing amine leaving group by His 60 generates an acyl-enzyme intermediate.
+        This is then hydrolysed by a water molecule that is deprotonated by His 60.
+      notes: M-CSA entry 776, mechanism 1; M-CSA cites PMID:10702283, PMID:14984200, PMID:8861917; step
+        1
+  - subject: his60
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His60 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/776/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 776, mechanism 1; M-CSA cites PMID:10702283, PMID:14984200, PMID:8861917; M-CSA
+        catalytic-residue roles for His60
+  - subject: asp84
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp84 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/776/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 776, mechanism 1; M-CSA cites PMID:10702283, PMID:14984200, PMID:8861917; M-CSA
+        catalytic-residue roles for Asp84
+  - subject: gly140
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly140 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/776/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 776, mechanism 1; M-CSA cites PMID:10702283, PMID:14984200, PMID:8861917; M-CSA
+        catalytic-residue roles for Gly140
+  - subject: ser142
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser142 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/776/
+      snippet: covalently attached, electrostatic stabiliser
+      notes: M-CSA entry 776, mechanism 1; M-CSA cites PMID:10702283, PMID:14984200, PMID:8861917; M-CSA
+        catalytic-residue roles for Ser142
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/776/
+      snippet: Hepatitis C virus NS3 protease employs a classical serine protease mechanism. Ser 142 acts
+        as a nucleophile to attack the peptide bond and form a tetrahedral intermediate that is stabilised
+        by the backbone NH of Ser 142 and Gly 140. His 60 promotes the nucleophilic attack by deprotonating
+        Ser 142, while Asp 84 functions to modify the pKa of His 60. Collapse of the tetrahedral intermediate
+        with pro
+      notes: M-CSA entry 776, mechanism 1; M-CSA cites PMID:10702283, PMID:14984200, PMID:8861917; CATH
+        domain 2.40.10.120 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/776/
+      snippet: Hepatitis C virus NS3 protease employs a classical serine protease mechanism. Ser 142 acts
+        as a nucleophile to attack the peptide bond and form a tetrahedral intermediate that is stabilised
+        by the backbone NH of Ser 142 and Gly 140. His 60 promotes the nucleophilic attack by deprotonating
+        Ser 142, while Asp 84 functions to modify the pKa of His 60. Collapse of the tetrahedral intermediate
+        with pro
+      notes: M-CSA entry 776, mechanism 1; M-CSA cites PMID:10702283, PMID:14984200, PMID:8861917; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/776/
+      snippet: Hepatitis C virus NS3 protease employs a classical serine protease mechanism. Ser 142 acts
+        as a nucleophile to attack the peptide bond and form a tetrahedral intermediate that is stabilised
+        by the backbone NH of Ser 142 and Gly 140. His 60 promotes the nucleophilic attack by deprotonating
+        Ser 142, while Asp 84 functions to modify the pKa of His 60. Collapse of the tetrahedral intermediate
+        with pro
+      notes: M-CSA entry 776, mechanism 1; M-CSA cites PMID:10702283, PMID:14984200, PMID:8861917; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/776/
+      snippet: Hepatitis C virus NS3 protease employs a classical serine protease mechanism. Ser 142 acts
+        as a nucleophile to attack the peptide bond and form a tetrahedral intermediate that is stabilised
+        by the backbone NH of Ser 142 and Gly 140. His 60 promotes the nucleophilic attack by deprotonating
+        Ser 142, while Asp 84 functions to modify the pKa of His 60. Collapse of the tetrahedral intermediate
+        with pro
+      notes: M-CSA entry 776, mechanism 1; M-CSA cites PMID:10702283, PMID:14984200, PMID:8861917; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/776/
+      snippet: Hepatitis C virus NS3 protease employs a classical serine protease mechanism. Ser 142 acts
+        as a nucleophile to attack the peptide bond and form a tetrahedral intermediate that is stabilised
+        by the backbone NH of Ser 142 and Gly 140. His 60 promotes the nucleophilic attack by deprotonating
+        Ser 142, while Asp 84 functions to modify the pKa of His 60. Collapse of the tetrahedral intermediate
+        with pro
+      notes: M-CSA entry 776, mechanism 1; M-CSA cites PMID:10702283, PMID:14984200, PMID:8861917; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 776;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

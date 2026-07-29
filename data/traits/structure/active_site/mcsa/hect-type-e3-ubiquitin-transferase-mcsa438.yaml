@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.3.2.26
 - CHEBI:15378
@@ -676,4 +676,297 @@ definitions:
       Ubiquitination is mediated by three enzymes, E1 (PDB:3cmm), E2 (PDB:1ayz) and E3 (PDB:1c4z). The first, E1, is essential for ubiquitin activation and transferring the substrate onto the second cascade enzyme, E2, which responsible for mediating repeated ubiquitination at the eventual substrate, which is brought into proximity of E2 by the active site of E3, the enzyme which also regulates substrate specificity. This entry represents the first of the three reactions occurring in this cascade: ubiquitin:[E1 ubiquitin-activating enzyme] ligase (AMP-forming) E6AP belongs to the HECT (homologous to E6AP COOH-terminus) class of E3s, which has at least 20 members in humans. The HECT E3s are so far unique among the known classes of E3s in that they form a ubiquitin-thioester intermediate and directly catalyse substrate ubiquitination. HECT E3s share a conserved ~40-kD COOH-terminal catalytic domain, the HECT domain (IPR000569), that has at least four biochemical activities: (i) it binds specific E2s; (ii) it accepts ubiquitin from the E2, forming a ubiquitin-thioester intermediate with its active-site cysteine; (iii) it transfers ubiquitin to the eta-amino groups of lysine side chains on the substrate by catalysing the formation of an isopeptide bond; and (iv) it transfers additional ubiquitin molecules to the growing end of the multi-ubiquitin chain. The NH2-terminal sequences of HECT E3s are not conserved and contain the primary determinants for specific substrate recognition. HECT E3s have been implicated in cancer, hypertension, neurological disorders, and other diseases. Moreover, some pathogenic bacteria have evolved HECT-like E3s as virulence factors to manipulate host cell signalling.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of HECT-type E3 ubiquitin transferase
+  description: Mechanism transcribed from M-CSA entry 438. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering only — no unique offset to the record's reference sequence could
+    be verified, so no UniProt position is asserted.
+  nodes:
+  - node_id: cys86
+    label: catalytic Cys86 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q05086
+    description: 'M-CSA roles: nucleofuge.'
+  - node_id: arg506
+    label: catalytic Arg506 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q05086
+    description: 'M-CSA roles: unknown.'
+  - node_id: glu539
+    label: catalytic Glu539 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q05086
+    description: 'M-CSA roles: unknown.'
+  - node_id: glu550
+    label: catalytic Glu550 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q05086
+    description: 'M-CSA roles: unknown.'
+  - node_id: asp607
+    label: catalytic Asp607 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q05086
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his818
+    label: catalytic His818 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q05086
+  - node_id: cys820
+    label: catalytic Cys820 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q05086
+    description: 'M-CSA roles: covalent catalysis.'
+  - node_id: reactant0
+    label: S-ubiquitinyl-[E2 ubiquitin-conjugating enzyme]-L-cysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:134521
+  - node_id: reactant1
+    label: lysinium residue
+    node_type: CHEMICAL
+    grounding: CHEBI:32579
+  - node_id: product0
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product1
+    label: L-cysteine residue
+    node_type: CHEMICAL
+    grounding: CHEBI:29950
+  - node_id: product2
+    label: N6-monoubiquitinyl-[protein]-L-lysine
+    node_type: CHEMICAL
+    grounding: CHEBI:134522
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: Occurs in the active site of E3. Specific binding motifs are present within E3 to direct
+      ubiquitination of lysine side chains from selected protein substrates. The presence of hydrogen
+      bond acceptor residues enhances the nucleophilic character of the attacking lysine. Activated ubiquitin
+      is brought into the active site by the ubiquitin loaded E2 enzyme. In the first step the enzyme
+      transfers ubiqu
+  - node_id: active_site
+    label: HECT-type E3 ubiquitin transferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:438
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.10.110.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.10.110.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: HECT-type E3 ubiquitin transferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.3.2.26
+  edges:
+  - subject: cys86
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys86 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/438/
+      snippet: nucleofuge
+      notes: M-CSA entry 438, mechanism 1; M-CSA cites PMID:10558980, PMID:14998368, PMID:16061177, PMID:17919899,
+        PMID:18047743, PMID:19851334, PMID:19940261, PMID:20980253, PMID:21399620, PMID:21399621, PMID:23644597,
+        PMID:23936628, PMID:23936629, PMID:26457515, PMID:26949039, PMID:27485899, PMID:7800044; M-CSA
+        catalytic-residue roles for Cys86
+  - subject: arg506
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg506 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/438/
+      snippet: unknown
+      notes: M-CSA entry 438, mechanism 1; M-CSA cites PMID:10558980, PMID:14998368, PMID:16061177, PMID:17919899,
+        PMID:18047743, PMID:19851334, PMID:19940261, PMID:20980253, PMID:21399620, PMID:21399621, PMID:23644597,
+        PMID:23936628, PMID:23936629, PMID:26457515, PMID:26949039, PMID:27485899, PMID:7800044; M-CSA
+        catalytic-residue roles for Arg506
+  - subject: glu539
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu539 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/438/
+      snippet: unknown
+      notes: M-CSA entry 438, mechanism 1; M-CSA cites PMID:10558980, PMID:14998368, PMID:16061177, PMID:17919899,
+        PMID:18047743, PMID:19851334, PMID:19940261, PMID:20980253, PMID:21399620, PMID:21399621, PMID:23644597,
+        PMID:23936628, PMID:23936629, PMID:26457515, PMID:26949039, PMID:27485899, PMID:7800044; M-CSA
+        catalytic-residue roles for Glu539
+  - subject: glu550
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu550 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/438/
+      snippet: unknown
+      notes: M-CSA entry 438, mechanism 1; M-CSA cites PMID:10558980, PMID:14998368, PMID:16061177, PMID:17919899,
+        PMID:18047743, PMID:19851334, PMID:19940261, PMID:20980253, PMID:21399620, PMID:21399621, PMID:23644597,
+        PMID:23936628, PMID:23936629, PMID:26457515, PMID:26949039, PMID:27485899, PMID:7800044; M-CSA
+        catalytic-residue roles for Glu550
+  - subject: asp607
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp607 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/438/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 438, mechanism 1; M-CSA cites PMID:10558980, PMID:14998368, PMID:16061177, PMID:17919899,
+        PMID:18047743, PMID:19851334, PMID:19940261, PMID:20980253, PMID:21399620, PMID:21399621, PMID:23644597,
+        PMID:23936628, PMID:23936629, PMID:26457515, PMID:26949039, PMID:27485899, PMID:7800044; M-CSA
+        catalytic-residue roles for Asp607
+  - subject: his818
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His818 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/438/
+      snippet: Occurs in the active site of E3. Specific binding motifs are present within E3 to direct
+        ubiquitination of lysine side chains from selected protein substrates. The presence of hydrogen
+        bond acceptor residues enhances the nucleophilic character of the attacking lysine. Activated
+        ubiquitin is brought into the active site by the ubiquitin loaded E2 enzyme. In the first step
+        the enzyme transfers ubiqu
+      notes: M-CSA entry 438, mechanism 1; M-CSA cites PMID:10558980, PMID:14998368, PMID:16061177, PMID:17919899,
+        PMID:18047743, PMID:19851334, PMID:19940261, PMID:20980253, PMID:21399620, PMID:21399621, PMID:23644597,
+        PMID:23936628, PMID:23936629, PMID:26457515, PMID:26949039, PMID:27485899, PMID:7800044; M-CSA
+        catalytic-residue roles for His818
+  - subject: cys820
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys820 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/438/
+      snippet: covalent catalysis
+      notes: M-CSA entry 438, mechanism 1; M-CSA cites PMID:10558980, PMID:14998368, PMID:16061177, PMID:17919899,
+        PMID:18047743, PMID:19851334, PMID:19940261, PMID:20980253, PMID:21399620, PMID:21399621, PMID:23644597,
+        PMID:23936628, PMID:23936629, PMID:26457515, PMID:26949039, PMID:27485899, PMID:7800044; M-CSA
+        catalytic-residue roles for Cys820
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/438/
+      snippet: Occurs in the active site of E3. Specific binding motifs are present within E3 to direct
+        ubiquitination of lysine side chains from selected protein substrates. The presence of hydrogen
+        bond acceptor residues enhances the nucleophilic character of the attacking lysine. Activated
+        ubiquitin is brought into the active site by the ubiquitin loaded E2 enzyme. In the first step
+        the enzyme transfers ubiqu
+      notes: M-CSA entry 438, mechanism 1; M-CSA cites PMID:10558980, PMID:14998368, PMID:16061177, PMID:17919899,
+        PMID:18047743, PMID:19851334, PMID:19940261, PMID:20980253, PMID:21399620, PMID:21399621, PMID:23644597,
+        PMID:23936628, PMID:23936629, PMID:26457515, PMID:26949039, PMID:27485899, PMID:7800044; CATH
+        domain 3.10.110.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/438/
+      snippet: Occurs in the active site of E3. Specific binding motifs are present within E3 to direct
+        ubiquitination of lysine side chains from selected protein substrates. The presence of hydrogen
+        bond acceptor residues enhances the nucleophilic character of the attacking lysine. Activated
+        ubiquitin is brought into the active site by the ubiquitin loaded E2 enzyme. In the first step
+        the enzyme transfers ubiqu
+      notes: M-CSA entry 438, mechanism 1; M-CSA cites PMID:10558980, PMID:14998368, PMID:16061177, PMID:17919899,
+        PMID:18047743, PMID:19851334, PMID:19940261, PMID:20980253, PMID:21399620, PMID:21399621, PMID:23644597,
+        PMID:23936628, PMID:23936629, PMID:26457515, PMID:26949039, PMID:27485899, PMID:7800044; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/438/
+      snippet: Occurs in the active site of E3. Specific binding motifs are present within E3 to direct
+        ubiquitination of lysine side chains from selected protein substrates. The presence of hydrogen
+        bond acceptor residues enhances the nucleophilic character of the attacking lysine. Activated
+        ubiquitin is brought into the active site by the ubiquitin loaded E2 enzyme. In the first step
+        the enzyme transfers ubiqu
+      notes: M-CSA entry 438, mechanism 1; M-CSA cites PMID:10558980, PMID:14998368, PMID:16061177, PMID:17919899,
+        PMID:18047743, PMID:19851334, PMID:19940261, PMID:20980253, PMID:21399620, PMID:21399621, PMID:23644597,
+        PMID:23936628, PMID:23936629, PMID:26457515, PMID:26949039, PMID:27485899, PMID:7800044; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/438/
+      snippet: Occurs in the active site of E3. Specific binding motifs are present within E3 to direct
+        ubiquitination of lysine side chains from selected protein substrates. The presence of hydrogen
+        bond acceptor residues enhances the nucleophilic character of the attacking lysine. Activated
+        ubiquitin is brought into the active site by the ubiquitin loaded E2 enzyme. In the first step
+        the enzyme transfers ubiqu
+      notes: M-CSA entry 438, mechanism 1; M-CSA cites PMID:10558980, PMID:14998368, PMID:16061177, PMID:17919899,
+        PMID:18047743, PMID:19851334, PMID:19940261, PMID:20980253, PMID:21399620, PMID:21399621, PMID:23644597,
+        PMID:23936628, PMID:23936629, PMID:26457515, PMID:26949039, PMID:27485899, PMID:7800044; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/438/
+      snippet: Occurs in the active site of E3. Specific binding motifs are present within E3 to direct
+        ubiquitination of lysine side chains from selected protein substrates. The presence of hydrogen
+        bond acceptor residues enhances the nucleophilic character of the attacking lysine. Activated
+        ubiquitin is brought into the active site by the ubiquitin loaded E2 enzyme. In the first step
+        the enzyme transfers ubiqu
+      notes: M-CSA entry 438, mechanism 1; M-CSA cites PMID:10558980, PMID:14998368, PMID:16061177, PMID:17919899,
+        PMID:18047743, PMID:19851334, PMID:19940261, PMID:20980253, PMID:21399620, PMID:21399621, PMID:23644597,
+        PMID:23936628, PMID:23936629, PMID:26457515, PMID:26949039, PMID:27485899, PMID:7800044; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/438/
+      snippet: Occurs in the active site of E3. Specific binding motifs are present within E3 to direct
+        ubiquitination of lysine side chains from selected protein substrates. The presence of hydrogen
+        bond acceptor residues enhances the nucleophilic character of the attacking lysine. Activated
+        ubiquitin is brought into the active site by the ubiquitin loaded E2 enzyme. In the first step
+        the enzyme transfers ubiqu
+      notes: M-CSA entry 438, mechanism 1; M-CSA cites PMID:10558980, PMID:14998368, PMID:16061177, PMID:17919899,
+        PMID:18047743, PMID:19851334, PMID:19940261, PMID:20980253, PMID:21399620, PMID:21399621, PMID:23644597,
+        PMID:23936628, PMID:23936629, PMID:26457515, PMID:26949039, PMID:27485899, PMID:7800044; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/438/
+      snippet: Occurs in the active site of E3. Specific binding motifs are present within E3 to direct
+        ubiquitination of lysine side chains from selected protein substrates. The presence of hydrogen
+        bond acceptor residues enhances the nucleophilic character of the attacking lysine. Activated
+        ubiquitin is brought into the active site by the ubiquitin loaded E2 enzyme. In the first step
+        the enzyme transfers ubiqu
+      notes: M-CSA entry 438, mechanism 1; M-CSA cites PMID:10558980, PMID:14998368, PMID:16061177, PMID:17919899,
+        PMID:18047743, PMID:19851334, PMID:19940261, PMID:20980253, PMID:21399620, PMID:21399621, PMID:23644597,
+        PMID:23936628, PMID:23936629, PMID:26457515, PMID:26949039, PMID:27485899, PMID:7800044; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (14 evidence-backed edges) transcribed from M-CSA entry 438;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.7.2.6
 - CHEBI:15378
@@ -512,4 +512,334 @@ definitions:
       Hydroxylamine oxioreductase catalyses the conversion of hydroxylamines to nitrite. This is the second step in the respiratory system of nitrifying chemoautotrophic bacteria. Ammonia mono-oxygenase produces hydroxylamine which is reduced by hydroxylamine oxioreductase to product electrons which feed into an electron transport chain to produce energy. The enzyme employs 24 haem groups across three sub units which interact in a uniquely complicated electron transport chain.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of hydroxylamine oxidase
+  description: Mechanism transcribed from M-CSA entry 581. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +24).
+  nodes:
+  - node_id: his233
+    label: catalytic His233 (M-CSA/PDB numbering; UniProt residue 257)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q50925
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp267
+    label: catalytic Asp267 (M-CSA/PDB numbering; UniProt residue 291)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q50925
+    description: 'M-CSA roles: steric role.'
+  - node_id: his268
+    label: catalytic His268 (M-CSA/PDB numbering; UniProt residue 292)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q50925
+    description: 'M-CSA roles: steric role.'
+  - node_id: tyr334
+    label: catalytic Tyr334 (M-CSA/PDB numbering; UniProt residue 358)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q50925
+    description: 'M-CSA roles: steric role.'
+  - node_id: tyr467
+    label: catalytic Tyr467 (M-CSA/PDB numbering; UniProt residue 491)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q50925
+    description: 'M-CSA roles: activator, covalently attached.'
+  - node_id: reactant0
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: reactant1
+    label: nitrite
+    node_type: CHEMICAL
+    grounding: CHEBI:16301
+  - node_id: reactant2
+    label: iron(2+)
+    node_type: CHEMICAL
+    grounding: CHEBI:29033
+  - node_id: product0
+    label: hydroxylamine
+    node_type: CHEMICAL
+    grounding: CHEBI:15429
+  - node_id: product1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product2
+    label: iron(3+)
+    node_type: CHEMICAL
+    grounding: CHEBI:29034
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: The reaction centre of hydroxylamine oxioreductase is an unusual haem group, cross linked
+      to Tyr467 of a separate sub unit through a covalent bond. This linking meso-substituted haem group,
+      P460 extracts two electrons from the substrate and transfers them to cytochrome c through the six
+      surrounding c type haem groups. His233 is the axial ligand to Fe in P460 while the proximal site
+      is free for hyd
+  - node_id: active_site
+    label: hydroxylamine oxidase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:581
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.10.780.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.10.780.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: hydroxylamine oxidase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.7.2.6
+  edges:
+  - subject: his233
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His233 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/581/
+      snippet: The reaction centre of hydroxylamine oxioreductase is an unusual haem group, cross linked
+        to Tyr467 of a separate sub unit through a covalent bond. This linking meso-substituted haem group,
+        P460 extracts two electrons from the substrate and transfers them to cytochrome c through the
+        six surrounding c type haem groups. His233 is the axial ligand to Fe in P460 while the proximal
+        site is free for hydroxylamine binding. The residues Asp267, His268 and Tyr334 protrude towards
+        the catalytic haem group in the upper portion of the catalytic pocket and are thought to aid the
+        extraction of electrons from hydroxylamine.
+      notes: M-CSA entry 581, mechanism 1; M-CSA cites PMID:18336913, PMID:25277374, PMID:9095195; step
+        1
+  - subject: asp267
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp267 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/581/
+      snippet: The reaction centre of hydroxylamine oxioreductase is an unusual haem group, cross linked
+        to Tyr467 of a separate sub unit through a covalent bond. This linking meso-substituted haem group,
+        P460 extracts two electrons from the substrate and transfers them to cytochrome c through the
+        six surrounding c type haem groups. His233 is the axial ligand to Fe in P460 while the proximal
+        site is free for hydroxylamine binding. The residues Asp267, His268 and Tyr334 protrude towards
+        the catalytic haem group in the upper portion of the catalytic pocket and are thought to aid the
+        extraction of electrons from hydroxylamine.
+      notes: M-CSA entry 581, mechanism 1; M-CSA cites PMID:18336913, PMID:25277374, PMID:9095195; step
+        1
+  - subject: his268
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His268 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/581/
+      snippet: The reaction centre of hydroxylamine oxioreductase is an unusual haem group, cross linked
+        to Tyr467 of a separate sub unit through a covalent bond. This linking meso-substituted haem group,
+        P460 extracts two electrons from the substrate and transfers them to cytochrome c through the
+        six surrounding c type haem groups. His233 is the axial ligand to Fe in P460 while the proximal
+        site is free for hydroxylamine binding. The residues Asp267, His268 and Tyr334 protrude towards
+        the catalytic haem group in the upper portion of the catalytic pocket and are thought to aid the
+        extraction of electrons from hydroxylamine.
+      notes: M-CSA entry 581, mechanism 1; M-CSA cites PMID:18336913, PMID:25277374, PMID:9095195; step
+        1
+  - subject: tyr334
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr334 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/581/
+      snippet: The reaction centre of hydroxylamine oxioreductase is an unusual haem group, cross linked
+        to Tyr467 of a separate sub unit through a covalent bond. This linking meso-substituted haem group,
+        P460 extracts two electrons from the substrate and transfers them to cytochrome c through the
+        six surrounding c type haem groups. His233 is the axial ligand to Fe in P460 while the proximal
+        site is free for hydroxylamine binding. The residues Asp267, His268 and Tyr334 protrude towards
+        the catalytic haem group in the upper portion of the catalytic pocket and are thought to aid the
+        extraction of electrons from hydroxylamine.
+      notes: M-CSA entry 581, mechanism 1; M-CSA cites PMID:18336913, PMID:25277374, PMID:9095195; step
+        1
+  - subject: tyr467
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr467 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/581/
+      snippet: The reaction centre of hydroxylamine oxioreductase is an unusual haem group, cross linked
+        to Tyr467 of a separate sub unit through a covalent bond. This linking meso-substituted haem group,
+        P460 extracts two electrons from the substrate and transfers them to cytochrome c through the
+        six surrounding c type haem groups. His233 is the axial ligand to Fe in P460 while the proximal
+        site is free for hydroxylamine binding. The residues Asp267, His268 and Tyr334 protrude towards
+        the catalytic haem group in the upper portion of the catalytic pocket and are thought to aid the
+        extraction of electrons from hydroxylamine.
+      notes: M-CSA entry 581, mechanism 1; M-CSA cites PMID:18336913, PMID:25277374, PMID:9095195; step
+        1
+  - subject: his233
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His233 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/581/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 581, mechanism 1; M-CSA cites PMID:18336913, PMID:25277374, PMID:9095195; M-CSA
+        catalytic-residue roles for His233
+  - subject: asp267
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp267 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/581/
+      snippet: steric role
+      notes: M-CSA entry 581, mechanism 1; M-CSA cites PMID:18336913, PMID:25277374, PMID:9095195; M-CSA
+        catalytic-residue roles for Asp267
+  - subject: his268
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His268 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/581/
+      snippet: steric role
+      notes: M-CSA entry 581, mechanism 1; M-CSA cites PMID:18336913, PMID:25277374, PMID:9095195; M-CSA
+        catalytic-residue roles for His268
+  - subject: tyr334
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr334 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/581/
+      snippet: steric role
+      notes: M-CSA entry 581, mechanism 1; M-CSA cites PMID:18336913, PMID:25277374, PMID:9095195; M-CSA
+        catalytic-residue roles for Tyr334
+  - subject: tyr467
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr467 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/581/
+      snippet: activator, covalently attached
+      notes: M-CSA entry 581, mechanism 1; M-CSA cites PMID:18336913, PMID:25277374, PMID:9095195; M-CSA
+        catalytic-residue roles for Tyr467
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/581/
+      snippet: The reaction centre of hydroxylamine oxioreductase is an unusual haem group, cross linked
+        to Tyr467 of a separate sub unit through a covalent bond. This linking meso-substituted haem group,
+        P460 extracts two electrons from the substrate and transfers them to cytochrome c through the
+        six surrounding c type haem groups. His233 is the axial ligand to Fe in P460 while the proximal
+        site is free for hyd
+      notes: M-CSA entry 581, mechanism 1; M-CSA cites PMID:18336913, PMID:25277374, PMID:9095195; CATH
+        domain 1.10.780.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/581/
+      snippet: The reaction centre of hydroxylamine oxioreductase is an unusual haem group, cross linked
+        to Tyr467 of a separate sub unit through a covalent bond. This linking meso-substituted haem group,
+        P460 extracts two electrons from the substrate and transfers them to cytochrome c through the
+        six surrounding c type haem groups. His233 is the axial ligand to Fe in P460 while the proximal
+        site is free for hyd
+      notes: M-CSA entry 581, mechanism 1; M-CSA cites PMID:18336913, PMID:25277374, PMID:9095195; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/581/
+      snippet: The reaction centre of hydroxylamine oxioreductase is an unusual haem group, cross linked
+        to Tyr467 of a separate sub unit through a covalent bond. This linking meso-substituted haem group,
+        P460 extracts two electrons from the substrate and transfers them to cytochrome c through the
+        six surrounding c type haem groups. His233 is the axial ligand to Fe in P460 while the proximal
+        site is free for hyd
+      notes: M-CSA entry 581, mechanism 1; M-CSA cites PMID:18336913, PMID:25277374, PMID:9095195; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/581/
+      snippet: The reaction centre of hydroxylamine oxioreductase is an unusual haem group, cross linked
+        to Tyr467 of a separate sub unit through a covalent bond. This linking meso-substituted haem group,
+        P460 extracts two electrons from the substrate and transfers them to cytochrome c through the
+        six surrounding c type haem groups. His233 is the axial ligand to Fe in P460 while the proximal
+        site is free for hyd
+      notes: M-CSA entry 581, mechanism 1; M-CSA cites PMID:18336913, PMID:25277374, PMID:9095195; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/581/
+      snippet: The reaction centre of hydroxylamine oxioreductase is an unusual haem group, cross linked
+        to Tyr467 of a separate sub unit through a covalent bond. This linking meso-substituted haem group,
+        P460 extracts two electrons from the substrate and transfers them to cytochrome c through the
+        six surrounding c type haem groups. His233 is the axial ligand to Fe in P460 while the proximal
+        site is free for hyd
+      notes: M-CSA entry 581, mechanism 1; M-CSA cites PMID:18336913, PMID:25277374, PMID:9095195; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/581/
+      snippet: The reaction centre of hydroxylamine oxioreductase is an unusual haem group, cross linked
+        to Tyr467 of a separate sub unit through a covalent bond. This linking meso-substituted haem group,
+        P460 extracts two electrons from the substrate and transfers them to cytochrome c through the
+        six surrounding c type haem groups. His233 is the axial ligand to Fe in P460 while the proximal
+        site is free for hyd
+      notes: M-CSA entry 581, mechanism 1; M-CSA cites PMID:18336913, PMID:25277374, PMID:9095195; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/581/
+      snippet: The reaction centre of hydroxylamine oxioreductase is an unusual haem group, cross linked
+        to Tyr467 of a separate sub unit through a covalent bond. This linking meso-substituted haem group,
+        P460 extracts two electrons from the substrate and transfers them to cytochrome c through the
+        six surrounding c type haem groups. His233 is the axial ligand to Fe in P460 while the proximal
+        site is free for hyd
+      notes: M-CSA entry 581, mechanism 1; M-CSA cites PMID:18336913, PMID:25277374, PMID:9095195; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/581/
+      snippet: The reaction centre of hydroxylamine oxioreductase is an unusual haem group, cross linked
+        to Tyr467 of a separate sub unit through a covalent bond. This linking meso-substituted haem group,
+        P460 extracts two electrons from the substrate and transfers them to cytochrome c through the
+        six surrounding c type haem groups. His233 is the axial ligand to Fe in P460 while the proximal
+        site is free for hyd
+      notes: M-CSA entry 581, mechanism 1; M-CSA cites PMID:18336913, PMID:25277374, PMID:9095195; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (18 evidence-backed edges) transcribed from M-CSA entry 581;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

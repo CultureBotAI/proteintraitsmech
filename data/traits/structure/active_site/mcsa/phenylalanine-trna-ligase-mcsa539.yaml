@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:6.1.1.20
 - CHEBI:58095
@@ -627,4 +627,364 @@ definitions:
       Phenylalanine tRNA synthase is able to catalyse the addition of a phenylalanine residue to the specific tRNA needed to transfer it to the ribosome for protein synthesis. It is a member of the Class II group of amino acid tRNA synthases, which includes Histidine and Serine specific enzymes, as opposed to the Class I group including, among others, Arginine and Lysine specific enzymes. As a consequence, it shows homology with the rest of the Class II group in the residues surrounding the ATP binding site in particular, as well as some overall structural similarity. The enzyme is unusual however because it adds the amino acid to the 2' OH group of the tRNA rather than the 3'OH, the only Class II enzyme so far discovered with this functionality. Currently, there is insufficient evidence to create an exact enzyme mechanism and verify if divalent ions such as magnesium have a role at the active site.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of phenylalanine---tRNA ligase
+  description: Mechanism transcribed from M-CSA entry 539. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: trp149
+    label: catalytic Trp149 (M-CSA/PDB numbering; UniProt residue 149)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27001
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his178
+    label: catalytic His178 (M-CSA/PDB numbering; UniProt residue 178)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27001
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: arg204
+    label: catalytic Arg204 (M-CSA/PDB numbering; UniProt residue 204)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27001
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: gln218
+    label: catalytic Gln218 (M-CSA/PDB numbering; UniProt residue 218)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27001
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: val261
+    label: catalytic Val261 (M-CSA/PDB numbering; UniProt residue 261)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27001
+    description: 'M-CSA roles: steric role.'
+  - node_id: ala314
+    label: catalytic Ala314 (M-CSA/PDB numbering; UniProt residue 314)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27001
+    description: 'M-CSA roles: steric role.'
+  - node_id: reactant0
+    label: L-phenylalanine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:58095
+  - node_id: reactant1
+    label: AMP 3'-end(1-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:78442
+  - node_id: reactant2
+    label: ATP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+  - node_id: product0
+    label: adenosine 5'-monophosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+  - node_id: product1
+    label: 3'-(L-phenylalanyl)adenylyl(1-) group
+    node_type: CHEMICAL
+    grounding: CHEBI:78531
+  - node_id: product2
+    label: diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+  - node_id: product3
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: 'The overall reaction proceeds via two steps. In the first step, the amino acid is activated
+      towards nucleophilic attack by the addition of an AMP molecule to its carboxylic group. This is
+      achieved by a nucleophilic attack of the carboxylic group of the amino acid on the alpha phosphate
+      of ATP, producing a pentavalent phosphate transition state that is stabilised by positively charged
+      residues Arg '
+  - node_id: active_site
+    label: phenylalanine---tRNA ligase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:539
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.930.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.930.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: phenylalanine---tRNA ligase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:6.1.1.20
+  edges:
+  - subject: his178
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His178 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/539/
+      snippet: The overall reaction proceeds via two steps. In the first step, the amino acid is activated
+        towards nucleophilic attack by the addition of an AMP molecule to its carboxylic group. This is
+        achieved by a nucleophilic attack of the carboxylic group of the amino acid on the alpha phosphate
+        of ATP, producing a pentavalent phosphate transition state that is stabilised by positively charged
+        residues Arg 204, His178 and Gln 218. This structure collapses into a phenylalanyl-AMP molecule
+        and pyrophosphate. From this position, nucleophilic attack on the amino acid's carboxylic group
+        by the 2'OH group of the attacking tRNA results in the formation of the final product. The discrimination
+        of the enzyme between phenylalanine and tyrosine is achieved by Ala 314 and Val 261 which promotes
+        hydrolysis of the tyrosylAMP which is formed if tyrosine reacts.
+      notes: M-CSA entry 539, mechanism 1; M-CSA cites PMID:10092459; step 1
+  - subject: arg204
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg204 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/539/
+      snippet: The overall reaction proceeds via two steps. In the first step, the amino acid is activated
+        towards nucleophilic attack by the addition of an AMP molecule to its carboxylic group. This is
+        achieved by a nucleophilic attack of the carboxylic group of the amino acid on the alpha phosphate
+        of ATP, producing a pentavalent phosphate transition state that is stabilised by positively charged
+        residues Arg 204, His178 and Gln 218. This structure collapses into a phenylalanyl-AMP molecule
+        and pyrophosphate. From this position, nucleophilic attack on the amino acid's carboxylic group
+        by the 2'OH group of the attacking tRNA results in the formation of the final product. The discrimination
+        of the enzyme between phenylalanine and tyrosine is achieved by Ala 314 and Val 261 which promotes
+        hydrolysis of the tyrosylAMP which is formed if tyrosine reacts.
+      notes: M-CSA entry 539, mechanism 1; M-CSA cites PMID:10092459; step 1
+  - subject: gln218
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Gln218 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/539/
+      snippet: The overall reaction proceeds via two steps. In the first step, the amino acid is activated
+        towards nucleophilic attack by the addition of an AMP molecule to its carboxylic group. This is
+        achieved by a nucleophilic attack of the carboxylic group of the amino acid on the alpha phosphate
+        of ATP, producing a pentavalent phosphate transition state that is stabilised by positively charged
+        residues Arg 204, His178 and Gln 218. This structure collapses into a phenylalanyl-AMP molecule
+        and pyrophosphate. From this position, nucleophilic attack on the amino acid's carboxylic group
+        by the 2'OH group of the attacking tRNA results in the formation of the final product. The discrimination
+        of the enzyme between phenylalanine and tyrosine is achieved by Ala 314 and Val 261 which promotes
+        hydrolysis of the tyrosylAMP which is formed if tyrosine reacts.
+      notes: M-CSA entry 539, mechanism 1; M-CSA cites PMID:10092459; step 1
+  - subject: val261
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Val261 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/539/
+      snippet: The overall reaction proceeds via two steps. In the first step, the amino acid is activated
+        towards nucleophilic attack by the addition of an AMP molecule to its carboxylic group. This is
+        achieved by a nucleophilic attack of the carboxylic group of the amino acid on the alpha phosphate
+        of ATP, producing a pentavalent phosphate transition state that is stabilised by positively charged
+        residues Arg 204, His178 and Gln 218. This structure collapses into a phenylalanyl-AMP molecule
+        and pyrophosphate. From this position, nucleophilic attack on the amino acid's carboxylic group
+        by the 2'OH group of the attacking tRNA results in the formation of the final product. The discrimination
+        of the enzyme between phenylalanine and tyrosine is achieved by Ala 314 and Val 261 which promotes
+        hydrolysis of the tyrosylAMP which is formed if tyrosine reacts.
+      notes: M-CSA entry 539, mechanism 1; M-CSA cites PMID:10092459; step 1
+  - subject: ala314
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ala314 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/539/
+      snippet: The overall reaction proceeds via two steps. In the first step, the amino acid is activated
+        towards nucleophilic attack by the addition of an AMP molecule to its carboxylic group. This is
+        achieved by a nucleophilic attack of the carboxylic group of the amino acid on the alpha phosphate
+        of ATP, producing a pentavalent phosphate transition state that is stabilised by positively charged
+        residues Arg 204, His178 and Gln 218. This structure collapses into a phenylalanyl-AMP molecule
+        and pyrophosphate. From this position, nucleophilic attack on the amino acid's carboxylic group
+        by the 2'OH group of the attacking tRNA results in the formation of the final product. The discrimination
+        of the enzyme between phenylalanine and tyrosine is achieved by Ala 314 and Val 261 which promotes
+        hydrolysis of the tyrosylAMP which is formed if tyrosine reacts.
+      notes: M-CSA entry 539, mechanism 1; M-CSA cites PMID:10092459; step 1
+  - subject: trp149
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp149 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/539/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 539, mechanism 1; M-CSA cites PMID:10092459; M-CSA catalytic-residue roles for
+        Trp149
+  - subject: his178
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His178 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/539/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 539, mechanism 1; M-CSA cites PMID:10092459; M-CSA catalytic-residue roles for
+        His178
+  - subject: arg204
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg204 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/539/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 539, mechanism 1; M-CSA cites PMID:10092459; M-CSA catalytic-residue roles for
+        Arg204
+  - subject: gln218
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln218 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/539/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 539, mechanism 1; M-CSA cites PMID:10092459; M-CSA catalytic-residue roles for
+        Gln218
+  - subject: val261
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Val261 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/539/
+      snippet: steric role
+      notes: M-CSA entry 539, mechanism 1; M-CSA cites PMID:10092459; M-CSA catalytic-residue roles for
+        Val261
+  - subject: ala314
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ala314 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/539/
+      snippet: steric role
+      notes: M-CSA entry 539, mechanism 1; M-CSA cites PMID:10092459; M-CSA catalytic-residue roles for
+        Ala314
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/539/
+      snippet: The overall reaction proceeds via two steps. In the first step, the amino acid is activated
+        towards nucleophilic attack by the addition of an AMP molecule to its carboxylic group. This is
+        achieved by a nucleophilic attack of the carboxylic group of the amino acid on the alpha phosphate
+        of ATP, producing a pentavalent phosphate transition state that is stabilised by positively charged
+        residues Arg
+      notes: M-CSA entry 539, mechanism 1; M-CSA cites PMID:10092459; CATH domain 3.30.930.10 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/539/
+      snippet: The overall reaction proceeds via two steps. In the first step, the amino acid is activated
+        towards nucleophilic attack by the addition of an AMP molecule to its carboxylic group. This is
+        achieved by a nucleophilic attack of the carboxylic group of the amino acid on the alpha phosphate
+        of ATP, producing a pentavalent phosphate transition state that is stabilised by positively charged
+        residues Arg
+      notes: M-CSA entry 539, mechanism 1; M-CSA cites PMID:10092459; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/539/
+      snippet: The overall reaction proceeds via two steps. In the first step, the amino acid is activated
+        towards nucleophilic attack by the addition of an AMP molecule to its carboxylic group. This is
+        achieved by a nucleophilic attack of the carboxylic group of the amino acid on the alpha phosphate
+        of ATP, producing a pentavalent phosphate transition state that is stabilised by positively charged
+        residues Arg
+      notes: M-CSA entry 539, mechanism 1; M-CSA cites PMID:10092459; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/539/
+      snippet: The overall reaction proceeds via two steps. In the first step, the amino acid is activated
+        towards nucleophilic attack by the addition of an AMP molecule to its carboxylic group. This is
+        achieved by a nucleophilic attack of the carboxylic group of the amino acid on the alpha phosphate
+        of ATP, producing a pentavalent phosphate transition state that is stabilised by positively charged
+        residues Arg
+      notes: M-CSA entry 539, mechanism 1; M-CSA cites PMID:10092459; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/539/
+      snippet: The overall reaction proceeds via two steps. In the first step, the amino acid is activated
+        towards nucleophilic attack by the addition of an AMP molecule to its carboxylic group. This is
+        achieved by a nucleophilic attack of the carboxylic group of the amino acid on the alpha phosphate
+        of ATP, producing a pentavalent phosphate transition state that is stabilised by positively charged
+        residues Arg
+      notes: M-CSA entry 539, mechanism 1; M-CSA cites PMID:10092459; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/539/
+      snippet: The overall reaction proceeds via two steps. In the first step, the amino acid is activated
+        towards nucleophilic attack by the addition of an AMP molecule to its carboxylic group. This is
+        achieved by a nucleophilic attack of the carboxylic group of the amino acid on the alpha phosphate
+        of ATP, producing a pentavalent phosphate transition state that is stabilised by positively charged
+        residues Arg
+      notes: M-CSA entry 539, mechanism 1; M-CSA cites PMID:10092459; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/539/
+      snippet: The overall reaction proceeds via two steps. In the first step, the amino acid is activated
+        towards nucleophilic attack by the addition of an AMP molecule to its carboxylic group. This is
+        achieved by a nucleophilic attack of the carboxylic group of the amino acid on the alpha phosphate
+        of ATP, producing a pentavalent phosphate transition state that is stabilised by positively charged
+        residues Arg
+      notes: M-CSA entry 539, mechanism 1; M-CSA cites PMID:10092459; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/539/
+      snippet: The overall reaction proceeds via two steps. In the first step, the amino acid is activated
+        towards nucleophilic attack by the addition of an AMP molecule to its carboxylic group. This is
+        achieved by a nucleophilic attack of the carboxylic group of the amino acid on the alpha phosphate
+        of ATP, producing a pentavalent phosphate transition state that is stabilised by positively charged
+        residues Arg
+      notes: M-CSA entry 539, mechanism 1; M-CSA cites PMID:10092459; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product3
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/539/
+      snippet: The overall reaction proceeds via two steps. In the first step, the amino acid is activated
+        towards nucleophilic attack by the addition of an AMP molecule to its carboxylic group. This is
+        achieved by a nucleophilic attack of the carboxylic group of the amino acid on the alpha phosphate
+        of ATP, producing a pentavalent phosphate transition state that is stabilised by positively charged
+        residues Arg
+      notes: M-CSA entry 539, mechanism 1; M-CSA cites PMID:10092459; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (20 evidence-backed edges) transcribed from M-CSA entry 539;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

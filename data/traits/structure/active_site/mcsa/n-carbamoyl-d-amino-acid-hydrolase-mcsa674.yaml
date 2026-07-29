@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.5.1.77
 - CHEBI:16526
@@ -228,4 +228,247 @@ definitions:
       N-carbomyl-D-amino acid amindohydrolase (DCase) catalyses the hydrolysis of N-carbomyl-D-amino acids to the corresponding D-amino acids, which are useful in preparation of physiologically active peptides and beta-lactam antibiotics.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of N-carbamoyl-D-amino-acid hydrolase
+  description: Mechanism transcribed from M-CSA entry 674. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering only — no unique offset to the record's reference sequence could
+    be verified, so no UniProt position is asserted.
+  nodes:
+  - node_id: glu46
+    label: catalytic Glu46 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P60327
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: lys126
+    label: catalytic Lys126 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P60327
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ala171
+    label: catalytic Ala171 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P60327
+    description: 'M-CSA roles: covalent catalysis, proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: N-carbamoyl-D-alpha-amino acid anion
+    node_type: CHEMICAL
+    grounding: CHEBI:85602
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product0
+    label: carbon dioxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+  - node_id: product1
+    label: D-alpha-amino acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:59871
+  - node_id: product2
+    label: ammonium
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: The proposed mechanism suggests that Glu46 acts as a base to deprotonate the thiol group
+      of Cys171 to promote its nucleophilic attack on the carbonyl carbon of the substrate to form an
+      acylenzyme intermediate and ammonia. Glu46 then protonates the leaving group and activates a water
+      molecule to restore the enzyme from the acylenzyme intermediate. The released N-carboxy-amino acid
+      spontaneously col
+  - node_id: active_site
+    label: N-carbamoyl-D-amino-acid hydrolase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:674
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.60.110.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.60.110.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: N-carbamoyl-D-amino-acid hydrolase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.5.1.77
+  edges:
+  - subject: glu46
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu46 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/674/
+      snippet: The proposed mechanism suggests that Glu46 acts as a base to deprotonate the thiol group
+        of Cys171 to promote its nucleophilic attack on the carbonyl carbon of the substrate to form an
+        acylenzyme intermediate and ammonia. Glu46 then protonates the leaving group and activates a water
+        molecule to restore the enzyme from the acylenzyme intermediate. The released N-carboxy-amino
+        acid spontaneously collapses and converts to the corresponding D-amino acid and carbon dioxide.
+        The negatively charged transition state in the reaction is stabilised by an oxyanion hole formed
+        by Lys126.
+      notes: M-CSA entry 674, mechanism 1; M-CSA cites PMID:10903946, PMID:8621596; step 1
+  - subject: lys126
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys126 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/674/
+      snippet: The proposed mechanism suggests that Glu46 acts as a base to deprotonate the thiol group
+        of Cys171 to promote its nucleophilic attack on the carbonyl carbon of the substrate to form an
+        acylenzyme intermediate and ammonia. Glu46 then protonates the leaving group and activates a water
+        molecule to restore the enzyme from the acylenzyme intermediate. The released N-carboxy-amino
+        acid spontaneously collapses and converts to the corresponding D-amino acid and carbon dioxide.
+        The negatively charged transition state in the reaction is stabilised by an oxyanion hole formed
+        by Lys126.
+      notes: M-CSA entry 674, mechanism 1; M-CSA cites PMID:10903946, PMID:8621596; step 1
+  - subject: glu46
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu46 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/674/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 674, mechanism 1; M-CSA cites PMID:10903946, PMID:8621596; M-CSA catalytic-residue
+        roles for Glu46
+  - subject: lys126
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys126 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/674/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 674, mechanism 1; M-CSA cites PMID:10903946, PMID:8621596; M-CSA catalytic-residue
+        roles for Lys126
+  - subject: ala171
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ala171 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/674/
+      snippet: covalent catalysis, proton shuttle (general acid/base)
+      notes: M-CSA entry 674, mechanism 1; M-CSA cites PMID:10903946, PMID:8621596; M-CSA catalytic-residue
+        roles for Ala171
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/674/
+      snippet: The proposed mechanism suggests that Glu46 acts as a base to deprotonate the thiol group
+        of Cys171 to promote its nucleophilic attack on the carbonyl carbon of the substrate to form an
+        acylenzyme intermediate and ammonia. Glu46 then protonates the leaving group and activates a water
+        molecule to restore the enzyme from the acylenzyme intermediate. The released N-carboxy-amino
+        acid spontaneously col
+      notes: M-CSA entry 674, mechanism 1; M-CSA cites PMID:10903946, PMID:8621596; CATH domain 3.60.110.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/674/
+      snippet: The proposed mechanism suggests that Glu46 acts as a base to deprotonate the thiol group
+        of Cys171 to promote its nucleophilic attack on the carbonyl carbon of the substrate to form an
+        acylenzyme intermediate and ammonia. Glu46 then protonates the leaving group and activates a water
+        molecule to restore the enzyme from the acylenzyme intermediate. The released N-carboxy-amino
+        acid spontaneously col
+      notes: M-CSA entry 674, mechanism 1; M-CSA cites PMID:10903946, PMID:8621596; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/674/
+      snippet: The proposed mechanism suggests that Glu46 acts as a base to deprotonate the thiol group
+        of Cys171 to promote its nucleophilic attack on the carbonyl carbon of the substrate to form an
+        acylenzyme intermediate and ammonia. Glu46 then protonates the leaving group and activates a water
+        molecule to restore the enzyme from the acylenzyme intermediate. The released N-carboxy-amino
+        acid spontaneously col
+      notes: M-CSA entry 674, mechanism 1; M-CSA cites PMID:10903946, PMID:8621596; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/674/
+      snippet: The proposed mechanism suggests that Glu46 acts as a base to deprotonate the thiol group
+        of Cys171 to promote its nucleophilic attack on the carbonyl carbon of the substrate to form an
+        acylenzyme intermediate and ammonia. Glu46 then protonates the leaving group and activates a water
+        molecule to restore the enzyme from the acylenzyme intermediate. The released N-carboxy-amino
+        acid spontaneously col
+      notes: M-CSA entry 674, mechanism 1; M-CSA cites PMID:10903946, PMID:8621596; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/674/
+      snippet: The proposed mechanism suggests that Glu46 acts as a base to deprotonate the thiol group
+        of Cys171 to promote its nucleophilic attack on the carbonyl carbon of the substrate to form an
+        acylenzyme intermediate and ammonia. Glu46 then protonates the leaving group and activates a water
+        molecule to restore the enzyme from the acylenzyme intermediate. The released N-carboxy-amino
+        acid spontaneously col
+      notes: M-CSA entry 674, mechanism 1; M-CSA cites PMID:10903946, PMID:8621596; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/674/
+      snippet: The proposed mechanism suggests that Glu46 acts as a base to deprotonate the thiol group
+        of Cys171 to promote its nucleophilic attack on the carbonyl carbon of the substrate to form an
+        acylenzyme intermediate and ammonia. Glu46 then protonates the leaving group and activates a water
+        molecule to restore the enzyme from the acylenzyme intermediate. The released N-carboxy-amino
+        acid spontaneously col
+      notes: M-CSA entry 674, mechanism 1; M-CSA cites PMID:10903946, PMID:8621596; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/674/
+      snippet: The proposed mechanism suggests that Glu46 acts as a base to deprotonate the thiol group
+        of Cys171 to promote its nucleophilic attack on the carbonyl carbon of the substrate to form an
+        acylenzyme intermediate and ammonia. Glu46 then protonates the leaving group and activates a water
+        molecule to restore the enzyme from the acylenzyme intermediate. The released N-carboxy-amino
+        acid spontaneously col
+      notes: M-CSA entry 674, mechanism 1; M-CSA cites PMID:10903946, PMID:8621596; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/674/
+      snippet: The proposed mechanism suggests that Glu46 acts as a base to deprotonate the thiol group
+        of Cys171 to promote its nucleophilic attack on the carbonyl carbon of the substrate to form an
+        acylenzyme intermediate and ammonia. Glu46 then protonates the leaving group and activates a water
+        molecule to restore the enzyme from the acylenzyme intermediate. The released N-carboxy-amino
+        acid spontaneously col
+      notes: M-CSA entry 674, mechanism 1; M-CSA cites PMID:10903946, PMID:8621596; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 674;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

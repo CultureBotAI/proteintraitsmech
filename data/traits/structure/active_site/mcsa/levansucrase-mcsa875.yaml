@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.4.1.10
 - CHEBI:134464
@@ -359,4 +359,237 @@ definitions:
       Member of the glycosyl hydrolase 68 family. Catalyses the polymerisation of fructan via the direct incorporation of a (2,6)-linked furan from sucrose.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of levansucrase
+  description: Mechanism transcribed from M-CSA entry 875. M-CSA does not resolve this one into steps,
+    so the whole mechanism is a single node quoting its `mechanism_text`; residue edges are still per-residue.
+    Every edge quotes the M-CSA entry; M-CSA's primary references are in the edge notes. Residue nodes
+    carry M-CSA/PDB author numbering; the UniProt position in each label was verified against the reference
+    sequence (offset +0).
+  nodes:
+  - node_id: asp86
+    label: catalytic Asp86 (M-CSA/PDB numbering; UniProt residue 86)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05655
+    description: 'M-CSA roles: covalent catalysis.'
+  - node_id: ser164
+    label: catalytic Ser164 (M-CSA/PDB numbering; UniProt residue 164)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05655
+    description: 'M-CSA roles: steric locator.'
+  - node_id: asp247
+    label: catalytic Asp247 (M-CSA/PDB numbering; UniProt residue 247)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05655
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu342
+    label: catalytic Glu342 (M-CSA/PDB numbering; UniProt residue 342)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05655
+    description: 'M-CSA roles: proton shuttle (general acid/base).'
+  - node_id: reactant0
+    label: '[(2->6)-beta-D-fructofuranosyl-]n alpha-D-glucopyranoside'
+    node_type: CHEMICAL
+    grounding: CHEBI:134464
+  - node_id: reactant1
+    label: sucrose
+    node_type: CHEMICAL
+    grounding: CHEBI:17992
+  - node_id: product0
+    label: D-glucopyranose
+    node_type: CHEMICAL
+    grounding: CHEBI:4167
+  - node_id: product1
+    label: 6-kestotriose
+    node_type: CHEMICAL
+    grounding: CHEBI:64833
+  - node_id: step1
+    label: overall catalytic mechanism (not resolved into steps by M-CSA)
+    node_type: STATE
+    description: The canonical reaction mechanism of retaining glycosidases implies that Asp86 and Glu342
+      need to be in different protonation states upon substrate binding in the double displacement reaction
+      mechanism of fructosyl transfer. The optimum of levansucrase enzymatic activity is at pH 6.0. During
+      the first reaction step of the double displacement mechanism, nucleophilic Asp86 forms a covalent
+      intermedia
+  - node_id: active_site
+    label: levansucrase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:875
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.115.10.20 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.115.10.20
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: levansucrase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.4.1.10
+  edges:
+  - subject: asp86
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp86 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/875/
+      snippet: The canonical reaction mechanism of retaining glycosidases implies that Asp86 and Glu342
+        need to be in different protonation states upon substrate binding in the double displacement reaction
+        mechanism of fructosyl transfer. The optimum of levansucrase enzymatic activity is at pH 6.0.
+        During the first reaction step of the double displacement mechanism, nucleophilic Asp86 forms
+        a covalent intermediate with the fructofuranosyl, while Glu342 protonates the glucosyl leaving
+        group. In the second reaction step of the double displacement mechanism, the acceptor substrate
+        binds and, through nucleophilic attack of the terminal 6'-hydroxyl (assuming a polymer with β
+        (2 → 6) linkage) on the anomeric carbon, the enzyme-bound fructosyl is added to the acceptor.
+      notes: M-CSA entry 875, mechanism 1; M-CSA cites PMID:14517548, PMID:16870166, PMID:18366639, PMID:18596022,
+        PMID:26646447; step 1
+  - subject: glu342
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu342 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/875/
+      snippet: The canonical reaction mechanism of retaining glycosidases implies that Asp86 and Glu342
+        need to be in different protonation states upon substrate binding in the double displacement reaction
+        mechanism of fructosyl transfer. The optimum of levansucrase enzymatic activity is at pH 6.0.
+        During the first reaction step of the double displacement mechanism, nucleophilic Asp86 forms
+        a covalent intermediate with the fructofuranosyl, while Glu342 protonates the glucosyl leaving
+        group. In the second reaction step of the double displacement mechanism, the acceptor substrate
+        binds and, through nucleophilic attack of the terminal 6'-hydroxyl (assuming a polymer with β
+        (2 → 6) linkage) on the anomeric carbon, the enzyme-bound fructosyl is added to the acceptor.
+      notes: M-CSA entry 875, mechanism 1; M-CSA cites PMID:14517548, PMID:16870166, PMID:18366639, PMID:18596022,
+        PMID:26646447; step 1
+  - subject: asp86
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp86 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/875/
+      snippet: covalent catalysis
+      notes: M-CSA entry 875, mechanism 1; M-CSA cites PMID:14517548, PMID:16870166, PMID:18366639, PMID:18596022,
+        PMID:26646447; M-CSA catalytic-residue roles for Asp86
+  - subject: ser164
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser164 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/875/
+      snippet: steric locator
+      notes: M-CSA entry 875, mechanism 1; M-CSA cites PMID:14517548, PMID:16870166, PMID:18366639, PMID:18596022,
+        PMID:26646447; M-CSA catalytic-residue roles for Ser164
+  - subject: asp247
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp247 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/875/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 875, mechanism 1; M-CSA cites PMID:14517548, PMID:16870166, PMID:18366639, PMID:18596022,
+        PMID:26646447; M-CSA catalytic-residue roles for Asp247
+  - subject: glu342
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu342 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/875/
+      snippet: proton shuttle (general acid/base)
+      notes: M-CSA entry 875, mechanism 1; M-CSA cites PMID:14517548, PMID:16870166, PMID:18366639, PMID:18596022,
+        PMID:26646447; M-CSA catalytic-residue roles for Glu342
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/875/
+      snippet: The canonical reaction mechanism of retaining glycosidases implies that Asp86 and Glu342
+        need to be in different protonation states upon substrate binding in the double displacement reaction
+        mechanism of fructosyl transfer. The optimum of levansucrase enzymatic activity is at pH 6.0.
+        During the first reaction step of the double displacement mechanism, nucleophilic Asp86 forms
+        a covalent intermedia
+      notes: M-CSA entry 875, mechanism 1; M-CSA cites PMID:14517548, PMID:16870166, PMID:18366639, PMID:18596022,
+        PMID:26646447; CATH domain 2.115.10.20 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/875/
+      snippet: The canonical reaction mechanism of retaining glycosidases implies that Asp86 and Glu342
+        need to be in different protonation states upon substrate binding in the double displacement reaction
+        mechanism of fructosyl transfer. The optimum of levansucrase enzymatic activity is at pH 6.0.
+        During the first reaction step of the double displacement mechanism, nucleophilic Asp86 forms
+        a covalent intermedia
+      notes: M-CSA entry 875, mechanism 1; M-CSA cites PMID:14517548, PMID:16870166, PMID:18366639, PMID:18596022,
+        PMID:26646447; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/875/
+      snippet: The canonical reaction mechanism of retaining glycosidases implies that Asp86 and Glu342
+        need to be in different protonation states upon substrate binding in the double displacement reaction
+        mechanism of fructosyl transfer. The optimum of levansucrase enzymatic activity is at pH 6.0.
+        During the first reaction step of the double displacement mechanism, nucleophilic Asp86 forms
+        a covalent intermedia
+      notes: M-CSA entry 875, mechanism 1; M-CSA cites PMID:14517548, PMID:16870166, PMID:18366639, PMID:18596022,
+        PMID:26646447; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/875/
+      snippet: The canonical reaction mechanism of retaining glycosidases implies that Asp86 and Glu342
+        need to be in different protonation states upon substrate binding in the double displacement reaction
+        mechanism of fructosyl transfer. The optimum of levansucrase enzymatic activity is at pH 6.0.
+        During the first reaction step of the double displacement mechanism, nucleophilic Asp86 forms
+        a covalent intermedia
+      notes: M-CSA entry 875, mechanism 1; M-CSA cites PMID:14517548, PMID:16870166, PMID:18366639, PMID:18596022,
+        PMID:26646447; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/875/
+      snippet: The canonical reaction mechanism of retaining glycosidases implies that Asp86 and Glu342
+        need to be in different protonation states upon substrate binding in the double displacement reaction
+        mechanism of fructosyl transfer. The optimum of levansucrase enzymatic activity is at pH 6.0.
+        During the first reaction step of the double displacement mechanism, nucleophilic Asp86 forms
+        a covalent intermedia
+      notes: M-CSA entry 875, mechanism 1; M-CSA cites PMID:14517548, PMID:16870166, PMID:18366639, PMID:18596022,
+        PMID:26646447; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/875/
+      snippet: The canonical reaction mechanism of retaining glycosidases implies that Asp86 and Glu342
+        need to be in different protonation states upon substrate binding in the double displacement reaction
+        mechanism of fructosyl transfer. The optimum of levansucrase enzymatic activity is at pH 6.0.
+        During the first reaction step of the double displacement mechanism, nucleophilic Asp86 forms
+        a covalent intermedia
+      notes: M-CSA entry 875, mechanism 1; M-CSA cites PMID:14517548, PMID:16870166, PMID:18366639, PMID:18596022,
+        PMID:26646447; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (12 evidence-backed edges) transcribed from M-CSA entry 875;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0
