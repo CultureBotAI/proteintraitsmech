@@ -29,112 +29,127 @@ evidence:
 - reference: DOI:10.1021/bi4015852
   notes: PMID:24447055 (aro citation)
 causal_graphs:
-  - graph_id: resistance
-    title: FosB → mechanism → resistance (curated from ARO relations + literature)
-    description: >-
-      Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence (PMID:15741169). Fosfomycin thiol transferase (FosA) — inactivates fosfomycin by opening its epoxide ring via glutathione conjugation.
-    nodes:
-      - node_id: determinant
-        label: FosB
-        node_type: PROTEIN
-        grounding: ARO:3000172
-      - node_id: mech0
-        label: antibiotic inactivation
-        node_type: MOLECULAR_FUNCTION
-        grounding: ARO:0001004
-      - node_id: mech1
-        label: hydrolysis of fosfomycin epoxide ring
-        node_type: MOLECULAR_FUNCTION
-        grounding: ARO:3000125
-      - node_id: drug0
-        label: phosphonic acid antibiotic
-        node_type: CHEMICAL
-        grounding: ARO:3007149
-      - node_id: domain
-        label: glyoxalase / VOC-superfamily domain
-        node_type: DOMAIN
-        grounding: Pfam:PF00903
-        description: KB protein-trait record carrying the mechanism.
-      - node_id: fold
-        label: VOC / glyoxalase superfamily fold
-        node_type: DOMAIN
-        grounding: CATH:3.10.180
-        description: KB protein-trait record carrying the mechanism.
-      - node_id: resistance
-        label: antibiotic resistance phenotype
-        node_type: PHENOTYPE
-    edges:
-      - subject: determinant
-        predicate: participates in (resistance mechanism)
-        predicate_id: RO:0000056
-        object: mech0
-        evidence:
-          - reference: PMID:15741169
-            snippet: "The metalloglutathione transferase FosA catalyzes the conjugation of glutathione to carbon-1 of the antibiotic fosfomycin, rendering it ineffective as an antibacterial drug."
-            notes: "Family mechanism ARO:0001004."
-      - subject: mech0
-        predicate: causally upstream of
-        predicate_id: RO:0002411
-        object: resistance
-        evidence:
-          - reference: PMID:15741169
-            snippet: "The metalloglutathione transferase FosA catalyzes the conjugation of glutathione to carbon-1 of the antibiotic fosfomycin, rendering it ineffective as an antibacterial drug."
-            notes: "Mechanism ARO:0001004 → resistance."
-      - subject: determinant
-        predicate: participates in (resistance mechanism)
-        predicate_id: RO:0000056
-        object: mech1
-        evidence:
-          - reference: PMID:15741169
-            snippet: "The metalloglutathione transferase FosA catalyzes the conjugation of glutathione to carbon-1 of the antibiotic fosfomycin, rendering it ineffective as an antibacterial drug."
-            notes: "Family mechanism ARO:3000125."
-      - subject: mech1
-        predicate: causally upstream of
-        predicate_id: RO:0002411
-        object: resistance
-        evidence:
-          - reference: PMID:15741169
-            snippet: "The metalloglutathione transferase FosA catalyzes the conjugation of glutathione to carbon-1 of the antibiotic fosfomycin, rendering it ineffective as an antibacterial drug."
-            notes: "Mechanism ARO:3000125 → resistance."
-      - subject: determinant
-        predicate: causally upstream of (confers resistance)
-        predicate_id: RO:0002411
-        object: resistance
-        evidence:
-          - reference: PMID:15741169
-            snippet: "The metalloglutathione transferase FosA catalyzes the conjugation of glutathione to carbon-1 of the antibiotic fosfomycin, rendering it ineffective as an antibacterial drug."
-            notes: Determinant → resistance phenotype.
-      - subject: resistance
-        predicate: related to (resistance is to)
-        object: drug0
-        evidence:
-          - reference: PMID:15741169
-            snippet: "The metalloglutathione transferase FosA catalyzes the conjugation of glutathione to carbon-1 of the antibiotic fosfomycin, rendering it ineffective as an antibacterial drug."
-            notes: Resistance to phosphonic acid antibiotic.
-      - subject: domain
-        predicate: part of (catalytic domain of the protein)
-        predicate_id: BFO:0000050
-        object: determinant
-        evidence:
-          - reference: Pfam:PF00903
-            snippet: Glyoxalase/Bleomycin resistance protein/Dioxygenase superfamily
-            notes: "KB trait: the glyoxalase/VOC domain."
-      - subject: determinant
-        predicate: member of (adopts fold)
-        predicate_id: RO:0002350
-        object: fold
-        evidence:
-          - reference: CATH:3.10.180
-            snippet: "2,3-Dihydroxybiphenyl 1,2-Dioxygenase; domain 1"
-            notes: "KB trait: the VOC/glyoxalase fold."
-      - subject: domain
-        predicate: enables (fosfomycin epoxide opening)
-        predicate_id: RO:0002327
-        object: mech1
-        evidence:
-          - reference: PMID:15741169
-            snippet: "The metalloglutathione transferase FosA catalyzes the conjugation of glutathione to carbon-1 of the antibiotic fosfomycin, rendering it ineffective as an antibacterial drug."
-            notes: "The FosA domain conjugates glutathione to fosfomycin, inactivating it."
+- graph_id: resistance
+  title: FosB → mechanism → resistance (curated from ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (PMID:15741169). Fosfomycin thiol transferase (FosA) — inactivates fosfomycin by opening its epoxide
+    ring via glutathione conjugation.
+  nodes:
+  - node_id: determinant
+    label: FosB
+    node_type: PROTEIN
+    grounding: ARO:3000172
+  - node_id: mech0
+    label: antibiotic inactivation
+    node_type: MOLECULAR_FUNCTION
+    grounding: ARO:0001004
+  - node_id: mech1
+    label: hydrolysis of fosfomycin epoxide ring
+    node_type: MOLECULAR_FUNCTION
+    grounding: ARO:3000125
+  - node_id: drug0
+    label: phosphonic acid antibiotic
+    node_type: CHEMICAL
+    grounding: ARO:3007149
+  - node_id: domain
+    label: glyoxalase / VOC-superfamily domain
+    node_type: DOMAIN
+    grounding: Pfam:PF00903
+    description: KB protein-trait record carrying the mechanism.
+  - node_id: fold
+    label: VOC / glyoxalase superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.10.180
+    description: KB protein-trait record carrying the mechanism.
+  - node_id: resistance
+    label: antibiotic resistance phenotype
+    node_type: PHENOTYPE
+    grounding: GO:0046677
+    description: 'Resistance phenotype conferred by this determinant. Grounded to the nearest available
+      superclass: ARO models determinants and mechanisms but has no term for the resistance phenotype
+      itself.'
+  edges:
+  - subject: determinant
+    predicate: participates in (resistance mechanism)
+    predicate_id: RO:0000056
+    object: mech0
+    evidence:
+    - reference: PMID:15741169
+      snippet: The metalloglutathione transferase FosA catalyzes the conjugation of glutathione to carbon-1
+        of the antibiotic fosfomycin, rendering it ineffective as an antibacterial drug.
+      notes: Family mechanism ARO:0001004.
+  - subject: mech0
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    evidence:
+    - reference: PMID:15741169
+      snippet: The metalloglutathione transferase FosA catalyzes the conjugation of glutathione to carbon-1
+        of the antibiotic fosfomycin, rendering it ineffective as an antibacterial drug.
+      notes: Mechanism ARO:0001004 → resistance.
+  - subject: determinant
+    predicate: participates in (resistance mechanism)
+    predicate_id: RO:0000056
+    object: mech1
+    evidence:
+    - reference: PMID:15741169
+      snippet: The metalloglutathione transferase FosA catalyzes the conjugation of glutathione to carbon-1
+        of the antibiotic fosfomycin, rendering it ineffective as an antibacterial drug.
+      notes: Family mechanism ARO:3000125.
+  - subject: mech1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    evidence:
+    - reference: PMID:15741169
+      snippet: The metalloglutathione transferase FosA catalyzes the conjugation of glutathione to carbon-1
+        of the antibiotic fosfomycin, rendering it ineffective as an antibacterial drug.
+      notes: Mechanism ARO:3000125 → resistance.
+  - subject: determinant
+    predicate: causally upstream of (confers resistance)
+    predicate_id: RO:0002411
+    object: resistance
+    evidence:
+    - reference: PMID:15741169
+      snippet: The metalloglutathione transferase FosA catalyzes the conjugation of glutathione to carbon-1
+        of the antibiotic fosfomycin, rendering it ineffective as an antibacterial drug.
+      notes: Determinant → resistance phenotype.
+  - subject: determinant
+    predicate: confers resistance to (drug class)
+    object: drug0
+    evidence:
+    - reference: ARO:3000133
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:3007149 ! phosphonic acid antibiotic'
+      notes: Asserted on ARO:3000133 (fosfomycin thiol transferase), an is_a ancestor of this record's
+        ARO:3000172; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+    predicate_id: ARO:2000001
+    description: CARD asserts that this determinant confers resistance to phosphonic acid antibiotic.
+  - subject: domain
+    predicate: part of (catalytic domain of the protein)
+    predicate_id: BFO:0000050
+    object: determinant
+    evidence:
+    - reference: Pfam:PF00903
+      snippet: Glyoxalase/Bleomycin resistance protein/Dioxygenase superfamily
+      notes: 'KB trait: the glyoxalase/VOC domain.'
+  - subject: determinant
+    predicate: member of (adopts fold)
+    predicate_id: RO:0002350
+    object: fold
+    evidence:
+    - reference: CATH:3.10.180
+      snippet: 2,3-Dihydroxybiphenyl 1,2-Dioxygenase; domain 1
+      notes: 'KB trait: the VOC/glyoxalase fold.'
+  - subject: domain
+    predicate: enables (fosfomycin epoxide opening)
+    predicate_id: RO:0002327
+    object: mech1
+    evidence:
+    - reference: PMID:15741169
+      snippet: The metalloglutathione transferase FosA catalyzes the conjugation of glutathione to carbon-1
+        of the antibiotic fosfomycin, rendering it ineffective as an antibacterial drug.
+      notes: The FosA domain conjugates glutathione to fosfomycin, inactivating it.
 curation_history:
   - timestamp: "2026-07-21T00:00:00Z"
     curator: edison-causal-graphs

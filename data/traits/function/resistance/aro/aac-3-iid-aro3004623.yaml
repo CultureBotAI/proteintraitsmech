@@ -28,112 +28,127 @@ evidence:
 - reference: DOI:10.1099/jmm.0.015032-0
   notes: PMID:20185552 (aro citation)
 causal_graphs:
-  - graph_id: resistance
-    title: AAC(3)-IId → mechanism → resistance (curated from ARO relations + literature)
-    description: >-
-      Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence (PMID:26818562). AAC — aminoglycoside N-acetyltransferase; inactivates aminoglycosides by acetyl-CoA-dependent acetylation.
-    nodes:
-      - node_id: determinant
-        label: AAC(3)-IId
-        node_type: PROTEIN
-        grounding: ARO:3004623
-      - node_id: mech0
-        label: antibiotic inactivation
-        node_type: MOLECULAR_FUNCTION
-        grounding: ARO:0001004
-      - node_id: mech1
-        label: acylation of antibiotic conferring resistance
-        node_type: MOLECULAR_FUNCTION
-        grounding: ARO:3000106
-      - node_id: drug0
-        label: aminoglycoside antibiotic
-        node_type: CHEMICAL
-        grounding: ARO:0000016
-      - node_id: domain
-        label: GNAT acetyltransferase domain
-        node_type: DOMAIN
-        grounding: InterPro:IPR000182
-        description: KB protein-trait record carrying the mechanism.
-      - node_id: fold
-        label: acyl-CoA N-acyltransferase (GNAT) fold
-        node_type: DOMAIN
-        grounding: CATH:3.40.630
-        description: KB protein-trait record carrying the mechanism.
-      - node_id: resistance
-        label: antibiotic resistance phenotype
-        node_type: PHENOTYPE
-    edges:
-      - subject: determinant
-        predicate: participates in (resistance mechanism)
-        predicate_id: RO:0000056
-        object: mech0
-        evidence:
-          - reference: PMID:26818562
-            snippet: "N-Acetyltransferases transfer an acetyl group from acetyl-CoA to a large array of substrates, from small molecules such as aminoglycoside antibiotics to macromolecules."
-            notes: "Family mechanism ARO:0001004."
-      - subject: mech0
-        predicate: causally upstream of
-        predicate_id: RO:0002411
-        object: resistance
-        evidence:
-          - reference: PMID:26818562
-            snippet: "N-Acetyltransferases transfer an acetyl group from acetyl-CoA to a large array of substrates, from small molecules such as aminoglycoside antibiotics to macromolecules."
-            notes: "Mechanism ARO:0001004 → resistance."
-      - subject: determinant
-        predicate: participates in (resistance mechanism)
-        predicate_id: RO:0000056
-        object: mech1
-        evidence:
-          - reference: PMID:26818562
-            snippet: "N-Acetyltransferases transfer an acetyl group from acetyl-CoA to a large array of substrates, from small molecules such as aminoglycoside antibiotics to macromolecules."
-            notes: "Family mechanism ARO:3000106."
-      - subject: mech1
-        predicate: causally upstream of
-        predicate_id: RO:0002411
-        object: resistance
-        evidence:
-          - reference: PMID:26818562
-            snippet: "N-Acetyltransferases transfer an acetyl group from acetyl-CoA to a large array of substrates, from small molecules such as aminoglycoside antibiotics to macromolecules."
-            notes: "Mechanism ARO:3000106 → resistance."
-      - subject: determinant
-        predicate: causally upstream of (confers resistance)
-        predicate_id: RO:0002411
-        object: resistance
-        evidence:
-          - reference: PMID:26818562
-            snippet: "N-Acetyltransferases transfer an acetyl group from acetyl-CoA to a large array of substrates, from small molecules such as aminoglycoside antibiotics to macromolecules."
-            notes: Determinant → resistance phenotype.
-      - subject: resistance
-        predicate: related to (resistance is to)
-        object: drug0
-        evidence:
-          - reference: PMID:26818562
-            snippet: "N-Acetyltransferases transfer an acetyl group from acetyl-CoA to a large array of substrates, from small molecules such as aminoglycoside antibiotics to macromolecules."
-            notes: Resistance to aminoglycoside antibiotic.
-      - subject: domain
-        predicate: part of (catalytic domain of the protein)
-        predicate_id: BFO:0000050
-        object: determinant
-        evidence:
-          - reference: InterPro:IPR000182
-            snippet: GNAT domain
-            notes: "KB trait: the GNAT acetyltransferase domain."
-      - subject: determinant
-        predicate: member of (adopts fold)
-        predicate_id: RO:0002350
-        object: fold
-        evidence:
-          - reference: CATH:3.40.630
-            snippet: Aminopeptidase
-            notes: "KB trait: the GNAT structural fold."
-      - subject: domain
-        predicate: enables (antibiotic acetylation)
-        predicate_id: RO:0002327
-        object: mech1
-        evidence:
-          - reference: PMID:26818562
-            snippet: "N-Acetyltransferases transfer an acetyl group from acetyl-CoA to a large array of substrates, from small molecules such as aminoglycoside antibiotics to macromolecules."
-            notes: "The GNAT domain transfers an acetyl group onto the aminoglycoside, inactivating it."
+- graph_id: resistance
+  title: AAC(3)-IId → mechanism → resistance (curated from ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (PMID:26818562). AAC — aminoglycoside N-acetyltransferase; inactivates aminoglycosides by acetyl-CoA-dependent
+    acetylation.
+  nodes:
+  - node_id: determinant
+    label: AAC(3)-IId
+    node_type: PROTEIN
+    grounding: ARO:3004623
+  - node_id: mech0
+    label: antibiotic inactivation
+    node_type: MOLECULAR_FUNCTION
+    grounding: ARO:0001004
+  - node_id: mech1
+    label: acylation of antibiotic conferring resistance
+    node_type: MOLECULAR_FUNCTION
+    grounding: ARO:3000106
+  - node_id: drug0
+    label: aminoglycoside antibiotic
+    node_type: CHEMICAL
+    grounding: ARO:0000016
+  - node_id: domain
+    label: GNAT acetyltransferase domain
+    node_type: DOMAIN
+    grounding: InterPro:IPR000182
+    description: KB protein-trait record carrying the mechanism.
+  - node_id: fold
+    label: acyl-CoA N-acyltransferase (GNAT) fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.630
+    description: KB protein-trait record carrying the mechanism.
+  - node_id: resistance
+    label: antibiotic resistance phenotype
+    node_type: PHENOTYPE
+    grounding: GO:0046677
+    description: 'Resistance phenotype conferred by this determinant. Grounded to the nearest available
+      superclass: ARO models determinants and mechanisms but has no term for the resistance phenotype
+      itself.'
+  edges:
+  - subject: determinant
+    predicate: participates in (resistance mechanism)
+    predicate_id: RO:0000056
+    object: mech0
+    evidence:
+    - reference: PMID:26818562
+      snippet: N-Acetyltransferases transfer an acetyl group from acetyl-CoA to a large array of substrates,
+        from small molecules such as aminoglycoside antibiotics to macromolecules.
+      notes: Family mechanism ARO:0001004.
+  - subject: mech0
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    evidence:
+    - reference: PMID:26818562
+      snippet: N-Acetyltransferases transfer an acetyl group from acetyl-CoA to a large array of substrates,
+        from small molecules such as aminoglycoside antibiotics to macromolecules.
+      notes: Mechanism ARO:0001004 → resistance.
+  - subject: determinant
+    predicate: participates in (resistance mechanism)
+    predicate_id: RO:0000056
+    object: mech1
+    evidence:
+    - reference: PMID:26818562
+      snippet: N-Acetyltransferases transfer an acetyl group from acetyl-CoA to a large array of substrates,
+        from small molecules such as aminoglycoside antibiotics to macromolecules.
+      notes: Family mechanism ARO:3000106.
+  - subject: mech1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    evidence:
+    - reference: PMID:26818562
+      snippet: N-Acetyltransferases transfer an acetyl group from acetyl-CoA to a large array of substrates,
+        from small molecules such as aminoglycoside antibiotics to macromolecules.
+      notes: Mechanism ARO:3000106 → resistance.
+  - subject: determinant
+    predicate: causally upstream of (confers resistance)
+    predicate_id: RO:0002411
+    object: resistance
+    evidence:
+    - reference: PMID:26818562
+      snippet: N-Acetyltransferases transfer an acetyl group from acetyl-CoA to a large array of substrates,
+        from small molecules such as aminoglycoside antibiotics to macromolecules.
+      notes: Determinant → resistance phenotype.
+  - subject: determinant
+    predicate: confers resistance to (drug class)
+    object: drug0
+    evidence:
+    - reference: ARO:3000322
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:0000016 ! aminoglycoside antibiotic'
+      notes: Asserted on ARO:3000322 (AAC(3)), an is_a ancestor of this record's ARO:3004623; inherited
+        by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+    predicate_id: ARO:2000001
+    description: CARD asserts that this determinant confers resistance to aminoglycoside antibiotic.
+  - subject: domain
+    predicate: part of (catalytic domain of the protein)
+    predicate_id: BFO:0000050
+    object: determinant
+    evidence:
+    - reference: InterPro:IPR000182
+      snippet: GNAT domain
+      notes: 'KB trait: the GNAT acetyltransferase domain.'
+  - subject: determinant
+    predicate: member of (adopts fold)
+    predicate_id: RO:0002350
+    object: fold
+    evidence:
+    - reference: CATH:3.40.630
+      snippet: Aminopeptidase
+      notes: 'KB trait: the GNAT structural fold.'
+  - subject: domain
+    predicate: enables (antibiotic acetylation)
+    predicate_id: RO:0002327
+    object: mech1
+    evidence:
+    - reference: PMID:26818562
+      snippet: N-Acetyltransferases transfer an acetyl group from acetyl-CoA to a large array of substrates,
+        from small molecules such as aminoglycoside antibiotics to macromolecules.
+      notes: The GNAT domain transfers an acetyl group onto the aminoglycoside, inactivating it.
 curation_history:
   - timestamp: "2026-07-21T00:00:00Z"
     curator: edison-causal-graphs

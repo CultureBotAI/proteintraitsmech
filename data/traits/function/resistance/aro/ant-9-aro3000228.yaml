@@ -20,112 +20,125 @@ trait_relations:
     object: ARO:0000016
     relation_source: "ARO confers_resistance_to_drug_class via ARO:3000228 ANT(9)"
 causal_graphs:
-  - graph_id: resistance
-    title: ANT(9) → mechanism → resistance (curated from ARO relations + literature)
-    description: >-
-      Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence (PMID:25564464). ANT — aminoglycoside nucleotidyltransferase; inactivates aminoglycosides by adenylylation.
-    nodes:
-      - node_id: determinant
-        label: ANT(9)
-        node_type: PROTEIN
-        grounding: ARO:3000228
-      - node_id: mech0
-        label: antibiotic inactivation
-        node_type: MOLECULAR_FUNCTION
-        grounding: ARO:0001004
-      - node_id: mech1
-        label: nucleotidylation of antibiotic conferring resistance
-        node_type: MOLECULAR_FUNCTION
-        grounding: ARO:3000107
-      - node_id: drug0
-        label: aminoglycoside antibiotic
-        node_type: CHEMICAL
-        grounding: ARO:0000016
-      - node_id: domain
-        label: nucleotidyltransferase domain
-        node_type: DOMAIN
-        grounding: Pfam:PF01909
-        description: KB protein-trait record carrying the mechanism.
-      - node_id: fold
-        label: DNA-polymerase-β-like nucleotidyltransferase fold
-        node_type: DOMAIN
-        grounding: CATH:3.30.460
-        description: KB protein-trait record carrying the mechanism.
-      - node_id: resistance
-        label: antibiotic resistance phenotype
-        node_type: PHENOTYPE
-    edges:
-      - subject: determinant
-        predicate: participates in (resistance mechanism)
-        predicate_id: RO:0000056
-        object: mech0
-        evidence:
-          - reference: PMID:25564464
-            snippet: ANT(2″)-Ia confers resistance by magnesium-dependent transfer of a nucleoside monophosphate (AMP) to the 2″-hydroxyl of aminoglycoside substrates containing a 2-deoxystreptamine core.
-            notes: "Family mechanism ARO:0001004."
-      - subject: mech0
-        predicate: causally upstream of
-        predicate_id: RO:0002411
-        object: resistance
-        evidence:
-          - reference: PMID:25564464
-            snippet: ANT(2″)-Ia confers resistance by magnesium-dependent transfer of a nucleoside monophosphate (AMP) to the 2″-hydroxyl of aminoglycoside substrates containing a 2-deoxystreptamine core.
-            notes: "Mechanism ARO:0001004 → resistance."
-      - subject: determinant
-        predicate: participates in (resistance mechanism)
-        predicate_id: RO:0000056
-        object: mech1
-        evidence:
-          - reference: PMID:25564464
-            snippet: ANT(2″)-Ia confers resistance by magnesium-dependent transfer of a nucleoside monophosphate (AMP) to the 2″-hydroxyl of aminoglycoside substrates containing a 2-deoxystreptamine core.
-            notes: "Family mechanism ARO:3000107."
-      - subject: mech1
-        predicate: causally upstream of
-        predicate_id: RO:0002411
-        object: resistance
-        evidence:
-          - reference: PMID:25564464
-            snippet: ANT(2″)-Ia confers resistance by magnesium-dependent transfer of a nucleoside monophosphate (AMP) to the 2″-hydroxyl of aminoglycoside substrates containing a 2-deoxystreptamine core.
-            notes: "Mechanism ARO:3000107 → resistance."
-      - subject: determinant
-        predicate: causally upstream of (confers resistance)
-        predicate_id: RO:0002411
-        object: resistance
-        evidence:
-          - reference: PMID:25564464
-            snippet: ANT(2″)-Ia confers resistance by magnesium-dependent transfer of a nucleoside monophosphate (AMP) to the 2″-hydroxyl of aminoglycoside substrates containing a 2-deoxystreptamine core.
-            notes: Determinant → resistance phenotype.
-      - subject: resistance
-        predicate: related to (resistance is to)
-        object: drug0
-        evidence:
-          - reference: PMID:25564464
-            snippet: ANT(2″)-Ia confers resistance by magnesium-dependent transfer of a nucleoside monophosphate (AMP) to the 2″-hydroxyl of aminoglycoside substrates containing a 2-deoxystreptamine core.
-            notes: Resistance to aminoglycoside antibiotic.
-      - subject: domain
-        predicate: part of (catalytic domain of the protein)
-        predicate_id: BFO:0000050
-        object: determinant
-        evidence:
-          - reference: Pfam:PF01909
-            snippet: Nucleotidyltransferase domain
-            notes: "KB trait: the nucleotidyltransferase domain."
-      - subject: determinant
-        predicate: member of (adopts fold)
-        predicate_id: RO:0002350
-        object: fold
-        evidence:
-          - reference: CATH:3.30.460
-            snippet: Beta Polymerase; domain 2
-            notes: "KB trait: the nucleotidyltransferase fold."
-      - subject: domain
-        predicate: enables (antibiotic nucleotidylation)
-        predicate_id: RO:0002327
-        object: mech1
-        evidence:
-          - reference: PMID:25564464
-            snippet: ANT(2″)-Ia confers resistance by magnesium-dependent transfer of a nucleoside monophosphate (AMP) to the 2″-hydroxyl of aminoglycoside substrates containing a 2-deoxystreptamine core.
-            notes: The nucleotidyltransferase domain adenylylates the aminoglycoside.
+- graph_id: resistance
+  title: ANT(9) → mechanism → resistance (curated from ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (PMID:25564464). ANT — aminoglycoside nucleotidyltransferase; inactivates aminoglycosides by adenylylation.
+  nodes:
+  - node_id: determinant
+    label: ANT(9)
+    node_type: PROTEIN
+    grounding: ARO:3000228
+  - node_id: mech0
+    label: antibiotic inactivation
+    node_type: MOLECULAR_FUNCTION
+    grounding: ARO:0001004
+  - node_id: mech1
+    label: nucleotidylation of antibiotic conferring resistance
+    node_type: MOLECULAR_FUNCTION
+    grounding: ARO:3000107
+  - node_id: drug0
+    label: aminoglycoside antibiotic
+    node_type: CHEMICAL
+    grounding: ARO:0000016
+  - node_id: domain
+    label: nucleotidyltransferase domain
+    node_type: DOMAIN
+    grounding: Pfam:PF01909
+    description: KB protein-trait record carrying the mechanism.
+  - node_id: fold
+    label: DNA-polymerase-β-like nucleotidyltransferase fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.460
+    description: KB protein-trait record carrying the mechanism.
+  - node_id: resistance
+    label: antibiotic resistance phenotype
+    node_type: PHENOTYPE
+    grounding: GO:0046677
+    description: 'Resistance phenotype conferred by this determinant. Grounded to the nearest available
+      superclass: ARO models determinants and mechanisms but has no term for the resistance phenotype
+      itself.'
+  edges:
+  - subject: determinant
+    predicate: participates in (resistance mechanism)
+    predicate_id: RO:0000056
+    object: mech0
+    evidence:
+    - reference: PMID:25564464
+      snippet: ANT(2″)-Ia confers resistance by magnesium-dependent transfer of a nucleoside monophosphate
+        (AMP) to the 2″-hydroxyl of aminoglycoside substrates containing a 2-deoxystreptamine core.
+      notes: Family mechanism ARO:0001004.
+  - subject: mech0
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    evidence:
+    - reference: PMID:25564464
+      snippet: ANT(2″)-Ia confers resistance by magnesium-dependent transfer of a nucleoside monophosphate
+        (AMP) to the 2″-hydroxyl of aminoglycoside substrates containing a 2-deoxystreptamine core.
+      notes: Mechanism ARO:0001004 → resistance.
+  - subject: determinant
+    predicate: participates in (resistance mechanism)
+    predicate_id: RO:0000056
+    object: mech1
+    evidence:
+    - reference: PMID:25564464
+      snippet: ANT(2″)-Ia confers resistance by magnesium-dependent transfer of a nucleoside monophosphate
+        (AMP) to the 2″-hydroxyl of aminoglycoside substrates containing a 2-deoxystreptamine core.
+      notes: Family mechanism ARO:3000107.
+  - subject: mech1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    evidence:
+    - reference: PMID:25564464
+      snippet: ANT(2″)-Ia confers resistance by magnesium-dependent transfer of a nucleoside monophosphate
+        (AMP) to the 2″-hydroxyl of aminoglycoside substrates containing a 2-deoxystreptamine core.
+      notes: Mechanism ARO:3000107 → resistance.
+  - subject: determinant
+    predicate: causally upstream of (confers resistance)
+    predicate_id: RO:0002411
+    object: resistance
+    evidence:
+    - reference: PMID:25564464
+      snippet: ANT(2″)-Ia confers resistance by magnesium-dependent transfer of a nucleoside monophosphate
+        (AMP) to the 2″-hydroxyl of aminoglycoside substrates containing a 2-deoxystreptamine core.
+      notes: Determinant → resistance phenotype.
+  - subject: determinant
+    predicate: confers resistance to (drug class)
+    object: drug0
+    evidence:
+    - reference: ARO:3000228
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:0000016 ! aminoglycoside antibiotic'
+      notes: Asserted directly on ARO:3000228 (ANT(9)) in the CARD/ARO release in data/raw/aro/aro.obo.
+    predicate_id: ARO:2000001
+    description: CARD asserts that this determinant confers resistance to aminoglycoside antibiotic.
+  - subject: domain
+    predicate: part of (catalytic domain of the protein)
+    predicate_id: BFO:0000050
+    object: determinant
+    evidence:
+    - reference: Pfam:PF01909
+      snippet: Nucleotidyltransferase domain
+      notes: 'KB trait: the nucleotidyltransferase domain.'
+  - subject: determinant
+    predicate: member of (adopts fold)
+    predicate_id: RO:0002350
+    object: fold
+    evidence:
+    - reference: CATH:3.30.460
+      snippet: Beta Polymerase; domain 2
+      notes: 'KB trait: the nucleotidyltransferase fold.'
+  - subject: domain
+    predicate: enables (antibiotic nucleotidylation)
+    predicate_id: RO:0002327
+    object: mech1
+    evidence:
+    - reference: PMID:25564464
+      snippet: ANT(2″)-Ia confers resistance by magnesium-dependent transfer of a nucleoside monophosphate
+        (AMP) to the 2″-hydroxyl of aminoglycoside substrates containing a 2-deoxystreptamine core.
+      notes: The nucleotidyltransferase domain adenylylates the aminoglycoside.
 curation_history:
   - timestamp: "2026-07-21T00:00:00Z"
     curator: edison-causal-graphs
