@@ -31,121 +31,142 @@ evidence:
 - reference: DOI:10.1128/AAC.00627-12
   notes: PMID:22733067 (aro citation)
 causal_graphs:
-  - graph_id: resistance
-    title: Erm(43) → mechanism → resistance (curated from ARO relations + literature)
-    description: >-
-      Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence (PMID:31601908). Erm — 23S rRNA adenine dimethyltransferase; target alteration (methylates A2058) conferring MLSB resistance.
-    nodes:
-      - node_id: determinant
-        label: Erm(43)
-        node_type: PROTEIN
-        grounding: ARO:3003205
-      - node_id: mech0
-        label: antibiotic target alteration
-        node_type: MOLECULAR_FUNCTION
-        grounding: ARO:0001001
-      - node_id: mech1
-        label: ribosomal alteration conferring antibiotic resistance
-        node_type: MOLECULAR_FUNCTION
-        grounding: ARO:3000211
-      - node_id: drug0
-        label: macrolide antibiotic
-        node_type: CHEMICAL
-        grounding: ARO:0000000
-      - node_id: drug1
-        label: lincosamide antibiotic
-        node_type: CHEMICAL
-        grounding: ARO:0000017
-      - node_id: drug2
-        label: streptogramin antibiotic
-        node_type: CHEMICAL
-        grounding: ARO:0000026
-      - node_id: domain
-        label: rRNA adenine dimethyltransferase domain (RrnaAD)
-        node_type: DOMAIN
-        grounding: Pfam:PF00398
-        description: KB protein-trait record carrying the mechanism.
-      - node_id: resistance
-        label: antibiotic resistance phenotype
-        node_type: PHENOTYPE
-    edges:
-      - subject: determinant
-        predicate: participates in (resistance mechanism)
-        predicate_id: RO:0000056
-        object: mech0
-        evidence:
-          - reference: PMID:31601908
-            snippet: ErmE is a methyltransferase (MTase) from Saccharopolyspora erythraea that dimethylates A2058 in 23S rRNA
-            notes: "Family mechanism ARO:0001001."
-      - subject: mech0
-        predicate: causally upstream of
-        predicate_id: RO:0002411
-        object: resistance
-        evidence:
-          - reference: PMID:31601908
-            snippet: ErmE is a methyltransferase (MTase) from Saccharopolyspora erythraea that dimethylates A2058 in 23S rRNA
-            notes: "Mechanism ARO:0001001 → resistance."
-      - subject: determinant
-        predicate: participates in (resistance mechanism)
-        predicate_id: RO:0000056
-        object: mech1
-        evidence:
-          - reference: PMID:31601908
-            snippet: ErmE is a methyltransferase (MTase) from Saccharopolyspora erythraea that dimethylates A2058 in 23S rRNA
-            notes: "Family mechanism ARO:3000211."
-      - subject: mech1
-        predicate: causally upstream of
-        predicate_id: RO:0002411
-        object: resistance
-        evidence:
-          - reference: PMID:31601908
-            snippet: ErmE is a methyltransferase (MTase) from Saccharopolyspora erythraea that dimethylates A2058 in 23S rRNA
-            notes: "Mechanism ARO:3000211 → resistance."
-      - subject: determinant
-        predicate: causally upstream of (confers resistance)
-        predicate_id: RO:0002411
-        object: resistance
-        evidence:
-          - reference: PMID:31601908
-            snippet: ErmE is a methyltransferase (MTase) from Saccharopolyspora erythraea that dimethylates A2058 in 23S rRNA
-            notes: Determinant → resistance phenotype.
-      - subject: resistance
-        predicate: related to (resistance is to)
-        object: drug0
-        evidence:
-          - reference: PMID:31601908
-            snippet: ErmE is a methyltransferase (MTase) from Saccharopolyspora erythraea that dimethylates A2058 in 23S rRNA
-            notes: Resistance to macrolide antibiotic.
-      - subject: resistance
-        predicate: related to (resistance is to)
-        object: drug1
-        evidence:
-          - reference: PMID:31601908
-            snippet: ErmE is a methyltransferase (MTase) from Saccharopolyspora erythraea that dimethylates A2058 in 23S rRNA
-            notes: Resistance to lincosamide antibiotic.
-      - subject: resistance
-        predicate: related to (resistance is to)
-        object: drug2
-        evidence:
-          - reference: PMID:31601908
-            snippet: ErmE is a methyltransferase (MTase) from Saccharopolyspora erythraea that dimethylates A2058 in 23S rRNA
-            notes: Resistance to streptogramin antibiotic.
-      - subject: domain
-        predicate: part of (catalytic domain of the protein)
-        predicate_id: BFO:0000050
-        object: determinant
-        evidence:
-          - reference: Pfam:PF00398
-            snippet: Ribosomal RNA adenine dimethylase
-            notes: "KB trait: the RrnaAD methyltransferase domain."
-      - subject: domain
-        predicate: enables (23S rRNA A2058 methylation)
-        predicate_id: RO:0002327
-        object: mech1
-        evidence:
-          - reference: PMID:31601908
-            snippet: ErmE is a methyltransferase (MTase) from Saccharopolyspora erythraea that dimethylates A2058 in 23S rRNA
-            notes: "The methyltransferase domain dimethylates 23S rRNA A2058, altering the drug target."
+- graph_id: resistance
+  title: Erm(43) → mechanism → resistance (curated from ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (PMID:31601908). Erm — 23S rRNA adenine dimethyltransferase; target alteration (methylates A2058)
+    conferring MLSB resistance.
+  nodes:
+  - node_id: determinant
+    label: Erm(43)
+    node_type: PROTEIN
+    grounding: ARO:3003205
+  - node_id: mech0
+    label: antibiotic target alteration
+    node_type: MOLECULAR_FUNCTION
+    grounding: ARO:0001001
+  - node_id: mech1
+    label: ribosomal alteration conferring antibiotic resistance
+    node_type: MOLECULAR_FUNCTION
+    grounding: ARO:3000211
+  - node_id: drug0
+    label: macrolide antibiotic
+    node_type: CHEMICAL
+    grounding: ARO:0000000
+  - node_id: drug1
+    label: lincosamide antibiotic
+    node_type: CHEMICAL
+    grounding: ARO:0000017
+  - node_id: drug2
+    label: streptogramin antibiotic
+    node_type: CHEMICAL
+    grounding: ARO:0000026
+  - node_id: domain
+    label: rRNA adenine dimethyltransferase domain (RrnaAD)
+    node_type: DOMAIN
+    grounding: Pfam:PF00398
+    description: KB protein-trait record carrying the mechanism.
+  - node_id: resistance
+    label: antibiotic resistance phenotype
+    node_type: PHENOTYPE
+    grounding: GO:0046677
+    description: 'Resistance phenotype conferred by this determinant. Grounded to the nearest available
+      superclass: ARO models determinants and mechanisms but has no term for the resistance phenotype
+      itself.'
+  edges:
+  - subject: determinant
+    predicate: participates in (resistance mechanism)
+    predicate_id: RO:0000056
+    object: mech0
+    evidence:
+    - reference: PMID:31601908
+      snippet: ErmE is a methyltransferase (MTase) from Saccharopolyspora erythraea that dimethylates
+        A2058 in 23S rRNA
+      notes: Family mechanism ARO:0001001.
+  - subject: mech0
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    evidence:
+    - reference: PMID:31601908
+      snippet: ErmE is a methyltransferase (MTase) from Saccharopolyspora erythraea that dimethylates
+        A2058 in 23S rRNA
+      notes: Mechanism ARO:0001001 → resistance.
+  - subject: determinant
+    predicate: participates in (resistance mechanism)
+    predicate_id: RO:0000056
+    object: mech1
+    evidence:
+    - reference: PMID:31601908
+      snippet: ErmE is a methyltransferase (MTase) from Saccharopolyspora erythraea that dimethylates
+        A2058 in 23S rRNA
+      notes: Family mechanism ARO:3000211.
+  - subject: mech1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    evidence:
+    - reference: PMID:31601908
+      snippet: ErmE is a methyltransferase (MTase) from Saccharopolyspora erythraea that dimethylates
+        A2058 in 23S rRNA
+      notes: Mechanism ARO:3000211 → resistance.
+  - subject: determinant
+    predicate: causally upstream of (confers resistance)
+    predicate_id: RO:0002411
+    object: resistance
+    evidence:
+    - reference: PMID:31601908
+      snippet: ErmE is a methyltransferase (MTase) from Saccharopolyspora erythraea that dimethylates
+        A2058 in 23S rRNA
+      notes: Determinant → resistance phenotype.
+  - subject: determinant
+    predicate: confers resistance to (drug class)
+    object: drug0
+    evidence:
+    - reference: ARO:3000560
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:0000000 ! macrolide antibiotic'
+      notes: Asserted on ARO:3000560 (Erm 23S ribosomal RNA methyltransferase), an is_a ancestor of this
+        record's ARO:3003205; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+    predicate_id: ARO:2000001
+    description: CARD asserts that this determinant confers resistance to macrolide antibiotic.
+  - subject: determinant
+    predicate: confers resistance to (drug class)
+    object: drug1
+    evidence:
+    - reference: ARO:3000560
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:0000017 ! lincosamide antibiotic'
+      notes: Asserted on ARO:3000560 (Erm 23S ribosomal RNA methyltransferase), an is_a ancestor of this
+        record's ARO:3003205; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+    predicate_id: ARO:2000001
+    description: CARD asserts that this determinant confers resistance to lincosamide antibiotic.
+  - subject: determinant
+    predicate: confers resistance to (drug class)
+    object: drug2
+    evidence:
+    - reference: ARO:3000560
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:0000026 ! streptogramin antibiotic'
+      notes: Asserted on ARO:3000560 (Erm 23S ribosomal RNA methyltransferase), an is_a ancestor of this
+        record's ARO:3003205; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+    predicate_id: ARO:2000001
+    description: CARD asserts that this determinant confers resistance to streptogramin antibiotic.
+  - subject: domain
+    predicate: part of (catalytic domain of the protein)
+    predicate_id: BFO:0000050
+    object: determinant
+    evidence:
+    - reference: Pfam:PF00398
+      snippet: Ribosomal RNA adenine dimethylase
+      notes: 'KB trait: the RrnaAD methyltransferase domain.'
+  - subject: domain
+    predicate: enables (23S rRNA A2058 methylation)
+    predicate_id: RO:0002327
+    object: mech1
+    evidence:
+    - reference: PMID:31601908
+      snippet: ErmE is a methyltransferase (MTase) from Saccharopolyspora erythraea that dimethylates
+        A2058 in 23S rRNA
+      notes: The methyltransferase domain dimethylates 23S rRNA A2058, altering the drug target.
 curation_history:
   - timestamp: "2026-07-21T00:00:00Z"
     curator: edison-causal-graphs

@@ -25,92 +25,105 @@ evidence:
 - reference: DOI:10.1128/AEM.02159-06
   notes: PMID:17261525 (aro citation)
 causal_graphs:
-  - graph_id: resistance
-    title: dfrB2 → mechanism → resistance (curated from ARO relations + literature)
-    description: >-
-      Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence (PMID:35562546). dfr — trimethoprim-resistant dihydrofolate reductase; a drug-insensitive DHFR that replaces the trimethoprim target enzyme.
-    nodes:
-      - node_id: determinant
-        label: dfrB2
-        node_type: PROTEIN
-        grounding: ARO:3003021
-      - node_id: mech0
-        label: antibiotic target replacement
-        node_type: MOLECULAR_FUNCTION
-        grounding: ARO:0001002
-      - node_id: drug0
-        label: diaminopyrimidine antibiotic
-        node_type: CHEMICAL
-        grounding: ARO:3000171
-      - node_id: domain
-        label: dihydrofolate reductase domain
-        node_type: DOMAIN
-        grounding: Pfam:PF00186
-        description: KB protein-trait record carrying the mechanism.
-      - node_id: fold
-        label: dihydrofolate reductase fold
-        node_type: DOMAIN
-        grounding: CATH:3.40.430
-        description: KB protein-trait record carrying the mechanism.
-      - node_id: resistance
-        label: antibiotic resistance phenotype
-        node_type: PHENOTYPE
-    edges:
-      - subject: determinant
-        predicate: participates in (resistance mechanism)
-        predicate_id: RO:0000056
-        object: mech0
-        evidence:
-          - reference: PMID:35562546
-            snippet: Trimethoprim resistance in Enterobacteriaceae occurs almost exclusively through the acquisition of plasmid-associated dfr genes that encode intrinsically insensitive DHFR enzymes.
-            notes: "Family mechanism ARO:0001002."
-      - subject: mech0
-        predicate: causally upstream of
-        predicate_id: RO:0002411
-        object: resistance
-        evidence:
-          - reference: PMID:35562546
-            snippet: Trimethoprim resistance in Enterobacteriaceae occurs almost exclusively through the acquisition of plasmid-associated dfr genes that encode intrinsically insensitive DHFR enzymes.
-            notes: "Mechanism ARO:0001002 → resistance."
-      - subject: determinant
-        predicate: causally upstream of (confers resistance)
-        predicate_id: RO:0002411
-        object: resistance
-        evidence:
-          - reference: PMID:35562546
-            snippet: Trimethoprim resistance in Enterobacteriaceae occurs almost exclusively through the acquisition of plasmid-associated dfr genes that encode intrinsically insensitive DHFR enzymes.
-            notes: Determinant → resistance phenotype.
-      - subject: resistance
-        predicate: related to (resistance is to)
-        object: drug0
-        evidence:
-          - reference: PMID:35562546
-            snippet: Trimethoprim resistance in Enterobacteriaceae occurs almost exclusively through the acquisition of plasmid-associated dfr genes that encode intrinsically insensitive DHFR enzymes.
-            notes: Resistance to diaminopyrimidine antibiotic.
-      - subject: domain
-        predicate: part of (catalytic domain of the protein)
-        predicate_id: BFO:0000050
-        object: determinant
-        evidence:
-          - reference: Pfam:PF00186
-            snippet: Dihydrofolate reductase
-            notes: "KB trait: the dihydrofolate-reductase domain."
-      - subject: determinant
-        predicate: member of (adopts fold)
-        predicate_id: RO:0002350
-        object: fold
-        evidence:
-          - reference: CATH:3.40.430
-            snippet: "Dihydrofolate Reductase, subunit A"
-            notes: "KB trait: the DHFR fold."
-      - subject: domain
-        predicate: enables (drug-insensitive target enzyme)
-        predicate_id: RO:0002327
-        object: mech0
-        evidence:
-          - reference: PMID:35562546
-            snippet: Trimethoprim resistance in Enterobacteriaceae occurs almost exclusively through the acquisition of plasmid-associated dfr genes that encode intrinsically insensitive DHFR enzymes.
-            notes: The trimethoprim-insensitive DHFR replaces the drug-sensitive enzyme.
+- graph_id: resistance
+  title: dfrB2 → mechanism → resistance (curated from ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (PMID:35562546). dfr — trimethoprim-resistant dihydrofolate reductase; a drug-insensitive DHFR that
+    replaces the trimethoprim target enzyme.
+  nodes:
+  - node_id: determinant
+    label: dfrB2
+    node_type: PROTEIN
+    grounding: ARO:3003021
+  - node_id: mech0
+    label: antibiotic target replacement
+    node_type: MOLECULAR_FUNCTION
+    grounding: ARO:0001002
+  - node_id: drug0
+    label: diaminopyrimidine antibiotic
+    node_type: CHEMICAL
+    grounding: ARO:3000171
+  - node_id: domain
+    label: dihydrofolate reductase domain
+    node_type: DOMAIN
+    grounding: Pfam:PF00186
+    description: KB protein-trait record carrying the mechanism.
+  - node_id: fold
+    label: dihydrofolate reductase fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.430
+    description: KB protein-trait record carrying the mechanism.
+  - node_id: resistance
+    label: antibiotic resistance phenotype
+    node_type: PHENOTYPE
+    grounding: GO:0046677
+    description: 'Resistance phenotype conferred by this determinant. Grounded to the nearest available
+      superclass: ARO models determinants and mechanisms but has no term for the resistance phenotype
+      itself.'
+  edges:
+  - subject: determinant
+    predicate: participates in (resistance mechanism)
+    predicate_id: RO:0000056
+    object: mech0
+    evidence:
+    - reference: PMID:35562546
+      snippet: Trimethoprim resistance in Enterobacteriaceae occurs almost exclusively through the acquisition
+        of plasmid-associated dfr genes that encode intrinsically insensitive DHFR enzymes.
+      notes: Family mechanism ARO:0001002.
+  - subject: mech0
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    evidence:
+    - reference: PMID:35562546
+      snippet: Trimethoprim resistance in Enterobacteriaceae occurs almost exclusively through the acquisition
+        of plasmid-associated dfr genes that encode intrinsically insensitive DHFR enzymes.
+      notes: Mechanism ARO:0001002 → resistance.
+  - subject: determinant
+    predicate: causally upstream of (confers resistance)
+    predicate_id: RO:0002411
+    object: resistance
+    evidence:
+    - reference: PMID:35562546
+      snippet: Trimethoprim resistance in Enterobacteriaceae occurs almost exclusively through the acquisition
+        of plasmid-associated dfr genes that encode intrinsically insensitive DHFR enzymes.
+      notes: Determinant → resistance phenotype.
+  - subject: determinant
+    predicate: confers resistance to (drug class)
+    object: drug0
+    evidence:
+    - reference: ARO:3001218
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000171 ! diaminopyrimidine antibiotic'
+      notes: Asserted on ARO:3001218 (trimethoprim resistant dihydrofolate reductase dfr), an is_a ancestor
+        of this record's ARO:3003021; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+    predicate_id: ARO:2000001
+    description: CARD asserts that this determinant confers resistance to diaminopyrimidine antibiotic.
+  - subject: domain
+    predicate: part of (catalytic domain of the protein)
+    predicate_id: BFO:0000050
+    object: determinant
+    evidence:
+    - reference: Pfam:PF00186
+      snippet: Dihydrofolate reductase
+      notes: 'KB trait: the dihydrofolate-reductase domain.'
+  - subject: determinant
+    predicate: member of (adopts fold)
+    predicate_id: RO:0002350
+    object: fold
+    evidence:
+    - reference: CATH:3.40.430
+      snippet: Dihydrofolate Reductase, subunit A
+      notes: 'KB trait: the DHFR fold.'
+  - subject: domain
+    predicate: enables (drug-insensitive target enzyme)
+    predicate_id: RO:0002327
+    object: mech0
+    evidence:
+    - reference: PMID:35562546
+      snippet: Trimethoprim resistance in Enterobacteriaceae occurs almost exclusively through the acquisition
+        of plasmid-associated dfr genes that encode intrinsically insensitive DHFR enzymes.
+      notes: The trimethoprim-insensitive DHFR replaces the drug-sensitive enzyme.
 curation_history:
   - timestamp: "2026-07-21T00:00:00Z"
     curator: edison-causal-graphs

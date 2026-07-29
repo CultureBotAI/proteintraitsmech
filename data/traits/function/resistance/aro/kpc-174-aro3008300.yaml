@@ -29,145 +29,172 @@ trait_relations:
     object: ARO:3000008
     relation_source: "ARO confers_resistance_to_drug_class via ARO:3000059 KPC beta-lactamase"
 causal_graphs:
-  - graph_id: resistance
-    title: KPC-174 → mechanism → resistance (curated from ARO relations + literature)
-    description: >-
-      Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence (PMID:28388065). Family-level evidence: KPC is a class A serine carbapenemase; the Ser70 acyl-enzyme mechanism is the same chemistry curated atomically in MCSA:2.
-    nodes:
-      - node_id: determinant
-        label: KPC-174
-        node_type: PROTEIN
-        grounding: ARO:3008300
-      - node_id: mech0
-        label: antibiotic inactivation
-        node_type: MOLECULAR_FUNCTION
-        grounding: ARO:0001004
-      - node_id: mech1
-        label: hydrolysis of beta-lactam antibiotic by serine beta-lactamase
-        node_type: MOLECULAR_FUNCTION
-        grounding: ARO:3000187
-      - node_id: drug0
-        label: monobactam
-        node_type: CHEMICAL
-        grounding: ARO:0000004
-      - node_id: drug1
-        label: carbapenem
-        node_type: CHEMICAL
-        grounding: ARO:0000020
-      - node_id: drug2
-        label: cephalosporin
-        node_type: CHEMICAL
-        grounding: ARO:0000032
-      - node_id: drug3
-        label: penicillin beta-lactam
-        node_type: CHEMICAL
-        grounding: ARO:3000008
-      - node_id: active_site
-        label: class A beta-lactamase active-site signature (S-x-x-K)
-        node_type: MOTIF
-        grounding: PROSITE:PS00146
-        description: KB protein-trait record carrying the mechanism.
-      - node_id: fold
-        label: DD-peptidase/beta-lactamase superfamily fold
-        node_type: DOMAIN
-        grounding: CATH:3.40.710.10
-        description: KB protein-trait record carrying the mechanism.
-      - node_id: resistance
-        label: antibiotic resistance phenotype
-        node_type: PHENOTYPE
-    edges:
-      - subject: determinant
-        predicate: participates in (resistance mechanism)
-        predicate_id: RO:0000056
-        object: mech0
-        evidence:
-          - reference: PMID:28388065
-            snippet: "KPC-2 is the most prevalent carbapenemase in the United States and it has been termed the 'versatile β-lactamase' due to its large and shallow active site, allowing it to efficiently hydrolyze virtually all β-lactam antibiotics."
-            notes: "Family mechanism ARO:0001004."
-      - subject: mech0
-        predicate: causally upstream of
-        predicate_id: RO:0002411
-        object: resistance
-        evidence:
-          - reference: PMID:28388065
-            snippet: The Klebsiella pneumoniae carbapenemase (KPC) class A β-lactamase poses a serious threat to nearly all β-lactam antibiotics.
-            notes: "Mechanism ARO:0001004 → resistance."
-      - subject: determinant
-        predicate: participates in (resistance mechanism)
-        predicate_id: RO:0000056
-        object: mech1
-        evidence:
-          - reference: PMID:28388065
-            snippet: "The attack of Ser70 on the substrate β-lactam carbonyl results in a covalent acyl-enzyme complex. Subsequently, the catalytic water, activated by Glu166, cleaves the acyl-enzyme bond, leading to the formation of the hydrolyzed product."
-            notes: "Family mechanism ARO:3000187."
-      - subject: mech1
-        predicate: causally upstream of
-        predicate_id: RO:0002411
-        object: resistance
-        evidence:
-          - reference: PMID:28388065
-            snippet: The Klebsiella pneumoniae carbapenemase (KPC) class A β-lactamase poses a serious threat to nearly all β-lactam antibiotics.
-            notes: "Mechanism ARO:3000187 → resistance."
-      - subject: determinant
-        predicate: causally upstream of (confers resistance)
-        predicate_id: RO:0002411
-        object: resistance
-        evidence:
-          - reference: PMID:28388065
-            snippet: The Klebsiella pneumoniae carbapenemase (KPC) class A β-lactamase poses a serious threat to nearly all β-lactam antibiotics.
-            notes: Determinant → resistance phenotype.
-      - subject: resistance
-        predicate: related to (resistance is to)
-        object: drug0
-        evidence:
-          - reference: PMID:28388065
-            snippet: KPC-2 ... allowing it to efficiently hydrolyze virtually all β-lactam antibiotics.
-            notes: Resistance to monobactam.
-      - subject: resistance
-        predicate: related to (resistance is to)
-        object: drug1
-        evidence:
-          - reference: PMID:28388065
-            snippet: KPC-2 ... allowing it to efficiently hydrolyze virtually all β-lactam antibiotics.
-            notes: Resistance to carbapenem.
-      - subject: resistance
-        predicate: related to (resistance is to)
-        object: drug2
-        evidence:
-          - reference: PMID:28388065
-            snippet: KPC-2 ... allowing it to efficiently hydrolyze virtually all β-lactam antibiotics.
-            notes: Resistance to cephalosporin.
-      - subject: resistance
-        predicate: related to (resistance is to)
-        object: drug3
-        evidence:
-          - reference: PMID:28388065
-            snippet: KPC-2 ... allowing it to efficiently hydrolyze virtually all β-lactam antibiotics.
-            notes: Resistance to penicillin beta-lactam.
-      - subject: active_site
-        predicate: part of (active site of the protein)
-        predicate_id: BFO:0000050
-        object: determinant
-        evidence:
-          - reference: PROSITE:PS00146
-            snippet: Beta-lactamase class-A active site
-            notes: "KB trait: the class-A active-site signature carried by this determinant."
-      - subject: determinant
-        predicate: member of (adopts fold)
-        predicate_id: RO:0002350
-        object: fold
-        evidence:
-          - reference: CATH:3.40.710.10
-            snippet: DD-peptidase/beta-lactamase superfamily
-            notes: "KB trait: the DD-peptidase/beta-lactamase superfamily fold."
-      - subject: active_site
-        predicate: enables (catalysis)
-        predicate_id: RO:0002327
-        object: mech1
-        evidence:
-          - reference: PMID:28388065
-            snippet: "The attack of Ser70 on the substrate β-lactam carbonyl results in a covalent acyl-enzyme complex. Subsequently, the catalytic water, activated by Glu166, cleaves the acyl-enzyme bond, leading to the formation of the hydrolyzed product."
-            notes: The active site carries out the serine β-lactam hydrolysis mechanism.
+- graph_id: resistance
+  title: KPC-174 → mechanism → resistance (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (PMID:28388065). Family-level evidence: KPC is a class A serine carbapenemase; the Ser70 acyl-enzyme
+    mechanism is the same chemistry curated atomically in MCSA:2.'
+  nodes:
+  - node_id: determinant
+    label: KPC-174
+    node_type: PROTEIN
+    grounding: ARO:3008300
+  - node_id: mech0
+    label: antibiotic inactivation
+    node_type: MOLECULAR_FUNCTION
+    grounding: ARO:0001004
+  - node_id: mech1
+    label: hydrolysis of beta-lactam antibiotic by serine beta-lactamase
+    node_type: MOLECULAR_FUNCTION
+    grounding: ARO:3000187
+  - node_id: drug0
+    label: monobactam
+    node_type: CHEMICAL
+    grounding: ARO:0000004
+  - node_id: drug1
+    label: carbapenem
+    node_type: CHEMICAL
+    grounding: ARO:0000020
+  - node_id: drug2
+    label: cephalosporin
+    node_type: CHEMICAL
+    grounding: ARO:0000032
+  - node_id: drug3
+    label: penicillin beta-lactam
+    node_type: CHEMICAL
+    grounding: ARO:3000008
+  - node_id: active_site
+    label: class A beta-lactamase active-site signature (S-x-x-K)
+    node_type: MOTIF
+    grounding: PROSITE:PS00146
+    description: KB protein-trait record carrying the mechanism.
+  - node_id: fold
+    label: DD-peptidase/beta-lactamase superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.710.10
+    description: KB protein-trait record carrying the mechanism.
+  - node_id: resistance
+    label: antibiotic resistance phenotype
+    node_type: PHENOTYPE
+    grounding: GO:0046677
+    description: 'Resistance phenotype conferred by this determinant. Grounded to the nearest available
+      superclass: ARO models determinants and mechanisms but has no term for the resistance phenotype
+      itself.'
+  edges:
+  - subject: determinant
+    predicate: participates in (resistance mechanism)
+    predicate_id: RO:0000056
+    object: mech0
+    evidence:
+    - reference: PMID:28388065
+      snippet: KPC-2 is the most prevalent carbapenemase in the United States and it has been termed the
+        'versatile β-lactamase' due to its large and shallow active site, allowing it to efficiently hydrolyze
+        virtually all β-lactam antibiotics.
+      notes: Family mechanism ARO:0001004.
+  - subject: mech0
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    evidence:
+    - reference: PMID:28388065
+      snippet: The Klebsiella pneumoniae carbapenemase (KPC) class A β-lactamase poses a serious threat
+        to nearly all β-lactam antibiotics.
+      notes: Mechanism ARO:0001004 → resistance.
+  - subject: determinant
+    predicate: participates in (resistance mechanism)
+    predicate_id: RO:0000056
+    object: mech1
+    evidence:
+    - reference: PMID:28388065
+      snippet: The attack of Ser70 on the substrate β-lactam carbonyl results in a covalent acyl-enzyme
+        complex. Subsequently, the catalytic water, activated by Glu166, cleaves the acyl-enzyme bond,
+        leading to the formation of the hydrolyzed product.
+      notes: Family mechanism ARO:3000187.
+  - subject: mech1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    evidence:
+    - reference: PMID:28388065
+      snippet: The Klebsiella pneumoniae carbapenemase (KPC) class A β-lactamase poses a serious threat
+        to nearly all β-lactam antibiotics.
+      notes: Mechanism ARO:3000187 → resistance.
+  - subject: determinant
+    predicate: causally upstream of (confers resistance)
+    predicate_id: RO:0002411
+    object: resistance
+    evidence:
+    - reference: PMID:28388065
+      snippet: The Klebsiella pneumoniae carbapenemase (KPC) class A β-lactamase poses a serious threat
+        to nearly all β-lactam antibiotics.
+      notes: Determinant → resistance phenotype.
+  - subject: determinant
+    predicate: confers resistance to (drug class)
+    object: drug0
+    evidence:
+    - reference: ARO:3000059
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:0000004 ! monobactam'
+      notes: Asserted on ARO:3000059 (KPC beta-lactamase), an is_a ancestor of this record's ARO:3008300;
+        inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+    predicate_id: ARO:2000001
+    description: CARD asserts that this determinant confers resistance to monobactam.
+  - subject: determinant
+    predicate: confers resistance to (drug class)
+    object: drug1
+    evidence:
+    - reference: ARO:3000059
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:0000020 ! carbapenem'
+      notes: Asserted on ARO:3000059 (KPC beta-lactamase), an is_a ancestor of this record's ARO:3008300;
+        inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+    predicate_id: ARO:2000001
+    description: CARD asserts that this determinant confers resistance to carbapenem.
+  - subject: determinant
+    predicate: confers resistance to (drug class)
+    object: drug2
+    evidence:
+    - reference: ARO:3000059
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:0000032 ! cephalosporin'
+      notes: Asserted on ARO:3000059 (KPC beta-lactamase), an is_a ancestor of this record's ARO:3008300;
+        inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+    predicate_id: ARO:2000001
+    description: CARD asserts that this determinant confers resistance to cephalosporin.
+  - subject: determinant
+    predicate: confers resistance to (drug class)
+    object: drug3
+    evidence:
+    - reference: ARO:3000059
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000008 ! penicillin beta-lactam'
+      notes: Asserted on ARO:3000059 (KPC beta-lactamase), an is_a ancestor of this record's ARO:3008300;
+        inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+    predicate_id: ARO:2000001
+    description: CARD asserts that this determinant confers resistance to penicillin beta-lactam.
+  - subject: active_site
+    predicate: part of (active site of the protein)
+    predicate_id: BFO:0000050
+    object: determinant
+    evidence:
+    - reference: PROSITE:PS00146
+      snippet: Beta-lactamase class-A active site
+      notes: 'KB trait: the class-A active-site signature carried by this determinant.'
+  - subject: determinant
+    predicate: member of (adopts fold)
+    predicate_id: RO:0002350
+    object: fold
+    evidence:
+    - reference: CATH:3.40.710.10
+      snippet: DD-peptidase/beta-lactamase superfamily
+      notes: 'KB trait: the DD-peptidase/beta-lactamase superfamily fold.'
+  - subject: active_site
+    predicate: enables (catalysis)
+    predicate_id: RO:0002327
+    object: mech1
+    evidence:
+    - reference: PMID:28388065
+      snippet: The attack of Ser70 on the substrate β-lactam carbonyl results in a covalent acyl-enzyme
+        complex. Subsequently, the catalytic water, activated by Glu166, cleaves the acyl-enzyme bond,
+        leading to the formation of the hydrolyzed product.
+      notes: The active site carries out the serine β-lactam hydrolysis mechanism.
 curation_history:
   - timestamp: "2026-07-21T00:00:00Z"
     curator: edison-causal-graphs
