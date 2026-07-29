@@ -101,27 +101,37 @@ def map_residue(doc, pdb, chain, auth, resid, acc):
     if not doc:
         return None
     ent = (doc.get(pdb.lower()) or {}).get("UniProt") or {}
-    for use_author in (True, False):
-        for a, v in ent.items():
-            if acc and a != acc:
-                continue
-            for m in v.get("mappings") or []:
-                if str(m.get("chain_id")) != str(chain):
+    # Accession pass 1 is the record's own; pass 2 accepts any accession SIFTS
+    # names for the entry. That is not a loosening of standards, because the
+    # sequence check downstream is the arbiter — it exists because UniProt
+    # renames and demerges accessions (Q05489 -> P0DUB8), so SIFTS can be right
+    # about the residue while naming an accession the record predates. A wrong
+    # protein cannot survive the check; a renamed one can.
+    for accept_any in (False, True):
+        for use_author in (True, False):
+            for a, v in ent.items():
+                if not accept_any and acc and a != acc:
                     continue
-                s, e = m.get("start") or {}, m.get("end") or {}
-                us = m.get("unp_start")
-                if us is None:
-                    continue
-                if use_author:
-                    sa, ea, pos = (s.get("author_residue_number"),
-                                   e.get("author_residue_number"), auth)
-                else:
-                    sa, ea, pos = (s.get("residue_number"),
-                                   e.get("residue_number"), resid)
-                if sa is None or ea is None or pos is None:
-                    continue
-                if sa <= pos <= ea:
-                    return us + (pos - sa)
+                for m in v.get("mappings") or []:
+                    # M-CSA's chain_name matches SIFTS chain_id for most entries
+                    # and struct_asym_id for the rest
+                    if str(chain) not in {str(m.get("chain_id")),
+                                          str(m.get("struct_asym_id"))}:
+                        continue
+                    s, e = m.get("start") or {}, m.get("end") or {}
+                    us = m.get("unp_start")
+                    if us is None:
+                        continue
+                    if use_author:
+                        sa, ea, pos = (s.get("author_residue_number"),
+                                       e.get("author_residue_number"), auth)
+                    else:
+                        sa, ea, pos = (s.get("residue_number"),
+                                       e.get("residue_number"), resid)
+                    if sa is None or ea is None or pos is None:
+                        continue
+                    if sa <= pos <= ea:
+                        return us + (pos - sa)
     return None
 
 
