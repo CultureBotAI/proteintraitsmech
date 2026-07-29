@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.4.1.129
 - CHEBI:78435
@@ -133,4 +133,242 @@ definitions:
       Bacterial peptidoglycan glycosyltransferases (PGT) catalyse the polymerization of peptidoglycan (lipid II) into linear glycan chains, which is an essential part of peptidoglycan biosynthesis. It uses lipid II precursors to synthesize glycan chains of the peptidoglycan, the polymeric layer in the cell wall of bacteria. PGT inhibition leads to bacterial cell wall lysis, making it an important topic of research.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of Peptidoglycan glycosyltransferase
+  description: Stepwise mechanism transcribed from M-CSA entry 970 (2 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: glu100
+    label: catalytic Glu100 (M-CSA/PDB numbering; UniProt residue 100)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q99T05
+    description: 'M-CSA roles: activator, nucleophile.'
+  - node_id: gly131
+    label: catalytic Gly131 (M-CSA/PDB numbering; UniProt residue 131)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q99T05
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: ser132
+    label: catalytic Ser132 (M-CSA/PDB numbering; UniProt residue 132)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q99T05
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: gln136
+    label: catalytic Gln136 (M-CSA/PDB numbering; UniProt residue 136)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q99T05
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: '[GlcNAc-(1->4)-Mur2Ac(oyl-L-Ala-gamma-D-Glu-L-Lys-D-Ala-D-Ala)]n-diphospho-ditrans,polycis-undecaprenol
+      polyanion'
+    node_type: CHEMICAL
+    grounding: CHEBI:78435
+  - node_id: reactant1
+    label: lipid II(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:60033
+  - node_id: product0
+    label: ditrans,polycis-undecaprenyl diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58405
+  - node_id: product1
+    label: product
+    node_type: CHEMICAL
+    grounding: CHEBI:X00676
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: S<sub>N</sub>2 nucleophilic attack by the polysaccharide strand at the donor site to
+      the acceptor polysaccharide strand, assisted by Glu100 forming a lipid II linkage.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Product is formed.
+  - node_id: active_site
+    label: Peptidoglycan glycosyltransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:970
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.10.3810.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.10.3810.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: Peptidoglycan glycosyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.4.1.129
+  edges:
+  - subject: glu100
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu100 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/970/
+      snippet: S<sub>N</sub>2 nucleophilic attack by the polysaccharide strand at the donor site to the
+        acceptor polysaccharide strand, assisted by Glu100 forming a lipid II linkage.
+      notes: M-CSA entry 970, mechanism 1; M-CSA cites PMID:23543824, PMID:30046666, PMID:32786224; step
+        1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/970/
+      snippet: Product is formed.
+      notes: M-CSA entry 970, mechanism 1; M-CSA cites PMID:23543824, PMID:30046666, PMID:32786224; step
+        2
+  - subject: glu100
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu100 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/970/
+      snippet: activator, nucleophile
+      notes: M-CSA entry 970, mechanism 1; M-CSA cites PMID:23543824, PMID:30046666, PMID:32786224; M-CSA
+        catalytic-residue roles for Glu100
+  - subject: gly131
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly131 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/970/
+      snippet: metal ligand
+      notes: M-CSA entry 970, mechanism 1; M-CSA cites PMID:23543824, PMID:30046666, PMID:32786224; M-CSA
+        catalytic-residue roles for Gly131
+  - subject: ser132
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser132 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/970/
+      snippet: metal ligand
+      notes: M-CSA entry 970, mechanism 1; M-CSA cites PMID:23543824, PMID:30046666, PMID:32786224; M-CSA
+        catalytic-residue roles for Ser132
+  - subject: gln136
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln136 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/970/
+      snippet: metal ligand
+      notes: M-CSA entry 970, mechanism 1; M-CSA cites PMID:23543824, PMID:30046666, PMID:32786224; M-CSA
+        catalytic-residue roles for Gln136
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/970/
+      snippet: Peptidoglycan glycosyltransferases polymerize the glycan chain or lipid II chain of the
+        bacterial peptidoglycan. A magnesium ion in the enzyme's active site stabilizes the diphosphate
+        of the lipid II donor molecule, while the catalytic residues Ser132, Gln136, and Gly131 act as
+        metal ligands for the magnesium ion. This polymerization is an S<sub>N</sub>2 nucleophilic reaction
+        catalysed by Glu100.
+      notes: M-CSA entry 970, mechanism 1; M-CSA cites PMID:23543824, PMID:30046666, PMID:32786224; CATH
+        domain 1.10.3810.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/970/
+      snippet: Peptidoglycan glycosyltransferases polymerize the glycan chain or lipid II chain of the
+        bacterial peptidoglycan. A magnesium ion in the enzyme's active site stabilizes the diphosphate
+        of the lipid II donor molecule, while the catalytic residues Ser132, Gln136, and Gly131 act as
+        metal ligands for the magnesium ion. This polymerization is an S<sub>N</sub>2 nucleophilic reaction
+        catalysed by Glu100.
+      notes: M-CSA entry 970, mechanism 1; M-CSA cites PMID:23543824, PMID:30046666, PMID:32786224; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/970/
+      snippet: Peptidoglycan glycosyltransferases polymerize the glycan chain or lipid II chain of the
+        bacterial peptidoglycan. A magnesium ion in the enzyme's active site stabilizes the diphosphate
+        of the lipid II donor molecule, while the catalytic residues Ser132, Gln136, and Gly131 act as
+        metal ligands for the magnesium ion. This polymerization is an S<sub>N</sub>2 nucleophilic reaction
+        catalysed by Glu100.
+      notes: M-CSA entry 970, mechanism 1; M-CSA cites PMID:23543824, PMID:30046666, PMID:32786224; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/970/
+      snippet: Peptidoglycan glycosyltransferases polymerize the glycan chain or lipid II chain of the
+        bacterial peptidoglycan. A magnesium ion in the enzyme's active site stabilizes the diphosphate
+        of the lipid II donor molecule, while the catalytic residues Ser132, Gln136, and Gly131 act as
+        metal ligands for the magnesium ion. This polymerization is an S<sub>N</sub>2 nucleophilic reaction
+        catalysed by Glu100.
+      notes: M-CSA entry 970, mechanism 1; M-CSA cites PMID:23543824, PMID:30046666, PMID:32786224; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/970/
+      snippet: Peptidoglycan glycosyltransferases polymerize the glycan chain or lipid II chain of the
+        bacterial peptidoglycan. A magnesium ion in the enzyme's active site stabilizes the diphosphate
+        of the lipid II donor molecule, while the catalytic residues Ser132, Gln136, and Gly131 act as
+        metal ligands for the magnesium ion. This polymerization is an S<sub>N</sub>2 nucleophilic reaction
+        catalysed by Glu100.
+      notes: M-CSA entry 970, mechanism 1; M-CSA cites PMID:23543824, PMID:30046666, PMID:32786224; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/970/
+      snippet: Peptidoglycan glycosyltransferases polymerize the glycan chain or lipid II chain of the
+        bacterial peptidoglycan. A magnesium ion in the enzyme's active site stabilizes the diphosphate
+        of the lipid II donor molecule, while the catalytic residues Ser132, Gln136, and Gly131 act as
+        metal ligands for the magnesium ion. This polymerization is an S<sub>N</sub>2 nucleophilic reaction
+        catalysed by Glu100.
+      notes: M-CSA entry 970, mechanism 1; M-CSA cites PMID:23543824, PMID:30046666, PMID:32786224; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/970/
+      snippet: Peptidoglycan glycosyltransferases polymerize the glycan chain or lipid II chain of the
+        bacterial peptidoglycan. A magnesium ion in the enzyme's active site stabilizes the diphosphate
+        of the lipid II donor molecule, while the catalytic residues Ser132, Gln136, and Gly131 act as
+        metal ligands for the magnesium ion. This polymerization is an S<sub>N</sub>2 nucleophilic reaction
+        catalysed by Glu100.
+      notes: M-CSA entry 970, mechanism 1; M-CSA cites PMID:23543824, PMID:30046666, PMID:32786224; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 970;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

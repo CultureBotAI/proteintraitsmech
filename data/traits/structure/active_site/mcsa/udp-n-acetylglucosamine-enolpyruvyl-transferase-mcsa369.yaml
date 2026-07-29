@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.5.1.7
 - CHEBI:58702
@@ -370,4 +370,280 @@ definitions:
       UDP-N-acetylglucosamine 1-carboxyvinyltransferase or UDP-N-acetylglucosamine enolpyruvyl transferase (EPT) is a key enzyme in the biosynthesis of peptidoglycan, a major component of the bacterial cell wall. The enzyme is involved in the first step of peptidoglycan biosynthesis, it catalyses the the enolpyruvyl transfer from phosphoenolpyruvate (PEP) to a second substrate. Historically, the pathway of peptidogycan biosynthesis has been an important target for antibacterial agents, such as the beta-lactams. EPT is of particular interest because it is inhibited by the naturally occurring antibiotic fosfomycin.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of UDP-N-acetylglucosamine enolpyruvyl transferase
+  description: Stepwise mechanism transcribed from M-CSA entry 369 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: lys22
+    label: catalytic Lys22 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P33038
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor, proton acceptor, proton
+      donor.'
+  - node_id: asn23
+    label: catalytic Asn23 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P33038
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: ser115
+    label: catalytic Ser115 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P33038
+    description: 'M-CSA roles: activator, hydrogen bond acceptor, hydrogen bond donor, nucleofuge, nucleophile,
+      proton acceptor, proton donor, proton relay.'
+  - node_id: arg120
+    label: catalytic Arg120 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P33038
+    description: 'M-CSA roles: electrostatic stabiliser, proton acceptor, proton donor.'
+  - node_id: asp305
+    label: catalytic Asp305 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P33038
+    description: 'M-CSA roles: activator, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+      proton donor.'
+  - node_id: arg397
+    label: catalytic Arg397 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P33038
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor, proton acceptor, proton
+      donor.'
+  - node_id: reactant0
+    label: phosphonatoenolpyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:58702
+  - node_id: reactant1
+    label: UDP-N-acetyl-alpha-D-glucosamine(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57705
+  - node_id: product0
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: product1
+    label: UDP-N-acetyl-3-O-(1-carboxylatovinyl)-alpha-D-glucosamine(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:68483
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu305 deprotonates the attacking hydroxyl, activating it towards nucleophilic addition
+      at the phosphoenolpyruvate double bond, with concomitant deprotonation of Cys115, forming a quaternary
+      centre intermediate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The anionic Cys115 deprotonates the methyl group, initiating the elimination of phosphate
+      and formation of the carboxy-vinyl glucosamine. The proton transfer from Asp305 to the departing
+      phosphate is inferred.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: UDP-N-acetylglucosamine enolpyruvyl transferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:369
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.65.10.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.65.10.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: UDP-N-acetylglucosamine enolpyruvyl transferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.5.1.7
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/369/
+      snippet: The anionic Cys115 deprotonates the methyl group, initiating the elimination of phosphate
+        and formation of the carboxy-vinyl glucosamine. The proton transfer from Asp305 to the departing
+        phosphate is inferred.
+      notes: M-CSA entry 369, mechanism 2; M-CSA cites PMID:11027147, PMID:11327813, PMID:13129913, PMID:15531591,
+        PMID:8075064, PMID:8805592, PMID:9485407, PMID:9890910; step 2
+  - subject: asp305
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Asp305 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/369/
+      snippet: The anionic Cys115 deprotonates the methyl group, initiating the elimination of phosphate
+        and formation of the carboxy-vinyl glucosamine. The proton transfer from Asp305 to the departing
+        phosphate is inferred.
+      notes: M-CSA entry 369, mechanism 2; M-CSA cites PMID:11027147, PMID:11327813, PMID:13129913, PMID:15531591,
+        PMID:8075064, PMID:8805592, PMID:9485407, PMID:9890910; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/369/
+      snippet: Products
+      notes: M-CSA entry 369, mechanism 2; M-CSA cites PMID:11027147, PMID:11327813, PMID:13129913, PMID:15531591,
+        PMID:8075064, PMID:8805592, PMID:9485407, PMID:9890910; step 3
+  - subject: lys22
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys22 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/369/
+      snippet: electrostatic stabiliser, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 369, mechanism 2; M-CSA cites PMID:11027147, PMID:11327813, PMID:13129913, PMID:15531591,
+        PMID:8075064, PMID:8805592, PMID:9485407, PMID:9890910; M-CSA catalytic-residue roles for Lys22
+  - subject: asn23
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn23 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/369/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 369, mechanism 2; M-CSA cites PMID:11027147, PMID:11327813, PMID:13129913, PMID:15531591,
+        PMID:8075064, PMID:8805592, PMID:9485407, PMID:9890910; M-CSA catalytic-residue roles for Asn23
+  - subject: ser115
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser115 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/369/
+      snippet: activator, hydrogen bond acceptor, hydrogen bond donor, nucleofuge, nucleophile, proton
+        acceptor, proton donor, proton relay
+      notes: M-CSA entry 369, mechanism 2; M-CSA cites PMID:11027147, PMID:11327813, PMID:13129913, PMID:15531591,
+        PMID:8075064, PMID:8805592, PMID:9485407, PMID:9890910; M-CSA catalytic-residue roles for Ser115
+  - subject: arg120
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg120 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/369/
+      snippet: electrostatic stabiliser, proton acceptor, proton donor
+      notes: M-CSA entry 369, mechanism 2; M-CSA cites PMID:11027147, PMID:11327813, PMID:13129913, PMID:15531591,
+        PMID:8075064, PMID:8805592, PMID:9485407, PMID:9890910; M-CSA catalytic-residue roles for Arg120
+  - subject: asp305
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp305 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/369/
+      snippet: activator, hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 369, mechanism 2; M-CSA cites PMID:11027147, PMID:11327813, PMID:13129913, PMID:15531591,
+        PMID:8075064, PMID:8805592, PMID:9485407, PMID:9890910; M-CSA catalytic-residue roles for Asp305
+  - subject: arg397
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg397 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/369/
+      snippet: electrostatic stabiliser, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 369, mechanism 2; M-CSA cites PMID:11027147, PMID:11327813, PMID:13129913, PMID:15531591,
+        PMID:8075064, PMID:8805592, PMID:9485407, PMID:9890910; M-CSA catalytic-residue roles for Arg397
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/369/
+      snippet: Conserved residue Asp305 deprotonates the 3-OH of UDP-N-acetyl-D-glucosamine, activating
+        the oxygen towards nucleophilic attack at the carbonyl group of phosphoenolpyruvate with concomitant
+        deprotonation of Cys115. in the second step, the anionic sulphur deprotonates the methyl group,
+        reforming the alkene with elimination of phosphate. The active site is regenerated for the next
+        round of catalysis
+      notes: M-CSA entry 369, mechanism 2; M-CSA cites PMID:11027147, PMID:11327813, PMID:13129913, PMID:15531591,
+        PMID:8075064, PMID:8805592, PMID:9485407, PMID:9890910; CATH domain 3.65.10.10 assigned to the
+        catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/369/
+      snippet: Conserved residue Asp305 deprotonates the 3-OH of UDP-N-acetyl-D-glucosamine, activating
+        the oxygen towards nucleophilic attack at the carbonyl group of phosphoenolpyruvate with concomitant
+        deprotonation of Cys115. in the second step, the anionic sulphur deprotonates the methyl group,
+        reforming the alkene with elimination of phosphate. The active site is regenerated for the next
+        round of catalysis
+      notes: M-CSA entry 369, mechanism 2; M-CSA cites PMID:11027147, PMID:11327813, PMID:13129913, PMID:15531591,
+        PMID:8075064, PMID:8805592, PMID:9485407, PMID:9890910; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/369/
+      snippet: Conserved residue Asp305 deprotonates the 3-OH of UDP-N-acetyl-D-glucosamine, activating
+        the oxygen towards nucleophilic attack at the carbonyl group of phosphoenolpyruvate with concomitant
+        deprotonation of Cys115. in the second step, the anionic sulphur deprotonates the methyl group,
+        reforming the alkene with elimination of phosphate. The active site is regenerated for the next
+        round of catalysis
+      notes: M-CSA entry 369, mechanism 2; M-CSA cites PMID:11027147, PMID:11327813, PMID:13129913, PMID:15531591,
+        PMID:8075064, PMID:8805592, PMID:9485407, PMID:9890910; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/369/
+      snippet: Conserved residue Asp305 deprotonates the 3-OH of UDP-N-acetyl-D-glucosamine, activating
+        the oxygen towards nucleophilic attack at the carbonyl group of phosphoenolpyruvate with concomitant
+        deprotonation of Cys115. in the second step, the anionic sulphur deprotonates the methyl group,
+        reforming the alkene with elimination of phosphate. The active site is regenerated for the next
+        round of catalysis
+      notes: M-CSA entry 369, mechanism 2; M-CSA cites PMID:11027147, PMID:11327813, PMID:13129913, PMID:15531591,
+        PMID:8075064, PMID:8805592, PMID:9485407, PMID:9890910; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/369/
+      snippet: Conserved residue Asp305 deprotonates the 3-OH of UDP-N-acetyl-D-glucosamine, activating
+        the oxygen towards nucleophilic attack at the carbonyl group of phosphoenolpyruvate with concomitant
+        deprotonation of Cys115. in the second step, the anionic sulphur deprotonates the methyl group,
+        reforming the alkene with elimination of phosphate. The active site is regenerated for the next
+        round of catalysis
+      notes: M-CSA entry 369, mechanism 2; M-CSA cites PMID:11027147, PMID:11327813, PMID:13129913, PMID:15531591,
+        PMID:8075064, PMID:8805592, PMID:9485407, PMID:9890910; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/369/
+      snippet: Conserved residue Asp305 deprotonates the 3-OH of UDP-N-acetyl-D-glucosamine, activating
+        the oxygen towards nucleophilic attack at the carbonyl group of phosphoenolpyruvate with concomitant
+        deprotonation of Cys115. in the second step, the anionic sulphur deprotonates the methyl group,
+        reforming the alkene with elimination of phosphate. The active site is regenerated for the next
+        round of catalysis
+      notes: M-CSA entry 369, mechanism 2; M-CSA cites PMID:11027147, PMID:11327813, PMID:13129913, PMID:15531591,
+        PMID:8075064, PMID:8805592, PMID:9485407, PMID:9890910; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 369;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

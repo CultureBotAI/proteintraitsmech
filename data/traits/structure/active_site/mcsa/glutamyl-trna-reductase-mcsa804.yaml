@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.2.1.70
 - CHEBI:78442
@@ -234,4 +234,241 @@ definitions:
       Glutamyl-tRNA Reductase catalyses the reduction of the activated alpha-carboxyl group of glutamate from glutamyl-tRNA using NADPH to form glutamate-1-semialdehyde(GSA). GSA is then converted to 5-aminolevulenic acid, a precursor molecule for the biosynthesis of tetrapyrroles like chlorophylls, hemes and coenzyme B12.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of glutamyl-tRNA reductase
+  description: Stepwise mechanism transcribed from M-CSA entry 804 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: ser48
+    label: catalytic Ser48 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9UXR8
+    description: 'M-CSA roles: covalently attached, nucleofuge, nucleophile.'
+  - node_id: his84
+    label: catalytic His84 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9UXR8
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: reactant1
+    label: NADPH(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+  - node_id: reactant2
+    label: 3'-(L-glutamate)adenylyl(1-) group
+    node_type: CHEMICAL
+    grounding: CHEBI:78520
+  - node_id: product0
+    label: AMP 3'-end(1-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:78442
+  - node_id: product1
+    label: (S)-4-amino-5-oxopentanoic acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57501
+  - node_id: product2
+    label: NADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The sulfryl group of Cys48 acts as a nucleophile to attack glutamate and the tRNA residue
+      is eliminated. An enzyme thioester intermediate is formed.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: A hydride is transferred from NADPH to the thioester intermediate. This is promoted by
+      His84.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The tetrahedral intermediate collapses, releasing Cys48 and forming the product.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: glutamyl-tRNA reductase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:804
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.460.30 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.460.30
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: glutamyl-tRNA reductase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.2.1.70
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/804/
+      snippet: A hydride is transferred from NADPH to the thioester intermediate. This is promoted by
+        His84.
+      notes: M-CSA entry 804, mechanism 1; M-CSA cites PMID:10521455, PMID:11726494; step 2
+  - subject: his84
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His84 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/804/
+      snippet: A hydride is transferred from NADPH to the thioester intermediate. This is promoted by
+        His84.
+      notes: M-CSA entry 804, mechanism 1; M-CSA cites PMID:10521455, PMID:11726494; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/804/
+      snippet: The tetrahedral intermediate collapses, releasing Cys48 and forming the product.
+      notes: M-CSA entry 804, mechanism 1; M-CSA cites PMID:10521455, PMID:11726494; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/804/
+      snippet: Products.
+      notes: M-CSA entry 804, mechanism 1; M-CSA cites PMID:10521455, PMID:11726494; step 4
+  - subject: ser48
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser48 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/804/
+      snippet: covalently attached, nucleofuge, nucleophile
+      notes: M-CSA entry 804, mechanism 1; M-CSA cites PMID:10521455, PMID:11726494; M-CSA catalytic-residue
+        roles for Ser48
+  - subject: his84
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His84 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/804/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 804, mechanism 1; M-CSA cites PMID:10521455, PMID:11726494; M-CSA catalytic-residue
+        roles for His84
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/804/
+      snippet: Cys48 acts as a nucleophile to attack the alpha-carboxyl group of glutamate, which is activated
+        by an ester linkage to tRNA, forming a highly reactive enzyme-localised thioester and tRNA is
+        released. Direct hydride transfer from NADPH, facilitated by His84, which acts as a base catalyst
+        to stabilise the protonated tetrahedral intermediate, leads to the formation of the product GSA.
+      notes: M-CSA entry 804, mechanism 1; M-CSA cites PMID:10521455, PMID:11726494; CATH domain 3.30.460.30
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/804/
+      snippet: Cys48 acts as a nucleophile to attack the alpha-carboxyl group of glutamate, which is activated
+        by an ester linkage to tRNA, forming a highly reactive enzyme-localised thioester and tRNA is
+        released. Direct hydride transfer from NADPH, facilitated by His84, which acts as a base catalyst
+        to stabilise the protonated tetrahedral intermediate, leads to the formation of the product GSA.
+      notes: M-CSA entry 804, mechanism 1; M-CSA cites PMID:10521455, PMID:11726494; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/804/
+      snippet: Cys48 acts as a nucleophile to attack the alpha-carboxyl group of glutamate, which is activated
+        by an ester linkage to tRNA, forming a highly reactive enzyme-localised thioester and tRNA is
+        released. Direct hydride transfer from NADPH, facilitated by His84, which acts as a base catalyst
+        to stabilise the protonated tetrahedral intermediate, leads to the formation of the product GSA.
+      notes: M-CSA entry 804, mechanism 1; M-CSA cites PMID:10521455, PMID:11726494; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/804/
+      snippet: Cys48 acts as a nucleophile to attack the alpha-carboxyl group of glutamate, which is activated
+        by an ester linkage to tRNA, forming a highly reactive enzyme-localised thioester and tRNA is
+        released. Direct hydride transfer from NADPH, facilitated by His84, which acts as a base catalyst
+        to stabilise the protonated tetrahedral intermediate, leads to the formation of the product GSA.
+      notes: M-CSA entry 804, mechanism 1; M-CSA cites PMID:10521455, PMID:11726494; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/804/
+      snippet: Cys48 acts as a nucleophile to attack the alpha-carboxyl group of glutamate, which is activated
+        by an ester linkage to tRNA, forming a highly reactive enzyme-localised thioester and tRNA is
+        released. Direct hydride transfer from NADPH, facilitated by His84, which acts as a base catalyst
+        to stabilise the protonated tetrahedral intermediate, leads to the formation of the product GSA.
+      notes: M-CSA entry 804, mechanism 1; M-CSA cites PMID:10521455, PMID:11726494; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/804/
+      snippet: Cys48 acts as a nucleophile to attack the alpha-carboxyl group of glutamate, which is activated
+        by an ester linkage to tRNA, forming a highly reactive enzyme-localised thioester and tRNA is
+        released. Direct hydride transfer from NADPH, facilitated by His84, which acts as a base catalyst
+        to stabilise the protonated tetrahedral intermediate, leads to the formation of the product GSA.
+      notes: M-CSA entry 804, mechanism 1; M-CSA cites PMID:10521455, PMID:11726494; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/804/
+      snippet: Cys48 acts as a nucleophile to attack the alpha-carboxyl group of glutamate, which is activated
+        by an ester linkage to tRNA, forming a highly reactive enzyme-localised thioester and tRNA is
+        released. Direct hydride transfer from NADPH, facilitated by His84, which acts as a base catalyst
+        to stabilise the protonated tetrahedral intermediate, leads to the formation of the product GSA.
+      notes: M-CSA entry 804, mechanism 1; M-CSA cites PMID:10521455, PMID:11726494; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/804/
+      snippet: Cys48 acts as a nucleophile to attack the alpha-carboxyl group of glutamate, which is activated
+        by an ester linkage to tRNA, forming a highly reactive enzyme-localised thioester and tRNA is
+        released. Direct hydride transfer from NADPH, facilitated by His84, which acts as a base catalyst
+        to stabilise the protonated tetrahedral intermediate, leads to the formation of the product GSA.
+      notes: M-CSA entry 804, mechanism 1; M-CSA cites PMID:10521455, PMID:11726494; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (14 evidence-backed edges) transcribed from M-CSA entry 804;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

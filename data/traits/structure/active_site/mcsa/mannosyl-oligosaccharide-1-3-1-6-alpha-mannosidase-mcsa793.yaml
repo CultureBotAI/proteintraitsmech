@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.1.114
 - CHEBI:28729
@@ -616,4 +616,274 @@ definitions:
       Golgi alpha-mannosidase II (dGMII) from Drosophila melanogaster is a member of the glycosyl hydrolase family 38. It catalyses the hydrolysis of the terminal 1,3- and 1,6-linked alpha-D-mannose (Man) residues in the mannosyl-oligosaccharide Man(5)(GlcNAc)(3) producing Man(3)(GlcNAc)(3). GlcNAc stands for N-acetylglucosamine. The enzyme has a high degree of conservation of sequence among many eukaryotes. Inhibition of the human GMII may be helpful in the treatmant of breast, colon or skin cancer. GMII is involved in the N-linked glycosylation pathway which begins in the endoplasmic reticulum where an oligosaccharide is attached to an asparagine residue on a nascent polypeptide. GMII is located in the Golgi apparatus and is one of the glycosyl hydrolases involved in trimming the oligosaccharide. The active site of GMII consitsis of a ctalytic site, a holding site, and an anchor site. Initially the alpha1,6-linked mannose residue of the substrate binds in the catalytic site while the alpha1,3-linked mannose bind in the holding site. A terminal N-acetylglucosamine residue of the substrate binds in the holding site and helps orient the substrate for the hydrolysis reaction. The holding site cannot accommodate the alpha1,6-linked residue without displacing the terminal N-acetylglucosamine from the anchor site. This ensures that the alpha1,6 bond is hydrolysed before the alpha1,3 bond. In in vitro studies dGMII shows an 80-fold preference for substrates containing a nonreducing beta(1,2)-linked GlcNAc which can occupy the anchor site. It has been proposed that the conformation of the catalytic site depends on the presence of a GlcNAc residue in the anchoring site.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of mannosyl-oligosaccharide 1,3-1,6-alpha-mannosidase
+  description: Stepwise mechanism transcribed from M-CSA entry 793 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: his90
+    label: catalytic His90 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q24451
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp92
+    label: catalytic Asp92 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q24451
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp204
+    label: catalytic Asp204 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q24451
+    description: 'M-CSA roles: covalently attached, metal ligand, nucleofuge, nucleophile.'
+  - node_id: asp341
+    label: catalytic Asp341 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q24451
+    description: 'M-CSA roles: activator, increase nucleophilicity, proton acceptor, proton donor.'
+  - node_id: his471
+    label: catalytic His471 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q24451
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: alpha-D-Manp-(1->3)-alpha-D-Manp-(1->2)-alpha-D-Manp
+    node_type: CHEMICAL
+    grounding: CHEBI:64167
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: alpha-D-mannose
+    node_type: CHEMICAL
+    grounding: CHEBI:28729
+  - node_id: product1
+    label: alpha-D-mannose
+    node_type: CHEMICAL
+    grounding: CHEBI:28729
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp267 attacks C1 of the C1-C6 linkage, this causes the linkage to break. Asp404 donates
+      a proton to the leaving group.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Asp404 activates a water for nucleophillic attack on C1 this displaces Asp267 and the
+      first mannose unit is released. There is then a rearrangement of the substrates in the active site
+      with a new mannose unit being ligated to the zinc.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The mechanism repeats for the C1-C3 linkage.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The final mannose unit is formed.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: mannosyl-oligosaccharide 1,3-1,6-alpha-mannosidase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:793
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.110.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.110.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: mannosyl-oligosaccharide 1,3-1,6-alpha-mannosidase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.1.114
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/793/
+      snippet: Asp404 activates a water for nucleophillic attack on C1 this displaces Asp267 and the first
+        mannose unit is released. There is then a rearrangement of the substrates in the active site with
+        a new mannose unit being ligated to the zinc.
+      notes: M-CSA entry 793, mechanism 1; M-CSA cites PMID:12960159, PMID:18599462, PMID:22819743, PMID:25751413;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/793/
+      snippet: The mechanism repeats for the C1-C3 linkage.
+      notes: M-CSA entry 793, mechanism 1; M-CSA cites PMID:12960159, PMID:18599462, PMID:22819743, PMID:25751413;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/793/
+      snippet: The final mannose unit is formed.
+      notes: M-CSA entry 793, mechanism 1; M-CSA cites PMID:12960159, PMID:18599462, PMID:22819743, PMID:25751413;
+        step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/793/
+      snippet: Products.
+      notes: M-CSA entry 793, mechanism 1; M-CSA cites PMID:12960159, PMID:18599462, PMID:22819743, PMID:25751413;
+        step 5
+  - subject: his90
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His90 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/793/
+      snippet: metal ligand
+      notes: M-CSA entry 793, mechanism 1; M-CSA cites PMID:12960159, PMID:18599462, PMID:22819743, PMID:25751413;
+        M-CSA catalytic-residue roles for His90
+  - subject: asp92
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp92 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/793/
+      snippet: metal ligand
+      notes: M-CSA entry 793, mechanism 1; M-CSA cites PMID:12960159, PMID:18599462, PMID:22819743, PMID:25751413;
+        M-CSA catalytic-residue roles for Asp92
+  - subject: asp204
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp204 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/793/
+      snippet: covalently attached, metal ligand, nucleofuge, nucleophile
+      notes: M-CSA entry 793, mechanism 1; M-CSA cites PMID:12960159, PMID:18599462, PMID:22819743, PMID:25751413;
+        M-CSA catalytic-residue roles for Asp204
+  - subject: asp341
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp341 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/793/
+      snippet: activator, increase nucleophilicity, proton acceptor, proton donor
+      notes: M-CSA entry 793, mechanism 1; M-CSA cites PMID:12960159, PMID:18599462, PMID:22819743, PMID:25751413;
+        M-CSA catalytic-residue roles for Asp341
+  - subject: his471
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His471 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/793/
+      snippet: metal ligand
+      notes: M-CSA entry 793, mechanism 1; M-CSA cites PMID:12960159, PMID:18599462, PMID:22819743, PMID:25751413;
+        M-CSA catalytic-residue roles for His471
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/793/
+      snippet: The two glycosidic bonds are hydrolysed in the same catalytic site.  The bond to the alpha1,6-linked
+        mannose residue is hydrolysed first.  This is followed by a rearrangement of the substrate which
+        results in the repositioning of the alpha1,3-linked mannose residue from the holding site into
+        the catalytic site.  The alpha1,3 bond is subsequently hydrolysed. The hydrolysis of both the
+        alpha1,6 and
+      notes: M-CSA entry 793, mechanism 1; M-CSA cites PMID:12960159, PMID:18599462, PMID:22819743, PMID:25751413;
+        CATH domain 3.20.110.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/793/
+      snippet: The two glycosidic bonds are hydrolysed in the same catalytic site.  The bond to the alpha1,6-linked
+        mannose residue is hydrolysed first.  This is followed by a rearrangement of the substrate which
+        results in the repositioning of the alpha1,3-linked mannose residue from the holding site into
+        the catalytic site.  The alpha1,3 bond is subsequently hydrolysed. The hydrolysis of both the
+        alpha1,6 and
+      notes: M-CSA entry 793, mechanism 1; M-CSA cites PMID:12960159, PMID:18599462, PMID:22819743, PMID:25751413;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/793/
+      snippet: The two glycosidic bonds are hydrolysed in the same catalytic site.  The bond to the alpha1,6-linked
+        mannose residue is hydrolysed first.  This is followed by a rearrangement of the substrate which
+        results in the repositioning of the alpha1,3-linked mannose residue from the holding site into
+        the catalytic site.  The alpha1,3 bond is subsequently hydrolysed. The hydrolysis of both the
+        alpha1,6 and
+      notes: M-CSA entry 793, mechanism 1; M-CSA cites PMID:12960159, PMID:18599462, PMID:22819743, PMID:25751413;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/793/
+      snippet: The two glycosidic bonds are hydrolysed in the same catalytic site.  The bond to the alpha1,6-linked
+        mannose residue is hydrolysed first.  This is followed by a rearrangement of the substrate which
+        results in the repositioning of the alpha1,3-linked mannose residue from the holding site into
+        the catalytic site.  The alpha1,3 bond is subsequently hydrolysed. The hydrolysis of both the
+        alpha1,6 and
+      notes: M-CSA entry 793, mechanism 1; M-CSA cites PMID:12960159, PMID:18599462, PMID:22819743, PMID:25751413;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/793/
+      snippet: The two glycosidic bonds are hydrolysed in the same catalytic site.  The bond to the alpha1,6-linked
+        mannose residue is hydrolysed first.  This is followed by a rearrangement of the substrate which
+        results in the repositioning of the alpha1,3-linked mannose residue from the holding site into
+        the catalytic site.  The alpha1,3 bond is subsequently hydrolysed. The hydrolysis of both the
+        alpha1,6 and
+      notes: M-CSA entry 793, mechanism 1; M-CSA cites PMID:12960159, PMID:18599462, PMID:22819743, PMID:25751413;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/793/
+      snippet: The two glycosidic bonds are hydrolysed in the same catalytic site.  The bond to the alpha1,6-linked
+        mannose residue is hydrolysed first.  This is followed by a rearrangement of the substrate which
+        results in the repositioning of the alpha1,3-linked mannose residue from the holding site into
+        the catalytic site.  The alpha1,3 bond is subsequently hydrolysed. The hydrolysis of both the
+        alpha1,6 and
+      notes: M-CSA entry 793, mechanism 1; M-CSA cites PMID:12960159, PMID:18599462, PMID:22819743, PMID:25751413;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 793;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

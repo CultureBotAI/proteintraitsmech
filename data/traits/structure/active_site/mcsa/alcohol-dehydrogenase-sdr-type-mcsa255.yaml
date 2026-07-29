@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.1.1.1
 - CHEBI:15846
@@ -213,4 +213,257 @@ definitions:
       An NAD+-dependent enzyme that catalyzes the oxidation of alcohols to aldehydes/ketones and that is also able to further oxidize aldehydes to their corresponding carboxylic acids. It is a zinc-independent protein which is a member of the short-chain dehydrogenases/reductases (SDR) family. It is known to be inhibited by 2,2,2-trifluoroethanol and pyrazole.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of alcohol dehydrogenase (SDR type)
+  description: Stepwise mechanism transcribed from M-CSA entry 255 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +1).
+  nodes:
+  - node_id: asn108
+    label: catalytic Asn108 (M-CSA/PDB numbering; UniProt residue 109)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00334
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ser139
+    label: catalytic Ser139 (M-CSA/PDB numbering; UniProt residue 140)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00334
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor, increase acidity.'
+  - node_id: tyr152
+    label: catalytic Tyr152 (M-CSA/PDB numbering; UniProt residue 153)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00334
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: lys156
+    label: catalytic Lys156 (M-CSA/PDB numbering; UniProt residue 157)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00334
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, increase basicity.'
+  - node_id: reactant0
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15846
+  - node_id: reactant1
+    label: primary alcohol
+    node_type: CHEMICAL
+    grounding: CHEBI:15734
+  - node_id: product0
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:16908
+  - node_id: product1
+    label: aldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:17478
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Binding of the NAD initiates the deprotonation of Tyr152.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Tyr152 abstracts a proton from the substrate alcohol, initiating the elimination of a
+      hydride (which is added to NAD).
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: alcohol dehydrogenase (SDR type) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:255
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.720 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.720
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: alcohol dehydrogenase (SDR type) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.1.1.1
+  edges:
+  - subject: tyr152
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr152 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/255/
+      snippet: Binding of the NAD initiates the deprotonation of Tyr152.
+      notes: M-CSA entry 255, mechanism 1; M-CSA cites PMID:10366509, PMID:11976334, PMID:12604210, PMID:15581900,
+        PMID:17981907, PMID:18453685, PMID:19011748, PMID:6789320, PMID:9735295; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/255/
+      snippet: Tyr152 abstracts a proton from the substrate alcohol, initiating the elimination of a hydride
+        (which is added to NAD).
+      notes: M-CSA entry 255, mechanism 1; M-CSA cites PMID:10366509, PMID:11976334, PMID:12604210, PMID:15581900,
+        PMID:17981907, PMID:18453685, PMID:19011748, PMID:6789320, PMID:9735295; step 2
+  - subject: tyr152
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Tyr152 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/255/
+      snippet: Tyr152 abstracts a proton from the substrate alcohol, initiating the elimination of a hydride
+        (which is added to NAD).
+      notes: M-CSA entry 255, mechanism 1; M-CSA cites PMID:10366509, PMID:11976334, PMID:12604210, PMID:15581900,
+        PMID:17981907, PMID:18453685, PMID:19011748, PMID:6789320, PMID:9735295; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/255/
+      snippet: Products.
+      notes: M-CSA entry 255, mechanism 1; M-CSA cites PMID:10366509, PMID:11976334, PMID:12604210, PMID:15581900,
+        PMID:17981907, PMID:18453685, PMID:19011748, PMID:6789320, PMID:9735295; step 3
+  - subject: asn108
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn108 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/255/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 255, mechanism 1; M-CSA cites PMID:10366509, PMID:11976334, PMID:12604210, PMID:15581900,
+        PMID:17981907, PMID:18453685, PMID:19011748, PMID:6789320, PMID:9735295; M-CSA catalytic-residue
+        roles for Asn108
+  - subject: ser139
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser139 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/255/
+      snippet: electrostatic stabiliser, hydrogen bond donor, increase acidity
+      notes: M-CSA entry 255, mechanism 1; M-CSA cites PMID:10366509, PMID:11976334, PMID:12604210, PMID:15581900,
+        PMID:17981907, PMID:18453685, PMID:19011748, PMID:6789320, PMID:9735295; M-CSA catalytic-residue
+        roles for Ser139
+  - subject: tyr152
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr152 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/255/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 255, mechanism 1; M-CSA cites PMID:10366509, PMID:11976334, PMID:12604210, PMID:15581900,
+        PMID:17981907, PMID:18453685, PMID:19011748, PMID:6789320, PMID:9735295; M-CSA catalytic-residue
+        roles for Tyr152
+  - subject: lys156
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys156 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/255/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, increase basicity
+      notes: M-CSA entry 255, mechanism 1; M-CSA cites PMID:10366509, PMID:11976334, PMID:12604210, PMID:15581900,
+        PMID:17981907, PMID:18453685, PMID:19011748, PMID:6789320, PMID:9735295; M-CSA catalytic-residue
+        roles for Lys156
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/255/
+      snippet: The NAD cofactor binds first, causing one of the active site waters to deprotonate Tyr152.
+        Once the alcohol substrate has been bound, Tyr152 abstracts its hydroxyl proton, initiating the
+        hydride transfer to NAD. The ketone product is released first, followed by the NADH.
+      notes: M-CSA entry 255, mechanism 1; M-CSA cites PMID:10366509, PMID:11976334, PMID:12604210, PMID:15581900,
+        PMID:17981907, PMID:18453685, PMID:19011748, PMID:6789320, PMID:9735295; CATH domain 3.40.50.720
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/255/
+      snippet: The NAD cofactor binds first, causing one of the active site waters to deprotonate Tyr152.
+        Once the alcohol substrate has been bound, Tyr152 abstracts its hydroxyl proton, initiating the
+        hydride transfer to NAD. The ketone product is released first, followed by the NADH.
+      notes: M-CSA entry 255, mechanism 1; M-CSA cites PMID:10366509, PMID:11976334, PMID:12604210, PMID:15581900,
+        PMID:17981907, PMID:18453685, PMID:19011748, PMID:6789320, PMID:9735295; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/255/
+      snippet: The NAD cofactor binds first, causing one of the active site waters to deprotonate Tyr152.
+        Once the alcohol substrate has been bound, Tyr152 abstracts its hydroxyl proton, initiating the
+        hydride transfer to NAD. The ketone product is released first, followed by the NADH.
+      notes: M-CSA entry 255, mechanism 1; M-CSA cites PMID:10366509, PMID:11976334, PMID:12604210, PMID:15581900,
+        PMID:17981907, PMID:18453685, PMID:19011748, PMID:6789320, PMID:9735295; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/255/
+      snippet: The NAD cofactor binds first, causing one of the active site waters to deprotonate Tyr152.
+        Once the alcohol substrate has been bound, Tyr152 abstracts its hydroxyl proton, initiating the
+        hydride transfer to NAD. The ketone product is released first, followed by the NADH.
+      notes: M-CSA entry 255, mechanism 1; M-CSA cites PMID:10366509, PMID:11976334, PMID:12604210, PMID:15581900,
+        PMID:17981907, PMID:18453685, PMID:19011748, PMID:6789320, PMID:9735295; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/255/
+      snippet: The NAD cofactor binds first, causing one of the active site waters to deprotonate Tyr152.
+        Once the alcohol substrate has been bound, Tyr152 abstracts its hydroxyl proton, initiating the
+        hydride transfer to NAD. The ketone product is released first, followed by the NADH.
+      notes: M-CSA entry 255, mechanism 1; M-CSA cites PMID:10366509, PMID:11976334, PMID:12604210, PMID:15581900,
+        PMID:17981907, PMID:18453685, PMID:19011748, PMID:6789320, PMID:9735295; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/255/
+      snippet: The NAD cofactor binds first, causing one of the active site waters to deprotonate Tyr152.
+        Once the alcohol substrate has been bound, Tyr152 abstracts its hydroxyl proton, initiating the
+        hydride transfer to NAD. The ketone product is released first, followed by the NADH.
+      notes: M-CSA entry 255, mechanism 1; M-CSA cites PMID:10366509, PMID:11976334, PMID:12604210, PMID:15581900,
+        PMID:17981907, PMID:18453685, PMID:19011748, PMID:6789320, PMID:9735295; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/255/
+      snippet: The NAD cofactor binds first, causing one of the active site waters to deprotonate Tyr152.
+        Once the alcohol substrate has been bound, Tyr152 abstracts its hydroxyl proton, initiating the
+        hydride transfer to NAD. The ketone product is released first, followed by the NADH.
+      notes: M-CSA entry 255, mechanism 1; M-CSA cites PMID:10366509, PMID:11976334, PMID:12604210, PMID:15581900,
+        PMID:17981907, PMID:18453685, PMID:19011748, PMID:6789320, PMID:9735295; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 255;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

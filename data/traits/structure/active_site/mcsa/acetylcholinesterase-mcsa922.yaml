@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.1.7
 - CHEBI:30089
@@ -458,4 +458,435 @@ definitions:
       This enzyme is found in, or attached to, cellular or basement membranes of presynaptic cholinergic neurons and postsynaptic cholinoceptive cells within the neuromuscular junction. Signal transmission at the neuromuscular junction involves the release of acylcholine, its interaction with the acycholine receptor and hydrolysis, all occuring in a period of a few milliseconds. Rapid hydrolysis of the newly released aceytlcholine is vital in order to prevent continuous firing of the nerve impulses [PMID:8161450].
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of acetylcholinesterase
+  description: Stepwise mechanism transcribed from M-CSA entry 922 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +31).
+  nodes:
+  - node_id: gly121
+    label: catalytic Gly121 (M-CSA/PDB numbering; UniProt residue 152)
+    node_type: RESIDUE
+    grounding: UniProtKB:P21836
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: gly122
+    label: catalytic Gly122 (M-CSA/PDB numbering; UniProt residue 153)
+    node_type: RESIDUE
+    grounding: UniProtKB:P21836
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ser203
+    label: catalytic Ser203 (M-CSA/PDB numbering; UniProt residue 234)
+    node_type: RESIDUE
+    grounding: UniProtKB:P21836
+    description: 'M-CSA roles: covalently attached, nucleofuge, nucleophile, proton acceptor, proton donor.'
+  - node_id: ala204
+    label: catalytic Ala204 (M-CSA/PDB numbering; UniProt residue 235)
+    node_type: RESIDUE
+    grounding: UniProtKB:P21836
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: phe295
+    label: catalytic Phe295 (M-CSA/PDB numbering; UniProt residue 326)
+    node_type: RESIDUE
+    grounding: UniProtKB:P21836
+    description: 'M-CSA roles: steric locator.'
+  - node_id: glu334
+    label: catalytic Glu334 (M-CSA/PDB numbering; UniProt residue 365)
+    node_type: RESIDUE
+    grounding: UniProtKB:P21836
+    description: 'M-CSA roles: electrostatic stabiliser, modifies pKa.'
+  - node_id: phe338
+    label: catalytic Phe338 (M-CSA/PDB numbering; UniProt residue 369)
+    node_type: RESIDUE
+    grounding: UniProtKB:P21836
+    description: 'M-CSA roles: steric locator.'
+  - node_id: his447
+    label: catalytic His447 (M-CSA/PDB numbering; UniProt residue 478)
+    node_type: RESIDUE
+    grounding: UniProtKB:P21836
+    description: 'M-CSA roles: activator, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: acetylcholine
+    node_type: CHEMICAL
+    grounding: CHEBI:15355
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+  - node_id: product1
+    label: choline
+    node_type: CHEMICAL
+    grounding: CHEBI:15354
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Ser203 is deprotonated by His447 after which Ser203 attacks the acyl carbon on the substrate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The intermediate collapses due to His447 donating a proton to the leaving choline group.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: His447 deprotonates a water molecule from solution and the resulting hydroxide binds
+      to the remaining acly group bound to Ser203.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: His447 donate a proton to Ser203 which collapses the intermediate and releases the acyl
+      group in the form of acetate.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Final product.
+  - node_id: active_site
+    label: acetylcholinesterase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:922
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1820 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1820
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: acetylcholinesterase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.1.7
+  edges:
+  - subject: ser203
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser203 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/922/
+      snippet: Ser203 is deprotonated by His447 after which Ser203 attacks the acyl carbon on the substrate.
+      notes: M-CSA entry 922, mechanism 1; M-CSA cites PMID:10892800, PMID:11412096, PMID:12505979, PMID:12869558,
+        PMID:14885021, PMID:17402711, PMID:18471807, PMID:19326912, PMID:19536291, PMID:20550161, PMID:23992153,
+        PMID:8989325; step 1
+  - subject: his447
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His447 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/922/
+      snippet: Ser203 is deprotonated by His447 after which Ser203 attacks the acyl carbon on the substrate.
+      notes: M-CSA entry 922, mechanism 1; M-CSA cites PMID:10892800, PMID:11412096, PMID:12505979, PMID:12869558,
+        PMID:14885021, PMID:17402711, PMID:18471807, PMID:19326912, PMID:19536291, PMID:20550161, PMID:23992153,
+        PMID:8989325; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/922/
+      snippet: The intermediate collapses due to His447 donating a proton to the leaving choline group.
+      notes: M-CSA entry 922, mechanism 1; M-CSA cites PMID:10892800, PMID:11412096, PMID:12505979, PMID:12869558,
+        PMID:14885021, PMID:17402711, PMID:18471807, PMID:19326912, PMID:19536291, PMID:20550161, PMID:23992153,
+        PMID:8989325; step 2
+  - subject: his447
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His447 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/922/
+      snippet: The intermediate collapses due to His447 donating a proton to the leaving choline group.
+      notes: M-CSA entry 922, mechanism 1; M-CSA cites PMID:10892800, PMID:11412096, PMID:12505979, PMID:12869558,
+        PMID:14885021, PMID:17402711, PMID:18471807, PMID:19326912, PMID:19536291, PMID:20550161, PMID:23992153,
+        PMID:8989325; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/922/
+      snippet: His447 deprotonates a water molecule from solution and the resulting hydroxide binds to
+        the remaining acly group bound to Ser203.
+      notes: M-CSA entry 922, mechanism 1; M-CSA cites PMID:10892800, PMID:11412096, PMID:12505979, PMID:12869558,
+        PMID:14885021, PMID:17402711, PMID:18471807, PMID:19326912, PMID:19536291, PMID:20550161, PMID:23992153,
+        PMID:8989325; step 3
+  - subject: ser203
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Ser203 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/922/
+      snippet: His447 deprotonates a water molecule from solution and the resulting hydroxide binds to
+        the remaining acly group bound to Ser203.
+      notes: M-CSA entry 922, mechanism 1; M-CSA cites PMID:10892800, PMID:11412096, PMID:12505979, PMID:12869558,
+        PMID:14885021, PMID:17402711, PMID:18471807, PMID:19326912, PMID:19536291, PMID:20550161, PMID:23992153,
+        PMID:8989325; step 3
+  - subject: his447
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His447 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/922/
+      snippet: His447 deprotonates a water molecule from solution and the resulting hydroxide binds to
+        the remaining acly group bound to Ser203.
+      notes: M-CSA entry 922, mechanism 1; M-CSA cites PMID:10892800, PMID:11412096, PMID:12505979, PMID:12869558,
+        PMID:14885021, PMID:17402711, PMID:18471807, PMID:19326912, PMID:19536291, PMID:20550161, PMID:23992153,
+        PMID:8989325; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/922/
+      snippet: His447 donate a proton to Ser203 which collapses the intermediate and releases the acyl
+        group in the form of acetate.
+      notes: M-CSA entry 922, mechanism 1; M-CSA cites PMID:10892800, PMID:11412096, PMID:12505979, PMID:12869558,
+        PMID:14885021, PMID:17402711, PMID:18471807, PMID:19326912, PMID:19536291, PMID:20550161, PMID:23992153,
+        PMID:8989325; step 4
+  - subject: ser203
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Ser203 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/922/
+      snippet: His447 donate a proton to Ser203 which collapses the intermediate and releases the acyl
+        group in the form of acetate.
+      notes: M-CSA entry 922, mechanism 1; M-CSA cites PMID:10892800, PMID:11412096, PMID:12505979, PMID:12869558,
+        PMID:14885021, PMID:17402711, PMID:18471807, PMID:19326912, PMID:19536291, PMID:20550161, PMID:23992153,
+        PMID:8989325; step 4
+  - subject: his447
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: His447 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/922/
+      snippet: His447 donate a proton to Ser203 which collapses the intermediate and releases the acyl
+        group in the form of acetate.
+      notes: M-CSA entry 922, mechanism 1; M-CSA cites PMID:10892800, PMID:11412096, PMID:12505979, PMID:12869558,
+        PMID:14885021, PMID:17402711, PMID:18471807, PMID:19326912, PMID:19536291, PMID:20550161, PMID:23992153,
+        PMID:8989325; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/922/
+      snippet: Final product.
+      notes: M-CSA entry 922, mechanism 1; M-CSA cites PMID:10892800, PMID:11412096, PMID:12505979, PMID:12869558,
+        PMID:14885021, PMID:17402711, PMID:18471807, PMID:19326912, PMID:19536291, PMID:20550161, PMID:23992153,
+        PMID:8989325; step 5
+  - subject: gly121
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly121 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/922/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 922, mechanism 1; M-CSA cites PMID:10892800, PMID:11412096, PMID:12505979, PMID:12869558,
+        PMID:14885021, PMID:17402711, PMID:18471807, PMID:19326912, PMID:19536291, PMID:20550161, PMID:23992153,
+        PMID:8989325; M-CSA catalytic-residue roles for Gly121
+  - subject: gly122
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly122 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/922/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 922, mechanism 1; M-CSA cites PMID:10892800, PMID:11412096, PMID:12505979, PMID:12869558,
+        PMID:14885021, PMID:17402711, PMID:18471807, PMID:19326912, PMID:19536291, PMID:20550161, PMID:23992153,
+        PMID:8989325; M-CSA catalytic-residue roles for Gly122
+  - subject: ser203
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser203 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/922/
+      snippet: covalently attached, nucleofuge, nucleophile, proton acceptor, proton donor
+      notes: M-CSA entry 922, mechanism 1; M-CSA cites PMID:10892800, PMID:11412096, PMID:12505979, PMID:12869558,
+        PMID:14885021, PMID:17402711, PMID:18471807, PMID:19326912, PMID:19536291, PMID:20550161, PMID:23992153,
+        PMID:8989325; M-CSA catalytic-residue roles for Ser203
+  - subject: ala204
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ala204 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/922/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 922, mechanism 1; M-CSA cites PMID:10892800, PMID:11412096, PMID:12505979, PMID:12869558,
+        PMID:14885021, PMID:17402711, PMID:18471807, PMID:19326912, PMID:19536291, PMID:20550161, PMID:23992153,
+        PMID:8989325; M-CSA catalytic-residue roles for Ala204
+  - subject: phe295
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Phe295 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/922/
+      snippet: steric locator
+      notes: M-CSA entry 922, mechanism 1; M-CSA cites PMID:10892800, PMID:11412096, PMID:12505979, PMID:12869558,
+        PMID:14885021, PMID:17402711, PMID:18471807, PMID:19326912, PMID:19536291, PMID:20550161, PMID:23992153,
+        PMID:8989325; M-CSA catalytic-residue roles for Phe295
+  - subject: glu334
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu334 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/922/
+      snippet: electrostatic stabiliser, modifies pKa
+      notes: M-CSA entry 922, mechanism 1; M-CSA cites PMID:10892800, PMID:11412096, PMID:12505979, PMID:12869558,
+        PMID:14885021, PMID:17402711, PMID:18471807, PMID:19326912, PMID:19536291, PMID:20550161, PMID:23992153,
+        PMID:8989325; M-CSA catalytic-residue roles for Glu334
+  - subject: phe338
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Phe338 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/922/
+      snippet: steric locator
+      notes: M-CSA entry 922, mechanism 1; M-CSA cites PMID:10892800, PMID:11412096, PMID:12505979, PMID:12869558,
+        PMID:14885021, PMID:17402711, PMID:18471807, PMID:19326912, PMID:19536291, PMID:20550161, PMID:23992153,
+        PMID:8989325; M-CSA catalytic-residue roles for Phe338
+  - subject: his447
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His447 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/922/
+      snippet: activator, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 922, mechanism 1; M-CSA cites PMID:10892800, PMID:11412096, PMID:12505979, PMID:12869558,
+        PMID:14885021, PMID:17402711, PMID:18471807, PMID:19326912, PMID:19536291, PMID:20550161, PMID:23992153,
+        PMID:8989325; M-CSA catalytic-residue roles for His447
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/922/
+      snippet: Acetylcholine esterase functions via classic Ser-His-Asp/Glu triad mechanism. Acetylcholine
+        is guided into the site via Phe290 and Phe292. Ser203 is deprotonated and activated by His447.
+        Ser203 then performs a nucleophilic attack on the acly carbon of the substrate creating a intermediate
+        stabilised by Gly121, Gly120 and Ala204 forming an oxyanion hole. His447 then proceeds to donate
+        the newly gai
+      notes: M-CSA entry 922, mechanism 1; M-CSA cites PMID:10892800, PMID:11412096, PMID:12505979, PMID:12869558,
+        PMID:14885021, PMID:17402711, PMID:18471807, PMID:19326912, PMID:19536291, PMID:20550161, PMID:23992153,
+        PMID:8989325; CATH domain 3.40.50.1820 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/922/
+      snippet: Acetylcholine esterase functions via classic Ser-His-Asp/Glu triad mechanism. Acetylcholine
+        is guided into the site via Phe290 and Phe292. Ser203 is deprotonated and activated by His447.
+        Ser203 then performs a nucleophilic attack on the acly carbon of the substrate creating a intermediate
+        stabilised by Gly121, Gly120 and Ala204 forming an oxyanion hole. His447 then proceeds to donate
+        the newly gai
+      notes: M-CSA entry 922, mechanism 1; M-CSA cites PMID:10892800, PMID:11412096, PMID:12505979, PMID:12869558,
+        PMID:14885021, PMID:17402711, PMID:18471807, PMID:19326912, PMID:19536291, PMID:20550161, PMID:23992153,
+        PMID:8989325; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/922/
+      snippet: Acetylcholine esterase functions via classic Ser-His-Asp/Glu triad mechanism. Acetylcholine
+        is guided into the site via Phe290 and Phe292. Ser203 is deprotonated and activated by His447.
+        Ser203 then performs a nucleophilic attack on the acly carbon of the substrate creating a intermediate
+        stabilised by Gly121, Gly120 and Ala204 forming an oxyanion hole. His447 then proceeds to donate
+        the newly gai
+      notes: M-CSA entry 922, mechanism 1; M-CSA cites PMID:10892800, PMID:11412096, PMID:12505979, PMID:12869558,
+        PMID:14885021, PMID:17402711, PMID:18471807, PMID:19326912, PMID:19536291, PMID:20550161, PMID:23992153,
+        PMID:8989325; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/922/
+      snippet: Acetylcholine esterase functions via classic Ser-His-Asp/Glu triad mechanism. Acetylcholine
+        is guided into the site via Phe290 and Phe292. Ser203 is deprotonated and activated by His447.
+        Ser203 then performs a nucleophilic attack on the acly carbon of the substrate creating a intermediate
+        stabilised by Gly121, Gly120 and Ala204 forming an oxyanion hole. His447 then proceeds to donate
+        the newly gai
+      notes: M-CSA entry 922, mechanism 1; M-CSA cites PMID:10892800, PMID:11412096, PMID:12505979, PMID:12869558,
+        PMID:14885021, PMID:17402711, PMID:18471807, PMID:19326912, PMID:19536291, PMID:20550161, PMID:23992153,
+        PMID:8989325; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/922/
+      snippet: Acetylcholine esterase functions via classic Ser-His-Asp/Glu triad mechanism. Acetylcholine
+        is guided into the site via Phe290 and Phe292. Ser203 is deprotonated and activated by His447.
+        Ser203 then performs a nucleophilic attack on the acly carbon of the substrate creating a intermediate
+        stabilised by Gly121, Gly120 and Ala204 forming an oxyanion hole. His447 then proceeds to donate
+        the newly gai
+      notes: M-CSA entry 922, mechanism 1; M-CSA cites PMID:10892800, PMID:11412096, PMID:12505979, PMID:12869558,
+        PMID:14885021, PMID:17402711, PMID:18471807, PMID:19326912, PMID:19536291, PMID:20550161, PMID:23992153,
+        PMID:8989325; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/922/
+      snippet: Acetylcholine esterase functions via classic Ser-His-Asp/Glu triad mechanism. Acetylcholine
+        is guided into the site via Phe290 and Phe292. Ser203 is deprotonated and activated by His447.
+        Ser203 then performs a nucleophilic attack on the acly carbon of the substrate creating a intermediate
+        stabilised by Gly121, Gly120 and Ala204 forming an oxyanion hole. His447 then proceeds to donate
+        the newly gai
+      notes: M-CSA entry 922, mechanism 1; M-CSA cites PMID:10892800, PMID:11412096, PMID:12505979, PMID:12869558,
+        PMID:14885021, PMID:17402711, PMID:18471807, PMID:19326912, PMID:19536291, PMID:20550161, PMID:23992153,
+        PMID:8989325; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/922/
+      snippet: Acetylcholine esterase functions via classic Ser-His-Asp/Glu triad mechanism. Acetylcholine
+        is guided into the site via Phe290 and Phe292. Ser203 is deprotonated and activated by His447.
+        Ser203 then performs a nucleophilic attack on the acly carbon of the substrate creating a intermediate
+        stabilised by Gly121, Gly120 and Ala204 forming an oxyanion hole. His447 then proceeds to donate
+        the newly gai
+      notes: M-CSA entry 922, mechanism 1; M-CSA cites PMID:10892800, PMID:11412096, PMID:12505979, PMID:12869558,
+        PMID:14885021, PMID:17402711, PMID:18471807, PMID:19326912, PMID:19536291, PMID:20550161, PMID:23992153,
+        PMID:8989325; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (26 evidence-backed edges) transcribed from M-CSA entry 922;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

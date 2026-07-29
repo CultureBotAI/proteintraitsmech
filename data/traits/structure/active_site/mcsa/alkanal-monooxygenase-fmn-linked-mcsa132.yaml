@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.14.14.3
 - CHEBI:15379
@@ -379,4 +379,369 @@ definitions:
       In the bioluminescence reaction catalysed by bacterial luciferase, a flavin-dependent monooxygenase, reduced riboflavin 5' -phosphate (FMNH2) and a long-chain aliphatic aldehyde are oxidised by molecular oxygen to produce FMN, water, aliphatic carboxylic acid, and visible light with an overall quantum yield of about 0.12. It is intriguing that bacterial luciferase is unique among all known flavin-dependent monooxygenases in catalysing a light-emitting reaction. Vibrio harveyi luciferase is an alpha-beta heterodimer, the proposed earlier to be at a cleft in the alpha subunit.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of alkanal monooxygenase (FMN-linked)
+  description: Stepwise mechanism transcribed from M-CSA entry 132 (6 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: his44
+    label: catalytic His44 (M-CSA/PDB numbering; UniProt residue 44)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07740
+    description: 'M-CSA roles: activator, electrostatic stabiliser, hydrogen bond donor, proton acceptor,
+      proton donor.'
+  - node_id: his45
+    label: catalytic His45 (M-CSA/PDB numbering; UniProt residue 45)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07740
+    description: 'M-CSA roles: electrostatic stabiliser, polar/non-polar interaction.'
+  - node_id: cys106
+    label: catalytic Cys106 (M-CSA/PDB numbering; UniProt residue 106)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07740
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp113
+    label: catalytic Asp113 (M-CSA/PDB numbering; UniProt residue 113)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07740
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: ser227
+    label: catalytic Ser227 (M-CSA/PDB numbering; UniProt residue 227)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07740
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: reactant0
+    label: dioxygen
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+  - node_id: reactant1
+    label: long-chain fatty aldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:17176
+  - node_id: reactant2
+    label: FMNH2(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57618
+  - node_id: product0
+    label: photon
+    node_type: CHEMICAL
+    grounding: CHEBI:30212
+  - node_id: product1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product2
+    label: long-chain fatty acid anion
+    node_type: CHEMICAL
+    grounding: CHEBI:57560
+  - node_id: product3
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product4
+    label: FMN(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58210
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: FMNH2 undergoes a double bond rearrangement which results in the single electron transfer
+      to a dioxygen molecule which results in the homolysis of a bond and production of a superoxide radical.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The radical species produced colligate to form the FMN-peroxo adduct. The generation
+      of the excited C4a-peroxyflavin emitter originates from the fission of the O-O bond of an intermediate
+      along the reaction mechanism. The intermediate formed in this step can undergo a competing dark
+      decay via the scission of the C4a-O bond.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The peroxo intermediate nucleophilically attacks the carbonyl carbon of the aldehyde
+      substrate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The flavin C(4a)-peroxyhemiacetal adduct decomposes resulting in the production of dioxirane
+      and the excited state of the C(4a)-hydroxyflavin intermediate which when that decays to ground state
+      will emit blue-green light.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: The FMN-bound hydroxyl group initiates an intramolecular elimination of water, generating
+      the product FMN.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: alkanal monooxygenase (FMN-linked) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:132
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.30 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.30
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: alkanal monooxygenase (FMN-linked) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.14.14.3
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/132/
+      snippet: The radical species produced colligate to form the FMN-peroxo adduct. The generation of
+        the excited C4a-peroxyflavin emitter originates from the fission of the O-O bond of an intermediate
+        along the reaction mechanism. The intermediate formed in this step can undergo a competing dark
+        decay via the scission of the C4a-O bond.
+      notes: M-CSA entry 132, mechanism 4; M-CSA cites PMID:19435287, PMID:25487767, PMID:29323892, PMID:9402752;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/132/
+      snippet: The peroxo intermediate nucleophilically attacks the carbonyl carbon of the aldehyde substrate.
+      notes: M-CSA entry 132, mechanism 4; M-CSA cites PMID:19435287, PMID:25487767, PMID:29323892, PMID:9402752;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/132/
+      snippet: The flavin C(4a)-peroxyhemiacetal adduct decomposes resulting in the production of dioxirane
+        and the excited state of the C(4a)-hydroxyflavin intermediate which when that decays to ground
+        state will emit blue-green light.
+      notes: M-CSA entry 132, mechanism 4; M-CSA cites PMID:19435287, PMID:25487767, PMID:29323892, PMID:9402752;
+        step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/132/
+      snippet: The FMN-bound hydroxyl group initiates an intramolecular elimination of water, generating
+        the product FMN.
+      notes: M-CSA entry 132, mechanism 4; M-CSA cites PMID:19435287, PMID:25487767, PMID:29323892, PMID:9402752;
+        step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/132/
+      snippet: Products
+      notes: M-CSA entry 132, mechanism 4; M-CSA cites PMID:19435287, PMID:25487767, PMID:29323892, PMID:9402752;
+        step 6
+  - subject: his44
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His44 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/132/
+      snippet: activator, electrostatic stabiliser, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 132, mechanism 4; M-CSA cites PMID:19435287, PMID:25487767, PMID:29323892, PMID:9402752;
+        M-CSA catalytic-residue roles for His44
+  - subject: his45
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His45 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/132/
+      snippet: electrostatic stabiliser, polar/non-polar interaction
+      notes: M-CSA entry 132, mechanism 4; M-CSA cites PMID:19435287, PMID:25487767, PMID:29323892, PMID:9402752;
+        M-CSA catalytic-residue roles for His45
+  - subject: cys106
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys106 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/132/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 132, mechanism 4; M-CSA cites PMID:19435287, PMID:25487767, PMID:29323892, PMID:9402752;
+        M-CSA catalytic-residue roles for Cys106
+  - subject: asp113
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp113 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/132/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 132, mechanism 4; M-CSA cites PMID:19435287, PMID:25487767, PMID:29323892, PMID:9402752;
+        M-CSA catalytic-residue roles for Asp113
+  - subject: ser227
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser227 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/132/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 132, mechanism 4; M-CSA cites PMID:19435287, PMID:25487767, PMID:29323892, PMID:9402752;
+        M-CSA catalytic-residue roles for Ser227
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/132/
+      snippet: This follows initially a similar reaction as the other proposals where following a double
+        bond rearrangement of FMNH2 and the production if a radical the addition of dioxygen to flavin
+        produces an intermediate which can then nucleophilically attack the aldehyde substrate. The flavin
+        C(4a)-peroxyhemiacetal formed will decomposes producing a dioxirane intermediate and the excited
+        state C(4a)-hydroxy
+      notes: M-CSA entry 132, mechanism 4; M-CSA cites PMID:19435287, PMID:25487767, PMID:29323892, PMID:9402752;
+        CATH domain 3.20.20.30 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/132/
+      snippet: This follows initially a similar reaction as the other proposals where following a double
+        bond rearrangement of FMNH2 and the production if a radical the addition of dioxygen to flavin
+        produces an intermediate which can then nucleophilically attack the aldehyde substrate. The flavin
+        C(4a)-peroxyhemiacetal formed will decomposes producing a dioxirane intermediate and the excited
+        state C(4a)-hydroxy
+      notes: M-CSA entry 132, mechanism 4; M-CSA cites PMID:19435287, PMID:25487767, PMID:29323892, PMID:9402752;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/132/
+      snippet: This follows initially a similar reaction as the other proposals where following a double
+        bond rearrangement of FMNH2 and the production if a radical the addition of dioxygen to flavin
+        produces an intermediate which can then nucleophilically attack the aldehyde substrate. The flavin
+        C(4a)-peroxyhemiacetal formed will decomposes producing a dioxirane intermediate and the excited
+        state C(4a)-hydroxy
+      notes: M-CSA entry 132, mechanism 4; M-CSA cites PMID:19435287, PMID:25487767, PMID:29323892, PMID:9402752;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/132/
+      snippet: This follows initially a similar reaction as the other proposals where following a double
+        bond rearrangement of FMNH2 and the production if a radical the addition of dioxygen to flavin
+        produces an intermediate which can then nucleophilically attack the aldehyde substrate. The flavin
+        C(4a)-peroxyhemiacetal formed will decomposes producing a dioxirane intermediate and the excited
+        state C(4a)-hydroxy
+      notes: M-CSA entry 132, mechanism 4; M-CSA cites PMID:19435287, PMID:25487767, PMID:29323892, PMID:9402752;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/132/
+      snippet: This follows initially a similar reaction as the other proposals where following a double
+        bond rearrangement of FMNH2 and the production if a radical the addition of dioxygen to flavin
+        produces an intermediate which can then nucleophilically attack the aldehyde substrate. The flavin
+        C(4a)-peroxyhemiacetal formed will decomposes producing a dioxirane intermediate and the excited
+        state C(4a)-hydroxy
+      notes: M-CSA entry 132, mechanism 4; M-CSA cites PMID:19435287, PMID:25487767, PMID:29323892, PMID:9402752;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/132/
+      snippet: This follows initially a similar reaction as the other proposals where following a double
+        bond rearrangement of FMNH2 and the production if a radical the addition of dioxygen to flavin
+        produces an intermediate which can then nucleophilically attack the aldehyde substrate. The flavin
+        C(4a)-peroxyhemiacetal formed will decomposes producing a dioxirane intermediate and the excited
+        state C(4a)-hydroxy
+      notes: M-CSA entry 132, mechanism 4; M-CSA cites PMID:19435287, PMID:25487767, PMID:29323892, PMID:9402752;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/132/
+      snippet: This follows initially a similar reaction as the other proposals where following a double
+        bond rearrangement of FMNH2 and the production if a radical the addition of dioxygen to flavin
+        produces an intermediate which can then nucleophilically attack the aldehyde substrate. The flavin
+        C(4a)-peroxyhemiacetal formed will decomposes producing a dioxirane intermediate and the excited
+        state C(4a)-hydroxy
+      notes: M-CSA entry 132, mechanism 4; M-CSA cites PMID:19435287, PMID:25487767, PMID:29323892, PMID:9402752;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/132/
+      snippet: This follows initially a similar reaction as the other proposals where following a double
+        bond rearrangement of FMNH2 and the production if a radical the addition of dioxygen to flavin
+        produces an intermediate which can then nucleophilically attack the aldehyde substrate. The flavin
+        C(4a)-peroxyhemiacetal formed will decomposes producing a dioxirane intermediate and the excited
+        state C(4a)-hydroxy
+      notes: M-CSA entry 132, mechanism 4; M-CSA cites PMID:19435287, PMID:25487767, PMID:29323892, PMID:9402752;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product3
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/132/
+      snippet: This follows initially a similar reaction as the other proposals where following a double
+        bond rearrangement of FMNH2 and the production if a radical the addition of dioxygen to flavin
+        produces an intermediate which can then nucleophilically attack the aldehyde substrate. The flavin
+        C(4a)-peroxyhemiacetal formed will decomposes producing a dioxirane intermediate and the excited
+        state C(4a)-hydroxy
+      notes: M-CSA entry 132, mechanism 4; M-CSA cites PMID:19435287, PMID:25487767, PMID:29323892, PMID:9402752;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product4
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/132/
+      snippet: This follows initially a similar reaction as the other proposals where following a double
+        bond rearrangement of FMNH2 and the production if a radical the addition of dioxygen to flavin
+        produces an intermediate which can then nucleophilically attack the aldehyde substrate. The flavin
+        C(4a)-peroxyhemiacetal formed will decomposes producing a dioxirane intermediate and the excited
+        state C(4a)-hydroxy
+      notes: M-CSA entry 132, mechanism 4; M-CSA cites PMID:19435287, PMID:25487767, PMID:29323892, PMID:9402752;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (20 evidence-backed edges) transcribed from M-CSA entry 132;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:6.5.1.1
 - CHEBI:30616
@@ -253,4 +253,371 @@ definitions:
       DNA ligase is an essential enzyme required for the repair, replication and recombination of DNA. In all organisms except the prokaryotes it is dependent on the hydrolysis of ATP to AMP and pyrophosphate.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of DNA ligase (ATP)
+  description: Stepwise mechanism transcribed from M-CSA entry 202 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: lys34
+    label: catalytic Lys34 (M-CSA/PDB numbering; UniProt residue 34)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00969
+    description: 'M-CSA roles: hydrogen bond donor, nucleofuge, nucleophile, polar interaction.'
+  - node_id: lys238
+    label: catalytic Lys238 (M-CSA/PDB numbering; UniProt residue 238)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00969
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor, steric role.'
+  - node_id: lys240
+    label: catalytic Lys240 (M-CSA/PDB numbering; UniProt residue 240)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00969
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: reactant0
+    label: ATP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+  - node_id: reactant1
+    label: dAMP 5'-end residue
+    node_type: CHEMICAL
+    grounding: CHEBI:53099
+  - node_id: reactant2
+    label: dAMP 3'-end residue
+    node_type: CHEMICAL
+    grounding: CHEBI:53113
+  - node_id: product0
+    label: diphosphate(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:18361
+  - node_id: product1
+    label: adenosine 5'-monophosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+  - node_id: product2
+    label: poly(deoxyadenylic acid)
+    node_type: CHEMICAL
+    grounding: CHEBI:73276
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Lys34 acts as a nucleophile and attacks the alpha-phosphate of ATP in a substitution
+      reaction, liberating pyrophosphate and forming an intermediate covalently bound to the enzyme. Mg(II),
+      Lys238 and Lys240 stabilise the intermediates formed, Lys238 positions the pyrophosphate leaving
+      group, allowing for the in-line mechanism to occur.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The phosphate group of the first strand of DNA acts as a nucleophile and attacks the
+      phosphate bound to Lys34 in a substitution reaction, liberating Lys34 and forming a DNA-AMP complex.
+      Mg(II), Lys238 and Lys240 stabilise the intermediates formed.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The AMP phosphate deprotonates the hydroxyl group of the second DNA molecule, which then
+      acts as a nucleophile and attacks the DNA phosphate of the DNA-AMP complex in a substitution reaction,
+      liberating AMP and the ligated DNA. Mg(II), Lys238 and Lys240 stabilise the intermediates formed.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: DNA ligase (ATP) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:202
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.1490.70 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.1490.70
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: DNA ligase (ATP) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:6.5.1.1
+  edges:
+  - subject: lys34
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys34 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/202/
+      snippet: Lys34 acts as a nucleophile and attacks the alpha-phosphate of ATP in a substitution reaction,
+        liberating pyrophosphate and forming an intermediate covalently bound to the enzyme. Mg(II), Lys238
+        and Lys240 stabilise the intermediates formed, Lys238 positions the pyrophosphate leaving group,
+        allowing for the in-line mechanism to occur.
+      notes: M-CSA entry 202, mechanism 1; M-CSA cites PMID:10656817, PMID:11106756, PMID:11687591, PMID:11751916,
+        PMID:1988940, PMID:4377758, PMID:8653795; step 1
+  - subject: lys238
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys238 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/202/
+      snippet: Lys34 acts as a nucleophile and attacks the alpha-phosphate of ATP in a substitution reaction,
+        liberating pyrophosphate and forming an intermediate covalently bound to the enzyme. Mg(II), Lys238
+        and Lys240 stabilise the intermediates formed, Lys238 positions the pyrophosphate leaving group,
+        allowing for the in-line mechanism to occur.
+      notes: M-CSA entry 202, mechanism 1; M-CSA cites PMID:10656817, PMID:11106756, PMID:11687591, PMID:11751916,
+        PMID:1988940, PMID:4377758, PMID:8653795; step 1
+  - subject: lys240
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys240 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/202/
+      snippet: Lys34 acts as a nucleophile and attacks the alpha-phosphate of ATP in a substitution reaction,
+        liberating pyrophosphate and forming an intermediate covalently bound to the enzyme. Mg(II), Lys238
+        and Lys240 stabilise the intermediates formed, Lys238 positions the pyrophosphate leaving group,
+        allowing for the in-line mechanism to occur.
+      notes: M-CSA entry 202, mechanism 1; M-CSA cites PMID:10656817, PMID:11106756, PMID:11687591, PMID:11751916,
+        PMID:1988940, PMID:4377758, PMID:8653795; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/202/
+      snippet: The phosphate group of the first strand of DNA acts as a nucleophile and attacks the phosphate
+        bound to Lys34 in a substitution reaction, liberating Lys34 and forming a DNA-AMP complex. Mg(II),
+        Lys238 and Lys240 stabilise the intermediates formed.
+      notes: M-CSA entry 202, mechanism 1; M-CSA cites PMID:10656817, PMID:11106756, PMID:11687591, PMID:11751916,
+        PMID:1988940, PMID:4377758, PMID:8653795; step 2
+  - subject: lys34
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Lys34 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/202/
+      snippet: The phosphate group of the first strand of DNA acts as a nucleophile and attacks the phosphate
+        bound to Lys34 in a substitution reaction, liberating Lys34 and forming a DNA-AMP complex. Mg(II),
+        Lys238 and Lys240 stabilise the intermediates formed.
+      notes: M-CSA entry 202, mechanism 1; M-CSA cites PMID:10656817, PMID:11106756, PMID:11687591, PMID:11751916,
+        PMID:1988940, PMID:4377758, PMID:8653795; step 2
+  - subject: lys238
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Lys238 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/202/
+      snippet: The phosphate group of the first strand of DNA acts as a nucleophile and attacks the phosphate
+        bound to Lys34 in a substitution reaction, liberating Lys34 and forming a DNA-AMP complex. Mg(II),
+        Lys238 and Lys240 stabilise the intermediates formed.
+      notes: M-CSA entry 202, mechanism 1; M-CSA cites PMID:10656817, PMID:11106756, PMID:11687591, PMID:11751916,
+        PMID:1988940, PMID:4377758, PMID:8653795; step 2
+  - subject: lys240
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Lys240 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/202/
+      snippet: The phosphate group of the first strand of DNA acts as a nucleophile and attacks the phosphate
+        bound to Lys34 in a substitution reaction, liberating Lys34 and forming a DNA-AMP complex. Mg(II),
+        Lys238 and Lys240 stabilise the intermediates formed.
+      notes: M-CSA entry 202, mechanism 1; M-CSA cites PMID:10656817, PMID:11106756, PMID:11687591, PMID:11751916,
+        PMID:1988940, PMID:4377758, PMID:8653795; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/202/
+      snippet: The AMP phosphate deprotonates the hydroxyl group of the second DNA molecule, which then
+        acts as a nucleophile and attacks the DNA phosphate of the DNA-AMP complex in a substitution reaction,
+        liberating AMP and the ligated DNA. Mg(II), Lys238 and Lys240 stabilise the intermediates formed.
+      notes: M-CSA entry 202, mechanism 1; M-CSA cites PMID:10656817, PMID:11106756, PMID:11687591, PMID:11751916,
+        PMID:1988940, PMID:4377758, PMID:8653795; step 3
+  - subject: lys238
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Lys238 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/202/
+      snippet: The AMP phosphate deprotonates the hydroxyl group of the second DNA molecule, which then
+        acts as a nucleophile and attacks the DNA phosphate of the DNA-AMP complex in a substitution reaction,
+        liberating AMP and the ligated DNA. Mg(II), Lys238 and Lys240 stabilise the intermediates formed.
+      notes: M-CSA entry 202, mechanism 1; M-CSA cites PMID:10656817, PMID:11106756, PMID:11687591, PMID:11751916,
+        PMID:1988940, PMID:4377758, PMID:8653795; step 3
+  - subject: lys240
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Lys240 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/202/
+      snippet: The AMP phosphate deprotonates the hydroxyl group of the second DNA molecule, which then
+        acts as a nucleophile and attacks the DNA phosphate of the DNA-AMP complex in a substitution reaction,
+        liberating AMP and the ligated DNA. Mg(II), Lys238 and Lys240 stabilise the intermediates formed.
+      notes: M-CSA entry 202, mechanism 1; M-CSA cites PMID:10656817, PMID:11106756, PMID:11687591, PMID:11751916,
+        PMID:1988940, PMID:4377758, PMID:8653795; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/202/
+      snippet: Products
+      notes: M-CSA entry 202, mechanism 1; M-CSA cites PMID:10656817, PMID:11106756, PMID:11687591, PMID:11751916,
+        PMID:1988940, PMID:4377758, PMID:8653795; step 4
+  - subject: lys34
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys34 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/202/
+      snippet: hydrogen bond donor, nucleofuge, nucleophile, polar interaction
+      notes: M-CSA entry 202, mechanism 1; M-CSA cites PMID:10656817, PMID:11106756, PMID:11687591, PMID:11751916,
+        PMID:1988940, PMID:4377758, PMID:8653795; M-CSA catalytic-residue roles for Lys34
+  - subject: lys238
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys238 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/202/
+      snippet: electrostatic stabiliser, hydrogen bond donor, steric role
+      notes: M-CSA entry 202, mechanism 1; M-CSA cites PMID:10656817, PMID:11106756, PMID:11687591, PMID:11751916,
+        PMID:1988940, PMID:4377758, PMID:8653795; M-CSA catalytic-residue roles for Lys238
+  - subject: lys240
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys240 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/202/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 202, mechanism 1; M-CSA cites PMID:10656817, PMID:11106756, PMID:11687591, PMID:11751916,
+        PMID:1988940, PMID:4377758, PMID:8653795; M-CSA catalytic-residue roles for Lys240
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/202/
+      snippet: Lys34 acts as a nucleophile and attacks the alpha-phosphate of ATP in a substitution reaction,
+        liberating pyrophosphate and forming an intermediate covalently bound to the enzyme. The phosphate
+        group of the first strand of DNA acts as a nucleophile and attacks the phosphate bound to Lys34
+        in a substitution reaction, liberating Lys34 and forming a DNA-AMP complex. The AMP phosphate
+        deprotonates the
+      notes: M-CSA entry 202, mechanism 1; M-CSA cites PMID:10656817, PMID:11106756, PMID:11687591, PMID:11751916,
+        PMID:1988940, PMID:4377758, PMID:8653795; CATH domain 3.30.1490.70 assigned to the catalytic chain
+        by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/202/
+      snippet: Lys34 acts as a nucleophile and attacks the alpha-phosphate of ATP in a substitution reaction,
+        liberating pyrophosphate and forming an intermediate covalently bound to the enzyme. The phosphate
+        group of the first strand of DNA acts as a nucleophile and attacks the phosphate bound to Lys34
+        in a substitution reaction, liberating Lys34 and forming a DNA-AMP complex. The AMP phosphate
+        deprotonates the
+      notes: M-CSA entry 202, mechanism 1; M-CSA cites PMID:10656817, PMID:11106756, PMID:11687591, PMID:11751916,
+        PMID:1988940, PMID:4377758, PMID:8653795; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/202/
+      snippet: Lys34 acts as a nucleophile and attacks the alpha-phosphate of ATP in a substitution reaction,
+        liberating pyrophosphate and forming an intermediate covalently bound to the enzyme. The phosphate
+        group of the first strand of DNA acts as a nucleophile and attacks the phosphate bound to Lys34
+        in a substitution reaction, liberating Lys34 and forming a DNA-AMP complex. The AMP phosphate
+        deprotonates the
+      notes: M-CSA entry 202, mechanism 1; M-CSA cites PMID:10656817, PMID:11106756, PMID:11687591, PMID:11751916,
+        PMID:1988940, PMID:4377758, PMID:8653795; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/202/
+      snippet: Lys34 acts as a nucleophile and attacks the alpha-phosphate of ATP in a substitution reaction,
+        liberating pyrophosphate and forming an intermediate covalently bound to the enzyme. The phosphate
+        group of the first strand of DNA acts as a nucleophile and attacks the phosphate bound to Lys34
+        in a substitution reaction, liberating Lys34 and forming a DNA-AMP complex. The AMP phosphate
+        deprotonates the
+      notes: M-CSA entry 202, mechanism 1; M-CSA cites PMID:10656817, PMID:11106756, PMID:11687591, PMID:11751916,
+        PMID:1988940, PMID:4377758, PMID:8653795; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/202/
+      snippet: Lys34 acts as a nucleophile and attacks the alpha-phosphate of ATP in a substitution reaction,
+        liberating pyrophosphate and forming an intermediate covalently bound to the enzyme. The phosphate
+        group of the first strand of DNA acts as a nucleophile and attacks the phosphate bound to Lys34
+        in a substitution reaction, liberating Lys34 and forming a DNA-AMP complex. The AMP phosphate
+        deprotonates the
+      notes: M-CSA entry 202, mechanism 1; M-CSA cites PMID:10656817, PMID:11106756, PMID:11687591, PMID:11751916,
+        PMID:1988940, PMID:4377758, PMID:8653795; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/202/
+      snippet: Lys34 acts as a nucleophile and attacks the alpha-phosphate of ATP in a substitution reaction,
+        liberating pyrophosphate and forming an intermediate covalently bound to the enzyme. The phosphate
+        group of the first strand of DNA acts as a nucleophile and attacks the phosphate bound to Lys34
+        in a substitution reaction, liberating Lys34 and forming a DNA-AMP complex. The AMP phosphate
+        deprotonates the
+      notes: M-CSA entry 202, mechanism 1; M-CSA cites PMID:10656817, PMID:11106756, PMID:11687591, PMID:11751916,
+        PMID:1988940, PMID:4377758, PMID:8653795; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/202/
+      snippet: Lys34 acts as a nucleophile and attacks the alpha-phosphate of ATP in a substitution reaction,
+        liberating pyrophosphate and forming an intermediate covalently bound to the enzyme. The phosphate
+        group of the first strand of DNA acts as a nucleophile and attacks the phosphate bound to Lys34
+        in a substitution reaction, liberating Lys34 and forming a DNA-AMP complex. The AMP phosphate
+        deprotonates the
+      notes: M-CSA entry 202, mechanism 1; M-CSA cites PMID:10656817, PMID:11106756, PMID:11687591, PMID:11751916,
+        PMID:1988940, PMID:4377758, PMID:8653795; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/202/
+      snippet: Lys34 acts as a nucleophile and attacks the alpha-phosphate of ATP in a substitution reaction,
+        liberating pyrophosphate and forming an intermediate covalently bound to the enzyme. The phosphate
+        group of the first strand of DNA acts as a nucleophile and attacks the phosphate bound to Lys34
+        in a substitution reaction, liberating Lys34 and forming a DNA-AMP complex. The AMP phosphate
+        deprotonates the
+      notes: M-CSA entry 202, mechanism 1; M-CSA cites PMID:10656817, PMID:11106756, PMID:11687591, PMID:11751916,
+        PMID:1988940, PMID:4377758, PMID:8653795; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (22 evidence-backed edges) transcribed from M-CSA entry 202;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

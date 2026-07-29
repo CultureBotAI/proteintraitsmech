@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.1.99.1
 - CHEBI:57326
@@ -54,4 +54,272 @@ definitions:
       Methylmalonyl-CoA epimerase is essential for the breakdown of odd-numbered fatty acids and the amino acids valine, isoleucine and methionine. It is present in many species of bacteria and animals. Defective activity in humans can result in severe acidosis and damage to the central nervous system.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of methylmalonyl-CoA epimerase
+  description: Stepwise mechanism transcribed from M-CSA entry 33 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: his12
+    label: catalytic His12 (M-CSA/PDB numbering; UniProt residue 12)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8VQN0
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu48
+    label: catalytic Glu48 (M-CSA/PDB numbering; UniProt residue 48)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8VQN0
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: gln65
+    label: catalytic Gln65 (M-CSA/PDB numbering; UniProt residue 65)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8VQN0
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his91
+    label: catalytic His91 (M-CSA/PDB numbering; UniProt residue 91)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8VQN0
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu141
+    label: catalytic Glu141 (M-CSA/PDB numbering; UniProt residue 141)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8VQN0
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, metal ligand, proton acceptor,
+      proton donor.'
+  - node_id: reactant0
+    label: (R)-methylmalonyl-CoA(5-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57326
+  - node_id: product0
+    label: (S)-methylmalonyl-CoA(5-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57327
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu48 deprotonates the chiral centre of methylmalonyl-CoA, resulting in formation of
+      an enol intermediate that is stabilised by the Co(II) centre.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Glu141 deprotonates Glu48.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The oxyanion collapses back to re-form the keto-form, the chiral centre is re-formed
+      by proton transfer from Glu141.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: methylmalonyl-CoA epimerase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:33
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.10.180.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.10.180.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: methylmalonyl-CoA epimerase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.1.99.1
+  edges:
+  - subject: glu48
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu48 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/33/
+      snippet: Glu48 deprotonates the chiral centre of methylmalonyl-CoA, resulting in formation of an
+        enol intermediate that is stabilised by the Co(II) centre.
+      notes: M-CSA entry 33, mechanism 1; M-CSA cites PMID:10521255, PMID:11076500, PMID:11470438, PMID:19731367;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/33/
+      snippet: Glu141 deprotonates Glu48.
+      notes: M-CSA entry 33, mechanism 1; M-CSA cites PMID:10521255, PMID:11076500, PMID:11470438, PMID:19731367;
+        step 2
+  - subject: glu48
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu48 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/33/
+      snippet: Glu141 deprotonates Glu48.
+      notes: M-CSA entry 33, mechanism 1; M-CSA cites PMID:10521255, PMID:11076500, PMID:11470438, PMID:19731367;
+        step 2
+  - subject: glu141
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu141 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/33/
+      snippet: Glu141 deprotonates Glu48.
+      notes: M-CSA entry 33, mechanism 1; M-CSA cites PMID:10521255, PMID:11076500, PMID:11470438, PMID:19731367;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/33/
+      snippet: The oxyanion collapses back to re-form the keto-form, the chiral centre is re-formed by
+        proton transfer from Glu141.
+      notes: M-CSA entry 33, mechanism 1; M-CSA cites PMID:10521255, PMID:11076500, PMID:11470438, PMID:19731367;
+        step 3
+  - subject: glu141
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Glu141 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/33/
+      snippet: The oxyanion collapses back to re-form the keto-form, the chiral centre is re-formed by
+        proton transfer from Glu141.
+      notes: M-CSA entry 33, mechanism 1; M-CSA cites PMID:10521255, PMID:11076500, PMID:11470438, PMID:19731367;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/33/
+      snippet: Products
+      notes: M-CSA entry 33, mechanism 1; M-CSA cites PMID:10521255, PMID:11076500, PMID:11470438, PMID:19731367;
+        step 4
+  - subject: his12
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His12 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/33/
+      snippet: metal ligand
+      notes: M-CSA entry 33, mechanism 1; M-CSA cites PMID:10521255, PMID:11076500, PMID:11470438, PMID:19731367;
+        M-CSA catalytic-residue roles for His12
+  - subject: glu48
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu48 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/33/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 33, mechanism 1; M-CSA cites PMID:10521255, PMID:11076500, PMID:11470438, PMID:19731367;
+        M-CSA catalytic-residue roles for Glu48
+  - subject: gln65
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln65 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/33/
+      snippet: metal ligand
+      notes: M-CSA entry 33, mechanism 1; M-CSA cites PMID:10521255, PMID:11076500, PMID:11470438, PMID:19731367;
+        M-CSA catalytic-residue roles for Gln65
+  - subject: his91
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His91 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/33/
+      snippet: metal ligand
+      notes: M-CSA entry 33, mechanism 1; M-CSA cites PMID:10521255, PMID:11076500, PMID:11470438, PMID:19731367;
+        M-CSA catalytic-residue roles for His91
+  - subject: glu141
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu141 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/33/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, metal ligand, proton acceptor, proton donor
+      notes: M-CSA entry 33, mechanism 1; M-CSA cites PMID:10521255, PMID:11076500, PMID:11470438, PMID:19731367;
+        M-CSA catalytic-residue roles for Glu141
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/33/
+      snippet: "Although there is no Co(II) present in the crystal structure, it has been determined that\
+        \ the ion is necessary and the most likely to bind well [PMID:11470438].  
+<br/><br/>
+Glu48\
+        \ deprotonates the chiral centre of methylmalonyl-CoA, forming an enol intermediate. Glu141 then\
+        \ deprotonates Glu48. The oxyanion intermediate collapses, reforming the ketone while the chiral\
+        \ centre is reformed by proton"
+      notes: M-CSA entry 33, mechanism 1; M-CSA cites PMID:10521255, PMID:11076500, PMID:11470438, PMID:19731367;
+        CATH domain 3.10.180.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/33/
+      snippet: "Although there is no Co(II) present in the crystal structure, it has been determined that\
+        \ the ion is necessary and the most likely to bind well [PMID:11470438].  
+<br/><br/>
+Glu48\
+        \ deprotonates the chiral centre of methylmalonyl-CoA, forming an enol intermediate. Glu141 then\
+        \ deprotonates Glu48. The oxyanion intermediate collapses, reforming the ketone while the chiral\
+        \ centre is reformed by proton"
+      notes: M-CSA entry 33, mechanism 1; M-CSA cites PMID:10521255, PMID:11076500, PMID:11470438, PMID:19731367;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/33/
+      snippet: "Although there is no Co(II) present in the crystal structure, it has been determined that\
+        \ the ion is necessary and the most likely to bind well [PMID:11470438].  
+<br/><br/>
+Glu48\
+        \ deprotonates the chiral centre of methylmalonyl-CoA, forming an enol intermediate. Glu141 then\
+        \ deprotonates Glu48. The oxyanion intermediate collapses, reforming the ketone while the chiral\
+        \ centre is reformed by proton"
+      notes: M-CSA entry 33, mechanism 1; M-CSA cites PMID:10521255, PMID:11076500, PMID:11470438, PMID:19731367;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/33/
+      snippet: "Although there is no Co(II) present in the crystal structure, it has been determined that\
+        \ the ion is necessary and the most likely to bind well [PMID:11470438].  
+<br/><br/>
+Glu48\
+        \ deprotonates the chiral centre of methylmalonyl-CoA, forming an enol intermediate. Glu141 then\
+        \ deprotonates Glu48. The oxyanion intermediate collapses, reforming the ketone while the chiral\
+        \ centre is reformed by proton"
+      notes: M-CSA entry 33, mechanism 1; M-CSA cites PMID:10521255, PMID:11076500, PMID:11470438, PMID:19731367;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (16 evidence-backed edges) transcribed from M-CSA entry 33;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

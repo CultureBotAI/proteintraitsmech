@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:6.3.4.15
 - CHEBI:29969
@@ -249,4 +249,397 @@ definitions:
       The biotin operon repressor, biotin--[acetyl-CoA-carboxylase] ligase or BirA, is a 33.5-kDa protein. BirA is bifunctional, serving both as the biotin activating enzyme and as a transcriptional regulator. It catalyses the formation of biotinyl-5'-adenylate(bio-5'-AMP) from biotin and ATP and transfers biotin to a specific lysine residue on the biotin carboxyl carrier protein, a subunit of acetyl-CoA carboxylase. Bio-5'-AMP is also the corepressor of BirA.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of biotin---[acetyl-CoA-carboxylase] ligase
+  description: Stepwise mechanism transcribed from M-CSA entry 538 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: arg118
+    label: catalytic Arg118 (M-CSA/PDB numbering; UniProt residue 118)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06709
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: lys183
+    label: catalytic Lys183 (M-CSA/PDB numbering; UniProt residue 183)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06709
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: arg317
+    label: catalytic Arg317 (M-CSA/PDB numbering; UniProt residue 317)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06709
+  - node_id: reactant0
+    label: L-lysinium residue
+    node_type: CHEMICAL
+    grounding: CHEBI:29969
+  - node_id: reactant1
+    label: biotinate
+    node_type: CHEMICAL
+    grounding: CHEBI:57586
+  - node_id: reactant2
+    label: ATP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+  - node_id: product0
+    label: adenosine 5'-monophosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+  - node_id: product1
+    label: diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product3
+    label: biotinyl-L-lysine residue
+    node_type: CHEMICAL
+    grounding: CHEBI:83144
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: "The biotinate and the ATP condense via a nucleophillic substitution this forms the Bionyl-5̕-AMP\
+      \ intermediate and releases pyrophospahte. 
+Lys 183 is essential for this process as it coordinates\
+      \ both the biotinate and the ATP via hydrogen bonding. It also stabilizes the intermediate formed.\
+      \ 
+Arg 118 is also important for coordination, by electrostatic stabilization. 
+There are\
+      \ other arginine re"
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: "There is nucleophillic attack from the lysinium residue to the carbon of the mixed anhydride\
+      \ bond of the Bionyl-5̕-AMP intermediate forming a new intermediate with the lysine covalently bonded\
+      \ to this carbon. 
+Lys 183 and Arg 118 and other argines continue to coordinate and stabilize\
+      \ the intermediates via hydrogen bonds and other electrostatic interactions, keeping Bionyl-5̕-AMP\
+      \ in the active sit"
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: In the final step of the reaction AMP is cleaved from the biotin, leaving the biotin
+      only attached to the lysine by an amide bond where it remains permanently. This overall is a nucleophillic
+      substitution reaction. The intermediate is again stabilized by the hydrogen bonding and electrostatic
+      interactions  of the Lys183 and Arg118 and other arginine residues.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: biotin---[acetyl-CoA-carboxylase] ligase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:538
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.930.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.930.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: biotin---[acetyl-CoA-carboxylase] ligase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:6.3.4.15
+  edges:
+  - subject: arg118
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg118 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/538/
+      snippet: "The biotinate and the ATP condense via a nucleophillic substitution this forms the Bionyl-5̕-AMP\
+        \ intermediate and releases pyrophospahte. 
+Lys 183 is essential for this process as it coordinates\
+        \ both the biotinate and the ATP via hydrogen bonding. It also stabilizes the intermediate formed.\
+        \ 
+Arg 118 is also important for coordination, by electrostatic stabilization. 
+There are\
+        \ other arginine residues in the catalytic site which also have some role coordination, such as\
+        \ R317 though 118 is the most relevant."
+      notes: M-CSA entry 538, mechanism 1; M-CSA cites PMID:10470036, PMID:11353844, PMID:1409631, PMID:16169557,
+        PMID:16438984, PMID:18509457, PMID:24723382; step 1
+  - subject: lys183
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys183 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/538/
+      snippet: "The biotinate and the ATP condense via a nucleophillic substitution this forms the Bionyl-5̕-AMP\
+        \ intermediate and releases pyrophospahte. 
+Lys 183 is essential for this process as it coordinates\
+        \ both the biotinate and the ATP via hydrogen bonding. It also stabilizes the intermediate formed.\
+        \ 
+Arg 118 is also important for coordination, by electrostatic stabilization. 
+There are\
+        \ other arginine residues in the catalytic site which also have some role coordination, such as\
+        \ R317 though 118 is the most relevant."
+      notes: M-CSA entry 538, mechanism 1; M-CSA cites PMID:10470036, PMID:11353844, PMID:1409631, PMID:16169557,
+        PMID:16438984, PMID:18509457, PMID:24723382; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/538/
+      snippet: "There is nucleophillic attack from the lysinium residue to the carbon of the mixed anhydride\
+        \ bond of the Bionyl-5̕-AMP intermediate forming a new intermediate with the lysine covalently\
+        \ bonded to this carbon. 
+Lys 183 and Arg 118 and other argines continue to coordinate and\
+        \ stabilize the intermediates via hydrogen bonds and other electrostatic interactions, keeping\
+        \ Bionyl-5̕-AMP in the active site while the while the nucleophillic attack occurs."
+      notes: M-CSA entry 538, mechanism 1; M-CSA cites PMID:10470036, PMID:11353844, PMID:1409631, PMID:16169557,
+        PMID:16438984, PMID:18509457, PMID:24723382; step 2
+  - subject: arg118
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Arg118 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/538/
+      snippet: "There is nucleophillic attack from the lysinium residue to the carbon of the mixed anhydride\
+        \ bond of the Bionyl-5̕-AMP intermediate forming a new intermediate with the lysine covalently\
+        \ bonded to this carbon. 
+Lys 183 and Arg 118 and other argines continue to coordinate and\
+        \ stabilize the intermediates via hydrogen bonds and other electrostatic interactions, keeping\
+        \ Bionyl-5̕-AMP in the active site while the while the nucleophillic attack occurs."
+      notes: M-CSA entry 538, mechanism 1; M-CSA cites PMID:10470036, PMID:11353844, PMID:1409631, PMID:16169557,
+        PMID:16438984, PMID:18509457, PMID:24723382; step 2
+  - subject: lys183
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Lys183 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/538/
+      snippet: "There is nucleophillic attack from the lysinium residue to the carbon of the mixed anhydride\
+        \ bond of the Bionyl-5̕-AMP intermediate forming a new intermediate with the lysine covalently\
+        \ bonded to this carbon. 
+Lys 183 and Arg 118 and other argines continue to coordinate and\
+        \ stabilize the intermediates via hydrogen bonds and other electrostatic interactions, keeping\
+        \ Bionyl-5̕-AMP in the active site while the while the nucleophillic attack occurs."
+      notes: M-CSA entry 538, mechanism 1; M-CSA cites PMID:10470036, PMID:11353844, PMID:1409631, PMID:16169557,
+        PMID:16438984, PMID:18509457, PMID:24723382; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/538/
+      snippet: In the final step of the reaction AMP is cleaved from the biotin, leaving the biotin only
+        attached to the lysine by an amide bond where it remains permanently. This overall is a nucleophillic
+        substitution reaction. The intermediate is again stabilized by the hydrogen bonding and electrostatic
+        interactions  of the Lys183 and Arg118 and other arginine residues.
+      notes: M-CSA entry 538, mechanism 1; M-CSA cites PMID:10470036, PMID:11353844, PMID:1409631, PMID:16169557,
+        PMID:16438984, PMID:18509457, PMID:24723382; step 3
+  - subject: arg118
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Arg118 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/538/
+      snippet: In the final step of the reaction AMP is cleaved from the biotin, leaving the biotin only
+        attached to the lysine by an amide bond where it remains permanently. This overall is a nucleophillic
+        substitution reaction. The intermediate is again stabilized by the hydrogen bonding and electrostatic
+        interactions  of the Lys183 and Arg118 and other arginine residues.
+      notes: M-CSA entry 538, mechanism 1; M-CSA cites PMID:10470036, PMID:11353844, PMID:1409631, PMID:16169557,
+        PMID:16438984, PMID:18509457, PMID:24723382; step 3
+  - subject: lys183
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Lys183 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/538/
+      snippet: In the final step of the reaction AMP is cleaved from the biotin, leaving the biotin only
+        attached to the lysine by an amide bond where it remains permanently. This overall is a nucleophillic
+        substitution reaction. The intermediate is again stabilized by the hydrogen bonding and electrostatic
+        interactions  of the Lys183 and Arg118 and other arginine residues.
+      notes: M-CSA entry 538, mechanism 1; M-CSA cites PMID:10470036, PMID:11353844, PMID:1409631, PMID:16169557,
+        PMID:16438984, PMID:18509457, PMID:24723382; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/538/
+      snippet: Products.
+      notes: M-CSA entry 538, mechanism 1; M-CSA cites PMID:10470036, PMID:11353844, PMID:1409631, PMID:16169557,
+        PMID:16438984, PMID:18509457, PMID:24723382; step 4
+  - subject: arg118
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg118 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/538/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 538, mechanism 1; M-CSA cites PMID:10470036, PMID:11353844, PMID:1409631, PMID:16169557,
+        PMID:16438984, PMID:18509457, PMID:24723382; M-CSA catalytic-residue roles for Arg118
+  - subject: lys183
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys183 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/538/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 538, mechanism 1; M-CSA cites PMID:10470036, PMID:11353844, PMID:1409631, PMID:16169557,
+        PMID:16438984, PMID:18509457, PMID:24723382; M-CSA catalytic-residue roles for Lys183
+  - subject: arg317
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg317 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/538/
+      snippet: In the first half reaction, Lys183 catalyzes the attack of an oxygen atom of the biotin
+        carboxylate group on P-alpha of ATP to form bio-5'-AMP plus pyrophosphate. The charged transition
+        state is stabilised by a number of arginine residues. Bio-5'-AMP remains bound in the active site
+        and is quite stable.  In the presence of the correct apoprotein, apoBCCP, the nucleophilic amino
+        group of the Lys122
+      notes: M-CSA entry 538, mechanism 1; M-CSA cites PMID:10470036, PMID:11353844, PMID:1409631, PMID:16169557,
+        PMID:16438984, PMID:18509457, PMID:24723382; M-CSA catalytic-residue roles for Arg317
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/538/
+      snippet: In the first half reaction, Lys183 catalyzes the attack of an oxygen atom of the biotin
+        carboxylate group on P-alpha of ATP to form bio-5'-AMP plus pyrophosphate. The charged transition
+        state is stabilised by a number of arginine residues. Bio-5'-AMP remains bound in the active site
+        and is quite stable.  In the presence of the correct apoprotein, apoBCCP, the nucleophilic amino
+        group of the Lys122
+      notes: M-CSA entry 538, mechanism 1; M-CSA cites PMID:10470036, PMID:11353844, PMID:1409631, PMID:16169557,
+        PMID:16438984, PMID:18509457, PMID:24723382; CATH domain 3.30.930.10 assigned to the catalytic
+        chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/538/
+      snippet: In the first half reaction, Lys183 catalyzes the attack of an oxygen atom of the biotin
+        carboxylate group on P-alpha of ATP to form bio-5'-AMP plus pyrophosphate. The charged transition
+        state is stabilised by a number of arginine residues. Bio-5'-AMP remains bound in the active site
+        and is quite stable.  In the presence of the correct apoprotein, apoBCCP, the nucleophilic amino
+        group of the Lys122
+      notes: M-CSA entry 538, mechanism 1; M-CSA cites PMID:10470036, PMID:11353844, PMID:1409631, PMID:16169557,
+        PMID:16438984, PMID:18509457, PMID:24723382; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/538/
+      snippet: In the first half reaction, Lys183 catalyzes the attack of an oxygen atom of the biotin
+        carboxylate group on P-alpha of ATP to form bio-5'-AMP plus pyrophosphate. The charged transition
+        state is stabilised by a number of arginine residues. Bio-5'-AMP remains bound in the active site
+        and is quite stable.  In the presence of the correct apoprotein, apoBCCP, the nucleophilic amino
+        group of the Lys122
+      notes: M-CSA entry 538, mechanism 1; M-CSA cites PMID:10470036, PMID:11353844, PMID:1409631, PMID:16169557,
+        PMID:16438984, PMID:18509457, PMID:24723382; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/538/
+      snippet: In the first half reaction, Lys183 catalyzes the attack of an oxygen atom of the biotin
+        carboxylate group on P-alpha of ATP to form bio-5'-AMP plus pyrophosphate. The charged transition
+        state is stabilised by a number of arginine residues. Bio-5'-AMP remains bound in the active site
+        and is quite stable.  In the presence of the correct apoprotein, apoBCCP, the nucleophilic amino
+        group of the Lys122
+      notes: M-CSA entry 538, mechanism 1; M-CSA cites PMID:10470036, PMID:11353844, PMID:1409631, PMID:16169557,
+        PMID:16438984, PMID:18509457, PMID:24723382; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/538/
+      snippet: In the first half reaction, Lys183 catalyzes the attack of an oxygen atom of the biotin
+        carboxylate group on P-alpha of ATP to form bio-5'-AMP plus pyrophosphate. The charged transition
+        state is stabilised by a number of arginine residues. Bio-5'-AMP remains bound in the active site
+        and is quite stable.  In the presence of the correct apoprotein, apoBCCP, the nucleophilic amino
+        group of the Lys122
+      notes: M-CSA entry 538, mechanism 1; M-CSA cites PMID:10470036, PMID:11353844, PMID:1409631, PMID:16169557,
+        PMID:16438984, PMID:18509457, PMID:24723382; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/538/
+      snippet: In the first half reaction, Lys183 catalyzes the attack of an oxygen atom of the biotin
+        carboxylate group on P-alpha of ATP to form bio-5'-AMP plus pyrophosphate. The charged transition
+        state is stabilised by a number of arginine residues. Bio-5'-AMP remains bound in the active site
+        and is quite stable.  In the presence of the correct apoprotein, apoBCCP, the nucleophilic amino
+        group of the Lys122
+      notes: M-CSA entry 538, mechanism 1; M-CSA cites PMID:10470036, PMID:11353844, PMID:1409631, PMID:16169557,
+        PMID:16438984, PMID:18509457, PMID:24723382; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/538/
+      snippet: In the first half reaction, Lys183 catalyzes the attack of an oxygen atom of the biotin
+        carboxylate group on P-alpha of ATP to form bio-5'-AMP plus pyrophosphate. The charged transition
+        state is stabilised by a number of arginine residues. Bio-5'-AMP remains bound in the active site
+        and is quite stable.  In the presence of the correct apoprotein, apoBCCP, the nucleophilic amino
+        group of the Lys122
+      notes: M-CSA entry 538, mechanism 1; M-CSA cites PMID:10470036, PMID:11353844, PMID:1409631, PMID:16169557,
+        PMID:16438984, PMID:18509457, PMID:24723382; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/538/
+      snippet: In the first half reaction, Lys183 catalyzes the attack of an oxygen atom of the biotin
+        carboxylate group on P-alpha of ATP to form bio-5'-AMP plus pyrophosphate. The charged transition
+        state is stabilised by a number of arginine residues. Bio-5'-AMP remains bound in the active site
+        and is quite stable.  In the presence of the correct apoprotein, apoBCCP, the nucleophilic amino
+        group of the Lys122
+      notes: M-CSA entry 538, mechanism 1; M-CSA cites PMID:10470036, PMID:11353844, PMID:1409631, PMID:16169557,
+        PMID:16438984, PMID:18509457, PMID:24723382; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product3
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/538/
+      snippet: In the first half reaction, Lys183 catalyzes the attack of an oxygen atom of the biotin
+        carboxylate group on P-alpha of ATP to form bio-5'-AMP plus pyrophosphate. The charged transition
+        state is stabilised by a number of arginine residues. Bio-5'-AMP remains bound in the active site
+        and is quite stable.  In the presence of the correct apoprotein, apoBCCP, the nucleophilic amino
+        group of the Lys122
+      notes: M-CSA entry 538, mechanism 1; M-CSA cites PMID:10470036, PMID:11353844, PMID:1409631, PMID:16169557,
+        PMID:16438984, PMID:18509457, PMID:24723382; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (21 evidence-backed edges) transcribed from M-CSA entry 538;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

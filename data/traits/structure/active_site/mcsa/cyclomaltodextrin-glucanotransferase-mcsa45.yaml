@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.4.1.19
 - CHEBI:40585
@@ -594,4 +594,283 @@ definitions:
       Cyclodextrin glycosyltransferases (CGTases) are industrially important enzymes that produce cyclodextrins from starch by intramolecular transglycosylation. They belong to the important alpha-amylase family (family 13) of glycosyl hydrolases and catalyse the cyclisation of part of a (1->4)-alpha-D-glucan chain by the formation of a (1->4)-alpha-D-glucosidic bond. This enzyme also acts as a hydrolase or a transglycosylase, depending on the identity of the acceptor molecule in the final stages of the reaction.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of cyclomaltodextrin glucanotransferase
+  description: Stepwise mechanism transcribed from M-CSA entry 45 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +27).
+  nodes:
+  - node_id: arg227
+    label: catalytic Arg227 (M-CSA/PDB numbering; UniProt residue 254)
+    node_type: RESIDUE
+    grounding: UniProtKB:P43379
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: asp229
+    label: catalytic Asp229 (M-CSA/PDB numbering; UniProt residue 256)
+    node_type: RESIDUE
+    grounding: UniProtKB:P43379
+    description: 'M-CSA roles: nucleofuge, nucleophile.'
+  - node_id: glu257
+    label: catalytic Glu257 (M-CSA/PDB numbering; UniProt residue 284)
+    node_type: RESIDUE
+    grounding: UniProtKB:P43379
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: his327
+    label: catalytic His327 (M-CSA/PDB numbering; UniProt residue 354)
+    node_type: RESIDUE
+    grounding: UniProtKB:P43379
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: asp328
+    label: catalytic Asp328 (M-CSA/PDB numbering; UniProt residue 355)
+    node_type: RESIDUE
+    grounding: UniProtKB:P43379
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: reactant0
+    label: Celloheptaose
+    node_type: CHEMICAL
+    grounding: CHEBI:3524
+  - node_id: product0
+    label: alpha-cyclodextrin
+    node_type: CHEMICAL
+    grounding: CHEBI:40585
+  - node_id: product1
+    label: beta-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:15903
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp229 initiates a nucleophilic attack upon the carbon of the ether linkage between the
+      two sugar rings in a substitution reaction, which eliminates a free sugar molecule, with concomitant
+      deprotonation of Glu257.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Glu257 deprotonates a the acceptor OH, which initiates a nucleophilic attack upon the
+      covalently bound sugar in a substitution reaction, eliminating Asp229.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: cyclomaltodextrin glucanotransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:45
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.80 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.80
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: cyclomaltodextrin glucanotransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.4.1.19
+  edges:
+  - subject: asp229
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp229 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/45/
+      snippet: Asp229 initiates a nucleophilic attack upon the carbon of the ether linkage between the
+        two sugar rings in a substitution reaction, which eliminates a free sugar molecule, with concomitant
+        deprotonation of Glu257.
+      notes: M-CSA entry 45, mechanism 1; M-CSA cites PMID:10331869, PMID:20227065, PMID:25748847, PMID:26608005,
+        PMID:7493956, PMID:8107143, PMID:9245426; step 1
+  - subject: glu257
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu257 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/45/
+      snippet: Asp229 initiates a nucleophilic attack upon the carbon of the ether linkage between the
+        two sugar rings in a substitution reaction, which eliminates a free sugar molecule, with concomitant
+        deprotonation of Glu257.
+      notes: M-CSA entry 45, mechanism 1; M-CSA cites PMID:10331869, PMID:20227065, PMID:25748847, PMID:26608005,
+        PMID:7493956, PMID:8107143, PMID:9245426; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/45/
+      snippet: Glu257 deprotonates a the acceptor OH, which initiates a nucleophilic attack upon the covalently
+        bound sugar in a substitution reaction, eliminating Asp229.
+      notes: M-CSA entry 45, mechanism 1; M-CSA cites PMID:10331869, PMID:20227065, PMID:25748847, PMID:26608005,
+        PMID:7493956, PMID:8107143, PMID:9245426; step 2
+  - subject: asp229
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Asp229 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/45/
+      snippet: Glu257 deprotonates a the acceptor OH, which initiates a nucleophilic attack upon the covalently
+        bound sugar in a substitution reaction, eliminating Asp229.
+      notes: M-CSA entry 45, mechanism 1; M-CSA cites PMID:10331869, PMID:20227065, PMID:25748847, PMID:26608005,
+        PMID:7493956, PMID:8107143, PMID:9245426; step 2
+  - subject: glu257
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu257 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/45/
+      snippet: Glu257 deprotonates a the acceptor OH, which initiates a nucleophilic attack upon the covalently
+        bound sugar in a substitution reaction, eliminating Asp229.
+      notes: M-CSA entry 45, mechanism 1; M-CSA cites PMID:10331869, PMID:20227065, PMID:25748847, PMID:26608005,
+        PMID:7493956, PMID:8107143, PMID:9245426; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/45/
+      snippet: Products
+      notes: M-CSA entry 45, mechanism 1; M-CSA cites PMID:10331869, PMID:20227065, PMID:25748847, PMID:26608005,
+        PMID:7493956, PMID:8107143, PMID:9245426; step 3
+  - subject: arg227
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg227 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/45/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 45, mechanism 1; M-CSA cites PMID:10331869, PMID:20227065, PMID:25748847, PMID:26608005,
+        PMID:7493956, PMID:8107143, PMID:9245426; M-CSA catalytic-residue roles for Arg227
+  - subject: asp229
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp229 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/45/
+      snippet: nucleofuge, nucleophile
+      notes: M-CSA entry 45, mechanism 1; M-CSA cites PMID:10331869, PMID:20227065, PMID:25748847, PMID:26608005,
+        PMID:7493956, PMID:8107143, PMID:9245426; M-CSA catalytic-residue roles for Asp229
+  - subject: glu257
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu257 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/45/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 45, mechanism 1; M-CSA cites PMID:10331869, PMID:20227065, PMID:25748847, PMID:26608005,
+        PMID:7493956, PMID:8107143, PMID:9245426; M-CSA catalytic-residue roles for Glu257
+  - subject: his327
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His327 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/45/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 45, mechanism 1; M-CSA cites PMID:10331869, PMID:20227065, PMID:25748847, PMID:26608005,
+        PMID:7493956, PMID:8107143, PMID:9245426; M-CSA catalytic-residue roles for His327
+  - subject: asp328
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp328 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/45/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 45, mechanism 1; M-CSA cites PMID:10331869, PMID:20227065, PMID:25748847, PMID:26608005,
+        PMID:7493956, PMID:8107143, PMID:9245426; M-CSA catalytic-residue roles for Asp328
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/45/
+      snippet: "This enzyme has an Asp-Asp-Glu catalytic triad that is absolutely conserved in all the\
+        \ amylolytic enzymes.This triad occurs in the so-called domain A of the protein.   
+<br/><br/>\
+        
+The first step of the cyclisation reaction is the binding of the starch chain at binding site\
+        \ 1 (in the E-domain, which includes part of the Ca3 binding site). After this event, binding\
+        \ is extended to the active site t"
+      notes: M-CSA entry 45, mechanism 1; M-CSA cites PMID:10331869, PMID:20227065, PMID:25748847, PMID:26608005,
+        PMID:7493956, PMID:8107143, PMID:9245426; CATH domain 3.20.20.80 assigned to the catalytic chain
+        by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/45/
+      snippet: "This enzyme has an Asp-Asp-Glu catalytic triad that is absolutely conserved in all the\
+        \ amylolytic enzymes.This triad occurs in the so-called domain A of the protein.   
+<br/><br/>\
+        
+The first step of the cyclisation reaction is the binding of the starch chain at binding site\
+        \ 1 (in the E-domain, which includes part of the Ca3 binding site). After this event, binding\
+        \ is extended to the active site t"
+      notes: M-CSA entry 45, mechanism 1; M-CSA cites PMID:10331869, PMID:20227065, PMID:25748847, PMID:26608005,
+        PMID:7493956, PMID:8107143, PMID:9245426; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/45/
+      snippet: "This enzyme has an Asp-Asp-Glu catalytic triad that is absolutely conserved in all the\
+        \ amylolytic enzymes.This triad occurs in the so-called domain A of the protein.   
+<br/><br/>\
+        
+The first step of the cyclisation reaction is the binding of the starch chain at binding site\
+        \ 1 (in the E-domain, which includes part of the Ca3 binding site). After this event, binding\
+        \ is extended to the active site t"
+      notes: M-CSA entry 45, mechanism 1; M-CSA cites PMID:10331869, PMID:20227065, PMID:25748847, PMID:26608005,
+        PMID:7493956, PMID:8107143, PMID:9245426; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/45/
+      snippet: "This enzyme has an Asp-Asp-Glu catalytic triad that is absolutely conserved in all the\
+        \ amylolytic enzymes.This triad occurs in the so-called domain A of the protein.   
+<br/><br/>\
+        
+The first step of the cyclisation reaction is the binding of the starch chain at binding site\
+        \ 1 (in the E-domain, which includes part of the Ca3 binding site). After this event, binding\
+        \ is extended to the active site t"
+      notes: M-CSA entry 45, mechanism 1; M-CSA cites PMID:10331869, PMID:20227065, PMID:25748847, PMID:26608005,
+        PMID:7493956, PMID:8107143, PMID:9245426; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/45/
+      snippet: "This enzyme has an Asp-Asp-Glu catalytic triad that is absolutely conserved in all the\
+        \ amylolytic enzymes.This triad occurs in the so-called domain A of the protein.   
+<br/><br/>\
+        
+The first step of the cyclisation reaction is the binding of the starch chain at binding site\
+        \ 1 (in the E-domain, which includes part of the Ca3 binding site). After this event, binding\
+        \ is extended to the active site t"
+      notes: M-CSA entry 45, mechanism 1; M-CSA cites PMID:10331869, PMID:20227065, PMID:25748847, PMID:26608005,
+        PMID:7493956, PMID:8107143, PMID:9245426; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (16 evidence-backed edges) transcribed from M-CSA entry 45;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

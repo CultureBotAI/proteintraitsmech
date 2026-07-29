@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.5.1.33
 - CHEBI:57783
@@ -226,4 +226,272 @@ definitions:
       Pteridine reductase (TbPTR1), isolated from Trypanosoma brucei, is an NADPH-dependent short-chain reductase. TbPTR1 has broad specificity and can catalyse the reduction of biopterin to 5,6,7,8-tetrahydrobiopterin (THB) and folate to tetrahydrofolate. Both these reactants can be reduced from the oxidised or dihydro-state since the mechanism is a two step reduction by two molecules of NADPH. These reactions are important for the salvage of pteridines from the host and so TbPTR1 is a potential drug target for the treatment of African trypanosomiasis. TbPTR1 is a member of the Short-chain dehydrogenase/reductase (SDR) superfamily.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of pteridine reductase
+  description: Stepwise mechanism transcribed from M-CSA entry 237 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: arg14
+    label: catalytic Arg14 (M-CSA/PDB numbering; UniProt residue 14)
+    node_type: RESIDUE
+    grounding: UniProtKB:O76290
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor, steric role.'
+  - node_id: asp161
+    label: catalytic Asp161 (M-CSA/PDB numbering; UniProt residue 161)
+    node_type: RESIDUE
+    grounding: UniProtKB:O76290
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor,
+      proton relay.'
+  - node_id: tyr174
+    label: catalytic Tyr174 (M-CSA/PDB numbering; UniProt residue 174)
+    node_type: RESIDUE
+    grounding: UniProtKB:O76290
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      proton acceptor, proton donor, proton relay.'
+  - node_id: reactant0
+    label: NADPH(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+  - node_id: reactant1
+    label: L-erythro-biopterin
+    node_type: CHEMICAL
+    grounding: CHEBI:63931
+  - node_id: reactant2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product0
+    label: NADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+  - node_id: product1
+    label: sapropterin
+    node_type: CHEMICAL
+    grounding: CHEBI:59560
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: NADPH transfers a hydride to the C7 position of biopterin. The N8 position is protonated
+      by Tyr174, which in turn is protonated by Asp161. Since Asp161 is exposed to the bulk solvent it
+      is then protonated by water.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: 'Before this step (tautomerisation of the dihydrobiopterin) occurs the dihydrobiopterin
+      must dissociate from the active site, followed by NADP<sup>+</sup>. A second molecule of NADPH can
+      then bind to the active site, followed by dihydrobiopterin. It is unclear whether the dihydrobiopterin
+      is deprotonated (the base most likely to be the phosphate of the NADPH) or whether it retains the
+      proton, with '
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: NADPH transfers a hydride to the C6 position of the dihydrobiopterin intermediate. The
+      N5 position is protonated by an activated water. This water then deprotonates the 4-hydroxyl group
+      and causes tautomerisation back to the keto-form.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: pteridine reductase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:237
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.720 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.720
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: pteridine reductase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.5.1.33
+  edges:
+  - subject: asp161
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp161 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/237/
+      snippet: NADPH transfers a hydride to the C7 position of biopterin. The N8 position is protonated
+        by Tyr174, which in turn is protonated by Asp161. Since Asp161 is exposed to the bulk solvent
+        it is then protonated by water.
+      notes: M-CSA entry 237, mechanism 1; M-CSA cites PMID:11373620, PMID:16968221; step 1
+  - subject: tyr174
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr174 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/237/
+      snippet: NADPH transfers a hydride to the C7 position of biopterin. The N8 position is protonated
+        by Tyr174, which in turn is protonated by Asp161. Since Asp161 is exposed to the bulk solvent
+        it is then protonated by water.
+      notes: M-CSA entry 237, mechanism 1; M-CSA cites PMID:11373620, PMID:16968221; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/237/
+      snippet: Before this step (tautomerisation of the dihydrobiopterin) occurs the dihydrobiopterin
+        must dissociate from the active site, followed by NADP<sup>+</sup>. A second molecule of NADPH
+        can then bind to the active site, followed by dihydrobiopterin. It is unclear whether the dihydrobiopterin
+        is deprotonated (the base most likely to be the phosphate of the NADPH) or whether it retains
+        the proton, with the intermediate stabilised by the negative charge of the NADPH phosphates.
+      notes: M-CSA entry 237, mechanism 1; M-CSA cites PMID:11373620, PMID:16968221; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/237/
+      snippet: NADPH transfers a hydride to the C6 position of the dihydrobiopterin intermediate. The
+        N5 position is protonated by an activated water. This water then deprotonates the 4-hydroxyl group
+        and causes tautomerisation back to the keto-form.
+      notes: M-CSA entry 237, mechanism 1; M-CSA cites PMID:11373620, PMID:16968221; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/237/
+      snippet: Products.
+      notes: M-CSA entry 237, mechanism 1; M-CSA cites PMID:11373620, PMID:16968221; step 4
+  - subject: arg14
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg14 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/237/
+      snippet: electrostatic stabiliser, hydrogen bond donor, steric role
+      notes: M-CSA entry 237, mechanism 1; M-CSA cites PMID:11373620, PMID:16968221; M-CSA catalytic-residue
+        roles for Arg14
+  - subject: asp161
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp161 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/237/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 237, mechanism 1; M-CSA cites PMID:11373620, PMID:16968221; M-CSA catalytic-residue
+        roles for Asp161
+  - subject: tyr174
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr174 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/237/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+        proton donor, proton relay
+      notes: M-CSA entry 237, mechanism 1; M-CSA cites PMID:11373620, PMID:16968221; M-CSA catalytic-residue
+        roles for Tyr174
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/237/
+      snippet: NADPH binds first, followed by biopterin. NADPH transfers a hydride to C7 of biopterin.
+        The N8 position is then protonated by Tyr174, which is part of a proton shuffling system also
+        involving Asp161. The dihydrobiopterin intermediate dissociates, followed by NADP+. A second molecule
+        of NADPH can then bind, followed by the intermediate. The 4-keto function of the intermediate
+        enolises, with Arg14 s
+      notes: M-CSA entry 237, mechanism 1; M-CSA cites PMID:11373620, PMID:16968221; CATH domain 3.40.50.720
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/237/
+      snippet: NADPH binds first, followed by biopterin. NADPH transfers a hydride to C7 of biopterin.
+        The N8 position is then protonated by Tyr174, which is part of a proton shuffling system also
+        involving Asp161. The dihydrobiopterin intermediate dissociates, followed by NADP+. A second molecule
+        of NADPH can then bind, followed by the intermediate. The 4-keto function of the intermediate
+        enolises, with Arg14 s
+      notes: M-CSA entry 237, mechanism 1; M-CSA cites PMID:11373620, PMID:16968221; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/237/
+      snippet: NADPH binds first, followed by biopterin. NADPH transfers a hydride to C7 of biopterin.
+        The N8 position is then protonated by Tyr174, which is part of a proton shuffling system also
+        involving Asp161. The dihydrobiopterin intermediate dissociates, followed by NADP+. A second molecule
+        of NADPH can then bind, followed by the intermediate. The 4-keto function of the intermediate
+        enolises, with Arg14 s
+      notes: M-CSA entry 237, mechanism 1; M-CSA cites PMID:11373620, PMID:16968221; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/237/
+      snippet: NADPH binds first, followed by biopterin. NADPH transfers a hydride to C7 of biopterin.
+        The N8 position is then protonated by Tyr174, which is part of a proton shuffling system also
+        involving Asp161. The dihydrobiopterin intermediate dissociates, followed by NADP+. A second molecule
+        of NADPH can then bind, followed by the intermediate. The 4-keto function of the intermediate
+        enolises, with Arg14 s
+      notes: M-CSA entry 237, mechanism 1; M-CSA cites PMID:11373620, PMID:16968221; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/237/
+      snippet: NADPH binds first, followed by biopterin. NADPH transfers a hydride to C7 of biopterin.
+        The N8 position is then protonated by Tyr174, which is part of a proton shuffling system also
+        involving Asp161. The dihydrobiopterin intermediate dissociates, followed by NADP+. A second molecule
+        of NADPH can then bind, followed by the intermediate. The 4-keto function of the intermediate
+        enolises, with Arg14 s
+      notes: M-CSA entry 237, mechanism 1; M-CSA cites PMID:11373620, PMID:16968221; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/237/
+      snippet: NADPH binds first, followed by biopterin. NADPH transfers a hydride to C7 of biopterin.
+        The N8 position is then protonated by Tyr174, which is part of a proton shuffling system also
+        involving Asp161. The dihydrobiopterin intermediate dissociates, followed by NADP+. A second molecule
+        of NADPH can then bind, followed by the intermediate. The 4-keto function of the intermediate
+        enolises, with Arg14 s
+      notes: M-CSA entry 237, mechanism 1; M-CSA cites PMID:11373620, PMID:16968221; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/237/
+      snippet: NADPH binds first, followed by biopterin. NADPH transfers a hydride to C7 of biopterin.
+        The N8 position is then protonated by Tyr174, which is part of a proton shuffling system also
+        involving Asp161. The dihydrobiopterin intermediate dissociates, followed by NADP+. A second molecule
+        of NADPH can then bind, followed by the intermediate. The 4-keto function of the intermediate
+        enolises, with Arg14 s
+      notes: M-CSA entry 237, mechanism 1; M-CSA cites PMID:11373620, PMID:16968221; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 237;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.14.15.35
 - CHEBI:27977
@@ -271,4 +271,372 @@ definitions:
       6-deoxyerythronolide B hydroxylase (P450eryF) is a heme-thiolate protein (P-450). P-450s are a superfamily of heme proteins found in all eukaryotes, most prokaryotes, and Archaea and catalyse the monooxygenation of a wide variety of organic molecules. P450 reactions of biological significance include steroid biogenesis, drug metabolism, procarcinogen activation, xenobiotic detoxification, and fatty acid metabolism. P450eryF catalyses the NADPH-dependent conversion of 6-deoxyerythronolide B (6-DEB) to erythronolide B (EB) by the insertion of an oxygen at the 6S position of 6-DEB. Function requires the participation of a ferredoxin and a ferredoxin reductase for the transfer of electrons from NADPH to the monooxygenase.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 6-deoxyerythronolide B hydroxylase
+  description: Stepwise mechanism transcribed from M-CSA entry 694 (9 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: ala241
+    label: catalytic Ala241 (M-CSA/PDB numbering; UniProt residue 241)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q00441
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor.'
+  - node_id: glu244
+    label: catalytic Glu244 (M-CSA/PDB numbering; UniProt residue 244)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q00441
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor, proton acceptor, proton
+      donor, proton relay.'
+  - node_id: ser246
+    label: catalytic Ser246 (M-CSA/PDB numbering; UniProt residue 246)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q00441
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      metal ligand, proton acceptor, proton donor, proton relay.'
+  - node_id: cys351
+    label: catalytic Cys351 (M-CSA/PDB numbering; UniProt residue 351)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q00441
+    description: 'M-CSA roles: covalently attached, metal ligand.'
+  - node_id: glu360
+    label: catalytic Glu360 (M-CSA/PDB numbering; UniProt residue 360)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q00441
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      proton donor.'
+  - node_id: reactant0
+    label: hydrogen donor
+    node_type: CHEMICAL
+    grounding: CHEBI:17499
+  - node_id: reactant1
+    label: 6-deoxyerythronolide B
+    node_type: CHEMICAL
+    grounding: CHEBI:16089
+  - node_id: reactant2
+    label: dioxygen
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+  - node_id: product0
+    label: erythronolide B
+    node_type: CHEMICAL
+    grounding: CHEBI:27977
+  - node_id: product1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product2
+    label: acceptor
+    node_type: CHEMICAL
+    grounding: CHEBI:15339
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: After the substrate binds a water molecule is released from the active site which increases
+      the redox potential. This facilitates the first one electron reduction of Fe(III) to Fe(II) by NADPH.
+      Electron transfer is illustrated from a general donor.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Molecular oxygen binds to Fe(II) to form the oxyferrous intermediate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The second reduction forms a peroxo intermediate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The peroxy oxygen accepts a proton from the C5 hydroxyl group of 6-DEB.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: "A second proton transfer from Glu244 occurs. Glu244 is well connected to bulk water\
+      
+and can easily replenish its proton from bulk water."
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: The O-O bond breaks, releasing water from the metal centre and Fe(III) is oxidised to
+      Fe(IV). The C5 hydroxyl group of DEB is reprotonated. This is likely to be by the solvent.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: The Fe(IV)-oxo complex undergoes spin inversion to form a radical oxo group which removes
+      a hydrogen from the substrate to form a radical carbon centre and an alcohol group on Fe(IV).
+  - node_id: step8
+    label: mechanism step 8
+    node_type: STATE
+    description: The carbon radical attacks the hydroxyl group to form the alcohol product and reduce
+      Fe(IV) to Fe(III).
+  - node_id: step9
+    label: mechanism step 9
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: 6-deoxyerythronolide B hydroxylase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:694
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.10.630.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.10.630.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: 6-deoxyerythronolide B hydroxylase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.14.15.35
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/694/
+      snippet: Molecular oxygen binds to Fe(II) to form the oxyferrous intermediate.
+      notes: M-CSA entry 694, mechanism 2; M-CSA cites PMID:15824115, PMID:8673608; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/694/
+      snippet: The second reduction forms a peroxo intermediate.
+      notes: M-CSA entry 694, mechanism 2; M-CSA cites PMID:15824115, PMID:8673608; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/694/
+      snippet: The peroxy oxygen accepts a proton from the C5 hydroxyl group of 6-DEB.
+      notes: M-CSA entry 694, mechanism 2; M-CSA cites PMID:15824115, PMID:8673608; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/694/
+      snippet: "A second proton transfer from Glu244 occurs. Glu244 is well connected to bulk water
+\
+        and can easily replenish its proton from bulk water."
+      notes: M-CSA entry 694, mechanism 2; M-CSA cites PMID:15824115, PMID:8673608; step 5
+  - subject: glu244
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Glu244 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/694/
+      snippet: "A second proton transfer from Glu244 occurs. Glu244 is well connected to bulk water
+\
+        and can easily replenish its proton from bulk water."
+      notes: M-CSA entry 694, mechanism 2; M-CSA cites PMID:15824115, PMID:8673608; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/694/
+      snippet: The O-O bond breaks, releasing water from the metal centre and Fe(III) is oxidised to Fe(IV).
+        The C5 hydroxyl group of DEB is reprotonated. This is likely to be by the solvent.
+      notes: M-CSA entry 694, mechanism 2; M-CSA cites PMID:15824115, PMID:8673608; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/694/
+      snippet: The Fe(IV)-oxo complex undergoes spin inversion to form a radical oxo group which removes
+        a hydrogen from the substrate to form a radical carbon centre and an alcohol group on Fe(IV).
+      notes: M-CSA entry 694, mechanism 2; M-CSA cites PMID:15824115, PMID:8673608; step 7
+  - subject: step7
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step8
+    description: Step 7 leads to step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/694/
+      snippet: The carbon radical attacks the hydroxyl group to form the alcohol product and reduce Fe(IV)
+        to Fe(III).
+      notes: M-CSA entry 694, mechanism 2; M-CSA cites PMID:15824115, PMID:8673608; step 8
+  - subject: step8
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step9
+    description: Step 8 leads to step 9.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/694/
+      snippet: Products.
+      notes: M-CSA entry 694, mechanism 2; M-CSA cites PMID:15824115, PMID:8673608; step 9
+  - subject: ala241
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ala241 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/694/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor
+      notes: M-CSA entry 694, mechanism 2; M-CSA cites PMID:15824115, PMID:8673608; M-CSA catalytic-residue
+        roles for Ala241
+  - subject: glu244
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu244 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/694/
+      snippet: electrostatic stabiliser, hydrogen bond donor, proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 694, mechanism 2; M-CSA cites PMID:15824115, PMID:8673608; M-CSA catalytic-residue
+        roles for Glu244
+  - subject: ser246
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser246 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/694/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, metal ligand, proton
+        acceptor, proton donor, proton relay
+      notes: M-CSA entry 694, mechanism 2; M-CSA cites PMID:15824115, PMID:8673608; M-CSA catalytic-residue
+        roles for Ser246
+  - subject: cys351
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys351 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/694/
+      snippet: covalently attached, metal ligand
+      notes: M-CSA entry 694, mechanism 2; M-CSA cites PMID:15824115, PMID:8673608; M-CSA catalytic-residue
+        roles for Cys351
+  - subject: glu360
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu360 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/694/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, proton donor
+      notes: M-CSA entry 694, mechanism 2; M-CSA cites PMID:15824115, PMID:8673608; M-CSA catalytic-residue
+        roles for Glu360
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/694/
+      snippet: The catalytic cycle of all cytochrome P450s is conserved. Electrons are delivered to the
+        haem centre by NADH, permitting oxygen reduction. Binding of the substrate promotes electron transfer
+        to P450 haem, reducing the iron from Fe(III) to Fe(II). Dioxygen binds and thus Fe(II) is oxidised
+        back to Fe(III). A second electron is passed to the haem forming a superoxide species, followed
+        by donation of
+      notes: M-CSA entry 694, mechanism 2; M-CSA cites PMID:15824115, PMID:8673608; CATH domain 1.10.630.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/694/
+      snippet: The catalytic cycle of all cytochrome P450s is conserved. Electrons are delivered to the
+        haem centre by NADH, permitting oxygen reduction. Binding of the substrate promotes electron transfer
+        to P450 haem, reducing the iron from Fe(III) to Fe(II). Dioxygen binds and thus Fe(II) is oxidised
+        back to Fe(III). A second electron is passed to the haem forming a superoxide species, followed
+        by donation of
+      notes: M-CSA entry 694, mechanism 2; M-CSA cites PMID:15824115, PMID:8673608; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/694/
+      snippet: The catalytic cycle of all cytochrome P450s is conserved. Electrons are delivered to the
+        haem centre by NADH, permitting oxygen reduction. Binding of the substrate promotes electron transfer
+        to P450 haem, reducing the iron from Fe(III) to Fe(II). Dioxygen binds and thus Fe(II) is oxidised
+        back to Fe(III). A second electron is passed to the haem forming a superoxide species, followed
+        by donation of
+      notes: M-CSA entry 694, mechanism 2; M-CSA cites PMID:15824115, PMID:8673608; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/694/
+      snippet: The catalytic cycle of all cytochrome P450s is conserved. Electrons are delivered to the
+        haem centre by NADH, permitting oxygen reduction. Binding of the substrate promotes electron transfer
+        to P450 haem, reducing the iron from Fe(III) to Fe(II). Dioxygen binds and thus Fe(II) is oxidised
+        back to Fe(III). A second electron is passed to the haem forming a superoxide species, followed
+        by donation of
+      notes: M-CSA entry 694, mechanism 2; M-CSA cites PMID:15824115, PMID:8673608; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/694/
+      snippet: The catalytic cycle of all cytochrome P450s is conserved. Electrons are delivered to the
+        haem centre by NADH, permitting oxygen reduction. Binding of the substrate promotes electron transfer
+        to P450 haem, reducing the iron from Fe(III) to Fe(II). Dioxygen binds and thus Fe(II) is oxidised
+        back to Fe(III). A second electron is passed to the haem forming a superoxide species, followed
+        by donation of
+      notes: M-CSA entry 694, mechanism 2; M-CSA cites PMID:15824115, PMID:8673608; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/694/
+      snippet: The catalytic cycle of all cytochrome P450s is conserved. Electrons are delivered to the
+        haem centre by NADH, permitting oxygen reduction. Binding of the substrate promotes electron transfer
+        to P450 haem, reducing the iron from Fe(III) to Fe(II). Dioxygen binds and thus Fe(II) is oxidised
+        back to Fe(III). A second electron is passed to the haem forming a superoxide species, followed
+        by donation of
+      notes: M-CSA entry 694, mechanism 2; M-CSA cites PMID:15824115, PMID:8673608; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/694/
+      snippet: The catalytic cycle of all cytochrome P450s is conserved. Electrons are delivered to the
+        haem centre by NADH, permitting oxygen reduction. Binding of the substrate promotes electron transfer
+        to P450 haem, reducing the iron from Fe(III) to Fe(II). Dioxygen binds and thus Fe(II) is oxidised
+        back to Fe(III). A second electron is passed to the haem forming a superoxide species, followed
+        by donation of
+      notes: M-CSA entry 694, mechanism 2; M-CSA cites PMID:15824115, PMID:8673608; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/694/
+      snippet: The catalytic cycle of all cytochrome P450s is conserved. Electrons are delivered to the
+        haem centre by NADH, permitting oxygen reduction. Binding of the substrate promotes electron transfer
+        to P450 haem, reducing the iron from Fe(III) to Fe(II). Dioxygen binds and thus Fe(II) is oxidised
+        back to Fe(III). A second electron is passed to the haem forming a superoxide species, followed
+        by donation of
+      notes: M-CSA entry 694, mechanism 2; M-CSA cites PMID:15824115, PMID:8673608; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (22 evidence-backed edges) transcribed from M-CSA entry 694;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

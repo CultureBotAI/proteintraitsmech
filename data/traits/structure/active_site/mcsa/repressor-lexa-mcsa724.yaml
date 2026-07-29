@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.21.88
 - CHEBI:15377
@@ -178,4 +178,325 @@ definitions:
       LexA repressor (LexA) from Escherichia coli hydrolyses the specific peptide bond between Alanine and Glycine residues. It is of the peptidase S24 family. It can take two conformations; cleavable and non cleavable. In the non cleavable conformer, the Ala 84 - Gly 85 peptide bond lies about 20 angstroms away from the active site. In the cleavable conformer, part of the protein, the Ala 84 - Gly 85 peptide bond lies directly adjacent to the active site. In this case, LexA will cleave itself and become denatured. This function allows LexA to control the SOS response of E. coli to conditions that damage DNA or inhibit DNA replication.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of repressor LexA
+  description: Stepwise mechanism transcribed from M-CSA entry 724 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: met118
+    label: catalytic Met118 (M-CSA/PDB numbering; UniProt residue 118)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A7C2
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ser119
+    label: catalytic Ser119 (M-CSA/PDB numbering; UniProt residue 119)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A7C2
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu152
+    label: catalytic Glu152 (M-CSA/PDB numbering; UniProt residue 152)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A7C2
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: lys156
+    label: catalytic Lys156 (M-CSA/PDB numbering; UniProt residue 156)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A7C2
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: Ala-Gly
+    node_type: CHEMICAL
+    grounding: CHEBI:73757
+  - node_id: product0
+    label: alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:16449
+  - node_id: product1
+    label: glycine
+    node_type: CHEMICAL
+    grounding: CHEBI:15428
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Ser 119 is activated when it is deprotonated by Lys 156, and nucleophilically attacks
+      the carbonyl of the scissile peptide bond, forming a negatively charged tetrahedral intermediate.
+      Glu 152 hydrogen bonds to Lys 156 to stabilise it and enable it to accept a proton.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The oxyanion initiates an elimination which results in the cleavage of the peptide bond.
+      The N-terminal product is then protonated by Lys 156.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Lys 156 abstracts a proton from a water, activating it to attack the carbon of the ester
+      bond in a nucleophilic addition.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The tetrahedral intermediate collapse again resulting the release of Ser 119 which then
+      accepts a proton from Lys 156 which returns the enzyme to its native state.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Product
+  - node_id: active_site
+    label: repressor LexA catalytic site
+    node_type: MOTIF
+    grounding: MCSA:724
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.10.109.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.10.109.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: repressor LexA activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.21.88
+  edges:
+  - subject: ser119
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser119 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/724/
+      snippet: Ser 119 is activated when it is deprotonated by Lys 156, and nucleophilically attacks the
+        carbonyl of the scissile peptide bond, forming a negatively charged tetrahedral intermediate.
+        Glu 152 hydrogen bonds to Lys 156 to stabilise it and enable it to accept a proton.
+      notes: M-CSA entry 724, mechanism 1; M-CSA cites PMID:11551506, PMID:3108885; step 1
+  - subject: glu152
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu152 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/724/
+      snippet: Ser 119 is activated when it is deprotonated by Lys 156, and nucleophilically attacks the
+        carbonyl of the scissile peptide bond, forming a negatively charged tetrahedral intermediate.
+        Glu 152 hydrogen bonds to Lys 156 to stabilise it and enable it to accept a proton.
+      notes: M-CSA entry 724, mechanism 1; M-CSA cites PMID:11551506, PMID:3108885; step 1
+  - subject: lys156
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys156 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/724/
+      snippet: Ser 119 is activated when it is deprotonated by Lys 156, and nucleophilically attacks the
+        carbonyl of the scissile peptide bond, forming a negatively charged tetrahedral intermediate.
+        Glu 152 hydrogen bonds to Lys 156 to stabilise it and enable it to accept a proton.
+      notes: M-CSA entry 724, mechanism 1; M-CSA cites PMID:11551506, PMID:3108885; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/724/
+      snippet: The oxyanion initiates an elimination which results in the cleavage of the peptide bond.
+        The N-terminal product is then protonated by Lys 156.
+      notes: M-CSA entry 724, mechanism 1; M-CSA cites PMID:11551506, PMID:3108885; step 2
+  - subject: lys156
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Lys156 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/724/
+      snippet: The oxyanion initiates an elimination which results in the cleavage of the peptide bond.
+        The N-terminal product is then protonated by Lys 156.
+      notes: M-CSA entry 724, mechanism 1; M-CSA cites PMID:11551506, PMID:3108885; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/724/
+      snippet: Lys 156 abstracts a proton from a water, activating it to attack the carbon of the ester
+        bond in a nucleophilic addition.
+      notes: M-CSA entry 724, mechanism 1; M-CSA cites PMID:11551506, PMID:3108885; step 3
+  - subject: lys156
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Lys156 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/724/
+      snippet: Lys 156 abstracts a proton from a water, activating it to attack the carbon of the ester
+        bond in a nucleophilic addition.
+      notes: M-CSA entry 724, mechanism 1; M-CSA cites PMID:11551506, PMID:3108885; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/724/
+      snippet: The tetrahedral intermediate collapse again resulting the release of Ser 119 which then
+        accepts a proton from Lys 156 which returns the enzyme to its native state.
+      notes: M-CSA entry 724, mechanism 1; M-CSA cites PMID:11551506, PMID:3108885; step 4
+  - subject: ser119
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Ser119 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/724/
+      snippet: The tetrahedral intermediate collapse again resulting the release of Ser 119 which then
+        accepts a proton from Lys 156 which returns the enzyme to its native state.
+      notes: M-CSA entry 724, mechanism 1; M-CSA cites PMID:11551506, PMID:3108885; step 4
+  - subject: lys156
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Lys156 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/724/
+      snippet: The tetrahedral intermediate collapse again resulting the release of Ser 119 which then
+        accepts a proton from Lys 156 which returns the enzyme to its native state.
+      notes: M-CSA entry 724, mechanism 1; M-CSA cites PMID:11551506, PMID:3108885; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/724/
+      snippet: Product
+      notes: M-CSA entry 724, mechanism 1; M-CSA cites PMID:11551506, PMID:3108885; step 5
+  - subject: met118
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Met118 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/724/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 724, mechanism 1; M-CSA cites PMID:11551506, PMID:3108885; M-CSA catalytic-residue
+        roles for Met118
+  - subject: ser119
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser119 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/724/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 724, mechanism 1; M-CSA cites PMID:11551506, PMID:3108885; M-CSA catalytic-residue
+        roles for Ser119
+  - subject: glu152
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu152 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/724/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 724, mechanism 1; M-CSA cites PMID:11551506, PMID:3108885; M-CSA catalytic-residue
+        roles for Glu152
+  - subject: lys156
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys156 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/724/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 724, mechanism 1; M-CSA cites PMID:11551506, PMID:3108885; M-CSA catalytic-residue
+        roles for Lys156
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/724/
+      snippet: Ser 119 is activated on being deprotonated by Lys 156, and nucleophilically attacks the
+        carbonyl of the scissile peptide bond, forming a negatively charged tetrahedral intermediate.  The
+        protonated form of Lys 156 is stabilised through hydrogen bonding to the side chain of Glu 152.
+        The intermediate is stabilised by the oxyanion hole formed by the backbone NH's of Ser 119 and
+        Met 118. The oxyanion
+      notes: M-CSA entry 724, mechanism 1; M-CSA cites PMID:11551506, PMID:3108885; CATH domain 2.10.109.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/724/
+      snippet: Ser 119 is activated on being deprotonated by Lys 156, and nucleophilically attacks the
+        carbonyl of the scissile peptide bond, forming a negatively charged tetrahedral intermediate.  The
+        protonated form of Lys 156 is stabilised through hydrogen bonding to the side chain of Glu 152.
+        The intermediate is stabilised by the oxyanion hole formed by the backbone NH's of Ser 119 and
+        Met 118. The oxyanion
+      notes: M-CSA entry 724, mechanism 1; M-CSA cites PMID:11551506, PMID:3108885; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/724/
+      snippet: Ser 119 is activated on being deprotonated by Lys 156, and nucleophilically attacks the
+        carbonyl of the scissile peptide bond, forming a negatively charged tetrahedral intermediate.  The
+        protonated form of Lys 156 is stabilised through hydrogen bonding to the side chain of Glu 152.
+        The intermediate is stabilised by the oxyanion hole formed by the backbone NH's of Ser 119 and
+        Met 118. The oxyanion
+      notes: M-CSA entry 724, mechanism 1; M-CSA cites PMID:11551506, PMID:3108885; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/724/
+      snippet: Ser 119 is activated on being deprotonated by Lys 156, and nucleophilically attacks the
+        carbonyl of the scissile peptide bond, forming a negatively charged tetrahedral intermediate.  The
+        protonated form of Lys 156 is stabilised through hydrogen bonding to the side chain of Glu 152.
+        The intermediate is stabilised by the oxyanion hole formed by the backbone NH's of Ser 119 and
+        Met 118. The oxyanion
+      notes: M-CSA entry 724, mechanism 1; M-CSA cites PMID:11551506, PMID:3108885; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/724/
+      snippet: Ser 119 is activated on being deprotonated by Lys 156, and nucleophilically attacks the
+        carbonyl of the scissile peptide bond, forming a negatively charged tetrahedral intermediate.  The
+        protonated form of Lys 156 is stabilised through hydrogen bonding to the side chain of Glu 152.
+        The intermediate is stabilised by the oxyanion hole formed by the backbone NH's of Ser 119 and
+        Met 118. The oxyanion
+      notes: M-CSA entry 724, mechanism 1; M-CSA cites PMID:11551506, PMID:3108885; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/724/
+      snippet: Ser 119 is activated on being deprotonated by Lys 156, and nucleophilically attacks the
+        carbonyl of the scissile peptide bond, forming a negatively charged tetrahedral intermediate.  The
+        protonated form of Lys 156 is stabilised through hydrogen bonding to the side chain of Glu 152.
+        The intermediate is stabilised by the oxyanion hole formed by the backbone NH's of Ser 119 and
+        Met 118. The oxyanion
+      notes: M-CSA entry 724, mechanism 1; M-CSA cites PMID:11551506, PMID:3108885; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (21 evidence-backed edges) transcribed from M-CSA entry 724;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

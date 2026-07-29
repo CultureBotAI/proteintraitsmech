@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.22.39
 - CHEBI:15377
@@ -298,4 +298,311 @@ definitions:
       Human adenovirus proteinase is a cysteine proteinase required for the synthesis of infectious virus. Cofactors discovered include viral DNA, or a short oligopeptide which the enzyme itself cleaves out. The enzyme cleaves specific Gly-Ala peptides in a number of viral precursor proteins, and also cleaves host cell cytoskeleton keratins. The structure and mechanism of this enzyme suggest convergent evolution to give a catalytic mechanism similar to papain.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of adenain
+  description: Stepwise mechanism transcribed from M-CSA entry 679 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: his54
+    label: catalytic His54 (M-CSA/PDB numbering; UniProt residue 54)
+    node_type: RESIDUE
+    grounding: UniProtKB:P03252
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: glu71
+    label: catalytic Glu71 (M-CSA/PDB numbering; UniProt residue 71)
+    node_type: RESIDUE
+    grounding: UniProtKB:P03252
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: gln115
+    label: catalytic Gln115 (M-CSA/PDB numbering; UniProt residue 115)
+    node_type: RESIDUE
+    grounding: UniProtKB:P03252
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: cys122
+    label: catalytic Cys122 (M-CSA/PDB numbering; UniProt residue 122)
+    node_type: RESIDUE
+    grounding: UniProtKB:P03252
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: dipeptide zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:90799
+  - node_id: product0
+    label: L-alpha-amino acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:59869
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His54 deprotonate Cys122 activating it so that it can attack the carbon of the peptide
+      bond in a nucleophilic addition.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The oxyanion initiates an elimination resulting in the cleavage of the peptide bond.
+      The N-terminal product then accepts a proton from His54 which prevents reformation of the peptide
+      bond.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: His54 deprotonates water activating it so that it can attack the carbon of the thioester
+      bond in a nucleophilic addition.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The oxyanion initiates another elimination resulting in the cleavage of the thioester
+      bond. The released Cys122 accepts a proton from His54 which returns the enzyme to its native state.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Product
+  - node_id: active_site
+    label: adenain catalytic site
+    node_type: MOTIF
+    grounding: MCSA:679
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.395.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.395.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: adenain activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.22.39
+  edges:
+  - subject: his54
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His54 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/679/
+      snippet: His54 deprotonate Cys122 activating it so that it can attack the carbon of the peptide
+        bond in a nucleophilic addition.
+      notes: M-CSA entry 679, mechanism 1; M-CSA cites PMID:12758141, PMID:23043139, PMID:7931163, PMID:8617222;
+        step 1
+  - subject: cys122
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys122 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/679/
+      snippet: His54 deprotonate Cys122 activating it so that it can attack the carbon of the peptide
+        bond in a nucleophilic addition.
+      notes: M-CSA entry 679, mechanism 1; M-CSA cites PMID:12758141, PMID:23043139, PMID:7931163, PMID:8617222;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/679/
+      snippet: The oxyanion initiates an elimination resulting in the cleavage of the peptide bond. The
+        N-terminal product then accepts a proton from His54 which prevents reformation of the peptide
+        bond.
+      notes: M-CSA entry 679, mechanism 1; M-CSA cites PMID:12758141, PMID:23043139, PMID:7931163, PMID:8617222;
+        step 2
+  - subject: his54
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His54 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/679/
+      snippet: The oxyanion initiates an elimination resulting in the cleavage of the peptide bond. The
+        N-terminal product then accepts a proton from His54 which prevents reformation of the peptide
+        bond.
+      notes: M-CSA entry 679, mechanism 1; M-CSA cites PMID:12758141, PMID:23043139, PMID:7931163, PMID:8617222;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/679/
+      snippet: His54 deprotonates water activating it so that it can attack the carbon of the thioester
+        bond in a nucleophilic addition.
+      notes: M-CSA entry 679, mechanism 1; M-CSA cites PMID:12758141, PMID:23043139, PMID:7931163, PMID:8617222;
+        step 3
+  - subject: his54
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His54 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/679/
+      snippet: His54 deprotonates water activating it so that it can attack the carbon of the thioester
+        bond in a nucleophilic addition.
+      notes: M-CSA entry 679, mechanism 1; M-CSA cites PMID:12758141, PMID:23043139, PMID:7931163, PMID:8617222;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/679/
+      snippet: The oxyanion initiates another elimination resulting in the cleavage of the thioester bond.
+        The released Cys122 accepts a proton from His54 which returns the enzyme to its native state.
+      notes: M-CSA entry 679, mechanism 1; M-CSA cites PMID:12758141, PMID:23043139, PMID:7931163, PMID:8617222;
+        step 4
+  - subject: his54
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: His54 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/679/
+      snippet: The oxyanion initiates another elimination resulting in the cleavage of the thioester bond.
+        The released Cys122 accepts a proton from His54 which returns the enzyme to its native state.
+      notes: M-CSA entry 679, mechanism 1; M-CSA cites PMID:12758141, PMID:23043139, PMID:7931163, PMID:8617222;
+        step 4
+  - subject: cys122
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Cys122 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/679/
+      snippet: The oxyanion initiates another elimination resulting in the cleavage of the thioester bond.
+        The released Cys122 accepts a proton from His54 which returns the enzyme to its native state.
+      notes: M-CSA entry 679, mechanism 1; M-CSA cites PMID:12758141, PMID:23043139, PMID:7931163, PMID:8617222;
+        step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/679/
+      snippet: Product
+      notes: M-CSA entry 679, mechanism 1; M-CSA cites PMID:12758141, PMID:23043139, PMID:7931163, PMID:8617222;
+        step 5
+  - subject: his54
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His54 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/679/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 679, mechanism 1; M-CSA cites PMID:12758141, PMID:23043139, PMID:7931163, PMID:8617222;
+        M-CSA catalytic-residue roles for His54
+  - subject: glu71
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu71 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/679/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 679, mechanism 1; M-CSA cites PMID:12758141, PMID:23043139, PMID:7931163, PMID:8617222;
+        M-CSA catalytic-residue roles for Glu71
+  - subject: gln115
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln115 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/679/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 679, mechanism 1; M-CSA cites PMID:12758141, PMID:23043139, PMID:7931163, PMID:8617222;
+        M-CSA catalytic-residue roles for Gln115
+  - subject: cys122
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys122 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/679/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 679, mechanism 1; M-CSA cites PMID:12758141, PMID:23043139, PMID:7931163, PMID:8617222;
+        M-CSA catalytic-residue roles for Cys122
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/679/
+      snippet: This enzyme has a virtually identical mechanism to the cysteine proteinase papain. The
+        pKa of the thiol residue of Cys 122 is lowered by the action of His 54 as a general base catalyst
+        which abstracts the cysteine proton. This allows the thiolate ion to acts as a nucleophile in
+        attack of the carbonyl carbon. The tetrahedral transition state is stabilised by the oxyanion
+        hole formed by Gln 115. Glu
+      notes: M-CSA entry 679, mechanism 1; M-CSA cites PMID:12758141, PMID:23043139, PMID:7931163, PMID:8617222;
+        CATH domain 3.40.395.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/679/
+      snippet: This enzyme has a virtually identical mechanism to the cysteine proteinase papain. The
+        pKa of the thiol residue of Cys 122 is lowered by the action of His 54 as a general base catalyst
+        which abstracts the cysteine proton. This allows the thiolate ion to acts as a nucleophile in
+        attack of the carbonyl carbon. The tetrahedral transition state is stabilised by the oxyanion
+        hole formed by Gln 115. Glu
+      notes: M-CSA entry 679, mechanism 1; M-CSA cites PMID:12758141, PMID:23043139, PMID:7931163, PMID:8617222;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/679/
+      snippet: This enzyme has a virtually identical mechanism to the cysteine proteinase papain. The
+        pKa of the thiol residue of Cys 122 is lowered by the action of His 54 as a general base catalyst
+        which abstracts the cysteine proton. This allows the thiolate ion to acts as a nucleophile in
+        attack of the carbonyl carbon. The tetrahedral transition state is stabilised by the oxyanion
+        hole formed by Gln 115. Glu
+      notes: M-CSA entry 679, mechanism 1; M-CSA cites PMID:12758141, PMID:23043139, PMID:7931163, PMID:8617222;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/679/
+      snippet: This enzyme has a virtually identical mechanism to the cysteine proteinase papain. The
+        pKa of the thiol residue of Cys 122 is lowered by the action of His 54 as a general base catalyst
+        which abstracts the cysteine proton. This allows the thiolate ion to acts as a nucleophile in
+        attack of the carbonyl carbon. The tetrahedral transition state is stabilised by the oxyanion
+        hole formed by Gln 115. Glu
+      notes: M-CSA entry 679, mechanism 1; M-CSA cites PMID:12758141, PMID:23043139, PMID:7931163, PMID:8617222;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/679/
+      snippet: This enzyme has a virtually identical mechanism to the cysteine proteinase papain. The
+        pKa of the thiol residue of Cys 122 is lowered by the action of His 54 as a general base catalyst
+        which abstracts the cysteine proton. This allows the thiolate ion to acts as a nucleophile in
+        attack of the carbonyl carbon. The tetrahedral transition state is stabilised by the oxyanion
+        hole formed by Gln 115. Glu
+      notes: M-CSA entry 679, mechanism 1; M-CSA cites PMID:12758141, PMID:23043139, PMID:7931163, PMID:8617222;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (19 evidence-backed edges) transcribed from M-CSA entry 679;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

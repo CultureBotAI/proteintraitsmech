@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.5.1.3
 - CHEBI:57783
@@ -90,4 +90,223 @@ definitions:
       R67-plasmid encoded dihydrofolate reductase (R67-DHFR) from Escherichia coli catalyses the reduction of 7,8-dihydrofolate (DHF) to 5,6,7,8-tetrahydrofolate (THF) in the presence of NADPH. It is one of the smallest enzymes known to self-assemble into an active quaternary structure. The tetramer has an unusual pore, 25 angstroms in length that passes through the middle of the molecule and out the other side. R67-DHFR has 222 symmetry, and has a distinctive 'one site fits both' substrate and cofactor.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of dihydrofolate reductase (type II)
+  description: Stepwise mechanism transcribed from M-CSA entry 752 (2 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: lys32
+    label: catalytic Lys32 (M-CSA/PDB numbering; UniProt residue 32)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00383
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: gln67
+    label: catalytic Gln67 (M-CSA/PDB numbering; UniProt residue 67)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00383
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ile68
+    label: catalytic Ile68 (M-CSA/PDB numbering; UniProt residue 68)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00383
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: tyr69
+    label: catalytic Tyr69 (M-CSA/PDB numbering; UniProt residue 69)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00383
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: NADPH(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+  - node_id: reactant1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: reactant2
+    label: dihydrofolate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57451
+  - node_id: product0
+    label: (6S)-5,6,7,8-tetrahydrofolate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57453
+  - node_id: product1
+    label: NADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: A hydride is transferred from NADPH to the protonated form of DHF, forming the product
+      and NADP.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: dihydrofolate reductase (type II) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:752
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.30.30.60 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.30.30.60
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: dihydrofolate reductase (type II) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.5.1.3
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/752/
+      snippet: Products.
+      notes: M-CSA entry 752, mechanism 1; M-CSA cites PMID:11560482, PMID:15812782, PMID:18052202, PMID:23458706;
+        step 2
+  - subject: lys32
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys32 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/752/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 752, mechanism 1; M-CSA cites PMID:11560482, PMID:15812782, PMID:18052202, PMID:23458706;
+        M-CSA catalytic-residue roles for Lys32
+  - subject: gln67
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln67 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/752/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 752, mechanism 1; M-CSA cites PMID:11560482, PMID:15812782, PMID:18052202, PMID:23458706;
+        M-CSA catalytic-residue roles for Gln67
+  - subject: ile68
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ile68 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/752/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 752, mechanism 1; M-CSA cites PMID:11560482, PMID:15812782, PMID:18052202, PMID:23458706;
+        M-CSA catalytic-residue roles for Ile68
+  - subject: tyr69
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr69 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/752/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 752, mechanism 1; M-CSA cites PMID:11560482, PMID:15812782, PMID:18052202, PMID:23458706;
+        M-CSA catalytic-residue roles for Tyr69
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/752/
+      snippet: The mechanism of R67-DHFR relies on a pre-protonated form of DHF being the substrate. The
+        substrate then accepts a hydride from NADPH to form the product, THF. The catalytic residues Tyr
+        69, Ile 68 and Gln 67 destabilise the ground state. Lys 32 is involved in stabilising the transition
+        state.
+      notes: M-CSA entry 752, mechanism 1; M-CSA cites PMID:11560482, PMID:15812782, PMID:18052202, PMID:23458706;
+        CATH domain 2.30.30.60 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/752/
+      snippet: The mechanism of R67-DHFR relies on a pre-protonated form of DHF being the substrate. The
+        substrate then accepts a hydride from NADPH to form the product, THF. The catalytic residues Tyr
+        69, Ile 68 and Gln 67 destabilise the ground state. Lys 32 is involved in stabilising the transition
+        state.
+      notes: M-CSA entry 752, mechanism 1; M-CSA cites PMID:11560482, PMID:15812782, PMID:18052202, PMID:23458706;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/752/
+      snippet: The mechanism of R67-DHFR relies on a pre-protonated form of DHF being the substrate. The
+        substrate then accepts a hydride from NADPH to form the product, THF. The catalytic residues Tyr
+        69, Ile 68 and Gln 67 destabilise the ground state. Lys 32 is involved in stabilising the transition
+        state.
+      notes: M-CSA entry 752, mechanism 1; M-CSA cites PMID:11560482, PMID:15812782, PMID:18052202, PMID:23458706;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/752/
+      snippet: The mechanism of R67-DHFR relies on a pre-protonated form of DHF being the substrate. The
+        substrate then accepts a hydride from NADPH to form the product, THF. The catalytic residues Tyr
+        69, Ile 68 and Gln 67 destabilise the ground state. Lys 32 is involved in stabilising the transition
+        state.
+      notes: M-CSA entry 752, mechanism 1; M-CSA cites PMID:11560482, PMID:15812782, PMID:18052202, PMID:23458706;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/752/
+      snippet: The mechanism of R67-DHFR relies on a pre-protonated form of DHF being the substrate. The
+        substrate then accepts a hydride from NADPH to form the product, THF. The catalytic residues Tyr
+        69, Ile 68 and Gln 67 destabilise the ground state. Lys 32 is involved in stabilising the transition
+        state.
+      notes: M-CSA entry 752, mechanism 1; M-CSA cites PMID:11560482, PMID:15812782, PMID:18052202, PMID:23458706;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/752/
+      snippet: The mechanism of R67-DHFR relies on a pre-protonated form of DHF being the substrate. The
+        substrate then accepts a hydride from NADPH to form the product, THF. The catalytic residues Tyr
+        69, Ile 68 and Gln 67 destabilise the ground state. Lys 32 is involved in stabilising the transition
+        state.
+      notes: M-CSA entry 752, mechanism 1; M-CSA cites PMID:11560482, PMID:15812782, PMID:18052202, PMID:23458706;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/752/
+      snippet: The mechanism of R67-DHFR relies on a pre-protonated form of DHF being the substrate. The
+        substrate then accepts a hydride from NADPH to form the product, THF. The catalytic residues Tyr
+        69, Ile 68 and Gln 67 destabilise the ground state. Lys 32 is involved in stabilising the transition
+        state.
+      notes: M-CSA entry 752, mechanism 1; M-CSA cites PMID:11560482, PMID:15812782, PMID:18052202, PMID:23458706;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (12 evidence-backed edges) transcribed from M-CSA entry 752;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

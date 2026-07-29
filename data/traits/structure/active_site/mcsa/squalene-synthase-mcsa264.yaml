@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.5.1.21
 - CHEBI:175763
@@ -243,4 +243,359 @@ definitions:
       Squalene synthase is a member of the Isoprenoid Synthase Type I superfamily. These enzymes catalyse the formation of squalene by the reductive dimerisation of two farnesyl diphosphate molecules in a two-step reaction (2 farnesyl diphosphate --> presqualene diphosphate; presqualene diphosphate + NAD(P)H --> squalene). In the human enzyme, the first half reaction occurs at one end of a large channel (surrounded by five alpha helices runs through the centre of the protein). Then the intermediate is thought to move into an enclosed pocket where the second half reaction occurs. This reaction occurs at the final branch point of the isoprenoid biosynthesis pathway, and is the first committed step in cholesterol biosynthesis.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of squalene synthase
+  description: Stepwise mechanism transcribed from M-CSA entry 264 (8 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: tyr171
+    label: catalytic Tyr171 (M-CSA/PDB numbering; UniProt residue 171)
+    node_type: RESIDUE
+    grounding: UniProtKB:P37268
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: arg218
+    label: catalytic Arg218 (M-CSA/PDB numbering; UniProt residue 218)
+    node_type: RESIDUE
+    grounding: UniProtKB:P37268
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor, promote heterolysis.'
+  - node_id: arg228
+    label: catalytic Arg228 (M-CSA/PDB numbering; UniProt residue 228)
+    node_type: RESIDUE
+    grounding: UniProtKB:P37268
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor, promote heterolysis.'
+  - node_id: phe288
+    label: catalytic Phe288 (M-CSA/PDB numbering; UniProt residue 288)
+    node_type: RESIDUE
+    grounding: UniProtKB:P37268
+    description: 'M-CSA roles: polar/non-polar interaction, steric role, van der waals interaction.'
+  - node_id: reactant0
+    label: 2-trans,6-trans-farnesyl diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+  - node_id: reactant1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: reactant2
+    label: NADPH(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+  - node_id: product0
+    label: squalene
+    node_type: CHEMICAL
+    grounding: CHEBI:15440
+  - node_id: product1
+    label: diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+  - node_id: product2
+    label: NADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Pyrophosphate is eliminated with concomitant deprotonation of Tyr171.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The second molecule of farnesyl diphosphate initiates an electrophilic attack on the
+      intermediate formed.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Tyr171 acts as a base to deprotonate the intermediate, forming the stable intermediate
+      presqualene diphosphate, the product of the first half reaction.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The substrate undergoes heterolysis. Phe288 essential for the second half reaction
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: A 1,2 sigmatropic rearrangement to produce the cyclobutyl intermediate.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: A 1,2 sigmatropic rearrangement to produce the second cyclopropyl intermediate.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: A hydride transfer from NADP caused the cleavage of the cyclopropyl group to produce
+      squalene.
+  - node_id: step8
+    label: mechanism step 8
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: squalene synthase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:264
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.10.600.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.10.600.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: squalene synthase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.5.1.21
+  edges:
+  - subject: tyr171
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr171 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/264/
+      snippet: Pyrophosphate is eliminated with concomitant deprotonation of Tyr171.
+      notes: M-CSA entry 264, mechanism 1; M-CSA cites PMID:10677224, PMID:10896663, PMID:12137537, PMID:24531458,
+        PMID:9575210; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/264/
+      snippet: The second molecule of farnesyl diphosphate initiates an electrophilic attack on the intermediate
+        formed.
+      notes: M-CSA entry 264, mechanism 1; M-CSA cites PMID:10677224, PMID:10896663, PMID:12137537, PMID:24531458,
+        PMID:9575210; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/264/
+      snippet: Tyr171 acts as a base to deprotonate the intermediate, forming the stable intermediate
+        presqualene diphosphate, the product of the first half reaction.
+      notes: M-CSA entry 264, mechanism 1; M-CSA cites PMID:10677224, PMID:10896663, PMID:12137537, PMID:24531458,
+        PMID:9575210; step 3
+  - subject: tyr171
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Tyr171 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/264/
+      snippet: Tyr171 acts as a base to deprotonate the intermediate, forming the stable intermediate
+        presqualene diphosphate, the product of the first half reaction.
+      notes: M-CSA entry 264, mechanism 1; M-CSA cites PMID:10677224, PMID:10896663, PMID:12137537, PMID:24531458,
+        PMID:9575210; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/264/
+      snippet: The substrate undergoes heterolysis. Phe288 essential for the second half reaction
+      notes: M-CSA entry 264, mechanism 1; M-CSA cites PMID:10677224, PMID:10896663, PMID:12137537, PMID:24531458,
+        PMID:9575210; step 4
+  - subject: phe288
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Phe288 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/264/
+      snippet: The substrate undergoes heterolysis. Phe288 essential for the second half reaction
+      notes: M-CSA entry 264, mechanism 1; M-CSA cites PMID:10677224, PMID:10896663, PMID:12137537, PMID:24531458,
+        PMID:9575210; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/264/
+      snippet: A 1,2 sigmatropic rearrangement to produce the cyclobutyl intermediate.
+      notes: M-CSA entry 264, mechanism 1; M-CSA cites PMID:10677224, PMID:10896663, PMID:12137537, PMID:24531458,
+        PMID:9575210; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/264/
+      snippet: A 1,2 sigmatropic rearrangement to produce the second cyclopropyl intermediate.
+      notes: M-CSA entry 264, mechanism 1; M-CSA cites PMID:10677224, PMID:10896663, PMID:12137537, PMID:24531458,
+        PMID:9575210; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/264/
+      snippet: A hydride transfer from NADP caused the cleavage of the cyclopropyl group to produce squalene.
+      notes: M-CSA entry 264, mechanism 1; M-CSA cites PMID:10677224, PMID:10896663, PMID:12137537, PMID:24531458,
+        PMID:9575210; step 7
+  - subject: step7
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step8
+    description: Step 7 leads to step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/264/
+      snippet: Products
+      notes: M-CSA entry 264, mechanism 1; M-CSA cites PMID:10677224, PMID:10896663, PMID:12137537, PMID:24531458,
+        PMID:9575210; step 8
+  - subject: tyr171
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr171 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/264/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 264, mechanism 1; M-CSA cites PMID:10677224, PMID:10896663, PMID:12137537, PMID:24531458,
+        PMID:9575210; M-CSA catalytic-residue roles for Tyr171
+  - subject: arg218
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg218 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/264/
+      snippet: electrostatic stabiliser, hydrogen bond donor, promote heterolysis
+      notes: M-CSA entry 264, mechanism 1; M-CSA cites PMID:10677224, PMID:10896663, PMID:12137537, PMID:24531458,
+        PMID:9575210; M-CSA catalytic-residue roles for Arg218
+  - subject: arg228
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg228 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/264/
+      snippet: electrostatic stabiliser, hydrogen bond donor, promote heterolysis
+      notes: M-CSA entry 264, mechanism 1; M-CSA cites PMID:10677224, PMID:10896663, PMID:12137537, PMID:24531458,
+        PMID:9575210; M-CSA catalytic-residue roles for Arg228
+  - subject: phe288
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Phe288 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/264/
+      snippet: polar/non-polar interaction, steric role, van der waals interaction
+      notes: M-CSA entry 264, mechanism 1; M-CSA cites PMID:10677224, PMID:10896663, PMID:12137537, PMID:24531458,
+        PMID:9575210; M-CSA catalytic-residue roles for Phe288
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/264/
+      snippet: There is still much debate as to the exact mechanism of this enzyme. It is known that the
+        reaction proceeds <i>via</i> two half reactions, the first of which produces the stable cyclopropylcarbinyl
+        diphosphate intermediate (presqualene diphosphate) from two molecules of 2-trans,6-trans-farnesyl
+        diphosphate. In the second half reaction, the presqualene diphosphate undergoes heterolysis, isomerisati
+      notes: M-CSA entry 264, mechanism 1; M-CSA cites PMID:10677224, PMID:10896663, PMID:12137537, PMID:24531458,
+        PMID:9575210; CATH domain 1.10.600.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/264/
+      snippet: There is still much debate as to the exact mechanism of this enzyme. It is known that the
+        reaction proceeds <i>via</i> two half reactions, the first of which produces the stable cyclopropylcarbinyl
+        diphosphate intermediate (presqualene diphosphate) from two molecules of 2-trans,6-trans-farnesyl
+        diphosphate. In the second half reaction, the presqualene diphosphate undergoes heterolysis, isomerisati
+      notes: M-CSA entry 264, mechanism 1; M-CSA cites PMID:10677224, PMID:10896663, PMID:12137537, PMID:24531458,
+        PMID:9575210; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/264/
+      snippet: There is still much debate as to the exact mechanism of this enzyme. It is known that the
+        reaction proceeds <i>via</i> two half reactions, the first of which produces the stable cyclopropylcarbinyl
+        diphosphate intermediate (presqualene diphosphate) from two molecules of 2-trans,6-trans-farnesyl
+        diphosphate. In the second half reaction, the presqualene diphosphate undergoes heterolysis, isomerisati
+      notes: M-CSA entry 264, mechanism 1; M-CSA cites PMID:10677224, PMID:10896663, PMID:12137537, PMID:24531458,
+        PMID:9575210; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/264/
+      snippet: There is still much debate as to the exact mechanism of this enzyme. It is known that the
+        reaction proceeds <i>via</i> two half reactions, the first of which produces the stable cyclopropylcarbinyl
+        diphosphate intermediate (presqualene diphosphate) from two molecules of 2-trans,6-trans-farnesyl
+        diphosphate. In the second half reaction, the presqualene diphosphate undergoes heterolysis, isomerisati
+      notes: M-CSA entry 264, mechanism 1; M-CSA cites PMID:10677224, PMID:10896663, PMID:12137537, PMID:24531458,
+        PMID:9575210; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/264/
+      snippet: There is still much debate as to the exact mechanism of this enzyme. It is known that the
+        reaction proceeds <i>via</i> two half reactions, the first of which produces the stable cyclopropylcarbinyl
+        diphosphate intermediate (presqualene diphosphate) from two molecules of 2-trans,6-trans-farnesyl
+        diphosphate. In the second half reaction, the presqualene diphosphate undergoes heterolysis, isomerisati
+      notes: M-CSA entry 264, mechanism 1; M-CSA cites PMID:10677224, PMID:10896663, PMID:12137537, PMID:24531458,
+        PMID:9575210; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/264/
+      snippet: There is still much debate as to the exact mechanism of this enzyme. It is known that the
+        reaction proceeds <i>via</i> two half reactions, the first of which produces the stable cyclopropylcarbinyl
+        diphosphate intermediate (presqualene diphosphate) from two molecules of 2-trans,6-trans-farnesyl
+        diphosphate. In the second half reaction, the presqualene diphosphate undergoes heterolysis, isomerisati
+      notes: M-CSA entry 264, mechanism 1; M-CSA cites PMID:10677224, PMID:10896663, PMID:12137537, PMID:24531458,
+        PMID:9575210; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/264/
+      snippet: There is still much debate as to the exact mechanism of this enzyme. It is known that the
+        reaction proceeds <i>via</i> two half reactions, the first of which produces the stable cyclopropylcarbinyl
+        diphosphate intermediate (presqualene diphosphate) from two molecules of 2-trans,6-trans-farnesyl
+        diphosphate. In the second half reaction, the presqualene diphosphate undergoes heterolysis, isomerisati
+      notes: M-CSA entry 264, mechanism 1; M-CSA cites PMID:10677224, PMID:10896663, PMID:12137537, PMID:24531458,
+        PMID:9575210; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/264/
+      snippet: There is still much debate as to the exact mechanism of this enzyme. It is known that the
+        reaction proceeds <i>via</i> two half reactions, the first of which produces the stable cyclopropylcarbinyl
+        diphosphate intermediate (presqualene diphosphate) from two molecules of 2-trans,6-trans-farnesyl
+        diphosphate. In the second half reaction, the presqualene diphosphate undergoes heterolysis, isomerisati
+      notes: M-CSA entry 264, mechanism 1; M-CSA cites PMID:10677224, PMID:10896663, PMID:12137537, PMID:24531458,
+        PMID:9575210; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (22 evidence-backed edges) transcribed from M-CSA entry 264;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

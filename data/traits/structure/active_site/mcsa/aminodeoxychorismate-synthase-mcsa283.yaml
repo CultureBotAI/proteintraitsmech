@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.6.1.85
 - CHEBI:29748
@@ -421,4 +421,336 @@ definitions:
       The enzyme is composed of two parts, PabA and PabB. In the absence of PabA and glutamine, PabB will still convert ammonia and chorismate into 4-amino-4-deoxychorismate. PabA, a 21kDa subunit, converts glutamine into glutamate only in the presence of stoichiometric amounts of PabB and provides the nucleophile (ammonia) via hydrolysis of glutamine to the PabA subunit. The crystal structure used here is only of PabB, there doesn't appear to be a structure available of both components together. Of the two domains present, the Chlorismate Superfamily Fold is thought to be the site of catalysis, but the second domain, situated in the N-terminus is thought to be involved in regulating an inhibitory feedback mechanism involving tryptophan.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of aminodeoxychorismate synthase
+  description: Stepwise mechanism transcribed from M-CSA entry 283 (8 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: glu258
+    label: catalytic Glu258 (M-CSA/PDB numbering; UniProt residue 258)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05041
+    description: 'M-CSA roles: activator, attractive charge-charge interaction, electrostatic stabiliser,
+      hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: lys274
+    label: catalytic Lys274 (M-CSA/PDB numbering; UniProt residue 274)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05041
+    description: 'M-CSA roles: activator, hydrogen bond donor, nucleofuge, nucleophile, polar/non-polar
+      interaction.'
+  - node_id: reactant0
+    label: chorismate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:29748
+  - node_id: reactant1
+    label: L-glutamine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:58359
+  - node_id: product0
+    label: 4-amino-4-deoxychorismate(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58406
+  - node_id: product1
+    label: L-glutamate(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:29985
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The chlorismate substrate binds in the synthase domain before glutamine is present [PMID:9575335]..
+      Chorismate is attacked at C(2) by the nucleophilic Lys274, resulting in the conjugate elimination
+      of water from C(4). Glu258 acts as a general acid to the departing water. The reaction proceeds
+      via a Sn2" which maintains the stereochemistry at C(4). A single displacement mechanism would result
+      in st
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The imidazol of His168 is proposed to act as a general base towards Cys79, activating
+      the thiol towards nucleophilic attack at the glutamine carbonyl.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The anionic tetrahedral intermediate collapses. This generates the ammonia. The ammonia
+      produced in this step is then relayed to the active site contained in PapB (where the 4-amino 4-deoxychorismate
+      is formed) through a channel; similar to the reactions of  GMP and CTP synthetase [PMID:11841211].
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Ammonia formed from the hydrolysis of glutamine attacks at the C(4) position of the chorismate-enzyme
+      adduct, eliminating Lys274.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Glu258 acts as a general base, abstracting a proton from the C(4) amino group and regenerating
+      the synthase catalytic site.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: His168 deprotonates the water, which attacks the enzyme-glutamine complex, forming a
+      tetrahedral intermediate.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: The tetrahedral intermediate collapses, eliminating Cys79, which deprotonates His168.
+  - node_id: step8
+    label: mechanism step 8
+    node_type: STATE
+    description: Product
+  - node_id: active_site
+    label: aminodeoxychorismate synthase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:283
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.60.120.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.60.120.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: aminodeoxychorismate synthase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.6.1.85
+  edges:
+  - subject: glu258
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu258 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/283/
+      snippet: The chlorismate substrate binds in the synthase domain before glutamine is present [PMID:9575335]..
+        Chorismate is attacked at C(2) by the nucleophilic Lys274, resulting in the conjugate elimination
+        of water from C(4). Glu258 acts as a general acid to the departing water. The reaction proceeds
+        via a Sn2" which maintains the stereochemistry at C(4). A single displacement mechanism would
+        result in stereochemical inversion [PMID:14982443].
+      notes: M-CSA entry 283, mechanism 1; M-CSA cites PMID:11841211, PMID:14982443, PMID:16605270, PMID:20170126,
+        PMID:23230967, PMID:8096767, PMID:9575335; step 1
+  - subject: lys274
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys274 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/283/
+      snippet: The chlorismate substrate binds in the synthase domain before glutamine is present [PMID:9575335]..
+        Chorismate is attacked at C(2) by the nucleophilic Lys274, resulting in the conjugate elimination
+        of water from C(4). Glu258 acts as a general acid to the departing water. The reaction proceeds
+        via a Sn2" which maintains the stereochemistry at C(4). A single displacement mechanism would
+        result in stereochemical inversion [PMID:14982443].
+      notes: M-CSA entry 283, mechanism 1; M-CSA cites PMID:11841211, PMID:14982443, PMID:16605270, PMID:20170126,
+        PMID:23230967, PMID:8096767, PMID:9575335; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/283/
+      snippet: The imidazol of His168 is proposed to act as a general base towards Cys79, activating the
+        thiol towards nucleophilic attack at the glutamine carbonyl.
+      notes: M-CSA entry 283, mechanism 1; M-CSA cites PMID:11841211, PMID:14982443, PMID:16605270, PMID:20170126,
+        PMID:23230967, PMID:8096767, PMID:9575335; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/283/
+      snippet: The anionic tetrahedral intermediate collapses. This generates the ammonia. The ammonia
+        produced in this step is then relayed to the active site contained in PapB (where the 4-amino
+        4-deoxychorismate is formed) through a channel; similar to the reactions of  GMP and CTP synthetase
+        [PMID:11841211].
+      notes: M-CSA entry 283, mechanism 1; M-CSA cites PMID:11841211, PMID:14982443, PMID:16605270, PMID:20170126,
+        PMID:23230967, PMID:8096767, PMID:9575335; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/283/
+      snippet: Ammonia formed from the hydrolysis of glutamine attacks at the C(4) position of the chorismate-enzyme
+        adduct, eliminating Lys274.
+      notes: M-CSA entry 283, mechanism 1; M-CSA cites PMID:11841211, PMID:14982443, PMID:16605270, PMID:20170126,
+        PMID:23230967, PMID:8096767, PMID:9575335; step 4
+  - subject: lys274
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Lys274 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/283/
+      snippet: Ammonia formed from the hydrolysis of glutamine attacks at the C(4) position of the chorismate-enzyme
+        adduct, eliminating Lys274.
+      notes: M-CSA entry 283, mechanism 1; M-CSA cites PMID:11841211, PMID:14982443, PMID:16605270, PMID:20170126,
+        PMID:23230967, PMID:8096767, PMID:9575335; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/283/
+      snippet: Glu258 acts as a general base, abstracting a proton from the C(4) amino group and regenerating
+        the synthase catalytic site.
+      notes: M-CSA entry 283, mechanism 1; M-CSA cites PMID:11841211, PMID:14982443, PMID:16605270, PMID:20170126,
+        PMID:23230967, PMID:8096767, PMID:9575335; step 5
+  - subject: glu258
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Glu258 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/283/
+      snippet: Glu258 acts as a general base, abstracting a proton from the C(4) amino group and regenerating
+        the synthase catalytic site.
+      notes: M-CSA entry 283, mechanism 1; M-CSA cites PMID:11841211, PMID:14982443, PMID:16605270, PMID:20170126,
+        PMID:23230967, PMID:8096767, PMID:9575335; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/283/
+      snippet: His168 deprotonates the water, which attacks the enzyme-glutamine complex, forming a tetrahedral
+        intermediate.
+      notes: M-CSA entry 283, mechanism 1; M-CSA cites PMID:11841211, PMID:14982443, PMID:16605270, PMID:20170126,
+        PMID:23230967, PMID:8096767, PMID:9575335; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/283/
+      snippet: The tetrahedral intermediate collapses, eliminating Cys79, which deprotonates His168.
+      notes: M-CSA entry 283, mechanism 1; M-CSA cites PMID:11841211, PMID:14982443, PMID:16605270, PMID:20170126,
+        PMID:23230967, PMID:8096767, PMID:9575335; step 7
+  - subject: step7
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step8
+    description: Step 7 leads to step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/283/
+      snippet: Product
+      notes: M-CSA entry 283, mechanism 1; M-CSA cites PMID:11841211, PMID:14982443, PMID:16605270, PMID:20170126,
+        PMID:23230967, PMID:8096767, PMID:9575335; step 8
+  - subject: glu258
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu258 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/283/
+      snippet: activator, attractive charge-charge interaction, electrostatic stabiliser, hydrogen bond
+        acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 283, mechanism 1; M-CSA cites PMID:11841211, PMID:14982443, PMID:16605270, PMID:20170126,
+        PMID:23230967, PMID:8096767, PMID:9575335; M-CSA catalytic-residue roles for Glu258
+  - subject: lys274
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys274 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/283/
+      snippet: activator, hydrogen bond donor, nucleofuge, nucleophile, polar/non-polar interaction
+      notes: M-CSA entry 283, mechanism 1; M-CSA cites PMID:11841211, PMID:14982443, PMID:16605270, PMID:20170126,
+        PMID:23230967, PMID:8096767, PMID:9575335; M-CSA catalytic-residue roles for Lys274
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/283/
+      snippet: Chorismate is attacked at C(2) by the nucleophilic Lys274, resulting in the conjugate elimination
+        of water from C(4). Glu258 acts as a general acid to the departing water. The imidazol of His168
+        is proposed to act as a general base towards Cys79, activating the thiol towards nucleophilic
+        attack at the glutamine carbonyl. The anionic tetrahedral intermediate collapses. This generates
+        the ammonia wh
+      notes: M-CSA entry 283, mechanism 1; M-CSA cites PMID:11841211, PMID:14982443, PMID:16605270, PMID:20170126,
+        PMID:23230967, PMID:8096767, PMID:9575335; CATH domain 3.60.120.10 assigned to the catalytic chain
+        by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/283/
+      snippet: Chorismate is attacked at C(2) by the nucleophilic Lys274, resulting in the conjugate elimination
+        of water from C(4). Glu258 acts as a general acid to the departing water. The imidazol of His168
+        is proposed to act as a general base towards Cys79, activating the thiol towards nucleophilic
+        attack at the glutamine carbonyl. The anionic tetrahedral intermediate collapses. This generates
+        the ammonia wh
+      notes: M-CSA entry 283, mechanism 1; M-CSA cites PMID:11841211, PMID:14982443, PMID:16605270, PMID:20170126,
+        PMID:23230967, PMID:8096767, PMID:9575335; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/283/
+      snippet: Chorismate is attacked at C(2) by the nucleophilic Lys274, resulting in the conjugate elimination
+        of water from C(4). Glu258 acts as a general acid to the departing water. The imidazol of His168
+        is proposed to act as a general base towards Cys79, activating the thiol towards nucleophilic
+        attack at the glutamine carbonyl. The anionic tetrahedral intermediate collapses. This generates
+        the ammonia wh
+      notes: M-CSA entry 283, mechanism 1; M-CSA cites PMID:11841211, PMID:14982443, PMID:16605270, PMID:20170126,
+        PMID:23230967, PMID:8096767, PMID:9575335; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/283/
+      snippet: Chorismate is attacked at C(2) by the nucleophilic Lys274, resulting in the conjugate elimination
+        of water from C(4). Glu258 acts as a general acid to the departing water. The imidazol of His168
+        is proposed to act as a general base towards Cys79, activating the thiol towards nucleophilic
+        attack at the glutamine carbonyl. The anionic tetrahedral intermediate collapses. This generates
+        the ammonia wh
+      notes: M-CSA entry 283, mechanism 1; M-CSA cites PMID:11841211, PMID:14982443, PMID:16605270, PMID:20170126,
+        PMID:23230967, PMID:8096767, PMID:9575335; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/283/
+      snippet: Chorismate is attacked at C(2) by the nucleophilic Lys274, resulting in the conjugate elimination
+        of water from C(4). Glu258 acts as a general acid to the departing water. The imidazol of His168
+        is proposed to act as a general base towards Cys79, activating the thiol towards nucleophilic
+        attack at the glutamine carbonyl. The anionic tetrahedral intermediate collapses. This generates
+        the ammonia wh
+      notes: M-CSA entry 283, mechanism 1; M-CSA cites PMID:11841211, PMID:14982443, PMID:16605270, PMID:20170126,
+        PMID:23230967, PMID:8096767, PMID:9575335; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/283/
+      snippet: Chorismate is attacked at C(2) by the nucleophilic Lys274, resulting in the conjugate elimination
+        of water from C(4). Glu258 acts as a general acid to the departing water. The imidazol of His168
+        is proposed to act as a general base towards Cys79, activating the thiol towards nucleophilic
+        attack at the glutamine carbonyl. The anionic tetrahedral intermediate collapses. This generates
+        the ammonia wh
+      notes: M-CSA entry 283, mechanism 1; M-CSA cites PMID:11841211, PMID:14982443, PMID:16605270, PMID:20170126,
+        PMID:23230967, PMID:8096767, PMID:9575335; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (19 evidence-backed edges) transcribed from M-CSA entry 283;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.6.5.2
 - CHEBI:57945
@@ -273,4 +273,320 @@ definitions:
       Quinone reductase exists as a dimer of identical subunits, each comprising of 273 amino acids with two identical catalytic sites at equivalent positions. The enzyme catalyses the FAD dependent reduction of quinones. The dimer binds two FAD cofactors which remain non-covalently bound during catalysis. NAD(P)H and NAD(P)+ cycle in and out of the catalytic site. The catalytic domain has the characteristic twisted central parallel beta sheet surrounded on both sides by connecting helices, as found in other flavoproteins.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of NAD(P)H dehydrogenase (quinone)
+  description: Stepwise mechanism transcribed from M-CSA entry 3 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +1).
+  nodes:
+  - node_id: gly149
+    label: catalytic Gly149 (M-CSA/PDB numbering; UniProt residue 150)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15559
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: tyr155
+    label: catalytic Tyr155 (M-CSA/PDB numbering; UniProt residue 156)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15559
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      proton acceptor, proton donor, proton relay.'
+  - node_id: his161
+    label: catalytic His161 (M-CSA/PDB numbering; UniProt residue 162)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15559
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor,
+      proton relay.'
+  - node_id: reactant0
+    label: NADH(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+  - node_id: reactant1
+    label: 1,4-benzoquinones
+    node_type: CHEMICAL
+    grounding: CHEBI:132124
+  - node_id: reactant2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product0
+    label: NAD(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+  - node_id: product1
+    label: hydroquinones
+    node_type: CHEMICAL
+    grounding: CHEBI:24646
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: A hydride ion is transferred from NADH to the FAD cofactor, with concomitant double bond
+      rearrangement.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The FADH deprotonates Tyr155, which in turn deprotonates His161.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: NAD<sup>+</sup> is released, followed by binding of the quinine. His161 deprotonates
+      Tyr155, which in turn deprotonates the FADH, resulting in double bond rearrangement and the elimination
+      of a hydride to the quinone.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The negatively charged substrate deprotonates His161, which is rapidly re-protonated
+      from the solvent.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: NAD(P)H dehydrogenase (quinone) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:3
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.360 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.360
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: NAD(P)H dehydrogenase (quinone) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.6.5.2
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/3/
+      snippet: The FADH deprotonates Tyr155, which in turn deprotonates His161.
+      notes: M-CSA entry 3, mechanism 1; M-CSA cites PMID:11340659, PMID:7568029; step 2
+  - subject: tyr155
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Tyr155 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/3/
+      snippet: The FADH deprotonates Tyr155, which in turn deprotonates His161.
+      notes: M-CSA entry 3, mechanism 1; M-CSA cites PMID:11340659, PMID:7568029; step 2
+  - subject: his161
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His161 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/3/
+      snippet: The FADH deprotonates Tyr155, which in turn deprotonates His161.
+      notes: M-CSA entry 3, mechanism 1; M-CSA cites PMID:11340659, PMID:7568029; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/3/
+      snippet: NAD<sup>+</sup> is released, followed by binding of the quinine. His161 deprotonates Tyr155,
+        which in turn deprotonates the FADH, resulting in double bond rearrangement and the elimination
+        of a hydride to the quinone.
+      notes: M-CSA entry 3, mechanism 1; M-CSA cites PMID:11340659, PMID:7568029; step 3
+  - subject: tyr155
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Tyr155 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/3/
+      snippet: NAD<sup>+</sup> is released, followed by binding of the quinine. His161 deprotonates Tyr155,
+        which in turn deprotonates the FADH, resulting in double bond rearrangement and the elimination
+        of a hydride to the quinone.
+      notes: M-CSA entry 3, mechanism 1; M-CSA cites PMID:11340659, PMID:7568029; step 3
+  - subject: his161
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His161 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/3/
+      snippet: NAD<sup>+</sup> is released, followed by binding of the quinine. His161 deprotonates Tyr155,
+        which in turn deprotonates the FADH, resulting in double bond rearrangement and the elimination
+        of a hydride to the quinone.
+      notes: M-CSA entry 3, mechanism 1; M-CSA cites PMID:11340659, PMID:7568029; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/3/
+      snippet: The negatively charged substrate deprotonates His161, which is rapidly re-protonated from
+        the solvent.
+      notes: M-CSA entry 3, mechanism 1; M-CSA cites PMID:11340659, PMID:7568029; step 4
+  - subject: his161
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: His161 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/3/
+      snippet: The negatively charged substrate deprotonates His161, which is rapidly re-protonated from
+        the solvent.
+      notes: M-CSA entry 3, mechanism 1; M-CSA cites PMID:11340659, PMID:7568029; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/3/
+      snippet: Products.
+      notes: M-CSA entry 3, mechanism 1; M-CSA cites PMID:11340659, PMID:7568029; step 5
+  - subject: gly149
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly149 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/3/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 3, mechanism 1; M-CSA cites PMID:11340659, PMID:7568029; M-CSA catalytic-residue
+        roles for Gly149
+  - subject: tyr155
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr155 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/3/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+        proton donor, proton relay
+      notes: M-CSA entry 3, mechanism 1; M-CSA cites PMID:11340659, PMID:7568029; M-CSA catalytic-residue
+        roles for Tyr155
+  - subject: his161
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His161 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/3/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 3, mechanism 1; M-CSA cites PMID:11340659, PMID:7568029; M-CSA catalytic-residue
+        roles for His161
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/3/
+      snippet: "The obligatory two-electron reduction is shown here to proceed via two direct hydride\
+        \ transfers.
+<br/><br/>
+The mechanism has two distinct steps. Firstly, hydride transfer\
+        \ occurs from NAD(P)H to the enzyme-bound flavin followed by the release of NAD(P)+. Secondly,\
+        \ a hydride transfer takes place from the flavin to the quionone followed by the releases of hydroquinone.\
+        \ The mechanism follows a 'pin"
+      notes: M-CSA entry 3, mechanism 1; M-CSA cites PMID:11340659, PMID:7568029; CATH domain 3.40.50.360
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/3/
+      snippet: "The obligatory two-electron reduction is shown here to proceed via two direct hydride\
+        \ transfers.
+<br/><br/>
+The mechanism has two distinct steps. Firstly, hydride transfer\
+        \ occurs from NAD(P)H to the enzyme-bound flavin followed by the release of NAD(P)+. Secondly,\
+        \ a hydride transfer takes place from the flavin to the quionone followed by the releases of hydroquinone.\
+        \ The mechanism follows a 'pin"
+      notes: M-CSA entry 3, mechanism 1; M-CSA cites PMID:11340659, PMID:7568029; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/3/
+      snippet: "The obligatory two-electron reduction is shown here to proceed via two direct hydride\
+        \ transfers.
+<br/><br/>
+The mechanism has two distinct steps. Firstly, hydride transfer\
+        \ occurs from NAD(P)H to the enzyme-bound flavin followed by the release of NAD(P)+. Secondly,\
+        \ a hydride transfer takes place from the flavin to the quionone followed by the releases of hydroquinone.\
+        \ The mechanism follows a 'pin"
+      notes: M-CSA entry 3, mechanism 1; M-CSA cites PMID:11340659, PMID:7568029; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/3/
+      snippet: "The obligatory two-electron reduction is shown here to proceed via two direct hydride\
+        \ transfers.
+<br/><br/>
+The mechanism has two distinct steps. Firstly, hydride transfer\
+        \ occurs from NAD(P)H to the enzyme-bound flavin followed by the release of NAD(P)+. Secondly,\
+        \ a hydride transfer takes place from the flavin to the quionone followed by the releases of hydroquinone.\
+        \ The mechanism follows a 'pin"
+      notes: M-CSA entry 3, mechanism 1; M-CSA cites PMID:11340659, PMID:7568029; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/3/
+      snippet: "The obligatory two-electron reduction is shown here to proceed via two direct hydride\
+        \ transfers.
+<br/><br/>
+The mechanism has two distinct steps. Firstly, hydride transfer\
+        \ occurs from NAD(P)H to the enzyme-bound flavin followed by the release of NAD(P)+. Secondly,\
+        \ a hydride transfer takes place from the flavin to the quionone followed by the releases of hydroquinone.\
+        \ The mechanism follows a 'pin"
+      notes: M-CSA entry 3, mechanism 1; M-CSA cites PMID:11340659, PMID:7568029; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/3/
+      snippet: "The obligatory two-electron reduction is shown here to proceed via two direct hydride\
+        \ transfers.
+<br/><br/>
+The mechanism has two distinct steps. Firstly, hydride transfer\
+        \ occurs from NAD(P)H to the enzyme-bound flavin followed by the release of NAD(P)+. Secondly,\
+        \ a hydride transfer takes place from the flavin to the quionone followed by the releases of hydroquinone.\
+        \ The mechanism follows a 'pin"
+      notes: M-CSA entry 3, mechanism 1; M-CSA cites PMID:11340659, PMID:7568029; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/3/
+      snippet: "The obligatory two-electron reduction is shown here to proceed via two direct hydride\
+        \ transfers.
+<br/><br/>
+The mechanism has two distinct steps. Firstly, hydride transfer\
+        \ occurs from NAD(P)H to the enzyme-bound flavin followed by the release of NAD(P)+. Secondly,\
+        \ a hydride transfer takes place from the flavin to the quionone followed by the releases of hydroquinone.\
+        \ The mechanism follows a 'pin"
+      notes: M-CSA entry 3, mechanism 1; M-CSA cites PMID:11340659, PMID:7568029; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (19 evidence-backed edges) transcribed from M-CSA entry 3; SEEDED
+    -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

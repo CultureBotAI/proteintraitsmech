@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.13.12.7
 - CHEBI:15379
@@ -378,4 +378,377 @@ definitions:
       Luciferases (EC:1.13.12.7) are the enzymes that catalyse the reactions that produce light in bioluminescence. Photinus pyralis luciferase produces green light with a wavelength of 562 nm, but the colour for firefly bioluminescence can vary between yellow-green to red. Luciferase is commonly used as a reporter in biological research.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of Photinus-luciferin 4-monooxygenase (ATP-hydrolysing)
+  description: Stepwise mechanism transcribed from M-CSA entry 128 (6 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: arg218
+    label: catalytic Arg218 (M-CSA/PDB numbering; UniProt residue 218)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08659
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his245
+    label: catalytic His245 (M-CSA/PDB numbering; UniProt residue 245)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08659
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: thr343
+    label: catalytic Thr343 (M-CSA/PDB numbering; UniProt residue 343)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08659
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: lys443
+    label: catalytic Lys443 (M-CSA/PDB numbering; UniProt residue 443)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08659
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: lys529
+    label: catalytic Lys529 (M-CSA/PDB numbering; UniProt residue 529)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08659
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: reactant0
+    label: dioxygen
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+  - node_id: reactant1
+    label: ATP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+  - node_id: reactant2
+    label: Photinus luciferin(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58038
+  - node_id: product0
+    label: carbon dioxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+  - node_id: product1
+    label: adenosine 5'-monophosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+  - node_id: product2
+    label: photon
+    node_type: CHEMICAL
+    grounding: CHEBI:30212
+  - node_id: product3
+    label: diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+  - node_id: product4
+    label: oxidized Photinus luciferin
+    node_type: CHEMICAL
+    grounding: CHEBI:16792
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The carboxylate oxygen of photinus luciferin attacks the alpha-phosphate of ATP in a
+      nucleophilic substitution reaction, producing the pyrophosphate product.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: 'To oxidise luciferin, luciferase must abstract the C4 proton producing a carbanion that
+      undergoes electrophilic attack by molecular oxygen. This process is greatly facilitated by the activating
+      effect of AMP which increases the acidity of C4 and is a good leaving group, allowing the formation
+      of the dioxetanone ring. The abstraction of the proton from C4 is the rate-limiting step of the
+      oxygenase '
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The carbanion attacks dioxygen in a nucleophilic addition.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The peroxide anion attacks the carbonyl carbon in an intramolecular nucleophilic substitution,
+      resulting in the formation of the AMP product and a 4-membered peroxo ring intermediate.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: '<p>The cleavage of the dioxetanone ring yields carbon dioxide and singlet excited oxyluciferin,
+      which then decays emitting a photon in the green-red region of the spectrum with very high efficiency
+      (0.88). To achieve an efficient production of singlet excited species, the breakdown of the dioxetanone
+      ring intermediate is suggested to be activated by an intramolecular chemically initiated electron '
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: Photinus-luciferin 4-monooxygenase (ATP-hydrolysing) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:128
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.980 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.980
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: Photinus-luciferin 4-monooxygenase (ATP-hydrolysing) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.13.12.7
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/128/
+      snippet: To oxidise luciferin, luciferase must abstract the C4 proton producing a carbanion that
+        undergoes electrophilic attack by molecular oxygen. This process is greatly facilitated by the
+        activating effect of AMP which increases the acidity of C4 and is a good leaving group, allowing
+        the formation of the dioxetanone ring. The abstraction of the proton from C4 is the rate-limiting
+        step of the oxygenase reaction [PMID:12530517]. Due to lack of evidence suggesting an enzymatic
+        base we have assumed that the base is water.
+      notes: M-CSA entry 128, mechanism 1; M-CSA cites PMID:10820015, PMID:12530517, PMID:15182171, PMID:15683224,
+        PMID:16541080, PMID:22852753, PMID:272645, PMID:9799491; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/128/
+      snippet: The carbanion attacks dioxygen in a nucleophilic addition.
+      notes: M-CSA entry 128, mechanism 1; M-CSA cites PMID:10820015, PMID:12530517, PMID:15182171, PMID:15683224,
+        PMID:16541080, PMID:22852753, PMID:272645, PMID:9799491; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/128/
+      snippet: The peroxide anion attacks the carbonyl carbon in an intramolecular nucleophilic substitution,
+        resulting in the formation of the AMP product and a 4-membered peroxo ring intermediate.
+      notes: M-CSA entry 128, mechanism 1; M-CSA cites PMID:10820015, PMID:12530517, PMID:15182171, PMID:15683224,
+        PMID:16541080, PMID:22852753, PMID:272645, PMID:9799491; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/128/
+      snippet: <p>The cleavage of the dioxetanone ring yields carbon dioxide and singlet excited oxyluciferin,
+        which then decays emitting a photon in the green-red region of the spectrum with very high efficiency
+        (0.88). To achieve an efficient production of singlet excited species, the breakdown of the dioxetanone
+        ring intermediate is suggested to be activated by an intramolecular chemically initiated electron
+        exchange luminescence (CIEEL) process. In this process, the electron transfer from the benzothiazolyl
+        moiety of the luciferin in the phenolate form destabilizes the dioxetanone ring yielding a radical
+        ion pair luciferin and CO<sub>2</sub> followed by the return of the electron to generate a singlet
+        excited state of the oxyluciferin moiety [PMID:12530517, PMID:272645].</p>
+      notes: M-CSA entry 128, mechanism 1; M-CSA cites PMID:10820015, PMID:12530517, PMID:15182171, PMID:15683224,
+        PMID:16541080, PMID:22852753, PMID:272645, PMID:9799491; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/128/
+      snippet: Products.
+      notes: M-CSA entry 128, mechanism 1; M-CSA cites PMID:10820015, PMID:12530517, PMID:15182171, PMID:15683224,
+        PMID:16541080, PMID:22852753, PMID:272645, PMID:9799491; step 6
+  - subject: arg218
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg218 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/128/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 128, mechanism 1; M-CSA cites PMID:10820015, PMID:12530517, PMID:15182171, PMID:15683224,
+        PMID:16541080, PMID:22852753, PMID:272645, PMID:9799491; M-CSA catalytic-residue roles for Arg218
+  - subject: his245
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His245 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/128/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 128, mechanism 1; M-CSA cites PMID:10820015, PMID:12530517, PMID:15182171, PMID:15683224,
+        PMID:16541080, PMID:22852753, PMID:272645, PMID:9799491; M-CSA catalytic-residue roles for His245
+  - subject: thr343
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr343 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/128/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 128, mechanism 1; M-CSA cites PMID:10820015, PMID:12530517, PMID:15182171, PMID:15683224,
+        PMID:16541080, PMID:22852753, PMID:272645, PMID:9799491; M-CSA catalytic-residue roles for Thr343
+  - subject: lys443
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys443 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/128/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 128, mechanism 1; M-CSA cites PMID:10820015, PMID:12530517, PMID:15182171, PMID:15683224,
+        PMID:16541080, PMID:22852753, PMID:272645, PMID:9799491; M-CSA catalytic-residue roles for Lys443
+  - subject: lys529
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys529 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/128/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 128, mechanism 1; M-CSA cites PMID:10820015, PMID:12530517, PMID:15182171, PMID:15683224,
+        PMID:16541080, PMID:22852753, PMID:272645, PMID:9799491; M-CSA catalytic-residue roles for Lys529
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/128/
+      snippet: Partial reactions are catalysed by two different conformations of the enzyme. Adenylation
+        in the PheA closed conformation and thioester formation in the bAcs rotated form. Lys443 and Lys529
+        are located on opposite sides of the C-terminal domain of the enzyme and are each essential for
+        only one of the partial reactions of firefly bioluminescence supporting the proposal of two different
+        conformation
+      notes: M-CSA entry 128, mechanism 1; M-CSA cites PMID:10820015, PMID:12530517, PMID:15182171, PMID:15683224,
+        PMID:16541080, PMID:22852753, PMID:272645, PMID:9799491; CATH domain 3.40.50.980 assigned to the
+        catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/128/
+      snippet: Partial reactions are catalysed by two different conformations of the enzyme. Adenylation
+        in the PheA closed conformation and thioester formation in the bAcs rotated form. Lys443 and Lys529
+        are located on opposite sides of the C-terminal domain of the enzyme and are each essential for
+        only one of the partial reactions of firefly bioluminescence supporting the proposal of two different
+        conformation
+      notes: M-CSA entry 128, mechanism 1; M-CSA cites PMID:10820015, PMID:12530517, PMID:15182171, PMID:15683224,
+        PMID:16541080, PMID:22852753, PMID:272645, PMID:9799491; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/128/
+      snippet: Partial reactions are catalysed by two different conformations of the enzyme. Adenylation
+        in the PheA closed conformation and thioester formation in the bAcs rotated form. Lys443 and Lys529
+        are located on opposite sides of the C-terminal domain of the enzyme and are each essential for
+        only one of the partial reactions of firefly bioluminescence supporting the proposal of two different
+        conformation
+      notes: M-CSA entry 128, mechanism 1; M-CSA cites PMID:10820015, PMID:12530517, PMID:15182171, PMID:15683224,
+        PMID:16541080, PMID:22852753, PMID:272645, PMID:9799491; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/128/
+      snippet: Partial reactions are catalysed by two different conformations of the enzyme. Adenylation
+        in the PheA closed conformation and thioester formation in the bAcs rotated form. Lys443 and Lys529
+        are located on opposite sides of the C-terminal domain of the enzyme and are each essential for
+        only one of the partial reactions of firefly bioluminescence supporting the proposal of two different
+        conformation
+      notes: M-CSA entry 128, mechanism 1; M-CSA cites PMID:10820015, PMID:12530517, PMID:15182171, PMID:15683224,
+        PMID:16541080, PMID:22852753, PMID:272645, PMID:9799491; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/128/
+      snippet: Partial reactions are catalysed by two different conformations of the enzyme. Adenylation
+        in the PheA closed conformation and thioester formation in the bAcs rotated form. Lys443 and Lys529
+        are located on opposite sides of the C-terminal domain of the enzyme and are each essential for
+        only one of the partial reactions of firefly bioluminescence supporting the proposal of two different
+        conformation
+      notes: M-CSA entry 128, mechanism 1; M-CSA cites PMID:10820015, PMID:12530517, PMID:15182171, PMID:15683224,
+        PMID:16541080, PMID:22852753, PMID:272645, PMID:9799491; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/128/
+      snippet: Partial reactions are catalysed by two different conformations of the enzyme. Adenylation
+        in the PheA closed conformation and thioester formation in the bAcs rotated form. Lys443 and Lys529
+        are located on opposite sides of the C-terminal domain of the enzyme and are each essential for
+        only one of the partial reactions of firefly bioluminescence supporting the proposal of two different
+        conformation
+      notes: M-CSA entry 128, mechanism 1; M-CSA cites PMID:10820015, PMID:12530517, PMID:15182171, PMID:15683224,
+        PMID:16541080, PMID:22852753, PMID:272645, PMID:9799491; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/128/
+      snippet: Partial reactions are catalysed by two different conformations of the enzyme. Adenylation
+        in the PheA closed conformation and thioester formation in the bAcs rotated form. Lys443 and Lys529
+        are located on opposite sides of the C-terminal domain of the enzyme and are each essential for
+        only one of the partial reactions of firefly bioluminescence supporting the proposal of two different
+        conformation
+      notes: M-CSA entry 128, mechanism 1; M-CSA cites PMID:10820015, PMID:12530517, PMID:15182171, PMID:15683224,
+        PMID:16541080, PMID:22852753, PMID:272645, PMID:9799491; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/128/
+      snippet: Partial reactions are catalysed by two different conformations of the enzyme. Adenylation
+        in the PheA closed conformation and thioester formation in the bAcs rotated form. Lys443 and Lys529
+        are located on opposite sides of the C-terminal domain of the enzyme and are each essential for
+        only one of the partial reactions of firefly bioluminescence supporting the proposal of two different
+        conformation
+      notes: M-CSA entry 128, mechanism 1; M-CSA cites PMID:10820015, PMID:12530517, PMID:15182171, PMID:15683224,
+        PMID:16541080, PMID:22852753, PMID:272645, PMID:9799491; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product3
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/128/
+      snippet: Partial reactions are catalysed by two different conformations of the enzyme. Adenylation
+        in the PheA closed conformation and thioester formation in the bAcs rotated form. Lys443 and Lys529
+        are located on opposite sides of the C-terminal domain of the enzyme and are each essential for
+        only one of the partial reactions of firefly bioluminescence supporting the proposal of two different
+        conformation
+      notes: M-CSA entry 128, mechanism 1; M-CSA cites PMID:10820015, PMID:12530517, PMID:15182171, PMID:15683224,
+        PMID:16541080, PMID:22852753, PMID:272645, PMID:9799491; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product4
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/128/
+      snippet: Partial reactions are catalysed by two different conformations of the enzyme. Adenylation
+        in the PheA closed conformation and thioester formation in the bAcs rotated form. Lys443 and Lys529
+        are located on opposite sides of the C-terminal domain of the enzyme and are each essential for
+        only one of the partial reactions of firefly bioluminescence supporting the proposal of two different
+        conformation
+      notes: M-CSA entry 128, mechanism 1; M-CSA cites PMID:10820015, PMID:12530517, PMID:15182171, PMID:15683224,
+        PMID:16541080, PMID:22852753, PMID:272645, PMID:9799491; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (20 evidence-backed edges) transcribed from M-CSA entry 128;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

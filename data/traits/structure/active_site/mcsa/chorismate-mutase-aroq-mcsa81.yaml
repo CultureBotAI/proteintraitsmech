@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.4.99.5
 - CHEBI:29748
@@ -253,4 +253,244 @@ definitions:
       Chorismate mutase (CM; EC:5.4.99.5) catalyses the reaction at the branch point of the biosynthetic pathway leading to the three aromatic amino acids, phenylalanine, tryptophan and tyrosine (chorismic acid is the last common intermediate, and CM leads to the L-phenylalanine/L-tyrosine branch). It is part of the shikimate pathway, which is present only in bacteria, fungi and plants. Members of this family, which are restricted to plants and fungi, contain a chorismate mutase domain of the AroQ class (eukaryotic type) and have an all-helical structure. The monomer consists of a catalytic and a regulatory domain covalently linked by a loop, which functions as a molecular hinge. They are monofunctional, allosteric enzymes and are subject to allosteric inhibition by tyrosine and activation by tryptophan.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of chorismate mutase (AroQ)
+  description: Stepwise mechanism transcribed from M-CSA entry 81 (2 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: arg16
+    label: catalytic Arg16 (M-CSA/PDB numbering; UniProt residue 16)
+    node_type: RESIDUE
+    grounding: UniProtKB:P32178
+    description: 'M-CSA roles: hydrogen bond donor, transition state stabiliser.'
+  - node_id: arg157
+    label: catalytic Arg157 (M-CSA/PDB numbering; UniProt residue 157)
+    node_type: RESIDUE
+    grounding: UniProtKB:P32178
+    description: 'M-CSA roles: hydrogen bond donor, transition state stabiliser.'
+  - node_id: lys168
+    label: catalytic Lys168 (M-CSA/PDB numbering; UniProt residue 168)
+    node_type: RESIDUE
+    grounding: UniProtKB:P32178
+    description: 'M-CSA roles: hydrogen bond donor, transition state stabiliser.'
+  - node_id: asn194
+    label: catalytic Asn194 (M-CSA/PDB numbering; UniProt residue 194)
+    node_type: RESIDUE
+    grounding: UniProtKB:P32178
+    description: 'M-CSA roles: transition state stabiliser.'
+  - node_id: glu198
+    label: catalytic Glu198 (M-CSA/PDB numbering; UniProt residue 198)
+    node_type: RESIDUE
+    grounding: UniProtKB:P32178
+    description: 'M-CSA roles: hydrogen bond acceptor, transition state stabiliser.'
+  - node_id: thr242
+    label: catalytic Thr242 (M-CSA/PDB numbering; UniProt residue 242)
+    node_type: RESIDUE
+    grounding: UniProtKB:P32178
+    description: 'M-CSA roles: transition state stabiliser.'
+  - node_id: glu246
+    label: catalytic Glu246 (M-CSA/PDB numbering; UniProt residue 246)
+    node_type: RESIDUE
+    grounding: UniProtKB:P32178
+    description: 'M-CSA roles: hydrogen bond donor, transition state stabiliser.'
+  - node_id: reactant0
+    label: chorismate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:29748
+  - node_id: product0
+    label: (1s,4s)-prephenate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:29934
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The substrate undergoes the pericyclic Claisen rearrangement.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: chorismate mutase (AroQ) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:81
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.10.590.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.10.590.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: chorismate mutase (AroQ) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.4.99.5
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/81/
+      snippet: Products
+      notes: M-CSA entry 81, mechanism 1; M-CSA cites PMID:11481470, PMID:11818529, PMID:11997452, PMID:12733937,
+        PMID:16060652, PMID:16499927, PMID:16752890, PMID:17146044, PMID:17506527, PMID:18727669, PMID:19556970,
+        PMID:23595942, PMID:7479847, PMID:8622937, PMID:9299331, PMID:9384560, PMID:9636050, PMID:9843375,
+        PMID:9843942; step 2
+  - subject: arg16
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg16 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/81/
+      snippet: hydrogen bond donor, transition state stabiliser
+      notes: M-CSA entry 81, mechanism 1; M-CSA cites PMID:11481470, PMID:11818529, PMID:11997452, PMID:12733937,
+        PMID:16060652, PMID:16499927, PMID:16752890, PMID:17146044, PMID:17506527, PMID:18727669, PMID:19556970,
+        PMID:23595942, PMID:7479847, PMID:8622937, PMID:9299331, PMID:9384560, PMID:9636050, PMID:9843375,
+        PMID:9843942; M-CSA catalytic-residue roles for Arg16
+  - subject: arg157
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg157 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/81/
+      snippet: hydrogen bond donor, transition state stabiliser
+      notes: M-CSA entry 81, mechanism 1; M-CSA cites PMID:11481470, PMID:11818529, PMID:11997452, PMID:12733937,
+        PMID:16060652, PMID:16499927, PMID:16752890, PMID:17146044, PMID:17506527, PMID:18727669, PMID:19556970,
+        PMID:23595942, PMID:7479847, PMID:8622937, PMID:9299331, PMID:9384560, PMID:9636050, PMID:9843375,
+        PMID:9843942; M-CSA catalytic-residue roles for Arg157
+  - subject: lys168
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys168 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/81/
+      snippet: hydrogen bond donor, transition state stabiliser
+      notes: M-CSA entry 81, mechanism 1; M-CSA cites PMID:11481470, PMID:11818529, PMID:11997452, PMID:12733937,
+        PMID:16060652, PMID:16499927, PMID:16752890, PMID:17146044, PMID:17506527, PMID:18727669, PMID:19556970,
+        PMID:23595942, PMID:7479847, PMID:8622937, PMID:9299331, PMID:9384560, PMID:9636050, PMID:9843375,
+        PMID:9843942; M-CSA catalytic-residue roles for Lys168
+  - subject: asn194
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn194 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/81/
+      snippet: transition state stabiliser
+      notes: M-CSA entry 81, mechanism 1; M-CSA cites PMID:11481470, PMID:11818529, PMID:11997452, PMID:12733937,
+        PMID:16060652, PMID:16499927, PMID:16752890, PMID:17146044, PMID:17506527, PMID:18727669, PMID:19556970,
+        PMID:23595942, PMID:7479847, PMID:8622937, PMID:9299331, PMID:9384560, PMID:9636050, PMID:9843375,
+        PMID:9843942; M-CSA catalytic-residue roles for Asn194
+  - subject: glu198
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu198 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/81/
+      snippet: hydrogen bond acceptor, transition state stabiliser
+      notes: M-CSA entry 81, mechanism 1; M-CSA cites PMID:11481470, PMID:11818529, PMID:11997452, PMID:12733937,
+        PMID:16060652, PMID:16499927, PMID:16752890, PMID:17146044, PMID:17506527, PMID:18727669, PMID:19556970,
+        PMID:23595942, PMID:7479847, PMID:8622937, PMID:9299331, PMID:9384560, PMID:9636050, PMID:9843375,
+        PMID:9843942; M-CSA catalytic-residue roles for Glu198
+  - subject: thr242
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr242 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/81/
+      snippet: transition state stabiliser
+      notes: M-CSA entry 81, mechanism 1; M-CSA cites PMID:11481470, PMID:11818529, PMID:11997452, PMID:12733937,
+        PMID:16060652, PMID:16499927, PMID:16752890, PMID:17146044, PMID:17506527, PMID:18727669, PMID:19556970,
+        PMID:23595942, PMID:7479847, PMID:8622937, PMID:9299331, PMID:9384560, PMID:9636050, PMID:9843375,
+        PMID:9843942; M-CSA catalytic-residue roles for Thr242
+  - subject: glu246
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu246 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/81/
+      snippet: hydrogen bond donor, transition state stabiliser
+      notes: M-CSA entry 81, mechanism 1; M-CSA cites PMID:11481470, PMID:11818529, PMID:11997452, PMID:12733937,
+        PMID:16060652, PMID:16499927, PMID:16752890, PMID:17146044, PMID:17506527, PMID:18727669, PMID:19556970,
+        PMID:23595942, PMID:7479847, PMID:8622937, PMID:9299331, PMID:9384560, PMID:9636050, PMID:9843375,
+        PMID:9843942; M-CSA catalytic-residue roles for Glu246
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/81/
+      snippet: Chorismate mutase uses an extensive array of hydrogen-bonding and electrostatic interactions
+        to bind the pseudodiaxial substrate conformer. Sterically constraining chorismate in a “near attack
+        conformation” (NAC), in which the reacting centres are confined to contact distances. Further,
+        ground state destabilisation through conformational compression has been shown to afford large
+        rate acceleration
+      notes: M-CSA entry 81, mechanism 1; M-CSA cites PMID:11481470, PMID:11818529, PMID:11997452, PMID:12733937,
+        PMID:16060652, PMID:16499927, PMID:16752890, PMID:17146044, PMID:17506527, PMID:18727669, PMID:19556970,
+        PMID:23595942, PMID:7479847, PMID:8622937, PMID:9299331, PMID:9384560, PMID:9636050, PMID:9843375,
+        PMID:9843942; CATH domain 1.10.590.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/81/
+      snippet: Chorismate mutase uses an extensive array of hydrogen-bonding and electrostatic interactions
+        to bind the pseudodiaxial substrate conformer. Sterically constraining chorismate in a “near attack
+        conformation” (NAC), in which the reacting centres are confined to contact distances. Further,
+        ground state destabilisation through conformational compression has been shown to afford large
+        rate acceleration
+      notes: M-CSA entry 81, mechanism 1; M-CSA cites PMID:11481470, PMID:11818529, PMID:11997452, PMID:12733937,
+        PMID:16060652, PMID:16499927, PMID:16752890, PMID:17146044, PMID:17506527, PMID:18727669, PMID:19556970,
+        PMID:23595942, PMID:7479847, PMID:8622937, PMID:9299331, PMID:9384560, PMID:9636050, PMID:9843375,
+        PMID:9843942; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/81/
+      snippet: Chorismate mutase uses an extensive array of hydrogen-bonding and electrostatic interactions
+        to bind the pseudodiaxial substrate conformer. Sterically constraining chorismate in a “near attack
+        conformation” (NAC), in which the reacting centres are confined to contact distances. Further,
+        ground state destabilisation through conformational compression has been shown to afford large
+        rate acceleration
+      notes: M-CSA entry 81, mechanism 1; M-CSA cites PMID:11481470, PMID:11818529, PMID:11997452, PMID:12733937,
+        PMID:16060652, PMID:16499927, PMID:16752890, PMID:17146044, PMID:17506527, PMID:18727669, PMID:19556970,
+        PMID:23595942, PMID:7479847, PMID:8622937, PMID:9299331, PMID:9384560, PMID:9636050, PMID:9843375,
+        PMID:9843942; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/81/
+      snippet: Chorismate mutase uses an extensive array of hydrogen-bonding and electrostatic interactions
+        to bind the pseudodiaxial substrate conformer. Sterically constraining chorismate in a “near attack
+        conformation” (NAC), in which the reacting centres are confined to contact distances. Further,
+        ground state destabilisation through conformational compression has been shown to afford large
+        rate acceleration
+      notes: M-CSA entry 81, mechanism 1; M-CSA cites PMID:11481470, PMID:11818529, PMID:11997452, PMID:12733937,
+        PMID:16060652, PMID:16499927, PMID:16752890, PMID:17146044, PMID:17506527, PMID:18727669, PMID:19556970,
+        PMID:23595942, PMID:7479847, PMID:8622937, PMID:9299331, PMID:9384560, PMID:9636050, PMID:9843375,
+        PMID:9843942; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (12 evidence-backed edges) transcribed from M-CSA entry 81;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.3.2.23
 - CHEBI:133479
@@ -848,4 +848,248 @@ definitions:
       Ubiquitination is mediated by three enzymes, E1 (PDB:3cmm), E2 (PDB:1ayz) and E3 (PDB:1c4z). The first, E1, is essential for ubiquitin activation and transferring the substrate onto the second cascade enzyme, E2, which responsible for mediating repeated ubiquitination at the eventual substrate, which is brought into proximity of E2 by the active site of E3, the enzyme which also regulates substrate specificity. This entry represents the second of the three reactions occurring in this cascade: ubiquitin:[E1 ubiquitin-activating enzyme] ligase (AMP-forming). The E2 ubiquitin-conjugating enzyme acquires the activated ubquitin from the E1 ubiquitin-activating enzyme (EC 6.2.1.45) and binds it via a transthioesterification reaction to itself. In the human enzyme the catalytic centre is located at Cys-87 where ubiquitin is bound via its C-terminal glycine in a thioester linkage.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of E2 ubiquitin-conjugating enzyme
+  description: Stepwise mechanism transcribed from M-CSA entry 939 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: cys600
+    label: catalytic Cys600 (M-CSA/PDB numbering; UniProt residue 600)
+    node_type: RESIDUE
+    grounding: UniProtKB:P22515
+    description: 'M-CSA roles: nucleofuge.'
+  - node_id: thr601
+    label: catalytic Thr601 (M-CSA/PDB numbering; UniProt residue 601)
+    node_type: RESIDUE
+    grounding: UniProtKB:P22515
+    description: 'M-CSA roles: modifies pKa.'
+  - node_id: arg603
+    label: catalytic Arg603 (M-CSA/PDB numbering; UniProt residue 603)
+    node_type: RESIDUE
+    grounding: UniProtKB:P22515
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asn781
+    label: catalytic Asn781 (M-CSA/PDB numbering; UniProt residue 781)
+    node_type: RESIDUE
+    grounding: UniProtKB:P22515
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp782
+    label: catalytic Asp782 (M-CSA/PDB numbering; UniProt residue 782)
+    node_type: RESIDUE
+    grounding: UniProtKB:P22515
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: S-(long-chain fatty acyl)-L-cysteine residue
+    node_type: CHEMICAL
+    grounding: CHEBI:133479
+  - node_id: reactant1
+    label: L-cysteine residue
+    node_type: CHEMICAL
+    grounding: CHEBI:29950
+  - node_id: product0
+    label: L-cysteine residue
+    node_type: CHEMICAL
+    grounding: CHEBI:29950
+  - node_id: product1
+    label: S-(long-chain fatty acyl)-L-cysteine residue
+    node_type: CHEMICAL
+    grounding: CHEBI:133479
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The ubiquitin accepting enzyme E2 attacks the high energy thioester bond at the active
+      site of E1, forming an oxyanion intermediate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The tetrahedral intermediate collapses, completing the transfer of ubiquitin from the
+      Cys600 residue of E1 to Cys88 of E2. The active site of E1 is regenerated.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: E2 ubiquitin-conjugating enzyme catalytic site
+    node_type: MOTIF
+    grounding: MCSA:939
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.10.10.2660 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.10.10.2660
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: E2 ubiquitin-conjugating enzyme activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.3.2.23
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/939/
+      snippet: The tetrahedral intermediate collapses, completing the transfer of ubiquitin from the Cys600
+        residue of E1 to Cys88 of E2. The active site of E1 is regenerated.
+      notes: M-CSA entry 939, mechanism 1; M-CSA cites PMID:16732283, PMID:19684601, PMID:19851334, PMID:19940261,
+        PMID:7800044; step 2
+  - subject: cys600
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Cys600 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/939/
+      snippet: The tetrahedral intermediate collapses, completing the transfer of ubiquitin from the Cys600
+        residue of E1 to Cys88 of E2. The active site of E1 is regenerated.
+      notes: M-CSA entry 939, mechanism 1; M-CSA cites PMID:16732283, PMID:19684601, PMID:19851334, PMID:19940261,
+        PMID:7800044; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/939/
+      snippet: Products
+      notes: M-CSA entry 939, mechanism 1; M-CSA cites PMID:16732283, PMID:19684601, PMID:19851334, PMID:19940261,
+        PMID:7800044; step 3
+  - subject: cys600
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys600 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/939/
+      snippet: nucleofuge
+      notes: M-CSA entry 939, mechanism 1; M-CSA cites PMID:16732283, PMID:19684601, PMID:19851334, PMID:19940261,
+        PMID:7800044; M-CSA catalytic-residue roles for Cys600
+  - subject: thr601
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr601 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/939/
+      snippet: modifies pKa
+      notes: M-CSA entry 939, mechanism 1; M-CSA cites PMID:16732283, PMID:19684601, PMID:19851334, PMID:19940261,
+        PMID:7800044; M-CSA catalytic-residue roles for Thr601
+  - subject: arg603
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg603 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/939/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 939, mechanism 1; M-CSA cites PMID:16732283, PMID:19684601, PMID:19851334, PMID:19940261,
+        PMID:7800044; M-CSA catalytic-residue roles for Arg603
+  - subject: asn781
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn781 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/939/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 939, mechanism 1; M-CSA cites PMID:16732283, PMID:19684601, PMID:19851334, PMID:19940261,
+        PMID:7800044; M-CSA catalytic-residue roles for Asn781
+  - subject: asp782
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp782 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/939/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 939, mechanism 1; M-CSA cites PMID:16732283, PMID:19684601, PMID:19851334, PMID:19940261,
+        PMID:7800044; M-CSA catalytic-residue roles for Asp782
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/939/
+      snippet: The ubiquitin accepting enzyme E2 attacks the high energy thioester bond at the active
+        site of E1, forming an oxyanion intermediate. The intermediate then collapses, forming the E2
+        product and regenerating the active form of E1. It is unclear how the E1 Cys returns to its protonation
+        state.
+      notes: M-CSA entry 939, mechanism 1; M-CSA cites PMID:16732283, PMID:19684601, PMID:19851334, PMID:19940261,
+        PMID:7800044; CATH domain 1.10.10.2660 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/939/
+      snippet: The ubiquitin accepting enzyme E2 attacks the high energy thioester bond at the active
+        site of E1, forming an oxyanion intermediate. The intermediate then collapses, forming the E2
+        product and regenerating the active form of E1. It is unclear how the E1 Cys returns to its protonation
+        state.
+      notes: M-CSA entry 939, mechanism 1; M-CSA cites PMID:16732283, PMID:19684601, PMID:19851334, PMID:19940261,
+        PMID:7800044; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/939/
+      snippet: The ubiquitin accepting enzyme E2 attacks the high energy thioester bond at the active
+        site of E1, forming an oxyanion intermediate. The intermediate then collapses, forming the E2
+        product and regenerating the active form of E1. It is unclear how the E1 Cys returns to its protonation
+        state.
+      notes: M-CSA entry 939, mechanism 1; M-CSA cites PMID:16732283, PMID:19684601, PMID:19851334, PMID:19940261,
+        PMID:7800044; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/939/
+      snippet: The ubiquitin accepting enzyme E2 attacks the high energy thioester bond at the active
+        site of E1, forming an oxyanion intermediate. The intermediate then collapses, forming the E2
+        product and regenerating the active form of E1. It is unclear how the E1 Cys returns to its protonation
+        state.
+      notes: M-CSA entry 939, mechanism 1; M-CSA cites PMID:16732283, PMID:19684601, PMID:19851334, PMID:19940261,
+        PMID:7800044; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/939/
+      snippet: The ubiquitin accepting enzyme E2 attacks the high energy thioester bond at the active
+        site of E1, forming an oxyanion intermediate. The intermediate then collapses, forming the E2
+        product and regenerating the active form of E1. It is unclear how the E1 Cys returns to its protonation
+        state.
+      notes: M-CSA entry 939, mechanism 1; M-CSA cites PMID:16732283, PMID:19684601, PMID:19851334, PMID:19940261,
+        PMID:7800044; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/939/
+      snippet: The ubiquitin accepting enzyme E2 attacks the high energy thioester bond at the active
+        site of E1, forming an oxyanion intermediate. The intermediate then collapses, forming the E2
+        product and regenerating the active form of E1. It is unclear how the E1 Cys returns to its protonation
+        state.
+      notes: M-CSA entry 939, mechanism 1; M-CSA cites PMID:16732283, PMID:19684601, PMID:19851334, PMID:19940261,
+        PMID:7800044; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (14 evidence-backed edges) transcribed from M-CSA entry 939;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

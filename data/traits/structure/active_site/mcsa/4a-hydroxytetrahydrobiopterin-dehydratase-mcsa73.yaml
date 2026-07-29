@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.2.1.96
 - CHEBI:15377
@@ -124,4 +124,311 @@ definitions:
       4a-Hydroxy-tetrahydrobiopterin dehydratase/DCoH is a bifunctional protein. In the cytoplasm it is an enzyme required for the regeneration of tetrahydrobiopterin, an essential cofactor for phenylalanine hydroxylase. In the nucleus it functions as a transcriptional coactivator by forming a 2:2 heterotetramer with the hepatic nuclear factor HNF1alpha (HNF1). The enzymatic catalytic form is a tetramer whereas the mode of binding to the nuclear factor is as a heterotetramer. The enzyme catalyses the dehydration of 4a-carbinolamine biopterin cofactor, a substrate used by the aromatic acid hydroxylases and NO synthase. Mutations of DcoHin humans have been associated with elevated levels of phenylalanine and the excretion of large amounts of 7-substituted pterins.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 4a-hydroxytetrahydrobiopterin dehydratase
+  description: Stepwise mechanism transcribed from M-CSA entry 73 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: glu58
+    label: catalytic Glu58 (M-CSA/PDB numbering; UniProt residue 58)
+    node_type: RESIDUE
+    grounding: UniProtKB:P61459
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, proton acceptor, proton
+      donor.'
+  - node_id: his62
+    label: catalytic His62 (M-CSA/PDB numbering; UniProt residue 62)
+    node_type: RESIDUE
+    grounding: UniProtKB:P61459
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: his63
+    label: catalytic His63 (M-CSA/PDB numbering; UniProt residue 63)
+    node_type: RESIDUE
+    grounding: UniProtKB:P61459
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor,
+      proton relay.'
+  - node_id: his80
+    label: catalytic His80 (M-CSA/PDB numbering; UniProt residue 80)
+    node_type: RESIDUE
+    grounding: UniProtKB:P61459
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu81
+    label: catalytic Glu81 (M-CSA/PDB numbering; UniProt residue 81)
+    node_type: RESIDUE
+    grounding: UniProtKB:P61459
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: asp89
+    label: catalytic Asp89 (M-CSA/PDB numbering; UniProt residue 89)
+    node_type: RESIDUE
+    grounding: UniProtKB:P61459
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: reactant0
+    label: 4a-hydroxy-L-erythro-5,6,7,8-tetrahydrobiopterin
+    node_type: CHEMICAL
+    grounding: CHEBI:15642
+  - node_id: product0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product1
+    label: (6R)-6-(L-erythro-1,2-dihydroxypropyl)-7,8-dihydro-6H-pterin
+    node_type: CHEMICAL
+    grounding: CHEBI:15643
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His63 deprotonates the substrate initiating a double bond rearrangement that forms an
+      oxyanion.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The substrate eliminates water, which obtains its proton from His62.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: His62 deprotonates the substrate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The oxyanion collapses, initiating double bond rearrangement that results in the deprotonation
+      of His63 and the formation of the final product.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: 4a-hydroxytetrahydrobiopterin dehydratase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:73
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.1360.20 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.1360.20
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: 4a-hydroxytetrahydrobiopterin dehydratase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.2.1.96
+  edges:
+  - subject: his63
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His63 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/73/
+      snippet: His63 deprotonates the substrate initiating a double bond rearrangement that forms an oxyanion.
+      notes: M-CSA entry 73, mechanism 1; M-CSA cites PMID:16423549, PMID:18215430, PMID:18644344, PMID:8897596,
+        PMID:9698371, PMID:9894810; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/73/
+      snippet: The substrate eliminates water, which obtains its proton from His62.
+      notes: M-CSA entry 73, mechanism 1; M-CSA cites PMID:16423549, PMID:18215430, PMID:18644344, PMID:8897596,
+        PMID:9698371, PMID:9894810; step 2
+  - subject: his62
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His62 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/73/
+      snippet: The substrate eliminates water, which obtains its proton from His62.
+      notes: M-CSA entry 73, mechanism 1; M-CSA cites PMID:16423549, PMID:18215430, PMID:18644344, PMID:8897596,
+        PMID:9698371, PMID:9894810; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/73/
+      snippet: His62 deprotonates the substrate.
+      notes: M-CSA entry 73, mechanism 1; M-CSA cites PMID:16423549, PMID:18215430, PMID:18644344, PMID:8897596,
+        PMID:9698371, PMID:9894810; step 3
+  - subject: his62
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His62 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/73/
+      snippet: His62 deprotonates the substrate.
+      notes: M-CSA entry 73, mechanism 1; M-CSA cites PMID:16423549, PMID:18215430, PMID:18644344, PMID:8897596,
+        PMID:9698371, PMID:9894810; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/73/
+      snippet: The oxyanion collapses, initiating double bond rearrangement that results in the deprotonation
+        of His63 and the formation of the final product.
+      notes: M-CSA entry 73, mechanism 1; M-CSA cites PMID:16423549, PMID:18215430, PMID:18644344, PMID:8897596,
+        PMID:9698371, PMID:9894810; step 4
+  - subject: his63
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: His63 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/73/
+      snippet: The oxyanion collapses, initiating double bond rearrangement that results in the deprotonation
+        of His63 and the formation of the final product.
+      notes: M-CSA entry 73, mechanism 1; M-CSA cites PMID:16423549, PMID:18215430, PMID:18644344, PMID:8897596,
+        PMID:9698371, PMID:9894810; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/73/
+      snippet: Products
+      notes: M-CSA entry 73, mechanism 1; M-CSA cites PMID:16423549, PMID:18215430, PMID:18644344, PMID:8897596,
+        PMID:9698371, PMID:9894810; step 5
+  - subject: glu58
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu58 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/73/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, proton acceptor, proton donor
+      notes: M-CSA entry 73, mechanism 1; M-CSA cites PMID:16423549, PMID:18215430, PMID:18644344, PMID:8897596,
+        PMID:9698371, PMID:9894810; M-CSA catalytic-residue roles for Glu58
+  - subject: his62
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His62 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/73/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 73, mechanism 1; M-CSA cites PMID:16423549, PMID:18215430, PMID:18644344, PMID:8897596,
+        PMID:9698371, PMID:9894810; M-CSA catalytic-residue roles for His62
+  - subject: his63
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His63 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/73/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 73, mechanism 1; M-CSA cites PMID:16423549, PMID:18215430, PMID:18644344, PMID:8897596,
+        PMID:9698371, PMID:9894810; M-CSA catalytic-residue roles for His63
+  - subject: his80
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His80 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/73/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 73, mechanism 1; M-CSA cites PMID:16423549, PMID:18215430, PMID:18644344, PMID:8897596,
+        PMID:9698371, PMID:9894810; M-CSA catalytic-residue roles for His80
+  - subject: glu81
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu81 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/73/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 73, mechanism 1; M-CSA cites PMID:16423549, PMID:18215430, PMID:18644344, PMID:8897596,
+        PMID:9698371, PMID:9894810; M-CSA catalytic-residue roles for Glu81
+  - subject: asp89
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp89 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/73/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 73, mechanism 1; M-CSA cites PMID:16423549, PMID:18215430, PMID:18644344, PMID:8897596,
+        PMID:9698371, PMID:9894810; M-CSA catalytic-residue roles for Asp89
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/73/
+      snippet: His63, activated by Glu58 abstracts the N(8) proton. The anion resides on the C-OH group
+        in an enolate intermediate. The elimination of water from C4a is stereospecific, with His62 and
+        His80 acting as general acids towards the 4a(R) hydroxyl and 4a(S) hydroxyl respectively. The
+        residues then abstract a proton from N(5), relieving the atoms positive charge. This leads to
+        the collapse of the anionic
+      notes: M-CSA entry 73, mechanism 1; M-CSA cites PMID:16423549, PMID:18215430, PMID:18644344, PMID:8897596,
+        PMID:9698371, PMID:9894810; CATH domain 3.30.1360.20 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/73/
+      snippet: His63, activated by Glu58 abstracts the N(8) proton. The anion resides on the C-OH group
+        in an enolate intermediate. The elimination of water from C4a is stereospecific, with His62 and
+        His80 acting as general acids towards the 4a(R) hydroxyl and 4a(S) hydroxyl respectively. The
+        residues then abstract a proton from N(5), relieving the atoms positive charge. This leads to
+        the collapse of the anionic
+      notes: M-CSA entry 73, mechanism 1; M-CSA cites PMID:16423549, PMID:18215430, PMID:18644344, PMID:8897596,
+        PMID:9698371, PMID:9894810; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/73/
+      snippet: His63, activated by Glu58 abstracts the N(8) proton. The anion resides on the C-OH group
+        in an enolate intermediate. The elimination of water from C4a is stereospecific, with His62 and
+        His80 acting as general acids towards the 4a(R) hydroxyl and 4a(S) hydroxyl respectively. The
+        residues then abstract a proton from N(5), relieving the atoms positive charge. This leads to
+        the collapse of the anionic
+      notes: M-CSA entry 73, mechanism 1; M-CSA cites PMID:16423549, PMID:18215430, PMID:18644344, PMID:8897596,
+        PMID:9698371, PMID:9894810; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/73/
+      snippet: His63, activated by Glu58 abstracts the N(8) proton. The anion resides on the C-OH group
+        in an enolate intermediate. The elimination of water from C4a is stereospecific, with His62 and
+        His80 acting as general acids towards the 4a(R) hydroxyl and 4a(S) hydroxyl respectively. The
+        residues then abstract a proton from N(5), relieving the atoms positive charge. This leads to
+        the collapse of the anionic
+      notes: M-CSA entry 73, mechanism 1; M-CSA cites PMID:16423549, PMID:18215430, PMID:18644344, PMID:8897596,
+        PMID:9698371, PMID:9894810; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/73/
+      snippet: His63, activated by Glu58 abstracts the N(8) proton. The anion resides on the C-OH group
+        in an enolate intermediate. The elimination of water from C4a is stereospecific, with His62 and
+        His80 acting as general acids towards the 4a(R) hydroxyl and 4a(S) hydroxyl respectively. The
+        residues then abstract a proton from N(5), relieving the atoms positive charge. This leads to
+        the collapse of the anionic
+      notes: M-CSA entry 73, mechanism 1; M-CSA cites PMID:16423549, PMID:18215430, PMID:18644344, PMID:8897596,
+        PMID:9698371, PMID:9894810; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (19 evidence-backed edges) transcribed from M-CSA entry 73;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.4.1.38
 - CHEBI:61631
@@ -262,4 +262,325 @@ definitions:
       Beta-1,4-galactosyltransferase-1 (Gal-T1) is a Golgi resident type II protein that catalyses the transfer of galactose from UDP-Gal to N-acetylglucosamine in the presence of Mg2+, forming the product N-acetyl-lactosamine. The 1-4- galactosyltransferase (Gal-T) family, consists of at least seven members, including Gal-T1, with a 25 to 55% sequence homology. These enzymes are expressed in different tissues and show differences in the oligosaccharide acceptor specificity.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of β-N-acetylglucosaminylglycopeptide β-1,4-galactosyltransferase
+  description: Stepwise mechanism transcribed from M-CSA entry 570 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: asp252
+    label: catalytic Asp252 (M-CSA/PDB numbering; UniProt residue 252)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08037
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor.'
+  - node_id: asp254
+    label: catalytic Asp254 (M-CSA/PDB numbering; UniProt residue 254)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08037
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: trp314
+    label: catalytic Trp314 (M-CSA/PDB numbering; UniProt residue 314)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08037
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: glu317
+    label: catalytic Glu317 (M-CSA/PDB numbering; UniProt residue 317)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08037
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: asp318
+    label: catalytic Asp318 (M-CSA/PDB numbering; UniProt residue 318)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08037
+    description: 'M-CSA roles: activator, electrostatic stabiliser, proton acceptor, proton donor.'
+  - node_id: met344
+    label: catalytic Met344 (M-CSA/PDB numbering; UniProt residue 344)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08037
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his347
+    label: catalytic His347 (M-CSA/PDB numbering; UniProt residue 347)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08037
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: arg349
+    label: catalytic Arg349 (M-CSA/PDB numbering; UniProt residue 349)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08037
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: reactant0
+    label: N-acetyl-beta-D-glucosaminide
+    node_type: CHEMICAL
+    grounding: CHEBI:61631
+  - node_id: reactant1
+    label: UDP-alpha-D-galactose(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:66914
+  - node_id: product0
+    label: beta-D-galactosyl-(1->4)-N-acetyl-beta-D-glucosaminide
+    node_type: CHEMICAL
+    grounding: CHEBI:133507
+  - node_id: product1
+    label: UDP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58223
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp318 acts as a general base and abstracts a proton from the O4 hydroxyl, resulting
+      in an increase in its nucleophilicity to attack C1 on UDP-galactose.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Asp318 is deprotonated by a water molecule to regenerate active site.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: β-N-acetylglucosaminylglycopeptide β-1,4-galactosyltransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:570
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.550.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.550.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: β-N-acetylglucosaminylglycopeptide β-1,4-galactosyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.4.1.38
+  edges:
+  - subject: asp318
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp318 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/570/
+      snippet: Asp318 acts as a general base and abstracts a proton from the O4 hydroxyl, resulting in
+        an increase in its nucleophilicity to attack C1 on UDP-galactose.
+      notes: M-CSA entry 570, mechanism 1; M-CSA cites PMID:15465321, PMID:16497331, PMID:19627105; step
+        1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/570/
+      snippet: Asp318 is deprotonated by a water molecule to regenerate active site.
+      notes: M-CSA entry 570, mechanism 1; M-CSA cites PMID:15465321, PMID:16497331, PMID:19627105; step
+        2
+  - subject: asp318
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Asp318 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/570/
+      snippet: Asp318 is deprotonated by a water molecule to regenerate active site.
+      notes: M-CSA entry 570, mechanism 1; M-CSA cites PMID:15465321, PMID:16497331, PMID:19627105; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/570/
+      snippet: Products.
+      notes: M-CSA entry 570, mechanism 1; M-CSA cites PMID:15465321, PMID:16497331, PMID:19627105; step
+        3
+  - subject: asp252
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp252 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/570/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor
+      notes: M-CSA entry 570, mechanism 1; M-CSA cites PMID:15465321, PMID:16497331, PMID:19627105; M-CSA
+        catalytic-residue roles for Asp252
+  - subject: asp254
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp254 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/570/
+      snippet: metal ligand
+      notes: M-CSA entry 570, mechanism 1; M-CSA cites PMID:15465321, PMID:16497331, PMID:19627105; M-CSA
+        catalytic-residue roles for Asp254
+  - subject: trp314
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp314 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/570/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 570, mechanism 1; M-CSA cites PMID:15465321, PMID:16497331, PMID:19627105; M-CSA
+        catalytic-residue roles for Trp314
+  - subject: glu317
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu317 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/570/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 570, mechanism 1; M-CSA cites PMID:15465321, PMID:16497331, PMID:19627105; M-CSA
+        catalytic-residue roles for Glu317
+  - subject: asp318
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp318 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/570/
+      snippet: activator, electrostatic stabiliser, proton acceptor, proton donor
+      notes: M-CSA entry 570, mechanism 1; M-CSA cites PMID:15465321, PMID:16497331, PMID:19627105; M-CSA
+        catalytic-residue roles for Asp318
+  - subject: met344
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Met344 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/570/
+      snippet: metal ligand
+      notes: M-CSA entry 570, mechanism 1; M-CSA cites PMID:15465321, PMID:16497331, PMID:19627105; M-CSA
+        catalytic-residue roles for Met344
+  - subject: his347
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His347 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/570/
+      snippet: metal ligand
+      notes: M-CSA entry 570, mechanism 1; M-CSA cites PMID:15465321, PMID:16497331, PMID:19627105; M-CSA
+        catalytic-residue roles for His347
+  - subject: arg349
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg349 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/570/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 570, mechanism 1; M-CSA cites PMID:15465321, PMID:16497331, PMID:19627105; M-CSA
+        catalytic-residue roles for Arg349
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/570/
+      snippet: The reaction proceeds in an SN2 type mechanism via the formation of an oxocarbenium ion-like
+        transition state. As the acceptor glucose molecule binds to the enzyme-Mn(II)-UDP-Gal-N-acetylglucosamine
+        complex, the O4 atoms of the glucose forms a strong hydrogen bond with the side chain carboxylate
+        group of Asp318. Due to the presence of the negatively charged carboxylate group, the O4 hydroxyl
+        hydro
+      notes: M-CSA entry 570, mechanism 1; M-CSA cites PMID:15465321, PMID:16497331, PMID:19627105; CATH
+        domain 3.90.550.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/570/
+      snippet: The reaction proceeds in an SN2 type mechanism via the formation of an oxocarbenium ion-like
+        transition state. As the acceptor glucose molecule binds to the enzyme-Mn(II)-UDP-Gal-N-acetylglucosamine
+        complex, the O4 atoms of the glucose forms a strong hydrogen bond with the side chain carboxylate
+        group of Asp318. Due to the presence of the negatively charged carboxylate group, the O4 hydroxyl
+        hydro
+      notes: M-CSA entry 570, mechanism 1; M-CSA cites PMID:15465321, PMID:16497331, PMID:19627105; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/570/
+      snippet: The reaction proceeds in an SN2 type mechanism via the formation of an oxocarbenium ion-like
+        transition state. As the acceptor glucose molecule binds to the enzyme-Mn(II)-UDP-Gal-N-acetylglucosamine
+        complex, the O4 atoms of the glucose forms a strong hydrogen bond with the side chain carboxylate
+        group of Asp318. Due to the presence of the negatively charged carboxylate group, the O4 hydroxyl
+        hydro
+      notes: M-CSA entry 570, mechanism 1; M-CSA cites PMID:15465321, PMID:16497331, PMID:19627105; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/570/
+      snippet: The reaction proceeds in an SN2 type mechanism via the formation of an oxocarbenium ion-like
+        transition state. As the acceptor glucose molecule binds to the enzyme-Mn(II)-UDP-Gal-N-acetylglucosamine
+        complex, the O4 atoms of the glucose forms a strong hydrogen bond with the side chain carboxylate
+        group of Asp318. Due to the presence of the negatively charged carboxylate group, the O4 hydroxyl
+        hydro
+      notes: M-CSA entry 570, mechanism 1; M-CSA cites PMID:15465321, PMID:16497331, PMID:19627105; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/570/
+      snippet: The reaction proceeds in an SN2 type mechanism via the formation of an oxocarbenium ion-like
+        transition state. As the acceptor glucose molecule binds to the enzyme-Mn(II)-UDP-Gal-N-acetylglucosamine
+        complex, the O4 atoms of the glucose forms a strong hydrogen bond with the side chain carboxylate
+        group of Asp318. Due to the presence of the negatively charged carboxylate group, the O4 hydroxyl
+        hydro
+      notes: M-CSA entry 570, mechanism 1; M-CSA cites PMID:15465321, PMID:16497331, PMID:19627105; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/570/
+      snippet: The reaction proceeds in an SN2 type mechanism via the formation of an oxocarbenium ion-like
+        transition state. As the acceptor glucose molecule binds to the enzyme-Mn(II)-UDP-Gal-N-acetylglucosamine
+        complex, the O4 atoms of the glucose forms a strong hydrogen bond with the side chain carboxylate
+        group of Asp318. Due to the presence of the negatively charged carboxylate group, the O4 hydroxyl
+        hydro
+      notes: M-CSA entry 570, mechanism 1; M-CSA cites PMID:15465321, PMID:16497331, PMID:19627105; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/570/
+      snippet: The reaction proceeds in an SN2 type mechanism via the formation of an oxocarbenium ion-like
+        transition state. As the acceptor glucose molecule binds to the enzyme-Mn(II)-UDP-Gal-N-acetylglucosamine
+        complex, the O4 atoms of the glucose forms a strong hydrogen bond with the side chain carboxylate
+        group of Asp318. Due to the presence of the negatively charged carboxylate group, the O4 hydroxyl
+        hydro
+      notes: M-CSA entry 570, mechanism 1; M-CSA cites PMID:15465321, PMID:16497331, PMID:19627105; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (19 evidence-backed edges) transcribed from M-CSA entry 570;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

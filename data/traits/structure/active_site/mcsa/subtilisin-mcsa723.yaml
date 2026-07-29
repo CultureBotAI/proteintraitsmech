@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.21.62
 - CHEBI:90799
@@ -318,4 +318,245 @@ definitions:
       Subtilisin is an extracellular enzyme secreted by Bacillus amyloliquefaciens and belongs to the alpha/beta subtilase family. It is a serine-class endoprotease, hydrolysing peptide bonds with broad specificity and a preference for a large uncharged residue in the P1 binding site.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of subtilisin
+  description: Stepwise mechanism transcribed from M-CSA entry 723 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: asp32
+    label: catalytic Asp32 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00782
+    description: 'M-CSA roles: electrostatic interaction, electrostatic stabiliser.'
+  - node_id: his64
+    label: catalytic His64 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00782
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: asn155
+    label: catalytic Asn155 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00782
+    description: 'M-CSA roles: electrostatic interaction, electrostatic stabiliser.'
+  - node_id: ser221
+    label: catalytic Ser221 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00782
+    description: 'M-CSA roles: electrostatic interaction, electrostatic stabiliser.'
+  - node_id: reactant0
+    label: dipeptide zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:90799
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: L-alpha-amino acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:59869
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His171 deprotonates Ser328 activating it to attack the carbon of the peptide bond in
+      a nucleophilic addition.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The tetrahedral transition state collapses, forming an acyl-enzyme and His171 acts as
+      a general acid, protonating the amide leaving group
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: His171 abstracts a proton from a water which in turn activates it to attack the carbon
+      of the ester bond in a nucleophilic addition to produce another transition state tetrahedral intermediate
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The tetrahedral transition state collapses, forming the acid component of the substrate
+      and Ser328. His171 acts as a general acid, protonating the leaving group Ser328 which returns the
+      enzyme to its native state.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Product
+  - node_id: active_site
+    label: subtilisin catalytic site
+    node_type: MOTIF
+    grounding: MCSA:723
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.200 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.200
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: subtilisin activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.21.62
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/723/
+      snippet: The tetrahedral transition state collapses, forming an acyl-enzyme and His171 acts as a
+        general acid, protonating the amide leaving group
+      notes: M-CSA entry 723, mechanism 1; M-CSA cites PMID:1920411, PMID:2199971, PMID:3520553, PMID:5764436;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/723/
+      snippet: His171 abstracts a proton from a water which in turn activates it to attack the carbon
+        of the ester bond in a nucleophilic addition to produce another transition state tetrahedral intermediate
+      notes: M-CSA entry 723, mechanism 1; M-CSA cites PMID:1920411, PMID:2199971, PMID:3520553, PMID:5764436;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/723/
+      snippet: The tetrahedral transition state collapses, forming the acid component of the substrate
+        and Ser328. His171 acts as a general acid, protonating the leaving group Ser328 which returns
+        the enzyme to its native state.
+      notes: M-CSA entry 723, mechanism 1; M-CSA cites PMID:1920411, PMID:2199971, PMID:3520553, PMID:5764436;
+        step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/723/
+      snippet: Product
+      notes: M-CSA entry 723, mechanism 1; M-CSA cites PMID:1920411, PMID:2199971, PMID:3520553, PMID:5764436;
+        step 5
+  - subject: asp32
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp32 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/723/
+      snippet: electrostatic interaction, electrostatic stabiliser
+      notes: M-CSA entry 723, mechanism 1; M-CSA cites PMID:1920411, PMID:2199971, PMID:3520553, PMID:5764436;
+        M-CSA catalytic-residue roles for Asp32
+  - subject: his64
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His64 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/723/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 723, mechanism 1; M-CSA cites PMID:1920411, PMID:2199971, PMID:3520553, PMID:5764436;
+        M-CSA catalytic-residue roles for His64
+  - subject: asn155
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn155 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/723/
+      snippet: electrostatic interaction, electrostatic stabiliser
+      notes: M-CSA entry 723, mechanism 1; M-CSA cites PMID:1920411, PMID:2199971, PMID:3520553, PMID:5764436;
+        M-CSA catalytic-residue roles for Asn155
+  - subject: ser221
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser221 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/723/
+      snippet: electrostatic interaction, electrostatic stabiliser
+      notes: M-CSA entry 723, mechanism 1; M-CSA cites PMID:1920411, PMID:2199971, PMID:3520553, PMID:5764436;
+        M-CSA catalytic-residue roles for Ser221
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/723/
+      snippet: His 171 acts as a general base, deprotonating Ser 328. Ser 328 performs nucleophilic attack
+        on the carbonyl carbon of the amide bond.  This results in a tetrahedral transition state, which
+        is stabilised through Coulombic interactions with protonated His 171, hydrogen bonding with the
+        backbone amide of Ser 328 and the amide side-chain of Asn 262. The transition state is also stabilised
+        by hydrogen
+      notes: M-CSA entry 723, mechanism 1; M-CSA cites PMID:1920411, PMID:2199971, PMID:3520553, PMID:5764436;
+        CATH domain 3.40.50.200 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/723/
+      snippet: His 171 acts as a general base, deprotonating Ser 328. Ser 328 performs nucleophilic attack
+        on the carbonyl carbon of the amide bond.  This results in a tetrahedral transition state, which
+        is stabilised through Coulombic interactions with protonated His 171, hydrogen bonding with the
+        backbone amide of Ser 328 and the amide side-chain of Asn 262. The transition state is also stabilised
+        by hydrogen
+      notes: M-CSA entry 723, mechanism 1; M-CSA cites PMID:1920411, PMID:2199971, PMID:3520553, PMID:5764436;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/723/
+      snippet: His 171 acts as a general base, deprotonating Ser 328. Ser 328 performs nucleophilic attack
+        on the carbonyl carbon of the amide bond.  This results in a tetrahedral transition state, which
+        is stabilised through Coulombic interactions with protonated His 171, hydrogen bonding with the
+        backbone amide of Ser 328 and the amide side-chain of Asn 262. The transition state is also stabilised
+        by hydrogen
+      notes: M-CSA entry 723, mechanism 1; M-CSA cites PMID:1920411, PMID:2199971, PMID:3520553, PMID:5764436;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/723/
+      snippet: His 171 acts as a general base, deprotonating Ser 328. Ser 328 performs nucleophilic attack
+        on the carbonyl carbon of the amide bond.  This results in a tetrahedral transition state, which
+        is stabilised through Coulombic interactions with protonated His 171, hydrogen bonding with the
+        backbone amide of Ser 328 and the amide side-chain of Asn 262. The transition state is also stabilised
+        by hydrogen
+      notes: M-CSA entry 723, mechanism 1; M-CSA cites PMID:1920411, PMID:2199971, PMID:3520553, PMID:5764436;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/723/
+      snippet: His 171 acts as a general base, deprotonating Ser 328. Ser 328 performs nucleophilic attack
+        on the carbonyl carbon of the amide bond.  This results in a tetrahedral transition state, which
+        is stabilised through Coulombic interactions with protonated His 171, hydrogen bonding with the
+        backbone amide of Ser 328 and the amide side-chain of Asn 262. The transition state is also stabilised
+        by hydrogen
+      notes: M-CSA entry 723, mechanism 1; M-CSA cites PMID:1920411, PMID:2199971, PMID:3520553, PMID:5764436;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 723;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

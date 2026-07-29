@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.7.1.3
 - CHEBI:15377
@@ -305,4 +305,513 @@ definitions:
       Kynureninase is a pyridoxal-5'-phosphate (PLP)-dependent enzyme sourced from Pseudomonas fluorescens that catalyses the hydrolytic cleavage of L-kynurenine to anthranilic acid and L-alanine. This reaction is a key step in the catabolism of L-tryptophan. In fungi and vertebrates, kynurenine is first hydroxylated to 3-hydroxykynurenine - the preferred substrate of kynureninase in those organisms, resulting in 3-hydroxyanthranilate and L-alanine. Kynureninase also plays a role in the biosynthesis of NAD-(P)+. The product of kynureninase is subsequently converted by 3-hydroxyanthranilate-3,4-dioxygenase to quinolinic acid - a precursor of NAD-(P)+. Quinolinic acid is a neurotoxin due to it's agonist effects on N-methyl-D-aspartate receptor. Excessive levels of quinolinic acid have been implicated in a wide range of neurological disorders such as epilepsy, stroke and AIDS related dementia. Therefore, inhibitors of kynureninase are of interest as potential drugs for the treatment of these CNS disorders.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of kynureninase
+  description: Stepwise mechanism transcribed from M-CSA entry 742 (11 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: phe129
+    label: catalytic Phe129 (M-CSA/PDB numbering; UniProt residue 129)
+    node_type: RESIDUE
+    grounding: UniProtKB:P83788
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp201
+    label: catalytic Asp201 (M-CSA/PDB numbering; UniProt residue 201)
+    node_type: RESIDUE
+    grounding: UniProtKB:P83788
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: tyr226
+    label: catalytic Tyr226 (M-CSA/PDB numbering; UniProt residue 226)
+    node_type: RESIDUE
+    grounding: UniProtKB:P83788
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor,
+      proton relay.'
+  - node_id: lys227
+    label: catalytic Lys227 (M-CSA/PDB numbering; UniProt residue 227)
+    node_type: RESIDUE
+    grounding: UniProtKB:P83788
+    description: 'M-CSA roles: electron pair acceptor, nucleofuge, nucleophile, proton acceptor, proton
+      donor.'
+  - node_id: arg375
+    label: catalytic Arg375 (M-CSA/PDB numbering; UniProt residue 375)
+    node_type: RESIDUE
+    grounding: UniProtKB:P83788
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: L-kynurenine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57959
+  - node_id: product0
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product1
+    label: L-alanine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57972
+  - node_id: product2
+    label: anthranilate
+    node_type: CHEMICAL
+    grounding: CHEBI:16567
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The phosphate of PLP accepts a proton from Tyr226 which then accepts a proton from the
+      amine group of L-kynurenine which then nucleophilically attacks the carbon of the C-N bond between
+      PLP and Lys227 and as a result releases Lys227.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The secondary amine that results from the initial attack initiates an elimination of
+      the covalently bound lysine, resulting in free PLP and lysine in a neutral state.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Lys227 deprotonates the CH adjacent to the bound amine, resulting in double bond rearrangement
+      as the PLP acts as an electron sink.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The PLP feeds the electrons back, resulting in the C=C attached to the aromatic ring
+      deprotonating Lys227
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Lys227 then abstracts a proton from water so that it can nucleophilically attack the
+      carbon of the carbonyl in the Kyurenine ketimine intermediate. The oxygen of the carbonyl accepts
+      a proton from Tyr226 which produces the gemdiol intermediate. Tyr266 then accepts a proton from
+      the phosphate group.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Tyr226 is deprotonated by the phosphate group of PLP so that in turn it can then deprotonate
+      the hydroxyl group of the gemdiol intermediate which results in the cleavage of anthranilate from
+      the enamine intermediate.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: The enamine accepts a proton on its beta carbon.
+  - node_id: step8
+    label: mechanism step 8
+    node_type: STATE
+    description: Lys227 deprotonates the CH adjacent to the amine, resulting in double bond rearrangement
+      as PLP acts as an electron sink.
+  - node_id: step9
+    label: mechanism step 9
+    node_type: STATE
+    description: The PLP feeds the electrons back, resulting in the N=C bond deprotonating Lys227.
+  - node_id: step10
+    label: mechanism step 10
+    node_type: STATE
+    description: Lys227 nucleophilically attacks the carbon of the C=N bond which results in the cleavage
+      of L-alanine from PLP and its substitution for Lys227 and the proton on the phosphate group is lost
+      to the environment which returns the active site back to its native state.
+  - node_id: step11
+    label: mechanism step 11
+    node_type: STATE
+    description: Product
+  - node_id: active_site
+    label: kynureninase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:742
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.640.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.640.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: kynureninase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.7.1.3
+  edges:
+  - subject: tyr226
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr226 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/742/
+      snippet: The phosphate of PLP accepts a proton from Tyr226 which then accepts a proton from the
+        amine group of L-kynurenine which then nucleophilically attacks the carbon of the C-N bond between
+        PLP and Lys227 and as a result releases Lys227.
+      notes: M-CSA entry 742, mechanism 1; M-CSA cites PMID:14756555, PMID:24200862, PMID:24304904; step
+        1
+  - subject: lys227
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys227 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/742/
+      snippet: The phosphate of PLP accepts a proton from Tyr226 which then accepts a proton from the
+        amine group of L-kynurenine which then nucleophilically attacks the carbon of the C-N bond between
+        PLP and Lys227 and as a result releases Lys227.
+      notes: M-CSA entry 742, mechanism 1; M-CSA cites PMID:14756555, PMID:24200862, PMID:24304904; step
+        1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/742/
+      snippet: The secondary amine that results from the initial attack initiates an elimination of the
+        covalently bound lysine, resulting in free PLP and lysine in a neutral state.
+      notes: M-CSA entry 742, mechanism 1; M-CSA cites PMID:14756555, PMID:24200862, PMID:24304904; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/742/
+      snippet: Lys227 deprotonates the CH adjacent to the bound amine, resulting in double bond rearrangement
+        as the PLP acts as an electron sink.
+      notes: M-CSA entry 742, mechanism 1; M-CSA cites PMID:14756555, PMID:24200862, PMID:24304904; step
+        3
+  - subject: lys227
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Lys227 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/742/
+      snippet: Lys227 deprotonates the CH adjacent to the bound amine, resulting in double bond rearrangement
+        as the PLP acts as an electron sink.
+      notes: M-CSA entry 742, mechanism 1; M-CSA cites PMID:14756555, PMID:24200862, PMID:24304904; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/742/
+      snippet: The PLP feeds the electrons back, resulting in the C=C attached to the aromatic ring deprotonating
+        Lys227
+      notes: M-CSA entry 742, mechanism 1; M-CSA cites PMID:14756555, PMID:24200862, PMID:24304904; step
+        4
+  - subject: lys227
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Lys227 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/742/
+      snippet: The PLP feeds the electrons back, resulting in the C=C attached to the aromatic ring deprotonating
+        Lys227
+      notes: M-CSA entry 742, mechanism 1; M-CSA cites PMID:14756555, PMID:24200862, PMID:24304904; step
+        4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/742/
+      snippet: Lys227 then abstracts a proton from water so that it can nucleophilically attack the carbon
+        of the carbonyl in the Kyurenine ketimine intermediate. The oxygen of the carbonyl accepts a proton
+        from Tyr226 which produces the gemdiol intermediate. Tyr266 then accepts a proton from the phosphate
+        group.
+      notes: M-CSA entry 742, mechanism 1; M-CSA cites PMID:14756555, PMID:24200862, PMID:24304904; step
+        5
+  - subject: tyr226
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Tyr226 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/742/
+      snippet: Lys227 then abstracts a proton from water so that it can nucleophilically attack the carbon
+        of the carbonyl in the Kyurenine ketimine intermediate. The oxygen of the carbonyl accepts a proton
+        from Tyr226 which produces the gemdiol intermediate. Tyr266 then accepts a proton from the phosphate
+        group.
+      notes: M-CSA entry 742, mechanism 1; M-CSA cites PMID:14756555, PMID:24200862, PMID:24304904; step
+        5
+  - subject: lys227
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Lys227 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/742/
+      snippet: Lys227 then abstracts a proton from water so that it can nucleophilically attack the carbon
+        of the carbonyl in the Kyurenine ketimine intermediate. The oxygen of the carbonyl accepts a proton
+        from Tyr226 which produces the gemdiol intermediate. Tyr266 then accepts a proton from the phosphate
+        group.
+      notes: M-CSA entry 742, mechanism 1; M-CSA cites PMID:14756555, PMID:24200862, PMID:24304904; step
+        5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/742/
+      snippet: Tyr226 is deprotonated by the phosphate group of PLP so that in turn it can then deprotonate
+        the hydroxyl group of the gemdiol intermediate which results in the cleavage of anthranilate from
+        the enamine intermediate.
+      notes: M-CSA entry 742, mechanism 1; M-CSA cites PMID:14756555, PMID:24200862, PMID:24304904; step
+        6
+  - subject: tyr226
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: Tyr226 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/742/
+      snippet: Tyr226 is deprotonated by the phosphate group of PLP so that in turn it can then deprotonate
+        the hydroxyl group of the gemdiol intermediate which results in the cleavage of anthranilate from
+        the enamine intermediate.
+      notes: M-CSA entry 742, mechanism 1; M-CSA cites PMID:14756555, PMID:24200862, PMID:24304904; step
+        6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/742/
+      snippet: The enamine accepts a proton on its beta carbon.
+      notes: M-CSA entry 742, mechanism 1; M-CSA cites PMID:14756555, PMID:24200862, PMID:24304904; step
+        7
+  - subject: step7
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step8
+    description: Step 7 leads to step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/742/
+      snippet: Lys227 deprotonates the CH adjacent to the amine, resulting in double bond rearrangement
+        as PLP acts as an electron sink.
+      notes: M-CSA entry 742, mechanism 1; M-CSA cites PMID:14756555, PMID:24200862, PMID:24304904; step
+        8
+  - subject: lys227
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step8
+    description: Lys227 acts in step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/742/
+      snippet: Lys227 deprotonates the CH adjacent to the amine, resulting in double bond rearrangement
+        as PLP acts as an electron sink.
+      notes: M-CSA entry 742, mechanism 1; M-CSA cites PMID:14756555, PMID:24200862, PMID:24304904; step
+        8
+  - subject: step8
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step9
+    description: Step 8 leads to step 9.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/742/
+      snippet: The PLP feeds the electrons back, resulting in the N=C bond deprotonating Lys227.
+      notes: M-CSA entry 742, mechanism 1; M-CSA cites PMID:14756555, PMID:24200862, PMID:24304904; step
+        9
+  - subject: lys227
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step9
+    description: Lys227 acts in step 9.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/742/
+      snippet: The PLP feeds the electrons back, resulting in the N=C bond deprotonating Lys227.
+      notes: M-CSA entry 742, mechanism 1; M-CSA cites PMID:14756555, PMID:24200862, PMID:24304904; step
+        9
+  - subject: step9
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step10
+    description: Step 9 leads to step 10.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/742/
+      snippet: Lys227 nucleophilically attacks the carbon of the C=N bond which results in the cleavage
+        of L-alanine from PLP and its substitution for Lys227 and the proton on the phosphate group is
+        lost to the environment which returns the active site back to its native state.
+      notes: M-CSA entry 742, mechanism 1; M-CSA cites PMID:14756555, PMID:24200862, PMID:24304904; step
+        10
+  - subject: lys227
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step10
+    description: Lys227 acts in step 10.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/742/
+      snippet: Lys227 nucleophilically attacks the carbon of the C=N bond which results in the cleavage
+        of L-alanine from PLP and its substitution for Lys227 and the proton on the phosphate group is
+        lost to the environment which returns the active site back to its native state.
+      notes: M-CSA entry 742, mechanism 1; M-CSA cites PMID:14756555, PMID:24200862, PMID:24304904; step
+        10
+  - subject: step10
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step11
+    description: Step 10 leads to step 11.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/742/
+      snippet: Product
+      notes: M-CSA entry 742, mechanism 1; M-CSA cites PMID:14756555, PMID:24200862, PMID:24304904; step
+        11
+  - subject: phe129
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Phe129 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/742/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 742, mechanism 1; M-CSA cites PMID:14756555, PMID:24200862, PMID:24304904; M-CSA
+        catalytic-residue roles for Phe129
+  - subject: asp201
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp201 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/742/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 742, mechanism 1; M-CSA cites PMID:14756555, PMID:24200862, PMID:24304904; M-CSA
+        catalytic-residue roles for Asp201
+  - subject: tyr226
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr226 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/742/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 742, mechanism 1; M-CSA cites PMID:14756555, PMID:24200862, PMID:24304904; M-CSA
+        catalytic-residue roles for Tyr226
+  - subject: lys227
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys227 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/742/
+      snippet: electron pair acceptor, nucleofuge, nucleophile, proton acceptor, proton donor
+      notes: M-CSA entry 742, mechanism 1; M-CSA cites PMID:14756555, PMID:24200862, PMID:24304904; M-CSA
+        catalytic-residue roles for Lys227
+  - subject: arg375
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg375 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/742/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 742, mechanism 1; M-CSA cites PMID:14756555, PMID:24200862, PMID:24304904; M-CSA
+        catalytic-residue roles for Arg375
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/742/
+      snippet: Lys 227 binds PLP to Kynureninase. Electrophilicity of PLP is enhanced through close contact
+        with Asp 201 which aids protonation of the pyridine ring. Phe 129 is Pi-stacked on top of the
+        pyridine ring of PLP, stabilising the cofactor.The phosphate of PLPis protonated by Tyr226 which
+        then accepts a proton from L-kynureninethus forming a hydrogen bond netewrok between PLP, Tyr226
+        and L-kynurenine. L
+      notes: M-CSA entry 742, mechanism 1; M-CSA cites PMID:14756555, PMID:24200862, PMID:24304904; CATH
+        domain 3.40.640.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/742/
+      snippet: Lys 227 binds PLP to Kynureninase. Electrophilicity of PLP is enhanced through close contact
+        with Asp 201 which aids protonation of the pyridine ring. Phe 129 is Pi-stacked on top of the
+        pyridine ring of PLP, stabilising the cofactor.The phosphate of PLPis protonated by Tyr226 which
+        then accepts a proton from L-kynureninethus forming a hydrogen bond netewrok between PLP, Tyr226
+        and L-kynurenine. L
+      notes: M-CSA entry 742, mechanism 1; M-CSA cites PMID:14756555, PMID:24200862, PMID:24304904; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/742/
+      snippet: Lys 227 binds PLP to Kynureninase. Electrophilicity of PLP is enhanced through close contact
+        with Asp 201 which aids protonation of the pyridine ring. Phe 129 is Pi-stacked on top of the
+        pyridine ring of PLP, stabilising the cofactor.The phosphate of PLPis protonated by Tyr226 which
+        then accepts a proton from L-kynureninethus forming a hydrogen bond netewrok between PLP, Tyr226
+        and L-kynurenine. L
+      notes: M-CSA entry 742, mechanism 1; M-CSA cites PMID:14756555, PMID:24200862, PMID:24304904; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/742/
+      snippet: Lys 227 binds PLP to Kynureninase. Electrophilicity of PLP is enhanced through close contact
+        with Asp 201 which aids protonation of the pyridine ring. Phe 129 is Pi-stacked on top of the
+        pyridine ring of PLP, stabilising the cofactor.The phosphate of PLPis protonated by Tyr226 which
+        then accepts a proton from L-kynureninethus forming a hydrogen bond netewrok between PLP, Tyr226
+        and L-kynurenine. L
+      notes: M-CSA entry 742, mechanism 1; M-CSA cites PMID:14756555, PMID:24200862, PMID:24304904; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/742/
+      snippet: Lys 227 binds PLP to Kynureninase. Electrophilicity of PLP is enhanced through close contact
+        with Asp 201 which aids protonation of the pyridine ring. Phe 129 is Pi-stacked on top of the
+        pyridine ring of PLP, stabilising the cofactor.The phosphate of PLPis protonated by Tyr226 which
+        then accepts a proton from L-kynureninethus forming a hydrogen bond netewrok between PLP, Tyr226
+        and L-kynurenine. L
+      notes: M-CSA entry 742, mechanism 1; M-CSA cites PMID:14756555, PMID:24200862, PMID:24304904; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/742/
+      snippet: Lys 227 binds PLP to Kynureninase. Electrophilicity of PLP is enhanced through close contact
+        with Asp 201 which aids protonation of the pyridine ring. Phe 129 is Pi-stacked on top of the
+        pyridine ring of PLP, stabilising the cofactor.The phosphate of PLPis protonated by Tyr226 which
+        then accepts a proton from L-kynureninethus forming a hydrogen bond netewrok between PLP, Tyr226
+        and L-kynurenine. L
+      notes: M-CSA entry 742, mechanism 1; M-CSA cites PMID:14756555, PMID:24200862, PMID:24304904; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/742/
+      snippet: Lys 227 binds PLP to Kynureninase. Electrophilicity of PLP is enhanced through close contact
+        with Asp 201 which aids protonation of the pyridine ring. Phe 129 is Pi-stacked on top of the
+        pyridine ring of PLP, stabilising the cofactor.The phosphate of PLPis protonated by Tyr226 which
+        then accepts a proton from L-kynureninethus forming a hydrogen bond netewrok between PLP, Tyr226
+        and L-kynurenine. L
+      notes: M-CSA entry 742, mechanism 1; M-CSA cites PMID:14756555, PMID:24200862, PMID:24304904; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (32 evidence-backed edges) transcribed from M-CSA entry 742;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.3.1.38
 - CHEBI:57287
@@ -735,4 +735,297 @@ definitions:
       Acyl Carrier Protein S-acetyltransferase is a transferase enzyme that catalyzes the first biosynthetic pathway for fatty acid synthase. It transfers the acyl moiety to the MAT domain, which is the starting part of the synthesis. Research on this enzyme gives new insights that will be valuable for the development of specific and efficient therapeutic strategies for diabetes and related diseases.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of acyl-carrier-protein S-acetyltransferase
+  description: Stepwise mechanism transcribed from M-CSA entry 985 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: met499
+    label: catalytic Met499 (M-CSA/PDB numbering; UniProt residue 499)
+    node_type: RESIDUE
+    grounding: UniProtKB:P19096
+    description: 'M-CSA roles: transition state stabiliser.'
+  - node_id: ser581
+    label: catalytic Ser581 (M-CSA/PDB numbering; UniProt residue 581)
+    node_type: RESIDUE
+    grounding: UniProtKB:P19096
+    description: 'M-CSA roles: nucleophile, proton acceptor.'
+  - node_id: leu582
+    label: catalytic Leu582 (M-CSA/PDB numbering; UniProt residue 582)
+    node_type: RESIDUE
+    grounding: UniProtKB:P19096
+    description: 'M-CSA roles: transition state stabiliser.'
+  - node_id: his683
+    label: catalytic His683 (M-CSA/PDB numbering; UniProt residue 683)
+    node_type: RESIDUE
+    grounding: UniProtKB:P19096
+    description: 'M-CSA roles: activator, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: acetyl-CoA(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+  - node_id: reactant1
+    label: O-(pantetheine-4'-phosphoryl)serine(1-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:64479
+  - node_id: product0
+    label: coenzyme A(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+  - node_id: product1
+    label: O-(S-acetylpantetheine-4'-phosphoryl)serine(1-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:78446
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: "His683 deprotonates Serine 581 and, the catalytic
+serine581 attacks the labile thioester\
+      \ bond of the acyl-CoA
+substrate"
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The tetrahedral intermediate  breaks down and deprotonates His683, and the CoA molecule
+      is released from the active site. Met499 and Leu582 form oxyanion hole for the stabilization of
+      transition-states and reaction intermediates.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: His683 deprotonates the thiol group which in turn attacks the ester carbonyl of the PNS
+      arm of ACP.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: "A tetrahedral intermediate is postulated to be formed and
+probably subsequently resolved\
+      \ through the re-protonation of
+the catalytic serine by the conserved histidine residue. The\
+      \ acyl-ACP product is then released from the  active site."
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products (acetyl ACP and CoA) are formed.
+  - node_id: active_site
+    label: acyl-carrier-protein S-acetyltransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:985
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: activity
+    label: acyl-carrier-protein S-acetyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.3.1.38
+  edges:
+  - subject: his683
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His683 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/985/
+      snippet: "His683 deprotonates Serine 581 and, the catalytic
+serine581 attacks the labile thioester\
+        \ bond of the acyl-CoA
+substrate"
+      notes: M-CSA entry 985, mechanism 1; M-CSA cites PMID:31209348; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/985/
+      snippet: The tetrahedral intermediate  breaks down and deprotonates His683, and the CoA molecule
+        is released from the active site. Met499 and Leu582 form oxyanion hole for the stabilization of
+        transition-states and reaction intermediates.
+      notes: M-CSA entry 985, mechanism 1; M-CSA cites PMID:31209348; step 2
+  - subject: met499
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Met499 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/985/
+      snippet: The tetrahedral intermediate  breaks down and deprotonates His683, and the CoA molecule
+        is released from the active site. Met499 and Leu582 form oxyanion hole for the stabilization of
+        transition-states and reaction intermediates.
+      notes: M-CSA entry 985, mechanism 1; M-CSA cites PMID:31209348; step 2
+  - subject: leu582
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Leu582 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/985/
+      snippet: The tetrahedral intermediate  breaks down and deprotonates His683, and the CoA molecule
+        is released from the active site. Met499 and Leu582 form oxyanion hole for the stabilization of
+        transition-states and reaction intermediates.
+      notes: M-CSA entry 985, mechanism 1; M-CSA cites PMID:31209348; step 2
+  - subject: his683
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His683 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/985/
+      snippet: The tetrahedral intermediate  breaks down and deprotonates His683, and the CoA molecule
+        is released from the active site. Met499 and Leu582 form oxyanion hole for the stabilization of
+        transition-states and reaction intermediates.
+      notes: M-CSA entry 985, mechanism 1; M-CSA cites PMID:31209348; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/985/
+      snippet: His683 deprotonates the thiol group which in turn attacks the ester carbonyl of the PNS
+        arm of ACP.
+      notes: M-CSA entry 985, mechanism 1; M-CSA cites PMID:31209348; step 3
+  - subject: his683
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His683 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/985/
+      snippet: His683 deprotonates the thiol group which in turn attacks the ester carbonyl of the PNS
+        arm of ACP.
+      notes: M-CSA entry 985, mechanism 1; M-CSA cites PMID:31209348; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/985/
+      snippet: "A tetrahedral intermediate is postulated to be formed and
+probably subsequently resolved\
+        \ through the re-protonation of
+the catalytic serine by the conserved histidine residue. The\
+        \ acyl-ACP product is then released from the  active site."
+      notes: M-CSA entry 985, mechanism 1; M-CSA cites PMID:31209348; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/985/
+      snippet: Products (acetyl ACP and CoA) are formed.
+      notes: M-CSA entry 985, mechanism 1; M-CSA cites PMID:31209348; step 5
+  - subject: met499
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Met499 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/985/
+      snippet: transition state stabiliser
+      notes: M-CSA entry 985, mechanism 1; M-CSA cites PMID:31209348; M-CSA catalytic-residue roles for
+        Met499
+  - subject: ser581
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser581 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/985/
+      snippet: nucleophile, proton acceptor
+      notes: M-CSA entry 985, mechanism 1; M-CSA cites PMID:31209348; M-CSA catalytic-residue roles for
+        Ser581
+  - subject: leu582
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Leu582 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/985/
+      snippet: transition state stabiliser
+      notes: M-CSA entry 985, mechanism 1; M-CSA cites PMID:31209348; M-CSA catalytic-residue roles for
+        Leu582
+  - subject: his683
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His683 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/985/
+      snippet: activator, proton acceptor, proton donor
+      notes: M-CSA entry 985, mechanism 1; M-CSA cites PMID:31209348; M-CSA catalytic-residue roles for
+        His683
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/985/
+      snippet: 'Ping-pong catalytic mechanism: [acyl-carrier-protein] S-acetyltransferase catalyses the
+        start of the biosynthetic pathway of fatty acid synthesis. During this reversible reaction, acylation
+        of the MAT domain is followed by the transfer of the acyl moiety from the MAT to the ACP domain.
+        A Ser581-His683 dyad plays a central role in this catalytic mechanism while Met499 and Leu582
+        stabilise the inter'
+      notes: M-CSA entry 985, mechanism 1; M-CSA cites PMID:31209348; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/985/
+      snippet: 'Ping-pong catalytic mechanism: [acyl-carrier-protein] S-acetyltransferase catalyses the
+        start of the biosynthetic pathway of fatty acid synthesis. During this reversible reaction, acylation
+        of the MAT domain is followed by the transfer of the acyl moiety from the MAT to the ACP domain.
+        A Ser581-His683 dyad plays a central role in this catalytic mechanism while Met499 and Leu582
+        stabilise the inter'
+      notes: M-CSA entry 985, mechanism 1; M-CSA cites PMID:31209348; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/985/
+      snippet: 'Ping-pong catalytic mechanism: [acyl-carrier-protein] S-acetyltransferase catalyses the
+        start of the biosynthetic pathway of fatty acid synthesis. During this reversible reaction, acylation
+        of the MAT domain is followed by the transfer of the acyl moiety from the MAT to the ACP domain.
+        A Ser581-His683 dyad plays a central role in this catalytic mechanism while Met499 and Leu582
+        stabilise the inter'
+      notes: M-CSA entry 985, mechanism 1; M-CSA cites PMID:31209348; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/985/
+      snippet: 'Ping-pong catalytic mechanism: [acyl-carrier-protein] S-acetyltransferase catalyses the
+        start of the biosynthetic pathway of fatty acid synthesis. During this reversible reaction, acylation
+        of the MAT domain is followed by the transfer of the acyl moiety from the MAT to the ACP domain.
+        A Ser581-His683 dyad plays a central role in this catalytic mechanism while Met499 and Leu582
+        stabilise the inter'
+      notes: M-CSA entry 985, mechanism 1; M-CSA cites PMID:31209348; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/985/
+      snippet: 'Ping-pong catalytic mechanism: [acyl-carrier-protein] S-acetyltransferase catalyses the
+        start of the biosynthetic pathway of fatty acid synthesis. During this reversible reaction, acylation
+        of the MAT domain is followed by the transfer of the acyl moiety from the MAT to the ACP domain.
+        A Ser581-His683 dyad plays a central role in this catalytic mechanism while Met499 and Leu582
+        stabilise the inter'
+      notes: M-CSA entry 985, mechanism 1; M-CSA cites PMID:31209348; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (18 evidence-backed edges) transcribed from M-CSA entry 985;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

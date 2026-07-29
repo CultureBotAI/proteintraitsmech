@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.13.1.3
 - CHEBI:18218
@@ -262,4 +262,351 @@ definitions:
       Part of a bacerial 4S pathway that removes covalently bound sulfur from dibenzothiophene (DBT) without breaking carbon-carbon bonds. This enzymatic system employs four different enzymes (DszA, DszB, DszC, and DszD) to work sequentially in order to oxidize the C−S bond and remove the oxidized sulfur as HSO3-. Bacteria use the oxidized sulfur for their anabolic needs such as producing sulfur-containing amino acids. DszB naturally metabolizes 2′-hydroxybiphenyl-2-sulfinate (HBPS) into biphenyl-2-ol without using cofactors. This reaction might be useful in the future for the processing of crude oil in a more environmentally friendly and lucrative way.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 2'-hydroxybiphenyl-2-sulfinate desulfinase
+  description: Stepwise mechanism transcribed from M-CSA entry 971 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: ser25
+    label: catalytic Ser25 (M-CSA/PDB numbering; UniProt residue 25)
+    node_type: RESIDUE
+    grounding: UniProtKB:P54997
+    description: 'M-CSA roles: hydrogen bond donor.'
+  - node_id: cys27
+    label: catalytic Cys27 (M-CSA/PDB numbering; UniProt residue 27)
+    node_type: RESIDUE
+    grounding: UniProtKB:P54997
+    description: 'M-CSA roles: nucleophile, proton acceptor, proton donor.'
+  - node_id: his60
+    label: catalytic His60 (M-CSA/PDB numbering; UniProt residue 60)
+    node_type: RESIDUE
+    grounding: UniProtKB:P54997
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor.'
+  - node_id: arg70
+    label: catalytic Arg70 (M-CSA/PDB numbering; UniProt residue 70)
+    node_type: RESIDUE
+    grounding: UniProtKB:P54997
+    description: 'M-CSA roles: hydrogen bond donor.'
+  - node_id: gly73
+    label: catalytic Gly73 (M-CSA/PDB numbering; UniProt residue 73)
+    node_type: RESIDUE
+    grounding: UniProtKB:P54997
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: reactant0
+    label: 2'-hydroxybiphenyl-2-sulfinate
+    node_type: CHEMICAL
+    grounding: CHEBI:18218
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: biphenyl-2-ol
+    node_type: CHEMICAL
+    grounding: CHEBI:17043
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: sulfite
+    node_type: CHEMICAL
+    grounding: CHEBI:17359
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: "The Cys27 proton moves toward the electrophilic
+carbon of HBPS and displaces the\
+      \ sulfinate group, leaving Cys27 deprotonated. Arg70, His60, Ser25 and Gly73(main chain oxygen)\
+      \ create a hydrogen bond network that allows the sulfinate to be displaced by anchoring it to the\
+      \ active site."
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: A water molecule is deprotonated by the negatively charged Cys27. His60 and Gly73(main-C)
+      form a stabilising structure for the negatively charged Cys27. The hydroxide molecule attacks the
+      sulfur dioxide, creating the second product of the catalysis.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The final product.
+  - node_id: active_site
+    label: 2'-hydroxybiphenyl-2-sulfinate desulfinase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:971
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.190.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.190.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: 2'-hydroxybiphenyl-2-sulfinate desulfinase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.13.1.3
+  edges:
+  - subject: ser25
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser25 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/971/
+      snippet: "The Cys27 proton moves toward the electrophilic
+carbon of HBPS and displaces the sulfinate\
+        \ group, leaving Cys27 deprotonated. Arg70, His60, Ser25 and Gly73(main chain oxygen) create a\
+        \ hydrogen bond network that allows the sulfinate to be displaced by anchoring it to the active\
+        \ site."
+      notes: M-CSA entry 971, mechanism 1; step 1
+  - subject: cys27
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys27 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/971/
+      snippet: "The Cys27 proton moves toward the electrophilic
+carbon of HBPS and displaces the sulfinate\
+        \ group, leaving Cys27 deprotonated. Arg70, His60, Ser25 and Gly73(main chain oxygen) create a\
+        \ hydrogen bond network that allows the sulfinate to be displaced by anchoring it to the active\
+        \ site."
+      notes: M-CSA entry 971, mechanism 1; step 1
+  - subject: his60
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His60 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/971/
+      snippet: "The Cys27 proton moves toward the electrophilic
+carbon of HBPS and displaces the sulfinate\
+        \ group, leaving Cys27 deprotonated. Arg70, His60, Ser25 and Gly73(main chain oxygen) create a\
+        \ hydrogen bond network that allows the sulfinate to be displaced by anchoring it to the active\
+        \ site."
+      notes: M-CSA entry 971, mechanism 1; step 1
+  - subject: arg70
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg70 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/971/
+      snippet: "The Cys27 proton moves toward the electrophilic
+carbon of HBPS and displaces the sulfinate\
+        \ group, leaving Cys27 deprotonated. Arg70, His60, Ser25 and Gly73(main chain oxygen) create a\
+        \ hydrogen bond network that allows the sulfinate to be displaced by anchoring it to the active\
+        \ site."
+      notes: M-CSA entry 971, mechanism 1; step 1
+  - subject: gly73
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Gly73 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/971/
+      snippet: "The Cys27 proton moves toward the electrophilic
+carbon of HBPS and displaces the sulfinate\
+        \ group, leaving Cys27 deprotonated. Arg70, His60, Ser25 and Gly73(main chain oxygen) create a\
+        \ hydrogen bond network that allows the sulfinate to be displaced by anchoring it to the active\
+        \ site."
+      notes: M-CSA entry 971, mechanism 1; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/971/
+      snippet: A water molecule is deprotonated by the negatively charged Cys27. His60 and Gly73(main-C)
+        form a stabilising structure for the negatively charged Cys27. The hydroxide molecule attacks
+        the sulfur dioxide, creating the second product of the catalysis.
+      notes: M-CSA entry 971, mechanism 1; step 2
+  - subject: cys27
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Cys27 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/971/
+      snippet: A water molecule is deprotonated by the negatively charged Cys27. His60 and Gly73(main-C)
+        form a stabilising structure for the negatively charged Cys27. The hydroxide molecule attacks
+        the sulfur dioxide, creating the second product of the catalysis.
+      notes: M-CSA entry 971, mechanism 1; step 2
+  - subject: his60
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His60 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/971/
+      snippet: A water molecule is deprotonated by the negatively charged Cys27. His60 and Gly73(main-C)
+        form a stabilising structure for the negatively charged Cys27. The hydroxide molecule attacks
+        the sulfur dioxide, creating the second product of the catalysis.
+      notes: M-CSA entry 971, mechanism 1; step 2
+  - subject: gly73
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Gly73 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/971/
+      snippet: A water molecule is deprotonated by the negatively charged Cys27. His60 and Gly73(main-C)
+        form a stabilising structure for the negatively charged Cys27. The hydroxide molecule attacks
+        the sulfur dioxide, creating the second product of the catalysis.
+      notes: M-CSA entry 971, mechanism 1; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/971/
+      snippet: The final product.
+      notes: M-CSA entry 971, mechanism 1; step 3
+  - subject: ser25
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser25 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/971/
+      snippet: hydrogen bond donor
+      notes: M-CSA entry 971, mechanism 1; M-CSA catalytic-residue roles for Ser25
+  - subject: cys27
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys27 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/971/
+      snippet: nucleophile, proton acceptor, proton donor
+      notes: M-CSA entry 971, mechanism 1; M-CSA catalytic-residue roles for Cys27
+  - subject: his60
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His60 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/971/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor
+      notes: M-CSA entry 971, mechanism 1; M-CSA catalytic-residue roles for His60
+  - subject: arg70
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg70 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/971/
+      snippet: hydrogen bond donor
+      notes: M-CSA entry 971, mechanism 1; M-CSA catalytic-residue roles for Arg70
+  - subject: gly73
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly73 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/971/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 971, mechanism 1; M-CSA catalytic-residue roles for Gly73
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/971/
+      snippet: In this mechanism the Cys27 performs a electrophilic aromatic substitution of the SO2 group.
+        The reaction is starts by the hydrogen bond network consisting of Arg70, His60, Ser25 and Gly73(main-C)
+        anchoring the sulfinate group. This allows Cys27 to donate a proton and cleave the bond between
+        the SO<sub>2</sub> and the rest of the substrate. he resulting SO<sub>2</sub> is also protected
+        by the hydr
+      notes: M-CSA entry 971, mechanism 1; CATH domain 3.40.190.10 assigned to the catalytic chain by
+        M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/971/
+      snippet: In this mechanism the Cys27 performs a electrophilic aromatic substitution of the SO2 group.
+        The reaction is starts by the hydrogen bond network consisting of Arg70, His60, Ser25 and Gly73(main-C)
+        anchoring the sulfinate group. This allows Cys27 to donate a proton and cleave the bond between
+        the SO<sub>2</sub> and the rest of the substrate. he resulting SO<sub>2</sub> is also protected
+        by the hydr
+      notes: M-CSA entry 971, mechanism 1; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/971/
+      snippet: In this mechanism the Cys27 performs a electrophilic aromatic substitution of the SO2 group.
+        The reaction is starts by the hydrogen bond network consisting of Arg70, His60, Ser25 and Gly73(main-C)
+        anchoring the sulfinate group. This allows Cys27 to donate a proton and cleave the bond between
+        the SO<sub>2</sub> and the rest of the substrate. he resulting SO<sub>2</sub> is also protected
+        by the hydr
+      notes: M-CSA entry 971, mechanism 1; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/971/
+      snippet: In this mechanism the Cys27 performs a electrophilic aromatic substitution of the SO2 group.
+        The reaction is starts by the hydrogen bond network consisting of Arg70, His60, Ser25 and Gly73(main-C)
+        anchoring the sulfinate group. This allows Cys27 to donate a proton and cleave the bond between
+        the SO<sub>2</sub> and the rest of the substrate. he resulting SO<sub>2</sub> is also protected
+        by the hydr
+      notes: M-CSA entry 971, mechanism 1; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/971/
+      snippet: In this mechanism the Cys27 performs a electrophilic aromatic substitution of the SO2 group.
+        The reaction is starts by the hydrogen bond network consisting of Arg70, His60, Ser25 and Gly73(main-C)
+        anchoring the sulfinate group. This allows Cys27 to donate a proton and cleave the bond between
+        the SO<sub>2</sub> and the rest of the substrate. he resulting SO<sub>2</sub> is also protected
+        by the hydr
+      notes: M-CSA entry 971, mechanism 1; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/971/
+      snippet: In this mechanism the Cys27 performs a electrophilic aromatic substitution of the SO2 group.
+        The reaction is starts by the hydrogen bond network consisting of Arg70, His60, Ser25 and Gly73(main-C)
+        anchoring the sulfinate group. This allows Cys27 to donate a proton and cleave the bond between
+        the SO<sub>2</sub> and the rest of the substrate. he resulting SO<sub>2</sub> is also protected
+        by the hydr
+      notes: M-CSA entry 971, mechanism 1; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/971/
+      snippet: In this mechanism the Cys27 performs a electrophilic aromatic substitution of the SO2 group.
+        The reaction is starts by the hydrogen bond network consisting of Arg70, His60, Ser25 and Gly73(main-C)
+        anchoring the sulfinate group. This allows Cys27 to donate a proton and cleave the bond between
+        the SO<sub>2</sub> and the rest of the substrate. he resulting SO<sub>2</sub> is also protected
+        by the hydr
+      notes: M-CSA entry 971, mechanism 1; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (22 evidence-backed edges) transcribed from M-CSA entry 971;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.1.2.10
 - CHEBI:17790
@@ -488,4 +488,252 @@ definitions:
       Lanthanide-dependent methanol dehydrogenase is a widespread enzyme used by methylotrophic bacteria to oxidise methanol for carbon and energy. The enzyme requires early lanthanide (Ln) metals in the 3+ oxidation state for catalytic activity. Across the series (La-Lu), catalytic activity of Ln-MDH decreases; Eu-MDH shows significantly lower catalytic activity than Ce-MDH, and Yb-MDH shows no catalytic activity. This is attributed to the lanthanide contraction effect whereby the ionic radius of Ln ions decreases as atomic number increases. In turn metal-ligand bond lengths decreases and Lewis acidity increases. Despite this, however, we observe a decrease in activity across the series. Nearly all strains of Methylobacterium have at least two types of MDHs, such as MxaFI, a Ca2+-dependent MDH, and XoxF, an Ln-dependent MDH. In contrast to Ca2+-dependent MDH (EC 1.1.2.7), Ln-dependent MDH shows little activity with Ca2+.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of lanthanide-dependent methanol dehydrogenase
+  description: Stepwise mechanism transcribed from M-CSA entry 997 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +34).
+  nodes:
+  - node_id: glu172
+    label: catalytic Glu172 (M-CSA/PDB numbering; UniProt residue 206)
+    node_type: RESIDUE
+    grounding: UniProtKB:I0JWN7
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asn256
+    label: catalytic Asn256 (M-CSA/PDB numbering; UniProt residue 290)
+    node_type: RESIDUE
+    grounding: UniProtKB:I0JWN7
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp299
+    label: catalytic Asp299 (M-CSA/PDB numbering; UniProt residue 333)
+    node_type: RESIDUE
+    grounding: UniProtKB:I0JWN7
+    description: 'M-CSA roles: metal ligand, proton acceptor, proton donor.'
+  - node_id: asp301
+    label: catalytic Asp301 (M-CSA/PDB numbering; UniProt residue 335)
+    node_type: RESIDUE
+    grounding: UniProtKB:I0JWN7
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: methanol
+    node_type: CHEMICAL
+    grounding: CHEBI:17790
+  - node_id: reactant1
+    label: pyrroloquinoline quinone
+    node_type: CHEMICAL
+    grounding: CHEBI:18315
+  - node_id: product0
+    label: formaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:16842
+  - node_id: product1
+    label: pyrroloquinoline quinol
+    node_type: CHEMICAL
+    grounding: CHEBI:18356
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The oxygen of the methanol substrate attacks the carbonyl carbon of the PQQ redox cofactor
+      and simultaneously donates its proton to Asp299, which acts as a general base.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The formaldehyde product is released as a result of protonation of PQQ by the substrate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: A second protonation of the cofactor forms PQQH<sub>2</sub> and deprotonated Asp299.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: PQQH<sub>2</sub> and formaldehyde products.
+  - node_id: active_site
+    label: lanthanide-dependent methanol dehydrogenase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:997
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: activity
+    label: lanthanide-dependent methanol dehydrogenase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.1.2.10
+  edges:
+  - subject: asp299
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp299 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/997/
+      snippet: The oxygen of the methanol substrate attacks the carbonyl carbon of the PQQ redox cofactor
+        and simultaneously donates its proton to Asp299, which acts as a general base.
+      notes: M-CSA entry 997, mechanism 1; M-CSA cites PMID:28488399, PMID:29286650, PMID:32369635, PMID:33867022;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/997/
+      snippet: The formaldehyde product is released as a result of protonation of PQQ by the substrate.
+      notes: M-CSA entry 997, mechanism 1; M-CSA cites PMID:28488399, PMID:29286650, PMID:32369635, PMID:33867022;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/997/
+      snippet: A second protonation of the cofactor forms PQQH<sub>2</sub> and deprotonated Asp299.
+      notes: M-CSA entry 997, mechanism 1; M-CSA cites PMID:28488399, PMID:29286650, PMID:32369635, PMID:33867022;
+        step 3
+  - subject: asp299
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Asp299 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/997/
+      snippet: A second protonation of the cofactor forms PQQH<sub>2</sub> and deprotonated Asp299.
+      notes: M-CSA entry 997, mechanism 1; M-CSA cites PMID:28488399, PMID:29286650, PMID:32369635, PMID:33867022;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/997/
+      snippet: PQQH<sub>2</sub> and formaldehyde products.
+      notes: M-CSA entry 997, mechanism 1; M-CSA cites PMID:28488399, PMID:29286650, PMID:32369635, PMID:33867022;
+        step 4
+  - subject: glu172
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu172 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/997/
+      snippet: metal ligand
+      notes: M-CSA entry 997, mechanism 1; M-CSA cites PMID:28488399, PMID:29286650, PMID:32369635, PMID:33867022;
+        M-CSA catalytic-residue roles for Glu172
+  - subject: asn256
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn256 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/997/
+      snippet: metal ligand
+      notes: M-CSA entry 997, mechanism 1; M-CSA cites PMID:28488399, PMID:29286650, PMID:32369635, PMID:33867022;
+        M-CSA catalytic-residue roles for Asn256
+  - subject: asp299
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp299 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/997/
+      snippet: metal ligand, proton acceptor, proton donor
+      notes: M-CSA entry 997, mechanism 1; M-CSA cites PMID:28488399, PMID:29286650, PMID:32369635, PMID:33867022;
+        M-CSA catalytic-residue roles for Asp299
+  - subject: asp301
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp301 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/997/
+      snippet: metal ligand
+      notes: M-CSA entry 997, mechanism 1; M-CSA cites PMID:28488399, PMID:29286650, PMID:32369635, PMID:33867022;
+        M-CSA catalytic-residue roles for Asp301
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/997/
+      snippet: "A possible mechanism for oxidation of methanol to formaldehyde by MDH is an addition-elimination-protonation\
+        \ reaction. In this reaction, a lanthanide ion is directly bound to the pyrroloquinolinequinone\
+        \ cofactor (PQQ). The enzyme shows highest activity with early Ln, but a later-Ln (Eu) is shown\
+        \ here. 
+<br> </br>
+In the first step (addition), the oxygen atom of the methanol substrate\
+        \ attacks the"
+      notes: M-CSA entry 997, mechanism 1; M-CSA cites PMID:28488399, PMID:29286650, PMID:32369635, PMID:33867022;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/997/
+      snippet: "A possible mechanism for oxidation of methanol to formaldehyde by MDH is an addition-elimination-protonation\
+        \ reaction. In this reaction, a lanthanide ion is directly bound to the pyrroloquinolinequinone\
+        \ cofactor (PQQ). The enzyme shows highest activity with early Ln, but a later-Ln (Eu) is shown\
+        \ here. 
+<br> </br>
+In the first step (addition), the oxygen atom of the methanol substrate\
+        \ attacks the"
+      notes: M-CSA entry 997, mechanism 1; M-CSA cites PMID:28488399, PMID:29286650, PMID:32369635, PMID:33867022;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/997/
+      snippet: "A possible mechanism for oxidation of methanol to formaldehyde by MDH is an addition-elimination-protonation\
+        \ reaction. In this reaction, a lanthanide ion is directly bound to the pyrroloquinolinequinone\
+        \ cofactor (PQQ). The enzyme shows highest activity with early Ln, but a later-Ln (Eu) is shown\
+        \ here. 
+<br> </br>
+In the first step (addition), the oxygen atom of the methanol substrate\
+        \ attacks the"
+      notes: M-CSA entry 997, mechanism 1; M-CSA cites PMID:28488399, PMID:29286650, PMID:32369635, PMID:33867022;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/997/
+      snippet: "A possible mechanism for oxidation of methanol to formaldehyde by MDH is an addition-elimination-protonation\
+        \ reaction. In this reaction, a lanthanide ion is directly bound to the pyrroloquinolinequinone\
+        \ cofactor (PQQ). The enzyme shows highest activity with early Ln, but a later-Ln (Eu) is shown\
+        \ here. 
+<br> </br>
+In the first step (addition), the oxygen atom of the methanol substrate\
+        \ attacks the"
+      notes: M-CSA entry 997, mechanism 1; M-CSA cites PMID:28488399, PMID:29286650, PMID:32369635, PMID:33867022;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/997/
+      snippet: "A possible mechanism for oxidation of methanol to formaldehyde by MDH is an addition-elimination-protonation\
+        \ reaction. In this reaction, a lanthanide ion is directly bound to the pyrroloquinolinequinone\
+        \ cofactor (PQQ). The enzyme shows highest activity with early Ln, but a later-Ln (Eu) is shown\
+        \ here. 
+<br> </br>
+In the first step (addition), the oxygen atom of the methanol substrate\
+        \ attacks the"
+      notes: M-CSA entry 997, mechanism 1; M-CSA cites PMID:28488399, PMID:29286650, PMID:32369635, PMID:33867022;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (14 evidence-backed edges) transcribed from M-CSA entry 997;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

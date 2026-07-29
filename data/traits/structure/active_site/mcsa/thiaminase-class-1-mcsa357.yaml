@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.5.1.2
 - CHEBI:18385
@@ -246,4 +246,279 @@ definitions:
       Thiaminase metabolises thiamine into two constituent parts, the pyrimidine unit, with the addition of a nucleophile, and hemineurine. In fern plants thiaminase is thought to provide protection from insect infestation, while in microorganisms and fish, in which the enzyme has also been found there is, as of yet no defined physiological role. Two classes of thiaminase exist, class 1 (EC:2.5.1.2) and class 2 (EC:3.5.99.2). The two classes share no sequence homology, although their catalytic mechanisms are thought to be very similar, utilising the same active site residues. One difference is their substrate specificity: class 1 thiaminases will catalyse the incorporation of several nucleophiles into the departing pyridimium moiety, while class 2 thiaminases will only utilise water as a nucleophile. The substrate divergence is thought to stem from the lack of homology in protein sequence.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of thiaminase (class 1)
+  description: Stepwise mechanism transcribed from M-CSA entry 357 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +30).
+  nodes:
+  - node_id: cys113
+    label: catalytic Cys113 (M-CSA/PDB numbering; UniProt residue 143)
+    node_type: RESIDUE
+    grounding: UniProtKB:P45741
+    description: 'M-CSA roles: activator, covalently attached, hydrogen bond acceptor, hydrogen bond donor,
+      nucleofuge, nucleophile, proton acceptor, proton donor.'
+  - node_id: glu241
+    label: catalytic Glu241 (M-CSA/PDB numbering; UniProt residue 271)
+    node_type: RESIDUE
+    grounding: UniProtKB:P45741
+    description: 'M-CSA roles: activator, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+      proton donor.'
+  - node_id: asp272
+    label: catalytic Asp272 (M-CSA/PDB numbering; UniProt residue 302)
+    node_type: RESIDUE
+    grounding: UniProtKB:P45741
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      steric role.'
+  - node_id: reactant0
+    label: thiamine(1+)
+    node_type: CHEMICAL
+    grounding: CHEBI:18385
+  - node_id: reactant1
+    label: pyridine
+    node_type: CHEMICAL
+    grounding: CHEBI:16227
+  - node_id: product0
+    label: 1-[(4-amino-2-methylpyrimidin-5-yl)methyl]pyridinium
+    node_type: CHEMICAL
+    grounding: CHEBI:11222
+  - node_id: product1
+    label: 5-(2-hydroxyethyl)-4-methylthiazole
+    node_type: CHEMICAL
+    grounding: CHEBI:17957
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu241 deprotonates Cys113, activating this residue towards nucleophilic attack at the
+      thiamine substrate, forming an covalently-bound adduct. The negative charge is stabilised as a zwitterion,
+      with the accompanying positive charge residing on the thiazole nitrogen.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The zwitterion intermediate undergoes intramolecular elimination, releasing hemineurine
+      (5-2-hydroxyethyl-4-methylthiazole) and the enzyme-bound, enol intermediate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Pyridine attacks the enol intermediate. The resulting carbanion is stabilised as a zwitterion
+      with the positive charge on the pyridine nitrogen.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The zwitterion intermediate undergoes intramolecular elimination to release Cys113 and
+      also the heteropyrithiamine product.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Product
+  - node_id: active_site
+    label: thiaminase (class 1) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:357
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.190.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.190.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: thiaminase (class 1) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.5.1.2
+  edges:
+  - subject: cys113
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys113 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/357/
+      snippet: Glu241 deprotonates Cys113, activating this residue towards nucleophilic attack at the
+        thiamine substrate, forming an covalently-bound adduct. The negative charge is stabilised as a
+        zwitterion, with the accompanying positive charge residing on the thiazole nitrogen.
+      notes: M-CSA entry 357, mechanism 2; M-CSA cites PMID:18054064, PMID:24351929, PMID:8631946, PMID:9843405;
+        step 1
+  - subject: glu241
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu241 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/357/
+      snippet: Glu241 deprotonates Cys113, activating this residue towards nucleophilic attack at the
+        thiamine substrate, forming an covalently-bound adduct. The negative charge is stabilised as a
+        zwitterion, with the accompanying positive charge residing on the thiazole nitrogen.
+      notes: M-CSA entry 357, mechanism 2; M-CSA cites PMID:18054064, PMID:24351929, PMID:8631946, PMID:9843405;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/357/
+      snippet: The zwitterion intermediate undergoes intramolecular elimination, releasing hemineurine
+        (5-2-hydroxyethyl-4-methylthiazole) and the enzyme-bound, enol intermediate.
+      notes: M-CSA entry 357, mechanism 2; M-CSA cites PMID:18054064, PMID:24351929, PMID:8631946, PMID:9843405;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/357/
+      snippet: Pyridine attacks the enol intermediate. The resulting carbanion is stabilised as a zwitterion
+        with the positive charge on the pyridine nitrogen.
+      notes: M-CSA entry 357, mechanism 2; M-CSA cites PMID:18054064, PMID:24351929, PMID:8631946, PMID:9843405;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/357/
+      snippet: The zwitterion intermediate undergoes intramolecular elimination to release Cys113 and
+        also the heteropyrithiamine product.
+      notes: M-CSA entry 357, mechanism 2; M-CSA cites PMID:18054064, PMID:24351929, PMID:8631946, PMID:9843405;
+        step 4
+  - subject: cys113
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Cys113 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/357/
+      snippet: The zwitterion intermediate undergoes intramolecular elimination to release Cys113 and
+        also the heteropyrithiamine product.
+      notes: M-CSA entry 357, mechanism 2; M-CSA cites PMID:18054064, PMID:24351929, PMID:8631946, PMID:9843405;
+        step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/357/
+      snippet: Product
+      notes: M-CSA entry 357, mechanism 2; M-CSA cites PMID:18054064, PMID:24351929, PMID:8631946, PMID:9843405;
+        step 5
+  - subject: cys113
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys113 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/357/
+      snippet: activator, covalently attached, hydrogen bond acceptor, hydrogen bond donor, nucleofuge,
+        nucleophile, proton acceptor, proton donor
+      notes: M-CSA entry 357, mechanism 2; M-CSA cites PMID:18054064, PMID:24351929, PMID:8631946, PMID:9843405;
+        M-CSA catalytic-residue roles for Cys113
+  - subject: glu241
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu241 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/357/
+      snippet: activator, hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 357, mechanism 2; M-CSA cites PMID:18054064, PMID:24351929, PMID:8631946, PMID:9843405;
+        M-CSA catalytic-residue roles for Glu241
+  - subject: asp272
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp272 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/357/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, steric role
+      notes: M-CSA entry 357, mechanism 2; M-CSA cites PMID:18054064, PMID:24351929, PMID:8631946, PMID:9843405;
+        M-CSA catalytic-residue roles for Asp272
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/357/
+      snippet: Cys113 undergoes nucleophilic attack on the pyrimidine subunit, forming a zwitter-ionic
+        adduct. Expulsion of the hemineurine leaving group via an Ec1b mechanism generates an alkene which
+        is attacked by the incoming nucleophile, in this case pyridine, to form a new carbon-nitrogen
+        bond.
+      notes: M-CSA entry 357, mechanism 2; M-CSA cites PMID:18054064, PMID:24351929, PMID:8631946, PMID:9843405;
+        CATH domain 3.40.190.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/357/
+      snippet: Cys113 undergoes nucleophilic attack on the pyrimidine subunit, forming a zwitter-ionic
+        adduct. Expulsion of the hemineurine leaving group via an Ec1b mechanism generates an alkene which
+        is attacked by the incoming nucleophile, in this case pyridine, to form a new carbon-nitrogen
+        bond.
+      notes: M-CSA entry 357, mechanism 2; M-CSA cites PMID:18054064, PMID:24351929, PMID:8631946, PMID:9843405;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/357/
+      snippet: Cys113 undergoes nucleophilic attack on the pyrimidine subunit, forming a zwitter-ionic
+        adduct. Expulsion of the hemineurine leaving group via an Ec1b mechanism generates an alkene which
+        is attacked by the incoming nucleophile, in this case pyridine, to form a new carbon-nitrogen
+        bond.
+      notes: M-CSA entry 357, mechanism 2; M-CSA cites PMID:18054064, PMID:24351929, PMID:8631946, PMID:9843405;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/357/
+      snippet: Cys113 undergoes nucleophilic attack on the pyrimidine subunit, forming a zwitter-ionic
+        adduct. Expulsion of the hemineurine leaving group via an Ec1b mechanism generates an alkene which
+        is attacked by the incoming nucleophile, in this case pyridine, to form a new carbon-nitrogen
+        bond.
+      notes: M-CSA entry 357, mechanism 2; M-CSA cites PMID:18054064, PMID:24351929, PMID:8631946, PMID:9843405;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/357/
+      snippet: Cys113 undergoes nucleophilic attack on the pyrimidine subunit, forming a zwitter-ionic
+        adduct. Expulsion of the hemineurine leaving group via an Ec1b mechanism generates an alkene which
+        is attacked by the incoming nucleophile, in this case pyridine, to form a new carbon-nitrogen
+        bond.
+      notes: M-CSA entry 357, mechanism 2; M-CSA cites PMID:18054064, PMID:24351929, PMID:8631946, PMID:9843405;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/357/
+      snippet: Cys113 undergoes nucleophilic attack on the pyrimidine subunit, forming a zwitter-ionic
+        adduct. Expulsion of the hemineurine leaving group via an Ec1b mechanism generates an alkene which
+        is attacked by the incoming nucleophile, in this case pyridine, to form a new carbon-nitrogen
+        bond.
+      notes: M-CSA entry 357, mechanism 2; M-CSA cites PMID:18054064, PMID:24351929, PMID:8631946, PMID:9843405;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (16 evidence-backed edges) transcribed from M-CSA entry 357;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

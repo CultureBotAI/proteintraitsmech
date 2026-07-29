@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.4.2.-
 - CHEBI:32664
@@ -238,4 +238,274 @@ definitions:
       Clostridium boltulinum C3 exoenzyme catalyses the transfer of the ADP-ribose moiety of NAD onto asparagine 41 of the small GTP-binding protein Rho. This ADP-ribosylation inactivates Rho, blocking Rho activity in regulating the cytoskeleton and leading to cytoskeleton depolymerisation. The protein synthesis inhibitors (inactivate the eukaryotic elongation factor 2 eEF2) diptheria toxin from Corynebacterium diphtheriae and exotoxin A (ETA) from Pseudomonas aeruginosa are also ADP-ribosyltransferases, contain a conserved Glu and thought to proceed through the same catalytic mechanism.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of mono-ADP-ribosyltransferase C3
+  description: Stepwise mechanism transcribed from M-CSA entry 824 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: ser174
+    label: catalytic Ser174 (M-CSA/PDB numbering; UniProt residue 174)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15879
+    description: 'M-CSA roles: electrostatic stabiliser, polar interaction.'
+  - node_id: glu214
+    label: catalytic Glu214 (M-CSA/PDB numbering; UniProt residue 214)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15879
+    description: 'M-CSA roles: electrostatic stabiliser, polar interaction, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: asparagine residue
+    node_type: CHEMICAL
+    grounding: CHEBI:32664
+  - node_id: reactant1
+    label: NAD(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+  - node_id: product0
+    label: nicotinamide
+    node_type: CHEMICAL
+    grounding: CHEBI:17154
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: '[protein]-N-ADP-D-ribosyl-L-asparagine'
+    node_type: CHEMICAL
+    grounding: CHEBI:137462
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glycosidic bond cleavage resulting in an oxocarbenium intermediate, stabilised by Glu214
+      and Ser174.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Nucleophilic attack by Asn41 on the Rho protein. Glu214 is proposed to deprotonate the
+      arginine to increase it's nucleophilicity.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Glu214 is deprotonated by a water molecule.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: mono-ADP-ribosyltransferase C3 catalytic site
+    node_type: MOTIF
+    grounding: MCSA:824
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.176.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.176.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: mono-ADP-ribosyltransferase C3 activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.4.2.-
+  edges:
+  - subject: ser174
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser174 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/824/
+      snippet: Glycosidic bond cleavage resulting in an oxocarbenium intermediate, stabilised by Glu214
+        and Ser174.
+      notes: M-CSA entry 824, mechanism 1; M-CSA cites PMID:11114250, PMID:14733615, PMID:16107839, PMID:16411778,
+        PMID:16956368, PMID:1980208, PMID:9012663; step 1
+  - subject: glu214
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu214 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/824/
+      snippet: Glycosidic bond cleavage resulting in an oxocarbenium intermediate, stabilised by Glu214
+        and Ser174.
+      notes: M-CSA entry 824, mechanism 1; M-CSA cites PMID:11114250, PMID:14733615, PMID:16107839, PMID:16411778,
+        PMID:16956368, PMID:1980208, PMID:9012663; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/824/
+      snippet: Nucleophilic attack by Asn41 on the Rho protein. Glu214 is proposed to deprotonate the
+        arginine to increase it's nucleophilicity.
+      notes: M-CSA entry 824, mechanism 1; M-CSA cites PMID:11114250, PMID:14733615, PMID:16107839, PMID:16411778,
+        PMID:16956368, PMID:1980208, PMID:9012663; step 2
+  - subject: glu214
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu214 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/824/
+      snippet: Nucleophilic attack by Asn41 on the Rho protein. Glu214 is proposed to deprotonate the
+        arginine to increase it's nucleophilicity.
+      notes: M-CSA entry 824, mechanism 1; M-CSA cites PMID:11114250, PMID:14733615, PMID:16107839, PMID:16411778,
+        PMID:16956368, PMID:1980208, PMID:9012663; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/824/
+      snippet: Glu214 is deprotonated by a water molecule.
+      notes: M-CSA entry 824, mechanism 1; M-CSA cites PMID:11114250, PMID:14733615, PMID:16107839, PMID:16411778,
+        PMID:16956368, PMID:1980208, PMID:9012663; step 3
+  - subject: glu214
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Glu214 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/824/
+      snippet: Glu214 is deprotonated by a water molecule.
+      notes: M-CSA entry 824, mechanism 1; M-CSA cites PMID:11114250, PMID:14733615, PMID:16107839, PMID:16411778,
+        PMID:16956368, PMID:1980208, PMID:9012663; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/824/
+      snippet: Products.
+      notes: M-CSA entry 824, mechanism 1; M-CSA cites PMID:11114250, PMID:14733615, PMID:16107839, PMID:16411778,
+        PMID:16956368, PMID:1980208, PMID:9012663; step 4
+  - subject: ser174
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser174 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/824/
+      snippet: electrostatic stabiliser, polar interaction
+      notes: M-CSA entry 824, mechanism 1; M-CSA cites PMID:11114250, PMID:14733615, PMID:16107839, PMID:16411778,
+        PMID:16956368, PMID:1980208, PMID:9012663; M-CSA catalytic-residue roles for Ser174
+  - subject: glu214
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu214 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/824/
+      snippet: electrostatic stabiliser, polar interaction, proton acceptor, proton donor
+      notes: M-CSA entry 824, mechanism 1; M-CSA cites PMID:11114250, PMID:14733615, PMID:16107839, PMID:16411778,
+        PMID:16956368, PMID:1980208, PMID:9012663; M-CSA catalytic-residue roles for Glu214
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/824/
+      snippet: The reaction requires loss of the nicotinamide moiety of NAD and attack on the C1' of ribose
+        by Asn 41 (thought to be activated by Glu214) of Rho in an Sn1 like mechanism. The oxocarbenium
+        ion intermediate is thought to be stabilised by Glu 214, which forms a hydrogen bond to the ribose
+        2' OH group and also Ser174. Out of the two mechanism proposals, this is more favoured due to
+        mutagenesis experi
+      notes: M-CSA entry 824, mechanism 1; M-CSA cites PMID:11114250, PMID:14733615, PMID:16107839, PMID:16411778,
+        PMID:16956368, PMID:1980208, PMID:9012663; CATH domain 3.90.176.10 assigned to the catalytic chain
+        by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/824/
+      snippet: The reaction requires loss of the nicotinamide moiety of NAD and attack on the C1' of ribose
+        by Asn 41 (thought to be activated by Glu214) of Rho in an Sn1 like mechanism. The oxocarbenium
+        ion intermediate is thought to be stabilised by Glu 214, which forms a hydrogen bond to the ribose
+        2' OH group and also Ser174. Out of the two mechanism proposals, this is more favoured due to
+        mutagenesis experi
+      notes: M-CSA entry 824, mechanism 1; M-CSA cites PMID:11114250, PMID:14733615, PMID:16107839, PMID:16411778,
+        PMID:16956368, PMID:1980208, PMID:9012663; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/824/
+      snippet: The reaction requires loss of the nicotinamide moiety of NAD and attack on the C1' of ribose
+        by Asn 41 (thought to be activated by Glu214) of Rho in an Sn1 like mechanism. The oxocarbenium
+        ion intermediate is thought to be stabilised by Glu 214, which forms a hydrogen bond to the ribose
+        2' OH group and also Ser174. Out of the two mechanism proposals, this is more favoured due to
+        mutagenesis experi
+      notes: M-CSA entry 824, mechanism 1; M-CSA cites PMID:11114250, PMID:14733615, PMID:16107839, PMID:16411778,
+        PMID:16956368, PMID:1980208, PMID:9012663; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/824/
+      snippet: The reaction requires loss of the nicotinamide moiety of NAD and attack on the C1' of ribose
+        by Asn 41 (thought to be activated by Glu214) of Rho in an Sn1 like mechanism. The oxocarbenium
+        ion intermediate is thought to be stabilised by Glu 214, which forms a hydrogen bond to the ribose
+        2' OH group and also Ser174. Out of the two mechanism proposals, this is more favoured due to
+        mutagenesis experi
+      notes: M-CSA entry 824, mechanism 1; M-CSA cites PMID:11114250, PMID:14733615, PMID:16107839, PMID:16411778,
+        PMID:16956368, PMID:1980208, PMID:9012663; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/824/
+      snippet: The reaction requires loss of the nicotinamide moiety of NAD and attack on the C1' of ribose
+        by Asn 41 (thought to be activated by Glu214) of Rho in an Sn1 like mechanism. The oxocarbenium
+        ion intermediate is thought to be stabilised by Glu 214, which forms a hydrogen bond to the ribose
+        2' OH group and also Ser174. Out of the two mechanism proposals, this is more favoured due to
+        mutagenesis experi
+      notes: M-CSA entry 824, mechanism 1; M-CSA cites PMID:11114250, PMID:14733615, PMID:16107839, PMID:16411778,
+        PMID:16956368, PMID:1980208, PMID:9012663; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/824/
+      snippet: The reaction requires loss of the nicotinamide moiety of NAD and attack on the C1' of ribose
+        by Asn 41 (thought to be activated by Glu214) of Rho in an Sn1 like mechanism. The oxocarbenium
+        ion intermediate is thought to be stabilised by Glu 214, which forms a hydrogen bond to the ribose
+        2' OH group and also Ser174. Out of the two mechanism proposals, this is more favoured due to
+        mutagenesis experi
+      notes: M-CSA entry 824, mechanism 1; M-CSA cites PMID:11114250, PMID:14733615, PMID:16107839, PMID:16411778,
+        PMID:16956368, PMID:1980208, PMID:9012663; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/824/
+      snippet: The reaction requires loss of the nicotinamide moiety of NAD and attack on the C1' of ribose
+        by Asn 41 (thought to be activated by Glu214) of Rho in an Sn1 like mechanism. The oxocarbenium
+        ion intermediate is thought to be stabilised by Glu 214, which forms a hydrogen bond to the ribose
+        2' OH group and also Ser174. Out of the two mechanism proposals, this is more favoured due to
+        mutagenesis experi
+      notes: M-CSA entry 824, mechanism 1; M-CSA cites PMID:11114250, PMID:14733615, PMID:16107839, PMID:16411778,
+        PMID:16956368, PMID:1980208, PMID:9012663; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (16 evidence-backed edges) transcribed from M-CSA entry 824;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

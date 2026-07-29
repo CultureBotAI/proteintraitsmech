@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.20.9.1
 - CHEBI:15377
@@ -675,4 +675,472 @@ definitions:
       Arsenite oxidase oxidises arsenite (As(III)O33-)to the less toxic arsenate (As(V)O43-). The electrons produced are transferred towards the soluble periplasmic electron carriers cytochrome c and/or amicyanin. Arsenite oxidase is a heterodimeric enzyme containing a large and a small subunit. The large catalytic subunit harbours the molybdopterin cofactor (comprising two molybdopterin guanosine dinucleotide cofactors bound to molybdenum), and a [3Fe-4S] cluster; the small subunit belongs to the structural class of the Rieske proteins and contains a Rieske-type [2Fe-2S] clusters.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of arsenite oxidase
+  description: Stepwise mechanism transcribed from M-CSA entry 144 (6 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: cys24
+    label: catalytic Cys24 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q7SIF4
+    description: 'M-CSA roles: metal ligand, single electron acceptor, single electron donor, single electron
+      relay.'
+  - node_id: his62
+    label: catalytic His62 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q7SIF4
+    description: 'M-CSA roles: hydrogen bond donor, metal ligand, single electron acceptor, single electron
+      donor, single electron relay.'
+  - node_id: his81
+    label: catalytic His81 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q7SIF4
+    description: 'M-CSA roles: metal ligand, single electron acceptor, single electron donor, single electron
+      relay.'
+  - node_id: ser98
+    label: catalytic Ser98 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q7SIF4
+    description: 'M-CSA roles: hydrogen bond acceptor, single electron acceptor, single electron donor,
+      single electron relay.'
+  - node_id: ser99
+    label: catalytic Ser99 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q7SIF4
+    description: 'M-CSA roles: hydrogen bond donor, single electron acceptor, single electron donor, single
+      electron relay.'
+  - node_id: ser238
+    label: catalytic Ser238 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q7SIF4
+    description: 'M-CSA roles: hydrogen bond acceptor, single electron acceptor, single electron donor,
+      single electron relay.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: arsenite(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:29242
+  - node_id: reactant2
+    label: copper(2+)
+    node_type: CHEMICAL
+    grounding: CHEBI:29036
+  - node_id: product0
+    label: arsenate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:48597
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: copper(1+)
+    node_type: CHEMICAL
+    grounding: CHEBI:49552
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Arsenic of the arsenite substrate attacks one of the molybdenum coordinating oxo groups,
+      resulting in a Mo(VI) to Mo(IV) reduction.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The attacking oxo group forms a second bond to the arsenic, forming the product arsenate
+      and resulting in the loss of the oxo group from the molybdenum complex and the remaining oxo group
+      binding in a much stronger interaction.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: An unidentified base (shown as water for simplicity) activates water to attack the Mo(IV),
+      forming a hydroxide group in place of the lost oxo group in a nucleophilic addition to the Mo(IV).
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: A second unidentified base (shown as water) deprotonates the Mo-bound hydroxide, reforming
+      the oxo group. This results in a single electron transfer through the pterin portion of the cofactor,
+      main chain carbonyl of Ser238, thiolate of Cys24, an iron-sulfur cluster, the peptide bond of Ser99-Ser98,
+      His62B, a second iron-sulfur complex and His81B and finally yields the electron to a bound azurin
+      an
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: The second single electron is transferred from Mo(V) through the pterin portion of the
+      cofactor, main chain carbonyl of Ser238, thiolate of Cys24, an iron-sulfur cluster, the peptide
+      bond of Ser99-Ser98, His62B, a second iron-sulfur complex and His81B and finally yields the electron
+      to a bound azurin. This regenerates the enzyme's Mo(VI) oxidation state.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: arsenite oxidase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:144
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.200.200 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.200.200
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: arsenite oxidase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.20.9.1
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/144/
+      snippet: The attacking oxo group forms a second bond to the arsenic, forming the product arsenate
+        and resulting in the loss of the oxo group from the molybdenum complex and the remaining oxo group
+        binding in a much stronger interaction.
+      notes: M-CSA entry 144, mechanism 1; M-CSA cites PMID:11250197, PMID:12236735, PMID:14769044, PMID:28496149;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/144/
+      snippet: An unidentified base (shown as water for simplicity) activates water to attack the Mo(IV),
+        forming a hydroxide group in place of the lost oxo group in a nucleophilic addition to the Mo(IV).
+      notes: M-CSA entry 144, mechanism 1; M-CSA cites PMID:11250197, PMID:12236735, PMID:14769044, PMID:28496149;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/144/
+      snippet: A second unidentified base (shown as water) deprotonates the Mo-bound hydroxide, reforming
+        the oxo group. This results in a single electron transfer through the pterin portion of the cofactor,
+        main chain carbonyl of Ser238, thiolate of Cys24, an iron-sulfur cluster, the peptide bond of
+        Ser99-Ser98, His62B, a second iron-sulfur complex and His81B and finally yields the electron to
+        a bound azurin and resulting in Mo(V).
+      notes: M-CSA entry 144, mechanism 1; M-CSA cites PMID:11250197, PMID:12236735, PMID:14769044, PMID:28496149;
+        step 4
+  - subject: cys24
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Cys24 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/144/
+      snippet: A second unidentified base (shown as water) deprotonates the Mo-bound hydroxide, reforming
+        the oxo group. This results in a single electron transfer through the pterin portion of the cofactor,
+        main chain carbonyl of Ser238, thiolate of Cys24, an iron-sulfur cluster, the peptide bond of
+        Ser99-Ser98, His62B, a second iron-sulfur complex and His81B and finally yields the electron to
+        a bound azurin and resulting in Mo(V).
+      notes: M-CSA entry 144, mechanism 1; M-CSA cites PMID:11250197, PMID:12236735, PMID:14769044, PMID:28496149;
+        step 4
+  - subject: ser98
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Ser98 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/144/
+      snippet: A second unidentified base (shown as water) deprotonates the Mo-bound hydroxide, reforming
+        the oxo group. This results in a single electron transfer through the pterin portion of the cofactor,
+        main chain carbonyl of Ser238, thiolate of Cys24, an iron-sulfur cluster, the peptide bond of
+        Ser99-Ser98, His62B, a second iron-sulfur complex and His81B and finally yields the electron to
+        a bound azurin and resulting in Mo(V).
+      notes: M-CSA entry 144, mechanism 1; M-CSA cites PMID:11250197, PMID:12236735, PMID:14769044, PMID:28496149;
+        step 4
+  - subject: ser99
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Ser99 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/144/
+      snippet: A second unidentified base (shown as water) deprotonates the Mo-bound hydroxide, reforming
+        the oxo group. This results in a single electron transfer through the pterin portion of the cofactor,
+        main chain carbonyl of Ser238, thiolate of Cys24, an iron-sulfur cluster, the peptide bond of
+        Ser99-Ser98, His62B, a second iron-sulfur complex and His81B and finally yields the electron to
+        a bound azurin and resulting in Mo(V).
+      notes: M-CSA entry 144, mechanism 1; M-CSA cites PMID:11250197, PMID:12236735, PMID:14769044, PMID:28496149;
+        step 4
+  - subject: ser238
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Ser238 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/144/
+      snippet: A second unidentified base (shown as water) deprotonates the Mo-bound hydroxide, reforming
+        the oxo group. This results in a single electron transfer through the pterin portion of the cofactor,
+        main chain carbonyl of Ser238, thiolate of Cys24, an iron-sulfur cluster, the peptide bond of
+        Ser99-Ser98, His62B, a second iron-sulfur complex and His81B and finally yields the electron to
+        a bound azurin and resulting in Mo(V).
+      notes: M-CSA entry 144, mechanism 1; M-CSA cites PMID:11250197, PMID:12236735, PMID:14769044, PMID:28496149;
+        step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/144/
+      snippet: The second single electron is transferred from Mo(V) through the pterin portion of the
+        cofactor, main chain carbonyl of Ser238, thiolate of Cys24, an iron-sulfur cluster, the peptide
+        bond of Ser99-Ser98, His62B, a second iron-sulfur complex and His81B and finally yields the electron
+        to a bound azurin. This regenerates the enzyme's Mo(VI) oxidation state.
+      notes: M-CSA entry 144, mechanism 1; M-CSA cites PMID:11250197, PMID:12236735, PMID:14769044, PMID:28496149;
+        step 5
+  - subject: cys24
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Cys24 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/144/
+      snippet: The second single electron is transferred from Mo(V) through the pterin portion of the
+        cofactor, main chain carbonyl of Ser238, thiolate of Cys24, an iron-sulfur cluster, the peptide
+        bond of Ser99-Ser98, His62B, a second iron-sulfur complex and His81B and finally yields the electron
+        to a bound azurin. This regenerates the enzyme's Mo(VI) oxidation state.
+      notes: M-CSA entry 144, mechanism 1; M-CSA cites PMID:11250197, PMID:12236735, PMID:14769044, PMID:28496149;
+        step 5
+  - subject: ser98
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Ser98 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/144/
+      snippet: The second single electron is transferred from Mo(V) through the pterin portion of the
+        cofactor, main chain carbonyl of Ser238, thiolate of Cys24, an iron-sulfur cluster, the peptide
+        bond of Ser99-Ser98, His62B, a second iron-sulfur complex and His81B and finally yields the electron
+        to a bound azurin. This regenerates the enzyme's Mo(VI) oxidation state.
+      notes: M-CSA entry 144, mechanism 1; M-CSA cites PMID:11250197, PMID:12236735, PMID:14769044, PMID:28496149;
+        step 5
+  - subject: ser99
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Ser99 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/144/
+      snippet: The second single electron is transferred from Mo(V) through the pterin portion of the
+        cofactor, main chain carbonyl of Ser238, thiolate of Cys24, an iron-sulfur cluster, the peptide
+        bond of Ser99-Ser98, His62B, a second iron-sulfur complex and His81B and finally yields the electron
+        to a bound azurin. This regenerates the enzyme's Mo(VI) oxidation state.
+      notes: M-CSA entry 144, mechanism 1; M-CSA cites PMID:11250197, PMID:12236735, PMID:14769044, PMID:28496149;
+        step 5
+  - subject: ser238
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Ser238 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/144/
+      snippet: The second single electron is transferred from Mo(V) through the pterin portion of the
+        cofactor, main chain carbonyl of Ser238, thiolate of Cys24, an iron-sulfur cluster, the peptide
+        bond of Ser99-Ser98, His62B, a second iron-sulfur complex and His81B and finally yields the electron
+        to a bound azurin. This regenerates the enzyme's Mo(VI) oxidation state.
+      notes: M-CSA entry 144, mechanism 1; M-CSA cites PMID:11250197, PMID:12236735, PMID:14769044, PMID:28496149;
+        step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/144/
+      snippet: Products.
+      notes: M-CSA entry 144, mechanism 1; M-CSA cites PMID:11250197, PMID:12236735, PMID:14769044, PMID:28496149;
+        step 6
+  - subject: cys24
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys24 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/144/
+      snippet: metal ligand, single electron acceptor, single electron donor, single electron relay
+      notes: M-CSA entry 144, mechanism 1; M-CSA cites PMID:11250197, PMID:12236735, PMID:14769044, PMID:28496149;
+        M-CSA catalytic-residue roles for Cys24
+  - subject: his62
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His62 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/144/
+      snippet: hydrogen bond donor, metal ligand, single electron acceptor, single electron donor, single
+        electron relay
+      notes: M-CSA entry 144, mechanism 1; M-CSA cites PMID:11250197, PMID:12236735, PMID:14769044, PMID:28496149;
+        M-CSA catalytic-residue roles for His62
+  - subject: his81
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His81 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/144/
+      snippet: metal ligand, single electron acceptor, single electron donor, single electron relay
+      notes: M-CSA entry 144, mechanism 1; M-CSA cites PMID:11250197, PMID:12236735, PMID:14769044, PMID:28496149;
+        M-CSA catalytic-residue roles for His81
+  - subject: ser98
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser98 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/144/
+      snippet: hydrogen bond acceptor, single electron acceptor, single electron donor, single electron
+        relay
+      notes: M-CSA entry 144, mechanism 1; M-CSA cites PMID:11250197, PMID:12236735, PMID:14769044, PMID:28496149;
+        M-CSA catalytic-residue roles for Ser98
+  - subject: ser99
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser99 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/144/
+      snippet: hydrogen bond donor, single electron acceptor, single electron donor, single electron relay
+      notes: M-CSA entry 144, mechanism 1; M-CSA cites PMID:11250197, PMID:12236735, PMID:14769044, PMID:28496149;
+        M-CSA catalytic-residue roles for Ser99
+  - subject: ser238
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser238 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/144/
+      snippet: hydrogen bond acceptor, single electron acceptor, single electron donor, single electron
+        relay
+      notes: M-CSA entry 144, mechanism 1; M-CSA cites PMID:11250197, PMID:12236735, PMID:14769044, PMID:28496149;
+        M-CSA catalytic-residue roles for Ser238
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/144/
+      snippet: The arsenic of the arsenite substrate attacks one of the molybdenum coordinating oxo groups,
+        resulting in a Mo(VI) to Mo(IV) reduction. The oxo group forms a second bond to the arsenic, forming
+        the product arsenate and resulting in the loss of the oxo group from the molybdenum complex and
+        the remaining oxo group binding in a much stronger interaction. An unidentified base activates
+        water to attack
+      notes: M-CSA entry 144, mechanism 1; M-CSA cites PMID:11250197, PMID:12236735, PMID:14769044, PMID:28496149;
+        CATH domain 3.30.200.200 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/144/
+      snippet: The arsenic of the arsenite substrate attacks one of the molybdenum coordinating oxo groups,
+        resulting in a Mo(VI) to Mo(IV) reduction. The oxo group forms a second bond to the arsenic, forming
+        the product arsenate and resulting in the loss of the oxo group from the molybdenum complex and
+        the remaining oxo group binding in a much stronger interaction. An unidentified base activates
+        water to attack
+      notes: M-CSA entry 144, mechanism 1; M-CSA cites PMID:11250197, PMID:12236735, PMID:14769044, PMID:28496149;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/144/
+      snippet: The arsenic of the arsenite substrate attacks one of the molybdenum coordinating oxo groups,
+        resulting in a Mo(VI) to Mo(IV) reduction. The oxo group forms a second bond to the arsenic, forming
+        the product arsenate and resulting in the loss of the oxo group from the molybdenum complex and
+        the remaining oxo group binding in a much stronger interaction. An unidentified base activates
+        water to attack
+      notes: M-CSA entry 144, mechanism 1; M-CSA cites PMID:11250197, PMID:12236735, PMID:14769044, PMID:28496149;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/144/
+      snippet: The arsenic of the arsenite substrate attacks one of the molybdenum coordinating oxo groups,
+        resulting in a Mo(VI) to Mo(IV) reduction. The oxo group forms a second bond to the arsenic, forming
+        the product arsenate and resulting in the loss of the oxo group from the molybdenum complex and
+        the remaining oxo group binding in a much stronger interaction. An unidentified base activates
+        water to attack
+      notes: M-CSA entry 144, mechanism 1; M-CSA cites PMID:11250197, PMID:12236735, PMID:14769044, PMID:28496149;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/144/
+      snippet: The arsenic of the arsenite substrate attacks one of the molybdenum coordinating oxo groups,
+        resulting in a Mo(VI) to Mo(IV) reduction. The oxo group forms a second bond to the arsenic, forming
+        the product arsenate and resulting in the loss of the oxo group from the molybdenum complex and
+        the remaining oxo group binding in a much stronger interaction. An unidentified base activates
+        water to attack
+      notes: M-CSA entry 144, mechanism 1; M-CSA cites PMID:11250197, PMID:12236735, PMID:14769044, PMID:28496149;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/144/
+      snippet: The arsenic of the arsenite substrate attacks one of the molybdenum coordinating oxo groups,
+        resulting in a Mo(VI) to Mo(IV) reduction. The oxo group forms a second bond to the arsenic, forming
+        the product arsenate and resulting in the loss of the oxo group from the molybdenum complex and
+        the remaining oxo group binding in a much stronger interaction. An unidentified base activates
+        water to attack
+      notes: M-CSA entry 144, mechanism 1; M-CSA cites PMID:11250197, PMID:12236735, PMID:14769044, PMID:28496149;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/144/
+      snippet: The arsenic of the arsenite substrate attacks one of the molybdenum coordinating oxo groups,
+        resulting in a Mo(VI) to Mo(IV) reduction. The oxo group forms a second bond to the arsenic, forming
+        the product arsenate and resulting in the loss of the oxo group from the molybdenum complex and
+        the remaining oxo group binding in a much stronger interaction. An unidentified base activates
+        water to attack
+      notes: M-CSA entry 144, mechanism 1; M-CSA cites PMID:11250197, PMID:12236735, PMID:14769044, PMID:28496149;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/144/
+      snippet: The arsenic of the arsenite substrate attacks one of the molybdenum coordinating oxo groups,
+        resulting in a Mo(VI) to Mo(IV) reduction. The oxo group forms a second bond to the arsenic, forming
+        the product arsenate and resulting in the loss of the oxo group from the molybdenum complex and
+        the remaining oxo group binding in a much stronger interaction. An unidentified base activates
+        water to attack
+      notes: M-CSA entry 144, mechanism 1; M-CSA cites PMID:11250197, PMID:12236735, PMID:14769044, PMID:28496149;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (27 evidence-backed edges) transcribed from M-CSA entry 144;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

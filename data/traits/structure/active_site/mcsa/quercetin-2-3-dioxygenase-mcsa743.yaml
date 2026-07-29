@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.13.11.24
 - CHEBI:57694
@@ -295,4 +295,310 @@ definitions:
       Quercetin 2,3-dioxygenase is a copper-dependent enzyme that catalyses the reaction of dioxygen with quercin (3,5,7,3',4'-pentahydroxy flavone). Dioxygenases are enzymes that catalyses the incorporation of both atoms of molecular oxygen into organic substrates, most notably during the degradation of aromatic compounds. They typically use a metal ion to circumvent the spin barrier that prevents the direct reaction of the triplet ground state of dioxygen with singlet-state organic compounds. In most of the well-studied dioxygenases, the metal used is iron; quercetin 2,3-dioxygenase is the only known member of this family to use copper.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of quercetin 2,3-dioxygenase
+  description: Stepwise mechanism transcribed from M-CSA entry 743 (7 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: his66
+    label: catalytic His66 (M-CSA/PDB numbering; UniProt residue 66)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q7SIC2
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his68
+    label: catalytic His68 (M-CSA/PDB numbering; UniProt residue 68)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q7SIC2
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu73
+    label: catalytic Glu73 (M-CSA/PDB numbering; UniProt residue 73)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q7SIC2
+    description: 'M-CSA roles: electrostatic stabiliser, proton acceptor, proton donor.'
+  - node_id: his112
+    label: catalytic His112 (M-CSA/PDB numbering; UniProt residue 112)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q7SIC2
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: quercetin-7-olate
+    node_type: CHEMICAL
+    grounding: CHEBI:57694
+  - node_id: reactant1
+    label: dioxygen
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+  - node_id: product0
+    label: 2-(3,4-dihydroxybenzoyloxy)-4,6-dihydroxybenzoate
+    node_type: CHEMICAL
+    grounding: CHEBI:57628
+  - node_id: product1
+    label: carbon monoxide
+    node_type: CHEMICAL
+    grounding: CHEBI:17245
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu73 deprotonates the hydroxyl  group of the substrate which then binds to the Cu(II)
+      through the oxygen. The substrate rearranges to form a radical intermediate in the low-lying excited
+      state [Cu(I)-substrate(radical)].
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Oxygen reacts with the low-lying state of the reactant.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Dioxygen attacks the radical intermediate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: A second C-O bond between dioxygen and the substrate forms.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: There is simultaneous cleavage of the peroxide O-O bond and two C-C bonds. Carbon monoxide
+      is released.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Glu73 donates a proton to the product, completing the reaction and regenerating the active
+      site.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: quercetin 2,3-dioxygenase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:743
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.60.120.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.60.120.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: quercetin 2,3-dioxygenase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.13.11.24
+  edges:
+  - subject: glu73
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu73 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/743/
+      snippet: Glu73 deprotonates the hydroxyl  group of the substrate which then binds to the Cu(II)
+        through the oxygen. The substrate rearranges to form a radical intermediate in the low-lying excited
+        state [Cu(I)-substrate(radical)].
+      notes: M-CSA entry 743, mechanism 2; M-CSA cites PMID:11839311, PMID:15360243, PMID:16786599, PMID:26599260;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/743/
+      snippet: Oxygen reacts with the low-lying state of the reactant.
+      notes: M-CSA entry 743, mechanism 2; M-CSA cites PMID:11839311, PMID:15360243, PMID:16786599, PMID:26599260;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/743/
+      snippet: Dioxygen attacks the radical intermediate.
+      notes: M-CSA entry 743, mechanism 2; M-CSA cites PMID:11839311, PMID:15360243, PMID:16786599, PMID:26599260;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/743/
+      snippet: A second C-O bond between dioxygen and the substrate forms.
+      notes: M-CSA entry 743, mechanism 2; M-CSA cites PMID:11839311, PMID:15360243, PMID:16786599, PMID:26599260;
+        step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/743/
+      snippet: There is simultaneous cleavage of the peroxide O-O bond and two C-C bonds. Carbon monoxide
+        is released.
+      notes: M-CSA entry 743, mechanism 2; M-CSA cites PMID:11839311, PMID:15360243, PMID:16786599, PMID:26599260;
+        step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/743/
+      snippet: Glu73 donates a proton to the product, completing the reaction and regenerating the active
+        site.
+      notes: M-CSA entry 743, mechanism 2; M-CSA cites PMID:11839311, PMID:15360243, PMID:16786599, PMID:26599260;
+        step 6
+  - subject: glu73
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: Glu73 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/743/
+      snippet: Glu73 donates a proton to the product, completing the reaction and regenerating the active
+        site.
+      notes: M-CSA entry 743, mechanism 2; M-CSA cites PMID:11839311, PMID:15360243, PMID:16786599, PMID:26599260;
+        step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/743/
+      snippet: Products.
+      notes: M-CSA entry 743, mechanism 2; M-CSA cites PMID:11839311, PMID:15360243, PMID:16786599, PMID:26599260;
+        step 7
+  - subject: his66
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His66 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/743/
+      snippet: metal ligand
+      notes: M-CSA entry 743, mechanism 2; M-CSA cites PMID:11839311, PMID:15360243, PMID:16786599, PMID:26599260;
+        M-CSA catalytic-residue roles for His66
+  - subject: his68
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His68 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/743/
+      snippet: metal ligand
+      notes: M-CSA entry 743, mechanism 2; M-CSA cites PMID:11839311, PMID:15360243, PMID:16786599, PMID:26599260;
+        M-CSA catalytic-residue roles for His68
+  - subject: glu73
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu73 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/743/
+      snippet: electrostatic stabiliser, proton acceptor, proton donor
+      notes: M-CSA entry 743, mechanism 2; M-CSA cites PMID:11839311, PMID:15360243, PMID:16786599, PMID:26599260;
+        M-CSA catalytic-residue roles for Glu73
+  - subject: his112
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His112 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/743/
+      snippet: metal ligand
+      notes: M-CSA entry 743, mechanism 2; M-CSA cites PMID:11839311, PMID:15360243, PMID:16786599, PMID:26599260;
+        M-CSA catalytic-residue roles for His112
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/743/
+      snippet: Quercetin 2,3-dioxygenase uses a Cu(II) ion to avoid problems of spin associated with reactions
+        involving dioxygen. In the first step, the C3 hydroxyl of the substrate coordinates the Cu(II)
+        and transfers its proton to Glu 73. Dioxygen must now bind to this complex. The ground state [Cu(II)-substrate]
+        binds dioxygen quite poorly, and the low-lying excited state [Cu(I)-substrate(radical)] is the
+        ac
+      notes: M-CSA entry 743, mechanism 2; M-CSA cites PMID:11839311, PMID:15360243, PMID:16786599, PMID:26599260;
+        CATH domain 2.60.120.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/743/
+      snippet: Quercetin 2,3-dioxygenase uses a Cu(II) ion to avoid problems of spin associated with reactions
+        involving dioxygen. In the first step, the C3 hydroxyl of the substrate coordinates the Cu(II)
+        and transfers its proton to Glu 73. Dioxygen must now bind to this complex. The ground state [Cu(II)-substrate]
+        binds dioxygen quite poorly, and the low-lying excited state [Cu(I)-substrate(radical)] is the
+        ac
+      notes: M-CSA entry 743, mechanism 2; M-CSA cites PMID:11839311, PMID:15360243, PMID:16786599, PMID:26599260;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/743/
+      snippet: Quercetin 2,3-dioxygenase uses a Cu(II) ion to avoid problems of spin associated with reactions
+        involving dioxygen. In the first step, the C3 hydroxyl of the substrate coordinates the Cu(II)
+        and transfers its proton to Glu 73. Dioxygen must now bind to this complex. The ground state [Cu(II)-substrate]
+        binds dioxygen quite poorly, and the low-lying excited state [Cu(I)-substrate(radical)] is the
+        ac
+      notes: M-CSA entry 743, mechanism 2; M-CSA cites PMID:11839311, PMID:15360243, PMID:16786599, PMID:26599260;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/743/
+      snippet: Quercetin 2,3-dioxygenase uses a Cu(II) ion to avoid problems of spin associated with reactions
+        involving dioxygen. In the first step, the C3 hydroxyl of the substrate coordinates the Cu(II)
+        and transfers its proton to Glu 73. Dioxygen must now bind to this complex. The ground state [Cu(II)-substrate]
+        binds dioxygen quite poorly, and the low-lying excited state [Cu(I)-substrate(radical)] is the
+        ac
+      notes: M-CSA entry 743, mechanism 2; M-CSA cites PMID:11839311, PMID:15360243, PMID:16786599, PMID:26599260;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/743/
+      snippet: Quercetin 2,3-dioxygenase uses a Cu(II) ion to avoid problems of spin associated with reactions
+        involving dioxygen. In the first step, the C3 hydroxyl of the substrate coordinates the Cu(II)
+        and transfers its proton to Glu 73. Dioxygen must now bind to this complex. The ground state [Cu(II)-substrate]
+        binds dioxygen quite poorly, and the low-lying excited state [Cu(I)-substrate(radical)] is the
+        ac
+      notes: M-CSA entry 743, mechanism 2; M-CSA cites PMID:11839311, PMID:15360243, PMID:16786599, PMID:26599260;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/743/
+      snippet: Quercetin 2,3-dioxygenase uses a Cu(II) ion to avoid problems of spin associated with reactions
+        involving dioxygen. In the first step, the C3 hydroxyl of the substrate coordinates the Cu(II)
+        and transfers its proton to Glu 73. Dioxygen must now bind to this complex. The ground state [Cu(II)-substrate]
+        binds dioxygen quite poorly, and the low-lying excited state [Cu(I)-substrate(radical)] is the
+        ac
+      notes: M-CSA entry 743, mechanism 2; M-CSA cites PMID:11839311, PMID:15360243, PMID:16786599, PMID:26599260;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (18 evidence-backed edges) transcribed from M-CSA entry 743;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.4.1.5
 - CHEBI:17158
@@ -295,4 +295,287 @@ definitions:
       Lactoyl-glutathione lyase (or glyoxalase I) is part of the glyoxalase system which catalyses the conversion of acyclic alpha-oxoaldehydes into the corresponding alpha-hydroxyacids. Glyoxalase I catalyses the isomerization of the hemithioacetal (formed spontaneously from alpha-oxoaldehyde and GSH), to S-2-hydroxyacylglutathione (or R) derivatives, therefore decreasing the steady-state concentrations of physiological alpha-oxoaldehydes and associated glycation reactions. Physiological substrates of glyoxalase I are methylglyoxal, glyoxal and other acyclic alpha-oxoaldehydes. This is the first of two steps in the conversion of 2-oxo-aldehydes to the corresponding 2-hydroxycarboxylic acids by way of the glyoxylase system. Methylglyoxal is produced as a by product of the triosephosphate isomerase reaction in glycolysis and, if not removed, is toxic as it reacts readily with with proteins and nucleic acids.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of lactoylglutathione lyase
+  description: Stepwise mechanism transcribed from M-CSA entry 32 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +1).
+  nodes:
+  - node_id: gln33
+    label: catalytic Gln33 (M-CSA/PDB numbering; UniProt residue 34)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q04760
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu99
+    label: catalytic Glu99 (M-CSA/PDB numbering; UniProt residue 100)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q04760
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, metal ligand, proton acceptor,
+      proton donor.'
+  - node_id: his126
+    label: catalytic His126 (M-CSA/PDB numbering; UniProt residue 127)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q04760
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu172
+    label: catalytic Glu172 (M-CSA/PDB numbering; UniProt residue 173)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q04760
+    description: 'M-CSA roles: hydrogen bond acceptor, metal ligand, proton acceptor, proton donor, proton
+      relay.'
+  - node_id: reactant0
+    label: methylglyoxal
+    node_type: CHEMICAL
+    grounding: CHEBI:17158
+  - node_id: reactant1
+    label: glutathione
+    node_type: CHEMICAL
+    grounding: CHEBI:16856
+  - node_id: product0
+    label: (R)-S-lactoylglutathione
+    node_type: CHEMICAL
+    grounding: CHEBI:15694
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Spontaneous formation of the lactoylglutathione.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Glu99 deprotonates the C3 carbon adjacent to the sulfur atom, resulting in double bond
+      rearrangement and formation of the enol-intermediate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The oxyanion deprotonates Glu99.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Glu172B deprotonates the C3 hydroxy group, causing double bond rearrangement and the
+      protonation of C2 from Glu172B.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: lactoylglutathione lyase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:32
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.10.180.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.10.180.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: lactoylglutathione lyase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.4.1.5
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/32/
+      snippet: Glu99 deprotonates the C3 carbon adjacent to the sulfur atom, resulting in double bond
+        rearrangement and formation of the enol-intermediate.
+      notes: M-CSA entry 32, mechanism 1; M-CSA cites PMID:10521255, PMID:11076500, PMID:11076566, PMID:11603978,
+        PMID:14556652, PMID:14641060, PMID:17513180, PMID:21310258, PMID:24369791, PMID:9705294; step
+        2
+  - subject: glu99
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu99 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/32/
+      snippet: Glu99 deprotonates the C3 carbon adjacent to the sulfur atom, resulting in double bond
+        rearrangement and formation of the enol-intermediate.
+      notes: M-CSA entry 32, mechanism 1; M-CSA cites PMID:10521255, PMID:11076500, PMID:11076566, PMID:11603978,
+        PMID:14556652, PMID:14641060, PMID:17513180, PMID:21310258, PMID:24369791, PMID:9705294; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/32/
+      snippet: The oxyanion deprotonates Glu99.
+      notes: M-CSA entry 32, mechanism 1; M-CSA cites PMID:10521255, PMID:11076500, PMID:11076566, PMID:11603978,
+        PMID:14556652, PMID:14641060, PMID:17513180, PMID:21310258, PMID:24369791, PMID:9705294; step
+        3
+  - subject: glu99
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Glu99 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/32/
+      snippet: The oxyanion deprotonates Glu99.
+      notes: M-CSA entry 32, mechanism 1; M-CSA cites PMID:10521255, PMID:11076500, PMID:11076566, PMID:11603978,
+        PMID:14556652, PMID:14641060, PMID:17513180, PMID:21310258, PMID:24369791, PMID:9705294; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/32/
+      snippet: Glu172B deprotonates the C3 hydroxy group, causing double bond rearrangement and the protonation
+        of C2 from Glu172B.
+      notes: M-CSA entry 32, mechanism 1; M-CSA cites PMID:10521255, PMID:11076500, PMID:11076566, PMID:11603978,
+        PMID:14556652, PMID:14641060, PMID:17513180, PMID:21310258, PMID:24369791, PMID:9705294; step
+        4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/32/
+      snippet: Products
+      notes: M-CSA entry 32, mechanism 1; M-CSA cites PMID:10521255, PMID:11076500, PMID:11076566, PMID:11603978,
+        PMID:14556652, PMID:14641060, PMID:17513180, PMID:21310258, PMID:24369791, PMID:9705294; step
+        5
+  - subject: gln33
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln33 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/32/
+      snippet: metal ligand
+      notes: M-CSA entry 32, mechanism 1; M-CSA cites PMID:10521255, PMID:11076500, PMID:11076566, PMID:11603978,
+        PMID:14556652, PMID:14641060, PMID:17513180, PMID:21310258, PMID:24369791, PMID:9705294; M-CSA
+        catalytic-residue roles for Gln33
+  - subject: glu99
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu99 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/32/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, metal ligand, proton acceptor, proton donor
+      notes: M-CSA entry 32, mechanism 1; M-CSA cites PMID:10521255, PMID:11076500, PMID:11076566, PMID:11603978,
+        PMID:14556652, PMID:14641060, PMID:17513180, PMID:21310258, PMID:24369791, PMID:9705294; M-CSA
+        catalytic-residue roles for Glu99
+  - subject: his126
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His126 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/32/
+      snippet: metal ligand
+      notes: M-CSA entry 32, mechanism 1; M-CSA cites PMID:10521255, PMID:11076500, PMID:11076566, PMID:11603978,
+        PMID:14556652, PMID:14641060, PMID:17513180, PMID:21310258, PMID:24369791, PMID:9705294; M-CSA
+        catalytic-residue roles for His126
+  - subject: glu172
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu172 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/32/
+      snippet: hydrogen bond acceptor, metal ligand, proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 32, mechanism 1; M-CSA cites PMID:10521255, PMID:11076500, PMID:11076566, PMID:11603978,
+        PMID:14556652, PMID:14641060, PMID:17513180, PMID:21310258, PMID:24369791, PMID:9705294; M-CSA
+        catalytic-residue roles for Glu172
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/32/
+      snippet: "This is the mechanism that occurs with the R enantiomer.  The mechanism employed by the\
+        \ enzyme reflects the stereochemistry of the substrate. Both S and R forms of the hemithioacetal\
+        \ bind in the active site, coordinated to the Zn(II) metal in the place of previously coordinated\
+        \ water molecules.   
+<br/><br/>
+The R enantiomer reaction mechanism differs in that it\
+        \ involves two bases (Glu99 and Glu"
+      notes: M-CSA entry 32, mechanism 1; M-CSA cites PMID:10521255, PMID:11076500, PMID:11076566, PMID:11603978,
+        PMID:14556652, PMID:14641060, PMID:17513180, PMID:21310258, PMID:24369791, PMID:9705294; CATH
+        domain 3.10.180.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/32/
+      snippet: "This is the mechanism that occurs with the R enantiomer.  The mechanism employed by the\
+        \ enzyme reflects the stereochemistry of the substrate. Both S and R forms of the hemithioacetal\
+        \ bind in the active site, coordinated to the Zn(II) metal in the place of previously coordinated\
+        \ water molecules.   
+<br/><br/>
+The R enantiomer reaction mechanism differs in that it\
+        \ involves two bases (Glu99 and Glu"
+      notes: M-CSA entry 32, mechanism 1; M-CSA cites PMID:10521255, PMID:11076500, PMID:11076566, PMID:11603978,
+        PMID:14556652, PMID:14641060, PMID:17513180, PMID:21310258, PMID:24369791, PMID:9705294; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/32/
+      snippet: "This is the mechanism that occurs with the R enantiomer.  The mechanism employed by the\
+        \ enzyme reflects the stereochemistry of the substrate. Both S and R forms of the hemithioacetal\
+        \ bind in the active site, coordinated to the Zn(II) metal in the place of previously coordinated\
+        \ water molecules.   
+<br/><br/>
+The R enantiomer reaction mechanism differs in that it\
+        \ involves two bases (Glu99 and Glu"
+      notes: M-CSA entry 32, mechanism 1; M-CSA cites PMID:10521255, PMID:11076500, PMID:11076566, PMID:11603978,
+        PMID:14556652, PMID:14641060, PMID:17513180, PMID:21310258, PMID:24369791, PMID:9705294; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/32/
+      snippet: "This is the mechanism that occurs with the R enantiomer.  The mechanism employed by the\
+        \ enzyme reflects the stereochemistry of the substrate. Both S and R forms of the hemithioacetal\
+        \ bind in the active site, coordinated to the Zn(II) metal in the place of previously coordinated\
+        \ water molecules.   
+<br/><br/>
+The R enantiomer reaction mechanism differs in that it\
+        \ involves two bases (Glu99 and Glu"
+      notes: M-CSA entry 32, mechanism 1; M-CSA cites PMID:10521255, PMID:11076500, PMID:11076566, PMID:11603978,
+        PMID:14556652, PMID:14641060, PMID:17513180, PMID:21310258, PMID:24369791, PMID:9705294; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/32/
+      snippet: "This is the mechanism that occurs with the R enantiomer.  The mechanism employed by the\
+        \ enzyme reflects the stereochemistry of the substrate. Both S and R forms of the hemithioacetal\
+        \ bind in the active site, coordinated to the Zn(II) metal in the place of previously coordinated\
+        \ water molecules.   
+<br/><br/>
+The R enantiomer reaction mechanism differs in that it\
+        \ involves two bases (Glu99 and Glu"
+      notes: M-CSA entry 32, mechanism 1; M-CSA cites PMID:10521255, PMID:11076500, PMID:11076566, PMID:11603978,
+        PMID:14556652, PMID:14641060, PMID:17513180, PMID:21310258, PMID:24369791, PMID:9705294; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 32;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

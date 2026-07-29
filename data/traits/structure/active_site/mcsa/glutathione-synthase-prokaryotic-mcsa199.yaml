@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:6.3.2.3
 - CHEBI:30616
@@ -244,4 +244,471 @@ definitions:
       Glutathione synthetase catalyses the ligation of glycine to gamma-L-glutamyl-L-cysteine (gamma-Glu-Cys) with concomitant hydrolysis of ATP. This is the second and final step in the synthesis of glutathione. Glutathione has many important functions in the cell, including protection against oxidative damage, detoxification of harmful substances, and as a coenzyme for several reactions. Glutathione synthetase is present in species ranging from bacteria to mammals. This entry represents the glutathione synthetases found in Gram-negative bacteria. This gene does not appear to be present in genomes of Gram-positive bacteria.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of glutathione synthase (prokaryotic)
+  description: Stepwise mechanism transcribed from M-CSA entry 199 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: lys125
+    label: catalytic Lys125 (M-CSA/PDB numbering; UniProt residue 125)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04425
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: lys160
+    label: catalytic Lys160 (M-CSA/PDB numbering; UniProt residue 160)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04425
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: arg210
+    label: catalytic Arg210 (M-CSA/PDB numbering; UniProt residue 210)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04425
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: arg225
+    label: catalytic Arg225 (M-CSA/PDB numbering; UniProt residue 225)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04425
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: arg233
+    label: catalytic Arg233 (M-CSA/PDB numbering; UniProt residue 233)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04425
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp273
+    label: catalytic Asp273 (M-CSA/PDB numbering; UniProt residue 273)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04425
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu281
+    label: catalytic Glu281 (M-CSA/PDB numbering; UniProt residue 281)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04425
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asn283
+    label: catalytic Asn283 (M-CSA/PDB numbering; UniProt residue 283)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04425
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: ATP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+  - node_id: reactant1
+    label: L-gamma-glutamyl-L-cysteinate(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58173
+  - node_id: reactant2
+    label: glycine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57305
+  - node_id: product0
+    label: ADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+  - node_id: product1
+    label: glutathionate(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57925
+  - node_id: product2
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: product3
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The carboxylate group of gamma-L-glutamyl-L-cysteine acts as a nucleophile and attacks
+      the alpha-phoposphate of ATP in a substitution reaction, liberating ADP. The two Mg(II) ions, Lys160,
+      Arg210 and Arg225 all stabilise the intermediates formed.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The amine group of L-glycine acts as a nucleophile and attacks the carbonyl group of
+      the phosphorylated substrate in an addition reaction. The two Mg(II) ions, Lys160, Arg210 and Arg225
+      all stabilise the intermediates formed.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The oxyanion formed re-forms the carbonyl group, cleaving the P-O bond in a conjugate
+      base elimination reaction. The leaving phosphate group deprotonates the newly formed secondary amine.
+      The two Mg(II) ions, Lys160, Arg210 and Arg225 all stabilise the intermediates formed.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: glutathione synthase (prokaryotic) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:199
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.470.20 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.470.20
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: glutathione synthase (prokaryotic) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:6.3.2.3
+  edges:
+  - subject: lys160
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys160 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/199/
+      snippet: The carboxylate group of gamma-L-glutamyl-L-cysteine acts as a nucleophile and attacks
+        the alpha-phoposphate of ATP in a substitution reaction, liberating ADP. The two Mg(II) ions,
+        Lys160, Arg210 and Arg225 all stabilise the intermediates formed.
+      notes: M-CSA entry 199, mechanism 1; M-CSA cites PMID:1540581, PMID:8445637, PMID:8810901, PMID:9056244;
+        step 1
+  - subject: arg210
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg210 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/199/
+      snippet: The carboxylate group of gamma-L-glutamyl-L-cysteine acts as a nucleophile and attacks
+        the alpha-phoposphate of ATP in a substitution reaction, liberating ADP. The two Mg(II) ions,
+        Lys160, Arg210 and Arg225 all stabilise the intermediates formed.
+      notes: M-CSA entry 199, mechanism 1; M-CSA cites PMID:1540581, PMID:8445637, PMID:8810901, PMID:9056244;
+        step 1
+  - subject: arg225
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg225 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/199/
+      snippet: The carboxylate group of gamma-L-glutamyl-L-cysteine acts as a nucleophile and attacks
+        the alpha-phoposphate of ATP in a substitution reaction, liberating ADP. The two Mg(II) ions,
+        Lys160, Arg210 and Arg225 all stabilise the intermediates formed.
+      notes: M-CSA entry 199, mechanism 1; M-CSA cites PMID:1540581, PMID:8445637, PMID:8810901, PMID:9056244;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/199/
+      snippet: The amine group of L-glycine acts as a nucleophile and attacks the carbonyl group of the
+        phosphorylated substrate in an addition reaction. The two Mg(II) ions, Lys160, Arg210 and Arg225
+        all stabilise the intermediates formed.
+      notes: M-CSA entry 199, mechanism 1; M-CSA cites PMID:1540581, PMID:8445637, PMID:8810901, PMID:9056244;
+        step 2
+  - subject: lys160
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Lys160 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/199/
+      snippet: The amine group of L-glycine acts as a nucleophile and attacks the carbonyl group of the
+        phosphorylated substrate in an addition reaction. The two Mg(II) ions, Lys160, Arg210 and Arg225
+        all stabilise the intermediates formed.
+      notes: M-CSA entry 199, mechanism 1; M-CSA cites PMID:1540581, PMID:8445637, PMID:8810901, PMID:9056244;
+        step 2
+  - subject: arg210
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Arg210 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/199/
+      snippet: The amine group of L-glycine acts as a nucleophile and attacks the carbonyl group of the
+        phosphorylated substrate in an addition reaction. The two Mg(II) ions, Lys160, Arg210 and Arg225
+        all stabilise the intermediates formed.
+      notes: M-CSA entry 199, mechanism 1; M-CSA cites PMID:1540581, PMID:8445637, PMID:8810901, PMID:9056244;
+        step 2
+  - subject: arg225
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Arg225 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/199/
+      snippet: The amine group of L-glycine acts as a nucleophile and attacks the carbonyl group of the
+        phosphorylated substrate in an addition reaction. The two Mg(II) ions, Lys160, Arg210 and Arg225
+        all stabilise the intermediates formed.
+      notes: M-CSA entry 199, mechanism 1; M-CSA cites PMID:1540581, PMID:8445637, PMID:8810901, PMID:9056244;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/199/
+      snippet: The oxyanion formed re-forms the carbonyl group, cleaving the P-O bond in a conjugate base
+        elimination reaction. The leaving phosphate group deprotonates the newly formed secondary amine.
+        The two Mg(II) ions, Lys160, Arg210 and Arg225 all stabilise the intermediates formed.
+      notes: M-CSA entry 199, mechanism 1; M-CSA cites PMID:1540581, PMID:8445637, PMID:8810901, PMID:9056244;
+        step 3
+  - subject: lys160
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Lys160 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/199/
+      snippet: The oxyanion formed re-forms the carbonyl group, cleaving the P-O bond in a conjugate base
+        elimination reaction. The leaving phosphate group deprotonates the newly formed secondary amine.
+        The two Mg(II) ions, Lys160, Arg210 and Arg225 all stabilise the intermediates formed.
+      notes: M-CSA entry 199, mechanism 1; M-CSA cites PMID:1540581, PMID:8445637, PMID:8810901, PMID:9056244;
+        step 3
+  - subject: arg210
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Arg210 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/199/
+      snippet: The oxyanion formed re-forms the carbonyl group, cleaving the P-O bond in a conjugate base
+        elimination reaction. The leaving phosphate group deprotonates the newly formed secondary amine.
+        The two Mg(II) ions, Lys160, Arg210 and Arg225 all stabilise the intermediates formed.
+      notes: M-CSA entry 199, mechanism 1; M-CSA cites PMID:1540581, PMID:8445637, PMID:8810901, PMID:9056244;
+        step 3
+  - subject: arg225
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Arg225 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/199/
+      snippet: The oxyanion formed re-forms the carbonyl group, cleaving the P-O bond in a conjugate base
+        elimination reaction. The leaving phosphate group deprotonates the newly formed secondary amine.
+        The two Mg(II) ions, Lys160, Arg210 and Arg225 all stabilise the intermediates formed.
+      notes: M-CSA entry 199, mechanism 1; M-CSA cites PMID:1540581, PMID:8445637, PMID:8810901, PMID:9056244;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/199/
+      snippet: Products
+      notes: M-CSA entry 199, mechanism 1; M-CSA cites PMID:1540581, PMID:8445637, PMID:8810901, PMID:9056244;
+        step 4
+  - subject: lys125
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys125 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/199/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 199, mechanism 1; M-CSA cites PMID:1540581, PMID:8445637, PMID:8810901, PMID:9056244;
+        M-CSA catalytic-residue roles for Lys125
+  - subject: lys160
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys160 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/199/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 199, mechanism 1; M-CSA cites PMID:1540581, PMID:8445637, PMID:8810901, PMID:9056244;
+        M-CSA catalytic-residue roles for Lys160
+  - subject: arg210
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg210 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/199/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 199, mechanism 1; M-CSA cites PMID:1540581, PMID:8445637, PMID:8810901, PMID:9056244;
+        M-CSA catalytic-residue roles for Arg210
+  - subject: arg225
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg225 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/199/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 199, mechanism 1; M-CSA cites PMID:1540581, PMID:8445637, PMID:8810901, PMID:9056244;
+        M-CSA catalytic-residue roles for Arg225
+  - subject: arg233
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg233 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/199/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 199, mechanism 1; M-CSA cites PMID:1540581, PMID:8445637, PMID:8810901, PMID:9056244;
+        M-CSA catalytic-residue roles for Arg233
+  - subject: asp273
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp273 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/199/
+      snippet: metal ligand
+      notes: M-CSA entry 199, mechanism 1; M-CSA cites PMID:1540581, PMID:8445637, PMID:8810901, PMID:9056244;
+        M-CSA catalytic-residue roles for Asp273
+  - subject: glu281
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu281 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/199/
+      snippet: metal ligand
+      notes: M-CSA entry 199, mechanism 1; M-CSA cites PMID:1540581, PMID:8445637, PMID:8810901, PMID:9056244;
+        M-CSA catalytic-residue roles for Glu281
+  - subject: asn283
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn283 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/199/
+      snippet: metal ligand
+      notes: M-CSA entry 199, mechanism 1; M-CSA cites PMID:1540581, PMID:8445637, PMID:8810901, PMID:9056244;
+        M-CSA catalytic-residue roles for Asn283
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/199/
+      snippet: The reaction proceeds via an enzyme-bound acylphosphate intermediate. In the first step,
+        a phosphate group is transferred from ATP to the carboxyl group of the Cys in gamma-Glu-Cys. Arg
+        225, Lys 160, and two Mg(II) ions may stabilise negative charge in the transition state of phosphoryl
+        transfer. In the second step, the carbonyl of the acyl phosphate is attacked by the amino group
+        of glycine to fo
+      notes: M-CSA entry 199, mechanism 1; M-CSA cites PMID:1540581, PMID:8445637, PMID:8810901, PMID:9056244;
+        CATH domain 3.30.470.20 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/199/
+      snippet: The reaction proceeds via an enzyme-bound acylphosphate intermediate. In the first step,
+        a phosphate group is transferred from ATP to the carboxyl group of the Cys in gamma-Glu-Cys. Arg
+        225, Lys 160, and two Mg(II) ions may stabilise negative charge in the transition state of phosphoryl
+        transfer. In the second step, the carbonyl of the acyl phosphate is attacked by the amino group
+        of glycine to fo
+      notes: M-CSA entry 199, mechanism 1; M-CSA cites PMID:1540581, PMID:8445637, PMID:8810901, PMID:9056244;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/199/
+      snippet: The reaction proceeds via an enzyme-bound acylphosphate intermediate. In the first step,
+        a phosphate group is transferred from ATP to the carboxyl group of the Cys in gamma-Glu-Cys. Arg
+        225, Lys 160, and two Mg(II) ions may stabilise negative charge in the transition state of phosphoryl
+        transfer. In the second step, the carbonyl of the acyl phosphate is attacked by the amino group
+        of glycine to fo
+      notes: M-CSA entry 199, mechanism 1; M-CSA cites PMID:1540581, PMID:8445637, PMID:8810901, PMID:9056244;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/199/
+      snippet: The reaction proceeds via an enzyme-bound acylphosphate intermediate. In the first step,
+        a phosphate group is transferred from ATP to the carboxyl group of the Cys in gamma-Glu-Cys. Arg
+        225, Lys 160, and two Mg(II) ions may stabilise negative charge in the transition state of phosphoryl
+        transfer. In the second step, the carbonyl of the acyl phosphate is attacked by the amino group
+        of glycine to fo
+      notes: M-CSA entry 199, mechanism 1; M-CSA cites PMID:1540581, PMID:8445637, PMID:8810901, PMID:9056244;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/199/
+      snippet: The reaction proceeds via an enzyme-bound acylphosphate intermediate. In the first step,
+        a phosphate group is transferred from ATP to the carboxyl group of the Cys in gamma-Glu-Cys. Arg
+        225, Lys 160, and two Mg(II) ions may stabilise negative charge in the transition state of phosphoryl
+        transfer. In the second step, the carbonyl of the acyl phosphate is attacked by the amino group
+        of glycine to fo
+      notes: M-CSA entry 199, mechanism 1; M-CSA cites PMID:1540581, PMID:8445637, PMID:8810901, PMID:9056244;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/199/
+      snippet: The reaction proceeds via an enzyme-bound acylphosphate intermediate. In the first step,
+        a phosphate group is transferred from ATP to the carboxyl group of the Cys in gamma-Glu-Cys. Arg
+        225, Lys 160, and two Mg(II) ions may stabilise negative charge in the transition state of phosphoryl
+        transfer. In the second step, the carbonyl of the acyl phosphate is attacked by the amino group
+        of glycine to fo
+      notes: M-CSA entry 199, mechanism 1; M-CSA cites PMID:1540581, PMID:8445637, PMID:8810901, PMID:9056244;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/199/
+      snippet: The reaction proceeds via an enzyme-bound acylphosphate intermediate. In the first step,
+        a phosphate group is transferred from ATP to the carboxyl group of the Cys in gamma-Glu-Cys. Arg
+        225, Lys 160, and two Mg(II) ions may stabilise negative charge in the transition state of phosphoryl
+        transfer. In the second step, the carbonyl of the acyl phosphate is attacked by the amino group
+        of glycine to fo
+      notes: M-CSA entry 199, mechanism 1; M-CSA cites PMID:1540581, PMID:8445637, PMID:8810901, PMID:9056244;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/199/
+      snippet: The reaction proceeds via an enzyme-bound acylphosphate intermediate. In the first step,
+        a phosphate group is transferred from ATP to the carboxyl group of the Cys in gamma-Glu-Cys. Arg
+        225, Lys 160, and two Mg(II) ions may stabilise negative charge in the transition state of phosphoryl
+        transfer. In the second step, the carbonyl of the acyl phosphate is attacked by the amino group
+        of glycine to fo
+      notes: M-CSA entry 199, mechanism 1; M-CSA cites PMID:1540581, PMID:8445637, PMID:8810901, PMID:9056244;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product3
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/199/
+      snippet: The reaction proceeds via an enzyme-bound acylphosphate intermediate. In the first step,
+        a phosphate group is transferred from ATP to the carboxyl group of the Cys in gamma-Glu-Cys. Arg
+        225, Lys 160, and two Mg(II) ions may stabilise negative charge in the transition state of phosphoryl
+        transfer. In the second step, the carbonyl of the acyl phosphate is attacked by the amino group
+        of glycine to fo
+      notes: M-CSA entry 199, mechanism 1; M-CSA cites PMID:1540581, PMID:8445637, PMID:8810901, PMID:9056244;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (29 evidence-backed edges) transcribed from M-CSA entry 199;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

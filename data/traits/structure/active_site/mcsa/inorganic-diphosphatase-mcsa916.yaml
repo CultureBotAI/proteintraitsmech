@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.6.1.1
 - CHEBI:15378
@@ -190,4 +190,313 @@ definitions:
       Soluble inorganic pyrophosphate is present in all organisms, and is essential for cell growth. It provides an entropic pull for biosynthetic reactions involving nucleotide triphosphates by irreversibly hydrolysing the pyrophosphate product to orthophosphate. The phosphoryltransferase activity is an ancient one, and there are functional similarities between the active site of this enzyme and alkaline phosphatase and other divalent cation containing enzymes such as exonucleases and polymerases.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of inorganic diphosphatase
+  description: Stepwise mechanism transcribed from M-CSA entry 916 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: glu8
+    label: catalytic Glu8 (M-CSA/PDB numbering; UniProt residue 8)
+    node_type: RESIDUE
+    grounding: UniProtKB:P9WI55
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: tyr42
+    label: catalytic Tyr42 (M-CSA/PDB numbering; UniProt residue 42)
+    node_type: RESIDUE
+    grounding: UniProtKB:P9WI55
+  - node_id: asp52
+    label: catalytic Asp52 (M-CSA/PDB numbering; UniProt residue 52)
+    node_type: RESIDUE
+    grounding: UniProtKB:P9WI55
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp57
+    label: catalytic Asp57 (M-CSA/PDB numbering; UniProt residue 57)
+    node_type: RESIDUE
+    grounding: UniProtKB:P9WI55
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp84
+    label: catalytic Asp84 (M-CSA/PDB numbering; UniProt residue 84)
+    node_type: RESIDUE
+    grounding: UniProtKB:P9WI55
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp89
+    label: catalytic Asp89 (M-CSA/PDB numbering; UniProt residue 89)
+    node_type: RESIDUE
+    grounding: UniProtKB:P9WI55
+    description: 'M-CSA roles: activator, metal ligand, proton acceptor.'
+  - node_id: reactant0
+    label: diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product1
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: 'A divalent metal ion M3 binds to the PPiase, which already contains the divalent metal
+      ion M1 in its active site. The presence of the two metal ions enable the binding of PPi together
+      with a third divalent metal ion: M2.'
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The binding events are followed by the deprotonation of a water molecule by Asp89 and
+      subsequent attack on the adjacent phosphate group of PPi by the resulting hydroxide, leading to
+      the formation of the products.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: After catalysis, ion M3 leaves the active site, followed by both phosphates and M2. Also,
+      Asp89 is deprotonated (here inferred to be by a water molecule from solvent), thereby restoring
+      the initial state of enzyme.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: inorganic diphosphatase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:916
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.80.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.80.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: inorganic diphosphatase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.6.1.1
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/916/
+      snippet: The binding events are followed by the deprotonation of a water molecule by Asp89 and subsequent
+        attack on the adjacent phosphate group of PPi by the resulting hydroxide, leading to the formation
+        of the products.
+      notes: M-CSA entry 916, mechanism 1; M-CSA cites PMID:11722562, PMID:1322842, PMID:14744152, PMID:15533044,
+        PMID:15533045, PMID:15751976, PMID:18774936, PMID:26296329, PMID:27622287; step 2
+  - subject: asp89
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Asp89 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/916/
+      snippet: The binding events are followed by the deprotonation of a water molecule by Asp89 and subsequent
+        attack on the adjacent phosphate group of PPi by the resulting hydroxide, leading to the formation
+        of the products.
+      notes: M-CSA entry 916, mechanism 1; M-CSA cites PMID:11722562, PMID:1322842, PMID:14744152, PMID:15533044,
+        PMID:15533045, PMID:15751976, PMID:18774936, PMID:26296329, PMID:27622287; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/916/
+      snippet: After catalysis, ion M3 leaves the active site, followed by both phosphates and M2. Also,
+        Asp89 is deprotonated (here inferred to be by a water molecule from solvent), thereby restoring
+        the initial state of enzyme.
+      notes: M-CSA entry 916, mechanism 1; M-CSA cites PMID:11722562, PMID:1322842, PMID:14744152, PMID:15533044,
+        PMID:15533045, PMID:15751976, PMID:18774936, PMID:26296329, PMID:27622287; step 3
+  - subject: asp89
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Asp89 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/916/
+      snippet: After catalysis, ion M3 leaves the active site, followed by both phosphates and M2. Also,
+        Asp89 is deprotonated (here inferred to be by a water molecule from solvent), thereby restoring
+        the initial state of enzyme.
+      notes: M-CSA entry 916, mechanism 1; M-CSA cites PMID:11722562, PMID:1322842, PMID:14744152, PMID:15533044,
+        PMID:15533045, PMID:15751976, PMID:18774936, PMID:26296329, PMID:27622287; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/916/
+      snippet: Products
+      notes: M-CSA entry 916, mechanism 1; M-CSA cites PMID:11722562, PMID:1322842, PMID:14744152, PMID:15533044,
+        PMID:15533045, PMID:15751976, PMID:18774936, PMID:26296329, PMID:27622287; step 4
+  - subject: glu8
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu8 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/916/
+      snippet: metal ligand
+      notes: M-CSA entry 916, mechanism 1; M-CSA cites PMID:11722562, PMID:1322842, PMID:14744152, PMID:15533044,
+        PMID:15533045, PMID:15751976, PMID:18774936, PMID:26296329, PMID:27622287; M-CSA catalytic-residue
+        roles for Glu8
+  - subject: tyr42
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr42 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/916/
+      snippet: This reaction begins with the coordination of  three divalent metal ions into the active
+        site as well as a water molecule from the aqueous solution. The metal ions coordinate a diphosphate
+        into the active site while Asp89 deprotonates a water molecule. The resulting hydroxide attacks
+        the proximal phosphate. This, in combination with the metals dissociating from the active site
+        results in the relea
+      notes: M-CSA entry 916, mechanism 1; M-CSA cites PMID:11722562, PMID:1322842, PMID:14744152, PMID:15533044,
+        PMID:15533045, PMID:15751976, PMID:18774936, PMID:26296329, PMID:27622287; M-CSA catalytic-residue
+        roles for Tyr42
+  - subject: asp52
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp52 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/916/
+      snippet: metal ligand
+      notes: M-CSA entry 916, mechanism 1; M-CSA cites PMID:11722562, PMID:1322842, PMID:14744152, PMID:15533044,
+        PMID:15533045, PMID:15751976, PMID:18774936, PMID:26296329, PMID:27622287; M-CSA catalytic-residue
+        roles for Asp52
+  - subject: asp57
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp57 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/916/
+      snippet: metal ligand
+      notes: M-CSA entry 916, mechanism 1; M-CSA cites PMID:11722562, PMID:1322842, PMID:14744152, PMID:15533044,
+        PMID:15533045, PMID:15751976, PMID:18774936, PMID:26296329, PMID:27622287; M-CSA catalytic-residue
+        roles for Asp57
+  - subject: asp84
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp84 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/916/
+      snippet: metal ligand
+      notes: M-CSA entry 916, mechanism 1; M-CSA cites PMID:11722562, PMID:1322842, PMID:14744152, PMID:15533044,
+        PMID:15533045, PMID:15751976, PMID:18774936, PMID:26296329, PMID:27622287; M-CSA catalytic-residue
+        roles for Asp84
+  - subject: asp89
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp89 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/916/
+      snippet: activator, metal ligand, proton acceptor
+      notes: M-CSA entry 916, mechanism 1; M-CSA cites PMID:11722562, PMID:1322842, PMID:14744152, PMID:15533044,
+        PMID:15533045, PMID:15751976, PMID:18774936, PMID:26296329, PMID:27622287; M-CSA catalytic-residue
+        roles for Asp89
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/916/
+      snippet: This reaction begins with the coordination of  three divalent metal ions into the active
+        site as well as a water molecule from the aqueous solution. The metal ions coordinate a diphosphate
+        into the active site while Asp89 deprotonates a water molecule. The resulting hydroxide attacks
+        the proximal phosphate. This, in combination with the metals dissociating from the active site
+        results in the relea
+      notes: M-CSA entry 916, mechanism 1; M-CSA cites PMID:11722562, PMID:1322842, PMID:14744152, PMID:15533044,
+        PMID:15533045, PMID:15751976, PMID:18774936, PMID:26296329, PMID:27622287; CATH domain 3.90.80.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/916/
+      snippet: This reaction begins with the coordination of  three divalent metal ions into the active
+        site as well as a water molecule from the aqueous solution. The metal ions coordinate a diphosphate
+        into the active site while Asp89 deprotonates a water molecule. The resulting hydroxide attacks
+        the proximal phosphate. This, in combination with the metals dissociating from the active site
+        results in the relea
+      notes: M-CSA entry 916, mechanism 1; M-CSA cites PMID:11722562, PMID:1322842, PMID:14744152, PMID:15533044,
+        PMID:15533045, PMID:15751976, PMID:18774936, PMID:26296329, PMID:27622287; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/916/
+      snippet: This reaction begins with the coordination of  three divalent metal ions into the active
+        site as well as a water molecule from the aqueous solution. The metal ions coordinate a diphosphate
+        into the active site while Asp89 deprotonates a water molecule. The resulting hydroxide attacks
+        the proximal phosphate. This, in combination with the metals dissociating from the active site
+        results in the relea
+      notes: M-CSA entry 916, mechanism 1; M-CSA cites PMID:11722562, PMID:1322842, PMID:14744152, PMID:15533044,
+        PMID:15533045, PMID:15751976, PMID:18774936, PMID:26296329, PMID:27622287; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/916/
+      snippet: This reaction begins with the coordination of  three divalent metal ions into the active
+        site as well as a water molecule from the aqueous solution. The metal ions coordinate a diphosphate
+        into the active site while Asp89 deprotonates a water molecule. The resulting hydroxide attacks
+        the proximal phosphate. This, in combination with the metals dissociating from the active site
+        results in the relea
+      notes: M-CSA entry 916, mechanism 1; M-CSA cites PMID:11722562, PMID:1322842, PMID:14744152, PMID:15533044,
+        PMID:15533045, PMID:15751976, PMID:18774936, PMID:26296329, PMID:27622287; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/916/
+      snippet: This reaction begins with the coordination of  three divalent metal ions into the active
+        site as well as a water molecule from the aqueous solution. The metal ions coordinate a diphosphate
+        into the active site while Asp89 deprotonates a water molecule. The resulting hydroxide attacks
+        the proximal phosphate. This, in combination with the metals dissociating from the active site
+        results in the relea
+      notes: M-CSA entry 916, mechanism 1; M-CSA cites PMID:11722562, PMID:1322842, PMID:14744152, PMID:15533044,
+        PMID:15533045, PMID:15751976, PMID:18774936, PMID:26296329, PMID:27622287; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/916/
+      snippet: This reaction begins with the coordination of  three divalent metal ions into the active
+        site as well as a water molecule from the aqueous solution. The metal ions coordinate a diphosphate
+        into the active site while Asp89 deprotonates a water molecule. The resulting hydroxide attacks
+        the proximal phosphate. This, in combination with the metals dissociating from the active site
+        results in the relea
+      notes: M-CSA entry 916, mechanism 1; M-CSA cites PMID:11722562, PMID:1322842, PMID:14744152, PMID:15533044,
+        PMID:15533045, PMID:15751976, PMID:18774936, PMID:26296329, PMID:27622287; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (17 evidence-backed edges) transcribed from M-CSA entry 916;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

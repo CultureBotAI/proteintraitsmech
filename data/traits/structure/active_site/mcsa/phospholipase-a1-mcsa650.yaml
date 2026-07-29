@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.1.32
 - CHEBI:57643
@@ -196,4 +196,319 @@ definitions:
       The outer membrane phospholipase A (OMPLA) is an integral membrane enzyme present in the outer membrane of Gram-negative bacteria. It catalyses the hydrolysis of acylester bonds in phospholipids. The physiological function of OMPLA is still not known.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of phospholipase A1
+  description: Stepwise mechanism transcribed from M-CSA entry 650 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +20).
+  nodes:
+  - node_id: ser106
+    label: catalytic Ser106 (M-CSA/PDB numbering; UniProt residue 126)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A921
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his142
+    label: catalytic His142 (M-CSA/PDB numbering; UniProt residue 162)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A921
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: ser144
+    label: catalytic Ser144 (M-CSA/PDB numbering; UniProt residue 164)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A921
+    description: 'M-CSA roles: covalently attached, nucleofuge, nucleophile, proton acceptor, proton donor.'
+  - node_id: gly146
+    label: catalytic Gly146 (M-CSA/PDB numbering; UniProt residue 166)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A921
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: arg147
+    label: catalytic Arg147 (M-CSA/PDB numbering; UniProt residue 167)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A921
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: ser152
+    label: catalytic Ser152 (M-CSA/PDB numbering; UniProt residue 172)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A921
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asn156
+    label: catalytic Asn156 (M-CSA/PDB numbering; UniProt residue 176)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A921
+    description: 'M-CSA roles: electrostatic stabiliser, increase basicity.'
+  - node_id: reactant0
+    label: 1,2-diacyl-sn-glycero-3-phosphocholine
+    node_type: CHEMICAL
+    grounding: CHEBI:57643
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: 2-acyl-sn-glycero-3-phosphocholine
+    node_type: CHEMICAL
+    grounding: CHEBI:57875
+  - node_id: product1
+    label: fatty acid anion
+    node_type: CHEMICAL
+    grounding: CHEBI:28868
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His162 acts as a general base activating the Ser164 hydroxyl group for nucleophilic attack
+      on the carbonyl carbon of the ester bond. The third component of this catalytic triad- Asn176 acts
+      to increase the basicity of the histidine. The oxyanion intermediate formed is stabilized by the
+      amide group of Gly166, the calcium ion and the water molecules coordinated to the calcium.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The tetrahedral intermediate collapses and 2-acyl-sn-glycero-3-phosphocholine is eliminated.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: His162 activates water for nucleophilic attack and another oxyanion intermediate is formed.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The tetrahedral intermediate collapses and Ser164 is eliminated.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: phospholipase A1 catalytic site
+    node_type: MOTIF
+    grounding: MCSA:650
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.40.230.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.40.230.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: phospholipase A1 activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.1.32
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/650/
+      snippet: The tetrahedral intermediate collapses and 2-acyl-sn-glycero-3-phosphocholine is eliminated.
+      notes: M-CSA entry 650, mechanism 1; M-CSA cites PMID:10537112, PMID:2040286, PMID:8575454, PMID:8672479;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/650/
+      snippet: His162 activates water for nucleophilic attack and another oxyanion intermediate is formed.
+      notes: M-CSA entry 650, mechanism 1; M-CSA cites PMID:10537112, PMID:2040286, PMID:8575454, PMID:8672479;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/650/
+      snippet: The tetrahedral intermediate collapses and Ser164 is eliminated.
+      notes: M-CSA entry 650, mechanism 1; M-CSA cites PMID:10537112, PMID:2040286, PMID:8575454, PMID:8672479;
+        step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/650/
+      snippet: Products.
+      notes: M-CSA entry 650, mechanism 1; M-CSA cites PMID:10537112, PMID:2040286, PMID:8575454, PMID:8672479;
+        step 5
+  - subject: ser106
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser106 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/650/
+      snippet: metal ligand
+      notes: M-CSA entry 650, mechanism 1; M-CSA cites PMID:10537112, PMID:2040286, PMID:8575454, PMID:8672479;
+        M-CSA catalytic-residue roles for Ser106
+  - subject: his142
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His142 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/650/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 650, mechanism 1; M-CSA cites PMID:10537112, PMID:2040286, PMID:8575454, PMID:8672479;
+        M-CSA catalytic-residue roles for His142
+  - subject: ser144
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser144 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/650/
+      snippet: covalently attached, nucleofuge, nucleophile, proton acceptor, proton donor
+      notes: M-CSA entry 650, mechanism 1; M-CSA cites PMID:10537112, PMID:2040286, PMID:8575454, PMID:8672479;
+        M-CSA catalytic-residue roles for Ser144
+  - subject: gly146
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly146 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/650/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 650, mechanism 1; M-CSA cites PMID:10537112, PMID:2040286, PMID:8575454, PMID:8672479;
+        M-CSA catalytic-residue roles for Gly146
+  - subject: arg147
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg147 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/650/
+      snippet: metal ligand
+      notes: M-CSA entry 650, mechanism 1; M-CSA cites PMID:10537112, PMID:2040286, PMID:8575454, PMID:8672479;
+        M-CSA catalytic-residue roles for Arg147
+  - subject: ser152
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser152 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/650/
+      snippet: metal ligand
+      notes: M-CSA entry 650, mechanism 1; M-CSA cites PMID:10537112, PMID:2040286, PMID:8575454, PMID:8672479;
+        M-CSA catalytic-residue roles for Ser152
+  - subject: asn156
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn156 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/650/
+      snippet: electrostatic stabiliser, increase basicity
+      notes: M-CSA entry 650, mechanism 1; M-CSA cites PMID:10537112, PMID:2040286, PMID:8575454, PMID:8672479;
+        M-CSA catalytic-residue roles for Asn156
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/650/
+      snippet: The mechanism of OMPLA is analogous to that of serine hydrolases. His162 acts as a base
+        to deprotonate the side chain of Ser164 to allow its nucleophilic attack on the ester bond. The
+        tetrahedral transition state is stabilised by an oxyanion hole formed by the amide of Gly166 and
+        2 water molecules. His162 protonates the leaving group and then deprotonates a water molecule
+        to allow its nucleophilic
+      notes: M-CSA entry 650, mechanism 1; M-CSA cites PMID:10537112, PMID:2040286, PMID:8575454, PMID:8672479;
+        CATH domain 2.40.230.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/650/
+      snippet: The mechanism of OMPLA is analogous to that of serine hydrolases. His162 acts as a base
+        to deprotonate the side chain of Ser164 to allow its nucleophilic attack on the ester bond. The
+        tetrahedral transition state is stabilised by an oxyanion hole formed by the amide of Gly166 and
+        2 water molecules. His162 protonates the leaving group and then deprotonates a water molecule
+        to allow its nucleophilic
+      notes: M-CSA entry 650, mechanism 1; M-CSA cites PMID:10537112, PMID:2040286, PMID:8575454, PMID:8672479;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/650/
+      snippet: The mechanism of OMPLA is analogous to that of serine hydrolases. His162 acts as a base
+        to deprotonate the side chain of Ser164 to allow its nucleophilic attack on the ester bond. The
+        tetrahedral transition state is stabilised by an oxyanion hole formed by the amide of Gly166 and
+        2 water molecules. His162 protonates the leaving group and then deprotonates a water molecule
+        to allow its nucleophilic
+      notes: M-CSA entry 650, mechanism 1; M-CSA cites PMID:10537112, PMID:2040286, PMID:8575454, PMID:8672479;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/650/
+      snippet: The mechanism of OMPLA is analogous to that of serine hydrolases. His162 acts as a base
+        to deprotonate the side chain of Ser164 to allow its nucleophilic attack on the ester bond. The
+        tetrahedral transition state is stabilised by an oxyanion hole formed by the amide of Gly166 and
+        2 water molecules. His162 protonates the leaving group and then deprotonates a water molecule
+        to allow its nucleophilic
+      notes: M-CSA entry 650, mechanism 1; M-CSA cites PMID:10537112, PMID:2040286, PMID:8575454, PMID:8672479;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/650/
+      snippet: The mechanism of OMPLA is analogous to that of serine hydrolases. His162 acts as a base
+        to deprotonate the side chain of Ser164 to allow its nucleophilic attack on the ester bond. The
+        tetrahedral transition state is stabilised by an oxyanion hole formed by the amide of Gly166 and
+        2 water molecules. His162 protonates the leaving group and then deprotonates a water molecule
+        to allow its nucleophilic
+      notes: M-CSA entry 650, mechanism 1; M-CSA cites PMID:10537112, PMID:2040286, PMID:8575454, PMID:8672479;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/650/
+      snippet: The mechanism of OMPLA is analogous to that of serine hydrolases. His162 acts as a base
+        to deprotonate the side chain of Ser164 to allow its nucleophilic attack on the ester bond. The
+        tetrahedral transition state is stabilised by an oxyanion hole formed by the amide of Gly166 and
+        2 water molecules. His162 protonates the leaving group and then deprotonates a water molecule
+        to allow its nucleophilic
+      notes: M-CSA entry 650, mechanism 1; M-CSA cites PMID:10537112, PMID:2040286, PMID:8575454, PMID:8672479;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/650/
+      snippet: The mechanism of OMPLA is analogous to that of serine hydrolases. His162 acts as a base
+        to deprotonate the side chain of Ser164 to allow its nucleophilic attack on the ester bond. The
+        tetrahedral transition state is stabilised by an oxyanion hole formed by the amide of Gly166 and
+        2 water molecules. His162 protonates the leaving group and then deprotonates a water molecule
+        to allow its nucleophilic
+      notes: M-CSA entry 650, mechanism 1; M-CSA cites PMID:10537112, PMID:2040286, PMID:8575454, PMID:8672479;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (18 evidence-backed edges) transcribed from M-CSA entry 650;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

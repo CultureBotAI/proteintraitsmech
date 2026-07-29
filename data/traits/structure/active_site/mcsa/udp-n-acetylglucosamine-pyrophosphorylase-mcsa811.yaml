@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.7.7.23
 - CHEBI:57776
@@ -375,4 +375,184 @@ definitions:
       The bifunctional enzyme GlmU is able to catalyse two steps in the pathway of bacterial cell wall synthesis: The C-terminal domain converts glucosamine-1-phosphate to N-acetyl glucosamine-1-phosphate using Acetyl CoA as the donor The N-terminal domain (this entry) utilises UTP to activate the N-acetyl glucosamine-1-phosphate forming UDP-acetyl-glucosamine and pyrophosphate. Interest in the processes catalysed by this enzyme stems from its potential as an antibiotic target.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of UDP-N-acetylglucosamine pyrophosphorylase
+  description: Stepwise mechanism transcribed from M-CSA entry 811 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: arg18
+    label: catalytic Arg18 (M-CSA/PDB numbering; UniProt residue 18)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0ACC7
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: N-acetyl-alpha-D-glucosamine 1-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57776
+  - node_id: reactant1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: reactant2
+    label: UTP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:46398
+  - node_id: product0
+    label: diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+  - node_id: product1
+    label: UDP-N-acetyl-alpha-D-glucosamine(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57705
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The phosphate of N-acetyl-alpha-D-glucosamine 1-phosphate attacks the alpha phosphate
+      of UTP. This releases diphosphate and forms the product.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The diphosphate group is protonated. The proton may be sourced from the solvent.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: UDP-N-acetylglucosamine pyrophosphorylase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:811
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.550.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.550.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: UDP-N-acetylglucosamine pyrophosphorylase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.7.7.23
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/811/
+      snippet: The diphosphate group is protonated. The proton may be sourced from the solvent.
+      notes: M-CSA entry 811, mechanism 1; M-CSA cites PMID:10428949; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/811/
+      snippet: Products.
+      notes: M-CSA entry 811, mechanism 1; M-CSA cites PMID:10428949; step 3
+  - subject: arg18
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg18 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/811/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 811, mechanism 1; M-CSA cites PMID:10428949; M-CSA catalytic-residue roles for
+        Arg18
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/811/
+      snippet: The mechanism of the transfer of UDP to N acetylglucosamine-1-phosphate proceeds via nucleophilic
+        attack from the phosphate oxygen of the phosphate moiety on the alpha phosphate producing a pentavalent
+        phosphate transition state. This is stabilised by Mg2+ at the active site and Arg 18, and collapses
+        to release the beta and gamma phosphates as pyrophosphate.
+      notes: M-CSA entry 811, mechanism 1; M-CSA cites PMID:10428949; CATH domain 3.90.550.10 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/811/
+      snippet: The mechanism of the transfer of UDP to N acetylglucosamine-1-phosphate proceeds via nucleophilic
+        attack from the phosphate oxygen of the phosphate moiety on the alpha phosphate producing a pentavalent
+        phosphate transition state. This is stabilised by Mg2+ at the active site and Arg 18, and collapses
+        to release the beta and gamma phosphates as pyrophosphate.
+      notes: M-CSA entry 811, mechanism 1; M-CSA cites PMID:10428949; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/811/
+      snippet: The mechanism of the transfer of UDP to N acetylglucosamine-1-phosphate proceeds via nucleophilic
+        attack from the phosphate oxygen of the phosphate moiety on the alpha phosphate producing a pentavalent
+        phosphate transition state. This is stabilised by Mg2+ at the active site and Arg 18, and collapses
+        to release the beta and gamma phosphates as pyrophosphate.
+      notes: M-CSA entry 811, mechanism 1; M-CSA cites PMID:10428949; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/811/
+      snippet: The mechanism of the transfer of UDP to N acetylglucosamine-1-phosphate proceeds via nucleophilic
+        attack from the phosphate oxygen of the phosphate moiety on the alpha phosphate producing a pentavalent
+        phosphate transition state. This is stabilised by Mg2+ at the active site and Arg 18, and collapses
+        to release the beta and gamma phosphates as pyrophosphate.
+      notes: M-CSA entry 811, mechanism 1; M-CSA cites PMID:10428949; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/811/
+      snippet: The mechanism of the transfer of UDP to N acetylglucosamine-1-phosphate proceeds via nucleophilic
+        attack from the phosphate oxygen of the phosphate moiety on the alpha phosphate producing a pentavalent
+        phosphate transition state. This is stabilised by Mg2+ at the active site and Arg 18, and collapses
+        to release the beta and gamma phosphates as pyrophosphate.
+      notes: M-CSA entry 811, mechanism 1; M-CSA cites PMID:10428949; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/811/
+      snippet: The mechanism of the transfer of UDP to N acetylglucosamine-1-phosphate proceeds via nucleophilic
+        attack from the phosphate oxygen of the phosphate moiety on the alpha phosphate producing a pentavalent
+        phosphate transition state. This is stabilised by Mg2+ at the active site and Arg 18, and collapses
+        to release the beta and gamma phosphates as pyrophosphate.
+      notes: M-CSA entry 811, mechanism 1; M-CSA cites PMID:10428949; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/811/
+      snippet: The mechanism of the transfer of UDP to N acetylglucosamine-1-phosphate proceeds via nucleophilic
+        attack from the phosphate oxygen of the phosphate moiety on the alpha phosphate producing a pentavalent
+        phosphate transition state. This is stabilised by Mg2+ at the active site and Arg 18, and collapses
+        to release the beta and gamma phosphates as pyrophosphate.
+      notes: M-CSA entry 811, mechanism 1; M-CSA cites PMID:10428949; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (10 evidence-backed edges) transcribed from M-CSA entry 811;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

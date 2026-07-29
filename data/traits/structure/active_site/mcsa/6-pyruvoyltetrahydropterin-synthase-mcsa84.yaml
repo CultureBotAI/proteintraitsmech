@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.2.3.12
 - CHEBI:58462
@@ -165,4 +165,425 @@ definitions:
       The enzyme 6-pyruvoyl tetrahyropterin synthase catalyses the second of three steps in the de novo biosynthesis of tetrahydrobiopterin, the conversion of dihydroneopterin triphosphate to 6-pyruvoyl tetrahyropterin. Tetrahydrobiopterin is the natural cofactor for several enzymes such as phenylalanine hydroxylase, tyrosine hydroxylase and tryptophan hydroxylase, nitric oxide synthase and glycerol ether monooxygenase. Lack of tetrahydrobiopterin leads to hyperphenylalaninaemia and a deficiency of the biogenic amine neurotransmitters, dopamine and serotonin and is accompanied by severe progressive mental retardation.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 6-pyruvoyltetrahydropterin synthase
+  description: Stepwise mechanism transcribed from M-CSA entry 84 (7 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: his23
+    label: catalytic His23 (M-CSA/PDB numbering; UniProt residue 23)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27213
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: cys42
+    label: catalytic Cys42 (M-CSA/PDB numbering; UniProt residue 42)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27213
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      proton acceptor, proton donor.'
+  - node_id: his48
+    label: catalytic His48 (M-CSA/PDB numbering; UniProt residue 48)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27213
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his50
+    label: catalytic His50 (M-CSA/PDB numbering; UniProt residue 50)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27213
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp88
+    label: catalytic Asp88 (M-CSA/PDB numbering; UniProt residue 88)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27213
+    description: 'M-CSA roles: activator, electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: his89
+    label: catalytic His89 (M-CSA/PDB numbering; UniProt residue 89)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27213
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      proton acceptor, proton donor.'
+  - node_id: glu133
+    label: catalytic Glu133 (M-CSA/PDB numbering; UniProt residue 133)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27213
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: 7,8-dihydroneopterin 3'-triphosphate(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58462
+  - node_id: product0
+    label: dyspropterin
+    node_type: CHEMICAL
+    grounding: CHEBI:17804
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: triphosphate(5-)
+    node_type: CHEMICAL
+    grounding: CHEBI:18036
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His89B, part of a Asp-His-Cys triad, deprotonates Cys42. The substrate deprotonates Glu133.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Cys42 deprotonates the substrate, initiating double bond rearrangement for which the
+      now positively charged secondary amine acts as an electron sink.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Glu133 deprotonates the alcohol on the same carbon attacked by Cys42. This formed the
+      keto-group and causes the double bond to deprotonate the Cys42.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Cys42 deprotonates the second carbon of the substrate carbon chain, which causes the
+      formation of a new double bond and elimination of the diphosphate group.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: The newly released diphosphate deprotonates the remaining alcohol group, which forms
+      the ketol-form of the intermediate and causes the double bond to deprotonate Cys42.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Cys42 deprotonates His89B in an inferred step.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: 6-pyruvoyltetrahydropterin synthase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:84
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.479.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.479.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: 6-pyruvoyltetrahydropterin synthase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.2.3.12
+  edges:
+  - subject: cys42
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys42 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/84/
+      snippet: His89B, part of a Asp-His-Cys triad, deprotonates Cys42. The substrate deprotonates Glu133.
+      notes: M-CSA entry 84, mechanism 1; M-CSA cites PMID:10024455, PMID:24990950, PMID:7563095, PMID:8137809;
+        step 1
+  - subject: glu133
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu133 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/84/
+      snippet: His89B, part of a Asp-His-Cys triad, deprotonates Cys42. The substrate deprotonates Glu133.
+      notes: M-CSA entry 84, mechanism 1; M-CSA cites PMID:10024455, PMID:24990950, PMID:7563095, PMID:8137809;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/84/
+      snippet: Cys42 deprotonates the substrate, initiating double bond rearrangement for which the now
+        positively charged secondary amine acts as an electron sink.
+      notes: M-CSA entry 84, mechanism 1; M-CSA cites PMID:10024455, PMID:24990950, PMID:7563095, PMID:8137809;
+        step 2
+  - subject: cys42
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Cys42 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/84/
+      snippet: Cys42 deprotonates the substrate, initiating double bond rearrangement for which the now
+        positively charged secondary amine acts as an electron sink.
+      notes: M-CSA entry 84, mechanism 1; M-CSA cites PMID:10024455, PMID:24990950, PMID:7563095, PMID:8137809;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/84/
+      snippet: Glu133 deprotonates the alcohol on the same carbon attacked by Cys42. This formed the keto-group
+        and causes the double bond to deprotonate the Cys42.
+      notes: M-CSA entry 84, mechanism 1; M-CSA cites PMID:10024455, PMID:24990950, PMID:7563095, PMID:8137809;
+        step 3
+  - subject: cys42
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Cys42 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/84/
+      snippet: Glu133 deprotonates the alcohol on the same carbon attacked by Cys42. This formed the keto-group
+        and causes the double bond to deprotonate the Cys42.
+      notes: M-CSA entry 84, mechanism 1; M-CSA cites PMID:10024455, PMID:24990950, PMID:7563095, PMID:8137809;
+        step 3
+  - subject: glu133
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Glu133 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/84/
+      snippet: Glu133 deprotonates the alcohol on the same carbon attacked by Cys42. This formed the keto-group
+        and causes the double bond to deprotonate the Cys42.
+      notes: M-CSA entry 84, mechanism 1; M-CSA cites PMID:10024455, PMID:24990950, PMID:7563095, PMID:8137809;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/84/
+      snippet: Cys42 deprotonates the second carbon of the substrate carbon chain, which causes the formation
+        of a new double bond and elimination of the diphosphate group.
+      notes: M-CSA entry 84, mechanism 1; M-CSA cites PMID:10024455, PMID:24990950, PMID:7563095, PMID:8137809;
+        step 4
+  - subject: cys42
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Cys42 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/84/
+      snippet: Cys42 deprotonates the second carbon of the substrate carbon chain, which causes the formation
+        of a new double bond and elimination of the diphosphate group.
+      notes: M-CSA entry 84, mechanism 1; M-CSA cites PMID:10024455, PMID:24990950, PMID:7563095, PMID:8137809;
+        step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/84/
+      snippet: The newly released diphosphate deprotonates the remaining alcohol group, which forms the
+        ketol-form of the intermediate and causes the double bond to deprotonate Cys42.
+      notes: M-CSA entry 84, mechanism 1; M-CSA cites PMID:10024455, PMID:24990950, PMID:7563095, PMID:8137809;
+        step 5
+  - subject: cys42
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Cys42 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/84/
+      snippet: The newly released diphosphate deprotonates the remaining alcohol group, which forms the
+        ketol-form of the intermediate and causes the double bond to deprotonate Cys42.
+      notes: M-CSA entry 84, mechanism 1; M-CSA cites PMID:10024455, PMID:24990950, PMID:7563095, PMID:8137809;
+        step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/84/
+      snippet: Cys42 deprotonates His89B in an inferred step.
+      notes: M-CSA entry 84, mechanism 1; M-CSA cites PMID:10024455, PMID:24990950, PMID:7563095, PMID:8137809;
+        step 6
+  - subject: cys42
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: Cys42 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/84/
+      snippet: Cys42 deprotonates His89B in an inferred step.
+      notes: M-CSA entry 84, mechanism 1; M-CSA cites PMID:10024455, PMID:24990950, PMID:7563095, PMID:8137809;
+        step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/84/
+      snippet: Products
+      notes: M-CSA entry 84, mechanism 1; M-CSA cites PMID:10024455, PMID:24990950, PMID:7563095, PMID:8137809;
+        step 7
+  - subject: his23
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His23 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/84/
+      snippet: metal ligand
+      notes: M-CSA entry 84, mechanism 1; M-CSA cites PMID:10024455, PMID:24990950, PMID:7563095, PMID:8137809;
+        M-CSA catalytic-residue roles for His23
+  - subject: cys42
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys42 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/84/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+        proton donor
+      notes: M-CSA entry 84, mechanism 1; M-CSA cites PMID:10024455, PMID:24990950, PMID:7563095, PMID:8137809;
+        M-CSA catalytic-residue roles for Cys42
+  - subject: his48
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His48 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/84/
+      snippet: metal ligand
+      notes: M-CSA entry 84, mechanism 1; M-CSA cites PMID:10024455, PMID:24990950, PMID:7563095, PMID:8137809;
+        M-CSA catalytic-residue roles for His48
+  - subject: his50
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His50 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/84/
+      snippet: metal ligand
+      notes: M-CSA entry 84, mechanism 1; M-CSA cites PMID:10024455, PMID:24990950, PMID:7563095, PMID:8137809;
+        M-CSA catalytic-residue roles for His50
+  - subject: asp88
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp88 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/84/
+      snippet: activator, electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 84, mechanism 1; M-CSA cites PMID:10024455, PMID:24990950, PMID:7563095, PMID:8137809;
+        M-CSA catalytic-residue roles for Asp88
+  - subject: his89
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His89 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/84/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+        proton donor
+      notes: M-CSA entry 84, mechanism 1; M-CSA cites PMID:10024455, PMID:24990950, PMID:7563095, PMID:8137809;
+        M-CSA catalytic-residue roles for His89
+  - subject: glu133
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu133 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/84/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+        proton donor
+      notes: M-CSA entry 84, mechanism 1; M-CSA cites PMID:10024455, PMID:24990950, PMID:7563095, PMID:8137809;
+        M-CSA catalytic-residue roles for Glu133
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/84/
+      snippet: 'The reaction involves a complex mechanism via a base catalysed redox transfer and a triphosphate
+        elimination. Each of the six active sites are located at the interface of three subunits: two
+        subunits, A and A'', from one trimer and one, B, from another trimer. A Glu107 forms a salt bridge
+        and A Met70 and A Thr106 form hydrogen bonds with the substrate. The active site zinc ion is coordinated
+        by A H'
+      notes: M-CSA entry 84, mechanism 1; M-CSA cites PMID:10024455, PMID:24990950, PMID:7563095, PMID:8137809;
+        CATH domain 3.30.479.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/84/
+      snippet: 'The reaction involves a complex mechanism via a base catalysed redox transfer and a triphosphate
+        elimination. Each of the six active sites are located at the interface of three subunits: two
+        subunits, A and A'', from one trimer and one, B, from another trimer. A Glu107 forms a salt bridge
+        and A Met70 and A Thr106 form hydrogen bonds with the substrate. The active site zinc ion is coordinated
+        by A H'
+      notes: M-CSA entry 84, mechanism 1; M-CSA cites PMID:10024455, PMID:24990950, PMID:7563095, PMID:8137809;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/84/
+      snippet: 'The reaction involves a complex mechanism via a base catalysed redox transfer and a triphosphate
+        elimination. Each of the six active sites are located at the interface of three subunits: two
+        subunits, A and A'', from one trimer and one, B, from another trimer. A Glu107 forms a salt bridge
+        and A Met70 and A Thr106 form hydrogen bonds with the substrate. The active site zinc ion is coordinated
+        by A H'
+      notes: M-CSA entry 84, mechanism 1; M-CSA cites PMID:10024455, PMID:24990950, PMID:7563095, PMID:8137809;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/84/
+      snippet: 'The reaction involves a complex mechanism via a base catalysed redox transfer and a triphosphate
+        elimination. Each of the six active sites are located at the interface of three subunits: two
+        subunits, A and A'', from one trimer and one, B, from another trimer. A Glu107 forms a salt bridge
+        and A Met70 and A Thr106 form hydrogen bonds with the substrate. The active site zinc ion is coordinated
+        by A H'
+      notes: M-CSA entry 84, mechanism 1; M-CSA cites PMID:10024455, PMID:24990950, PMID:7563095, PMID:8137809;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/84/
+      snippet: 'The reaction involves a complex mechanism via a base catalysed redox transfer and a triphosphate
+        elimination. Each of the six active sites are located at the interface of three subunits: two
+        subunits, A and A'', from one trimer and one, B, from another trimer. A Glu107 forms a salt bridge
+        and A Met70 and A Thr106 form hydrogen bonds with the substrate. The active site zinc ion is coordinated
+        by A H'
+      notes: M-CSA entry 84, mechanism 1; M-CSA cites PMID:10024455, PMID:24990950, PMID:7563095, PMID:8137809;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/84/
+      snippet: 'The reaction involves a complex mechanism via a base catalysed redox transfer and a triphosphate
+        elimination. Each of the six active sites are located at the interface of three subunits: two
+        subunits, A and A'', from one trimer and one, B, from another trimer. A Glu107 forms a salt bridge
+        and A Met70 and A Thr106 form hydrogen bonds with the substrate. The active site zinc ion is coordinated
+        by A H'
+      notes: M-CSA entry 84, mechanism 1; M-CSA cites PMID:10024455, PMID:24990950, PMID:7563095, PMID:8137809;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (27 evidence-backed edges) transcribed from M-CSA entry 84;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.1.45
 - CHEBI:22801
@@ -394,4 +394,237 @@ definitions:
       Acid beta-glucosidase (GCase) is a 497 amino acid membrane-associated lysosomal exo-beta-glucosidase, whose defective activity leads to the Gaucher disease. GCase cleaves the beta-glucosidic linkage of its major, natural substrate, glucosylceramide, as well as synthetic beta-glucosides. The 497 amino acid mature glycoprotein is derived from 517- or 536- amino acid precursors containing leader sequences that are removed during transit through the endoplasmic reticulum membrane. Cotranslational glycosylation occurs at four out of the five N-glycosylation sites. This glycosylation is essential for the development of the catalytically active enzyme. The catalytic cycle of GCase is dependent on the conformational changes during the transition state. Binding of effectors to specific sites of the enzyme induce the necessary changes required to active the enzyme.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of glucosylceramidase
+  description: Stepwise mechanism transcribed from M-CSA entry 764 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +39).
+  nodes:
+  - node_id: glu235
+    label: catalytic Glu235 (M-CSA/PDB numbering; UniProt residue 274)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04062
+    description: 'M-CSA roles: activator, increase nucleophilicity, promote heterolysis, proton acceptor,
+      proton donor.'
+  - node_id: glu340
+    label: catalytic Glu340 (M-CSA/PDB numbering; UniProt residue 379)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04062
+    description: 'M-CSA roles: covalently attached, nucleofuge, nucleophile.'
+  - node_id: cys342
+    label: catalytic Cys342 (M-CSA/PDB numbering; UniProt residue 381)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04062
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asn370
+    label: catalytic Asn370 (M-CSA/PDB numbering; UniProt residue 409)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04062
+  - node_id: reactant0
+    label: beta-D-glucosyl-N-acylsphingosine
+    node_type: CHEMICAL
+    grounding: CHEBI:22801
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: D-glucopyranose
+    node_type: CHEMICAL
+    grounding: CHEBI:4167
+  - node_id: product1
+    label: N-acylsphingosine
+    node_type: CHEMICAL
+    grounding: CHEBI:52639
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The glycosidic linkage is cleaved upon protonation by Glu274 and an oxy-carbonium ion
+      is formed.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Glu379 attacks the oxy-carbonium ion forming an enzyme-substrate intermediate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Glu274 activates a water molecule which hydrolyses the intermediate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: glucosylceramidase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:764
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.80 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.80
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: glucosylceramidase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.1.45
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/764/
+      snippet: Glu379 attacks the oxy-carbonium ion forming an enzyme-substrate intermediate.
+      notes: M-CSA entry 764, mechanism 1; M-CSA cites PMID:16293621, PMID:1714449, PMID:19217815; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/764/
+      snippet: Glu274 activates a water molecule which hydrolyses the intermediate.
+      notes: M-CSA entry 764, mechanism 1; M-CSA cites PMID:16293621, PMID:1714449, PMID:19217815; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/764/
+      snippet: Products.
+      notes: M-CSA entry 764, mechanism 1; M-CSA cites PMID:16293621, PMID:1714449, PMID:19217815; step
+        4
+  - subject: glu235
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu235 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/764/
+      snippet: activator, increase nucleophilicity, promote heterolysis, proton acceptor, proton donor
+      notes: M-CSA entry 764, mechanism 1; M-CSA cites PMID:16293621, PMID:1714449, PMID:19217815; M-CSA
+        catalytic-residue roles for Glu235
+  - subject: glu340
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu340 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/764/
+      snippet: covalently attached, nucleofuge, nucleophile
+      notes: M-CSA entry 764, mechanism 1; M-CSA cites PMID:16293621, PMID:1714449, PMID:19217815; M-CSA
+        catalytic-residue roles for Glu340
+  - subject: cys342
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys342 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/764/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 764, mechanism 1; M-CSA cites PMID:16293621, PMID:1714449, PMID:19217815; M-CSA
+        catalytic-residue roles for Cys342
+  - subject: asn370
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn370 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/764/
+      snippet: The mechanism begins with Glu274 acting as an acid protonating the glycosidic bond, this
+        promotes its cleavage. this leads to the formation of an oxy-carbonium ion which can be attacked
+        by the nucleophile Glu379, forming an enzyme-substrate intermediate. Glu274 then acts as a base
+        activating a water molecule which hydrolyses the intermediate.
+      notes: M-CSA entry 764, mechanism 1; M-CSA cites PMID:16293621, PMID:1714449, PMID:19217815; M-CSA
+        catalytic-residue roles for Asn370
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/764/
+      snippet: The mechanism begins with Glu274 acting as an acid protonating the glycosidic bond, this
+        promotes its cleavage. this leads to the formation of an oxy-carbonium ion which can be attacked
+        by the nucleophile Glu379, forming an enzyme-substrate intermediate. Glu274 then acts as a base
+        activating a water molecule which hydrolyses the intermediate.
+      notes: M-CSA entry 764, mechanism 1; M-CSA cites PMID:16293621, PMID:1714449, PMID:19217815; CATH
+        domain 3.20.20.80 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/764/
+      snippet: The mechanism begins with Glu274 acting as an acid protonating the glycosidic bond, this
+        promotes its cleavage. this leads to the formation of an oxy-carbonium ion which can be attacked
+        by the nucleophile Glu379, forming an enzyme-substrate intermediate. Glu274 then acts as a base
+        activating a water molecule which hydrolyses the intermediate.
+      notes: M-CSA entry 764, mechanism 1; M-CSA cites PMID:16293621, PMID:1714449, PMID:19217815; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/764/
+      snippet: The mechanism begins with Glu274 acting as an acid protonating the glycosidic bond, this
+        promotes its cleavage. this leads to the formation of an oxy-carbonium ion which can be attacked
+        by the nucleophile Glu379, forming an enzyme-substrate intermediate. Glu274 then acts as a base
+        activating a water molecule which hydrolyses the intermediate.
+      notes: M-CSA entry 764, mechanism 1; M-CSA cites PMID:16293621, PMID:1714449, PMID:19217815; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/764/
+      snippet: The mechanism begins with Glu274 acting as an acid protonating the glycosidic bond, this
+        promotes its cleavage. this leads to the formation of an oxy-carbonium ion which can be attacked
+        by the nucleophile Glu379, forming an enzyme-substrate intermediate. Glu274 then acts as a base
+        activating a water molecule which hydrolyses the intermediate.
+      notes: M-CSA entry 764, mechanism 1; M-CSA cites PMID:16293621, PMID:1714449, PMID:19217815; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/764/
+      snippet: The mechanism begins with Glu274 acting as an acid protonating the glycosidic bond, this
+        promotes its cleavage. this leads to the formation of an oxy-carbonium ion which can be attacked
+        by the nucleophile Glu379, forming an enzyme-substrate intermediate. Glu274 then acts as a base
+        activating a water molecule which hydrolyses the intermediate.
+      notes: M-CSA entry 764, mechanism 1; M-CSA cites PMID:16293621, PMID:1714449, PMID:19217815; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/764/
+      snippet: The mechanism begins with Glu274 acting as an acid protonating the glycosidic bond, this
+        promotes its cleavage. this leads to the formation of an oxy-carbonium ion which can be attacked
+        by the nucleophile Glu379, forming an enzyme-substrate intermediate. Glu274 then acts as a base
+        activating a water molecule which hydrolyses the intermediate.
+      notes: M-CSA entry 764, mechanism 1; M-CSA cites PMID:16293621, PMID:1714449, PMID:19217815; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 764;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

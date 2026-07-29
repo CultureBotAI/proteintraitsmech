@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.5.1.1
 - CHEBI:15377
@@ -292,4 +292,349 @@ definitions:
       Asparaginase (EC 3.5.1.1) and glutaminaase (EC 3.5.1.38) remove amino groups from asparagine and glutamine respectively leaving aspartate and glutamate. This entry covers both enzymes, though is derived from asparaginase. Enzymes from both EC families have some activity in the other. Two forms exist in E.coli, type I is cytoplasmic, type II is periplasmic. The type II form has a higher affinity for the substrate and its production is induced under anaerobic conditions when amino acids are the primary carbon source. Type II L-asparaginase is the most studied, because it is an important anti-cancer drug due to its ability to lower the levels of asparagine available to cancerous cells lacking in asparaginase synthase.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of asparaginase
+  description: Stepwise mechanism transcribed from M-CSA entry 455 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +22).
+  nodes:
+  - node_id: thr12
+    label: catalytic Thr12 (M-CSA/PDB numbering; UniProt residue 34)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00805
+    description: 'M-CSA roles: covalently attached, electrostatic stabiliser, nucleofuge, nucleophile,
+      proton acceptor, proton donor.'
+  - node_id: tyr25
+    label: catalytic Tyr25 (M-CSA/PDB numbering; UniProt residue 47)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00805
+    description: 'M-CSA roles: electrostatic stabiliser, increase nucleophilicity, proton acceptor, proton
+      donor, proton relay.'
+  - node_id: thr89
+    label: catalytic Thr89 (M-CSA/PDB numbering; UniProt residue 111)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00805
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp90
+    label: catalytic Asp90 (M-CSA/PDB numbering; UniProt residue 112)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00805
+    description: 'M-CSA roles: electrostatic stabiliser, increase acidity, increase basicity, increase
+      nucleophilicity, proton acceptor, proton donor.'
+  - node_id: lys162
+    label: catalytic Lys162 (M-CSA/PDB numbering; UniProt residue 184)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00805
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: glu283
+    label: catalytic Glu283 (M-CSA/PDB numbering; UniProt residue 305)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00805
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: L-asparagine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:58048
+  - node_id: product0
+    label: L-aspartate(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:29991
+  - node_id: product1
+    label: ammonium
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Lys162, activated by Asp90 and Thr89, abstracts a proton from water, which initiates
+      a nucleophilic attack on the carbonyl carbon, resulting in a negatively charged intermediate, stabilises
+      by Thr12.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The amine group of the intermediate abstracts a proton from Thr89, which in turn abstracts
+      a proton from Lys162.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The tetrahedral intermediate collapses, eliminating ammonia.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: asparaginase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:455
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1170 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1170
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: asparaginase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.5.1.1
+  edges:
+  - subject: thr12
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Thr12 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/455/
+      snippet: Lys162, activated by Asp90 and Thr89, abstracts a proton from water, which initiates a
+        nucleophilic attack on the carbonyl carbon, resulting in a negatively charged intermediate, stabilises
+        by Thr12.
+      notes: M-CSA entry 455, mechanism 3; M-CSA cites PMID:23544711, PMID:25040257, PMID:26733195; step
+        1
+  - subject: thr89
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Thr89 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/455/
+      snippet: Lys162, activated by Asp90 and Thr89, abstracts a proton from water, which initiates a
+        nucleophilic attack on the carbonyl carbon, resulting in a negatively charged intermediate, stabilises
+        by Thr12.
+      notes: M-CSA entry 455, mechanism 3; M-CSA cites PMID:23544711, PMID:25040257, PMID:26733195; step
+        1
+  - subject: asp90
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp90 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/455/
+      snippet: Lys162, activated by Asp90 and Thr89, abstracts a proton from water, which initiates a
+        nucleophilic attack on the carbonyl carbon, resulting in a negatively charged intermediate, stabilises
+        by Thr12.
+      notes: M-CSA entry 455, mechanism 3; M-CSA cites PMID:23544711, PMID:25040257, PMID:26733195; step
+        1
+  - subject: lys162
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys162 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/455/
+      snippet: Lys162, activated by Asp90 and Thr89, abstracts a proton from water, which initiates a
+        nucleophilic attack on the carbonyl carbon, resulting in a negatively charged intermediate, stabilises
+        by Thr12.
+      notes: M-CSA entry 455, mechanism 3; M-CSA cites PMID:23544711, PMID:25040257, PMID:26733195; step
+        1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/455/
+      snippet: The amine group of the intermediate abstracts a proton from Thr89, which in turn abstracts
+        a proton from Lys162.
+      notes: M-CSA entry 455, mechanism 3; M-CSA cites PMID:23544711, PMID:25040257, PMID:26733195; step
+        2
+  - subject: thr89
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Thr89 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/455/
+      snippet: The amine group of the intermediate abstracts a proton from Thr89, which in turn abstracts
+        a proton from Lys162.
+      notes: M-CSA entry 455, mechanism 3; M-CSA cites PMID:23544711, PMID:25040257, PMID:26733195; step
+        2
+  - subject: lys162
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Lys162 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/455/
+      snippet: The amine group of the intermediate abstracts a proton from Thr89, which in turn abstracts
+        a proton from Lys162.
+      notes: M-CSA entry 455, mechanism 3; M-CSA cites PMID:23544711, PMID:25040257, PMID:26733195; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/455/
+      snippet: The tetrahedral intermediate collapses, eliminating ammonia.
+      notes: M-CSA entry 455, mechanism 3; M-CSA cites PMID:23544711, PMID:25040257, PMID:26733195; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/455/
+      snippet: Products
+      notes: M-CSA entry 455, mechanism 3; M-CSA cites PMID:23544711, PMID:25040257, PMID:26733195; step
+        4
+  - subject: thr12
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr12 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/455/
+      snippet: covalently attached, electrostatic stabiliser, nucleofuge, nucleophile, proton acceptor,
+        proton donor
+      notes: M-CSA entry 455, mechanism 3; M-CSA cites PMID:23544711, PMID:25040257, PMID:26733195; M-CSA
+        catalytic-residue roles for Thr12
+  - subject: tyr25
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr25 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/455/
+      snippet: electrostatic stabiliser, increase nucleophilicity, proton acceptor, proton donor, proton
+        relay
+      notes: M-CSA entry 455, mechanism 3; M-CSA cites PMID:23544711, PMID:25040257, PMID:26733195; M-CSA
+        catalytic-residue roles for Tyr25
+  - subject: thr89
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr89 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/455/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 455, mechanism 3; M-CSA cites PMID:23544711, PMID:25040257, PMID:26733195; M-CSA
+        catalytic-residue roles for Thr89
+  - subject: asp90
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp90 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/455/
+      snippet: electrostatic stabiliser, increase acidity, increase basicity, increase nucleophilicity,
+        proton acceptor, proton donor
+      notes: M-CSA entry 455, mechanism 3; M-CSA cites PMID:23544711, PMID:25040257, PMID:26733195; M-CSA
+        catalytic-residue roles for Asp90
+  - subject: lys162
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys162 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/455/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 455, mechanism 3; M-CSA cites PMID:23544711, PMID:25040257, PMID:26733195; M-CSA
+        catalytic-residue roles for Lys162
+  - subject: glu283
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu283 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/455/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 455, mechanism 3; M-CSA cites PMID:23544711, PMID:25040257, PMID:26733195; M-CSA
+        catalytic-residue roles for Glu283
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/455/
+      snippet: In this direct displacement mechanism proposal, the Thr89-Lys162-Asp90 triad activates
+        a water molecule to perform the nucleophilic attack in the first step of reaction, while the second
+        triad, Thr12-Tyr25-Glu283, stabilizes the tetrahedral intermediate formed in the first step. The
+        Thr89-Lys162-Asp90 triad is situated in a rigid part of the structure and mutational and crystallographic
+        studies in
+      notes: M-CSA entry 455, mechanism 3; M-CSA cites PMID:23544711, PMID:25040257, PMID:26733195; CATH
+        domain 3.40.50.1170 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/455/
+      snippet: In this direct displacement mechanism proposal, the Thr89-Lys162-Asp90 triad activates
+        a water molecule to perform the nucleophilic attack in the first step of reaction, while the second
+        triad, Thr12-Tyr25-Glu283, stabilizes the tetrahedral intermediate formed in the first step. The
+        Thr89-Lys162-Asp90 triad is situated in a rigid part of the structure and mutational and crystallographic
+        studies in
+      notes: M-CSA entry 455, mechanism 3; M-CSA cites PMID:23544711, PMID:25040257, PMID:26733195; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/455/
+      snippet: In this direct displacement mechanism proposal, the Thr89-Lys162-Asp90 triad activates
+        a water molecule to perform the nucleophilic attack in the first step of reaction, while the second
+        triad, Thr12-Tyr25-Glu283, stabilizes the tetrahedral intermediate formed in the first step. The
+        Thr89-Lys162-Asp90 triad is situated in a rigid part of the structure and mutational and crystallographic
+        studies in
+      notes: M-CSA entry 455, mechanism 3; M-CSA cites PMID:23544711, PMID:25040257, PMID:26733195; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/455/
+      snippet: In this direct displacement mechanism proposal, the Thr89-Lys162-Asp90 triad activates
+        a water molecule to perform the nucleophilic attack in the first step of reaction, while the second
+        triad, Thr12-Tyr25-Glu283, stabilizes the tetrahedral intermediate formed in the first step. The
+        Thr89-Lys162-Asp90 triad is situated in a rigid part of the structure and mutational and crystallographic
+        studies in
+      notes: M-CSA entry 455, mechanism 3; M-CSA cites PMID:23544711, PMID:25040257, PMID:26733195; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/455/
+      snippet: In this direct displacement mechanism proposal, the Thr89-Lys162-Asp90 triad activates
+        a water molecule to perform the nucleophilic attack in the first step of reaction, while the second
+        triad, Thr12-Tyr25-Glu283, stabilizes the tetrahedral intermediate formed in the first step. The
+        Thr89-Lys162-Asp90 triad is situated in a rigid part of the structure and mutational and crystallographic
+        studies in
+      notes: M-CSA entry 455, mechanism 3; M-CSA cites PMID:23544711, PMID:25040257, PMID:26733195; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/455/
+      snippet: In this direct displacement mechanism proposal, the Thr89-Lys162-Asp90 triad activates
+        a water molecule to perform the nucleophilic attack in the first step of reaction, while the second
+        triad, Thr12-Tyr25-Glu283, stabilizes the tetrahedral intermediate formed in the first step. The
+        Thr89-Lys162-Asp90 triad is situated in a rigid part of the structure and mutational and crystallographic
+        studies in
+      notes: M-CSA entry 455, mechanism 3; M-CSA cites PMID:23544711, PMID:25040257, PMID:26733195; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (21 evidence-backed edges) transcribed from M-CSA entry 455;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.3.1.7
 - CHEBI:57288
@@ -423,4 +423,275 @@ definitions:
       Carnitine acetyltransferase (CrAT) belongs to the family of choline/carnitine acyltransferases, which catalyse the exchange between acyl-CoA and acylcarnitine (likewise with choline). The enzymes of this family are classified based on their substrate selectivity. CrAT prefers short-chain fatty acids. CrAT maybe involved in the transport of acetyl-CoA across intercellular membranes, in maintaining the acetyl-CoA:CoA balance and in the excretion of excess or harmful acyl molecules as acylcarnitines. Inherited deficiency of CrAT activity can lead to serious neurological and heart problems, and patients suffering from Alzhiemer's disease also have reduced CrAT activity.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of carnitine O-acetyltransferase
+  description: Stepwise mechanism transcribed from M-CSA entry 629 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: tyr107
+    label: catalytic Tyr107 (M-CSA/PDB numbering; UniProt residue 107)
+    node_type: RESIDUE
+    grounding: UniProtKB:P47934
+    description: 'M-CSA roles: steric role.'
+  - node_id: pro120
+    label: catalytic Pro120 (M-CSA/PDB numbering; UniProt residue 120)
+    node_type: RESIDUE
+    grounding: UniProtKB:P47934
+    description: 'M-CSA roles: steric role.'
+  - node_id: his343
+    label: catalytic His343 (M-CSA/PDB numbering; UniProt residue 343)
+    node_type: RESIDUE
+    grounding: UniProtKB:P47934
+    description: 'M-CSA roles: hydrogen bond acceptor, proton acceptor, proton donor.'
+  - node_id: ser554
+    label: catalytic Ser554 (M-CSA/PDB numbering; UniProt residue 554)
+    node_type: RESIDUE
+    grounding: UniProtKB:P47934
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: reactant0
+    label: acetyl-CoA(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+  - node_id: reactant1
+    label: (R)-carnitine
+    node_type: CHEMICAL
+    grounding: CHEBI:16347
+  - node_id: product0
+    label: O-acetyl-L-carnitine
+    node_type: CHEMICAL
+    grounding: CHEBI:57589
+  - node_id: product1
+    label: coenzyme A(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His343 deprotonates the 3'OH on carnitine.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Activated 3'OH then performs a nucleophilic attack on acetyl-CoA to form a tetrahedral
+      intermediate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Tetrahedral intermediate collapses.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Co-A is reprotonated by His343.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: carnitine O-acetyltransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:629
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.559.70 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.559.70
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: carnitine O-acetyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.3.1.7
+  edges:
+  - subject: his343
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His343 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/629/
+      snippet: His343 deprotonates the 3'OH on carnitine.
+      notes: M-CSA entry 629, mechanism 1; M-CSA cites PMID:12526798, PMID:15131697, PMID:15591000, PMID:16870616,
+        PMID:17144655; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/629/
+      snippet: Activated 3'OH then performs a nucleophilic attack on acetyl-CoA to form a tetrahedral
+        intermediate.
+      notes: M-CSA entry 629, mechanism 1; M-CSA cites PMID:12526798, PMID:15131697, PMID:15591000, PMID:16870616,
+        PMID:17144655; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/629/
+      snippet: Tetrahedral intermediate collapses.
+      notes: M-CSA entry 629, mechanism 1; M-CSA cites PMID:12526798, PMID:15131697, PMID:15591000, PMID:16870616,
+        PMID:17144655; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/629/
+      snippet: Co-A is reprotonated by His343.
+      notes: M-CSA entry 629, mechanism 1; M-CSA cites PMID:12526798, PMID:15131697, PMID:15591000, PMID:16870616,
+        PMID:17144655; step 4
+  - subject: his343
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: His343 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/629/
+      snippet: Co-A is reprotonated by His343.
+      notes: M-CSA entry 629, mechanism 1; M-CSA cites PMID:12526798, PMID:15131697, PMID:15591000, PMID:16870616,
+        PMID:17144655; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/629/
+      snippet: Products.
+      notes: M-CSA entry 629, mechanism 1; M-CSA cites PMID:12526798, PMID:15131697, PMID:15591000, PMID:16870616,
+        PMID:17144655; step 5
+  - subject: tyr107
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr107 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/629/
+      snippet: steric role
+      notes: M-CSA entry 629, mechanism 1; M-CSA cites PMID:12526798, PMID:15131697, PMID:15591000, PMID:16870616,
+        PMID:17144655; M-CSA catalytic-residue roles for Tyr107
+  - subject: pro120
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Pro120 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/629/
+      snippet: steric role
+      notes: M-CSA entry 629, mechanism 1; M-CSA cites PMID:12526798, PMID:15131697, PMID:15591000, PMID:16870616,
+        PMID:17144655; M-CSA catalytic-residue roles for Pro120
+  - subject: his343
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His343 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/629/
+      snippet: hydrogen bond acceptor, proton acceptor, proton donor
+      notes: M-CSA entry 629, mechanism 1; M-CSA cites PMID:12526798, PMID:15131697, PMID:15591000, PMID:16870616,
+        PMID:17144655; M-CSA catalytic-residue roles for His343
+  - subject: ser554
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser554 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/629/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 629, mechanism 1; M-CSA cites PMID:12526798, PMID:15131697, PMID:15591000, PMID:16870616,
+        PMID:17144655; M-CSA catalytic-residue roles for Ser554
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/629/
+      snippet: His343 acts as a general base to deprotonate the 3-hydroxyl group of the carnitine or the
+        thiol group of CoA, depending on what is being acetylated. The activated hydroxyl or thiol group
+        acts as a nucleophile to attack the carbonyl carbon in acyl-CoA or acylcarnitine. The oxyanion
+        intermediate (with a negatively charged oxygen atom) is stabilised by Ser554, apart of the STS
+        motif, which forms the
+      notes: M-CSA entry 629, mechanism 1; M-CSA cites PMID:12526798, PMID:15131697, PMID:15591000, PMID:16870616,
+        PMID:17144655; CATH domain 3.30.559.70 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/629/
+      snippet: His343 acts as a general base to deprotonate the 3-hydroxyl group of the carnitine or the
+        thiol group of CoA, depending on what is being acetylated. The activated hydroxyl or thiol group
+        acts as a nucleophile to attack the carbonyl carbon in acyl-CoA or acylcarnitine. The oxyanion
+        intermediate (with a negatively charged oxygen atom) is stabilised by Ser554, apart of the STS
+        motif, which forms the
+      notes: M-CSA entry 629, mechanism 1; M-CSA cites PMID:12526798, PMID:15131697, PMID:15591000, PMID:16870616,
+        PMID:17144655; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/629/
+      snippet: His343 acts as a general base to deprotonate the 3-hydroxyl group of the carnitine or the
+        thiol group of CoA, depending on what is being acetylated. The activated hydroxyl or thiol group
+        acts as a nucleophile to attack the carbonyl carbon in acyl-CoA or acylcarnitine. The oxyanion
+        intermediate (with a negatively charged oxygen atom) is stabilised by Ser554, apart of the STS
+        motif, which forms the
+      notes: M-CSA entry 629, mechanism 1; M-CSA cites PMID:12526798, PMID:15131697, PMID:15591000, PMID:16870616,
+        PMID:17144655; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/629/
+      snippet: His343 acts as a general base to deprotonate the 3-hydroxyl group of the carnitine or the
+        thiol group of CoA, depending on what is being acetylated. The activated hydroxyl or thiol group
+        acts as a nucleophile to attack the carbonyl carbon in acyl-CoA or acylcarnitine. The oxyanion
+        intermediate (with a negatively charged oxygen atom) is stabilised by Ser554, apart of the STS
+        motif, which forms the
+      notes: M-CSA entry 629, mechanism 1; M-CSA cites PMID:12526798, PMID:15131697, PMID:15591000, PMID:16870616,
+        PMID:17144655; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/629/
+      snippet: His343 acts as a general base to deprotonate the 3-hydroxyl group of the carnitine or the
+        thiol group of CoA, depending on what is being acetylated. The activated hydroxyl or thiol group
+        acts as a nucleophile to attack the carbonyl carbon in acyl-CoA or acylcarnitine. The oxyanion
+        intermediate (with a negatively charged oxygen atom) is stabilised by Ser554, apart of the STS
+        motif, which forms the
+      notes: M-CSA entry 629, mechanism 1; M-CSA cites PMID:12526798, PMID:15131697, PMID:15591000, PMID:16870616,
+        PMID:17144655; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/629/
+      snippet: His343 acts as a general base to deprotonate the 3-hydroxyl group of the carnitine or the
+        thiol group of CoA, depending on what is being acetylated. The activated hydroxyl or thiol group
+        acts as a nucleophile to attack the carbonyl carbon in acyl-CoA or acylcarnitine. The oxyanion
+        intermediate (with a negatively charged oxygen atom) is stabilised by Ser554, apart of the STS
+        motif, which forms the
+      notes: M-CSA entry 629, mechanism 1; M-CSA cites PMID:12526798, PMID:15131697, PMID:15591000, PMID:16870616,
+        PMID:17144655; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (16 evidence-backed edges) transcribed from M-CSA entry 629;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.2.22
 - CHEBI:16708
@@ -203,4 +203,211 @@ definitions:
       Abrin-A from the seeds of Abrus precatorius is a type II ribosome-inactivating protein (RIP) alongside the homologue Ricin. Like Ricin, it catalyses the endohydrolysis of the N-glycosidic bond at one specific adenosine A4324 on the 28S rRNA. This inhibition of protein biosynthesis is anti-carcinogenic. Abrin-A is composed of two chains which are linked by a disulphide bond. Type I RIPs such as α-Momorcharin however have a single chain, still retaining rRNA-glycosylase activity and share identical catalytic residues to Abrin-A and also excise adenines from a highly conserved loop rRNA.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of rRNA N-glycosylase
+  description: Stepwise mechanism transcribed from M-CSA entry 825 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +23).
+  nodes:
+  - node_id: ile71
+    label: catalytic Ile71 (M-CSA/PDB numbering; UniProt residue 94)
+    node_type: RESIDUE
+    grounding: UniProtKB:P16094
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: glu160
+    label: catalytic Glu160 (M-CSA/PDB numbering; UniProt residue 183)
+    node_type: RESIDUE
+    grounding: UniProtKB:P16094
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: arg163
+    label: catalytic Arg163 (M-CSA/PDB numbering; UniProt residue 186)
+    node_type: RESIDUE
+    grounding: UniProtKB:P16094
+    description: 'M-CSA roles: activator, electrostatic stabiliser, hydrogen bond donor, proton acceptor,
+      proton donor.'
+  - node_id: reactant0
+    label: adenosine
+    node_type: CHEMICAL
+    grounding: CHEBI:16335
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: adenine
+    node_type: CHEMICAL
+    grounding: CHEBI:16708
+  - node_id: product1
+    label: beta-D-ribose
+    node_type: CHEMICAL
+    grounding: CHEBI:47002
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: When in the active site, the substrate is in a strained high energy conformation which
+      serves to weaken the C1-N9 bond. Both Arg186 and Ile94 act as electrostatic stabilisers by hydrogen
+      bonding to N3 and N1 in adenine respectively, withdrawing electrons from this N-glycosidic bond
+      thus facilitating bond cleavage.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The resulting ribose oxycarbenium ion is stabilised by the positively charged Glu183.
+      Adenine rotates 15° so that the nucleophile, water can enter and attack the oxocarbenium ion. Adenine
+      is protonated by the released proton from water.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: rRNA N-glycosylase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:825
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.420.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.420.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: rRNA N-glycosylase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.2.22
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/825/
+      snippet: The resulting ribose oxycarbenium ion is stabilised by the positively charged Glu183. Adenine
+        rotates 15° so that the nucleophile, water can enter and attack the oxocarbenium ion. Adenine
+        is protonated by the released proton from water.
+      notes: M-CSA entry 825, mechanism 1; M-CSA cites PMID:7608980; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/825/
+      snippet: Products.
+      notes: M-CSA entry 825, mechanism 1; M-CSA cites PMID:7608980; step 3
+  - subject: ile71
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ile71 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/825/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 825, mechanism 1; M-CSA cites PMID:7608980; M-CSA catalytic-residue roles for
+        Ile71
+  - subject: glu160
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu160 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/825/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 825, mechanism 1; M-CSA cites PMID:7608980; M-CSA catalytic-residue roles for
+        Glu160
+  - subject: arg163
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg163 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/825/
+      snippet: activator, electrostatic stabiliser, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 825, mechanism 1; M-CSA cites PMID:7608980; M-CSA catalytic-residue roles for
+        Arg163
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/825/
+      snippet: When in the active site, the substrate is in a strained high energy conformation which
+        serves to weaken the C1-N9 bond. N-glycosidic bond cleavage is also facilitated by Arg186 and
+        Ile94, where the resulting ribose oxocarbenium ion is stabilised by Glu183 and nucleophilically
+        attacked by an incoming water molecule which also protonates adenine. The excised adenine and
+        ribose sugar (apart of the ri
+      notes: M-CSA entry 825, mechanism 1; M-CSA cites PMID:7608980; CATH domain 3.40.420.10 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/825/
+      snippet: When in the active site, the substrate is in a strained high energy conformation which
+        serves to weaken the C1-N9 bond. N-glycosidic bond cleavage is also facilitated by Arg186 and
+        Ile94, where the resulting ribose oxocarbenium ion is stabilised by Glu183 and nucleophilically
+        attacked by an incoming water molecule which also protonates adenine. The excised adenine and
+        ribose sugar (apart of the ri
+      notes: M-CSA entry 825, mechanism 1; M-CSA cites PMID:7608980; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/825/
+      snippet: When in the active site, the substrate is in a strained high energy conformation which
+        serves to weaken the C1-N9 bond. N-glycosidic bond cleavage is also facilitated by Arg186 and
+        Ile94, where the resulting ribose oxocarbenium ion is stabilised by Glu183 and nucleophilically
+        attacked by an incoming water molecule which also protonates adenine. The excised adenine and
+        ribose sugar (apart of the ri
+      notes: M-CSA entry 825, mechanism 1; M-CSA cites PMID:7608980; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/825/
+      snippet: When in the active site, the substrate is in a strained high energy conformation which
+        serves to weaken the C1-N9 bond. N-glycosidic bond cleavage is also facilitated by Arg186 and
+        Ile94, where the resulting ribose oxocarbenium ion is stabilised by Glu183 and nucleophilically
+        attacked by an incoming water molecule which also protonates adenine. The excised adenine and
+        ribose sugar (apart of the ri
+      notes: M-CSA entry 825, mechanism 1; M-CSA cites PMID:7608980; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/825/
+      snippet: When in the active site, the substrate is in a strained high energy conformation which
+        serves to weaken the C1-N9 bond. N-glycosidic bond cleavage is also facilitated by Arg186 and
+        Ile94, where the resulting ribose oxocarbenium ion is stabilised by Glu183 and nucleophilically
+        attacked by an incoming water molecule which also protonates adenine. The excised adenine and
+        ribose sugar (apart of the ri
+      notes: M-CSA entry 825, mechanism 1; M-CSA cites PMID:7608980; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/825/
+      snippet: When in the active site, the substrate is in a strained high energy conformation which
+        serves to weaken the C1-N9 bond. N-glycosidic bond cleavage is also facilitated by Arg186 and
+        Ile94, where the resulting ribose oxocarbenium ion is stabilised by Glu183 and nucleophilically
+        attacked by an incoming water molecule which also protonates adenine. The excised adenine and
+        ribose sugar (apart of the ri
+      notes: M-CSA entry 825, mechanism 1; M-CSA cites PMID:7608980; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (11 evidence-backed edges) transcribed from M-CSA entry 825;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

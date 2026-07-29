@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.5.1.88
 - CHEBI:15377
@@ -164,4 +164,288 @@ definitions:
       In prokaryotes, proteins are synthesised with an N-terminal formylmethionine which is removed by peptide deformylase. Eukaryotes do not use this enzyme, so it represents a potential drug target for the treatment of bacterial infections.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of peptide deformylase
+  description: Stepwise mechanism transcribed from M-CSA entry 98 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: gly1045
+    label: catalytic Gly1045 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A6K3
+    description: 'M-CSA roles: activator, hydrogen bond acceptor.'
+  - node_id: gln1050
+    label: catalytic Gln1050 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A6K3
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor.'
+  - node_id: cys1090
+    label: catalytic Cys1090 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A6K3
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: leu1091
+    label: catalytic Leu1091 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A6K3
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: his1132
+    label: catalytic His1132 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A6K3
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu1133
+    label: catalytic Glu1133 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A6K3
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: his1136
+    label: catalytic His1136 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A6K3
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: N-formyl-L-methionyl group
+    node_type: CHEMICAL
+    grounding: CHEBI:49298
+  - node_id: product0
+    label: formate
+    node_type: CHEMICAL
+    grounding: CHEBI:15740
+  - node_id: product1
+    label: L-methioniniumyl group
+    node_type: CHEMICAL
+    grounding: CHEBI:64731
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu133 deprotonates iron bound water. The activated water initiates a nucleophilic attack
+      on the peptide substrate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The amide of the peptide bond abstracts a proton from Glu133.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The oxyanion collapses, eliminating methionine. L-methionine dissociates from the active
+      site first. Then water displaces formic acid to regenerate the starting state.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: peptide deformylase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:98
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.45.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.45.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: peptide deformylase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.5.1.88
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/98/
+      snippet: The amide of the peptide bond abstracts a proton from Glu133.
+      notes: M-CSA entry 98, mechanism 1; M-CSA cites PMID:10200158, PMID:17497768, PMID:9126850, PMID:9374869,
+        PMID:9374870, PMID:9846875; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/98/
+      snippet: The oxyanion collapses, eliminating methionine. L-methionine dissociates from the active
+        site first. Then water displaces formic acid to regenerate the starting state.
+      notes: M-CSA entry 98, mechanism 1; M-CSA cites PMID:10200158, PMID:17497768, PMID:9126850, PMID:9374869,
+        PMID:9374870, PMID:9846875; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/98/
+      snippet: Products
+      notes: M-CSA entry 98, mechanism 1; M-CSA cites PMID:10200158, PMID:17497768, PMID:9126850, PMID:9374869,
+        PMID:9374870, PMID:9846875; step 4
+  - subject: gly1045
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly1045 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/98/
+      snippet: activator, hydrogen bond acceptor
+      notes: M-CSA entry 98, mechanism 1; M-CSA cites PMID:10200158, PMID:17497768, PMID:9126850, PMID:9374869,
+        PMID:9374870, PMID:9846875; M-CSA catalytic-residue roles for Gly1045
+  - subject: gln1050
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln1050 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/98/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor
+      notes: M-CSA entry 98, mechanism 1; M-CSA cites PMID:10200158, PMID:17497768, PMID:9126850, PMID:9374869,
+        PMID:9374870, PMID:9846875; M-CSA catalytic-residue roles for Gln1050
+  - subject: cys1090
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys1090 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/98/
+      snippet: metal ligand
+      notes: M-CSA entry 98, mechanism 1; M-CSA cites PMID:10200158, PMID:17497768, PMID:9126850, PMID:9374869,
+        PMID:9374870, PMID:9846875; M-CSA catalytic-residue roles for Cys1090
+  - subject: leu1091
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Leu1091 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/98/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 98, mechanism 1; M-CSA cites PMID:10200158, PMID:17497768, PMID:9126850, PMID:9374869,
+        PMID:9374870, PMID:9846875; M-CSA catalytic-residue roles for Leu1091
+  - subject: his1132
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His1132 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/98/
+      snippet: metal ligand
+      notes: M-CSA entry 98, mechanism 1; M-CSA cites PMID:10200158, PMID:17497768, PMID:9126850, PMID:9374869,
+        PMID:9374870, PMID:9846875; M-CSA catalytic-residue roles for His1132
+  - subject: glu1133
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu1133 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/98/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 98, mechanism 1; M-CSA cites PMID:10200158, PMID:17497768, PMID:9126850, PMID:9374869,
+        PMID:9374870, PMID:9846875; M-CSA catalytic-residue roles for Glu1133
+  - subject: his1136
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His1136 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/98/
+      snippet: metal ligand
+      notes: M-CSA entry 98, mechanism 1; M-CSA cites PMID:10200158, PMID:17497768, PMID:9126850, PMID:9374869,
+        PMID:9374870, PMID:9846875; M-CSA catalytic-residue roles for His1136
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/98/
+      snippet: Glu133 abstracts a proton from the metal activated water molecule in the first step of
+        this reaction. Computational studies have suggested that the nucleophilic attack of the resulting
+        hydroxide ion occurs in a concerted manner. The nitrogen of the peptide bond then abstracts the
+        proton from Glu133, making it a better leaving group for the final step. In this final step, the
+        oxyanion collapses, el
+      notes: M-CSA entry 98, mechanism 1; M-CSA cites PMID:10200158, PMID:17497768, PMID:9126850, PMID:9374869,
+        PMID:9374870, PMID:9846875; CATH domain 3.90.45.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/98/
+      snippet: Glu133 abstracts a proton from the metal activated water molecule in the first step of
+        this reaction. Computational studies have suggested that the nucleophilic attack of the resulting
+        hydroxide ion occurs in a concerted manner. The nitrogen of the peptide bond then abstracts the
+        proton from Glu133, making it a better leaving group for the final step. In this final step, the
+        oxyanion collapses, el
+      notes: M-CSA entry 98, mechanism 1; M-CSA cites PMID:10200158, PMID:17497768, PMID:9126850, PMID:9374869,
+        PMID:9374870, PMID:9846875; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/98/
+      snippet: Glu133 abstracts a proton from the metal activated water molecule in the first step of
+        this reaction. Computational studies have suggested that the nucleophilic attack of the resulting
+        hydroxide ion occurs in a concerted manner. The nitrogen of the peptide bond then abstracts the
+        proton from Glu133, making it a better leaving group for the final step. In this final step, the
+        oxyanion collapses, el
+      notes: M-CSA entry 98, mechanism 1; M-CSA cites PMID:10200158, PMID:17497768, PMID:9126850, PMID:9374869,
+        PMID:9374870, PMID:9846875; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/98/
+      snippet: Glu133 abstracts a proton from the metal activated water molecule in the first step of
+        this reaction. Computational studies have suggested that the nucleophilic attack of the resulting
+        hydroxide ion occurs in a concerted manner. The nitrogen of the peptide bond then abstracts the
+        proton from Glu133, making it a better leaving group for the final step. In this final step, the
+        oxyanion collapses, el
+      notes: M-CSA entry 98, mechanism 1; M-CSA cites PMID:10200158, PMID:17497768, PMID:9126850, PMID:9374869,
+        PMID:9374870, PMID:9846875; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/98/
+      snippet: Glu133 abstracts a proton from the metal activated water molecule in the first step of
+        this reaction. Computational studies have suggested that the nucleophilic attack of the resulting
+        hydroxide ion occurs in a concerted manner. The nitrogen of the peptide bond then abstracts the
+        proton from Glu133, making it a better leaving group for the final step. In this final step, the
+        oxyanion collapses, el
+      notes: M-CSA entry 98, mechanism 1; M-CSA cites PMID:10200158, PMID:17497768, PMID:9126850, PMID:9374869,
+        PMID:9374870, PMID:9846875; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/98/
+      snippet: Glu133 abstracts a proton from the metal activated water molecule in the first step of
+        this reaction. Computational studies have suggested that the nucleophilic attack of the resulting
+        hydroxide ion occurs in a concerted manner. The nitrogen of the peptide bond then abstracts the
+        proton from Glu133, making it a better leaving group for the final step. In this final step, the
+        oxyanion collapses, el
+      notes: M-CSA entry 98, mechanism 1; M-CSA cites PMID:10200158, PMID:17497768, PMID:9126850, PMID:9374869,
+        PMID:9374870, PMID:9846875; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (16 evidence-backed edges) transcribed from M-CSA entry 98;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

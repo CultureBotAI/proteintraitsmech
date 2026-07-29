@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.3.2.13
 - CHEBI:16134
@@ -283,4 +283,322 @@ definitions:
       Transglutaminases, TGase, catalyse an acyl transfer reaction in which gamma-caboxyamide groups of the peptide-bound glutamine residues act as acyl donors with e-amino lysine groups as acyl acceptors. The microbial tranglutaminase, MTG, from Streptoverticllium mobaraense is Ca2+ independent unlike mammalian TGases and folds in to aplate-like shape with a deep cleft at the edge of the molecule. MTG is secreted from the cytoplasm and is activated by proteolytic processing. The additional pro-sequence consisting of 45 amino acid residues at the N terminus is cleaved off, resulting in the active form, the mature enzyme. Industrial applications of MTG include improving the physical and textural properties of protein-rich foods.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of protein-glutamine gamma-glutamyltransferase (bacterial)
+  description: Stepwise mechanism transcribed from M-CSA entry 761 (7 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: cys64
+    label: catalytic Cys64 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P81453
+    description: 'M-CSA roles: covalently attached, electrostatic stabiliser, nucleofuge, nucleophile,
+      proton acceptor, proton donor.'
+  - node_id: asp255
+    label: catalytic Asp255 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P81453
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, proton acceptor, proton
+      donor.'
+  - node_id: trp272
+    label: catalytic Trp272 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P81453
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his274
+    label: catalytic His274 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P81453
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: reactant0
+    label: glutamine residue
+    node_type: CHEMICAL
+    grounding: CHEBI:32677
+  - node_id: reactant1
+    label: alkylamine
+    node_type: CHEMICAL
+    grounding: CHEBI:13759
+  - node_id: product0
+    label: ammonia
+    node_type: CHEMICAL
+    grounding: CHEBI:16134
+  - node_id: product1
+    label: N(5)-alkyl-L-glutamine residue
+    node_type: CHEMICAL
+    grounding: CHEBI:83697
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Solvent water deprotonates Cys64.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Cys64 performs a nucleophilic attack on the carbonyl carbon of glutamine.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Asp255 protonates the oxyanion to release the ammonia leaving group.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Negatively charged Asp255 is protonated from nucleophilic attack on lysine amine group.
+      Lysine amine group then attacks the carbonyl carbon.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Collapse of proposed oxyanion transition state.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Cys64 is reprotonated by a solvent water molecule.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: protein-glutamine gamma-glutamyltransferase (bacterial) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:761
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.1360.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.1360.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: protein-glutamine gamma-glutamyltransferase (bacterial) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.3.2.13
+  edges:
+  - subject: cys64
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys64 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/761/
+      snippet: Solvent water deprotonates Cys64.
+      notes: M-CSA entry 761, mechanism 1; M-CSA cites PMID:12221081; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/761/
+      snippet: Cys64 performs a nucleophilic attack on the carbonyl carbon of glutamine.
+      notes: M-CSA entry 761, mechanism 1; M-CSA cites PMID:12221081; step 2
+  - subject: cys64
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Cys64 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/761/
+      snippet: Cys64 performs a nucleophilic attack on the carbonyl carbon of glutamine.
+      notes: M-CSA entry 761, mechanism 1; M-CSA cites PMID:12221081; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/761/
+      snippet: Asp255 protonates the oxyanion to release the ammonia leaving group.
+      notes: M-CSA entry 761, mechanism 1; M-CSA cites PMID:12221081; step 3
+  - subject: asp255
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Asp255 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/761/
+      snippet: Asp255 protonates the oxyanion to release the ammonia leaving group.
+      notes: M-CSA entry 761, mechanism 1; M-CSA cites PMID:12221081; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/761/
+      snippet: Negatively charged Asp255 is protonated from nucleophilic attack on lysine amine group.
+        Lysine amine group then attacks the carbonyl carbon.
+      notes: M-CSA entry 761, mechanism 1; M-CSA cites PMID:12221081; step 4
+  - subject: asp255
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Asp255 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/761/
+      snippet: Negatively charged Asp255 is protonated from nucleophilic attack on lysine amine group.
+        Lysine amine group then attacks the carbonyl carbon.
+      notes: M-CSA entry 761, mechanism 1; M-CSA cites PMID:12221081; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/761/
+      snippet: Collapse of proposed oxyanion transition state.
+      notes: M-CSA entry 761, mechanism 1; M-CSA cites PMID:12221081; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/761/
+      snippet: Cys64 is reprotonated by a solvent water molecule.
+      notes: M-CSA entry 761, mechanism 1; M-CSA cites PMID:12221081; step 6
+  - subject: cys64
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: Cys64 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/761/
+      snippet: Cys64 is reprotonated by a solvent water molecule.
+      notes: M-CSA entry 761, mechanism 1; M-CSA cites PMID:12221081; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/761/
+      snippet: Products.
+      notes: M-CSA entry 761, mechanism 1; M-CSA cites PMID:12221081; step 7
+  - subject: cys64
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys64 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/761/
+      snippet: covalently attached, electrostatic stabiliser, nucleofuge, nucleophile, proton acceptor,
+        proton donor
+      notes: M-CSA entry 761, mechanism 1; M-CSA cites PMID:12221081; M-CSA catalytic-residue roles for
+        Cys64
+  - subject: asp255
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp255 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/761/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, proton acceptor, proton donor
+      notes: M-CSA entry 761, mechanism 1; M-CSA cites PMID:12221081; M-CSA catalytic-residue roles for
+        Asp255
+  - subject: trp272
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp272 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/761/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 761, mechanism 1; M-CSA cites PMID:12221081; M-CSA catalytic-residue roles for
+        Trp272
+  - subject: his274
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His274 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/761/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 761, mechanism 1; M-CSA cites PMID:12221081; M-CSA catalytic-residue roles for
+        His274
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/761/
+      snippet: MTG is involved in catalysing an acyl transfer reaction between protein glutamine and alkylamine,
+        producing protein N(5)-alkylglutamine and ammonia. The residues Cys 64, Asp 255 and His 274 superimpose
+        well on the 'Cys, His, Asp' catalytic triad of other transglutaminases, such as Factor XIII. However,
+        the relative positions of MTG His and Asp seem to be reversed relative to the Cys residue and
+        th
+      notes: M-CSA entry 761, mechanism 1; M-CSA cites PMID:12221081; CATH domain 3.90.1360.10 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/761/
+      snippet: MTG is involved in catalysing an acyl transfer reaction between protein glutamine and alkylamine,
+        producing protein N(5)-alkylglutamine and ammonia. The residues Cys 64, Asp 255 and His 274 superimpose
+        well on the 'Cys, His, Asp' catalytic triad of other transglutaminases, such as Factor XIII. However,
+        the relative positions of MTG His and Asp seem to be reversed relative to the Cys residue and
+        th
+      notes: M-CSA entry 761, mechanism 1; M-CSA cites PMID:12221081; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/761/
+      snippet: MTG is involved in catalysing an acyl transfer reaction between protein glutamine and alkylamine,
+        producing protein N(5)-alkylglutamine and ammonia. The residues Cys 64, Asp 255 and His 274 superimpose
+        well on the 'Cys, His, Asp' catalytic triad of other transglutaminases, such as Factor XIII. However,
+        the relative positions of MTG His and Asp seem to be reversed relative to the Cys residue and
+        th
+      notes: M-CSA entry 761, mechanism 1; M-CSA cites PMID:12221081; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/761/
+      snippet: MTG is involved in catalysing an acyl transfer reaction between protein glutamine and alkylamine,
+        producing protein N(5)-alkylglutamine and ammonia. The residues Cys 64, Asp 255 and His 274 superimpose
+        well on the 'Cys, His, Asp' catalytic triad of other transglutaminases, such as Factor XIII. However,
+        the relative positions of MTG His and Asp seem to be reversed relative to the Cys residue and
+        th
+      notes: M-CSA entry 761, mechanism 1; M-CSA cites PMID:12221081; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/761/
+      snippet: MTG is involved in catalysing an acyl transfer reaction between protein glutamine and alkylamine,
+        producing protein N(5)-alkylglutamine and ammonia. The residues Cys 64, Asp 255 and His 274 superimpose
+        well on the 'Cys, His, Asp' catalytic triad of other transglutaminases, such as Factor XIII. However,
+        the relative positions of MTG His and Asp seem to be reversed relative to the Cys residue and
+        th
+      notes: M-CSA entry 761, mechanism 1; M-CSA cites PMID:12221081; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/761/
+      snippet: MTG is involved in catalysing an acyl transfer reaction between protein glutamine and alkylamine,
+        producing protein N(5)-alkylglutamine and ammonia. The residues Cys 64, Asp 255 and His 274 superimpose
+        well on the 'Cys, His, Asp' catalytic triad of other transglutaminases, such as Factor XIII. However,
+        the relative positions of MTG His and Asp seem to be reversed relative to the Cys residue and
+        th
+      notes: M-CSA entry 761, mechanism 1; M-CSA cites PMID:12221081; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (21 evidence-backed edges) transcribed from M-CSA entry 761;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

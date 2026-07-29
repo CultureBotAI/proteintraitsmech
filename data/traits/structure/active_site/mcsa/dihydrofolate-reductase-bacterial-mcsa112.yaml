@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.5.1.3
 - CHEBI:16474
@@ -258,4 +258,315 @@ definitions:
       Dihydrofolate reductase catalyses the reduction of 7,8-dihydrofolate (DHF) to 5,6,7,8-tetrahydrofolate (THF) by stereospecific hydride transfer from a NADPH cofactor to the C6 atom of the pterin ring with concomitant protonation at N(5). DHFR plays a central role cell maintenance of THF reserves, which are essential for purine and thimidylate synthesis and hence for cell growth and proliferation. As DHFR is the sole source of THF, the enzyme is the Achilles heel of rapidly proliferating cells and, therefore, has been a major focus in the development of anticancer and antibacterial reagents. Much interest has been generated in this enzyme due to its potential as a target for antibacterial and anticancer drugs. It is ubiquitous throughout evolution, but always most important in cells which are dividing rapidly, hence its value as a drug target against infections and cancer.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of dihydrofolate reductase (bacterial)
+  description: Stepwise mechanism transcribed from M-CSA entry 112 (2 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +1).
+  nodes:
+  - node_id: leu4
+    label: catalytic Leu4 (M-CSA/PDB numbering; UniProt residue 5)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00381
+    description: 'M-CSA roles: steric role.'
+  - node_id: leu19
+    label: catalytic Leu19 (M-CSA/PDB numbering; UniProt residue 20)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00381
+    description: 'M-CSA roles: enhance reactivity.'
+  - node_id: trp21
+    label: catalytic Trp21 (M-CSA/PDB numbering; UniProt residue 22)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00381
+    description: 'M-CSA roles: activator, hydrogen bond donor.'
+  - node_id: asp26
+    label: catalytic Asp26 (M-CSA/PDB numbering; UniProt residue 27)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00381
+    description: 'M-CSA roles: hydrogen bond acceptor, modifies pKa.'
+  - node_id: leu27
+    label: catalytic Leu27 (M-CSA/PDB numbering; UniProt residue 28)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00381
+    description: 'M-CSA roles: steric locator.'
+  - node_id: phe30
+    label: catalytic Phe30 (M-CSA/PDB numbering; UniProt residue 31)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00381
+    description: 'M-CSA roles: steric locator.'
+  - node_id: leu54
+    label: catalytic Leu54 (M-CSA/PDB numbering; UniProt residue 55)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00381
+    description: 'M-CSA roles: steric locator.'
+  - node_id: leu94
+    label: catalytic Leu94 (M-CSA/PDB numbering; UniProt residue 95)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00381
+    description: 'M-CSA roles: steric role.'
+  - node_id: thr116
+    label: catalytic Thr116 (M-CSA/PDB numbering; UniProt residue 117)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00381
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: reactant0
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:16474
+  - node_id: reactant1
+    label: dihydrofolic acid
+    node_type: CHEMICAL
+    grounding: CHEBI:15633
+  - node_id: reactant2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product0
+    label: 5,6,7,8-tetrahydrofolic acid
+    node_type: CHEMICAL
+    grounding: CHEBI:20506
+  - node_id: product1
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:18009
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The dihydrofolate substrate undergoes a tautomerisation reaction, resulting in the deprotonation
+      of water.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: dihydrofolate reductase (bacterial) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:112
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.430.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.430.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: dihydrofolate reductase (bacterial) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.5.1.3
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/112/
+      snippet: Products.
+      notes: M-CSA entry 112, mechanism 1; M-CSA cites PMID:10387048, PMID:11472112, PMID:12021443, PMID:1290933,
+        PMID:21138249, PMID:2185835, PMID:25453083, PMID:25453098, PMID:6815178; step 2
+  - subject: leu4
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Leu4 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/112/
+      snippet: steric role
+      notes: M-CSA entry 112, mechanism 1; M-CSA cites PMID:10387048, PMID:11472112, PMID:12021443, PMID:1290933,
+        PMID:21138249, PMID:2185835, PMID:25453083, PMID:25453098, PMID:6815178; M-CSA catalytic-residue
+        roles for Leu4
+  - subject: leu19
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Leu19 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/112/
+      snippet: enhance reactivity
+      notes: M-CSA entry 112, mechanism 1; M-CSA cites PMID:10387048, PMID:11472112, PMID:12021443, PMID:1290933,
+        PMID:21138249, PMID:2185835, PMID:25453083, PMID:25453098, PMID:6815178; M-CSA catalytic-residue
+        roles for Leu19
+  - subject: trp21
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp21 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/112/
+      snippet: activator, hydrogen bond donor
+      notes: M-CSA entry 112, mechanism 1; M-CSA cites PMID:10387048, PMID:11472112, PMID:12021443, PMID:1290933,
+        PMID:21138249, PMID:2185835, PMID:25453083, PMID:25453098, PMID:6815178; M-CSA catalytic-residue
+        roles for Trp21
+  - subject: asp26
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp26 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/112/
+      snippet: hydrogen bond acceptor, modifies pKa
+      notes: M-CSA entry 112, mechanism 1; M-CSA cites PMID:10387048, PMID:11472112, PMID:12021443, PMID:1290933,
+        PMID:21138249, PMID:2185835, PMID:25453083, PMID:25453098, PMID:6815178; M-CSA catalytic-residue
+        roles for Asp26
+  - subject: leu27
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Leu27 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/112/
+      snippet: steric locator
+      notes: M-CSA entry 112, mechanism 1; M-CSA cites PMID:10387048, PMID:11472112, PMID:12021443, PMID:1290933,
+        PMID:21138249, PMID:2185835, PMID:25453083, PMID:25453098, PMID:6815178; M-CSA catalytic-residue
+        roles for Leu27
+  - subject: phe30
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Phe30 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/112/
+      snippet: steric locator
+      notes: M-CSA entry 112, mechanism 1; M-CSA cites PMID:10387048, PMID:11472112, PMID:12021443, PMID:1290933,
+        PMID:21138249, PMID:2185835, PMID:25453083, PMID:25453098, PMID:6815178; M-CSA catalytic-residue
+        roles for Phe30
+  - subject: leu54
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Leu54 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/112/
+      snippet: steric locator
+      notes: M-CSA entry 112, mechanism 1; M-CSA cites PMID:10387048, PMID:11472112, PMID:12021443, PMID:1290933,
+        PMID:21138249, PMID:2185835, PMID:25453083, PMID:25453098, PMID:6815178; M-CSA catalytic-residue
+        roles for Leu54
+  - subject: leu94
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Leu94 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/112/
+      snippet: steric role
+      notes: M-CSA entry 112, mechanism 1; M-CSA cites PMID:10387048, PMID:11472112, PMID:12021443, PMID:1290933,
+        PMID:21138249, PMID:2185835, PMID:25453083, PMID:25453098, PMID:6815178; M-CSA catalytic-residue
+        roles for Leu94
+  - subject: thr116
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr116 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/112/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 112, mechanism 1; M-CSA cites PMID:10387048, PMID:11472112, PMID:12021443, PMID:1290933,
+        PMID:21138249, PMID:2185835, PMID:25453083, PMID:25453098, PMID:6815178; M-CSA catalytic-residue
+        roles for Thr116
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/112/
+      snippet: This mechanism proceeds in a single step in which the hydride ion is added to C6 with concomitant
+        protonation of the N5 from a conserved water molecule. The active site residues are responsible
+        for maintaining the steric placement of the substrates and Asp26, shown to be critical to the
+        mechanism, is part of a hydrogen bonding network that modifies the pKa of the N5 atom from 2.4
+        to 6.5 when bound
+      notes: M-CSA entry 112, mechanism 1; M-CSA cites PMID:10387048, PMID:11472112, PMID:12021443, PMID:1290933,
+        PMID:21138249, PMID:2185835, PMID:25453083, PMID:25453098, PMID:6815178; CATH domain 3.40.430.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/112/
+      snippet: This mechanism proceeds in a single step in which the hydride ion is added to C6 with concomitant
+        protonation of the N5 from a conserved water molecule. The active site residues are responsible
+        for maintaining the steric placement of the substrates and Asp26, shown to be critical to the
+        mechanism, is part of a hydrogen bonding network that modifies the pKa of the N5 atom from 2.4
+        to 6.5 when bound
+      notes: M-CSA entry 112, mechanism 1; M-CSA cites PMID:10387048, PMID:11472112, PMID:12021443, PMID:1290933,
+        PMID:21138249, PMID:2185835, PMID:25453083, PMID:25453098, PMID:6815178; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/112/
+      snippet: This mechanism proceeds in a single step in which the hydride ion is added to C6 with concomitant
+        protonation of the N5 from a conserved water molecule. The active site residues are responsible
+        for maintaining the steric placement of the substrates and Asp26, shown to be critical to the
+        mechanism, is part of a hydrogen bonding network that modifies the pKa of the N5 atom from 2.4
+        to 6.5 when bound
+      notes: M-CSA entry 112, mechanism 1; M-CSA cites PMID:10387048, PMID:11472112, PMID:12021443, PMID:1290933,
+        PMID:21138249, PMID:2185835, PMID:25453083, PMID:25453098, PMID:6815178; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/112/
+      snippet: This mechanism proceeds in a single step in which the hydride ion is added to C6 with concomitant
+        protonation of the N5 from a conserved water molecule. The active site residues are responsible
+        for maintaining the steric placement of the substrates and Asp26, shown to be critical to the
+        mechanism, is part of a hydrogen bonding network that modifies the pKa of the N5 atom from 2.4
+        to 6.5 when bound
+      notes: M-CSA entry 112, mechanism 1; M-CSA cites PMID:10387048, PMID:11472112, PMID:12021443, PMID:1290933,
+        PMID:21138249, PMID:2185835, PMID:25453083, PMID:25453098, PMID:6815178; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/112/
+      snippet: This mechanism proceeds in a single step in which the hydride ion is added to C6 with concomitant
+        protonation of the N5 from a conserved water molecule. The active site residues are responsible
+        for maintaining the steric placement of the substrates and Asp26, shown to be critical to the
+        mechanism, is part of a hydrogen bonding network that modifies the pKa of the N5 atom from 2.4
+        to 6.5 when bound
+      notes: M-CSA entry 112, mechanism 1; M-CSA cites PMID:10387048, PMID:11472112, PMID:12021443, PMID:1290933,
+        PMID:21138249, PMID:2185835, PMID:25453083, PMID:25453098, PMID:6815178; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/112/
+      snippet: This mechanism proceeds in a single step in which the hydride ion is added to C6 with concomitant
+        protonation of the N5 from a conserved water molecule. The active site residues are responsible
+        for maintaining the steric placement of the substrates and Asp26, shown to be critical to the
+        mechanism, is part of a hydrogen bonding network that modifies the pKa of the N5 atom from 2.4
+        to 6.5 when bound
+      notes: M-CSA entry 112, mechanism 1; M-CSA cites PMID:10387048, PMID:11472112, PMID:12021443, PMID:1290933,
+        PMID:21138249, PMID:2185835, PMID:25453083, PMID:25453098, PMID:6815178; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/112/
+      snippet: This mechanism proceeds in a single step in which the hydride ion is added to C6 with concomitant
+        protonation of the N5 from a conserved water molecule. The active site residues are responsible
+        for maintaining the steric placement of the substrates and Asp26, shown to be critical to the
+        mechanism, is part of a hydrogen bonding network that modifies the pKa of the N5 atom from 2.4
+        to 6.5 when bound
+      notes: M-CSA entry 112, mechanism 1; M-CSA cites PMID:10387048, PMID:11472112, PMID:12021443, PMID:1290933,
+        PMID:21138249, PMID:2185835, PMID:25453083, PMID:25453098, PMID:6815178; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (17 evidence-backed edges) transcribed from M-CSA entry 112;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

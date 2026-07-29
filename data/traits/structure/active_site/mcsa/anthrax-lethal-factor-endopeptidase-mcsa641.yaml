@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.24.83
 - CHEBI:15377
@@ -533,4 +533,280 @@ definitions:
       Lethal Factor is critical in anthrax pathogenesis, by acting as a specific protease cleaving members of the MAPKK (mitogen-activated protein kinase kinase) family at their amino termini with its commonly cleaving at the sequence BBBBxHxH, where B denotes a basic amino acid Arg or Lys and H denotes a hydrophobic amino acid. This results in signalling pathway inhibition. The catalytic domain of this enzyme is distantly related to the zinc metalloprotease family.The implications of finding targets for inhibition of anthrax lethal factor are obvious and so the catalytic details of this enzyme should be highly important especially due to its use in biological warfare and when inhaled is fatal.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of anthrax lethal factor endopeptidase
+  description: Stepwise mechanism transcribed from M-CSA entry 641 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +33).
+  nodes:
+  - node_id: his686
+    label: catalytic His686 (M-CSA/PDB numbering; UniProt residue 719)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15917
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu687
+    label: catalytic Glu687 (M-CSA/PDB numbering; UniProt residue 720)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15917
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: his690
+    label: catalytic His690 (M-CSA/PDB numbering; UniProt residue 723)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15917
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: tyr728
+    label: catalytic Tyr728 (M-CSA/PDB numbering; UniProt residue 761)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15917
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu735
+    label: catalytic Glu735 (M-CSA/PDB numbering; UniProt residue 768)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15917
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: dipeptide zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:90799
+  - node_id: product0
+    label: L-alpha-amino acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:59869
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu687 deprotonates water which activates water to attack the carbonyl of the peptide
+      bond by nucleophilc addition. This results in the coordination of the oxyanion to Zinc. Tyr728 and
+      Zn interaction with the negatively charged oxygen of the carbonyl serves as an oxyanion hole which
+      stabilises the transition state.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The oxyanion initaites an elimination which results in the cleavage of the peptide bond.
+      The N-terminal product accepts a proton from Glu687.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The N-terminal product deprotonates the C-terminal product to produce the kinetically
+      favourable products.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Product
+  - node_id: active_site
+    label: anthrax lethal factor endopeptidase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:641
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.390.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.390.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: anthrax lethal factor endopeptidase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.24.83
+  edges:
+  - subject: glu687
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu687 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/641/
+      snippet: Glu687 deprotonates water which activates water to attack the carbonyl of the peptide bond
+        by nucleophilc addition. This results in the coordination of the oxyanion to Zinc. Tyr728 and
+        Zn interaction with the negatively charged oxygen of the carbonyl serves as an oxyanion hole which
+        stabilises the transition state.
+      notes: M-CSA entry 641, mechanism 1; M-CSA cites PMID:11700563, PMID:14672720, PMID:14697216, PMID:9573135;
+        step 1
+  - subject: tyr728
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr728 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/641/
+      snippet: Glu687 deprotonates water which activates water to attack the carbonyl of the peptide bond
+        by nucleophilc addition. This results in the coordination of the oxyanion to Zinc. Tyr728 and
+        Zn interaction with the negatively charged oxygen of the carbonyl serves as an oxyanion hole which
+        stabilises the transition state.
+      notes: M-CSA entry 641, mechanism 1; M-CSA cites PMID:11700563, PMID:14672720, PMID:14697216, PMID:9573135;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/641/
+      snippet: The oxyanion initaites an elimination which results in the cleavage of the peptide bond.
+        The N-terminal product accepts a proton from Glu687.
+      notes: M-CSA entry 641, mechanism 1; M-CSA cites PMID:11700563, PMID:14672720, PMID:14697216, PMID:9573135;
+        step 2
+  - subject: glu687
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu687 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/641/
+      snippet: The oxyanion initaites an elimination which results in the cleavage of the peptide bond.
+        The N-terminal product accepts a proton from Glu687.
+      notes: M-CSA entry 641, mechanism 1; M-CSA cites PMID:11700563, PMID:14672720, PMID:14697216, PMID:9573135;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/641/
+      snippet: The N-terminal product deprotonates the C-terminal product to produce the kinetically favourable
+        products.
+      notes: M-CSA entry 641, mechanism 1; M-CSA cites PMID:11700563, PMID:14672720, PMID:14697216, PMID:9573135;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/641/
+      snippet: Product
+      notes: M-CSA entry 641, mechanism 1; M-CSA cites PMID:11700563, PMID:14672720, PMID:14697216, PMID:9573135;
+        step 4
+  - subject: his686
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His686 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/641/
+      snippet: metal ligand
+      notes: M-CSA entry 641, mechanism 1; M-CSA cites PMID:11700563, PMID:14672720, PMID:14697216, PMID:9573135;
+        M-CSA catalytic-residue roles for His686
+  - subject: glu687
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu687 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/641/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 641, mechanism 1; M-CSA cites PMID:11700563, PMID:14672720, PMID:14697216, PMID:9573135;
+        M-CSA catalytic-residue roles for Glu687
+  - subject: his690
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His690 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/641/
+      snippet: metal ligand
+      notes: M-CSA entry 641, mechanism 1; M-CSA cites PMID:11700563, PMID:14672720, PMID:14697216, PMID:9573135;
+        M-CSA catalytic-residue roles for His690
+  - subject: tyr728
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr728 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/641/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 641, mechanism 1; M-CSA cites PMID:11700563, PMID:14672720, PMID:14697216, PMID:9573135;
+        M-CSA catalytic-residue roles for Tyr728
+  - subject: glu735
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu735 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/641/
+      snippet: metal ligand
+      notes: M-CSA entry 641, mechanism 1; M-CSA cites PMID:11700563, PMID:14672720, PMID:14697216, PMID:9573135;
+        M-CSA catalytic-residue roles for Glu735
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/641/
+      snippet: The active site is centred around a structural zinc cation coordinated by a strictly conserved
+        HExxH+E motif. The zinc ion is directly coordinated by the two histidines of the motif (His719
+        and His723) , by Glu 735 and by a water molecule. Glu 687 acts as a general base to activate the
+        water molecule for nucleophilic attack by deprotonation and also by further polarization by Zn2+.
+        The activated w
+      notes: M-CSA entry 641, mechanism 1; M-CSA cites PMID:11700563, PMID:14672720, PMID:14697216, PMID:9573135;
+        CATH domain 3.40.390.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/641/
+      snippet: The active site is centred around a structural zinc cation coordinated by a strictly conserved
+        HExxH+E motif. The zinc ion is directly coordinated by the two histidines of the motif (His719
+        and His723) , by Glu 735 and by a water molecule. Glu 687 acts as a general base to activate the
+        water molecule for nucleophilic attack by deprotonation and also by further polarization by Zn2+.
+        The activated w
+      notes: M-CSA entry 641, mechanism 1; M-CSA cites PMID:11700563, PMID:14672720, PMID:14697216, PMID:9573135;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/641/
+      snippet: The active site is centred around a structural zinc cation coordinated by a strictly conserved
+        HExxH+E motif. The zinc ion is directly coordinated by the two histidines of the motif (His719
+        and His723) , by Glu 735 and by a water molecule. Glu 687 acts as a general base to activate the
+        water molecule for nucleophilic attack by deprotonation and also by further polarization by Zn2+.
+        The activated w
+      notes: M-CSA entry 641, mechanism 1; M-CSA cites PMID:11700563, PMID:14672720, PMID:14697216, PMID:9573135;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/641/
+      snippet: The active site is centred around a structural zinc cation coordinated by a strictly conserved
+        HExxH+E motif. The zinc ion is directly coordinated by the two histidines of the motif (His719
+        and His723) , by Glu 735 and by a water molecule. Glu 687 acts as a general base to activate the
+        water molecule for nucleophilic attack by deprotonation and also by further polarization by Zn2+.
+        The activated w
+      notes: M-CSA entry 641, mechanism 1; M-CSA cites PMID:11700563, PMID:14672720, PMID:14697216, PMID:9573135;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/641/
+      snippet: The active site is centred around a structural zinc cation coordinated by a strictly conserved
+        HExxH+E motif. The zinc ion is directly coordinated by the two histidines of the motif (His719
+        and His723) , by Glu 735 and by a water molecule. Glu 687 acts as a general base to activate the
+        water molecule for nucleophilic attack by deprotonation and also by further polarization by Zn2+.
+        The activated w
+      notes: M-CSA entry 641, mechanism 1; M-CSA cites PMID:11700563, PMID:14672720, PMID:14697216, PMID:9573135;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (16 evidence-backed edges) transcribed from M-CSA entry 641;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

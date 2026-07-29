@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.1.1.37
 - CHEBI:16452
@@ -247,4 +247,237 @@ definitions:
       Malonate dehydrogenase (MDHase) catalyses the reversible oxidation of malonate to oxaloacetate, a reaction dependent upon the oxidation/reduction of NAD cofactor. The enzyme functions as an important component in the citric acid cycle in the prokaryotic cytoplasm and the malate/aspartate shuttle in eukaryotic cytoplasm.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of malate dehydrogenase (type 1)
+  description: Stepwise mechanism transcribed from M-CSA entry 527 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: asp150
+    label: catalytic Asp150 (M-CSA/PDB numbering; UniProt residue 150)
+    node_type: RESIDUE
+    grounding: UniProtKB:P61889
+    description: 'M-CSA roles: modifies pKa.'
+  - node_id: his177
+    label: catalytic His177 (M-CSA/PDB numbering; UniProt residue 177)
+    node_type: RESIDUE
+    grounding: UniProtKB:P61889
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: NAD(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+  - node_id: reactant1
+    label: (S)-malate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:15589
+  - node_id: product0
+    label: oxaloacetate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:16452
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: NADH(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His177, activated by Asp150, abstracts a proton from the hydroxyl group, with concomitant
+      elimination of a hydride to the NAD(P) cofactor.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Inferred step in which water abstracts a proton from the catalytic histidine.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: malate dehydrogenase (type 1) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:527
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.110.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.110.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: malate dehydrogenase (type 1) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.1.1.37
+  edges:
+  - subject: asp150
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp150 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/527/
+      snippet: His177, activated by Asp150, abstracts a proton from the hydroxyl group, with concomitant
+        elimination of a hydride to the NAD(P) cofactor.
+      notes: M-CSA entry 527, mechanism 1; M-CSA cites PMID:10075524, PMID:11389141, PMID:1507230, PMID:19724119,
+        PMID:6848515, PMID:7849603, PMID:8331658; step 1
+  - subject: his177
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His177 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/527/
+      snippet: His177, activated by Asp150, abstracts a proton from the hydroxyl group, with concomitant
+        elimination of a hydride to the NAD(P) cofactor.
+      notes: M-CSA entry 527, mechanism 1; M-CSA cites PMID:10075524, PMID:11389141, PMID:1507230, PMID:19724119,
+        PMID:6848515, PMID:7849603, PMID:8331658; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/527/
+      snippet: Inferred step in which water abstracts a proton from the catalytic histidine.
+      notes: M-CSA entry 527, mechanism 1; M-CSA cites PMID:10075524, PMID:11389141, PMID:1507230, PMID:19724119,
+        PMID:6848515, PMID:7849603, PMID:8331658; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/527/
+      snippet: Products.
+      notes: M-CSA entry 527, mechanism 1; M-CSA cites PMID:10075524, PMID:11389141, PMID:1507230, PMID:19724119,
+        PMID:6848515, PMID:7849603, PMID:8331658; step 3
+  - subject: asp150
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp150 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/527/
+      snippet: modifies pKa
+      notes: M-CSA entry 527, mechanism 1; M-CSA cites PMID:10075524, PMID:11389141, PMID:1507230, PMID:19724119,
+        PMID:6848515, PMID:7849603, PMID:8331658; M-CSA catalytic-residue roles for Asp150
+  - subject: his177
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His177 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/527/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 527, mechanism 1; M-CSA cites PMID:10075524, PMID:11389141, PMID:1507230, PMID:19724119,
+        PMID:6848515, PMID:7849603, PMID:8331658; M-CSA catalytic-residue roles for His177
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/527/
+      snippet: The enzyme catalyses the interconversion of malonate and oxaloacetate with the oxidation
+        and reduction of the NAD cofactor. A histidine-aspartate pair form a proton relay system in the
+        active site, which allows the histidine to act as both a general acid and general base to the
+        substrate. In the direction of reduction, a water molecule acts as the proton donor while in the
+        direction of oxidation t
+      notes: M-CSA entry 527, mechanism 1; M-CSA cites PMID:10075524, PMID:11389141, PMID:1507230, PMID:19724119,
+        PMID:6848515, PMID:7849603, PMID:8331658; CATH domain 3.90.110.10 assigned to the catalytic chain
+        by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/527/
+      snippet: The enzyme catalyses the interconversion of malonate and oxaloacetate with the oxidation
+        and reduction of the NAD cofactor. A histidine-aspartate pair form a proton relay system in the
+        active site, which allows the histidine to act as both a general acid and general base to the
+        substrate. In the direction of reduction, a water molecule acts as the proton donor while in the
+        direction of oxidation t
+      notes: M-CSA entry 527, mechanism 1; M-CSA cites PMID:10075524, PMID:11389141, PMID:1507230, PMID:19724119,
+        PMID:6848515, PMID:7849603, PMID:8331658; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/527/
+      snippet: The enzyme catalyses the interconversion of malonate and oxaloacetate with the oxidation
+        and reduction of the NAD cofactor. A histidine-aspartate pair form a proton relay system in the
+        active site, which allows the histidine to act as both a general acid and general base to the
+        substrate. In the direction of reduction, a water molecule acts as the proton donor while in the
+        direction of oxidation t
+      notes: M-CSA entry 527, mechanism 1; M-CSA cites PMID:10075524, PMID:11389141, PMID:1507230, PMID:19724119,
+        PMID:6848515, PMID:7849603, PMID:8331658; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/527/
+      snippet: The enzyme catalyses the interconversion of malonate and oxaloacetate with the oxidation
+        and reduction of the NAD cofactor. A histidine-aspartate pair form a proton relay system in the
+        active site, which allows the histidine to act as both a general acid and general base to the
+        substrate. In the direction of reduction, a water molecule acts as the proton donor while in the
+        direction of oxidation t
+      notes: M-CSA entry 527, mechanism 1; M-CSA cites PMID:10075524, PMID:11389141, PMID:1507230, PMID:19724119,
+        PMID:6848515, PMID:7849603, PMID:8331658; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/527/
+      snippet: The enzyme catalyses the interconversion of malonate and oxaloacetate with the oxidation
+        and reduction of the NAD cofactor. A histidine-aspartate pair form a proton relay system in the
+        active site, which allows the histidine to act as both a general acid and general base to the
+        substrate. In the direction of reduction, a water molecule acts as the proton donor while in the
+        direction of oxidation t
+      notes: M-CSA entry 527, mechanism 1; M-CSA cites PMID:10075524, PMID:11389141, PMID:1507230, PMID:19724119,
+        PMID:6848515, PMID:7849603, PMID:8331658; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/527/
+      snippet: The enzyme catalyses the interconversion of malonate and oxaloacetate with the oxidation
+        and reduction of the NAD cofactor. A histidine-aspartate pair form a proton relay system in the
+        active site, which allows the histidine to act as both a general acid and general base to the
+        substrate. In the direction of reduction, a water molecule acts as the proton donor while in the
+        direction of oxidation t
+      notes: M-CSA entry 527, mechanism 1; M-CSA cites PMID:10075524, PMID:11389141, PMID:1507230, PMID:19724119,
+        PMID:6848515, PMID:7849603, PMID:8331658; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/527/
+      snippet: The enzyme catalyses the interconversion of malonate and oxaloacetate with the oxidation
+        and reduction of the NAD cofactor. A histidine-aspartate pair form a proton relay system in the
+        active site, which allows the histidine to act as both a general acid and general base to the
+        substrate. In the direction of reduction, a water molecule acts as the proton donor while in the
+        direction of oxidation t
+      notes: M-CSA entry 527, mechanism 1; M-CSA cites PMID:10075524, PMID:11389141, PMID:1507230, PMID:19724119,
+        PMID:6848515, PMID:7849603, PMID:8331658; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 527;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

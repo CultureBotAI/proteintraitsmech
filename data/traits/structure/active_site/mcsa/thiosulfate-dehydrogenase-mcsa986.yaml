@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.8.2.2
 - CHEBI:29034
@@ -208,4 +208,317 @@ definitions:
       Thiosulphate dehydrogenase (TsdA) catalyses the oxidation of two thiosulphate molecules to form tetrathionate and is predicted to use an unusual cysteine-ligated heme as the catalytic cofactor. Thiosulfate and polythionates serve as energy-yielding or electron-donating substrates in the metabolism of a wide range of chemolithotrophic and photolithotrophic bacteria, as well as some heterotrophs. This reaction is interesting because of its potential applications in bioleaching and metal solubilisation.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of Thiosulfate dehydrogenase
+  description: Stepwise mechanism transcribed from M-CSA entry 986 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: arg109
+    label: catalytic Arg109 (M-CSA/PDB numbering; UniProt residue 109)
+    node_type: RESIDUE
+    grounding: UniProtKB:D3RVD4
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: arg119
+    label: catalytic Arg119 (M-CSA/PDB numbering; UniProt residue 119)
+    node_type: RESIDUE
+    grounding: UniProtKB:D3RVD4
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: cys123
+    label: catalytic Cys123 (M-CSA/PDB numbering; UniProt residue 123)
+    node_type: RESIDUE
+    grounding: UniProtKB:D3RVD4
+    description: 'M-CSA roles: covalently attached, electron pair donor, electrophile, nucleofuge.'
+  - node_id: ser127
+    label: catalytic Ser127 (M-CSA/PDB numbering; UniProt residue 127)
+    node_type: RESIDUE
+    grounding: UniProtKB:D3RVD4
+    description: 'M-CSA roles: hydrogen bond donor, transition state stabiliser.'
+  - node_id: reactant0
+    label: iron(3+)
+    node_type: CHEMICAL
+    grounding: CHEBI:29034
+  - node_id: reactant1
+    label: trioxidosulfanidosulfate(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:33542
+  - node_id: product0
+    label: iron(2+)
+    node_type: CHEMICAL
+    grounding: CHEBI:29033
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: tetrathionate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:15226
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The thiosulphate is brought in and stabilised by Arg109 and Arg119 through their positively
+      charged side chains. The negative sulphur from the thiosulphate donates its electrons to form a
+      S-S bond between itself and the Cys123. The Cys123 relays the electrons it gained to the heme 1
+      iron reducing it to Fe(II) while forming a bond with thiosulphate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The iron atoms in the heme molecules are regenerated to Fe(III) by transferring electrons
+      further down the enzyme.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The second thiosulphate is brought in to react with the S-S bond between Cys123 and the
+      first thiosulphate. This causes the two thiosulphates to form tetrathionate and Cys123 to become
+      negatively charged and coordinate the iron atom of the same heme molecule again.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Final step.
+  - node_id: active_site
+    label: Thiosulfate dehydrogenase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:986
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.10.760.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.10.760.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: Thiosulfate dehydrogenase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.8.2.2
+  edges:
+  - subject: arg109
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg109 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/986/
+      snippet: The thiosulphate is brought in and stabilised by Arg109 and Arg119 through their positively
+        charged side chains. The negative sulphur from the thiosulphate donates its electrons to form
+        a S-S bond between itself and the Cys123. The Cys123 relays the electrons it gained to the heme
+        1 iron reducing it to Fe(II) while forming a bond with thiosulphate.
+      notes: M-CSA entry 986, mechanism 1; M-CSA cites PMID:22779704, PMID:25673691, PMID:25673696, PMID:27694441;
+        step 1
+  - subject: arg119
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg119 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/986/
+      snippet: The thiosulphate is brought in and stabilised by Arg109 and Arg119 through their positively
+        charged side chains. The negative sulphur from the thiosulphate donates its electrons to form
+        a S-S bond between itself and the Cys123. The Cys123 relays the electrons it gained to the heme
+        1 iron reducing it to Fe(II) while forming a bond with thiosulphate.
+      notes: M-CSA entry 986, mechanism 1; M-CSA cites PMID:22779704, PMID:25673691, PMID:25673696, PMID:27694441;
+        step 1
+  - subject: cys123
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys123 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/986/
+      snippet: The thiosulphate is brought in and stabilised by Arg109 and Arg119 through their positively
+        charged side chains. The negative sulphur from the thiosulphate donates its electrons to form
+        a S-S bond between itself and the Cys123. The Cys123 relays the electrons it gained to the heme
+        1 iron reducing it to Fe(II) while forming a bond with thiosulphate.
+      notes: M-CSA entry 986, mechanism 1; M-CSA cites PMID:22779704, PMID:25673691, PMID:25673696, PMID:27694441;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/986/
+      snippet: The iron atoms in the heme molecules are regenerated to Fe(III) by transferring electrons
+        further down the enzyme.
+      notes: M-CSA entry 986, mechanism 1; M-CSA cites PMID:22779704, PMID:25673691, PMID:25673696, PMID:27694441;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/986/
+      snippet: The second thiosulphate is brought in to react with the S-S bond between Cys123 and the
+        first thiosulphate. This causes the two thiosulphates to form tetrathionate and Cys123 to become
+        negatively charged and coordinate the iron atom of the same heme molecule again.
+      notes: M-CSA entry 986, mechanism 1; M-CSA cites PMID:22779704, PMID:25673691, PMID:25673696, PMID:27694441;
+        step 3
+  - subject: cys123
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Cys123 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/986/
+      snippet: The second thiosulphate is brought in to react with the S-S bond between Cys123 and the
+        first thiosulphate. This causes the two thiosulphates to form tetrathionate and Cys123 to become
+        negatively charged and coordinate the iron atom of the same heme molecule again.
+      notes: M-CSA entry 986, mechanism 1; M-CSA cites PMID:22779704, PMID:25673691, PMID:25673696, PMID:27694441;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/986/
+      snippet: Final step.
+      notes: M-CSA entry 986, mechanism 1; M-CSA cites PMID:22779704, PMID:25673691, PMID:25673696, PMID:27694441;
+        step 4
+  - subject: arg109
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg109 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/986/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 986, mechanism 1; M-CSA cites PMID:22779704, PMID:25673691, PMID:25673696, PMID:27694441;
+        M-CSA catalytic-residue roles for Arg109
+  - subject: arg119
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg119 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/986/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 986, mechanism 1; M-CSA cites PMID:22779704, PMID:25673691, PMID:25673696, PMID:27694441;
+        M-CSA catalytic-residue roles for Arg119
+  - subject: cys123
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys123 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/986/
+      snippet: covalently attached, electron pair donor, electrophile, nucleofuge
+      notes: M-CSA entry 986, mechanism 1; M-CSA cites PMID:22779704, PMID:25673691, PMID:25673696, PMID:27694441;
+        M-CSA catalytic-residue roles for Cys123
+  - subject: ser127
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser127 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/986/
+      snippet: hydrogen bond donor, transition state stabiliser
+      notes: M-CSA entry 986, mechanism 1; M-CSA cites PMID:22779704, PMID:25673691, PMID:25673696, PMID:27694441;
+        M-CSA catalytic-residue roles for Ser127
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/986/
+      snippet: Thiosulphate is brought to the active center of the enzyme and stabilised by Arg109 and
+        Arg119 because of their positively charged side chains. The Cys123 bound to heme acts as an electron
+        relay for thiosulphate and propagates it down a chain of heme molecules within the heterodimer.
+        This causes the thiosulphate to bond with Cys123. Another thiosulphate then enters the active
+        site with the help of
+      notes: M-CSA entry 986, mechanism 1; M-CSA cites PMID:22779704, PMID:25673691, PMID:25673696, PMID:27694441;
+        CATH domain 1.10.760.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/986/
+      snippet: Thiosulphate is brought to the active center of the enzyme and stabilised by Arg109 and
+        Arg119 because of their positively charged side chains. The Cys123 bound to heme acts as an electron
+        relay for thiosulphate and propagates it down a chain of heme molecules within the heterodimer.
+        This causes the thiosulphate to bond with Cys123. Another thiosulphate then enters the active
+        site with the help of
+      notes: M-CSA entry 986, mechanism 1; M-CSA cites PMID:22779704, PMID:25673691, PMID:25673696, PMID:27694441;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/986/
+      snippet: Thiosulphate is brought to the active center of the enzyme and stabilised by Arg109 and
+        Arg119 because of their positively charged side chains. The Cys123 bound to heme acts as an electron
+        relay for thiosulphate and propagates it down a chain of heme molecules within the heterodimer.
+        This causes the thiosulphate to bond with Cys123. Another thiosulphate then enters the active
+        site with the help of
+      notes: M-CSA entry 986, mechanism 1; M-CSA cites PMID:22779704, PMID:25673691, PMID:25673696, PMID:27694441;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/986/
+      snippet: Thiosulphate is brought to the active center of the enzyme and stabilised by Arg109 and
+        Arg119 because of their positively charged side chains. The Cys123 bound to heme acts as an electron
+        relay for thiosulphate and propagates it down a chain of heme molecules within the heterodimer.
+        This causes the thiosulphate to bond with Cys123. Another thiosulphate then enters the active
+        site with the help of
+      notes: M-CSA entry 986, mechanism 1; M-CSA cites PMID:22779704, PMID:25673691, PMID:25673696, PMID:27694441;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/986/
+      snippet: Thiosulphate is brought to the active center of the enzyme and stabilised by Arg109 and
+        Arg119 because of their positively charged side chains. The Cys123 bound to heme acts as an electron
+        relay for thiosulphate and propagates it down a chain of heme molecules within the heterodimer.
+        This causes the thiosulphate to bond with Cys123. Another thiosulphate then enters the active
+        site with the help of
+      notes: M-CSA entry 986, mechanism 1; M-CSA cites PMID:22779704, PMID:25673691, PMID:25673696, PMID:27694441;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/986/
+      snippet: Thiosulphate is brought to the active center of the enzyme and stabilised by Arg109 and
+        Arg119 because of their positively charged side chains. The Cys123 bound to heme acts as an electron
+        relay for thiosulphate and propagates it down a chain of heme molecules within the heterodimer.
+        This causes the thiosulphate to bond with Cys123. Another thiosulphate then enters the active
+        site with the help of
+      notes: M-CSA entry 986, mechanism 1; M-CSA cites PMID:22779704, PMID:25673691, PMID:25673696, PMID:27694441;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/986/
+      snippet: Thiosulphate is brought to the active center of the enzyme and stabilised by Arg109 and
+        Arg119 because of their positively charged side chains. The Cys123 bound to heme acts as an electron
+        relay for thiosulphate and propagates it down a chain of heme molecules within the heterodimer.
+        This causes the thiosulphate to bond with Cys123. Another thiosulphate then enters the active
+        site with the help of
+      notes: M-CSA entry 986, mechanism 1; M-CSA cites PMID:22779704, PMID:25673691, PMID:25673696, PMID:27694441;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (18 evidence-backed edges) transcribed from M-CSA entry 986;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.8.4.1
 - CHEBI:58286
@@ -845,4 +845,269 @@ definitions:
       Methyl coenzyme M Reductase is responsible for the last step in methane production by methanogenic archaea. It utilises the ability of Nickel to adopt oxidation states I, II and III in order to catalyse the conversion of methyl coenzyme M and methyl coenzyme B to give methane and a heterodisulphide compound between the two coenzymes, in a complex redox cycle. The enzyme, like many found in archaea, is able to withstand high temperatures and salt content.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of coenzyme-B sulfoethylthiotransferase
+  description: Stepwise mechanism transcribed from M-CSA entry 156 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: gln147
+    label: catalytic Gln147 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11558
+    description: 'M-CSA roles: electrostatic stabiliser, metal ligand.'
+  - node_id: tyr333
+    label: catalytic Tyr333 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11558
+    description: 'M-CSA roles: electrostatic stabiliser, radical stabiliser.'
+  - node_id: tyr367
+    label: catalytic Tyr367 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11558
+    description: 'M-CSA roles: electrostatic stabiliser, proton acceptor, proton donor, proton relay,
+      radical stabiliser.'
+  - node_id: gly445
+    label: catalytic Gly445 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11558
+    description: 'M-CSA roles: single electron acceptor, single electron donor, single electron relay.'
+  - node_id: asn481
+    label: catalytic Asn481 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11558
+    description: 'M-CSA roles: activator, electrostatic stabiliser, proton acceptor, proton donor, proton
+      relay.'
+  - node_id: reactant0
+    label: methyl-CoM(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58286
+  - node_id: reactant1
+    label: coenzyme B(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58596
+  - node_id: product0
+    label: CoM-S-S-CoB(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58411
+  - node_id: product1
+    label: methane
+    node_type: CHEMICAL
+    grounding: CHEBI:16183
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Nickel (Ni(I)) of factor 430 attacks the sulfur atom of the methylated coenzyme M, forming
+      a methyl radical and Ni(II).
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The methyl radical abstracts a proton from the CoB substrate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The CoB radical then initiates a coligation with the CoM radical, forming the final intermediate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The reactive intermediate transfers the excess electron back to the Ni(II) centre, regenerating
+      the active site.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: coenzyme-B sulfoethylthiotransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:156
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.70.470 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.70.470
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: coenzyme-B sulfoethylthiotransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.8.4.1
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/156/
+      snippet: The methyl radical abstracts a proton from the CoB substrate.
+      notes: M-CSA entry 156, mechanism 3; M-CSA cites PMID:11942842, PMID:15053571, PMID:20014831, PMID:24004388,
+        PMID:25691570, PMID:27199421, PMID:27571920; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/156/
+      snippet: The CoB radical then initiates a coligation with the CoM radical, forming the final intermediate.
+      notes: M-CSA entry 156, mechanism 3; M-CSA cites PMID:11942842, PMID:15053571, PMID:20014831, PMID:24004388,
+        PMID:25691570, PMID:27199421, PMID:27571920; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/156/
+      snippet: The reactive intermediate transfers the excess electron back to the Ni(II) centre, regenerating
+        the active site.
+      notes: M-CSA entry 156, mechanism 3; M-CSA cites PMID:11942842, PMID:15053571, PMID:20014831, PMID:24004388,
+        PMID:25691570, PMID:27199421, PMID:27571920; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/156/
+      snippet: Products
+      notes: M-CSA entry 156, mechanism 3; M-CSA cites PMID:11942842, PMID:15053571, PMID:20014831, PMID:24004388,
+        PMID:25691570, PMID:27199421, PMID:27571920; step 5
+  - subject: gln147
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln147 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/156/
+      snippet: electrostatic stabiliser, metal ligand
+      notes: M-CSA entry 156, mechanism 3; M-CSA cites PMID:11942842, PMID:15053571, PMID:20014831, PMID:24004388,
+        PMID:25691570, PMID:27199421, PMID:27571920; M-CSA catalytic-residue roles for Gln147
+  - subject: tyr333
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr333 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/156/
+      snippet: electrostatic stabiliser, radical stabiliser
+      notes: M-CSA entry 156, mechanism 3; M-CSA cites PMID:11942842, PMID:15053571, PMID:20014831, PMID:24004388,
+        PMID:25691570, PMID:27199421, PMID:27571920; M-CSA catalytic-residue roles for Tyr333
+  - subject: tyr367
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr367 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/156/
+      snippet: electrostatic stabiliser, proton acceptor, proton donor, proton relay, radical stabiliser
+      notes: M-CSA entry 156, mechanism 3; M-CSA cites PMID:11942842, PMID:15053571, PMID:20014831, PMID:24004388,
+        PMID:25691570, PMID:27199421, PMID:27571920; M-CSA catalytic-residue roles for Tyr367
+  - subject: gly445
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly445 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/156/
+      snippet: single electron acceptor, single electron donor, single electron relay
+      notes: M-CSA entry 156, mechanism 3; M-CSA cites PMID:11942842, PMID:15053571, PMID:20014831, PMID:24004388,
+        PMID:25691570, PMID:27199421, PMID:27571920; M-CSA catalytic-residue roles for Gly445
+  - subject: asn481
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn481 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/156/
+      snippet: activator, electrostatic stabiliser, proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 156, mechanism 3; M-CSA cites PMID:11942842, PMID:15053571, PMID:20014831, PMID:24004388,
+        PMID:25691570, PMID:27199421, PMID:27571920; M-CSA catalytic-residue roles for Asn481
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/156/
+      snippet: This mechanism proposal assumes that the first step is the attack by the Ni(I) on the thioether
+        sulfur of methyl-coenzyme M. This yields a free methyl radical which reacts with the thiol group
+        of coenzyme B to give methane and the coenzyme B thiyl radical [PMID:11942842]. This radical then
+        attacks the CoM sulfur, forming the final product and regenerating the cofactor.
+      notes: M-CSA entry 156, mechanism 3; M-CSA cites PMID:11942842, PMID:15053571, PMID:20014831, PMID:24004388,
+        PMID:25691570, PMID:27199421, PMID:27571920; CATH domain 3.30.70.470 assigned to the catalytic
+        chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/156/
+      snippet: This mechanism proposal assumes that the first step is the attack by the Ni(I) on the thioether
+        sulfur of methyl-coenzyme M. This yields a free methyl radical which reacts with the thiol group
+        of coenzyme B to give methane and the coenzyme B thiyl radical [PMID:11942842]. This radical then
+        attacks the CoM sulfur, forming the final product and regenerating the cofactor.
+      notes: M-CSA entry 156, mechanism 3; M-CSA cites PMID:11942842, PMID:15053571, PMID:20014831, PMID:24004388,
+        PMID:25691570, PMID:27199421, PMID:27571920; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/156/
+      snippet: This mechanism proposal assumes that the first step is the attack by the Ni(I) on the thioether
+        sulfur of methyl-coenzyme M. This yields a free methyl radical which reacts with the thiol group
+        of coenzyme B to give methane and the coenzyme B thiyl radical [PMID:11942842]. This radical then
+        attacks the CoM sulfur, forming the final product and regenerating the cofactor.
+      notes: M-CSA entry 156, mechanism 3; M-CSA cites PMID:11942842, PMID:15053571, PMID:20014831, PMID:24004388,
+        PMID:25691570, PMID:27199421, PMID:27571920; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/156/
+      snippet: This mechanism proposal assumes that the first step is the attack by the Ni(I) on the thioether
+        sulfur of methyl-coenzyme M. This yields a free methyl radical which reacts with the thiol group
+        of coenzyme B to give methane and the coenzyme B thiyl radical [PMID:11942842]. This radical then
+        attacks the CoM sulfur, forming the final product and regenerating the cofactor.
+      notes: M-CSA entry 156, mechanism 3; M-CSA cites PMID:11942842, PMID:15053571, PMID:20014831, PMID:24004388,
+        PMID:25691570, PMID:27199421, PMID:27571920; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/156/
+      snippet: This mechanism proposal assumes that the first step is the attack by the Ni(I) on the thioether
+        sulfur of methyl-coenzyme M. This yields a free methyl radical which reacts with the thiol group
+        of coenzyme B to give methane and the coenzyme B thiyl radical [PMID:11942842]. This radical then
+        attacks the CoM sulfur, forming the final product and regenerating the cofactor.
+      notes: M-CSA entry 156, mechanism 3; M-CSA cites PMID:11942842, PMID:15053571, PMID:20014831, PMID:24004388,
+        PMID:25691570, PMID:27199421, PMID:27571920; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/156/
+      snippet: This mechanism proposal assumes that the first step is the attack by the Ni(I) on the thioether
+        sulfur of methyl-coenzyme M. This yields a free methyl radical which reacts with the thiol group
+        of coenzyme B to give methane and the coenzyme B thiyl radical [PMID:11942842]. This radical then
+        attacks the CoM sulfur, forming the final product and regenerating the cofactor.
+      notes: M-CSA entry 156, mechanism 3; M-CSA cites PMID:11942842, PMID:15053571, PMID:20014831, PMID:24004388,
+        PMID:25691570, PMID:27199421, PMID:27571920; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 156;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

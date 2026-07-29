@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.3.4.1
 - CHEBI:137058
@@ -177,4 +177,232 @@ definitions:
       The disulphide bond isomerase DsbC from E. coli is able to break up incorrectly formed disulphide bonds by transferring electrons to reduce the bond. It displays homology to the thioredoxase family of enzymes.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of protein disulfide-isomerase (DsbC)
+  description: Stepwise mechanism transcribed from M-CSA entry 512 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +20).
+  nodes:
+  - node_id: asp95
+    label: catalytic Asp95 (M-CSA/PDB numbering; UniProt residue 115)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AEG6
+    description: 'M-CSA roles: increase nucleophilicity, proton acceptor, proton donor.'
+  - node_id: cys98
+    label: catalytic Cys98 (M-CSA/PDB numbering; UniProt residue 118)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AEG6
+    description: 'M-CSA roles: electrofuge, electrophile, nucleofuge, nucleophile, proton acceptor, proton
+      donor.'
+  - node_id: cys101
+    label: catalytic Cys101 (M-CSA/PDB numbering; UniProt residue 121)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AEG6
+    description: 'M-CSA roles: nucleophile, proton donor.'
+  - node_id: arg125
+    label: catalytic Arg125 (M-CSA/PDB numbering; UniProt residue 145)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AEG6
+    description: 'M-CSA roles: increase nucleophilicity.'
+  - node_id: reactant0
+    label: protein with two disulfide bridges (configuration A)
+    node_type: CHEMICAL
+    grounding: CHEBI:137058
+  - node_id: product0
+    label: protein with two disulfide bridges (Configuration B)
+    node_type: CHEMICAL
+    grounding: CHEBI:137060
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: "There is nucleophilic attack from Cys 98 to one of the sulfur atoms of the protein disulphide\
+      \ bond. 
+The nucleophilicity of Cys 98 is increased by electrostatic interactions of  the Asp\
+      \ and Arg residues. 
+This results in an SN2 reaction, where a new disulphide bond is formed between\
+      \ Cys 98 and the substrate protein, leaving a thiolate group on the other sulfur of the old disulphide\
+      \ bond."
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: There is a second SN2 reaction where Cys 101 attacks Cys 98 forming a disulphide bond
+      between Cys 101 and Cys 98. This leaves both the sulfurs of the original disulphide bond reduced.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: protein disulfide-isomerase (DsbC) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:512
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.30.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.30.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: protein disulfide-isomerase (DsbC) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.3.4.1
+  edges:
+  - subject: cys98
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys98 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/512/
+      snippet: "There is nucleophilic attack from Cys 98 to one of the sulfur atoms of the protein disulphide\
+        \ bond. 
+The nucleophilicity of Cys 98 is increased by electrostatic interactions of  the Asp\
+        \ and Arg residues. 
+This results in an SN2 reaction, where a new disulphide bond is formed\
+        \ between Cys 98 and the substrate protein, leaving a thiolate group on the other sulfur of the\
+        \ old disulphide bond."
+      notes: M-CSA entry 512, mechanism 2; M-CSA cites PMID:20367276, PMID:23726983; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/512/
+      snippet: There is a second SN2 reaction where Cys 101 attacks Cys 98 forming a disulphide bond between
+        Cys 101 and Cys 98. This leaves both the sulfurs of the original disulphide bond reduced.
+      notes: M-CSA entry 512, mechanism 2; M-CSA cites PMID:20367276, PMID:23726983; step 2
+  - subject: cys98
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Cys98 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/512/
+      snippet: There is a second SN2 reaction where Cys 101 attacks Cys 98 forming a disulphide bond between
+        Cys 101 and Cys 98. This leaves both the sulfurs of the original disulphide bond reduced.
+      notes: M-CSA entry 512, mechanism 2; M-CSA cites PMID:20367276, PMID:23726983; step 2
+  - subject: cys101
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Cys101 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/512/
+      snippet: There is a second SN2 reaction where Cys 101 attacks Cys 98 forming a disulphide bond between
+        Cys 101 and Cys 98. This leaves both the sulfurs of the original disulphide bond reduced.
+      notes: M-CSA entry 512, mechanism 2; M-CSA cites PMID:20367276, PMID:23726983; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/512/
+      snippet: Products.
+      notes: M-CSA entry 512, mechanism 2; M-CSA cites PMID:20367276, PMID:23726983; step 3
+  - subject: asp95
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp95 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/512/
+      snippet: increase nucleophilicity, proton acceptor, proton donor
+      notes: M-CSA entry 512, mechanism 2; M-CSA cites PMID:20367276, PMID:23726983; M-CSA catalytic-residue
+        roles for Asp95
+  - subject: cys98
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys98 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/512/
+      snippet: electrofuge, electrophile, nucleofuge, nucleophile, proton acceptor, proton donor
+      notes: M-CSA entry 512, mechanism 2; M-CSA cites PMID:20367276, PMID:23726983; M-CSA catalytic-residue
+        roles for Cys98
+  - subject: cys101
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys101 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/512/
+      snippet: nucleophile, proton donor
+      notes: M-CSA entry 512, mechanism 2; M-CSA cites PMID:20367276, PMID:23726983; M-CSA catalytic-residue
+        roles for Cys101
+  - subject: arg125
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg125 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/512/
+      snippet: increase nucleophilicity
+      notes: M-CSA entry 512, mechanism 2; M-CSA cites PMID:20367276, PMID:23726983; M-CSA catalytic-residue
+        roles for Arg125
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/512/
+      snippet: "This is the second proposed mechanism for the repair of a  misoxidized cysteine pair,\
+        \ where the enzyme acts as a reductase rather than as an isomerase.
+In common with the other\
+        \ mechanism there is nucleophillic attack from Cys 98, promoted by Asp 95 and Arg125, which breaks\
+        \ the disulphide bond of the substrate protein and forms an intermediate disulphide bond between\
+        \ Cys 98 and the substrate. A th"
+      notes: M-CSA entry 512, mechanism 2; M-CSA cites PMID:20367276, PMID:23726983; CATH domain 3.40.30.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/512/
+      snippet: "This is the second proposed mechanism for the repair of a  misoxidized cysteine pair,\
+        \ where the enzyme acts as a reductase rather than as an isomerase.
+In common with the other\
+        \ mechanism there is nucleophillic attack from Cys 98, promoted by Asp 95 and Arg125, which breaks\
+        \ the disulphide bond of the substrate protein and forms an intermediate disulphide bond between\
+        \ Cys 98 and the substrate. A th"
+      notes: M-CSA entry 512, mechanism 2; M-CSA cites PMID:20367276, PMID:23726983; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/512/
+      snippet: "This is the second proposed mechanism for the repair of a  misoxidized cysteine pair,\
+        \ where the enzyme acts as a reductase rather than as an isomerase.
+In common with the other\
+        \ mechanism there is nucleophillic attack from Cys 98, promoted by Asp 95 and Arg125, which breaks\
+        \ the disulphide bond of the substrate protein and forms an intermediate disulphide bond between\
+        \ Cys 98 and the substrate. A th"
+      notes: M-CSA entry 512, mechanism 2; M-CSA cites PMID:20367276, PMID:23726983; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/512/
+      snippet: "This is the second proposed mechanism for the repair of a  misoxidized cysteine pair,\
+        \ where the enzyme acts as a reductase rather than as an isomerase.
+In common with the other\
+        \ mechanism there is nucleophillic attack from Cys 98, promoted by Asp 95 and Arg125, which breaks\
+        \ the disulphide bond of the substrate protein and forms an intermediate disulphide bond between\
+        \ Cys 98 and the substrate. A th"
+      notes: M-CSA entry 512, mechanism 2; M-CSA cites PMID:20367276, PMID:23726983; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 512;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

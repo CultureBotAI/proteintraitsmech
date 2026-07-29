@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.1.2.3
 - CHEBI:58475
@@ -485,4 +485,262 @@ definitions:
       The enzyme AITC is bifunctional being involved in the production of IMP, the final product of the de novo purine synthesis pathway.. The catalytic centre described here catalyses the first step in AIRC activity, the formylation of AICAR to form 5-formyl AICAR which can then be cyclised by the second catalytic centre. The enzyme shows a high degree of sequence conservation among organisms from E.coli to man, but does not show homology to other formyl transferases, suggesting that the bifunctionality has evolved from one gene rather than two.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of phosphoribosylaminoimidazolecarboxamide formyltransferase
+  description: Stepwise mechanism transcribed from M-CSA entry 646 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: lys266
+    label: catalytic Lys266 (M-CSA/PDB numbering; UniProt residue 266)
+    node_type: RESIDUE
+    grounding: UniProtKB:P31939
+    description: 'M-CSA roles: electrostatic stabiliser, proton acceptor, proton donor, proton relay.'
+  - node_id: his267
+    label: catalytic His267 (M-CSA/PDB numbering; UniProt residue 267)
+    node_type: RESIDUE
+    grounding: UniProtKB:P31939
+    description: 'M-CSA roles: electrostatic stabiliser, proton acceptor, proton donor, proton relay.'
+  - node_id: asn431
+    label: catalytic Asn431 (M-CSA/PDB numbering; UniProt residue 431)
+    node_type: RESIDUE
+    grounding: UniProtKB:P31939
+    description: 'M-CSA roles: electrostatic stabiliser, modifies pKa.'
+  - node_id: his592
+    label: catalytic His592 (M-CSA/PDB numbering; UniProt residue 592)
+    node_type: RESIDUE
+    grounding: UniProtKB:P31939
+    description: 'M-CSA roles: electrostatic stabiliser, modifies pKa, proton acceptor, proton donor,
+      proton relay.'
+  - node_id: reactant0
+    label: 5-amino-1-(5-phospho-D-ribosyl)imidazole-4-carboxamide(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58475
+  - node_id: reactant1
+    label: 10-formyltetrahydrofolate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57454
+  - node_id: product0
+    label: (6S)-5,6,7,8-tetrahydrofolate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57453
+  - node_id: product1
+    label: 5-formamido-1-(5-phospho-D-ribosyl)imidazole-4-carboxamide(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58467
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Solvent deprotoantes His592 which triggers the subsequent deprotonation of His267 and
+      the substrate amine group. The amine then attacks the aldehyde group of 10-f-THF.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The tetrahedral intermediate collapses to form the product and the cofactor is protonated
+      by Lys266. The native state of the enzyme is regenerated.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: phosphoribosylaminoimidazolecarboxamide formyltransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:646
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.140.20 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.140.20
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: phosphoribosylaminoimidazolecarboxamide formyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.1.2.3
+  edges:
+  - subject: his267
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His267 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/646/
+      snippet: Solvent deprotoantes His592 which triggers the subsequent deprotonation of His267 and the
+        substrate amine group. The amine then attacks the aldehyde group of 10-f-THF.
+      notes: M-CSA entry 646, mechanism 1; M-CSA cites PMID:11457277, PMID:12501179, PMID:14966129; step
+        1
+  - subject: his592
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His592 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/646/
+      snippet: Solvent deprotoantes His592 which triggers the subsequent deprotonation of His267 and the
+        substrate amine group. The amine then attacks the aldehyde group of 10-f-THF.
+      notes: M-CSA entry 646, mechanism 1; M-CSA cites PMID:11457277, PMID:12501179, PMID:14966129; step
+        1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/646/
+      snippet: The tetrahedral intermediate collapses to form the product and the cofactor is protonated
+        by Lys266. The native state of the enzyme is regenerated.
+      notes: M-CSA entry 646, mechanism 1; M-CSA cites PMID:11457277, PMID:12501179, PMID:14966129; step
+        2
+  - subject: lys266
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Lys266 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/646/
+      snippet: The tetrahedral intermediate collapses to form the product and the cofactor is protonated
+        by Lys266. The native state of the enzyme is regenerated.
+      notes: M-CSA entry 646, mechanism 1; M-CSA cites PMID:11457277, PMID:12501179, PMID:14966129; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/646/
+      snippet: Products.
+      notes: M-CSA entry 646, mechanism 1; M-CSA cites PMID:11457277, PMID:12501179, PMID:14966129; step
+        3
+  - subject: lys266
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys266 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/646/
+      snippet: electrostatic stabiliser, proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 646, mechanism 1; M-CSA cites PMID:11457277, PMID:12501179, PMID:14966129; M-CSA
+        catalytic-residue roles for Lys266
+  - subject: his267
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His267 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/646/
+      snippet: electrostatic stabiliser, proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 646, mechanism 1; M-CSA cites PMID:11457277, PMID:12501179, PMID:14966129; M-CSA
+        catalytic-residue roles for His267
+  - subject: asn431
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn431 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/646/
+      snippet: electrostatic stabiliser, modifies pKa
+      notes: M-CSA entry 646, mechanism 1; M-CSA cites PMID:11457277, PMID:12501179, PMID:14966129; M-CSA
+        catalytic-residue roles for Asn431
+  - subject: his592
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His592 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/646/
+      snippet: electrostatic stabiliser, modifies pKa, proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 646, mechanism 1; M-CSA cites PMID:11457277, PMID:12501179, PMID:14966129; M-CSA
+        catalytic-residue roles for His592
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/646/
+      snippet: The cofactor which supplies the formyl group is N10-formyl-tetrahydrofolate (10-f-THF).
+        During the reaction nucleophilic attack by the amino group of AICAR, facilitated by deprotonation
+        by His 267, forms a tetrahedral intermediate, stabilised by Lys 266 and Asn 431. This collapses
+        following protonation of the cofactor by Lys 266 to release the product. His 267 is activated
+        towards its role as a ge
+      notes: M-CSA entry 646, mechanism 1; M-CSA cites PMID:11457277, PMID:12501179, PMID:14966129; CATH
+        domain 3.40.140.20 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/646/
+      snippet: The cofactor which supplies the formyl group is N10-formyl-tetrahydrofolate (10-f-THF).
+        During the reaction nucleophilic attack by the amino group of AICAR, facilitated by deprotonation
+        by His 267, forms a tetrahedral intermediate, stabilised by Lys 266 and Asn 431. This collapses
+        following protonation of the cofactor by Lys 266 to release the product. His 267 is activated
+        towards its role as a ge
+      notes: M-CSA entry 646, mechanism 1; M-CSA cites PMID:11457277, PMID:12501179, PMID:14966129; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/646/
+      snippet: The cofactor which supplies the formyl group is N10-formyl-tetrahydrofolate (10-f-THF).
+        During the reaction nucleophilic attack by the amino group of AICAR, facilitated by deprotonation
+        by His 267, forms a tetrahedral intermediate, stabilised by Lys 266 and Asn 431. This collapses
+        following protonation of the cofactor by Lys 266 to release the product. His 267 is activated
+        towards its role as a ge
+      notes: M-CSA entry 646, mechanism 1; M-CSA cites PMID:11457277, PMID:12501179, PMID:14966129; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/646/
+      snippet: The cofactor which supplies the formyl group is N10-formyl-tetrahydrofolate (10-f-THF).
+        During the reaction nucleophilic attack by the amino group of AICAR, facilitated by deprotonation
+        by His 267, forms a tetrahedral intermediate, stabilised by Lys 266 and Asn 431. This collapses
+        following protonation of the cofactor by Lys 266 to release the product. His 267 is activated
+        towards its role as a ge
+      notes: M-CSA entry 646, mechanism 1; M-CSA cites PMID:11457277, PMID:12501179, PMID:14966129; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/646/
+      snippet: The cofactor which supplies the formyl group is N10-formyl-tetrahydrofolate (10-f-THF).
+        During the reaction nucleophilic attack by the amino group of AICAR, facilitated by deprotonation
+        by His 267, forms a tetrahedral intermediate, stabilised by Lys 266 and Asn 431. This collapses
+        following protonation of the cofactor by Lys 266 to release the product. His 267 is activated
+        towards its role as a ge
+      notes: M-CSA entry 646, mechanism 1; M-CSA cites PMID:11457277, PMID:12501179, PMID:14966129; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/646/
+      snippet: The cofactor which supplies the formyl group is N10-formyl-tetrahydrofolate (10-f-THF).
+        During the reaction nucleophilic attack by the amino group of AICAR, facilitated by deprotonation
+        by His 267, forms a tetrahedral intermediate, stabilised by Lys 266 and Asn 431. This collapses
+        following protonation of the cofactor by Lys 266 to release the product. His 267 is activated
+        towards its role as a ge
+      notes: M-CSA entry 646, mechanism 1; M-CSA cites PMID:11457277, PMID:12501179, PMID:14966129; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 646;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.4.2.21
 - CHEBI:57502
@@ -254,4 +254,195 @@ definitions:
       Nicotinate mononucleotide:5,6- dimethylbenzimidazole (DMB) phosphoribosyltransferase (CobT) is crucial in the synthesis of alpha-ribose-5'-phosphate, a precursor to the lower ligand of colbamin. The biosynthesis of colbamin requires more than 25 committed enzymes, and the biosynthetic pathway has received much interest because of its complexity. Colbamin synthesis is also of interest in evolutionary biology because of its utilisation by early forms of bacteria and Archaea. The enzyme has also been shown to act on benzimidazole, and the clostridial enzyme acts on adenine to form 7-alpha-D-ribosyladenine 5'-phosphate.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of nicotinate-nucleotide-dimethylbenzimidazole phosphoribosyltransferase
+  description: Stepwise mechanism transcribed from M-CSA entry 79 (2 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: glu174
+    label: catalytic Glu174 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q05603
+    description: 'M-CSA roles: electrostatic stabiliser, unknown.'
+  - node_id: glu317
+    label: catalytic Glu317 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q05603
+    description: 'M-CSA roles: activator, hydrogen bond acceptor, proton acceptor, unknown.'
+  - node_id: reactant0
+    label: nicotinate D-ribonucleotide(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57502
+  - node_id: reactant1
+    label: 5,6-dimethylbenzimidazole
+    node_type: CHEMICAL
+    grounding: CHEBI:15890
+  - node_id: product0
+    label: nicotinate
+    node_type: CHEMICAL
+    grounding: CHEBI:32544
+  - node_id: product1
+    label: alpha-ribazole 5'-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57918
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The N1 of dimethylbenzimidazole initiates a nucleophilic attack on the C1 of the nicotinate
+      D-ribonucleotide in a substitution reaction, eliminating nicotinate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: nicotinate-nucleotide-dimethylbenzimidazole phosphoribosyltransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:79
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.10210 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.10210
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: nicotinate-nucleotide-dimethylbenzimidazole phosphoribosyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.4.2.21
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/79/
+      snippet: Products.
+      notes: M-CSA entry 79, mechanism 1; M-CSA cites PMID:10587435, PMID:11441022, PMID:12101181, PMID:19880598,
+        PMID:24055007, PMID:24121107, PMID:8206834; step 2
+  - subject: glu174
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu174 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/79/
+      snippet: electrostatic stabiliser, unknown
+      notes: M-CSA entry 79, mechanism 1; M-CSA cites PMID:10587435, PMID:11441022, PMID:12101181, PMID:19880598,
+        PMID:24055007, PMID:24121107, PMID:8206834; M-CSA catalytic-residue roles for Glu174
+  - subject: glu317
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu317 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/79/
+      snippet: activator, hydrogen bond acceptor, proton acceptor, unknown
+      notes: M-CSA entry 79, mechanism 1; M-CSA cites PMID:10587435, PMID:11441022, PMID:12101181, PMID:19880598,
+        PMID:24055007, PMID:24121107, PMID:8206834; M-CSA catalytic-residue roles for Glu317
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/79/
+      snippet: The carboxylate side chain of Glu317 acts as a catalytic base, abstracting the proton of
+        the N3 of DMB, whereupon the N1 atom attacks the C1' carbon of ribose with concerted displacement
+        of the nicotinate ring. This leads to the direct displacement reaction, with a inversion of configuration
+        of the carbon centre.
+      notes: M-CSA entry 79, mechanism 1; M-CSA cites PMID:10587435, PMID:11441022, PMID:12101181, PMID:19880598,
+        PMID:24055007, PMID:24121107, PMID:8206834; CATH domain 3.40.50.10210 assigned to the catalytic
+        chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/79/
+      snippet: The carboxylate side chain of Glu317 acts as a catalytic base, abstracting the proton of
+        the N3 of DMB, whereupon the N1 atom attacks the C1' carbon of ribose with concerted displacement
+        of the nicotinate ring. This leads to the direct displacement reaction, with a inversion of configuration
+        of the carbon centre.
+      notes: M-CSA entry 79, mechanism 1; M-CSA cites PMID:10587435, PMID:11441022, PMID:12101181, PMID:19880598,
+        PMID:24055007, PMID:24121107, PMID:8206834; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/79/
+      snippet: The carboxylate side chain of Glu317 acts as a catalytic base, abstracting the proton of
+        the N3 of DMB, whereupon the N1 atom attacks the C1' carbon of ribose with concerted displacement
+        of the nicotinate ring. This leads to the direct displacement reaction, with a inversion of configuration
+        of the carbon centre.
+      notes: M-CSA entry 79, mechanism 1; M-CSA cites PMID:10587435, PMID:11441022, PMID:12101181, PMID:19880598,
+        PMID:24055007, PMID:24121107, PMID:8206834; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/79/
+      snippet: The carboxylate side chain of Glu317 acts as a catalytic base, abstracting the proton of
+        the N3 of DMB, whereupon the N1 atom attacks the C1' carbon of ribose with concerted displacement
+        of the nicotinate ring. This leads to the direct displacement reaction, with a inversion of configuration
+        of the carbon centre.
+      notes: M-CSA entry 79, mechanism 1; M-CSA cites PMID:10587435, PMID:11441022, PMID:12101181, PMID:19880598,
+        PMID:24055007, PMID:24121107, PMID:8206834; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/79/
+      snippet: The carboxylate side chain of Glu317 acts as a catalytic base, abstracting the proton of
+        the N3 of DMB, whereupon the N1 atom attacks the C1' carbon of ribose with concerted displacement
+        of the nicotinate ring. This leads to the direct displacement reaction, with a inversion of configuration
+        of the carbon centre.
+      notes: M-CSA entry 79, mechanism 1; M-CSA cites PMID:10587435, PMID:11441022, PMID:12101181, PMID:19880598,
+        PMID:24055007, PMID:24121107, PMID:8206834; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/79/
+      snippet: The carboxylate side chain of Glu317 acts as a catalytic base, abstracting the proton of
+        the N3 of DMB, whereupon the N1 atom attacks the C1' carbon of ribose with concerted displacement
+        of the nicotinate ring. This leads to the direct displacement reaction, with a inversion of configuration
+        of the carbon centre.
+      notes: M-CSA entry 79, mechanism 1; M-CSA cites PMID:10587435, PMID:11441022, PMID:12101181, PMID:19880598,
+        PMID:24055007, PMID:24121107, PMID:8206834; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/79/
+      snippet: The carboxylate side chain of Glu317 acts as a catalytic base, abstracting the proton of
+        the N3 of DMB, whereupon the N1 atom attacks the C1' carbon of ribose with concerted displacement
+        of the nicotinate ring. This leads to the direct displacement reaction, with a inversion of configuration
+        of the carbon centre.
+      notes: M-CSA entry 79, mechanism 1; M-CSA cites PMID:10587435, PMID:11441022, PMID:12101181, PMID:19880598,
+        PMID:24055007, PMID:24121107, PMID:8206834; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (10 evidence-backed edges) transcribed from M-CSA entry 79;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

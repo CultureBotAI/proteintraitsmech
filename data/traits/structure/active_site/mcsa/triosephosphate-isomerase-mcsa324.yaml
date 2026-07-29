@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.3.1.1
 - CHEBI:57642
@@ -241,4 +241,326 @@ definitions:
       Triosephosphate isomerase (TIM) is one of the most extensively characterised enzymes in the chemical literature. TIM is a glycolytic enzyme that catalyses the central reaction in the glycolytic pathway, the interconversion of D-glyceraldehyde 3-phosphate (GAP) and dihydroxyacetone phosphate (DHAP) with exceptionally high efficiency, while suppressing elimination of orthophosphate. It contains a large-scale catalytic loop motion, which alternates in open and closed positions. It is a homodimer and only the homodimer is fully active. TIM is known to exist in an unliganded and liganded conformation and the loop-6, in particular, would undergo the major conformational changes when there is a substrate or inhibitor bound at the active site. In addition, the shift of loop-6 preferentially stabilises the enediole phosphate intermediate. Its deficiency has been shown to enhance levels of dihydroxyacetone phosphate in humans and cause chronic anaemia and neuromuscular impairment. Due to its important place in glycolysis, TIM also forms an attractive target for drug design against parasites that have the ability to survive in the mammalian bloodstream. Among the various diseases currently ravaging the tropical world, those due to such parasites are some of the most serious ones (e.g., malaria and sleeping sickness). Control of these diseases is presently a major problem and has been a focus of attention of various agencies.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of triosephosphate isomerase
+  description: Stepwise mechanism transcribed from M-CSA entry 324 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: asn11
+    label: catalytic Asn11 (M-CSA/PDB numbering; UniProt residue 11)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00940
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: lys13
+    label: catalytic Lys13 (M-CSA/PDB numbering; UniProt residue 13)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00940
+    description: 'M-CSA roles: attractive charge-charge interaction, electrostatic stabiliser, hydrogen
+      bond donor, proton acceptor, proton donor, proton relay.'
+  - node_id: his95
+    label: catalytic His95 (M-CSA/PDB numbering; UniProt residue 95)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00940
+    description: 'M-CSA roles: activator, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+      proton donor.'
+  - node_id: glu97
+    label: catalytic Glu97 (M-CSA/PDB numbering; UniProt residue 97)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00940
+    description: 'M-CSA roles: proton acceptor, proton donor, steric role.'
+  - node_id: glu165
+    label: catalytic Glu165 (M-CSA/PDB numbering; UniProt residue 165)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00940
+    description: 'M-CSA roles: activator, proton acceptor, proton donor.'
+  - node_id: gly171
+    label: catalytic Gly171 (M-CSA/PDB numbering; UniProt residue 171)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00940
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ser211
+    label: catalytic Ser211 (M-CSA/PDB numbering; UniProt residue 211)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00940
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: reactant0
+    label: glycerone phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57642
+  - node_id: product0
+    label: D-glyceraldehyde 3-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:59776
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu165 acts as the catalytic base, abstracting a proton from the alpha-carbonyl carbon.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The enolate deprotonates His95. The deprotonation of neutral His95 creates a more favourable
+      hydrogen bond between the residue and the enol-transition state than if the residue were protonated
+      [PMID:9843453].
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: His95 now acts as the catalytic base towards the enol, forming an aldehyde with concomitant
+      reprotonation of C2 in a stereoselective manner.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: triosephosphate isomerase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:324
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.70 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.70
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: triosephosphate isomerase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.3.1.1
+  edges:
+  - subject: glu165
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu165 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/324/
+      snippet: Glu165 acts as the catalytic base, abstracting a proton from the alpha-carbonyl carbon.
+      notes: M-CSA entry 324, mechanism 1; M-CSA cites PMID:14631822, PMID:15001364, PMID:1569570, PMID:19348462,
+        PMID:2005961, PMID:20481463, PMID:21671330, PMID:2185832, PMID:2204417, PMID:2204418, PMID:22409228,
+        PMID:2361134, PMID:23909928, PMID:24729658, PMID:26570983, PMID:8130195, PMID:9843453; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/324/
+      snippet: The enolate deprotonates His95. The deprotonation of neutral His95 creates a more favourable
+        hydrogen bond between the residue and the enol-transition state than if the residue were protonated
+        [PMID:9843453].
+      notes: M-CSA entry 324, mechanism 1; M-CSA cites PMID:14631822, PMID:15001364, PMID:1569570, PMID:19348462,
+        PMID:2005961, PMID:20481463, PMID:21671330, PMID:2185832, PMID:2204417, PMID:2204418, PMID:22409228,
+        PMID:2361134, PMID:23909928, PMID:24729658, PMID:26570983, PMID:8130195, PMID:9843453; step 2
+  - subject: his95
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His95 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/324/
+      snippet: The enolate deprotonates His95. The deprotonation of neutral His95 creates a more favourable
+        hydrogen bond between the residue and the enol-transition state than if the residue were protonated
+        [PMID:9843453].
+      notes: M-CSA entry 324, mechanism 1; M-CSA cites PMID:14631822, PMID:15001364, PMID:1569570, PMID:19348462,
+        PMID:2005961, PMID:20481463, PMID:21671330, PMID:2185832, PMID:2204417, PMID:2204418, PMID:22409228,
+        PMID:2361134, PMID:23909928, PMID:24729658, PMID:26570983, PMID:8130195, PMID:9843453; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/324/
+      snippet: His95 now acts as the catalytic base towards the enol, forming an aldehyde with concomitant
+        reprotonation of C2 in a stereoselective manner.
+      notes: M-CSA entry 324, mechanism 1; M-CSA cites PMID:14631822, PMID:15001364, PMID:1569570, PMID:19348462,
+        PMID:2005961, PMID:20481463, PMID:21671330, PMID:2185832, PMID:2204417, PMID:2204418, PMID:22409228,
+        PMID:2361134, PMID:23909928, PMID:24729658, PMID:26570983, PMID:8130195, PMID:9843453; step 3
+  - subject: his95
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His95 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/324/
+      snippet: His95 now acts as the catalytic base towards the enol, forming an aldehyde with concomitant
+        reprotonation of C2 in a stereoselective manner.
+      notes: M-CSA entry 324, mechanism 1; M-CSA cites PMID:14631822, PMID:15001364, PMID:1569570, PMID:19348462,
+        PMID:2005961, PMID:20481463, PMID:21671330, PMID:2185832, PMID:2204417, PMID:2204418, PMID:22409228,
+        PMID:2361134, PMID:23909928, PMID:24729658, PMID:26570983, PMID:8130195, PMID:9843453; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/324/
+      snippet: Products
+      notes: M-CSA entry 324, mechanism 1; M-CSA cites PMID:14631822, PMID:15001364, PMID:1569570, PMID:19348462,
+        PMID:2005961, PMID:20481463, PMID:21671330, PMID:2185832, PMID:2204417, PMID:2204418, PMID:22409228,
+        PMID:2361134, PMID:23909928, PMID:24729658, PMID:26570983, PMID:8130195, PMID:9843453; step 4
+  - subject: asn11
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn11 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/324/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 324, mechanism 1; M-CSA cites PMID:14631822, PMID:15001364, PMID:1569570, PMID:19348462,
+        PMID:2005961, PMID:20481463, PMID:21671330, PMID:2185832, PMID:2204417, PMID:2204418, PMID:22409228,
+        PMID:2361134, PMID:23909928, PMID:24729658, PMID:26570983, PMID:8130195, PMID:9843453; M-CSA catalytic-residue
+        roles for Asn11
+  - subject: lys13
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys13 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/324/
+      snippet: attractive charge-charge interaction, electrostatic stabiliser, hydrogen bond donor, proton
+        acceptor, proton donor, proton relay
+      notes: M-CSA entry 324, mechanism 1; M-CSA cites PMID:14631822, PMID:15001364, PMID:1569570, PMID:19348462,
+        PMID:2005961, PMID:20481463, PMID:21671330, PMID:2185832, PMID:2204417, PMID:2204418, PMID:22409228,
+        PMID:2361134, PMID:23909928, PMID:24729658, PMID:26570983, PMID:8130195, PMID:9843453; M-CSA catalytic-residue
+        roles for Lys13
+  - subject: his95
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His95 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/324/
+      snippet: activator, hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 324, mechanism 1; M-CSA cites PMID:14631822, PMID:15001364, PMID:1569570, PMID:19348462,
+        PMID:2005961, PMID:20481463, PMID:21671330, PMID:2185832, PMID:2204417, PMID:2204418, PMID:22409228,
+        PMID:2361134, PMID:23909928, PMID:24729658, PMID:26570983, PMID:8130195, PMID:9843453; M-CSA catalytic-residue
+        roles for His95
+  - subject: glu97
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu97 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/324/
+      snippet: proton acceptor, proton donor, steric role
+      notes: M-CSA entry 324, mechanism 1; M-CSA cites PMID:14631822, PMID:15001364, PMID:1569570, PMID:19348462,
+        PMID:2005961, PMID:20481463, PMID:21671330, PMID:2185832, PMID:2204417, PMID:2204418, PMID:22409228,
+        PMID:2361134, PMID:23909928, PMID:24729658, PMID:26570983, PMID:8130195, PMID:9843453; M-CSA catalytic-residue
+        roles for Glu97
+  - subject: glu165
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu165 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/324/
+      snippet: activator, proton acceptor, proton donor
+      notes: M-CSA entry 324, mechanism 1; M-CSA cites PMID:14631822, PMID:15001364, PMID:1569570, PMID:19348462,
+        PMID:2005961, PMID:20481463, PMID:21671330, PMID:2185832, PMID:2204417, PMID:2204418, PMID:22409228,
+        PMID:2361134, PMID:23909928, PMID:24729658, PMID:26570983, PMID:8130195, PMID:9843453; M-CSA catalytic-residue
+        roles for Glu165
+  - subject: gly171
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly171 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/324/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 324, mechanism 1; M-CSA cites PMID:14631822, PMID:15001364, PMID:1569570, PMID:19348462,
+        PMID:2005961, PMID:20481463, PMID:21671330, PMID:2185832, PMID:2204417, PMID:2204418, PMID:22409228,
+        PMID:2361134, PMID:23909928, PMID:24729658, PMID:26570983, PMID:8130195, PMID:9843453; M-CSA catalytic-residue
+        roles for Gly171
+  - subject: ser211
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser211 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/324/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 324, mechanism 1; M-CSA cites PMID:14631822, PMID:15001364, PMID:1569570, PMID:19348462,
+        PMID:2005961, PMID:20481463, PMID:21671330, PMID:2185832, PMID:2204417, PMID:2204418, PMID:22409228,
+        PMID:2361134, PMID:23909928, PMID:24729658, PMID:26570983, PMID:8130195, PMID:9843453; M-CSA catalytic-residue
+        roles for Ser211
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/324/
+      snippet: "To accomplish this isomerization, TIM first extracts a pro-R hydrogen from the C1 of DHAP\
+        \ and then stereospecifically introduces a proton onto the C2 atom. The flexible loop formed by\
+        \ residues 167-177 allows the active site to organise around substrate, and it's distortion has\
+        \ been shown to reduce catalytic activity and affinity for the reaction intermediate.
+<br/><br/>\
+        
+Glu 165 acts as a general"
+      notes: M-CSA entry 324, mechanism 1; M-CSA cites PMID:14631822, PMID:15001364, PMID:1569570, PMID:19348462,
+        PMID:2005961, PMID:20481463, PMID:21671330, PMID:2185832, PMID:2204417, PMID:2204418, PMID:22409228,
+        PMID:2361134, PMID:23909928, PMID:24729658, PMID:26570983, PMID:8130195, PMID:9843453; CATH domain
+        3.20.20.70 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/324/
+      snippet: "To accomplish this isomerization, TIM first extracts a pro-R hydrogen from the C1 of DHAP\
+        \ and then stereospecifically introduces a proton onto the C2 atom. The flexible loop formed by\
+        \ residues 167-177 allows the active site to organise around substrate, and it's distortion has\
+        \ been shown to reduce catalytic activity and affinity for the reaction intermediate.
+<br/><br/>\
+        
+Glu 165 acts as a general"
+      notes: M-CSA entry 324, mechanism 1; M-CSA cites PMID:14631822, PMID:15001364, PMID:1569570, PMID:19348462,
+        PMID:2005961, PMID:20481463, PMID:21671330, PMID:2185832, PMID:2204417, PMID:2204418, PMID:22409228,
+        PMID:2361134, PMID:23909928, PMID:24729658, PMID:26570983, PMID:8130195, PMID:9843453; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/324/
+      snippet: "To accomplish this isomerization, TIM first extracts a pro-R hydrogen from the C1 of DHAP\
+        \ and then stereospecifically introduces a proton onto the C2 atom. The flexible loop formed by\
+        \ residues 167-177 allows the active site to organise around substrate, and it's distortion has\
+        \ been shown to reduce catalytic activity and affinity for the reaction intermediate.
+<br/><br/>\
+        
+Glu 165 acts as a general"
+      notes: M-CSA entry 324, mechanism 1; M-CSA cites PMID:14631822, PMID:15001364, PMID:1569570, PMID:19348462,
+        PMID:2005961, PMID:20481463, PMID:21671330, PMID:2185832, PMID:2204417, PMID:2204418, PMID:22409228,
+        PMID:2361134, PMID:23909928, PMID:24729658, PMID:26570983, PMID:8130195, PMID:9843453; M-CSA reaction
+        reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/324/
+      snippet: "To accomplish this isomerization, TIM first extracts a pro-R hydrogen from the C1 of DHAP\
+        \ and then stereospecifically introduces a proton onto the C2 atom. The flexible loop formed by\
+        \ residues 167-177 allows the active site to organise around substrate, and it's distortion has\
+        \ been shown to reduce catalytic activity and affinity for the reaction intermediate.
+<br/><br/>\
+        
+Glu 165 acts as a general"
+      notes: M-CSA entry 324, mechanism 1; M-CSA cites PMID:14631822, PMID:15001364, PMID:1569570, PMID:19348462,
+        PMID:2005961, PMID:20481463, PMID:21671330, PMID:2185832, PMID:2204417, PMID:2204418, PMID:22409228,
+        PMID:2361134, PMID:23909928, PMID:24729658, PMID:26570983, PMID:8130195, PMID:9843453; M-CSA reaction
+        products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (17 evidence-backed edges) transcribed from M-CSA entry 324;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

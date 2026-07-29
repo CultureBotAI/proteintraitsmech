@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:6.2.1.3
 - CHEBI:30616
@@ -403,4 +403,337 @@ definitions:
       Long chain fatty acid coenzyme-A synthetase (LC-FACS) participates in the first reaction step of long chain fatty acid degradation. These enzymes act on a wide range of long-chain saturated and unsaturated fatty acids, but the enzymes from different tissues and species show some variation in specificity. For example, the liver enzyme acts on acids from C6 to C20, that from brain shows high activity up to C24, and the enzyme from Thermus thermophilus acts on C12 to C22 fatty acids. LC-FACS catalyses the conversion of long chain fatty acids into fatty-acyl-CoA, creating AMP and pyrophosphate as bi-products. LC-FACS is responsible for physiological regulation of cellular functions, as well as fatty acid degradation.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of long-chain-fatty-acid-CoA ligase
+  description: Stepwise mechanism transcribed from M-CSA entry 198 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: thr184
+    label: catalytic Thr184 (M-CSA/PDB numbering; UniProt residue 184)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q5SKN9
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu328
+    label: catalytic Glu328 (M-CSA/PDB numbering; UniProt residue 328)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q5SKN9
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: lys439
+    label: catalytic Lys439 (M-CSA/PDB numbering; UniProt residue 439)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q5SKN9
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: trp444
+    label: catalytic Trp444 (M-CSA/PDB numbering; UniProt residue 444)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q5SKN9
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: reactant0
+    label: ATP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+  - node_id: reactant1
+    label: long-chain fatty acid anion
+    node_type: CHEMICAL
+    grounding: CHEBI:57560
+  - node_id: reactant2
+    label: coenzyme A(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+  - node_id: product0
+    label: adenosine 5'-monophosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+  - node_id: product1
+    label: long-chain fatty acyl-CoA(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:83139
+  - node_id: product2
+    label: diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The carboxylate of the long chain carboxylate acts as a nucleophile and attacks the alpha-phosphate
+      of ATP in an addition reaction to form a pentavalent phosphate intermediate. Mg(II), Trp444 and
+      Lys439 stabilise the intermediates formed.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The pentavalent phosphate intermediate breaks down in a conjugate base elimination, liberating
+      pyrophosphate. Mg(II), Trp444 and Lys439 stabilise the intermediates formed.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: CoA (probably activated by the phosphate group) acts as a nucleophile which attacks the
+      carbonyl group of the intermediate complex in a substitution reaction, liberating AMP. Mg(II), Trp444
+      and Lys439 stabilise the intermediates formed.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: long-chain-fatty-acid-CoA ligase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:198
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.12780 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.12780
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: long-chain-fatty-acid-CoA ligase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:6.2.1.3
+  edges:
+  - subject: lys439
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys439 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/198/
+      snippet: The carboxylate of the long chain carboxylate acts as a nucleophile and attacks the alpha-phosphate
+        of ATP in an addition reaction to form a pentavalent phosphate intermediate. Mg(II), Trp444 and
+        Lys439 stabilise the intermediates formed.
+      notes: M-CSA entry 198, mechanism 1; M-CSA cites PMID:15145952, PMID:18375835; step 1
+  - subject: trp444
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Trp444 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/198/
+      snippet: The carboxylate of the long chain carboxylate acts as a nucleophile and attacks the alpha-phosphate
+        of ATP in an addition reaction to form a pentavalent phosphate intermediate. Mg(II), Trp444 and
+        Lys439 stabilise the intermediates formed.
+      notes: M-CSA entry 198, mechanism 1; M-CSA cites PMID:15145952, PMID:18375835; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/198/
+      snippet: The pentavalent phosphate intermediate breaks down in a conjugate base elimination, liberating
+        pyrophosphate. Mg(II), Trp444 and Lys439 stabilise the intermediates formed.
+      notes: M-CSA entry 198, mechanism 1; M-CSA cites PMID:15145952, PMID:18375835; step 2
+  - subject: lys439
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Lys439 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/198/
+      snippet: The pentavalent phosphate intermediate breaks down in a conjugate base elimination, liberating
+        pyrophosphate. Mg(II), Trp444 and Lys439 stabilise the intermediates formed.
+      notes: M-CSA entry 198, mechanism 1; M-CSA cites PMID:15145952, PMID:18375835; step 2
+  - subject: trp444
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Trp444 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/198/
+      snippet: The pentavalent phosphate intermediate breaks down in a conjugate base elimination, liberating
+        pyrophosphate. Mg(II), Trp444 and Lys439 stabilise the intermediates formed.
+      notes: M-CSA entry 198, mechanism 1; M-CSA cites PMID:15145952, PMID:18375835; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/198/
+      snippet: CoA (probably activated by the phosphate group) acts as a nucleophile which attacks the
+        carbonyl group of the intermediate complex in a substitution reaction, liberating AMP. Mg(II),
+        Trp444 and Lys439 stabilise the intermediates formed.
+      notes: M-CSA entry 198, mechanism 1; M-CSA cites PMID:15145952, PMID:18375835; step 3
+  - subject: lys439
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Lys439 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/198/
+      snippet: CoA (probably activated by the phosphate group) acts as a nucleophile which attacks the
+        carbonyl group of the intermediate complex in a substitution reaction, liberating AMP. Mg(II),
+        Trp444 and Lys439 stabilise the intermediates formed.
+      notes: M-CSA entry 198, mechanism 1; M-CSA cites PMID:15145952, PMID:18375835; step 3
+  - subject: trp444
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Trp444 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/198/
+      snippet: CoA (probably activated by the phosphate group) acts as a nucleophile which attacks the
+        carbonyl group of the intermediate complex in a substitution reaction, liberating AMP. Mg(II),
+        Trp444 and Lys439 stabilise the intermediates formed.
+      notes: M-CSA entry 198, mechanism 1; M-CSA cites PMID:15145952, PMID:18375835; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/198/
+      snippet: Products
+      notes: M-CSA entry 198, mechanism 1; M-CSA cites PMID:15145952, PMID:18375835; step 4
+  - subject: thr184
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr184 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/198/
+      snippet: metal ligand
+      notes: M-CSA entry 198, mechanism 1; M-CSA cites PMID:15145952, PMID:18375835; M-CSA catalytic-residue
+        roles for Thr184
+  - subject: glu328
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu328 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/198/
+      snippet: metal ligand
+      notes: M-CSA entry 198, mechanism 1; M-CSA cites PMID:15145952, PMID:18375835; M-CSA catalytic-residue
+        roles for Glu328
+  - subject: lys439
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys439 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/198/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 198, mechanism 1; M-CSA cites PMID:15145952, PMID:18375835; M-CSA catalytic-residue
+        roles for Lys439
+  - subject: trp444
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp444 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/198/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 198, mechanism 1; M-CSA cites PMID:15145952, PMID:18375835; M-CSA catalytic-residue
+        roles for Trp444
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/198/
+      snippet: Trp 444 hydrogen bonds to the alpha-phosphorus atom, making the alpha-phosphorus electron
+        deficient, and a better electrophile. This is helped by the electrostatic interaction of Mg(II).
+        The carbonyl oxygen of the fatty acid nucleophilically attacks the alpha-phosphorus atom, forming
+        a negatively charged, penta-coordinated intermediate. This intermediate is stabilised through
+        interactions between
+      notes: M-CSA entry 198, mechanism 1; M-CSA cites PMID:15145952, PMID:18375835; CATH domain 3.40.50.12780
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/198/
+      snippet: Trp 444 hydrogen bonds to the alpha-phosphorus atom, making the alpha-phosphorus electron
+        deficient, and a better electrophile. This is helped by the electrostatic interaction of Mg(II).
+        The carbonyl oxygen of the fatty acid nucleophilically attacks the alpha-phosphorus atom, forming
+        a negatively charged, penta-coordinated intermediate. This intermediate is stabilised through
+        interactions between
+      notes: M-CSA entry 198, mechanism 1; M-CSA cites PMID:15145952, PMID:18375835; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/198/
+      snippet: Trp 444 hydrogen bonds to the alpha-phosphorus atom, making the alpha-phosphorus electron
+        deficient, and a better electrophile. This is helped by the electrostatic interaction of Mg(II).
+        The carbonyl oxygen of the fatty acid nucleophilically attacks the alpha-phosphorus atom, forming
+        a negatively charged, penta-coordinated intermediate. This intermediate is stabilised through
+        interactions between
+      notes: M-CSA entry 198, mechanism 1; M-CSA cites PMID:15145952, PMID:18375835; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/198/
+      snippet: Trp 444 hydrogen bonds to the alpha-phosphorus atom, making the alpha-phosphorus electron
+        deficient, and a better electrophile. This is helped by the electrostatic interaction of Mg(II).
+        The carbonyl oxygen of the fatty acid nucleophilically attacks the alpha-phosphorus atom, forming
+        a negatively charged, penta-coordinated intermediate. This intermediate is stabilised through
+        interactions between
+      notes: M-CSA entry 198, mechanism 1; M-CSA cites PMID:15145952, PMID:18375835; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/198/
+      snippet: Trp 444 hydrogen bonds to the alpha-phosphorus atom, making the alpha-phosphorus electron
+        deficient, and a better electrophile. This is helped by the electrostatic interaction of Mg(II).
+        The carbonyl oxygen of the fatty acid nucleophilically attacks the alpha-phosphorus atom, forming
+        a negatively charged, penta-coordinated intermediate. This intermediate is stabilised through
+        interactions between
+      notes: M-CSA entry 198, mechanism 1; M-CSA cites PMID:15145952, PMID:18375835; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/198/
+      snippet: Trp 444 hydrogen bonds to the alpha-phosphorus atom, making the alpha-phosphorus electron
+        deficient, and a better electrophile. This is helped by the electrostatic interaction of Mg(II).
+        The carbonyl oxygen of the fatty acid nucleophilically attacks the alpha-phosphorus atom, forming
+        a negatively charged, penta-coordinated intermediate. This intermediate is stabilised through
+        interactions between
+      notes: M-CSA entry 198, mechanism 1; M-CSA cites PMID:15145952, PMID:18375835; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/198/
+      snippet: Trp 444 hydrogen bonds to the alpha-phosphorus atom, making the alpha-phosphorus electron
+        deficient, and a better electrophile. This is helped by the electrostatic interaction of Mg(II).
+        The carbonyl oxygen of the fatty acid nucleophilically attacks the alpha-phosphorus atom, forming
+        a negatively charged, penta-coordinated intermediate. This intermediate is stabilised through
+        interactions between
+      notes: M-CSA entry 198, mechanism 1; M-CSA cites PMID:15145952, PMID:18375835; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/198/
+      snippet: Trp 444 hydrogen bonds to the alpha-phosphorus atom, making the alpha-phosphorus electron
+        deficient, and a better electrophile. This is helped by the electrostatic interaction of Mg(II).
+        The carbonyl oxygen of the fatty acid nucleophilically attacks the alpha-phosphorus atom, forming
+        a negatively charged, penta-coordinated intermediate. This intermediate is stabilised through
+        interactions between
+      notes: M-CSA entry 198, mechanism 1; M-CSA cites PMID:15145952, PMID:18375835; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (21 evidence-backed edges) transcribed from M-CSA entry 198;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

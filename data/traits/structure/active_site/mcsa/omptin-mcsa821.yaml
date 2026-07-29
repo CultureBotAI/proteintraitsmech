@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.23.49
 - CHEBI:15705
@@ -143,4 +143,243 @@ definitions:
       Outer membrane protease (OmpT) of Escherichia coli is from a family of homologous outer membrane proteases called omptins. They are implicated in the virulence of several pathogenic, gram negative bacteria, and OmpT is associated with urinary tract disease. OmpT preferentially cleaves substrates between two consecutive basic amino acids, and is dependent on the presence of lipopolysaccharide.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of omptin
+  description: Stepwise mechanism transcribed from M-CSA entry 821 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: asp83
+    label: catalytic Asp83 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09169
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: asp85
+    label: catalytic Asp85 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09169
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: ala99
+    label: catalytic Ala99 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09169
+    description: 'M-CSA roles: nucleofuge, nucleophile, proton acceptor, proton donor.'
+  - node_id: asp210
+    label: catalytic Asp210 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09169
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his212
+    label: catalytic His212 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09169
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: dipeptide
+    node_type: CHEMICAL
+    grounding: CHEBI:46761
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: L-alpha-amino acid
+    node_type: CHEMICAL
+    grounding: CHEBI:15705
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp103 deprotonates a water which activates it to nucleophilically attack the carbon
+      of the carbonyl. Simultaneously Asp 105 protonates the carbonyl oxygen. This results in a gemdiol
+      intermediate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Asp103 protonates the the amide nitrogen of the scissile peptide bond, which is simultaneously
+      and progressively weakened and elongated.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Asp105 deprotonates a hydroxyl of the gemdiol intermediate awhich initiates an elimination
+      which results in the cleavage of the peptide bond.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: omptin catalytic site
+    node_type: MOTIF
+    grounding: MCSA:821
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.40.128.90 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.40.128.90
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: omptin activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.23.49
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/821/
+      snippet: Asp103 protonates the the amide nitrogen of the scissile peptide bond, which is simultaneously
+        and progressively weakened and elongated.
+      notes: M-CSA entry 821, mechanism 2; M-CSA cites PMID:11566868, PMID:15315948, PMID:17710644; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/821/
+      snippet: Asp105 deprotonates a hydroxyl of the gemdiol intermediate awhich initiates an elimination
+        which results in the cleavage of the peptide bond.
+      notes: M-CSA entry 821, mechanism 2; M-CSA cites PMID:11566868, PMID:15315948, PMID:17710644; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/821/
+      snippet: Products
+      notes: M-CSA entry 821, mechanism 2; M-CSA cites PMID:11566868, PMID:15315948, PMID:17710644; step
+        4
+  - subject: asp83
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp83 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/821/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 821, mechanism 2; M-CSA cites PMID:11566868, PMID:15315948, PMID:17710644; M-CSA
+        catalytic-residue roles for Asp83
+  - subject: asp85
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp85 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/821/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 821, mechanism 2; M-CSA cites PMID:11566868, PMID:15315948, PMID:17710644; M-CSA
+        catalytic-residue roles for Asp85
+  - subject: ala99
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ala99 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/821/
+      snippet: nucleofuge, nucleophile, proton acceptor, proton donor
+      notes: M-CSA entry 821, mechanism 2; M-CSA cites PMID:11566868, PMID:15315948, PMID:17710644; M-CSA
+        catalytic-residue roles for Ala99
+  - subject: asp210
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp210 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/821/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 821, mechanism 2; M-CSA cites PMID:11566868, PMID:15315948, PMID:17710644; M-CSA
+        catalytic-residue roles for Asp210
+  - subject: his212
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His212 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/821/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 821, mechanism 2; M-CSA cites PMID:11566868, PMID:15315948, PMID:17710644; M-CSA
+        catalytic-residue roles for His212
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/821/
+      snippet: To initiate the reaction Asp 103 deprotonates a water which activates it to nucleophilically
+        attack the carbonyl carbon. In addition Asp 105 protonates the carbonyl oxygen which results in
+        the formation of the gemdiol intermediate. Asp 103 then protonates the amide nitrogen which weakens
+        the scissile bond and thus when Asp 105 accepts a proton from the gemdiol hydroxyl this results
+        in the collapse
+      notes: M-CSA entry 821, mechanism 2; M-CSA cites PMID:11566868, PMID:15315948, PMID:17710644; CATH
+        domain 2.40.128.90 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/821/
+      snippet: To initiate the reaction Asp 103 deprotonates a water which activates it to nucleophilically
+        attack the carbonyl carbon. In addition Asp 105 protonates the carbonyl oxygen which results in
+        the formation of the gemdiol intermediate. Asp 103 then protonates the amide nitrogen which weakens
+        the scissile bond and thus when Asp 105 accepts a proton from the gemdiol hydroxyl this results
+        in the collapse
+      notes: M-CSA entry 821, mechanism 2; M-CSA cites PMID:11566868, PMID:15315948, PMID:17710644; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/821/
+      snippet: To initiate the reaction Asp 103 deprotonates a water which activates it to nucleophilically
+        attack the carbonyl carbon. In addition Asp 105 protonates the carbonyl oxygen which results in
+        the formation of the gemdiol intermediate. Asp 103 then protonates the amide nitrogen which weakens
+        the scissile bond and thus when Asp 105 accepts a proton from the gemdiol hydroxyl this results
+        in the collapse
+      notes: M-CSA entry 821, mechanism 2; M-CSA cites PMID:11566868, PMID:15315948, PMID:17710644; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/821/
+      snippet: To initiate the reaction Asp 103 deprotonates a water which activates it to nucleophilically
+        attack the carbonyl carbon. In addition Asp 105 protonates the carbonyl oxygen which results in
+        the formation of the gemdiol intermediate. Asp 103 then protonates the amide nitrogen which weakens
+        the scissile bond and thus when Asp 105 accepts a proton from the gemdiol hydroxyl this results
+        in the collapse
+      notes: M-CSA entry 821, mechanism 2; M-CSA cites PMID:11566868, PMID:15315948, PMID:17710644; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/821/
+      snippet: To initiate the reaction Asp 103 deprotonates a water which activates it to nucleophilically
+        attack the carbonyl carbon. In addition Asp 105 protonates the carbonyl oxygen which results in
+        the formation of the gemdiol intermediate. Asp 103 then protonates the amide nitrogen which weakens
+        the scissile bond and thus when Asp 105 accepts a proton from the gemdiol hydroxyl this results
+        in the collapse
+      notes: M-CSA entry 821, mechanism 2; M-CSA cites PMID:11566868, PMID:15315948, PMID:17710644; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 821;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.1.1.20
 - CHEBI:59789
@@ -334,4 +334,245 @@ definitions:
       Glycine N-methyltransferase (GNMT) isolated from Rattus norvegicus catalyses the transfer of a methyl group from S-adenosyl-methionine (SAM) to glycine to produce N-methylglycine (sarcosine) and S-adenosyl homocysteine (SAH). Unlike most SAM-dependent methyltransferases, GNMT is not strongly inhibited by SAH. This, coupled with no evidence of a physiological role for sarcosine, has led to the suggestion that GNMT plays a key role in modulating the SAM/SAH ratio in tissues where it is an important cofactor, and so controls methyltransferase activity. GNMT exists as a dimer of dimers. Each subunit contains a molecular basket structure and a flexible N-terminal U-loop that can block the entrance to the basket of the partner subunit of the dimer. The U-loop competes with SAM for binding at the active site and so can regulate catalytic activity. GNMT binds first to SAM, which causes a conformational change, and then to glycine.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of glycine N-methyltransferase
+  description: Stepwise mechanism transcribed from M-CSA entry 23 (2 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +1).
+  nodes:
+  - node_id: tyr21
+    label: catalytic Tyr21 (M-CSA/PDB numbering; UniProt residue 22)
+    node_type: RESIDUE
+    grounding: UniProtKB:P13255
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor.'
+  - node_id: gly137
+    label: catalytic Gly137 (M-CSA/PDB numbering; UniProt residue 138)
+    node_type: RESIDUE
+    grounding: UniProtKB:P13255
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: his142
+    label: catalytic His142 (M-CSA/PDB numbering; UniProt residue 143)
+    node_type: RESIDUE
+    grounding: UniProtKB:P13255
+    description: 'M-CSA roles: activator.'
+  - node_id: arg175
+    label: catalytic Arg175 (M-CSA/PDB numbering; UniProt residue 176)
+    node_type: RESIDUE
+    grounding: UniProtKB:P13255
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: tyr194
+    label: catalytic Tyr194 (M-CSA/PDB numbering; UniProt residue 195)
+    node_type: RESIDUE
+    grounding: UniProtKB:P13255
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor.'
+  - node_id: reactant0
+    label: S-adenosyl-L-methionine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+  - node_id: reactant1
+    label: glycine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57305
+  - node_id: product0
+    label: S-adenosyl-L-homocysteine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: sarcosine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57433
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The amine of the substrate glycine initiates a nucleophilic attack on the methyl of the
+      S-adenosyl-L-methionine in a substitution reaction.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: glycine N-methyltransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:23
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.150 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.150
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: glycine N-methyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.1.1.20
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/23/
+      snippet: Products.
+      notes: M-CSA entry 23, mechanism 1; M-CSA cites PMID:12859184, PMID:16851960, PMID:17154529, PMID:8810903;
+        step 2
+  - subject: tyr21
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr21 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/23/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor
+      notes: M-CSA entry 23, mechanism 1; M-CSA cites PMID:12859184, PMID:16851960, PMID:17154529, PMID:8810903;
+        M-CSA catalytic-residue roles for Tyr21
+  - subject: gly137
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly137 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/23/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 23, mechanism 1; M-CSA cites PMID:12859184, PMID:16851960, PMID:17154529, PMID:8810903;
+        M-CSA catalytic-residue roles for Gly137
+  - subject: his142
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His142 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/23/
+      snippet: activator
+      notes: M-CSA entry 23, mechanism 1; M-CSA cites PMID:12859184, PMID:16851960, PMID:17154529, PMID:8810903;
+        M-CSA catalytic-residue roles for His142
+  - subject: arg175
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg175 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/23/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 23, mechanism 1; M-CSA cites PMID:12859184, PMID:16851960, PMID:17154529, PMID:8810903;
+        M-CSA catalytic-residue roles for Arg175
+  - subject: tyr194
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr194 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/23/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor
+      notes: M-CSA entry 23, mechanism 1; M-CSA cites PMID:12859184, PMID:16851960, PMID:17154529, PMID:8810903;
+        M-CSA catalytic-residue roles for Tyr194
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/23/
+      snippet: SAM and glycine bind in the active site in sequential order (SAM first). Glycine binds
+        to the NE of tryptophan and the main chain carbonyl of alanine. Hydrogen bond interactions between
+        glutamate and the SAM and glutamate and the glycine encourage the nucleophilic attack by glycine
+        on the SAM methyl group. However, GNMT primarily catalyses the reaction through proximity and
+        orientation effects. Ar
+      notes: M-CSA entry 23, mechanism 1; M-CSA cites PMID:12859184, PMID:16851960, PMID:17154529, PMID:8810903;
+        CATH domain 3.40.50.150 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/23/
+      snippet: SAM and glycine bind in the active site in sequential order (SAM first). Glycine binds
+        to the NE of tryptophan and the main chain carbonyl of alanine. Hydrogen bond interactions between
+        glutamate and the SAM and glutamate and the glycine encourage the nucleophilic attack by glycine
+        on the SAM methyl group. However, GNMT primarily catalyses the reaction through proximity and
+        orientation effects. Ar
+      notes: M-CSA entry 23, mechanism 1; M-CSA cites PMID:12859184, PMID:16851960, PMID:17154529, PMID:8810903;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/23/
+      snippet: SAM and glycine bind in the active site in sequential order (SAM first). Glycine binds
+        to the NE of tryptophan and the main chain carbonyl of alanine. Hydrogen bond interactions between
+        glutamate and the SAM and glutamate and the glycine encourage the nucleophilic attack by glycine
+        on the SAM methyl group. However, GNMT primarily catalyses the reaction through proximity and
+        orientation effects. Ar
+      notes: M-CSA entry 23, mechanism 1; M-CSA cites PMID:12859184, PMID:16851960, PMID:17154529, PMID:8810903;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/23/
+      snippet: SAM and glycine bind in the active site in sequential order (SAM first). Glycine binds
+        to the NE of tryptophan and the main chain carbonyl of alanine. Hydrogen bond interactions between
+        glutamate and the SAM and glutamate and the glycine encourage the nucleophilic attack by glycine
+        on the SAM methyl group. However, GNMT primarily catalyses the reaction through proximity and
+        orientation effects. Ar
+      notes: M-CSA entry 23, mechanism 1; M-CSA cites PMID:12859184, PMID:16851960, PMID:17154529, PMID:8810903;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/23/
+      snippet: SAM and glycine bind in the active site in sequential order (SAM first). Glycine binds
+        to the NE of tryptophan and the main chain carbonyl of alanine. Hydrogen bond interactions between
+        glutamate and the SAM and glutamate and the glycine encourage the nucleophilic attack by glycine
+        on the SAM methyl group. However, GNMT primarily catalyses the reaction through proximity and
+        orientation effects. Ar
+      notes: M-CSA entry 23, mechanism 1; M-CSA cites PMID:12859184, PMID:16851960, PMID:17154529, PMID:8810903;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/23/
+      snippet: SAM and glycine bind in the active site in sequential order (SAM first). Glycine binds
+        to the NE of tryptophan and the main chain carbonyl of alanine. Hydrogen bond interactions between
+        glutamate and the SAM and glutamate and the glycine encourage the nucleophilic attack by glycine
+        on the SAM methyl group. However, GNMT primarily catalyses the reaction through proximity and
+        orientation effects. Ar
+      notes: M-CSA entry 23, mechanism 1; M-CSA cites PMID:12859184, PMID:16851960, PMID:17154529, PMID:8810903;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/23/
+      snippet: SAM and glycine bind in the active site in sequential order (SAM first). Glycine binds
+        to the NE of tryptophan and the main chain carbonyl of alanine. Hydrogen bond interactions between
+        glutamate and the SAM and glutamate and the glycine encourage the nucleophilic attack by glycine
+        on the SAM methyl group. However, GNMT primarily catalyses the reaction through proximity and
+        orientation effects. Ar
+      notes: M-CSA entry 23, mechanism 1; M-CSA cites PMID:12859184, PMID:16851960, PMID:17154529, PMID:8810903;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 23;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

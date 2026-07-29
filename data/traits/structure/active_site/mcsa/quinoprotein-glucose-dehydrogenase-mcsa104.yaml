@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.1.5.2
 - CHEBI:16389
@@ -376,4 +376,347 @@ definitions:
       The soluble quinoprotein glucose dehydrogenase (s-GDH, EC 1.1.99.17) from Acinetobacter calcoaceticus is a classical quinoprotein which requires the cofactor pyrroloquinoline quinone (PQQ) to oxidise glucose to gluconolactone with the concomitant reduction of ubiquinone. The reaction mechanism of PQQ-dependent enzymes has remained controversial due to the absence of comprehensive structural data. Three alternative proposals have been suggested: the addition-elimination reaction in which the glucose becomes covalently attached to the PQQ, the hydride transfer to the C5 of the PQQ, and the hydride transfer to the C4 of the PQQ [PMID:10508152, PMID:12686124].
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of quinoprotein glucose dehydrogenase
+  description: Stepwise mechanism transcribed from M-CSA entry 104 (6 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +24).
+  nodes:
+  - node_id: his144
+    label: catalytic His144 (M-CSA/PDB numbering; UniProt residue 168)
+    node_type: RESIDUE
+    grounding: UniProtKB:P13650
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: asp163
+    label: catalytic Asp163 (M-CSA/PDB numbering; UniProt residue 187)
+    node_type: RESIDUE
+    grounding: UniProtKB:P13650
+    description: 'M-CSA roles: activator, electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: arg228
+    label: catalytic Arg228 (M-CSA/PDB numbering; UniProt residue 252)
+    node_type: RESIDUE
+    grounding: UniProtKB:P13650
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: ala269
+    label: catalytic Ala269 (M-CSA/PDB numbering; UniProt residue 293)
+    node_type: RESIDUE
+    grounding: UniProtKB:P13650
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: tyr271
+    label: catalytic Tyr271 (M-CSA/PDB numbering; UniProt residue 295)
+    node_type: RESIDUE
+    grounding: UniProtKB:P13650
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp273
+    label: catalytic Asp273 (M-CSA/PDB numbering; UniProt residue 297)
+    node_type: RESIDUE
+    grounding: UniProtKB:P13650
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu309
+    label: catalytic Glu309 (M-CSA/PDB numbering; UniProt residue 333)
+    node_type: RESIDUE
+    grounding: UniProtKB:P13650
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: ubiquinones
+    node_type: CHEMICAL
+    grounding: CHEBI:16389
+  - node_id: reactant1
+    label: D-glucopyranose
+    node_type: CHEMICAL
+    grounding: CHEBI:4167
+  - node_id: product0
+    label: ubiquinol
+    node_type: CHEMICAL
+    grounding: CHEBI:17976
+  - node_id: product1
+    label: D-glucono-1,5-lactone
+    node_type: CHEMICAL
+    grounding: CHEBI:16217
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His144 deprotonates the C1-OH of glucose, initiating the elimination of a hydride, which
+      is added to the C5 of the PQQ cofactor.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The C5-oxyanion deprotonated His144.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: His144 deprotonates the C5 carbon of PQQ, forming the C4-oxyanion.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The C4-oxyanion deprotonates His144.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: The quinone re-oxidises PQQ, the exact mechanism is unclear. The PQQ cofactor can be
+      re-oxidised in a single two-electron transfer step. Alternatively, re-oxidation can be achieved
+      in two separate one-electron transfer steps via the free radical semiquinone form.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: quinoprotein glucose dehydrogenase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:104
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.120.10.30 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.120.10.30
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: quinoprotein glucose dehydrogenase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.1.5.2
+  edges:
+  - subject: his144
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His144 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/104/
+      snippet: His144 deprotonates the C1-OH of glucose, initiating the elimination of a hydride, which
+        is added to the C5 of the PQQ cofactor.
+      notes: M-CSA entry 104, mechanism 1; M-CSA cites PMID:10508152, PMID:10924133, PMID:11149955, PMID:12116408,
+        PMID:12686124, PMID:15273299, PMID:17149777, PMID:9753475; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/104/
+      snippet: The C5-oxyanion deprotonated His144.
+      notes: M-CSA entry 104, mechanism 1; M-CSA cites PMID:10508152, PMID:10924133, PMID:11149955, PMID:12116408,
+        PMID:12686124, PMID:15273299, PMID:17149777, PMID:9753475; step 2
+  - subject: his144
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His144 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/104/
+      snippet: The C5-oxyanion deprotonated His144.
+      notes: M-CSA entry 104, mechanism 1; M-CSA cites PMID:10508152, PMID:10924133, PMID:11149955, PMID:12116408,
+        PMID:12686124, PMID:15273299, PMID:17149777, PMID:9753475; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/104/
+      snippet: His144 deprotonates the C5 carbon of PQQ, forming the C4-oxyanion.
+      notes: M-CSA entry 104, mechanism 1; M-CSA cites PMID:10508152, PMID:10924133, PMID:11149955, PMID:12116408,
+        PMID:12686124, PMID:15273299, PMID:17149777, PMID:9753475; step 3
+  - subject: his144
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His144 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/104/
+      snippet: His144 deprotonates the C5 carbon of PQQ, forming the C4-oxyanion.
+      notes: M-CSA entry 104, mechanism 1; M-CSA cites PMID:10508152, PMID:10924133, PMID:11149955, PMID:12116408,
+        PMID:12686124, PMID:15273299, PMID:17149777, PMID:9753475; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/104/
+      snippet: The C4-oxyanion deprotonates His144.
+      notes: M-CSA entry 104, mechanism 1; M-CSA cites PMID:10508152, PMID:10924133, PMID:11149955, PMID:12116408,
+        PMID:12686124, PMID:15273299, PMID:17149777, PMID:9753475; step 4
+  - subject: his144
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: His144 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/104/
+      snippet: The C4-oxyanion deprotonates His144.
+      notes: M-CSA entry 104, mechanism 1; M-CSA cites PMID:10508152, PMID:10924133, PMID:11149955, PMID:12116408,
+        PMID:12686124, PMID:15273299, PMID:17149777, PMID:9753475; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/104/
+      snippet: The quinone re-oxidises PQQ, the exact mechanism is unclear. The PQQ cofactor can be re-oxidised
+        in a single two-electron transfer step. Alternatively, re-oxidation can be achieved in two separate
+        one-electron transfer steps via the free radical semiquinone form.
+      notes: M-CSA entry 104, mechanism 1; M-CSA cites PMID:10508152, PMID:10924133, PMID:11149955, PMID:12116408,
+        PMID:12686124, PMID:15273299, PMID:17149777, PMID:9753475; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/104/
+      snippet: Products.
+      notes: M-CSA entry 104, mechanism 1; M-CSA cites PMID:10508152, PMID:10924133, PMID:11149955, PMID:12116408,
+        PMID:12686124, PMID:15273299, PMID:17149777, PMID:9753475; step 6
+  - subject: his144
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His144 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/104/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 104, mechanism 1; M-CSA cites PMID:10508152, PMID:10924133, PMID:11149955, PMID:12116408,
+        PMID:12686124, PMID:15273299, PMID:17149777, PMID:9753475; M-CSA catalytic-residue roles for His144
+  - subject: asp163
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp163 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/104/
+      snippet: activator, electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 104, mechanism 1; M-CSA cites PMID:10508152, PMID:10924133, PMID:11149955, PMID:12116408,
+        PMID:12686124, PMID:15273299, PMID:17149777, PMID:9753475; M-CSA catalytic-residue roles for Asp163
+  - subject: arg228
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg228 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/104/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 104, mechanism 1; M-CSA cites PMID:10508152, PMID:10924133, PMID:11149955, PMID:12116408,
+        PMID:12686124, PMID:15273299, PMID:17149777, PMID:9753475; M-CSA catalytic-residue roles for Arg228
+  - subject: ala269
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ala269 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/104/
+      snippet: metal ligand
+      notes: M-CSA entry 104, mechanism 1; M-CSA cites PMID:10508152, PMID:10924133, PMID:11149955, PMID:12116408,
+        PMID:12686124, PMID:15273299, PMID:17149777, PMID:9753475; M-CSA catalytic-residue roles for Ala269
+  - subject: tyr271
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr271 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/104/
+      snippet: metal ligand
+      notes: M-CSA entry 104, mechanism 1; M-CSA cites PMID:10508152, PMID:10924133, PMID:11149955, PMID:12116408,
+        PMID:12686124, PMID:15273299, PMID:17149777, PMID:9753475; M-CSA catalytic-residue roles for Tyr271
+  - subject: asp273
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp273 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/104/
+      snippet: metal ligand
+      notes: M-CSA entry 104, mechanism 1; M-CSA cites PMID:10508152, PMID:10924133, PMID:11149955, PMID:12116408,
+        PMID:12686124, PMID:15273299, PMID:17149777, PMID:9753475; M-CSA catalytic-residue roles for Asp273
+  - subject: glu309
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu309 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/104/
+      snippet: metal ligand
+      notes: M-CSA entry 104, mechanism 1; M-CSA cites PMID:10508152, PMID:10924133, PMID:11149955, PMID:12116408,
+        PMID:12686124, PMID:15273299, PMID:17149777, PMID:9753475; M-CSA catalytic-residue roles for Glu309
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/104/
+      snippet: Crystallographic evidence [PMID:10508152] strongly supports the direct hydride transfer
+        from the glucose to the C5 of the PQQ cofactor. Followed by re-oxidation of the PQQ cofactor by
+        ubiquinone.
+      notes: M-CSA entry 104, mechanism 1; M-CSA cites PMID:10508152, PMID:10924133, PMID:11149955, PMID:12116408,
+        PMID:12686124, PMID:15273299, PMID:17149777, PMID:9753475; CATH domain 2.120.10.30 assigned to
+        the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/104/
+      snippet: Crystallographic evidence [PMID:10508152] strongly supports the direct hydride transfer
+        from the glucose to the C5 of the PQQ cofactor. Followed by re-oxidation of the PQQ cofactor by
+        ubiquinone.
+      notes: M-CSA entry 104, mechanism 1; M-CSA cites PMID:10508152, PMID:10924133, PMID:11149955, PMID:12116408,
+        PMID:12686124, PMID:15273299, PMID:17149777, PMID:9753475; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/104/
+      snippet: Crystallographic evidence [PMID:10508152] strongly supports the direct hydride transfer
+        from the glucose to the C5 of the PQQ cofactor. Followed by re-oxidation of the PQQ cofactor by
+        ubiquinone.
+      notes: M-CSA entry 104, mechanism 1; M-CSA cites PMID:10508152, PMID:10924133, PMID:11149955, PMID:12116408,
+        PMID:12686124, PMID:15273299, PMID:17149777, PMID:9753475; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/104/
+      snippet: Crystallographic evidence [PMID:10508152] strongly supports the direct hydride transfer
+        from the glucose to the C5 of the PQQ cofactor. Followed by re-oxidation of the PQQ cofactor by
+        ubiquinone.
+      notes: M-CSA entry 104, mechanism 1; M-CSA cites PMID:10508152, PMID:10924133, PMID:11149955, PMID:12116408,
+        PMID:12686124, PMID:15273299, PMID:17149777, PMID:9753475; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/104/
+      snippet: Crystallographic evidence [PMID:10508152] strongly supports the direct hydride transfer
+        from the glucose to the C5 of the PQQ cofactor. Followed by re-oxidation of the PQQ cofactor by
+        ubiquinone.
+      notes: M-CSA entry 104, mechanism 1; M-CSA cites PMID:10508152, PMID:10924133, PMID:11149955, PMID:12116408,
+        PMID:12686124, PMID:15273299, PMID:17149777, PMID:9753475; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/104/
+      snippet: Crystallographic evidence [PMID:10508152] strongly supports the direct hydride transfer
+        from the glucose to the C5 of the PQQ cofactor. Followed by re-oxidation of the PQQ cofactor by
+        ubiquinone.
+      notes: M-CSA entry 104, mechanism 1; M-CSA cites PMID:10508152, PMID:10924133, PMID:11149955, PMID:12116408,
+        PMID:12686124, PMID:15273299, PMID:17149777, PMID:9753475; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (22 evidence-backed edges) transcribed from M-CSA entry 104;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

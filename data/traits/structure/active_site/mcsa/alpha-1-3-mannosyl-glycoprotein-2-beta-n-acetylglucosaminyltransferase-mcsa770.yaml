@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.4.1.101
 - CHEBI:32591
@@ -271,4 +271,235 @@ definitions:
       N-acetylglucosaminyltransferase I (GnT I) is an inverting glycosyl transferase from Oryctolagus cuniculus catalyses the attachment of N-acetyl glucosamine (GlcNAc) onto an oligomannose core, from UPD-N-acetyl glucosamine. It plays a critical role in mammalian development, involved in the transformation of oligomannose attached structures to complex N-glycans.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of alpha-1,3-mannosyl-glycoprotein 2-beta-N-acetylglucosaminyltransferase
+  description: Stepwise mechanism transcribed from M-CSA entry 770 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: asp213
+    label: catalytic Asp213 (M-CSA/PDB numbering; UniProt residue 213)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27115
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp291
+    label: catalytic Asp291 (M-CSA/PDB numbering; UniProt residue 291)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27115
+    description: 'M-CSA roles: activator, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: alpha-D-mannosyl-(1->3)-beta-D-mannosyl group
+    node_type: CHEMICAL
+    grounding: CHEBI:32591
+  - node_id: reactant1
+    label: UDP-N-acetyl-alpha-D-glucosamine(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57705
+  - node_id: product0
+    label: N-acetyl-beta-D-glucosaminyl-(1->2)-alpha-D-mannosyl-(1->3)-beta-D-mannosyl group
+    node_type: CHEMICAL
+    grounding: CHEBI:32618
+  - node_id: product1
+    label: UDP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58223
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp291 deprotonates the C2- OH on the mannose sugar, activating it for nucleophilic attack
+      on C1 of UDP-GlcNAc.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Asp291 is deprotonated by the leaving UDP group phosphate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: alpha-1,3-mannosyl-glycoprotein 2-beta-N-acetylglucosaminyltransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:770
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.550.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.550.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: alpha-1,3-mannosyl-glycoprotein 2-beta-N-acetylglucosaminyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.4.1.101
+  edges:
+  - subject: asp291
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp291 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/770/
+      snippet: Asp291 deprotonates the C2- OH on the mannose sugar, activating it for nucleophilic attack
+        on C1 of UDP-GlcNAc.
+      notes: M-CSA entry 770, mechanism 1; M-CSA cites PMID:11032794, PMID:12672701, PMID:25060837; step
+        1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/770/
+      snippet: Asp291 is deprotonated by the leaving UDP group phosphate.
+      notes: M-CSA entry 770, mechanism 1; M-CSA cites PMID:11032794, PMID:12672701, PMID:25060837; step
+        2
+  - subject: asp291
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Asp291 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/770/
+      snippet: Asp291 is deprotonated by the leaving UDP group phosphate.
+      notes: M-CSA entry 770, mechanism 1; M-CSA cites PMID:11032794, PMID:12672701, PMID:25060837; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/770/
+      snippet: Products.
+      notes: M-CSA entry 770, mechanism 1; M-CSA cites PMID:11032794, PMID:12672701, PMID:25060837; step
+        3
+  - subject: asp213
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp213 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/770/
+      snippet: metal ligand
+      notes: M-CSA entry 770, mechanism 1; M-CSA cites PMID:11032794, PMID:12672701, PMID:25060837; M-CSA
+        catalytic-residue roles for Asp213
+  - subject: asp291
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp291 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/770/
+      snippet: activator, proton acceptor, proton donor
+      notes: M-CSA entry 770, mechanism 1; M-CSA cites PMID:11032794, PMID:12672701, PMID:25060837; M-CSA
+        catalytic-residue roles for Asp291
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/770/
+      snippet: This reaction occurs in an SN2 concerted mechanism, whereby induced fit interactions help
+        destabilise the ground state promoting catalysis. Asp 291 acts as a general base to deprotonate
+        a hydroxyl group of the oligomannose core sugar.  The deprotonated oxygen atom then acts as a
+        nucleophile and attacks C1 of UPD-N-acetyl glucosamine.   The transition state is oxocarbenium
+        ion-like.  The C1 - UPD b
+      notes: M-CSA entry 770, mechanism 1; M-CSA cites PMID:11032794, PMID:12672701, PMID:25060837; CATH
+        domain 3.90.550.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/770/
+      snippet: This reaction occurs in an SN2 concerted mechanism, whereby induced fit interactions help
+        destabilise the ground state promoting catalysis. Asp 291 acts as a general base to deprotonate
+        a hydroxyl group of the oligomannose core sugar.  The deprotonated oxygen atom then acts as a
+        nucleophile and attacks C1 of UPD-N-acetyl glucosamine.   The transition state is oxocarbenium
+        ion-like.  The C1 - UPD b
+      notes: M-CSA entry 770, mechanism 1; M-CSA cites PMID:11032794, PMID:12672701, PMID:25060837; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/770/
+      snippet: This reaction occurs in an SN2 concerted mechanism, whereby induced fit interactions help
+        destabilise the ground state promoting catalysis. Asp 291 acts as a general base to deprotonate
+        a hydroxyl group of the oligomannose core sugar.  The deprotonated oxygen atom then acts as a
+        nucleophile and attacks C1 of UPD-N-acetyl glucosamine.   The transition state is oxocarbenium
+        ion-like.  The C1 - UPD b
+      notes: M-CSA entry 770, mechanism 1; M-CSA cites PMID:11032794, PMID:12672701, PMID:25060837; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/770/
+      snippet: This reaction occurs in an SN2 concerted mechanism, whereby induced fit interactions help
+        destabilise the ground state promoting catalysis. Asp 291 acts as a general base to deprotonate
+        a hydroxyl group of the oligomannose core sugar.  The deprotonated oxygen atom then acts as a
+        nucleophile and attacks C1 of UPD-N-acetyl glucosamine.   The transition state is oxocarbenium
+        ion-like.  The C1 - UPD b
+      notes: M-CSA entry 770, mechanism 1; M-CSA cites PMID:11032794, PMID:12672701, PMID:25060837; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/770/
+      snippet: This reaction occurs in an SN2 concerted mechanism, whereby induced fit interactions help
+        destabilise the ground state promoting catalysis. Asp 291 acts as a general base to deprotonate
+        a hydroxyl group of the oligomannose core sugar.  The deprotonated oxygen atom then acts as a
+        nucleophile and attacks C1 of UPD-N-acetyl glucosamine.   The transition state is oxocarbenium
+        ion-like.  The C1 - UPD b
+      notes: M-CSA entry 770, mechanism 1; M-CSA cites PMID:11032794, PMID:12672701, PMID:25060837; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/770/
+      snippet: This reaction occurs in an SN2 concerted mechanism, whereby induced fit interactions help
+        destabilise the ground state promoting catalysis. Asp 291 acts as a general base to deprotonate
+        a hydroxyl group of the oligomannose core sugar.  The deprotonated oxygen atom then acts as a
+        nucleophile and attacks C1 of UPD-N-acetyl glucosamine.   The transition state is oxocarbenium
+        ion-like.  The C1 - UPD b
+      notes: M-CSA entry 770, mechanism 1; M-CSA cites PMID:11032794, PMID:12672701, PMID:25060837; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/770/
+      snippet: This reaction occurs in an SN2 concerted mechanism, whereby induced fit interactions help
+        destabilise the ground state promoting catalysis. Asp 291 acts as a general base to deprotonate
+        a hydroxyl group of the oligomannose core sugar.  The deprotonated oxygen atom then acts as a
+        nucleophile and attacks C1 of UPD-N-acetyl glucosamine.   The transition state is oxocarbenium
+        ion-like.  The C1 - UPD b
+      notes: M-CSA entry 770, mechanism 1; M-CSA cites PMID:11032794, PMID:12672701, PMID:25060837; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 770;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

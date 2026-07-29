@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.1.4.1
 - CHEBI:32682
@@ -337,4 +337,306 @@ definitions:
       Glycine amidinotransferase, also known as L-arginine:glycine amidinotransferase (AT) catalyses the committed step in creatine biosynthesis. The enzyme does this by forming guanidinoacetic acid, the immediate precursor of creatine. Both creatine and its phosphorylated form play an essential role in the energy metabolism of muscle and nerve tissues, acting as a dynamic reservoir of high-energy phosphate which buffers the rapid fluctuations of the ATP/ADP ratio during muscle and nerve action.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of glycine amidinotransferase
+  description: Stepwise mechanism transcribed from M-CSA entry 18 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: asp170
+    label: catalytic Asp170 (M-CSA/PDB numbering; UniProt residue 170)
+    node_type: RESIDUE
+    grounding: UniProtKB:P50440
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: asp254
+    label: catalytic Asp254 (M-CSA/PDB numbering; UniProt residue 254)
+    node_type: RESIDUE
+    grounding: UniProtKB:P50440
+    description: 'M-CSA roles: activator, electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: his303
+    label: catalytic His303 (M-CSA/PDB numbering; UniProt residue 303)
+    node_type: RESIDUE
+    grounding: UniProtKB:P50440
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: asp305
+    label: catalytic Asp305 (M-CSA/PDB numbering; UniProt residue 305)
+    node_type: RESIDUE
+    grounding: UniProtKB:P50440
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: cys407
+    label: catalytic Cys407 (M-CSA/PDB numbering; UniProt residue 407)
+    node_type: RESIDUE
+    grounding: UniProtKB:P50440
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, nucleofuge, nucleophile, proton
+      acceptor, proton donor.'
+  - node_id: reactant0
+    label: L-argininium(1+)
+    node_type: CHEMICAL
+    grounding: CHEBI:32682
+  - node_id: reactant1
+    label: glycine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57305
+  - node_id: product0
+    label: guanidinoacetic acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57742
+  - node_id: product1
+    label: L-ornithinium(1+)
+    node_type: CHEMICAL
+    grounding: CHEBI:46911
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The substrate arginine deprotonates Cys407, which initiates a nucleophilic attack on
+      the guanido carbon of the arginine in a substitution reaction which eliminates ornithine.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: His303 deprotonates the amine of the substrate glycine, which initiates a nucleophilic
+      attack on the covalently bound carbon in a substitution reaction, eliminating Cys407, which deprotonates
+      the substrate glycine.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Water deprotonates His303 in an inferred return step.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: glycine amidinotransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:18
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.75.10.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.75.10.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: glycine amidinotransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.1.4.1
+  edges:
+  - subject: cys407
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys407 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/18/
+      snippet: The substrate arginine deprotonates Cys407, which initiates a nucleophilic attack on the
+        guanido carbon of the arginine in a substitution reaction which eliminates ornithine.
+      notes: M-CSA entry 18, mechanism 1; M-CSA cites PMID:11504612, PMID:26210755, PMID:9218780; step
+        1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/18/
+      snippet: His303 deprotonates the amine of the substrate glycine, which initiates a nucleophilic
+        attack on the covalently bound carbon in a substitution reaction, eliminating Cys407, which deprotonates
+        the substrate glycine.
+      notes: M-CSA entry 18, mechanism 1; M-CSA cites PMID:11504612, PMID:26210755, PMID:9218780; step
+        2
+  - subject: his303
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His303 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/18/
+      snippet: His303 deprotonates the amine of the substrate glycine, which initiates a nucleophilic
+        attack on the covalently bound carbon in a substitution reaction, eliminating Cys407, which deprotonates
+        the substrate glycine.
+      notes: M-CSA entry 18, mechanism 1; M-CSA cites PMID:11504612, PMID:26210755, PMID:9218780; step
+        2
+  - subject: cys407
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Cys407 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/18/
+      snippet: His303 deprotonates the amine of the substrate glycine, which initiates a nucleophilic
+        attack on the covalently bound carbon in a substitution reaction, eliminating Cys407, which deprotonates
+        the substrate glycine.
+      notes: M-CSA entry 18, mechanism 1; M-CSA cites PMID:11504612, PMID:26210755, PMID:9218780; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/18/
+      snippet: Water deprotonates His303 in an inferred return step.
+      notes: M-CSA entry 18, mechanism 1; M-CSA cites PMID:11504612, PMID:26210755, PMID:9218780; step
+        3
+  - subject: his303
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His303 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/18/
+      snippet: Water deprotonates His303 in an inferred return step.
+      notes: M-CSA entry 18, mechanism 1; M-CSA cites PMID:11504612, PMID:26210755, PMID:9218780; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/18/
+      snippet: Products.
+      notes: M-CSA entry 18, mechanism 1; M-CSA cites PMID:11504612, PMID:26210755, PMID:9218780; step
+        4
+  - subject: asp170
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp170 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/18/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 18, mechanism 1; M-CSA cites PMID:11504612, PMID:26210755, PMID:9218780; M-CSA
+        catalytic-residue roles for Asp170
+  - subject: asp254
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp254 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/18/
+      snippet: activator, electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 18, mechanism 1; M-CSA cites PMID:11504612, PMID:26210755, PMID:9218780; M-CSA
+        catalytic-residue roles for Asp254
+  - subject: his303
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His303 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/18/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 18, mechanism 1; M-CSA cites PMID:11504612, PMID:26210755, PMID:9218780; M-CSA
+        catalytic-residue roles for His303
+  - subject: asp305
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp305 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/18/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 18, mechanism 1; M-CSA cites PMID:11504612, PMID:26210755, PMID:9218780; M-CSA
+        catalytic-residue roles for Asp305
+  - subject: cys407
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys407 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/18/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, nucleofuge, nucleophile, proton acceptor,
+        proton donor
+      notes: M-CSA entry 18, mechanism 1; M-CSA cites PMID:11504612, PMID:26210755, PMID:9218780; M-CSA
+        catalytic-residue roles for Cys407
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/18/
+      snippet: The reaction comprises of two steps, both involving nucleophilic attack. The first step
+        starts by the addition of the carbon atom of the guanidino group of L-Arg to the thiol group of
+        Cys407 of the enzyme, and donation of the thiol proton to the L-Arg substrate. The thiol group
+        of C407 forms a covalently bound intermediate with the carbon atom of the guanidino group, and
+        donates its proton to the
+      notes: M-CSA entry 18, mechanism 1; M-CSA cites PMID:11504612, PMID:26210755, PMID:9218780; CATH
+        domain 3.75.10.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/18/
+      snippet: The reaction comprises of two steps, both involving nucleophilic attack. The first step
+        starts by the addition of the carbon atom of the guanidino group of L-Arg to the thiol group of
+        Cys407 of the enzyme, and donation of the thiol proton to the L-Arg substrate. The thiol group
+        of C407 forms a covalently bound intermediate with the carbon atom of the guanidino group, and
+        donates its proton to the
+      notes: M-CSA entry 18, mechanism 1; M-CSA cites PMID:11504612, PMID:26210755, PMID:9218780; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/18/
+      snippet: The reaction comprises of two steps, both involving nucleophilic attack. The first step
+        starts by the addition of the carbon atom of the guanidino group of L-Arg to the thiol group of
+        Cys407 of the enzyme, and donation of the thiol proton to the L-Arg substrate. The thiol group
+        of C407 forms a covalently bound intermediate with the carbon atom of the guanidino group, and
+        donates its proton to the
+      notes: M-CSA entry 18, mechanism 1; M-CSA cites PMID:11504612, PMID:26210755, PMID:9218780; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/18/
+      snippet: The reaction comprises of two steps, both involving nucleophilic attack. The first step
+        starts by the addition of the carbon atom of the guanidino group of L-Arg to the thiol group of
+        Cys407 of the enzyme, and donation of the thiol proton to the L-Arg substrate. The thiol group
+        of C407 forms a covalently bound intermediate with the carbon atom of the guanidino group, and
+        donates its proton to the
+      notes: M-CSA entry 18, mechanism 1; M-CSA cites PMID:11504612, PMID:26210755, PMID:9218780; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/18/
+      snippet: The reaction comprises of two steps, both involving nucleophilic attack. The first step
+        starts by the addition of the carbon atom of the guanidino group of L-Arg to the thiol group of
+        Cys407 of the enzyme, and donation of the thiol proton to the L-Arg substrate. The thiol group
+        of C407 forms a covalently bound intermediate with the carbon atom of the guanidino group, and
+        donates its proton to the
+      notes: M-CSA entry 18, mechanism 1; M-CSA cites PMID:11504612, PMID:26210755, PMID:9218780; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/18/
+      snippet: The reaction comprises of two steps, both involving nucleophilic attack. The first step
+        starts by the addition of the carbon atom of the guanidino group of L-Arg to the thiol group of
+        Cys407 of the enzyme, and donation of the thiol proton to the L-Arg substrate. The thiol group
+        of C407 forms a covalently bound intermediate with the carbon atom of the guanidino group, and
+        donates its proton to the
+      notes: M-CSA entry 18, mechanism 1; M-CSA cites PMID:11504612, PMID:26210755, PMID:9218780; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (18 evidence-backed edges) transcribed from M-CSA entry 18;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

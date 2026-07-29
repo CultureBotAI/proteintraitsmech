@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.3.3.2
 - CHEBI:128769
@@ -234,4 +234,376 @@ definitions:
       This entry represents type 1 of two non-homologous families of the enzyme isopentenyl-diphosphate delta-isomerase (IPP isomerase; EC:5.3.3.2). IPP isomerase is a member of the Nudix hydrolase superfamily, and is a key enzyme in the isoprenoid biosynthetic pathway. It catalyses the interconversion of isopentenyl diphosphate (IPP) and dimethylallyl diphosphate. Dimethylallyl phosphate is the initial substrate for the biosynthesis of carotenoids and other long chain isoprenoids.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of isopentenyl-diphosphate delta-isomerase (type 1)
+  description: Stepwise mechanism transcribed from M-CSA entry 190 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: his25
+    label: catalytic His25 (M-CSA/PDB numbering; UniProt residue 25)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q46822
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his32
+    label: catalytic His32 (M-CSA/PDB numbering; UniProt residue 32)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q46822
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: cys67
+    label: catalytic Cys67 (M-CSA/PDB numbering; UniProt residue 67)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q46822
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: his69
+    label: catalytic His69 (M-CSA/PDB numbering; UniProt residue 69)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q46822
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu87
+    label: catalytic Glu87 (M-CSA/PDB numbering; UniProt residue 87)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q46822
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: tyr104
+    label: catalytic Tyr104 (M-CSA/PDB numbering; UniProt residue 104)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q46822
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton donor.'
+  - node_id: glu114
+    label: catalytic Glu114 (M-CSA/PDB numbering; UniProt residue 114)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q46822
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu116
+    label: catalytic Glu116 (M-CSA/PDB numbering; UniProt residue 116)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q46822
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, metal ligand, proton
+      acceptor, proton donor.'
+  - node_id: trp161
+    label: catalytic Trp161 (M-CSA/PDB numbering; UniProt residue 161)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q46822
+    description: 'M-CSA roles: electrostatic stabiliser, polar/non-polar interaction.'
+  - node_id: reactant0
+    label: isopentenyl diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:128769
+  - node_id: product0
+    label: prenyl diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57623
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The origin of the protonating H has not been conclusively stabilised. Glu116 is probably
+      un-protonated given its location in the inner coordination sphere of the metal, there are also no
+      order molecules observed that could serve as proton donors during this step. Thus it seems likely
+      that the phenolic hydroxyl group in Tyr104 might be the source of the proton transferred to the
+      double bond via Glu
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The second step of the double bond protonation in which the double bond abstracts the
+      proton from Glu116.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The thiolate of Cys67 deprotonates the carbon adjacent to the newly formed carbocation,
+      reforming the double bond in the dimethylallyl diphosphate product.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Tyr104 deprotonates water, which in turn deprotonates Cys67 in an inferred return step.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: isopentenyl-diphosphate delta-isomerase (type 1) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:190
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.79.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.79.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: isopentenyl-diphosphate delta-isomerase (type 1) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.3.3.2
+  edges:
+  - subject: tyr104
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr104 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/190/
+      snippet: The origin of the protonating H has not been conclusively stabilised. Glu116 is probably
+        un-protonated given its location in the inner coordination sphere of the metal, there are also
+        no order molecules observed that could serve as proton donors during this step. Thus it seems
+        likely that the phenolic hydroxyl group in Tyr104 might be the source of the proton transferred
+        to the double bond via Glu116 [PMID:12540835].
+      notes: M-CSA entry 190, mechanism 1; M-CSA cites PMID:11285217, PMID:12540835, PMID:12630859, PMID:22503704;
+        step 1
+  - subject: glu116
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu116 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/190/
+      snippet: The origin of the protonating H has not been conclusively stabilised. Glu116 is probably
+        un-protonated given its location in the inner coordination sphere of the metal, there are also
+        no order molecules observed that could serve as proton donors during this step. Thus it seems
+        likely that the phenolic hydroxyl group in Tyr104 might be the source of the proton transferred
+        to the double bond via Glu116 [PMID:12540835].
+      notes: M-CSA entry 190, mechanism 1; M-CSA cites PMID:11285217, PMID:12540835, PMID:12630859, PMID:22503704;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/190/
+      snippet: The second step of the double bond protonation in which the double bond abstracts the proton
+        from Glu116.
+      notes: M-CSA entry 190, mechanism 1; M-CSA cites PMID:11285217, PMID:12540835, PMID:12630859, PMID:22503704;
+        step 2
+  - subject: glu116
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu116 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/190/
+      snippet: The second step of the double bond protonation in which the double bond abstracts the proton
+        from Glu116.
+      notes: M-CSA entry 190, mechanism 1; M-CSA cites PMID:11285217, PMID:12540835, PMID:12630859, PMID:22503704;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/190/
+      snippet: The thiolate of Cys67 deprotonates the carbon adjacent to the newly formed carbocation,
+        reforming the double bond in the dimethylallyl diphosphate product.
+      notes: M-CSA entry 190, mechanism 1; M-CSA cites PMID:11285217, PMID:12540835, PMID:12630859, PMID:22503704;
+        step 3
+  - subject: cys67
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Cys67 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/190/
+      snippet: The thiolate of Cys67 deprotonates the carbon adjacent to the newly formed carbocation,
+        reforming the double bond in the dimethylallyl diphosphate product.
+      notes: M-CSA entry 190, mechanism 1; M-CSA cites PMID:11285217, PMID:12540835, PMID:12630859, PMID:22503704;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/190/
+      snippet: Tyr104 deprotonates water, which in turn deprotonates Cys67 in an inferred return step.
+      notes: M-CSA entry 190, mechanism 1; M-CSA cites PMID:11285217, PMID:12540835, PMID:12630859, PMID:22503704;
+        step 4
+  - subject: cys67
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Cys67 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/190/
+      snippet: Tyr104 deprotonates water, which in turn deprotonates Cys67 in an inferred return step.
+      notes: M-CSA entry 190, mechanism 1; M-CSA cites PMID:11285217, PMID:12540835, PMID:12630859, PMID:22503704;
+        step 4
+  - subject: tyr104
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Tyr104 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/190/
+      snippet: Tyr104 deprotonates water, which in turn deprotonates Cys67 in an inferred return step.
+      notes: M-CSA entry 190, mechanism 1; M-CSA cites PMID:11285217, PMID:12540835, PMID:12630859, PMID:22503704;
+        step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/190/
+      snippet: Products.
+      notes: M-CSA entry 190, mechanism 1; M-CSA cites PMID:11285217, PMID:12540835, PMID:12630859, PMID:22503704;
+        step 5
+  - subject: his25
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His25 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/190/
+      snippet: metal ligand
+      notes: M-CSA entry 190, mechanism 1; M-CSA cites PMID:11285217, PMID:12540835, PMID:12630859, PMID:22503704;
+        M-CSA catalytic-residue roles for His25
+  - subject: his32
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His32 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/190/
+      snippet: metal ligand
+      notes: M-CSA entry 190, mechanism 1; M-CSA cites PMID:11285217, PMID:12540835, PMID:12630859, PMID:22503704;
+        M-CSA catalytic-residue roles for His32
+  - subject: cys67
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys67 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/190/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 190, mechanism 1; M-CSA cites PMID:11285217, PMID:12540835, PMID:12630859, PMID:22503704;
+        M-CSA catalytic-residue roles for Cys67
+  - subject: his69
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His69 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/190/
+      snippet: metal ligand
+      notes: M-CSA entry 190, mechanism 1; M-CSA cites PMID:11285217, PMID:12540835, PMID:12630859, PMID:22503704;
+        M-CSA catalytic-residue roles for His69
+  - subject: glu87
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu87 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/190/
+      snippet: metal ligand
+      notes: M-CSA entry 190, mechanism 1; M-CSA cites PMID:11285217, PMID:12540835, PMID:12630859, PMID:22503704;
+        M-CSA catalytic-residue roles for Glu87
+  - subject: tyr104
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr104 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/190/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton donor
+      notes: M-CSA entry 190, mechanism 1; M-CSA cites PMID:11285217, PMID:12540835, PMID:12630859, PMID:22503704;
+        M-CSA catalytic-residue roles for Tyr104
+  - subject: glu114
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu114 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/190/
+      snippet: metal ligand
+      notes: M-CSA entry 190, mechanism 1; M-CSA cites PMID:11285217, PMID:12540835, PMID:12630859, PMID:22503704;
+        M-CSA catalytic-residue roles for Glu114
+  - subject: glu116
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu116 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/190/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, metal ligand, proton acceptor, proton
+        donor
+      notes: M-CSA entry 190, mechanism 1; M-CSA cites PMID:11285217, PMID:12540835, PMID:12630859, PMID:22503704;
+        M-CSA catalytic-residue roles for Glu116
+  - subject: trp161
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp161 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/190/
+      snippet: electrostatic stabiliser, polar/non-polar interaction
+      notes: M-CSA entry 190, mechanism 1; M-CSA cites PMID:11285217, PMID:12540835, PMID:12630859, PMID:22503704;
+        M-CSA catalytic-residue roles for Trp161
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/190/
+      snippet: "<p>The double bond of the isopentenyl diphosphate substrate deprotonates Tyr104. The double\
+        \ bond of the isopentenyl diphosphate substrate deprotonates Tyr104. Tyr104 deprotonates water,\
+        \ which in turn deprotonates Cys67 in an inferred return step.</p>
+<p>The residues that donate\
+        \ and abstract protons in this reaction are likely to exist as an equilibrium mixture of protonated\
+        \ and deprotonated forms"
+      notes: M-CSA entry 190, mechanism 1; M-CSA cites PMID:11285217, PMID:12540835, PMID:12630859, PMID:22503704;
+        CATH domain 3.90.79.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/190/
+      snippet: "<p>The double bond of the isopentenyl diphosphate substrate deprotonates Tyr104. The double\
+        \ bond of the isopentenyl diphosphate substrate deprotonates Tyr104. Tyr104 deprotonates water,\
+        \ which in turn deprotonates Cys67 in an inferred return step.</p>
+<p>The residues that donate\
+        \ and abstract protons in this reaction are likely to exist as an equilibrium mixture of protonated\
+        \ and deprotonated forms"
+      notes: M-CSA entry 190, mechanism 1; M-CSA cites PMID:11285217, PMID:12540835, PMID:12630859, PMID:22503704;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/190/
+      snippet: "<p>The double bond of the isopentenyl diphosphate substrate deprotonates Tyr104. The double\
+        \ bond of the isopentenyl diphosphate substrate deprotonates Tyr104. Tyr104 deprotonates water,\
+        \ which in turn deprotonates Cys67 in an inferred return step.</p>
+<p>The residues that donate\
+        \ and abstract protons in this reaction are likely to exist as an equilibrium mixture of protonated\
+        \ and deprotonated forms"
+      notes: M-CSA entry 190, mechanism 1; M-CSA cites PMID:11285217, PMID:12540835, PMID:12630859, PMID:22503704;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/190/
+      snippet: "<p>The double bond of the isopentenyl diphosphate substrate deprotonates Tyr104. The double\
+        \ bond of the isopentenyl diphosphate substrate deprotonates Tyr104. Tyr104 deprotonates water,\
+        \ which in turn deprotonates Cys67 in an inferred return step.</p>
+<p>The residues that donate\
+        \ and abstract protons in this reaction are likely to exist as an equilibrium mixture of protonated\
+        \ and deprotonated forms"
+      notes: M-CSA entry 190, mechanism 1; M-CSA cites PMID:11285217, PMID:12540835, PMID:12630859, PMID:22503704;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (23 evidence-backed edges) transcribed from M-CSA entry 190;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

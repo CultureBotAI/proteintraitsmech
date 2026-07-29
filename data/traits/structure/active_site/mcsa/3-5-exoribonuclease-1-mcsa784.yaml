@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.-.-
 - CHEBI:8756
@@ -301,4 +301,244 @@ definitions:
       3'-5' exoribonuclease (3'hExo) from Homo sapiens is a DEDDh family member. It contains the invariant DEDD working with H sequence of residues. 3'hExo targets human histone mRNAs and degrades them in a 3' to 5' direction in a sequence specific manner.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 3'-5' exoribonuclease 1
+  description: Stepwise mechanism transcribed from M-CSA entry 784 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: asp134
+    label: catalytic Asp134 (M-CSA/PDB numbering; UniProt residue 134)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8IV48
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu136
+    label: catalytic Glu136 (M-CSA/PDB numbering; UniProt residue 136)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8IV48
+    description: 'M-CSA roles: electrostatic stabiliser, metal ligand, proton acceptor.'
+  - node_id: asp234
+    label: catalytic Asp234 (M-CSA/PDB numbering; UniProt residue 234)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8IV48
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his293
+    label: catalytic His293 (M-CSA/PDB numbering; UniProt residue 293)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8IV48
+    description: 'M-CSA roles: electrostatic stabiliser, proton acceptor.'
+  - node_id: asp298
+    label: catalytic Asp298 (M-CSA/PDB numbering; UniProt residue 298)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8IV48
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: RNA (poly(A))
+    node_type: CHEMICAL
+    grounding: CHEBI:8756
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: RNA (poly(A))
+    node_type: CHEMICAL
+    grounding: CHEBI:8756
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His293 abstracts a proton from a water which can then acts as a nucleophile and attacks
+      the last phosphorus atom.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The deprotonation of the five-coordinate phosphorane intermediate by Glu126 initiates
+      an elimination which results in the cleavage of the phosphodiester bond.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: 3'-5' exoribonuclease 1 catalytic site
+    node_type: MOTIF
+    grounding: MCSA:784
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.420.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.420.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: 3'-5' exoribonuclease 1 activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.-.-
+  edges:
+  - subject: his293
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His293 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/784/
+      snippet: His293 abstracts a proton from a water which can then acts as a nucleophile and attacks
+        the last phosphorus atom.
+      notes: M-CSA entry 784, mechanism 1; M-CSA cites PMID:15451662; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/784/
+      snippet: The deprotonation of the five-coordinate phosphorane intermediate by Glu126 initiates an
+        elimination which results in the cleavage of the phosphodiester bond.
+      notes: M-CSA entry 784, mechanism 1; M-CSA cites PMID:15451662; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/784/
+      snippet: Products
+      notes: M-CSA entry 784, mechanism 1; M-CSA cites PMID:15451662; step 3
+  - subject: asp134
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp134 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/784/
+      snippet: metal ligand
+      notes: M-CSA entry 784, mechanism 1; M-CSA cites PMID:15451662; M-CSA catalytic-residue roles for
+        Asp134
+  - subject: glu136
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu136 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/784/
+      snippet: electrostatic stabiliser, metal ligand, proton acceptor
+      notes: M-CSA entry 784, mechanism 1; M-CSA cites PMID:15451662; M-CSA catalytic-residue roles for
+        Glu136
+  - subject: asp234
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp234 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/784/
+      snippet: metal ligand
+      notes: M-CSA entry 784, mechanism 1; M-CSA cites PMID:15451662; M-CSA catalytic-residue roles for
+        Asp234
+  - subject: his293
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His293 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/784/
+      snippet: electrostatic stabiliser, proton acceptor
+      notes: M-CSA entry 784, mechanism 1; M-CSA cites PMID:15451662; M-CSA catalytic-residue roles for
+        His293
+  - subject: asp298
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp298 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/784/
+      snippet: metal ligand
+      notes: M-CSA entry 784, mechanism 1; M-CSA cites PMID:15451662; M-CSA catalytic-residue roles for
+        Asp298
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/784/
+      snippet: "His 293 acts as a general base by deprotonating a water molecule, activating it for nucleophilic\
+        \ attack.
+ The activated water molecule nucleophilically attacks the last phosphorus atom,\
+        \ breaking the phosphodiester bond of the terminal residue of the oligonucleotide chain.
+ A\
+        \ negatively charged, pentacoordinate intermediate is formed, which is stabilised by the MgA ion.\
+        
+ Glu 136 deprotonates the"
+      notes: M-CSA entry 784, mechanism 1; M-CSA cites PMID:15451662; CATH domain 3.30.420.10 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/784/
+      snippet: "His 293 acts as a general base by deprotonating a water molecule, activating it for nucleophilic\
+        \ attack.
+ The activated water molecule nucleophilically attacks the last phosphorus atom,\
+        \ breaking the phosphodiester bond of the terminal residue of the oligonucleotide chain.
+ A\
+        \ negatively charged, pentacoordinate intermediate is formed, which is stabilised by the MgA ion.\
+        
+ Glu 136 deprotonates the"
+      notes: M-CSA entry 784, mechanism 1; M-CSA cites PMID:15451662; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/784/
+      snippet: "His 293 acts as a general base by deprotonating a water molecule, activating it for nucleophilic\
+        \ attack.
+ The activated water molecule nucleophilically attacks the last phosphorus atom,\
+        \ breaking the phosphodiester bond of the terminal residue of the oligonucleotide chain.
+ A\
+        \ negatively charged, pentacoordinate intermediate is formed, which is stabilised by the MgA ion.\
+        
+ Glu 136 deprotonates the"
+      notes: M-CSA entry 784, mechanism 1; M-CSA cites PMID:15451662; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/784/
+      snippet: "His 293 acts as a general base by deprotonating a water molecule, activating it for nucleophilic\
+        \ attack.
+ The activated water molecule nucleophilically attacks the last phosphorus atom,\
+        \ breaking the phosphodiester bond of the terminal residue of the oligonucleotide chain.
+ A\
+        \ negatively charged, pentacoordinate intermediate is formed, which is stabilised by the MgA ion.\
+        
+ Glu 136 deprotonates the"
+      notes: M-CSA entry 784, mechanism 1; M-CSA cites PMID:15451662; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/784/
+      snippet: "His 293 acts as a general base by deprotonating a water molecule, activating it for nucleophilic\
+        \ attack.
+ The activated water molecule nucleophilically attacks the last phosphorus atom,\
+        \ breaking the phosphodiester bond of the terminal residue of the oligonucleotide chain.
+ A\
+        \ negatively charged, pentacoordinate intermediate is formed, which is stabilised by the MgA ion.\
+        
+ Glu 136 deprotonates the"
+      notes: M-CSA entry 784, mechanism 1; M-CSA cites PMID:15451662; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 784;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

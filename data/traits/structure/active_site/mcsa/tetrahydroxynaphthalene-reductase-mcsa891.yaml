@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.1.1.252
 - CHEBI:58349
@@ -208,4 +208,255 @@ definitions:
       Catalyzes the NADPH-dependent reduction of 1,3,6,8- tetrahydroxynaphthalene (T4HN) into (+)-scytalone and 1,3,8- trihydroxynaphthalene into (-)-vermelone. This enzyme is the biochemical target of several commercially important fungicides which are used to prevent blast disease in rice plants.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of Tetrahydroxynaphthalene reductase
+  description: Stepwise mechanism transcribed from M-CSA entry 891 (2 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: ser164
+    label: catalytic Ser164 (M-CSA/PDB numbering; UniProt residue 164)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q12634
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: tyr178
+    label: catalytic Tyr178 (M-CSA/PDB numbering; UniProt residue 178)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q12634
+    description: 'M-CSA roles: proton acceptor, proton donor, proton relay.'
+  - node_id: lys182
+    label: catalytic Lys182 (M-CSA/PDB numbering; UniProt residue 182)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q12634
+    description: 'M-CSA roles: electrostatic stabiliser, proton acceptor, proton donor, proton relay.'
+  - node_id: tyr223
+    label: catalytic Tyr223 (M-CSA/PDB numbering; UniProt residue 223)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q12634
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: NADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+  - node_id: reactant1
+    label: scytalone
+    node_type: CHEMICAL
+    grounding: CHEBI:16945
+  - node_id: product0
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product1
+    label: NADPH(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+  - node_id: product2
+    label: naphthalene-1,3,6,8-tetrol
+    node_type: CHEMICAL
+    grounding: CHEBI:18365
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: NADPH donates a hydride to the substrate, which initiates a proton relay from the bulk
+      solvent to the substrate via Tyr178, the ribose ring of the cosubstrate, Lys182 and the conserved
+      active site water molecule.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: Tetrahydroxynaphthalene reductase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:891
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.720 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.720
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: Tetrahydroxynaphthalene reductase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.1.1.252
+  edges:
+  - subject: tyr178
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr178 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/891/
+      snippet: NADPH donates a hydride to the substrate, which initiates a proton relay from the bulk
+        solvent to the substrate via Tyr178, the ribose ring of the cosubstrate, Lys182 and the conserved
+        active site water molecule.
+      notes: M-CSA entry 891, mechanism 1; M-CSA cites PMID:12604210, PMID:22308069, PMID:8939741, PMID:9048570;
+        step 1
+  - subject: lys182
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys182 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/891/
+      snippet: NADPH donates a hydride to the substrate, which initiates a proton relay from the bulk
+        solvent to the substrate via Tyr178, the ribose ring of the cosubstrate, Lys182 and the conserved
+        active site water molecule.
+      notes: M-CSA entry 891, mechanism 1; M-CSA cites PMID:12604210, PMID:22308069, PMID:8939741, PMID:9048570;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/891/
+      snippet: Products.
+      notes: M-CSA entry 891, mechanism 1; M-CSA cites PMID:12604210, PMID:22308069, PMID:8939741, PMID:9048570;
+        step 2
+  - subject: ser164
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser164 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/891/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 891, mechanism 1; M-CSA cites PMID:12604210, PMID:22308069, PMID:8939741, PMID:9048570;
+        M-CSA catalytic-residue roles for Ser164
+  - subject: tyr178
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr178 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/891/
+      snippet: proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 891, mechanism 1; M-CSA cites PMID:12604210, PMID:22308069, PMID:8939741, PMID:9048570;
+        M-CSA catalytic-residue roles for Tyr178
+  - subject: lys182
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys182 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/891/
+      snippet: electrostatic stabiliser, proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 891, mechanism 1; M-CSA cites PMID:12604210, PMID:22308069, PMID:8939741, PMID:9048570;
+        M-CSA catalytic-residue roles for Lys182
+  - subject: tyr223
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr223 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/891/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 891, mechanism 1; M-CSA cites PMID:12604210, PMID:22308069, PMID:8939741, PMID:9048570;
+        M-CSA catalytic-residue roles for Tyr223
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/891/
+      snippet: The invariant tyrosine residue polarises the carbonyl oxygen of the substrate, thereby
+        increasing the electrophilicity of the carbonyl carbon atom and facilitating hydride transfer
+        from NADPH. After hydride transfer has occurred, the tyrosine residue donates its phenolic proton
+        to the substrate hydroxyl group. The resulting negative charge of the side chain of the tyrosine
+        residue is stabilised by
+      notes: M-CSA entry 891, mechanism 1; M-CSA cites PMID:12604210, PMID:22308069, PMID:8939741, PMID:9048570;
+        CATH domain 3.40.50.720 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/891/
+      snippet: The invariant tyrosine residue polarises the carbonyl oxygen of the substrate, thereby
+        increasing the electrophilicity of the carbonyl carbon atom and facilitating hydride transfer
+        from NADPH. After hydride transfer has occurred, the tyrosine residue donates its phenolic proton
+        to the substrate hydroxyl group. The resulting negative charge of the side chain of the tyrosine
+        residue is stabilised by
+      notes: M-CSA entry 891, mechanism 1; M-CSA cites PMID:12604210, PMID:22308069, PMID:8939741, PMID:9048570;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/891/
+      snippet: The invariant tyrosine residue polarises the carbonyl oxygen of the substrate, thereby
+        increasing the electrophilicity of the carbonyl carbon atom and facilitating hydride transfer
+        from NADPH. After hydride transfer has occurred, the tyrosine residue donates its phenolic proton
+        to the substrate hydroxyl group. The resulting negative charge of the side chain of the tyrosine
+        residue is stabilised by
+      notes: M-CSA entry 891, mechanism 1; M-CSA cites PMID:12604210, PMID:22308069, PMID:8939741, PMID:9048570;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/891/
+      snippet: The invariant tyrosine residue polarises the carbonyl oxygen of the substrate, thereby
+        increasing the electrophilicity of the carbonyl carbon atom and facilitating hydride transfer
+        from NADPH. After hydride transfer has occurred, the tyrosine residue donates its phenolic proton
+        to the substrate hydroxyl group. The resulting negative charge of the side chain of the tyrosine
+        residue is stabilised by
+      notes: M-CSA entry 891, mechanism 1; M-CSA cites PMID:12604210, PMID:22308069, PMID:8939741, PMID:9048570;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/891/
+      snippet: The invariant tyrosine residue polarises the carbonyl oxygen of the substrate, thereby
+        increasing the electrophilicity of the carbonyl carbon atom and facilitating hydride transfer
+        from NADPH. After hydride transfer has occurred, the tyrosine residue donates its phenolic proton
+        to the substrate hydroxyl group. The resulting negative charge of the side chain of the tyrosine
+        residue is stabilised by
+      notes: M-CSA entry 891, mechanism 1; M-CSA cites PMID:12604210, PMID:22308069, PMID:8939741, PMID:9048570;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/891/
+      snippet: The invariant tyrosine residue polarises the carbonyl oxygen of the substrate, thereby
+        increasing the electrophilicity of the carbonyl carbon atom and facilitating hydride transfer
+        from NADPH. After hydride transfer has occurred, the tyrosine residue donates its phenolic proton
+        to the substrate hydroxyl group. The resulting negative charge of the side chain of the tyrosine
+        residue is stabilised by
+      notes: M-CSA entry 891, mechanism 1; M-CSA cites PMID:12604210, PMID:22308069, PMID:8939741, PMID:9048570;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/891/
+      snippet: The invariant tyrosine residue polarises the carbonyl oxygen of the substrate, thereby
+        increasing the electrophilicity of the carbonyl carbon atom and facilitating hydride transfer
+        from NADPH. After hydride transfer has occurred, the tyrosine residue donates its phenolic proton
+        to the substrate hydroxyl group. The resulting negative charge of the side chain of the tyrosine
+        residue is stabilised by
+      notes: M-CSA entry 891, mechanism 1; M-CSA cites PMID:12604210, PMID:22308069, PMID:8939741, PMID:9048570;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (14 evidence-backed edges) transcribed from M-CSA entry 891;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

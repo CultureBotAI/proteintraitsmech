@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.1.89
 - CHEBI:15377
@@ -211,4 +211,237 @@ definitions:
       Asperfillus aculeatus beta-1,4-Galactanase (AAGAL) is an enzyme involved in pectin degradation. It belongs to the glycoside hydrolase family 53 (GH-53) in clan GH-A. It catalyses the endohydrolysis of beta-1,4-linked galactan and type I arabinogalactan to galactose and galactose oligomers. Galactan and arabinogalactan are components of pectin which attaches to the C4 position of rhamnose. They forms the side-chains of the 'hairy' region of pectin. Degradation and modification of the galatan and arabinogalactan side chain has many industrial applications, so AAGAL has potential industrial uses.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of arabinogalactan endo-1,4-beta-galactosidase
+  description: Stepwise mechanism transcribed from M-CSA entry 658 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +16).
+  nodes:
+  - node_id: arg45
+    label: catalytic Arg45 (M-CSA/PDB numbering; UniProt residue 61)
+    node_type: RESIDUE
+    grounding: UniProtKB:P48842
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor, increase nucleophilicity,
+      modifies pKa.'
+  - node_id: glu136
+    label: catalytic Glu136 (M-CSA/PDB numbering; UniProt residue 152)
+    node_type: RESIDUE
+    grounding: UniProtKB:P48842
+    description: 'M-CSA roles: activator, increase nucleophilicity, proton acceptor, proton donor.'
+  - node_id: glu246
+    label: catalytic Glu246 (M-CSA/PDB numbering; UniProt residue 262)
+    node_type: RESIDUE
+    grounding: UniProtKB:P48842
+    description: 'M-CSA roles: covalently attached, hydrogen bond acceptor, nucleofuge, nucleophile.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: beta-(1->6)-galactotriose
+    node_type: CHEMICAL
+    grounding: CHEBI:61765
+  - node_id: product0
+    label: beta-D-galactose
+    node_type: CHEMICAL
+    grounding: CHEBI:27667
+  - node_id: product1
+    label: beta-(1->6)-galactobiose
+    node_type: CHEMICAL
+    grounding: CHEBI:61770
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu246 performs a nucleophilic attack on the glycosidic linkage while Glu136 protonates
+      the leaving group. This leads to an enzyme-substrate intermediate being formed.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Glu136 activates a water for nucleophilic attack, which leads to the intermediate being
+      hydrolysed and the active site being regenerated.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: arabinogalactan endo-1,4-beta-galactosidase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:658
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.80 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.80
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: arabinogalactan endo-1,4-beta-galactosidase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.1.89
+  edges:
+  - subject: glu136
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu136 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/658/
+      snippet: Glu246 performs a nucleophilic attack on the glycosidic linkage while Glu136 protonates
+        the leaving group. This leads to an enzyme-substrate intermediate being formed.
+      notes: M-CSA entry 658, mechanism 1; M-CSA cites PMID:12484750; step 1
+  - subject: glu246
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu246 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/658/
+      snippet: Glu246 performs a nucleophilic attack on the glycosidic linkage while Glu136 protonates
+        the leaving group. This leads to an enzyme-substrate intermediate being formed.
+      notes: M-CSA entry 658, mechanism 1; M-CSA cites PMID:12484750; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/658/
+      snippet: Glu136 activates a water for nucleophilic attack, which leads to the intermediate being
+        hydrolysed and the active site being regenerated.
+      notes: M-CSA entry 658, mechanism 1; M-CSA cites PMID:12484750; step 2
+  - subject: glu136
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu136 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/658/
+      snippet: Glu136 activates a water for nucleophilic attack, which leads to the intermediate being
+        hydrolysed and the active site being regenerated.
+      notes: M-CSA entry 658, mechanism 1; M-CSA cites PMID:12484750; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/658/
+      snippet: Products.
+      notes: M-CSA entry 658, mechanism 1; M-CSA cites PMID:12484750; step 3
+  - subject: arg45
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg45 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/658/
+      snippet: electrostatic stabiliser, hydrogen bond donor, increase nucleophilicity, modifies pKa
+      notes: M-CSA entry 658, mechanism 1; M-CSA cites PMID:12484750; M-CSA catalytic-residue roles for
+        Arg45
+  - subject: glu136
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu136 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/658/
+      snippet: activator, increase nucleophilicity, proton acceptor, proton donor
+      notes: M-CSA entry 658, mechanism 1; M-CSA cites PMID:12484750; M-CSA catalytic-residue roles for
+        Glu136
+  - subject: glu246
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu246 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/658/
+      snippet: covalently attached, hydrogen bond acceptor, nucleofuge, nucleophile
+      notes: M-CSA entry 658, mechanism 1; M-CSA cites PMID:12484750; M-CSA catalytic-residue roles for
+        Glu246
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/658/
+      snippet: Glu136 protonates the glycosidic oxygen while Glu246 acts as a nucleophilic to attack the
+        anomeric carbon to form a covalent enzyme-substrate intermediate. The deprotonated Glu136 then
+        activates a water molecule to hydrolyse the covalent enzyme-substrate intermediate. Arg45 hydrogen
+        bonds with Glu246 to ensure that it is deprotonated even at relatively low pH value to allow it
+        to act as a catalyti
+      notes: M-CSA entry 658, mechanism 1; M-CSA cites PMID:12484750; CATH domain 3.20.20.80 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/658/
+      snippet: Glu136 protonates the glycosidic oxygen while Glu246 acts as a nucleophilic to attack the
+        anomeric carbon to form a covalent enzyme-substrate intermediate. The deprotonated Glu136 then
+        activates a water molecule to hydrolyse the covalent enzyme-substrate intermediate. Arg45 hydrogen
+        bonds with Glu246 to ensure that it is deprotonated even at relatively low pH value to allow it
+        to act as a catalyti
+      notes: M-CSA entry 658, mechanism 1; M-CSA cites PMID:12484750; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/658/
+      snippet: Glu136 protonates the glycosidic oxygen while Glu246 acts as a nucleophilic to attack the
+        anomeric carbon to form a covalent enzyme-substrate intermediate. The deprotonated Glu136 then
+        activates a water molecule to hydrolyse the covalent enzyme-substrate intermediate. Arg45 hydrogen
+        bonds with Glu246 to ensure that it is deprotonated even at relatively low pH value to allow it
+        to act as a catalyti
+      notes: M-CSA entry 658, mechanism 1; M-CSA cites PMID:12484750; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/658/
+      snippet: Glu136 protonates the glycosidic oxygen while Glu246 acts as a nucleophilic to attack the
+        anomeric carbon to form a covalent enzyme-substrate intermediate. The deprotonated Glu136 then
+        activates a water molecule to hydrolyse the covalent enzyme-substrate intermediate. Arg45 hydrogen
+        bonds with Glu246 to ensure that it is deprotonated even at relatively low pH value to allow it
+        to act as a catalyti
+      notes: M-CSA entry 658, mechanism 1; M-CSA cites PMID:12484750; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/658/
+      snippet: Glu136 protonates the glycosidic oxygen while Glu246 acts as a nucleophilic to attack the
+        anomeric carbon to form a covalent enzyme-substrate intermediate. The deprotonated Glu136 then
+        activates a water molecule to hydrolyse the covalent enzyme-substrate intermediate. Arg45 hydrogen
+        bonds with Glu246 to ensure that it is deprotonated even at relatively low pH value to allow it
+        to act as a catalyti
+      notes: M-CSA entry 658, mechanism 1; M-CSA cites PMID:12484750; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/658/
+      snippet: Glu136 protonates the glycosidic oxygen while Glu246 acts as a nucleophilic to attack the
+        anomeric carbon to form a covalent enzyme-substrate intermediate. The deprotonated Glu136 then
+        activates a water molecule to hydrolyse the covalent enzyme-substrate intermediate. Arg45 hydrogen
+        bonds with Glu246 to ensure that it is deprotonated even at relatively low pH value to allow it
+        to act as a catalyti
+      notes: M-CSA entry 658, mechanism 1; M-CSA cites PMID:12484750; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (14 evidence-backed edges) transcribed from M-CSA entry 658;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

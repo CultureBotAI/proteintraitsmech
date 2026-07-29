@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.1.4
 - CHEBI:15377
@@ -344,4 +344,203 @@ definitions:
       Cellulase E4 from Thermomonospora is both exo- and endo- cellulases, catalysing the hydrolysis of cellulose. It contains both a family 9 catalytic domain, exhibiting an (alpha/apha)6 barrel fold and a family III cellulose binding domain, having an antiparallel beta-sandwich fold.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of cellulase (GH9)
+  description: Stepwise mechanism transcribed from M-CSA entry 559 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +46).
+  nodes:
+  - node_id: asp55
+    label: catalytic Asp55 (M-CSA/PDB numbering; UniProt residue 101)
+    node_type: RESIDUE
+    grounding: UniProtKB:P26221
+    description: 'M-CSA roles: activator, electrostatic stabiliser, increase nucleophilicity.'
+  - node_id: asp58
+    label: catalytic Asp58 (M-CSA/PDB numbering; UniProt residue 104)
+    node_type: RESIDUE
+    grounding: UniProtKB:P26221
+    description: 'M-CSA roles: activator, increase nucleophilicity, proton acceptor, proton donor.'
+  - node_id: tyr206
+    label: catalytic Tyr206 (M-CSA/PDB numbering; UniProt residue 252)
+    node_type: RESIDUE
+    grounding: UniProtKB:P26221
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu424
+    label: catalytic Glu424 (M-CSA/PDB numbering; UniProt residue 470)
+    node_type: RESIDUE
+    grounding: UniProtKB:P26221
+    description: 'M-CSA roles: promote heterolysis, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: cellotetraose
+    node_type: CHEMICAL
+    grounding: CHEBI:62974
+  - node_id: product0
+    label: cellobiose
+    node_type: CHEMICAL
+    grounding: CHEBI:17057
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Either Asp101 or Asp104 deprotonates the water activating it for nucleophilic attack
+      on the anomeric carbon. (Tyr252 hydrogen bonds to Asp101 which contributes to the activation of
+      water.) This causes the glycosidic bond to be broken upon protonation by Glu470.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Inferred step- active site is regenerated.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: cellulase (GH9) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:559
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.50.10.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.50.10.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: cellulase (GH9) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.1.4
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/559/
+      snippet: Inferred step- active site is regenerated.
+      notes: M-CSA entry 559, mechanism 1; M-CSA cites PMID:15274620, PMID:9334746; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/559/
+      snippet: Products.
+      notes: M-CSA entry 559, mechanism 1; M-CSA cites PMID:15274620, PMID:9334746; step 3
+  - subject: asp55
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp55 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/559/
+      snippet: activator, electrostatic stabiliser, increase nucleophilicity
+      notes: M-CSA entry 559, mechanism 1; M-CSA cites PMID:15274620, PMID:9334746; M-CSA catalytic-residue
+        roles for Asp55
+  - subject: asp58
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp58 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/559/
+      snippet: activator, increase nucleophilicity, proton acceptor, proton donor
+      notes: M-CSA entry 559, mechanism 1; M-CSA cites PMID:15274620, PMID:9334746; M-CSA catalytic-residue
+        roles for Asp58
+  - subject: tyr206
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr206 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/559/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 559, mechanism 1; M-CSA cites PMID:15274620, PMID:9334746; M-CSA catalytic-residue
+        roles for Tyr206
+  - subject: glu424
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu424 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/559/
+      snippet: promote heterolysis, proton acceptor, proton donor
+      notes: M-CSA entry 559, mechanism 1; M-CSA cites PMID:15274620, PMID:9334746; M-CSA catalytic-residue
+        roles for Glu424
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/559/
+      snippet: Same as the other members of family 9 cellulase, E4 endo/exocellulase cleaves cullulose
+        with inversion of configuration at the anomeric carbon. In the mechanism, an acid protonates the
+        glycosidic oxygen and a base extracts a nucleophilic water that attacks the anomeric carbon. Here,
+        Glu470 is the acid. Both Asp 104 and Asp 101 hydrogen bond to the attacking water and both of
+        them appear to contrib
+      notes: M-CSA entry 559, mechanism 1; M-CSA cites PMID:15274620, PMID:9334746; CATH domain 1.50.10.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/559/
+      snippet: Same as the other members of family 9 cellulase, E4 endo/exocellulase cleaves cullulose
+        with inversion of configuration at the anomeric carbon. In the mechanism, an acid protonates the
+        glycosidic oxygen and a base extracts a nucleophilic water that attacks the anomeric carbon. Here,
+        Glu470 is the acid. Both Asp 104 and Asp 101 hydrogen bond to the attacking water and both of
+        them appear to contrib
+      notes: M-CSA entry 559, mechanism 1; M-CSA cites PMID:15274620, PMID:9334746; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/559/
+      snippet: Same as the other members of family 9 cellulase, E4 endo/exocellulase cleaves cullulose
+        with inversion of configuration at the anomeric carbon. In the mechanism, an acid protonates the
+        glycosidic oxygen and a base extracts a nucleophilic water that attacks the anomeric carbon. Here,
+        Glu470 is the acid. Both Asp 104 and Asp 101 hydrogen bond to the attacking water and both of
+        them appear to contrib
+      notes: M-CSA entry 559, mechanism 1; M-CSA cites PMID:15274620, PMID:9334746; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/559/
+      snippet: Same as the other members of family 9 cellulase, E4 endo/exocellulase cleaves cullulose
+        with inversion of configuration at the anomeric carbon. In the mechanism, an acid protonates the
+        glycosidic oxygen and a base extracts a nucleophilic water that attacks the anomeric carbon. Here,
+        Glu470 is the acid. Both Asp 104 and Asp 101 hydrogen bond to the attacking water and both of
+        them appear to contrib
+      notes: M-CSA entry 559, mechanism 1; M-CSA cites PMID:15274620, PMID:9334746; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/559/
+      snippet: Same as the other members of family 9 cellulase, E4 endo/exocellulase cleaves cullulose
+        with inversion of configuration at the anomeric carbon. In the mechanism, an acid protonates the
+        glycosidic oxygen and a base extracts a nucleophilic water that attacks the anomeric carbon. Here,
+        Glu470 is the acid. Both Asp 104 and Asp 101 hydrogen bond to the attacking water and both of
+        them appear to contrib
+      notes: M-CSA entry 559, mechanism 1; M-CSA cites PMID:15274620, PMID:9334746; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (11 evidence-backed edges) transcribed from M-CSA entry 559;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.2.1.59
 - CHEBI:78827
@@ -182,4 +182,259 @@ definitions:
       The mammalian fatty acid synthase (mFAS) is a multidomain protein with seven different active sites working together for the de novo synthesis of lipids, specifically palmitic acid. The dehydratase (DH) domain of mFAS catalyses the dehydration of the β-hydroxyacyl (HAC) to an α,β-unsaturated acyl intermediate.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 3-hydroxydecanoyl-[acyl-carrier-protein] dehydratase
+  description: Stepwise mechanism transcribed from M-CSA entry 972 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: his878
+    label: catalytic His878 (M-CSA/PDB numbering; UniProt residue 878)
+    node_type: RESIDUE
+    grounding: UniProtKB:A5YV76
+    description: 'M-CSA roles: hydrogen bond donor, proton acceptor.'
+  - node_id: leu885
+    label: catalytic Leu885 (M-CSA/PDB numbering; UniProt residue 885)
+    node_type: RESIDUE
+    grounding: UniProtKB:A5YV76
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: gly888
+    label: catalytic Gly888 (M-CSA/PDB numbering; UniProt residue 888)
+    node_type: RESIDUE
+    grounding: UniProtKB:A5YV76
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: tyr1003
+    label: catalytic Tyr1003 (M-CSA/PDB numbering; UniProt residue 1003)
+    node_type: RESIDUE
+    grounding: UniProtKB:A5YV76
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: asp1033
+    label: catalytic Asp1033 (M-CSA/PDB numbering; UniProt residue 1033)
+    node_type: RESIDUE
+    grounding: UniProtKB:A5YV76
+    description: 'M-CSA roles: hydrogen bond donor, proton donor.'
+  - node_id: his1037
+    label: catalytic His1037 (M-CSA/PDB numbering; UniProt residue 1037)
+    node_type: RESIDUE
+    grounding: UniProtKB:A5YV76
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: reactant0
+    label: O-[S-(3R)-3-hydroxyacylpantetheine-4'-phosphoryl]serine(1-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:78827
+  - node_id: product0
+    label: O-[S-(2E)-2-enoylpantetheine-4'-phosphoryl]-L-serine(1-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:78784
+  - node_id: product1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: An oxyanion hole formed by an internal hydrogen bond with the β-hydroxyl of the substrate
+      and with the Gly888-amide allows for the deprotonation of the α-carbonyl carbon by His878.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The oxyanion hole collapses, initiating double bond rearrangement. Asp1033 is deprotonated
+      by the hydroxyl group producing water as a leaving group.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: 3-hydroxydecanoyl-[acyl-carrier-protein] dehydratase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:972
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.10.129.110 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.10.129.110
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: 3-hydroxydecanoyl-[acyl-carrier-protein] dehydratase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.2.1.59
+  edges:
+  - subject: his878
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His878 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/972/
+      snippet: An oxyanion hole formed by an internal hydrogen bond with the β-hydroxyl of the substrate
+        and with the Gly888-amide allows for the deprotonation of the α-carbonyl carbon by His878.
+      notes: M-CSA entry 972, mechanism 1; M-CSA cites PMID:18772430; step 1
+  - subject: gly888
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Gly888 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/972/
+      snippet: An oxyanion hole formed by an internal hydrogen bond with the β-hydroxyl of the substrate
+        and with the Gly888-amide allows for the deprotonation of the α-carbonyl carbon by His878.
+      notes: M-CSA entry 972, mechanism 1; M-CSA cites PMID:18772430; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/972/
+      snippet: The oxyanion hole collapses, initiating double bond rearrangement. Asp1033 is deprotonated
+        by the hydroxyl group producing water as a leaving group.
+      notes: M-CSA entry 972, mechanism 1; M-CSA cites PMID:18772430; step 2
+  - subject: asp1033
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Asp1033 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/972/
+      snippet: The oxyanion hole collapses, initiating double bond rearrangement. Asp1033 is deprotonated
+        by the hydroxyl group producing water as a leaving group.
+      notes: M-CSA entry 972, mechanism 1; M-CSA cites PMID:18772430; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/972/
+      snippet: Products.
+      notes: M-CSA entry 972, mechanism 1; M-CSA cites PMID:18772430; step 3
+  - subject: his878
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His878 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/972/
+      snippet: hydrogen bond donor, proton acceptor
+      notes: M-CSA entry 972, mechanism 1; M-CSA cites PMID:18772430; M-CSA catalytic-residue roles for
+        His878
+  - subject: leu885
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Leu885 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/972/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 972, mechanism 1; M-CSA cites PMID:18772430; M-CSA catalytic-residue roles for
+        Leu885
+  - subject: gly888
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly888 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/972/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 972, mechanism 1; M-CSA cites PMID:18772430; M-CSA catalytic-residue roles for
+        Gly888
+  - subject: tyr1003
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr1003 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/972/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 972, mechanism 1; M-CSA cites PMID:18772430; M-CSA catalytic-residue roles for
+        Tyr1003
+  - subject: asp1033
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp1033 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/972/
+      snippet: hydrogen bond donor, proton donor
+      notes: M-CSA entry 972, mechanism 1; M-CSA cites PMID:18772430; M-CSA catalytic-residue roles for
+        Asp1033
+  - subject: his1037
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His1037 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/972/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 972, mechanism 1; M-CSA cites PMID:18772430; M-CSA catalytic-residue roles for
+        His1037
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/972/
+      snippet: An oxyanion hole formed by an internal hydrogen bond with the β-hydroxyl of the substrate
+        and with the Gly888-amide allows for the deprotonation of the α-carbonyl carbon by His878. This
+        reaction creates an intermediate tautomer that collapses the oxyanion hole and eliminates its
+        hydroxyl group as water by the deprotonation of Asp1033.
+      notes: M-CSA entry 972, mechanism 1; M-CSA cites PMID:18772430; CATH domain 3.10.129.110 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/972/
+      snippet: An oxyanion hole formed by an internal hydrogen bond with the β-hydroxyl of the substrate
+        and with the Gly888-amide allows for the deprotonation of the α-carbonyl carbon by His878. This
+        reaction creates an intermediate tautomer that collapses the oxyanion hole and eliminates its
+        hydroxyl group as water by the deprotonation of Asp1033.
+      notes: M-CSA entry 972, mechanism 1; M-CSA cites PMID:18772430; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/972/
+      snippet: An oxyanion hole formed by an internal hydrogen bond with the β-hydroxyl of the substrate
+        and with the Gly888-amide allows for the deprotonation of the α-carbonyl carbon by His878. This
+        reaction creates an intermediate tautomer that collapses the oxyanion hole and eliminates its
+        hydroxyl group as water by the deprotonation of Asp1033.
+      notes: M-CSA entry 972, mechanism 1; M-CSA cites PMID:18772430; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/972/
+      snippet: An oxyanion hole formed by an internal hydrogen bond with the β-hydroxyl of the substrate
+        and with the Gly888-amide allows for the deprotonation of the α-carbonyl carbon by His878. This
+        reaction creates an intermediate tautomer that collapses the oxyanion hole and eliminates its
+        hydroxyl group as water by the deprotonation of Asp1033.
+      notes: M-CSA entry 972, mechanism 1; M-CSA cites PMID:18772430; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/972/
+      snippet: An oxyanion hole formed by an internal hydrogen bond with the β-hydroxyl of the substrate
+        and with the Gly888-amide allows for the deprotonation of the α-carbonyl carbon by His878. This
+        reaction creates an intermediate tautomer that collapses the oxyanion hole and eliminates its
+        hydroxyl group as water by the deprotonation of Asp1033.
+      notes: M-CSA entry 972, mechanism 1; M-CSA cites PMID:18772430; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (16 evidence-backed edges) transcribed from M-CSA entry 972;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

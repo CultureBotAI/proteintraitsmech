@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.3.5.1
 - CHEBI:29806
@@ -449,4 +449,312 @@ definitions:
       succinate dehydrogenase is a flavoprotein complex containing iron-sulfur centres. The enzyme is found in the inner mitochondrial membrane in eukaryotes and the plasma membrane of many aerobic or facultative bacteria. It catalyses succinate oxidation in the citric acid cycle and transfers the electrons to quinones in the membrane, thus constituting a part of the aerobic respiratory chain (known as complex II). In vivo the enzyme uses the quinone found in the organism - eukaryotic enzymes utilize ubiquinone, bacterial enzymes utilise ubiquinone or menaquinone, and archaebacterial enzymes from the Sulfolobus genus use caldariellaquinone.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of succinate dehydrogenase (ubiquinone)
+  description: Stepwise mechanism transcribed from M-CSA entry 294 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +44).
+  nodes:
+  - node_id: phe130
+    label: catalytic Phe130 (M-CSA/PDB numbering; UniProt residue 174)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9YHT1
+    description: 'M-CSA roles: steric role.'
+  - node_id: gln251
+    label: catalytic Gln251 (M-CSA/PDB numbering; UniProt residue 295)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9YHT1
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, steric role.'
+  - node_id: his253
+    label: catalytic His253 (M-CSA/PDB numbering; UniProt residue 297)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9YHT1
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor, steric role.'
+  - node_id: leu263
+    label: catalytic Leu263 (M-CSA/PDB numbering; UniProt residue 307)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9YHT1
+    description: 'M-CSA roles: steric role.'
+  - node_id: glu266
+    label: catalytic Glu266 (M-CSA/PDB numbering; UniProt residue 310)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9YHT1
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, steric role.'
+  - node_id: arg297
+    label: catalytic Arg297 (M-CSA/PDB numbering; UniProt residue 341)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9YHT1
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: his364
+    label: catalytic His364 (M-CSA/PDB numbering; UniProt residue 408)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9YHT1
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor, steric role.'
+  - node_id: arg408
+    label: catalytic Arg408 (M-CSA/PDB numbering; UniProt residue 452)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9YHT1
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor, steric role.'
+  - node_id: reactant0
+    label: fumarate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:29806
+  - node_id: reactant1
+    label: ubiquinol
+    node_type: CHEMICAL
+    grounding: CHEBI:17976
+  - node_id: product0
+    label: ubiquinones
+    node_type: CHEMICAL
+    grounding: CHEBI:16389
+  - node_id: product1
+    label: succinate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30031
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: "<p>Ubiquinol acts as a two electron donor to the FAD cofactor, forming anionic FADH.</p>\
+      
+<p>The electrons donated by the biological reducing agent ubiquinol tunnel from the ubiquinol\
+      \ binding site, through the iron-sulfur clusters to the active site [PMI:16371358]. In the absence\
+      \ of ubiquinol, the 3Fe4S centre is left with a net positive charge [PMID:17050691]. </p>
+<p>For\
+      \ the related enzyme fuma"
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The FADH N5 acts as a hydride donor to the polarised double bond in fumarate. A proton
+      is simultaneously abstracted from Arg297 to saturate the double bond, forming succinate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The catalytic acid/base is reprotonated by a solvent molecule.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: succinate dehydrogenase (ubiquinone) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:294
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.50.50.60 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.50.50.60
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: succinate dehydrogenase (ubiquinone) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.3.5.1
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/294/
+      snippet: The FADH N5 acts as a hydride donor to the polarised double bond in fumarate. A proton
+        is simultaneously abstracted from Arg297 to saturate the double bond, forming succinate.
+      notes: M-CSA entry 294, mechanism 1; M-CSA cites PMID:10581550, PMID:11591148, PMID:16371358, PMID:16407191,
+        PMID:17050691, PMID:18028869; step 2
+  - subject: arg297
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Arg297 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/294/
+      snippet: The FADH N5 acts as a hydride donor to the polarised double bond in fumarate. A proton
+        is simultaneously abstracted from Arg297 to saturate the double bond, forming succinate.
+      notes: M-CSA entry 294, mechanism 1; M-CSA cites PMID:10581550, PMID:11591148, PMID:16371358, PMID:16407191,
+        PMID:17050691, PMID:18028869; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/294/
+      snippet: The catalytic acid/base is reprotonated by a solvent molecule.
+      notes: M-CSA entry 294, mechanism 1; M-CSA cites PMID:10581550, PMID:11591148, PMID:16371358, PMID:16407191,
+        PMID:17050691, PMID:18028869; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/294/
+      snippet: Products.
+      notes: M-CSA entry 294, mechanism 1; M-CSA cites PMID:10581550, PMID:11591148, PMID:16371358, PMID:16407191,
+        PMID:17050691, PMID:18028869; step 4
+  - subject: phe130
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Phe130 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/294/
+      snippet: steric role
+      notes: M-CSA entry 294, mechanism 1; M-CSA cites PMID:10581550, PMID:11591148, PMID:16371358, PMID:16407191,
+        PMID:17050691, PMID:18028869; M-CSA catalytic-residue roles for Phe130
+  - subject: gln251
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln251 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/294/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, steric role
+      notes: M-CSA entry 294, mechanism 1; M-CSA cites PMID:10581550, PMID:11591148, PMID:16371358, PMID:16407191,
+        PMID:17050691, PMID:18028869; M-CSA catalytic-residue roles for Gln251
+  - subject: his253
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His253 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/294/
+      snippet: electrostatic stabiliser, hydrogen bond donor, steric role
+      notes: M-CSA entry 294, mechanism 1; M-CSA cites PMID:10581550, PMID:11591148, PMID:16371358, PMID:16407191,
+        PMID:17050691, PMID:18028869; M-CSA catalytic-residue roles for His253
+  - subject: leu263
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Leu263 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/294/
+      snippet: steric role
+      notes: M-CSA entry 294, mechanism 1; M-CSA cites PMID:10581550, PMID:11591148, PMID:16371358, PMID:16407191,
+        PMID:17050691, PMID:18028869; M-CSA catalytic-residue roles for Leu263
+  - subject: glu266
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu266 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/294/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, steric role
+      notes: M-CSA entry 294, mechanism 1; M-CSA cites PMID:10581550, PMID:11591148, PMID:16371358, PMID:16407191,
+        PMID:17050691, PMID:18028869; M-CSA catalytic-residue roles for Glu266
+  - subject: arg297
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg297 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/294/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 294, mechanism 1; M-CSA cites PMID:10581550, PMID:11591148, PMID:16371358, PMID:16407191,
+        PMID:17050691, PMID:18028869; M-CSA catalytic-residue roles for Arg297
+  - subject: his364
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His364 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/294/
+      snippet: electrostatic stabiliser, hydrogen bond donor, steric role
+      notes: M-CSA entry 294, mechanism 1; M-CSA cites PMID:10581550, PMID:11591148, PMID:16371358, PMID:16407191,
+        PMID:17050691, PMID:18028869; M-CSA catalytic-residue roles for His364
+  - subject: arg408
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg408 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/294/
+      snippet: electrostatic stabiliser, hydrogen bond donor, steric role
+      notes: M-CSA entry 294, mechanism 1; M-CSA cites PMID:10581550, PMID:11591148, PMID:16371358, PMID:16407191,
+        PMID:17050691, PMID:18028869; M-CSA catalytic-residue roles for Arg408
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/294/
+      snippet: Ubiquinol acts as a two electron donor to the FAD cofactor, forming anionic FADH. The FADH
+        N5 acts as a hydride donor to the polarised double bond in fumarate. A proton is simultaneously
+        abstracted from Arg297 to saturate the double bond, forming succinate. The catalytic acid/base
+        is reprotonated by a solvent molecule.
+      notes: M-CSA entry 294, mechanism 1; M-CSA cites PMID:10581550, PMID:11591148, PMID:16371358, PMID:16407191,
+        PMID:17050691, PMID:18028869; CATH domain 3.50.50.60 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/294/
+      snippet: Ubiquinol acts as a two electron donor to the FAD cofactor, forming anionic FADH. The FADH
+        N5 acts as a hydride donor to the polarised double bond in fumarate. A proton is simultaneously
+        abstracted from Arg297 to saturate the double bond, forming succinate. The catalytic acid/base
+        is reprotonated by a solvent molecule.
+      notes: M-CSA entry 294, mechanism 1; M-CSA cites PMID:10581550, PMID:11591148, PMID:16371358, PMID:16407191,
+        PMID:17050691, PMID:18028869; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/294/
+      snippet: Ubiquinol acts as a two electron donor to the FAD cofactor, forming anionic FADH. The FADH
+        N5 acts as a hydride donor to the polarised double bond in fumarate. A proton is simultaneously
+        abstracted from Arg297 to saturate the double bond, forming succinate. The catalytic acid/base
+        is reprotonated by a solvent molecule.
+      notes: M-CSA entry 294, mechanism 1; M-CSA cites PMID:10581550, PMID:11591148, PMID:16371358, PMID:16407191,
+        PMID:17050691, PMID:18028869; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/294/
+      snippet: Ubiquinol acts as a two electron donor to the FAD cofactor, forming anionic FADH. The FADH
+        N5 acts as a hydride donor to the polarised double bond in fumarate. A proton is simultaneously
+        abstracted from Arg297 to saturate the double bond, forming succinate. The catalytic acid/base
+        is reprotonated by a solvent molecule.
+      notes: M-CSA entry 294, mechanism 1; M-CSA cites PMID:10581550, PMID:11591148, PMID:16371358, PMID:16407191,
+        PMID:17050691, PMID:18028869; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/294/
+      snippet: Ubiquinol acts as a two electron donor to the FAD cofactor, forming anionic FADH. The FADH
+        N5 acts as a hydride donor to the polarised double bond in fumarate. A proton is simultaneously
+        abstracted from Arg297 to saturate the double bond, forming succinate. The catalytic acid/base
+        is reprotonated by a solvent molecule.
+      notes: M-CSA entry 294, mechanism 1; M-CSA cites PMID:10581550, PMID:11591148, PMID:16371358, PMID:16407191,
+        PMID:17050691, PMID:18028869; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/294/
+      snippet: Ubiquinol acts as a two electron donor to the FAD cofactor, forming anionic FADH. The FADH
+        N5 acts as a hydride donor to the polarised double bond in fumarate. A proton is simultaneously
+        abstracted from Arg297 to saturate the double bond, forming succinate. The catalytic acid/base
+        is reprotonated by a solvent molecule.
+      notes: M-CSA entry 294, mechanism 1; M-CSA cites PMID:10581550, PMID:11591148, PMID:16371358, PMID:16407191,
+        PMID:17050691, PMID:18028869; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (18 evidence-backed edges) transcribed from M-CSA entry 294;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.3.4.1
 - CHEBI:137060
@@ -470,4 +470,290 @@ definitions:
       Protein disulfide isomerase (PDI) from humans is a 57 kDa protein present in the endoplasmic reticulum of eukaryotes. It is involved in disulfide bond formation, breakage, and rearrangement during the folding of proteins translocated into the endoplasmic reticulum. PDI contains two active sites with the amino acid sequence -Cys-Gly-His-Cys-, each of which is cycled between the dithiol and the disulfide forms as in the related redox protein thioredoxin. In addition, PDI is the beta subunit of prolyl-4-hydroxylase, which has an alpha2beta2 quaternary structure, and it is one subunit of the heterodimeric triglyceride transfer protein complex.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of protein disulfide-isomerase (eukaryotic)
+  description: Stepwise mechanism transcribed from M-CSA entry 191 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +17).
+  nodes:
+  - node_id: cys36
+    label: catalytic Cys36 (M-CSA/PDB numbering; UniProt residue 53)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07237
+    description: 'M-CSA roles: nucleofuge, nucleophile, proton acceptor, proton donor.'
+  - node_id: gly37
+    label: catalytic Gly37 (M-CSA/PDB numbering; UniProt residue 54)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07237
+    description: 'M-CSA roles: activator, modifies pKa.'
+  - node_id: his38
+    label: catalytic His38 (M-CSA/PDB numbering; UniProt residue 55)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07237
+    description: 'M-CSA roles: modifies pKa, proton acceptor, proton donor.'
+  - node_id: cys39
+    label: catalytic Cys39 (M-CSA/PDB numbering; UniProt residue 56)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07237
+  - node_id: reactant0
+    label: protein with two disulfide bridges (configuration A)
+    node_type: CHEMICAL
+    grounding: CHEBI:137058
+  - node_id: product0
+    label: protein with two disulfide bridges (Configuration B)
+    node_type: CHEMICAL
+    grounding: CHEBI:137060
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: "The thiol of Cys36 attacks the first of the disulfide bonds in a nucleophilic substitution\
+      \ reaction that results in an enzyme bound intermediate with a new thiolate.
+Cys36 is activated\
+      \ by deprotonation from His38.
+
+If a second set of S-S bonds are present, Cys39 also acts\
+      \ as a catalytic nuclephile (not shown for simplicity)."
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The newly formed thiolate attacks attacks the adjacent disulphide bond in a second  nucleophilic
+      substitution reaction, leading to a new disulphide bond and thiolate being formed.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The second newly formed thiolate attacks the disulfide bond between the intermediate
+      and the Cys36 in a nucleophilic substitution reaction that results in the final new disulfide bond
+      and free Cys36 and deprotonated His 38.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: protein disulfide-isomerase (eukaryotic) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:191
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.30.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.30.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: protein disulfide-isomerase (eukaryotic) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.3.4.1
+  edges:
+  - subject: cys36
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys36 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/191/
+      snippet: "The thiol of Cys36 attacks the first of the disulfide bonds in a nucleophilic substitution\
+        \ reaction that results in an enzyme bound intermediate with a new thiolate.
+Cys36 is activated\
+        \ by deprotonation from His38.
+
+If a second set of S-S bonds are present, Cys39 also acts\
+        \ as a catalytic nuclephile (not shown for simplicity)."
+      notes: M-CSA entry 191, mechanism 1; M-CSA cites PMID:16142915, PMID:28559343, PMID:8527452, PMID:8672469;
+        step 1
+  - subject: his38
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His38 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/191/
+      snippet: "The thiol of Cys36 attacks the first of the disulfide bonds in a nucleophilic substitution\
+        \ reaction that results in an enzyme bound intermediate with a new thiolate.
+Cys36 is activated\
+        \ by deprotonation from His38.
+
+If a second set of S-S bonds are present, Cys39 also acts\
+        \ as a catalytic nuclephile (not shown for simplicity)."
+      notes: M-CSA entry 191, mechanism 1; M-CSA cites PMID:16142915, PMID:28559343, PMID:8527452, PMID:8672469;
+        step 1
+  - subject: cys39
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys39 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/191/
+      snippet: "The thiol of Cys36 attacks the first of the disulfide bonds in a nucleophilic substitution\
+        \ reaction that results in an enzyme bound intermediate with a new thiolate.
+Cys36 is activated\
+        \ by deprotonation from His38.
+
+If a second set of S-S bonds are present, Cys39 also acts\
+        \ as a catalytic nuclephile (not shown for simplicity)."
+      notes: M-CSA entry 191, mechanism 1; M-CSA cites PMID:16142915, PMID:28559343, PMID:8527452, PMID:8672469;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/191/
+      snippet: The newly formed thiolate attacks attacks the adjacent disulphide bond in a second  nucleophilic
+        substitution reaction, leading to a new disulphide bond and thiolate being formed.
+      notes: M-CSA entry 191, mechanism 1; M-CSA cites PMID:16142915, PMID:28559343, PMID:8527452, PMID:8672469;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/191/
+      snippet: The second newly formed thiolate attacks the disulfide bond between the intermediate and
+        the Cys36 in a nucleophilic substitution reaction that results in the final new disulfide bond
+        and free Cys36 and deprotonated His 38.
+      notes: M-CSA entry 191, mechanism 1; M-CSA cites PMID:16142915, PMID:28559343, PMID:8527452, PMID:8672469;
+        step 3
+  - subject: cys36
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Cys36 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/191/
+      snippet: The second newly formed thiolate attacks the disulfide bond between the intermediate and
+        the Cys36 in a nucleophilic substitution reaction that results in the final new disulfide bond
+        and free Cys36 and deprotonated His 38.
+      notes: M-CSA entry 191, mechanism 1; M-CSA cites PMID:16142915, PMID:28559343, PMID:8527452, PMID:8672469;
+        step 3
+  - subject: his38
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His38 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/191/
+      snippet: The second newly formed thiolate attacks the disulfide bond between the intermediate and
+        the Cys36 in a nucleophilic substitution reaction that results in the final new disulfide bond
+        and free Cys36 and deprotonated His 38.
+      notes: M-CSA entry 191, mechanism 1; M-CSA cites PMID:16142915, PMID:28559343, PMID:8527452, PMID:8672469;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/191/
+      snippet: Products.
+      notes: M-CSA entry 191, mechanism 1; M-CSA cites PMID:16142915, PMID:28559343, PMID:8527452, PMID:8672469;
+        step 4
+  - subject: cys36
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys36 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/191/
+      snippet: nucleofuge, nucleophile, proton acceptor, proton donor
+      notes: M-CSA entry 191, mechanism 1; M-CSA cites PMID:16142915, PMID:28559343, PMID:8527452, PMID:8672469;
+        M-CSA catalytic-residue roles for Cys36
+  - subject: gly37
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly37 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/191/
+      snippet: activator, modifies pKa
+      notes: M-CSA entry 191, mechanism 1; M-CSA cites PMID:16142915, PMID:28559343, PMID:8527452, PMID:8672469;
+        M-CSA catalytic-residue roles for Gly37
+  - subject: his38
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His38 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/191/
+      snippet: modifies pKa, proton acceptor, proton donor
+      notes: M-CSA entry 191, mechanism 1; M-CSA cites PMID:16142915, PMID:28559343, PMID:8527452, PMID:8672469;
+        M-CSA catalytic-residue roles for His38
+  - subject: cys39
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys39 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/191/
+      snippet: Cys36 is activated by His38 and Gly37 and then attacks the first of the disulfide bonds
+        in a nucleophilic substitution reaction that results in an enzyme bound intermediate with a new
+        thiolate. The newly formed thiolate attacks the second of the disulfide bonds in a nucleophilic
+        substitution reaction that results in a new disulfide bond and second thiolate. The second newly
+        formed thiolate attacks
+      notes: M-CSA entry 191, mechanism 1; M-CSA cites PMID:16142915, PMID:28559343, PMID:8527452, PMID:8672469;
+        M-CSA catalytic-residue roles for Cys39
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/191/
+      snippet: Cys36 is activated by His38 and Gly37 and then attacks the first of the disulfide bonds
+        in a nucleophilic substitution reaction that results in an enzyme bound intermediate with a new
+        thiolate. The newly formed thiolate attacks the second of the disulfide bonds in a nucleophilic
+        substitution reaction that results in a new disulfide bond and second thiolate. The second newly
+        formed thiolate attacks
+      notes: M-CSA entry 191, mechanism 1; M-CSA cites PMID:16142915, PMID:28559343, PMID:8527452, PMID:8672469;
+        CATH domain 3.40.30.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/191/
+      snippet: Cys36 is activated by His38 and Gly37 and then attacks the first of the disulfide bonds
+        in a nucleophilic substitution reaction that results in an enzyme bound intermediate with a new
+        thiolate. The newly formed thiolate attacks the second of the disulfide bonds in a nucleophilic
+        substitution reaction that results in a new disulfide bond and second thiolate. The second newly
+        formed thiolate attacks
+      notes: M-CSA entry 191, mechanism 1; M-CSA cites PMID:16142915, PMID:28559343, PMID:8527452, PMID:8672469;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/191/
+      snippet: Cys36 is activated by His38 and Gly37 and then attacks the first of the disulfide bonds
+        in a nucleophilic substitution reaction that results in an enzyme bound intermediate with a new
+        thiolate. The newly formed thiolate attacks the second of the disulfide bonds in a nucleophilic
+        substitution reaction that results in a new disulfide bond and second thiolate. The second newly
+        formed thiolate attacks
+      notes: M-CSA entry 191, mechanism 1; M-CSA cites PMID:16142915, PMID:28559343, PMID:8527452, PMID:8672469;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/191/
+      snippet: Cys36 is activated by His38 and Gly37 and then attacks the first of the disulfide bonds
+        in a nucleophilic substitution reaction that results in an enzyme bound intermediate with a new
+        thiolate. The newly formed thiolate attacks the second of the disulfide bonds in a nucleophilic
+        substitution reaction that results in a new disulfide bond and second thiolate. The second newly
+        formed thiolate attacks
+      notes: M-CSA entry 191, mechanism 1; M-CSA cites PMID:16142915, PMID:28559343, PMID:8527452, PMID:8672469;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (16 evidence-backed edges) transcribed from M-CSA entry 191;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

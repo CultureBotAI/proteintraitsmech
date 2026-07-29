@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.1.18
 - CHEBI:17950
@@ -420,4 +420,303 @@ definitions:
       The influenza virus neuramidase is a concanovin A-like lectin/glucanase. This glycoside hydrolase is composed of a central, veta-propeller catalytic domain flanked by two lectin-like domains. NA is involved in the pathogenesis of cholera by removing sialic acid from higher order gangliosides to unmask GM1, the receptor for the cholera toxin. The enzyme catalyses the hydrolysis of glycoside linkages between terminal sialic acids and adjacent sugar moieties. NA presents an excellent target for drug design against cholera.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of exo-alpha-sialidase (GH34 Family)
+  description: Stepwise mechanism transcribed from M-CSA entry 828 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: asp151
+    label: catalytic Asp151 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P03472
+    description: 'M-CSA roles: activator, electrostatic stabiliser, increase acidity, increase nucleophilicity,
+      proton acceptor, proton donor.'
+  - node_id: glu277
+    label: catalytic Glu277 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P03472
+    description: 'M-CSA roles: activator, electrostatic stabiliser, increase nucleophilicity, promote
+      heterolysis, proton acceptor, proton donor.'
+  - node_id: arg292
+    label: catalytic Arg292 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P03472
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: arg371
+    label: catalytic Arg371 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P03472
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: tyr406
+    label: catalytic Tyr406 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P03472
+    description: 'M-CSA roles: electrostatic stabiliser, nucleofuge, nucleophile, proton acceptor, proton
+      donor.'
+  - node_id: reactant0
+    label: alpha-N-acetylneuraminyl-(2->3)-beta-D-galactosyl-(1->4)-beta-D-glucosyl-(1<->1')-ceramide
+    node_type: CHEMICAL
+    grounding: CHEBI:15681
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: beta-D-galactosyl-(1->4)-beta-D-glucosyl-(1<->1)-N-acylsphingosine
+    node_type: CHEMICAL
+    grounding: CHEBI:17950
+  - node_id: product1
+    label: N-acetylneuraminic acid
+    node_type: CHEMICAL
+    grounding: CHEBI:17012
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu277 activates Tyr412 which attacks C1. The sialyl ketal linkage is broken in an SN2
+      reaction with Asp151 protonating a water molecule which in turn protonates the leaving group the
+      leaving group.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Asp92 activates the water molecule which hydrolyses the tyrosine bound intermediate.
+      Glu277 protonates the departing Tyr412.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: exo-alpha-sialidase (GH34 Family) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:828
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.120.10.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.120.10.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: exo-alpha-sialidase (GH34 Family) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.1.18
+  edges:
+  - subject: asp151
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp151 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/828/
+      snippet: Glu277 activates Tyr412 which attacks C1. The sialyl ketal linkage is broken in an SN2
+        reaction with Asp151 protonating a water molecule which in turn protonates the leaving group the
+        leaving group.
+      notes: M-CSA entry 828, mechanism 1; M-CSA cites PMID:10619840, PMID:16128567, PMID:23422659, PMID:8535779,
+        PMID:9874196; step 1
+  - subject: glu277
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu277 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/828/
+      snippet: Glu277 activates Tyr412 which attacks C1. The sialyl ketal linkage is broken in an SN2
+        reaction with Asp151 protonating a water molecule which in turn protonates the leaving group the
+        leaving group.
+      notes: M-CSA entry 828, mechanism 1; M-CSA cites PMID:10619840, PMID:16128567, PMID:23422659, PMID:8535779,
+        PMID:9874196; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/828/
+      snippet: Asp92 activates the water molecule which hydrolyses the tyrosine bound intermediate. Glu277
+        protonates the departing Tyr412.
+      notes: M-CSA entry 828, mechanism 1; M-CSA cites PMID:10619840, PMID:16128567, PMID:23422659, PMID:8535779,
+        PMID:9874196; step 2
+  - subject: glu277
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu277 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/828/
+      snippet: Asp92 activates the water molecule which hydrolyses the tyrosine bound intermediate. Glu277
+        protonates the departing Tyr412.
+      notes: M-CSA entry 828, mechanism 1; M-CSA cites PMID:10619840, PMID:16128567, PMID:23422659, PMID:8535779,
+        PMID:9874196; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/828/
+      snippet: Products.
+      notes: M-CSA entry 828, mechanism 1; M-CSA cites PMID:10619840, PMID:16128567, PMID:23422659, PMID:8535779,
+        PMID:9874196; step 3
+  - subject: asp151
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp151 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/828/
+      snippet: activator, electrostatic stabiliser, increase acidity, increase nucleophilicity, proton
+        acceptor, proton donor
+      notes: M-CSA entry 828, mechanism 1; M-CSA cites PMID:10619840, PMID:16128567, PMID:23422659, PMID:8535779,
+        PMID:9874196; M-CSA catalytic-residue roles for Asp151
+  - subject: glu277
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu277 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/828/
+      snippet: activator, electrostatic stabiliser, increase nucleophilicity, promote heterolysis, proton
+        acceptor, proton donor
+      notes: M-CSA entry 828, mechanism 1; M-CSA cites PMID:10619840, PMID:16128567, PMID:23422659, PMID:8535779,
+        PMID:9874196; M-CSA catalytic-residue roles for Glu277
+  - subject: arg292
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg292 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/828/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 828, mechanism 1; M-CSA cites PMID:10619840, PMID:16128567, PMID:23422659, PMID:8535779,
+        PMID:9874196; M-CSA catalytic-residue roles for Arg292
+  - subject: arg371
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg371 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/828/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 828, mechanism 1; M-CSA cites PMID:10619840, PMID:16128567, PMID:23422659, PMID:8535779,
+        PMID:9874196; M-CSA catalytic-residue roles for Arg371
+  - subject: tyr406
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr406 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/828/
+      snippet: electrostatic stabiliser, nucleofuge, nucleophile, proton acceptor, proton donor
+      notes: M-CSA entry 828, mechanism 1; M-CSA cites PMID:10619840, PMID:16128567, PMID:23422659, PMID:8535779,
+        PMID:9874196; M-CSA catalytic-residue roles for Tyr406
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/828/
+      snippet: "Binding of the alpha-sialic acid to NA, forming the Michaelis complex.
+Triad of arginine\
+        \ residues binds to and stabilises the carboxylate group of the substrate by strong ionic interactions\
+        \ with their guanidinium groups.
+Distortion of the substrate pyranose ring from chair to boat\
+        \ conformation.
+The glycosidic oxygen is raised from its equatotiral position to point vertically\
+        \ out of the active s"
+      notes: M-CSA entry 828, mechanism 1; M-CSA cites PMID:10619840, PMID:16128567, PMID:23422659, PMID:8535779,
+        PMID:9874196; CATH domain 2.120.10.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/828/
+      snippet: "Binding of the alpha-sialic acid to NA, forming the Michaelis complex.
+Triad of arginine\
+        \ residues binds to and stabilises the carboxylate group of the substrate by strong ionic interactions\
+        \ with their guanidinium groups.
+Distortion of the substrate pyranose ring from chair to boat\
+        \ conformation.
+The glycosidic oxygen is raised from its equatotiral position to point vertically\
+        \ out of the active s"
+      notes: M-CSA entry 828, mechanism 1; M-CSA cites PMID:10619840, PMID:16128567, PMID:23422659, PMID:8535779,
+        PMID:9874196; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/828/
+      snippet: "Binding of the alpha-sialic acid to NA, forming the Michaelis complex.
+Triad of arginine\
+        \ residues binds to and stabilises the carboxylate group of the substrate by strong ionic interactions\
+        \ with their guanidinium groups.
+Distortion of the substrate pyranose ring from chair to boat\
+        \ conformation.
+The glycosidic oxygen is raised from its equatotiral position to point vertically\
+        \ out of the active s"
+      notes: M-CSA entry 828, mechanism 1; M-CSA cites PMID:10619840, PMID:16128567, PMID:23422659, PMID:8535779,
+        PMID:9874196; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/828/
+      snippet: "Binding of the alpha-sialic acid to NA, forming the Michaelis complex.
+Triad of arginine\
+        \ residues binds to and stabilises the carboxylate group of the substrate by strong ionic interactions\
+        \ with their guanidinium groups.
+Distortion of the substrate pyranose ring from chair to boat\
+        \ conformation.
+The glycosidic oxygen is raised from its equatotiral position to point vertically\
+        \ out of the active s"
+      notes: M-CSA entry 828, mechanism 1; M-CSA cites PMID:10619840, PMID:16128567, PMID:23422659, PMID:8535779,
+        PMID:9874196; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/828/
+      snippet: "Binding of the alpha-sialic acid to NA, forming the Michaelis complex.
+Triad of arginine\
+        \ residues binds to and stabilises the carboxylate group of the substrate by strong ionic interactions\
+        \ with their guanidinium groups.
+Distortion of the substrate pyranose ring from chair to boat\
+        \ conformation.
+The glycosidic oxygen is raised from its equatotiral position to point vertically\
+        \ out of the active s"
+      notes: M-CSA entry 828, mechanism 1; M-CSA cites PMID:10619840, PMID:16128567, PMID:23422659, PMID:8535779,
+        PMID:9874196; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/828/
+      snippet: "Binding of the alpha-sialic acid to NA, forming the Michaelis complex.
+Triad of arginine\
+        \ residues binds to and stabilises the carboxylate group of the substrate by strong ionic interactions\
+        \ with their guanidinium groups.
+Distortion of the substrate pyranose ring from chair to boat\
+        \ conformation.
+The glycosidic oxygen is raised from its equatotiral position to point vertically\
+        \ out of the active s"
+      notes: M-CSA entry 828, mechanism 1; M-CSA cites PMID:10619840, PMID:16128567, PMID:23422659, PMID:8535779,
+        PMID:9874196; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (16 evidence-backed edges) transcribed from M-CSA entry 828;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.11.1.6
 - CHEBI:16240
@@ -208,4 +208,320 @@ definitions:
       The catalases are important antioxidant defence enzymes found in a broad range of microorganisms in microaerophilic environments. Manganese catalase, isolated from Lactobacillus plantarum, is a nonheme catalase containing a binuclear manganese cluster, and is responsible for catalysing the disproportionation of hydrogen peroxide into water and dioxygen. The enzyme is a hexamer of identical subunits organised around a catalytic core of close-packed four-helix bundle domains. Manganese catalase catalyses the disproportionation of toxic hydrogen peroxide into dioxygen and water. The overall reaction consists of two distinct half reactions involving alternate reduction and oxidation of the peroxide substrate. An m(1,3)-bridging glutamate anchors the two ions in the binuclear cluster, and each Mn is further coordinated by one histidine and one glutamate bound to opposite sides of the cluster. The Mn core is completed by two solvent derived oxygen bridges, which are structurally distinct.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of catalase (manganese dependent)
+  description: Stepwise mechanism transcribed from M-CSA entry 572 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: glu35
+    label: catalytic Glu35 (M-CSA/PDB numbering; UniProt residue 35)
+    node_type: RESIDUE
+    grounding: UniProtKB:P60355
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu66
+    label: catalytic Glu66 (M-CSA/PDB numbering; UniProt residue 66)
+    node_type: RESIDUE
+    grounding: UniProtKB:P60355
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his69
+    label: catalytic His69 (M-CSA/PDB numbering; UniProt residue 69)
+    node_type: RESIDUE
+    grounding: UniProtKB:P60355
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu148
+    label: catalytic Glu148 (M-CSA/PDB numbering; UniProt residue 148)
+    node_type: RESIDUE
+    grounding: UniProtKB:P60355
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu178
+    label: catalytic Glu178 (M-CSA/PDB numbering; UniProt residue 178)
+    node_type: RESIDUE
+    grounding: UniProtKB:P60355
+    description: 'M-CSA roles: proton acceptor, proton donor, proton shuttle (general acid/base).'
+  - node_id: his181
+    label: catalytic His181 (M-CSA/PDB numbering; UniProt residue 181)
+    node_type: RESIDUE
+    grounding: UniProtKB:P60355
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: hydrogen peroxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+  - node_id: product0
+    label: dioxygen
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+  - node_id: product1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The substrate peroxide binds to the oxidised (3,3) cluster and a proton is transferred,
+      possibly using Glu178 as a proton shuttle.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: There is a two-electron oxidation of the terminally bound peroxide by the dinuclear Mn
+      (III) complex. Glu178 may again be involved in transferring the proton away from the peroxide oxygen
+      to the active site bases. This forms oxygen and water which are released from the active site, and
+      a reduced (2,2) dinuclear Mn cluster.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: "The Mn-Mn solvent bridges are relatively labile and a second peroxide coordinates into\
+      \ the metal cluster, displacing the 
+relatively weakly bound, doubly protonated aquo bridge.\
+      \ This results in a symmetric (1,1) hydroperoxy intermediate. Glu178 may be involved in proton transfer\
+      \ from the peroxide."
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Glu178 protonates the peroxide bridge, polarising the O-O bond and activating it towards
+      heterolytic cleavage. There is loss of a water molecule and the Mn cluster is reoxidised by two
+      electron tranfser to regenerate the active site.
+  - node_id: active_site
+    label: catalase (manganese dependent) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:572
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.20.1260.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.20.1260.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: catalase (manganese dependent) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.11.1.6
+  edges:
+  - subject: glu178
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu178 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/572/
+      snippet: The substrate peroxide binds to the oxidised (3,3) cluster and a proton is transferred,
+        possibly using Glu178 as a proton shuttle.
+      notes: M-CSA entry 572, mechanism 1; M-CSA cites PMID:10413487, PMID:11587647, PMID:12631270; step
+        1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/572/
+      snippet: There is a two-electron oxidation of the terminally bound peroxide by the dinuclear Mn
+        (III) complex. Glu178 may again be involved in transferring the proton away from the peroxide
+        oxygen to the active site bases. This forms oxygen and water which are released from the active
+        site, and a reduced (2,2) dinuclear Mn cluster.
+      notes: M-CSA entry 572, mechanism 1; M-CSA cites PMID:10413487, PMID:11587647, PMID:12631270; step
+        2
+  - subject: glu178
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu178 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/572/
+      snippet: There is a two-electron oxidation of the terminally bound peroxide by the dinuclear Mn
+        (III) complex. Glu178 may again be involved in transferring the proton away from the peroxide
+        oxygen to the active site bases. This forms oxygen and water which are released from the active
+        site, and a reduced (2,2) dinuclear Mn cluster.
+      notes: M-CSA entry 572, mechanism 1; M-CSA cites PMID:10413487, PMID:11587647, PMID:12631270; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/572/
+      snippet: "The Mn-Mn solvent bridges are relatively labile and a second peroxide coordinates into\
+        \ the metal cluster, displacing the 
+relatively weakly bound, doubly protonated aquo bridge.\
+        \ This results in a symmetric (1,1) hydroperoxy intermediate. Glu178 may be involved in proton\
+        \ transfer from the peroxide."
+      notes: M-CSA entry 572, mechanism 1; M-CSA cites PMID:10413487, PMID:11587647, PMID:12631270; step
+        3
+  - subject: glu178
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Glu178 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/572/
+      snippet: "The Mn-Mn solvent bridges are relatively labile and a second peroxide coordinates into\
+        \ the metal cluster, displacing the 
+relatively weakly bound, doubly protonated aquo bridge.\
+        \ This results in a symmetric (1,1) hydroperoxy intermediate. Glu178 may be involved in proton\
+        \ transfer from the peroxide."
+      notes: M-CSA entry 572, mechanism 1; M-CSA cites PMID:10413487, PMID:11587647, PMID:12631270; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/572/
+      snippet: Glu178 protonates the peroxide bridge, polarising the O-O bond and activating it towards
+        heterolytic cleavage. There is loss of a water molecule and the Mn cluster is reoxidised by two
+        electron tranfser to regenerate the active site.
+      notes: M-CSA entry 572, mechanism 1; M-CSA cites PMID:10413487, PMID:11587647, PMID:12631270; step
+        4
+  - subject: glu178
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Glu178 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/572/
+      snippet: Glu178 protonates the peroxide bridge, polarising the O-O bond and activating it towards
+        heterolytic cleavage. There is loss of a water molecule and the Mn cluster is reoxidised by two
+        electron tranfser to regenerate the active site.
+      notes: M-CSA entry 572, mechanism 1; M-CSA cites PMID:10413487, PMID:11587647, PMID:12631270; step
+        4
+  - subject: glu35
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu35 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/572/
+      snippet: metal ligand
+      notes: M-CSA entry 572, mechanism 1; M-CSA cites PMID:10413487, PMID:11587647, PMID:12631270; M-CSA
+        catalytic-residue roles for Glu35
+  - subject: glu66
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu66 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/572/
+      snippet: metal ligand
+      notes: M-CSA entry 572, mechanism 1; M-CSA cites PMID:10413487, PMID:11587647, PMID:12631270; M-CSA
+        catalytic-residue roles for Glu66
+  - subject: his69
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His69 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/572/
+      snippet: metal ligand
+      notes: M-CSA entry 572, mechanism 1; M-CSA cites PMID:10413487, PMID:11587647, PMID:12631270; M-CSA
+        catalytic-residue roles for His69
+  - subject: glu148
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu148 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/572/
+      snippet: metal ligand
+      notes: M-CSA entry 572, mechanism 1; M-CSA cites PMID:10413487, PMID:11587647, PMID:12631270; M-CSA
+        catalytic-residue roles for Glu148
+  - subject: glu178
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu178 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/572/
+      snippet: proton acceptor, proton donor, proton shuttle (general acid/base)
+      notes: M-CSA entry 572, mechanism 1; M-CSA cites PMID:10413487, PMID:11587647, PMID:12631270; M-CSA
+        catalytic-residue roles for Glu178
+  - subject: his181
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His181 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/572/
+      snippet: metal ligand
+      notes: M-CSA entry 572, mechanism 1; M-CSA cites PMID:10413487, PMID:11587647, PMID:12631270; M-CSA
+        catalytic-residue roles for His181
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/572/
+      snippet: The hydrogen peroxide substrate becomes bound to the oxidised [3,3] state of the Mn cluster
+        via a terminal oxygen, replacing the nonbridging solvent (W3) on the Mn1 subsite. The [3,3] cluster
+        has a diamagnetic ground state, associated with the bis-m-bridged dimanganese core structure.
+        The bridging ligands act as proton acceptor sites in this reaction and support electronic coupling
+        between the two
+      notes: M-CSA entry 572, mechanism 1; M-CSA cites PMID:10413487, PMID:11587647, PMID:12631270; CATH
+        domain 1.20.1260.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/572/
+      snippet: The hydrogen peroxide substrate becomes bound to the oxidised [3,3] state of the Mn cluster
+        via a terminal oxygen, replacing the nonbridging solvent (W3) on the Mn1 subsite. The [3,3] cluster
+        has a diamagnetic ground state, associated with the bis-m-bridged dimanganese core structure.
+        The bridging ligands act as proton acceptor sites in this reaction and support electronic coupling
+        between the two
+      notes: M-CSA entry 572, mechanism 1; M-CSA cites PMID:10413487, PMID:11587647, PMID:12631270; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/572/
+      snippet: The hydrogen peroxide substrate becomes bound to the oxidised [3,3] state of the Mn cluster
+        via a terminal oxygen, replacing the nonbridging solvent (W3) on the Mn1 subsite. The [3,3] cluster
+        has a diamagnetic ground state, associated with the bis-m-bridged dimanganese core structure.
+        The bridging ligands act as proton acceptor sites in this reaction and support electronic coupling
+        between the two
+      notes: M-CSA entry 572, mechanism 1; M-CSA cites PMID:10413487, PMID:11587647, PMID:12631270; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/572/
+      snippet: The hydrogen peroxide substrate becomes bound to the oxidised [3,3] state of the Mn cluster
+        via a terminal oxygen, replacing the nonbridging solvent (W3) on the Mn1 subsite. The [3,3] cluster
+        has a diamagnetic ground state, associated with the bis-m-bridged dimanganese core structure.
+        The bridging ligands act as proton acceptor sites in this reaction and support electronic coupling
+        between the two
+      notes: M-CSA entry 572, mechanism 1; M-CSA cites PMID:10413487, PMID:11587647, PMID:12631270; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/572/
+      snippet: The hydrogen peroxide substrate becomes bound to the oxidised [3,3] state of the Mn cluster
+        via a terminal oxygen, replacing the nonbridging solvent (W3) on the Mn1 subsite. The [3,3] cluster
+        has a diamagnetic ground state, associated with the bis-m-bridged dimanganese core structure.
+        The bridging ligands act as proton acceptor sites in this reaction and support electronic coupling
+        between the two
+      notes: M-CSA entry 572, mechanism 1; M-CSA cites PMID:10413487, PMID:11587647, PMID:12631270; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (18 evidence-backed edges) transcribed from M-CSA entry 572;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.1.1.25
 - CHEBI:36208
@@ -245,4 +245,229 @@ definitions:
       Shikimate dehydrogenase catalyses the fourth step of the shikimate pathway, an essential aromatic biosynthesis pathway in plants and microorganisms. This enzyme belongs to the shikimate dehydrogenase family, in the superfamily of NAD(P)H-dependent oxidoreductases. The shikimate pathway is an attractive target for antifungal, antiparasite and herbicidal agents, and also for research into possible biosynthesis of hydroaromatic compounds for industrial processes.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of shikimate dehydrogenase
+  description: Stepwise mechanism transcribed from M-CSA entry 775 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: lys64
+    label: catalytic Lys64 (M-CSA/PDB numbering; UniProt residue 64)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q5SJF8
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: asp100
+    label: catalytic Asp100 (M-CSA/PDB numbering; UniProt residue 100)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q5SJF8
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: shikimate
+    node_type: CHEMICAL
+    grounding: CHEBI:36208
+  - node_id: reactant1
+    label: NADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+  - node_id: product0
+    label: 3-dehydroshikimate
+    node_type: CHEMICAL
+    grounding: CHEBI:16630
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: NADPH(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Lys64 acts as a general base and abstracts a proton from the 5-hydroxyl group of shikimate.
+      The hydride at C5 of shikimate is transferred to C4 of NADP+ in a bimolecular aromatic nucleophilic
+      addition reaction, forming the product.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: In an inferred reaction step Lys64 is deprotonated to regenerate the native state of
+      the enzyme.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: shikimate dehydrogenase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:775
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.10860 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.10860
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: shikimate dehydrogenase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.1.1.25
+  edges:
+  - subject: lys64
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys64 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/775/
+      snippet: Lys64 acts as a general base and abstracts a proton from the 5-hydroxyl group of shikimate.
+        The hydride at C5 of shikimate is transferred to C4 of NADP+ in a bimolecular aromatic nucleophilic
+        addition reaction, forming the product.
+      notes: M-CSA entry 775, mechanism 1; M-CSA cites PMID:12624088, PMID:12637497, PMID:12837789, PMID:12906831,
+        PMID:15596430, PMID:17649975, PMID:17825835, PMID:21846128; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/775/
+      snippet: In an inferred reaction step Lys64 is deprotonated to regenerate the native state of the
+        enzyme.
+      notes: M-CSA entry 775, mechanism 1; M-CSA cites PMID:12624088, PMID:12637497, PMID:12837789, PMID:12906831,
+        PMID:15596430, PMID:17649975, PMID:17825835, PMID:21846128; step 2
+  - subject: lys64
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Lys64 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/775/
+      snippet: In an inferred reaction step Lys64 is deprotonated to regenerate the native state of the
+        enzyme.
+      notes: M-CSA entry 775, mechanism 1; M-CSA cites PMID:12624088, PMID:12637497, PMID:12837789, PMID:12906831,
+        PMID:15596430, PMID:17649975, PMID:17825835, PMID:21846128; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/775/
+      snippet: Products.
+      notes: M-CSA entry 775, mechanism 1; M-CSA cites PMID:12624088, PMID:12637497, PMID:12837789, PMID:12906831,
+        PMID:15596430, PMID:17649975, PMID:17825835, PMID:21846128; step 3
+  - subject: lys64
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys64 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/775/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 775, mechanism 1; M-CSA cites PMID:12624088, PMID:12637497, PMID:12837789, PMID:12906831,
+        PMID:15596430, PMID:17649975, PMID:17825835, PMID:21846128; M-CSA catalytic-residue roles for
+        Lys64
+  - subject: asp100
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp100 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/775/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 775, mechanism 1; M-CSA cites PMID:12624088, PMID:12637497, PMID:12837789, PMID:12906831,
+        PMID:15596430, PMID:17649975, PMID:17825835, PMID:21846128; M-CSA catalytic-residue roles for
+        Asp100
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/775/
+      snippet: Shikimate 5-dehydrogenase catalyses the reduction of 3-dehydroshikimate to shikimate using
+        an NADH cofactor. Lys64 acts as a general base by in the initial proton abstraction from shikimate
+        and Asp100 facilitates the hydride transfer between shikimate and NADP+.
+      notes: M-CSA entry 775, mechanism 1; M-CSA cites PMID:12624088, PMID:12637497, PMID:12837789, PMID:12906831,
+        PMID:15596430, PMID:17649975, PMID:17825835, PMID:21846128; CATH domain 3.40.50.10860 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/775/
+      snippet: Shikimate 5-dehydrogenase catalyses the reduction of 3-dehydroshikimate to shikimate using
+        an NADH cofactor. Lys64 acts as a general base by in the initial proton abstraction from shikimate
+        and Asp100 facilitates the hydride transfer between shikimate and NADP+.
+      notes: M-CSA entry 775, mechanism 1; M-CSA cites PMID:12624088, PMID:12637497, PMID:12837789, PMID:12906831,
+        PMID:15596430, PMID:17649975, PMID:17825835, PMID:21846128; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/775/
+      snippet: Shikimate 5-dehydrogenase catalyses the reduction of 3-dehydroshikimate to shikimate using
+        an NADH cofactor. Lys64 acts as a general base by in the initial proton abstraction from shikimate
+        and Asp100 facilitates the hydride transfer between shikimate and NADP+.
+      notes: M-CSA entry 775, mechanism 1; M-CSA cites PMID:12624088, PMID:12637497, PMID:12837789, PMID:12906831,
+        PMID:15596430, PMID:17649975, PMID:17825835, PMID:21846128; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/775/
+      snippet: Shikimate 5-dehydrogenase catalyses the reduction of 3-dehydroshikimate to shikimate using
+        an NADH cofactor. Lys64 acts as a general base by in the initial proton abstraction from shikimate
+        and Asp100 facilitates the hydride transfer between shikimate and NADP+.
+      notes: M-CSA entry 775, mechanism 1; M-CSA cites PMID:12624088, PMID:12637497, PMID:12837789, PMID:12906831,
+        PMID:15596430, PMID:17649975, PMID:17825835, PMID:21846128; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/775/
+      snippet: Shikimate 5-dehydrogenase catalyses the reduction of 3-dehydroshikimate to shikimate using
+        an NADH cofactor. Lys64 acts as a general base by in the initial proton abstraction from shikimate
+        and Asp100 facilitates the hydride transfer between shikimate and NADP+.
+      notes: M-CSA entry 775, mechanism 1; M-CSA cites PMID:12624088, PMID:12637497, PMID:12837789, PMID:12906831,
+        PMID:15596430, PMID:17649975, PMID:17825835, PMID:21846128; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/775/
+      snippet: Shikimate 5-dehydrogenase catalyses the reduction of 3-dehydroshikimate to shikimate using
+        an NADH cofactor. Lys64 acts as a general base by in the initial proton abstraction from shikimate
+        and Asp100 facilitates the hydride transfer between shikimate and NADP+.
+      notes: M-CSA entry 775, mechanism 1; M-CSA cites PMID:12624088, PMID:12637497, PMID:12837789, PMID:12906831,
+        PMID:15596430, PMID:17649975, PMID:17825835, PMID:21846128; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/775/
+      snippet: Shikimate 5-dehydrogenase catalyses the reduction of 3-dehydroshikimate to shikimate using
+        an NADH cofactor. Lys64 acts as a general base by in the initial proton abstraction from shikimate
+        and Asp100 facilitates the hydride transfer between shikimate and NADP+.
+      notes: M-CSA entry 775, mechanism 1; M-CSA cites PMID:12624088, PMID:12637497, PMID:12837789, PMID:12906831,
+        PMID:15596430, PMID:17649975, PMID:17825835, PMID:21846128; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 775;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

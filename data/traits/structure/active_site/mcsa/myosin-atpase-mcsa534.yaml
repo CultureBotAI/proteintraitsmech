@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.6.1.8
 - CHEBI:30616
@@ -612,4 +612,317 @@ definitions:
       Myosin is the key enzyme in transducing the energy from ATP hydrolysis into directed movement. Muscle contraction involves the relative movements of myosin and actin filaments. This movement is achieved by the interaction of the globular heads of myosin with actin, and is driven by the hydrolysis of ATP in the myosin head domains.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of myosin ATPase
+  description: Stepwise mechanism transcribed from M-CSA entry 534 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: ser181
+    label: catalytic Ser181 (M-CSA/PDB numbering; UniProt residue 181)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08799
+    description: 'M-CSA roles: proton acceptor, proton donor, proton relay.'
+  - node_id: gly182
+    label: catalytic Gly182 (M-CSA/PDB numbering; UniProt residue 182)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08799
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: thr186
+    label: catalytic Thr186 (M-CSA/PDB numbering; UniProt residue 186)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08799
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asn233
+    label: catalytic Asn233 (M-CSA/PDB numbering; UniProt residue 233)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08799
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ser236
+    label: catalytic Ser236 (M-CSA/PDB numbering; UniProt residue 236)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08799
+    description: 'M-CSA roles: proton acceptor, proton donor, proton relay.'
+  - node_id: ser237
+    label: catalytic Ser237 (M-CSA/PDB numbering; UniProt residue 237)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08799
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: gly457
+    label: catalytic Gly457 (M-CSA/PDB numbering; UniProt residue 457)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08799
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu459
+    label: catalytic Glu459 (M-CSA/PDB numbering; UniProt residue 459)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08799
+    description: 'M-CSA roles: electrostatic stabiliser, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: ATP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: ADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Ser181 is deprotonated by the gamma phosphate which enables it to accept a proton from
+      the lytic water. This activates the water to nucleophilically attack the gamma phosphate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The pentavalent transition state collapses resulting in the cleavage of the phosphodiester
+      bond.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: myosin ATPase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:534
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.850.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.850.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: myosin ATPase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.6.1.8
+  edges:
+  - subject: ser181
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser181 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/534/
+      snippet: Ser181 is deprotonated by the gamma phosphate which enables it to accept a proton from
+        the lytic water. This activates the water to nucleophilically attack the gamma phosphate.
+      notes: M-CSA entry 534, mechanism 5; M-CSA cites PMID:15049682, PMID:16669626, PMID:21839658, PMID:26005996;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/534/
+      snippet: The pentavalent transition state collapses resulting in the cleavage of the phosphodiester
+        bond.
+      notes: M-CSA entry 534, mechanism 5; M-CSA cites PMID:15049682, PMID:16669626, PMID:21839658, PMID:26005996;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/534/
+      snippet: Products
+      notes: M-CSA entry 534, mechanism 5; M-CSA cites PMID:15049682, PMID:16669626, PMID:21839658, PMID:26005996;
+        step 3
+  - subject: ser181
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser181 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/534/
+      snippet: proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 534, mechanism 5; M-CSA cites PMID:15049682, PMID:16669626, PMID:21839658, PMID:26005996;
+        M-CSA catalytic-residue roles for Ser181
+  - subject: gly182
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly182 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/534/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 534, mechanism 5; M-CSA cites PMID:15049682, PMID:16669626, PMID:21839658, PMID:26005996;
+        M-CSA catalytic-residue roles for Gly182
+  - subject: thr186
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr186 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/534/
+      snippet: metal ligand
+      notes: M-CSA entry 534, mechanism 5; M-CSA cites PMID:15049682, PMID:16669626, PMID:21839658, PMID:26005996;
+        M-CSA catalytic-residue roles for Thr186
+  - subject: asn233
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn233 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/534/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 534, mechanism 5; M-CSA cites PMID:15049682, PMID:16669626, PMID:21839658, PMID:26005996;
+        M-CSA catalytic-residue roles for Asn233
+  - subject: ser236
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser236 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/534/
+      snippet: proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 534, mechanism 5; M-CSA cites PMID:15049682, PMID:16669626, PMID:21839658, PMID:26005996;
+        M-CSA catalytic-residue roles for Ser236
+  - subject: ser237
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser237 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/534/
+      snippet: metal ligand
+      notes: M-CSA entry 534, mechanism 5; M-CSA cites PMID:15049682, PMID:16669626, PMID:21839658, PMID:26005996;
+        M-CSA catalytic-residue roles for Ser237
+  - subject: gly457
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly457 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/534/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 534, mechanism 5; M-CSA cites PMID:15049682, PMID:16669626, PMID:21839658, PMID:26005996;
+        M-CSA catalytic-residue roles for Gly457
+  - subject: glu459
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu459 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/534/
+      snippet: electrostatic stabiliser, proton acceptor, proton donor
+      notes: M-CSA entry 534, mechanism 5; M-CSA cites PMID:15049682, PMID:16669626, PMID:21839658, PMID:26005996;
+        M-CSA catalytic-residue roles for Glu459
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/534/
+      snippet: As ATP binds and induces cleft closure so that the lytic water can be released from Arg
+        238 as it forms a salt bridge with Glu 459; Ser 181 is deprotonated by the gamma phosphate. This
+        enables it to accept a proton from the lytic water so that the water can then nucleophilically
+        attack the gamma phosphate. The transition state will collapse resulting in the cleavage of the
+        phosphodiester bond and
+      notes: M-CSA entry 534, mechanism 5; M-CSA cites PMID:15049682, PMID:16669626, PMID:21839658, PMID:26005996;
+        CATH domain 3.40.850.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/534/
+      snippet: As ATP binds and induces cleft closure so that the lytic water can be released from Arg
+        238 as it forms a salt bridge with Glu 459; Ser 181 is deprotonated by the gamma phosphate. This
+        enables it to accept a proton from the lytic water so that the water can then nucleophilically
+        attack the gamma phosphate. The transition state will collapse resulting in the cleavage of the
+        phosphodiester bond and
+      notes: M-CSA entry 534, mechanism 5; M-CSA cites PMID:15049682, PMID:16669626, PMID:21839658, PMID:26005996;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/534/
+      snippet: As ATP binds and induces cleft closure so that the lytic water can be released from Arg
+        238 as it forms a salt bridge with Glu 459; Ser 181 is deprotonated by the gamma phosphate. This
+        enables it to accept a proton from the lytic water so that the water can then nucleophilically
+        attack the gamma phosphate. The transition state will collapse resulting in the cleavage of the
+        phosphodiester bond and
+      notes: M-CSA entry 534, mechanism 5; M-CSA cites PMID:15049682, PMID:16669626, PMID:21839658, PMID:26005996;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/534/
+      snippet: As ATP binds and induces cleft closure so that the lytic water can be released from Arg
+        238 as it forms a salt bridge with Glu 459; Ser 181 is deprotonated by the gamma phosphate. This
+        enables it to accept a proton from the lytic water so that the water can then nucleophilically
+        attack the gamma phosphate. The transition state will collapse resulting in the cleavage of the
+        phosphodiester bond and
+      notes: M-CSA entry 534, mechanism 5; M-CSA cites PMID:15049682, PMID:16669626, PMID:21839658, PMID:26005996;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/534/
+      snippet: As ATP binds and induces cleft closure so that the lytic water can be released from Arg
+        238 as it forms a salt bridge with Glu 459; Ser 181 is deprotonated by the gamma phosphate. This
+        enables it to accept a proton from the lytic water so that the water can then nucleophilically
+        attack the gamma phosphate. The transition state will collapse resulting in the cleavage of the
+        phosphodiester bond and
+      notes: M-CSA entry 534, mechanism 5; M-CSA cites PMID:15049682, PMID:16669626, PMID:21839658, PMID:26005996;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/534/
+      snippet: As ATP binds and induces cleft closure so that the lytic water can be released from Arg
+        238 as it forms a salt bridge with Glu 459; Ser 181 is deprotonated by the gamma phosphate. This
+        enables it to accept a proton from the lytic water so that the water can then nucleophilically
+        attack the gamma phosphate. The transition state will collapse resulting in the cleavage of the
+        phosphodiester bond and
+      notes: M-CSA entry 534, mechanism 5; M-CSA cites PMID:15049682, PMID:16669626, PMID:21839658, PMID:26005996;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/534/
+      snippet: As ATP binds and induces cleft closure so that the lytic water can be released from Arg
+        238 as it forms a salt bridge with Glu 459; Ser 181 is deprotonated by the gamma phosphate. This
+        enables it to accept a proton from the lytic water so that the water can then nucleophilically
+        attack the gamma phosphate. The transition state will collapse resulting in the cleavage of the
+        phosphodiester bond and
+      notes: M-CSA entry 534, mechanism 5; M-CSA cites PMID:15049682, PMID:16669626, PMID:21839658, PMID:26005996;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (18 evidence-backed edges) transcribed from M-CSA entry 534;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

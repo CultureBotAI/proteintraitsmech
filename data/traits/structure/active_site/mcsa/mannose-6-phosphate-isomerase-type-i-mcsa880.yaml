@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.3.1.8
 - CHEBI:58735
@@ -318,4 +318,321 @@ definitions:
       Mannose-6-phosphate isomerase or phosphomannose isomerase (EC:5.3.1.8) (PMI) is the enzyme that catalyses the interconversion of mannose-6-phosphate and fructose-6-phosphate. In eukaryotes PMI is involved in the synthesis of GDP-mannose, a constituent of N- and O-linked glycans and GPI anchors and in prokaryotes it participates in a variety of pathways, including capsular polysaccharide biosynthesis and D-mannose metabolism. PMIs in this entry belong to the cupin superfamily whose functions range from isomerase and epimerase activities involved in the modification of cell wall carbohydrates in bacteria and plants, to non-enzymatic storage proteins in plant seeds, and transcription factors linked to congenital baldness in mammals [PMID: 11165500].
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of mannose-6-phosphate isomerase (type I)
+  description: Stepwise mechanism transcribed from M-CSA entry 880 (6 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: ser109
+    label: catalytic Ser109 (M-CSA/PDB numbering; UniProt residue 109)
+    node_type: RESIDUE
+    grounding: UniProtKB:P34948
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: gln111
+    label: catalytic Gln111 (M-CSA/PDB numbering; UniProt residue 111)
+    node_type: RESIDUE
+    grounding: UniProtKB:P34948
+    description: 'M-CSA roles: activator, metal ligand.'
+  - node_id: his113
+    label: catalytic His113 (M-CSA/PDB numbering; UniProt residue 113)
+    node_type: RESIDUE
+    grounding: UniProtKB:P34948
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: lys136
+    label: catalytic Lys136 (M-CSA/PDB numbering; UniProt residue 136)
+    node_type: RESIDUE
+    grounding: UniProtKB:P34948
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: glu138
+    label: catalytic Glu138 (M-CSA/PDB numbering; UniProt residue 138)
+    node_type: RESIDUE
+    grounding: UniProtKB:P34948
+    description: 'M-CSA roles: metal ligand, modifies pKa.'
+  - node_id: his285
+    label: catalytic His285 (M-CSA/PDB numbering; UniProt residue 285)
+    node_type: RESIDUE
+    grounding: UniProtKB:P34948
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: arg304
+    label: catalytic Arg304 (M-CSA/PDB numbering; UniProt residue 304)
+    node_type: RESIDUE
+    grounding: UniProtKB:P34948
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: lys310
+    label: catalytic Lys310 (M-CSA/PDB numbering; UniProt residue 310)
+    node_type: RESIDUE
+    grounding: UniProtKB:P34948
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: D-mannopyranose 6-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58735
+  - node_id: product0
+    label: D-fructofuranose 6-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:61527
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The ring of M6P opens.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Lys136 deprotonates C2 causing a keto-enol tautomerisation. The enolate becomes coordinated
+      to the zinc ion in place of the water after a conformational change.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Intramolecular proton transfer from O2 to O1.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The enolate collapses upon protonation by Lys136. A new water molecule coordinates to
+      the zinc ion.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: The ring closes and the product is formed.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: mannose-6-phosphate isomerase (type I) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:880
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.60.120.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.60.120.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: mannose-6-phosphate isomerase (type I) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.3.1.8
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/880/
+      snippet: Lys136 deprotonates C2 causing a keto-enol tautomerisation. The enolate becomes coordinated
+        to the zinc ion in place of the water after a conformational change.
+      notes: M-CSA entry 880, mechanism 1; M-CSA cites PMID:11165500, PMID:15716432, PMID:21058398; step
+        2
+  - subject: lys136
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Lys136 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/880/
+      snippet: Lys136 deprotonates C2 causing a keto-enol tautomerisation. The enolate becomes coordinated
+        to the zinc ion in place of the water after a conformational change.
+      notes: M-CSA entry 880, mechanism 1; M-CSA cites PMID:11165500, PMID:15716432, PMID:21058398; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/880/
+      snippet: Intramolecular proton transfer from O2 to O1.
+      notes: M-CSA entry 880, mechanism 1; M-CSA cites PMID:11165500, PMID:15716432, PMID:21058398; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/880/
+      snippet: The enolate collapses upon protonation by Lys136. A new water molecule coordinates to the
+        zinc ion.
+      notes: M-CSA entry 880, mechanism 1; M-CSA cites PMID:11165500, PMID:15716432, PMID:21058398; step
+        4
+  - subject: lys136
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Lys136 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/880/
+      snippet: The enolate collapses upon protonation by Lys136. A new water molecule coordinates to the
+        zinc ion.
+      notes: M-CSA entry 880, mechanism 1; M-CSA cites PMID:11165500, PMID:15716432, PMID:21058398; step
+        4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/880/
+      snippet: The ring closes and the product is formed.
+      notes: M-CSA entry 880, mechanism 1; M-CSA cites PMID:11165500, PMID:15716432, PMID:21058398; step
+        5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/880/
+      snippet: Products.
+      notes: M-CSA entry 880, mechanism 1; M-CSA cites PMID:11165500, PMID:15716432, PMID:21058398; step
+        6
+  - subject: ser109
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser109 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/880/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 880, mechanism 1; M-CSA cites PMID:11165500, PMID:15716432, PMID:21058398; M-CSA
+        catalytic-residue roles for Ser109
+  - subject: gln111
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln111 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/880/
+      snippet: activator, metal ligand
+      notes: M-CSA entry 880, mechanism 1; M-CSA cites PMID:11165500, PMID:15716432, PMID:21058398; M-CSA
+        catalytic-residue roles for Gln111
+  - subject: his113
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His113 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/880/
+      snippet: metal ligand
+      notes: M-CSA entry 880, mechanism 1; M-CSA cites PMID:11165500, PMID:15716432, PMID:21058398; M-CSA
+        catalytic-residue roles for His113
+  - subject: lys136
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys136 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/880/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 880, mechanism 1; M-CSA cites PMID:11165500, PMID:15716432, PMID:21058398; M-CSA
+        catalytic-residue roles for Lys136
+  - subject: glu138
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu138 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/880/
+      snippet: metal ligand, modifies pKa
+      notes: M-CSA entry 880, mechanism 1; M-CSA cites PMID:11165500, PMID:15716432, PMID:21058398; M-CSA
+        catalytic-residue roles for Glu138
+  - subject: his285
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His285 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/880/
+      snippet: metal ligand
+      notes: M-CSA entry 880, mechanism 1; M-CSA cites PMID:11165500, PMID:15716432, PMID:21058398; M-CSA
+        catalytic-residue roles for His285
+  - subject: arg304
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg304 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/880/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 880, mechanism 1; M-CSA cites PMID:11165500, PMID:15716432, PMID:21058398; M-CSA
+        catalytic-residue roles for Arg304
+  - subject: lys310
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys310 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/880/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 880, mechanism 1; M-CSA cites PMID:11165500, PMID:15716432, PMID:21058398; M-CSA
+        catalytic-residue roles for Lys310
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/880/
+      snippet: "<p>The reversible isomerisation reaction between M6P and F6P catalysed by PMI proceeds\
+        \ through a proton transfer between the two oxygen atoms O1 and O2 and a hydrogen transfer between\
+        \ the two carbon atoms C1 and C2 of the substrate and is thought to proceed through a “proton\
+        \ transfer mechanism” via a 1,2-cis-enediol(ate) high-energy intermediate.</p>
+<p>After the\
+        \ ligand has been bound, it undergo"
+      notes: M-CSA entry 880, mechanism 1; M-CSA cites PMID:11165500, PMID:15716432, PMID:21058398; CATH
+        domain 2.60.120.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/880/
+      snippet: "<p>The reversible isomerisation reaction between M6P and F6P catalysed by PMI proceeds\
+        \ through a proton transfer between the two oxygen atoms O1 and O2 and a hydrogen transfer between\
+        \ the two carbon atoms C1 and C2 of the substrate and is thought to proceed through a “proton\
+        \ transfer mechanism” via a 1,2-cis-enediol(ate) high-energy intermediate.</p>
+<p>After the\
+        \ ligand has been bound, it undergo"
+      notes: M-CSA entry 880, mechanism 1; M-CSA cites PMID:11165500, PMID:15716432, PMID:21058398; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/880/
+      snippet: "<p>The reversible isomerisation reaction between M6P and F6P catalysed by PMI proceeds\
+        \ through a proton transfer between the two oxygen atoms O1 and O2 and a hydrogen transfer between\
+        \ the two carbon atoms C1 and C2 of the substrate and is thought to proceed through a “proton\
+        \ transfer mechanism” via a 1,2-cis-enediol(ate) high-energy intermediate.</p>
+<p>After the\
+        \ ligand has been bound, it undergo"
+      notes: M-CSA entry 880, mechanism 1; M-CSA cites PMID:11165500, PMID:15716432, PMID:21058398; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/880/
+      snippet: "<p>The reversible isomerisation reaction between M6P and F6P catalysed by PMI proceeds\
+        \ through a proton transfer between the two oxygen atoms O1 and O2 and a hydrogen transfer between\
+        \ the two carbon atoms C1 and C2 of the substrate and is thought to proceed through a “proton\
+        \ transfer mechanism” via a 1,2-cis-enediol(ate) high-energy intermediate.</p>
+<p>After the\
+        \ ligand has been bound, it undergo"
+      notes: M-CSA entry 880, mechanism 1; M-CSA cites PMID:11165500, PMID:15716432, PMID:21058398; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (19 evidence-backed edges) transcribed from M-CSA entry 880;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.5.3.3
 - CHEBI:57947
@@ -208,4 +208,267 @@ definitions:
       Creatinase or creatine amidinohydrolase (EC:3.5.3.3) catalyses the conversion of creatine and water to sarcosine and urea. This is a key step in the metabolic breakdown of creatinine by micro-organisms. Creatinase is also found in higher animals but its metabolic role is as yet not known. The enzyme works as a homodimer, and is induced by choline chloride. Each monomer of creatinase has two clearly defined domains, a small N-terminal domain, and a large C-terminal domain. The C-terminal domain is a member of the MEROPS peptidase family M24 (clan MG), which share a common structural-fold, the "pita-bread" fold. The active site is located between the N- and C-terminal domains.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of creatinase
+  description: Stepwise mechanism transcribed from M-CSA entry 96 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: his232
+    label: catalytic His232 (M-CSA/PDB numbering; UniProt residue 232)
+    node_type: RESIDUE
+    grounding: UniProtKB:P38488
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: glu262
+    label: catalytic Glu262 (M-CSA/PDB numbering; UniProt residue 262)
+    node_type: RESIDUE
+    grounding: UniProtKB:P38488
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: glu358
+    label: catalytic Glu358 (M-CSA/PDB numbering; UniProt residue 358)
+    node_type: RESIDUE
+    grounding: UniProtKB:P38488
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: reactant0
+    label: creatine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57947
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: urea
+    node_type: CHEMICAL
+    grounding: CHEBI:16199
+  - node_id: product1
+    label: sarcosine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57433
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His232 deprotonates water, which initiates a nucleophilic attack on the guanidinium carbon
+      of the substrate in an addition reaction.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The methylated nitrogen of the guanidinium group deprotonates His232.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: His232 deprotonates the hydroxyl group added, eliminating sarcosine.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: water deprotonates His232 in an inferred return step.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: creatinase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:96
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.230.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.230.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: creatinase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.5.3.3
+  edges:
+  - subject: his232
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His232 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/96/
+      snippet: His232 deprotonates water, which initiates a nucleophilic attack on the guanidinium carbon
+        of the substrate in an addition reaction.
+      notes: M-CSA entry 96, mechanism 1; M-CSA cites PMID:1696320; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/96/
+      snippet: The methylated nitrogen of the guanidinium group deprotonates His232.
+      notes: M-CSA entry 96, mechanism 1; M-CSA cites PMID:1696320; step 2
+  - subject: his232
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His232 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/96/
+      snippet: The methylated nitrogen of the guanidinium group deprotonates His232.
+      notes: M-CSA entry 96, mechanism 1; M-CSA cites PMID:1696320; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/96/
+      snippet: His232 deprotonates the hydroxyl group added, eliminating sarcosine.
+      notes: M-CSA entry 96, mechanism 1; M-CSA cites PMID:1696320; step 3
+  - subject: his232
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His232 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/96/
+      snippet: His232 deprotonates the hydroxyl group added, eliminating sarcosine.
+      notes: M-CSA entry 96, mechanism 1; M-CSA cites PMID:1696320; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/96/
+      snippet: water deprotonates His232 in an inferred return step.
+      notes: M-CSA entry 96, mechanism 1; M-CSA cites PMID:1696320; step 4
+  - subject: his232
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: His232 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/96/
+      snippet: water deprotonates His232 in an inferred return step.
+      notes: M-CSA entry 96, mechanism 1; M-CSA cites PMID:1696320; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/96/
+      snippet: Products
+      notes: M-CSA entry 96, mechanism 1; M-CSA cites PMID:1696320; step 5
+  - subject: his232
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His232 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/96/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 96, mechanism 1; M-CSA cites PMID:1696320; M-CSA catalytic-residue roles for
+        His232
+  - subject: glu262
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu262 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/96/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 96, mechanism 1; M-CSA cites PMID:1696320; M-CSA catalytic-residue roles for
+        Glu262
+  - subject: glu358
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu358 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/96/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 96, mechanism 1; M-CSA cites PMID:1696320; M-CSA catalytic-residue roles for
+        Glu358
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/96/
+      snippet: Histidine 232 abstracts a proton from an active site water molecule to create a hydroxide
+        nucleophile. Glutamate 262 and 358 are negatively charged and break the resonance of the guanidinium
+        group, this allows the hydroxide to attack at C1. Histidine 232 now donates its proton to N3 which
+        leads to the C1-N3 bond breaking. Histidine 232 again abstracts a proton, this time from the hydroxide
+        attache
+      notes: M-CSA entry 96, mechanism 1; M-CSA cites PMID:1696320; CATH domain 3.90.230.10 assigned to
+        the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/96/
+      snippet: Histidine 232 abstracts a proton from an active site water molecule to create a hydroxide
+        nucleophile. Glutamate 262 and 358 are negatively charged and break the resonance of the guanidinium
+        group, this allows the hydroxide to attack at C1. Histidine 232 now donates its proton to N3 which
+        leads to the C1-N3 bond breaking. Histidine 232 again abstracts a proton, this time from the hydroxide
+        attache
+      notes: M-CSA entry 96, mechanism 1; M-CSA cites PMID:1696320; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/96/
+      snippet: Histidine 232 abstracts a proton from an active site water molecule to create a hydroxide
+        nucleophile. Glutamate 262 and 358 are negatively charged and break the resonance of the guanidinium
+        group, this allows the hydroxide to attack at C1. Histidine 232 now donates its proton to N3 which
+        leads to the C1-N3 bond breaking. Histidine 232 again abstracts a proton, this time from the hydroxide
+        attache
+      notes: M-CSA entry 96, mechanism 1; M-CSA cites PMID:1696320; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/96/
+      snippet: Histidine 232 abstracts a proton from an active site water molecule to create a hydroxide
+        nucleophile. Glutamate 262 and 358 are negatively charged and break the resonance of the guanidinium
+        group, this allows the hydroxide to attack at C1. Histidine 232 now donates its proton to N3 which
+        leads to the C1-N3 bond breaking. Histidine 232 again abstracts a proton, this time from the hydroxide
+        attache
+      notes: M-CSA entry 96, mechanism 1; M-CSA cites PMID:1696320; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/96/
+      snippet: Histidine 232 abstracts a proton from an active site water molecule to create a hydroxide
+        nucleophile. Glutamate 262 and 358 are negatively charged and break the resonance of the guanidinium
+        group, this allows the hydroxide to attack at C1. Histidine 232 now donates its proton to N3 which
+        leads to the C1-N3 bond breaking. Histidine 232 again abstracts a proton, this time from the hydroxide
+        attache
+      notes: M-CSA entry 96, mechanism 1; M-CSA cites PMID:1696320; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/96/
+      snippet: Histidine 232 abstracts a proton from an active site water molecule to create a hydroxide
+        nucleophile. Glutamate 262 and 358 are negatively charged and break the resonance of the guanidinium
+        group, this allows the hydroxide to attack at C1. Histidine 232 now donates its proton to N3 which
+        leads to the C1-N3 bond breaking. Histidine 232 again abstracts a proton, this time from the hydroxide
+        attache
+      notes: M-CSA entry 96, mechanism 1; M-CSA cites PMID:1696320; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (17 evidence-backed edges) transcribed from M-CSA entry 96;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

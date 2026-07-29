@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.13.19
 - CHEBI:77460
@@ -366,4 +366,275 @@ definitions:
       Renal Dipeptidase (hrDP), sourced from Homo sapiens, is a membrane-bound glyco-protein involved in hydrolysis of dipeptides. Hydrophobic dipeptides are cleaved preferentially, including prolyl amino acids. In the renal cortex, it is bound to the microvillar membranes in the brush-border region of proximal tubules. hrDP is involved in the hydrolytic metabolism of penem and carbapenem beta-lactam antibiotics. It also plays important roles in the renal metabolism of glutathione.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of membrane dipeptidase
+  description: Stepwise mechanism transcribed from M-CSA entry 168 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +16).
+  nodes:
+  - node_id: his20
+    label: catalytic His20 (M-CSA/PDB numbering; UniProt residue 36)
+    node_type: RESIDUE
+    grounding: UniProtKB:P16444
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp22
+    label: catalytic Asp22 (M-CSA/PDB numbering; UniProt residue 38)
+    node_type: RESIDUE
+    grounding: UniProtKB:P16444
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu125
+    label: catalytic Glu125 (M-CSA/PDB numbering; UniProt residue 141)
+    node_type: RESIDUE
+    grounding: UniProtKB:P16444
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his152
+    label: catalytic His152 (M-CSA/PDB numbering; UniProt residue 168)
+    node_type: RESIDUE
+    grounding: UniProtKB:P16444
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: his198
+    label: catalytic His198 (M-CSA/PDB numbering; UniProt residue 214)
+    node_type: RESIDUE
+    grounding: UniProtKB:P16444
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his219
+    label: catalytic His219 (M-CSA/PDB numbering; UniProt residue 235)
+    node_type: RESIDUE
+    grounding: UniProtKB:P16444
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp288
+    label: catalytic Asp288 (M-CSA/PDB numbering; UniProt residue 304)
+    node_type: RESIDUE
+    grounding: UniProtKB:P16444
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: L-aminoacyl-L-amino acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:77460
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: L-alpha-amino acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:59869
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp288 deprotonates the zinc activated water molecule.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The activated hydroxide attacks the peptide carbonyl in a nucleophilic addition.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The oxyanion initiates an elimination that cleaves the peptide bond, releasing the amino
+      acid products, the N-terminus then protonates from Asp288
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Product
+  - node_id: active_site
+    label: membrane dipeptidase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:168
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.140 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.140
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: membrane dipeptidase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.13.19
+  edges:
+  - subject: asp288
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp288 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/168/
+      snippet: Asp288 deprotonates the zinc activated water molecule.
+      notes: M-CSA entry 168, mechanism 1; M-CSA cites PMID:12144777, PMID:19879002; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/168/
+      snippet: The activated hydroxide attacks the peptide carbonyl in a nucleophilic addition.
+      notes: M-CSA entry 168, mechanism 1; M-CSA cites PMID:12144777, PMID:19879002; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/168/
+      snippet: The oxyanion initiates an elimination that cleaves the peptide bond, releasing the amino
+        acid products, the N-terminus then protonates from Asp288
+      notes: M-CSA entry 168, mechanism 1; M-CSA cites PMID:12144777, PMID:19879002; step 3
+  - subject: asp288
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Asp288 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/168/
+      snippet: The oxyanion initiates an elimination that cleaves the peptide bond, releasing the amino
+        acid products, the N-terminus then protonates from Asp288
+      notes: M-CSA entry 168, mechanism 1; M-CSA cites PMID:12144777, PMID:19879002; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/168/
+      snippet: Product
+      notes: M-CSA entry 168, mechanism 1; M-CSA cites PMID:12144777, PMID:19879002; step 4
+  - subject: his20
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His20 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/168/
+      snippet: metal ligand
+      notes: M-CSA entry 168, mechanism 1; M-CSA cites PMID:12144777, PMID:19879002; M-CSA catalytic-residue
+        roles for His20
+  - subject: asp22
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp22 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/168/
+      snippet: metal ligand
+      notes: M-CSA entry 168, mechanism 1; M-CSA cites PMID:12144777, PMID:19879002; M-CSA catalytic-residue
+        roles for Asp22
+  - subject: glu125
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu125 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/168/
+      snippet: metal ligand
+      notes: M-CSA entry 168, mechanism 1; M-CSA cites PMID:12144777, PMID:19879002; M-CSA catalytic-residue
+        roles for Glu125
+  - subject: his152
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His152 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/168/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 168, mechanism 1; M-CSA cites PMID:12144777, PMID:19879002; M-CSA catalytic-residue
+        roles for His152
+  - subject: his198
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His198 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/168/
+      snippet: metal ligand
+      notes: M-CSA entry 168, mechanism 1; M-CSA cites PMID:12144777, PMID:19879002; M-CSA catalytic-residue
+        roles for His198
+  - subject: his219
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His219 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/168/
+      snippet: metal ligand
+      notes: M-CSA entry 168, mechanism 1; M-CSA cites PMID:12144777, PMID:19879002; M-CSA catalytic-residue
+        roles for His219
+  - subject: asp288
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp288 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/168/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 168, mechanism 1; M-CSA cites PMID:12144777, PMID:19879002; M-CSA catalytic-residue
+        roles for Asp288
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/168/
+      snippet: Asp 288 deprotonates a water molecule in the active site. The activated water molecule
+        performs nucleophilic attack upon the carbonyl group of the amide. An oxyanion tetrahedral transition
+        state is formed. This is stabilised electrostatically by protonated His 152. The tetrahedral transition
+        state then collapses and the amine group of the scissile amide bond leaves.
+      notes: M-CSA entry 168, mechanism 1; M-CSA cites PMID:12144777, PMID:19879002; CATH domain 3.20.20.140
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/168/
+      snippet: Asp 288 deprotonates a water molecule in the active site. The activated water molecule
+        performs nucleophilic attack upon the carbonyl group of the amide. An oxyanion tetrahedral transition
+        state is formed. This is stabilised electrostatically by protonated His 152. The tetrahedral transition
+        state then collapses and the amine group of the scissile amide bond leaves.
+      notes: M-CSA entry 168, mechanism 1; M-CSA cites PMID:12144777, PMID:19879002; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/168/
+      snippet: Asp 288 deprotonates a water molecule in the active site. The activated water molecule
+        performs nucleophilic attack upon the carbonyl group of the amide. An oxyanion tetrahedral transition
+        state is formed. This is stabilised electrostatically by protonated His 152. The tetrahedral transition
+        state then collapses and the amine group of the scissile amide bond leaves.
+      notes: M-CSA entry 168, mechanism 1; M-CSA cites PMID:12144777, PMID:19879002; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/168/
+      snippet: Asp 288 deprotonates a water molecule in the active site. The activated water molecule
+        performs nucleophilic attack upon the carbonyl group of the amide. An oxyanion tetrahedral transition
+        state is formed. This is stabilised electrostatically by protonated His 152. The tetrahedral transition
+        state then collapses and the amine group of the scissile amide bond leaves.
+      notes: M-CSA entry 168, mechanism 1; M-CSA cites PMID:12144777, PMID:19879002; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/168/
+      snippet: Asp 288 deprotonates a water molecule in the active site. The activated water molecule
+        performs nucleophilic attack upon the carbonyl group of the amide. An oxyanion tetrahedral transition
+        state is formed. This is stabilised electrostatically by protonated His 152. The tetrahedral transition
+        state then collapses and the amine group of the scissile amide bond leaves.
+      notes: M-CSA entry 168, mechanism 1; M-CSA cites PMID:12144777, PMID:19879002; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (17 evidence-backed edges) transcribed from M-CSA entry 168;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

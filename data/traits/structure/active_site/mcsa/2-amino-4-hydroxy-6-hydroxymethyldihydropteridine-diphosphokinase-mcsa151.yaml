@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.7.6.3
 - CHEBI:456215
@@ -161,4 +161,231 @@ definitions:
       6-Hydroxymethyl-7,8-dihydropterin pyrophosphokinase (HPPK) catalyses the transfer of pyrophosphate from ATP to 6-hydroxymethyl-7,8-dihydropterin(HP), the first reaction in the folate biosynthesis. Folate cofactors are essential for life - they are required for the biosynthesis of purine and pyrimidine bases and certain amino acids. Mammals obtain folate from their diets by an active transport system. In contrast, many microorganisms lack the active transport system and must synthesise folate de novo. Therefore, enzymes in the folate biosynthesis pathway, including HPPK, are target for developing antimicrobial agents.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 2-amino-4-hydroxy-6-hydroxymethyldihydropteridine diphosphokinase
+  description: Stepwise mechanism transcribed from M-CSA entry 151 (2 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +1).
+  nodes:
+  - node_id: arg82
+    label: catalytic Arg82 (M-CSA/PDB numbering; UniProt residue 83)
+    node_type: RESIDUE
+    grounding: UniProtKB:P26281
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: arg92
+    label: catalytic Arg92 (M-CSA/PDB numbering; UniProt residue 93)
+    node_type: RESIDUE
+    grounding: UniProtKB:P26281
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: asp95
+    label: catalytic Asp95 (M-CSA/PDB numbering; UniProt residue 96)
+    node_type: RESIDUE
+    grounding: UniProtKB:P26281
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp97
+    label: catalytic Asp97 (M-CSA/PDB numbering; UniProt residue 98)
+    node_type: RESIDUE
+    grounding: UniProtKB:P26281
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: 2-amino-6-(hydroxymethyl)-7,8-dihydropteridin-4-one
+    node_type: CHEMICAL
+    grounding: CHEBI:44841
+  - node_id: reactant1
+    label: ATP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+  - node_id: product0
+    label: adenosine 5'-monophosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+  - node_id: product1
+    label: (7,8-dihydropterin-6-yl)methyl diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:72950
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Water deprotonates the alcohol group of 6-hydroxymethyl-7,8-dihydropterin, which in turn
+      attacks the beta phosphate of the ATP in a nucelophilic substitution reaction that generates the
+      7,8-dihydro-6-(diphosphooxymethyl)pterin and AMP products
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: 2-amino-4-hydroxy-6-hydroxymethyldihydropteridine diphosphokinase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:151
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.70.560 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.70.560
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: 2-amino-4-hydroxy-6-hydroxymethyldihydropteridine diphosphokinase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.7.6.3
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/151/
+      snippet: Products
+      notes: M-CSA entry 151, mechanism 1; M-CSA cites PMID:11080626, PMID:12578371, PMID:15952765; step
+        2
+  - subject: arg82
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg82 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/151/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 151, mechanism 1; M-CSA cites PMID:11080626, PMID:12578371, PMID:15952765; M-CSA
+        catalytic-residue roles for Arg82
+  - subject: arg92
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg92 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/151/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 151, mechanism 1; M-CSA cites PMID:11080626, PMID:12578371, PMID:15952765; M-CSA
+        catalytic-residue roles for Arg92
+  - subject: asp95
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp95 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/151/
+      snippet: metal ligand
+      notes: M-CSA entry 151, mechanism 1; M-CSA cites PMID:11080626, PMID:12578371, PMID:15952765; M-CSA
+        catalytic-residue roles for Asp95
+  - subject: asp97
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp97 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/151/
+      snippet: metal ligand
+      notes: M-CSA entry 151, mechanism 1; M-CSA cites PMID:11080626, PMID:12578371, PMID:15952765; M-CSA
+        catalytic-residue roles for Asp97
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/151/
+      snippet: The catalysis follows an inline displacement mechanism. The hydroxyl group of HP performs
+        a nucleophilic attack to the beta-phosphate group of ATP to yield HP-pyrophosphate and AMP. Arg92,
+        Arg82 and two Mg(II) ions stabilise the transition state. Both Mg(II) ions activate the beta-phosphorus
+        for the nucleophilic attack and the Mg(II) ion coordinated to the hydroxyl group of HP reduces
+        the hydroxyl
+      notes: M-CSA entry 151, mechanism 1; M-CSA cites PMID:11080626, PMID:12578371, PMID:15952765; CATH
+        domain 3.30.70.560 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/151/
+      snippet: The catalysis follows an inline displacement mechanism. The hydroxyl group of HP performs
+        a nucleophilic attack to the beta-phosphate group of ATP to yield HP-pyrophosphate and AMP. Arg92,
+        Arg82 and two Mg(II) ions stabilise the transition state. Both Mg(II) ions activate the beta-phosphorus
+        for the nucleophilic attack and the Mg(II) ion coordinated to the hydroxyl group of HP reduces
+        the hydroxyl
+      notes: M-CSA entry 151, mechanism 1; M-CSA cites PMID:11080626, PMID:12578371, PMID:15952765; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/151/
+      snippet: The catalysis follows an inline displacement mechanism. The hydroxyl group of HP performs
+        a nucleophilic attack to the beta-phosphate group of ATP to yield HP-pyrophosphate and AMP. Arg92,
+        Arg82 and two Mg(II) ions stabilise the transition state. Both Mg(II) ions activate the beta-phosphorus
+        for the nucleophilic attack and the Mg(II) ion coordinated to the hydroxyl group of HP reduces
+        the hydroxyl
+      notes: M-CSA entry 151, mechanism 1; M-CSA cites PMID:11080626, PMID:12578371, PMID:15952765; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/151/
+      snippet: The catalysis follows an inline displacement mechanism. The hydroxyl group of HP performs
+        a nucleophilic attack to the beta-phosphate group of ATP to yield HP-pyrophosphate and AMP. Arg92,
+        Arg82 and two Mg(II) ions stabilise the transition state. Both Mg(II) ions activate the beta-phosphorus
+        for the nucleophilic attack and the Mg(II) ion coordinated to the hydroxyl group of HP reduces
+        the hydroxyl
+      notes: M-CSA entry 151, mechanism 1; M-CSA cites PMID:11080626, PMID:12578371, PMID:15952765; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/151/
+      snippet: The catalysis follows an inline displacement mechanism. The hydroxyl group of HP performs
+        a nucleophilic attack to the beta-phosphate group of ATP to yield HP-pyrophosphate and AMP. Arg92,
+        Arg82 and two Mg(II) ions stabilise the transition state. Both Mg(II) ions activate the beta-phosphorus
+        for the nucleophilic attack and the Mg(II) ion coordinated to the hydroxyl group of HP reduces
+        the hydroxyl
+      notes: M-CSA entry 151, mechanism 1; M-CSA cites PMID:11080626, PMID:12578371, PMID:15952765; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/151/
+      snippet: The catalysis follows an inline displacement mechanism. The hydroxyl group of HP performs
+        a nucleophilic attack to the beta-phosphate group of ATP to yield HP-pyrophosphate and AMP. Arg92,
+        Arg82 and two Mg(II) ions stabilise the transition state. Both Mg(II) ions activate the beta-phosphorus
+        for the nucleophilic attack and the Mg(II) ion coordinated to the hydroxyl group of HP reduces
+        the hydroxyl
+      notes: M-CSA entry 151, mechanism 1; M-CSA cites PMID:11080626, PMID:12578371, PMID:15952765; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/151/
+      snippet: The catalysis follows an inline displacement mechanism. The hydroxyl group of HP performs
+        a nucleophilic attack to the beta-phosphate group of ATP to yield HP-pyrophosphate and AMP. Arg92,
+        Arg82 and two Mg(II) ions stabilise the transition state. Both Mg(II) ions activate the beta-phosphorus
+        for the nucleophilic attack and the Mg(II) ion coordinated to the hydroxyl group of HP reduces
+        the hydroxyl
+      notes: M-CSA entry 151, mechanism 1; M-CSA cites PMID:11080626, PMID:12578371, PMID:15952765; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (12 evidence-backed edges) transcribed from M-CSA entry 151;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

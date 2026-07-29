@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.5.2.6
 - CHEBI:35627
@@ -193,4 +193,310 @@ definitions:
       Class D beta lactamases are able to break down oxacillin and cloxacillin thus playing a vital role in antibiotic resistance in bacteria as they can prevent these compounds from inhibiting the DD peptidases involved in bacterial cell wall synthesis. As part of the family of serine beta lactamases, which also includes classes A B and C of the beta lactamases, they share significant homology with the DD peptidases, indicating that they diverged from a common ancestor. However, they are able to hydrolyse the acyl enzyme intermediate that forms through initial nucleophilic attack on the beta-lactam ring much more quickly, thus do not become inhibited by the beta lactams in the same way.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of beta-lactamase (Class D)
+  description: Stepwise mechanism transcribed from M-CSA entry 210 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: ser67
+    label: catalytic Ser67 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P13661
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor.'
+  - node_id: lys70
+    label: catalytic Lys70 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P13661
+    description: 'M-CSA roles: proton acceptor, proton donor, proton relay.'
+  - node_id: ser115
+    label: catalytic Ser115 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P13661
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor,
+      proton relay.'
+  - node_id: ser120
+    label: catalytic Ser120 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P13661
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: trp160
+    label: catalytic Trp160 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P13661
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: ala215
+    label: catalytic Ala215 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P13661
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: reactant0
+    label: beta-lactam
+    node_type: CHEMICAL
+    grounding: CHEBI:35627
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: substituted beta-amino acids
+    node_type: CHEMICAL
+    grounding: CHEBI:33705
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Carbamylated lysine (Kcx70) deprotonates the alcohol of Ser67, which initiates a nucleophilic
+      addition to the carbonyl group of the betalactam ring.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The tetrahedral intermediate collapses, cleaving the C-N bond, which deprotonates Ser115,
+      which in turn deprotonates the secondary amine of Kcx70, which deprotonates the carboxyl group of
+      Kcx70.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Kcx70 deprotonates water, which attacks the carbonyl carbon of the covalently attached
+      intermediate in a nucleophilic addition.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The tetrahedral intermediate collapses, eliminating Ser67, which reprotonates from Kcx70,
+      producing the product.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Product
+  - node_id: active_site
+    label: beta-lactamase (Class D) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:210
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.710.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.710.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: beta-lactamase (Class D) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.5.2.6
+  edges:
+  - subject: ser67
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser67 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/210/
+      snippet: Carbamylated lysine (Kcx70) deprotonates the alcohol of Ser67, which initiates a nucleophilic
+        addition to the carbonyl group of the betalactam ring.
+      notes: M-CSA entry 210, mechanism 1; M-CSA cites PMID:11188693, PMID:12493831, PMID:23902256; step
+        1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/210/
+      snippet: The tetrahedral intermediate collapses, cleaving the C-N bond, which deprotonates Ser115,
+        which in turn deprotonates the secondary amine of Kcx70, which deprotonates the carboxyl group
+        of Kcx70.
+      notes: M-CSA entry 210, mechanism 1; M-CSA cites PMID:11188693, PMID:12493831, PMID:23902256; step
+        2
+  - subject: ser115
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Ser115 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/210/
+      snippet: The tetrahedral intermediate collapses, cleaving the C-N bond, which deprotonates Ser115,
+        which in turn deprotonates the secondary amine of Kcx70, which deprotonates the carboxyl group
+        of Kcx70.
+      notes: M-CSA entry 210, mechanism 1; M-CSA cites PMID:11188693, PMID:12493831, PMID:23902256; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/210/
+      snippet: Kcx70 deprotonates water, which attacks the carbonyl carbon of the covalently attached
+        intermediate in a nucleophilic addition.
+      notes: M-CSA entry 210, mechanism 1; M-CSA cites PMID:11188693, PMID:12493831, PMID:23902256; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/210/
+      snippet: The tetrahedral intermediate collapses, eliminating Ser67, which reprotonates from Kcx70,
+        producing the product.
+      notes: M-CSA entry 210, mechanism 1; M-CSA cites PMID:11188693, PMID:12493831, PMID:23902256; step
+        4
+  - subject: ser67
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Ser67 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/210/
+      snippet: The tetrahedral intermediate collapses, eliminating Ser67, which reprotonates from Kcx70,
+        producing the product.
+      notes: M-CSA entry 210, mechanism 1; M-CSA cites PMID:11188693, PMID:12493831, PMID:23902256; step
+        4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/210/
+      snippet: Product
+      notes: M-CSA entry 210, mechanism 1; M-CSA cites PMID:11188693, PMID:12493831, PMID:23902256; step
+        5
+  - subject: ser67
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser67 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/210/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor
+      notes: M-CSA entry 210, mechanism 1; M-CSA cites PMID:11188693, PMID:12493831, PMID:23902256; M-CSA
+        catalytic-residue roles for Ser67
+  - subject: lys70
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys70 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/210/
+      snippet: proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 210, mechanism 1; M-CSA cites PMID:11188693, PMID:12493831, PMID:23902256; M-CSA
+        catalytic-residue roles for Lys70
+  - subject: ser115
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser115 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/210/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 210, mechanism 1; M-CSA cites PMID:11188693, PMID:12493831, PMID:23902256; M-CSA
+        catalytic-residue roles for Ser115
+  - subject: ser120
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser120 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/210/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 210, mechanism 1; M-CSA cites PMID:11188693, PMID:12493831, PMID:23902256; M-CSA
+        catalytic-residue roles for Ser120
+  - subject: trp160
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp160 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/210/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 210, mechanism 1; M-CSA cites PMID:11188693, PMID:12493831, PMID:23902256; M-CSA
+        catalytic-residue roles for Trp160
+  - subject: ala215
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ala215 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/210/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 210, mechanism 1; M-CSA cites PMID:11188693, PMID:12493831, PMID:23902256; M-CSA
+        catalytic-residue roles for Ala215
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/210/
+      snippet: Ser 67, having been deprotonated by carboxylated Lys 70, is able to act as a nucleophile
+        to attack the strained peptide bond in the beta lactam ring and form a tetrahedral intermediate,
+        stabilised by the backbone amide of Ser 67. The collapse of this intermediate, facilitated by
+        protonation of the leaving group by the epsilon NH of the carboxylated Lys 70, results in an acyl
+        enzyme intermediate. T
+      notes: M-CSA entry 210, mechanism 1; M-CSA cites PMID:11188693, PMID:12493831, PMID:23902256; CATH
+        domain 3.40.710.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/210/
+      snippet: Ser 67, having been deprotonated by carboxylated Lys 70, is able to act as a nucleophile
+        to attack the strained peptide bond in the beta lactam ring and form a tetrahedral intermediate,
+        stabilised by the backbone amide of Ser 67. The collapse of this intermediate, facilitated by
+        protonation of the leaving group by the epsilon NH of the carboxylated Lys 70, results in an acyl
+        enzyme intermediate. T
+      notes: M-CSA entry 210, mechanism 1; M-CSA cites PMID:11188693, PMID:12493831, PMID:23902256; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/210/
+      snippet: Ser 67, having been deprotonated by carboxylated Lys 70, is able to act as a nucleophile
+        to attack the strained peptide bond in the beta lactam ring and form a tetrahedral intermediate,
+        stabilised by the backbone amide of Ser 67. The collapse of this intermediate, facilitated by
+        protonation of the leaving group by the epsilon NH of the carboxylated Lys 70, results in an acyl
+        enzyme intermediate. T
+      notes: M-CSA entry 210, mechanism 1; M-CSA cites PMID:11188693, PMID:12493831, PMID:23902256; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/210/
+      snippet: Ser 67, having been deprotonated by carboxylated Lys 70, is able to act as a nucleophile
+        to attack the strained peptide bond in the beta lactam ring and form a tetrahedral intermediate,
+        stabilised by the backbone amide of Ser 67. The collapse of this intermediate, facilitated by
+        protonation of the leaving group by the epsilon NH of the carboxylated Lys 70, results in an acyl
+        enzyme intermediate. T
+      notes: M-CSA entry 210, mechanism 1; M-CSA cites PMID:11188693, PMID:12493831, PMID:23902256; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/210/
+      snippet: Ser 67, having been deprotonated by carboxylated Lys 70, is able to act as a nucleophile
+        to attack the strained peptide bond in the beta lactam ring and form a tetrahedral intermediate,
+        stabilised by the backbone amide of Ser 67. The collapse of this intermediate, facilitated by
+        protonation of the leaving group by the epsilon NH of the carboxylated Lys 70, results in an acyl
+        enzyme intermediate. T
+      notes: M-CSA entry 210, mechanism 1; M-CSA cites PMID:11188693, PMID:12493831, PMID:23902256; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (18 evidence-backed edges) transcribed from M-CSA entry 210;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

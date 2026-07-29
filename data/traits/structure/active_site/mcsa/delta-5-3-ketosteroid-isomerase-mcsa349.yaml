@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.3.3.1
 - CHEBI:47909
@@ -139,4 +139,197 @@ definitions:
       Delta5-3 ketosteroid isomerase catalyses the isomerisation of delta5-3-ketosteroid to delta4-3-ketosteroid by intramolecular transfer of the C4beta proton to the C6beta position via a dienolic intermediate. The mechanism proceeds at a diffusion controlled limit within an environment shielded from solvent. In mammals, this reaction is an essential step in the biosynthesis of steroid hormones and is catalysed by a membrane-bound complex. In bacteria, the enzyme appears to play a metabolic role in the degrading steroid substrates.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of delta 5-3-ketosteroid isomerase
+  description: Stepwise mechanism transcribed from M-CSA entry 349 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: tyr16
+    label: catalytic Tyr16 (M-CSA/PDB numbering; UniProt residue 16)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07445
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: asp40
+    label: catalytic Asp40 (M-CSA/PDB numbering; UniProt residue 40)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07445
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: asp100
+    label: catalytic Asp100 (M-CSA/PDB numbering; UniProt residue 100)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07445
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp103
+    label: catalytic Asp103 (M-CSA/PDB numbering; UniProt residue 103)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07445
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: 3-oxo-Delta(5)-steroid
+    node_type: CHEMICAL
+    grounding: CHEBI:47907
+  - node_id: product0
+    label: 3-oxo-Delta(4) steroid
+    node_type: CHEMICAL
+    grounding: CHEBI:47909
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp40A acts as a general base, abstracting the alpha-keto proton and initiating tautomerisation.
+      The enolate is protonated by Tyr16A.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Tyr14A deprotonates the enol, initiating conjugate rearrangement with concomitant reprotonation
+      at the C6 position.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: delta 5-3-ketosteroid isomerase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:349
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.10.450.50 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.10.450.50
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: delta 5-3-ketosteroid isomerase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.3.3.1
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/349/
+      snippet: Tyr14A deprotonates the enol, initiating conjugate rearrangement with concomitant reprotonation
+        at the C6 position.
+      notes: M-CSA entry 349, mechanism 2; M-CSA cites PMID:10653633, PMID:11007792, PMID:12537487, PMID:15228388,
+        PMID:23356661, PMID:24787954, PMID:2706241, PMID:9103200, PMID:9369474; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/349/
+      snippet: Products.
+      notes: M-CSA entry 349, mechanism 2; M-CSA cites PMID:10653633, PMID:11007792, PMID:12537487, PMID:15228388,
+        PMID:23356661, PMID:24787954, PMID:2706241, PMID:9103200, PMID:9369474; step 3
+  - subject: tyr16
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr16 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/349/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 349, mechanism 2; M-CSA cites PMID:10653633, PMID:11007792, PMID:12537487, PMID:15228388,
+        PMID:23356661, PMID:24787954, PMID:2706241, PMID:9103200, PMID:9369474; M-CSA catalytic-residue
+        roles for Tyr16
+  - subject: asp40
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp40 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/349/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 349, mechanism 2; M-CSA cites PMID:10653633, PMID:11007792, PMID:12537487, PMID:15228388,
+        PMID:23356661, PMID:24787954, PMID:2706241, PMID:9103200, PMID:9369474; M-CSA catalytic-residue
+        roles for Asp40
+  - subject: asp100
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp100 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/349/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 349, mechanism 2; M-CSA cites PMID:10653633, PMID:11007792, PMID:12537487, PMID:15228388,
+        PMID:23356661, PMID:24787954, PMID:2706241, PMID:9103200, PMID:9369474; M-CSA catalytic-residue
+        roles for Asp100
+  - subject: asp103
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp103 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/349/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 349, mechanism 2; M-CSA cites PMID:10653633, PMID:11007792, PMID:12537487, PMID:15228388,
+        PMID:23356661, PMID:24787954, PMID:2706241, PMID:9103200, PMID:9369474; M-CSA catalytic-residue
+        roles for Asp103
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/349/
+      snippet: Asp40 initiates the reaction by abstracting the C4beta proton of the steroid substrate,
+        deprotonating the C3-OH group. The activation energy of proton transfer is reduced by the presence
+        of Asp103 and Tyr16 which form strong low barrier hydrogen bonds to the dienolyic intermediate,
+        interactions which are stronger than the hydrogen bonding between to the initial substrate. The
+        resulting dienolate i
+      notes: M-CSA entry 349, mechanism 2; M-CSA cites PMID:10653633, PMID:11007792, PMID:12537487, PMID:15228388,
+        PMID:23356661, PMID:24787954, PMID:2706241, PMID:9103200, PMID:9369474; CATH domain 3.10.450.50
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/349/
+      snippet: Asp40 initiates the reaction by abstracting the C4beta proton of the steroid substrate,
+        deprotonating the C3-OH group. The activation energy of proton transfer is reduced by the presence
+        of Asp103 and Tyr16 which form strong low barrier hydrogen bonds to the dienolyic intermediate,
+        interactions which are stronger than the hydrogen bonding between to the initial substrate. The
+        resulting dienolate i
+      notes: M-CSA entry 349, mechanism 2; M-CSA cites PMID:10653633, PMID:11007792, PMID:12537487, PMID:15228388,
+        PMID:23356661, PMID:24787954, PMID:2706241, PMID:9103200, PMID:9369474; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/349/
+      snippet: Asp40 initiates the reaction by abstracting the C4beta proton of the steroid substrate,
+        deprotonating the C3-OH group. The activation energy of proton transfer is reduced by the presence
+        of Asp103 and Tyr16 which form strong low barrier hydrogen bonds to the dienolyic intermediate,
+        interactions which are stronger than the hydrogen bonding between to the initial substrate. The
+        resulting dienolate i
+      notes: M-CSA entry 349, mechanism 2; M-CSA cites PMID:10653633, PMID:11007792, PMID:12537487, PMID:15228388,
+        PMID:23356661, PMID:24787954, PMID:2706241, PMID:9103200, PMID:9369474; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/349/
+      snippet: Asp40 initiates the reaction by abstracting the C4beta proton of the steroid substrate,
+        deprotonating the C3-OH group. The activation energy of proton transfer is reduced by the presence
+        of Asp103 and Tyr16 which form strong low barrier hydrogen bonds to the dienolyic intermediate,
+        interactions which are stronger than the hydrogen bonding between to the initial substrate. The
+        resulting dienolate i
+      notes: M-CSA entry 349, mechanism 2; M-CSA cites PMID:10653633, PMID:11007792, PMID:12537487, PMID:15228388,
+        PMID:23356661, PMID:24787954, PMID:2706241, PMID:9103200, PMID:9369474; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (10 evidence-backed edges) transcribed from M-CSA entry 349;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

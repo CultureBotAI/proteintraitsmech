@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.21.43
 - CHEBI:73819
@@ -167,4 +167,236 @@ definitions:
       C3/C5 convertase is part of the complement system which is a major defence system in blood plasma against pathogens. The pathway activates the proteases C3 and C5 convertase which cleave proteins C3 and C5 respectively so that the cleaved products can attract phagocytes to the site of infection and tags target cells for elimination by phagocytosis. Also C5 convertase initiates the terminal phase of the complement system, leading to the assembly of the membrane attack complex (MAC). The membrane attack complex creates a pore on the target cell's membrane, inducing cell lysis and death. Both C3 and C5 convertase are made up of the subunits, C2a and C4b. However, C5 convertase in addition to these subunits also has the cleaved product of C3 convertase, C3b, which enables C5 convertase to cleave C5 components. The catalytic subunit of the convertase is C2a which displays the classic serine protease catalytic triad of serine, histidine and aspartate which are key for the mechanism of hydrolysis of peptide bonds with this convertase being specific to Arg-Ser bonds. Interestingly both C3b and C4b subunits contain a specific binding component on their alpha-chain, a thiolacetone ring, made up of the residues -Cys-Gly-Glu-Gln- which can react with hydroxyl or amino groups and enable the binding of this subunit to other molecules, including membranes and other protein subunits. The thiolacetone ring is usually buried in the protein however after cleavage of the alpha-chain by a protease it is exposed and so is liable to attack by nucleophiles such as hydroxyl and amino groups. Both the C4b and C3b subunit of C3/C5 convertases serve as a platform for the assembly of the proteolytically active convertases that mediate downstream activation of the complement system by cleavage of C3 and C5.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of classical-complement-pathway C3/C5 convertase
+  description: Stepwise mechanism transcribed from M-CSA entry 688 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +20).
+  nodes:
+  - node_id: his487
+    label: catalytic His487 (M-CSA/PDB numbering; UniProt residue 507)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q5JP69
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: asp541
+    label: catalytic Asp541 (M-CSA/PDB numbering; UniProt residue 561)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q5JP69
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ser659
+    label: catalytic Ser659 (M-CSA/PDB numbering; UniProt residue 679)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q5JP69
+    description: 'M-CSA roles: nucleofuge, nucleophile, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: Arg-Ser
+    node_type: CHEMICAL
+    grounding: CHEBI:73819
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: L-arginine
+    node_type: CHEMICAL
+    grounding: CHEBI:16467
+  - node_id: product1
+    label: L-serine
+    node_type: CHEMICAL
+    grounding: CHEBI:17115
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His 507 deprotonates Ser 679 which activates it to nucleophilically attack the carbon
+      of the carbonyl to produce the oxyanion intermediate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The tetrahedral intermediate collapse upon protonation of the amine by His 507 which
+      releases the serine product and forms the acyl-enzyme.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: His 507 abstracts a proton from a water which activates it to attack the carbon of the
+      ester bond in a nucleophilic addition and once again produces the oxyanion intermediate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The tetrahedral intermediate once again collapse releasing Ser 679 and the Arginine product.
+      Ser 679 then accepts a proton from His 507 which returns the active site to its native state.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Product
+  - node_id: active_site
+    label: classical-complement-pathway C3/C5 convertase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:688
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.40.10.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.40.10.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: classical-complement-pathway C3/C5 convertase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.21.43
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/688/
+      snippet: The tetrahedral intermediate collapse upon protonation of the amine by His 507 which releases
+        the serine product and forms the acyl-enzyme.
+      notes: M-CSA entry 688, mechanism 2; M-CSA cites PMID:12878586, PMID:17234210; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/688/
+      snippet: His 507 abstracts a proton from a water which activates it to attack the carbon of the
+        ester bond in a nucleophilic addition and once again produces the oxyanion intermediate.
+      notes: M-CSA entry 688, mechanism 2; M-CSA cites PMID:12878586, PMID:17234210; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/688/
+      snippet: The tetrahedral intermediate once again collapse releasing Ser 679 and the Arginine product.
+        Ser 679 then accepts a proton from His 507 which returns the active site to its native state.
+      notes: M-CSA entry 688, mechanism 2; M-CSA cites PMID:12878586, PMID:17234210; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/688/
+      snippet: Product
+      notes: M-CSA entry 688, mechanism 2; M-CSA cites PMID:12878586, PMID:17234210; step 5
+  - subject: his487
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His487 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/688/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 688, mechanism 2; M-CSA cites PMID:12878586, PMID:17234210; M-CSA catalytic-residue
+        roles for His487
+  - subject: asp541
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp541 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/688/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 688, mechanism 2; M-CSA cites PMID:12878586, PMID:17234210; M-CSA catalytic-residue
+        roles for Asp541
+  - subject: ser659
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser659 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/688/
+      snippet: nucleofuge, nucleophile, proton acceptor, proton donor
+      notes: M-CSA entry 688, mechanism 2; M-CSA cites PMID:12878586, PMID:17234210; M-CSA catalytic-residue
+        roles for Ser659
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/688/
+      snippet: The catalytic subunit of C3/C5 convertases, C2a, is a serine protease and contains the
+        key catalytic triad of serine, histidine and aspartate. His 507 acts as a general acid/base which
+        is enabled by the hydrogen bonding to Asp 561 which lowers the pKa of Histidine so that it accepts
+        a proton more willingly. This proton is donated by Ser 679 and upon deprotonation Ser 679 is activated
+        and can nucle
+      notes: M-CSA entry 688, mechanism 2; M-CSA cites PMID:12878586, PMID:17234210; CATH domain 2.40.10.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/688/
+      snippet: The catalytic subunit of C3/C5 convertases, C2a, is a serine protease and contains the
+        key catalytic triad of serine, histidine and aspartate. His 507 acts as a general acid/base which
+        is enabled by the hydrogen bonding to Asp 561 which lowers the pKa of Histidine so that it accepts
+        a proton more willingly. This proton is donated by Ser 679 and upon deprotonation Ser 679 is activated
+        and can nucle
+      notes: M-CSA entry 688, mechanism 2; M-CSA cites PMID:12878586, PMID:17234210; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/688/
+      snippet: The catalytic subunit of C3/C5 convertases, C2a, is a serine protease and contains the
+        key catalytic triad of serine, histidine and aspartate. His 507 acts as a general acid/base which
+        is enabled by the hydrogen bonding to Asp 561 which lowers the pKa of Histidine so that it accepts
+        a proton more willingly. This proton is donated by Ser 679 and upon deprotonation Ser 679 is activated
+        and can nucle
+      notes: M-CSA entry 688, mechanism 2; M-CSA cites PMID:12878586, PMID:17234210; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/688/
+      snippet: The catalytic subunit of C3/C5 convertases, C2a, is a serine protease and contains the
+        key catalytic triad of serine, histidine and aspartate. His 507 acts as a general acid/base which
+        is enabled by the hydrogen bonding to Asp 561 which lowers the pKa of Histidine so that it accepts
+        a proton more willingly. This proton is donated by Ser 679 and upon deprotonation Ser 679 is activated
+        and can nucle
+      notes: M-CSA entry 688, mechanism 2; M-CSA cites PMID:12878586, PMID:17234210; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/688/
+      snippet: The catalytic subunit of C3/C5 convertases, C2a, is a serine protease and contains the
+        key catalytic triad of serine, histidine and aspartate. His 507 acts as a general acid/base which
+        is enabled by the hydrogen bonding to Asp 561 which lowers the pKa of Histidine so that it accepts
+        a proton more willingly. This proton is donated by Ser 679 and upon deprotonation Ser 679 is activated
+        and can nucle
+      notes: M-CSA entry 688, mechanism 2; M-CSA cites PMID:12878586, PMID:17234210; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/688/
+      snippet: The catalytic subunit of C3/C5 convertases, C2a, is a serine protease and contains the
+        key catalytic triad of serine, histidine and aspartate. His 507 acts as a general acid/base which
+        is enabled by the hydrogen bonding to Asp 561 which lowers the pKa of Histidine so that it accepts
+        a proton more willingly. This proton is donated by Ser 679 and upon deprotonation Ser 679 is activated
+        and can nucle
+      notes: M-CSA entry 688, mechanism 2; M-CSA cites PMID:12878586, PMID:17234210; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 688;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

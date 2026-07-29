@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.5.1.99
 - CHEBI:15377
@@ -360,4 +360,422 @@ definitions:
       Mammalian fatty acid amide hydrolase (FAAH) degrades fatty acid primary amides and ethanolamides such as anandamide and oleamide. Anandamide binds and activates cannabinoid and vanilloid receptors exerting an analgesic and cannabinoid effects while oleamide has been found to be sleep inducing. Rat FAAH is an integral membrane protein. The wild type protein hydrolyses esters and amides at the same rate but the Lys142Ala mutant hydrolyses esters more rapidly than amides.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of fatty acid amide hydrolase
+  description: Stepwise mechanism transcribed from M-CSA entry 731 (6 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: lys142
+    label: catalytic Lys142 (M-CSA/PDB numbering; UniProt residue 142)
+    node_type: RESIDUE
+    grounding: UniProtKB:P97612
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: ser217
+    label: catalytic Ser217 (M-CSA/PDB numbering; UniProt residue 217)
+    node_type: RESIDUE
+    grounding: UniProtKB:P97612
+    description: 'M-CSA roles: proton acceptor, proton donor, proton relay.'
+  - node_id: ser218
+    label: catalytic Ser218 (M-CSA/PDB numbering; UniProt residue 218)
+    node_type: RESIDUE
+    grounding: UniProtKB:P97612
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ile238
+    label: catalytic Ile238 (M-CSA/PDB numbering; UniProt residue 238)
+    node_type: RESIDUE
+    grounding: UniProtKB:P97612
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: gly239
+    label: catalytic Gly239 (M-CSA/PDB numbering; UniProt residue 239)
+    node_type: RESIDUE
+    grounding: UniProtKB:P97612
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: gly240
+    label: catalytic Gly240 (M-CSA/PDB numbering; UniProt residue 240)
+    node_type: RESIDUE
+    grounding: UniProtKB:P97612
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ser241
+    label: catalytic Ser241 (M-CSA/PDB numbering; UniProt residue 241)
+    node_type: RESIDUE
+    grounding: UniProtKB:P97612
+    description: 'M-CSA roles: nucleofuge, nucleophile, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: anandamide
+    node_type: CHEMICAL
+    grounding: CHEBI:2700
+  - node_id: product0
+    label: arachidonate
+    node_type: CHEMICAL
+    grounding: CHEBI:32395
+  - node_id: product1
+    label: ethanolaminium(1+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57603
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Ser217 is deprotonated by Lys142
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The tetrahedral intermediate formed by nucleophilic attack by Ser241 concerted with proton
+      transfer from Ser241 to Ser217.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The nitrogen of the amide bond accepts a proton from Ser217 which initiates an elimination
+      from the oxyanion resulting in the cleavage of the amide bond.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Ser217 abstracts a proton from a water which activates it to nucleophilically attack
+      the carbon of the carbonyl group.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: The oxyanion initiates an elimination which results in the cleavage of the acyl-enzyme
+      intermediate releasing Ser241 which is then protonated by Ser217. Ser 217 then is protonated by
+      Lys142 which returns the active site to its native state.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: fatty acid amide hydrolase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:731
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.1300.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.1300.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: fatty acid amide hydrolase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.5.1.99
+  edges:
+  - subject: lys142
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys142 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/731/
+      snippet: Ser217 is deprotonated by Lys142
+      notes: M-CSA entry 731, mechanism 1; M-CSA cites PMID:10433686, PMID:12734197, PMID:16136230, PMID:17177441,
+        PMID:21365225; step 1
+  - subject: ser217
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser217 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/731/
+      snippet: Ser217 is deprotonated by Lys142
+      notes: M-CSA entry 731, mechanism 1; M-CSA cites PMID:10433686, PMID:12734197, PMID:16136230, PMID:17177441,
+        PMID:21365225; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/731/
+      snippet: The tetrahedral intermediate formed by nucleophilic attack by Ser241 concerted with proton
+        transfer from Ser241 to Ser217.
+      notes: M-CSA entry 731, mechanism 1; M-CSA cites PMID:10433686, PMID:12734197, PMID:16136230, PMID:17177441,
+        PMID:21365225; step 2
+  - subject: ser217
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Ser217 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/731/
+      snippet: The tetrahedral intermediate formed by nucleophilic attack by Ser241 concerted with proton
+        transfer from Ser241 to Ser217.
+      notes: M-CSA entry 731, mechanism 1; M-CSA cites PMID:10433686, PMID:12734197, PMID:16136230, PMID:17177441,
+        PMID:21365225; step 2
+  - subject: ser241
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Ser241 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/731/
+      snippet: The tetrahedral intermediate formed by nucleophilic attack by Ser241 concerted with proton
+        transfer from Ser241 to Ser217.
+      notes: M-CSA entry 731, mechanism 1; M-CSA cites PMID:10433686, PMID:12734197, PMID:16136230, PMID:17177441,
+        PMID:21365225; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/731/
+      snippet: The nitrogen of the amide bond accepts a proton from Ser217 which initiates an elimination
+        from the oxyanion resulting in the cleavage of the amide bond.
+      notes: M-CSA entry 731, mechanism 1; M-CSA cites PMID:10433686, PMID:12734197, PMID:16136230, PMID:17177441,
+        PMID:21365225; step 3
+  - subject: ser217
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Ser217 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/731/
+      snippet: The nitrogen of the amide bond accepts a proton from Ser217 which initiates an elimination
+        from the oxyanion resulting in the cleavage of the amide bond.
+      notes: M-CSA entry 731, mechanism 1; M-CSA cites PMID:10433686, PMID:12734197, PMID:16136230, PMID:17177441,
+        PMID:21365225; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/731/
+      snippet: Ser217 abstracts a proton from a water which activates it to nucleophilically attack the
+        carbon of the carbonyl group.
+      notes: M-CSA entry 731, mechanism 1; M-CSA cites PMID:10433686, PMID:12734197, PMID:16136230, PMID:17177441,
+        PMID:21365225; step 4
+  - subject: ser217
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Ser217 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/731/
+      snippet: Ser217 abstracts a proton from a water which activates it to nucleophilically attack the
+        carbon of the carbonyl group.
+      notes: M-CSA entry 731, mechanism 1; M-CSA cites PMID:10433686, PMID:12734197, PMID:16136230, PMID:17177441,
+        PMID:21365225; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/731/
+      snippet: The oxyanion initiates an elimination which results in the cleavage of the acyl-enzyme
+        intermediate releasing Ser241 which is then protonated by Ser217. Ser 217 then is protonated by
+        Lys142 which returns the active site to its native state.
+      notes: M-CSA entry 731, mechanism 1; M-CSA cites PMID:10433686, PMID:12734197, PMID:16136230, PMID:17177441,
+        PMID:21365225; step 5
+  - subject: lys142
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Lys142 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/731/
+      snippet: The oxyanion initiates an elimination which results in the cleavage of the acyl-enzyme
+        intermediate releasing Ser241 which is then protonated by Ser217. Ser 217 then is protonated by
+        Lys142 which returns the active site to its native state.
+      notes: M-CSA entry 731, mechanism 1; M-CSA cites PMID:10433686, PMID:12734197, PMID:16136230, PMID:17177441,
+        PMID:21365225; step 5
+  - subject: ser217
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Ser217 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/731/
+      snippet: The oxyanion initiates an elimination which results in the cleavage of the acyl-enzyme
+        intermediate releasing Ser241 which is then protonated by Ser217. Ser 217 then is protonated by
+        Lys142 which returns the active site to its native state.
+      notes: M-CSA entry 731, mechanism 1; M-CSA cites PMID:10433686, PMID:12734197, PMID:16136230, PMID:17177441,
+        PMID:21365225; step 5
+  - subject: ser241
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Ser241 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/731/
+      snippet: The oxyanion initiates an elimination which results in the cleavage of the acyl-enzyme
+        intermediate releasing Ser241 which is then protonated by Ser217. Ser 217 then is protonated by
+        Lys142 which returns the active site to its native state.
+      notes: M-CSA entry 731, mechanism 1; M-CSA cites PMID:10433686, PMID:12734197, PMID:16136230, PMID:17177441,
+        PMID:21365225; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/731/
+      snippet: Products
+      notes: M-CSA entry 731, mechanism 1; M-CSA cites PMID:10433686, PMID:12734197, PMID:16136230, PMID:17177441,
+        PMID:21365225; step 6
+  - subject: lys142
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys142 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/731/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 731, mechanism 1; M-CSA cites PMID:10433686, PMID:12734197, PMID:16136230, PMID:17177441,
+        PMID:21365225; M-CSA catalytic-residue roles for Lys142
+  - subject: ser217
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser217 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/731/
+      snippet: proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 731, mechanism 1; M-CSA cites PMID:10433686, PMID:12734197, PMID:16136230, PMID:17177441,
+        PMID:21365225; M-CSA catalytic-residue roles for Ser217
+  - subject: ser218
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser218 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/731/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 731, mechanism 1; M-CSA cites PMID:10433686, PMID:12734197, PMID:16136230, PMID:17177441,
+        PMID:21365225; M-CSA catalytic-residue roles for Ser218
+  - subject: ile238
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ile238 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/731/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 731, mechanism 1; M-CSA cites PMID:10433686, PMID:12734197, PMID:16136230, PMID:17177441,
+        PMID:21365225; M-CSA catalytic-residue roles for Ile238
+  - subject: gly239
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly239 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/731/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 731, mechanism 1; M-CSA cites PMID:10433686, PMID:12734197, PMID:16136230, PMID:17177441,
+        PMID:21365225; M-CSA catalytic-residue roles for Gly239
+  - subject: gly240
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly240 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/731/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 731, mechanism 1; M-CSA cites PMID:10433686, PMID:12734197, PMID:16136230, PMID:17177441,
+        PMID:21365225; M-CSA catalytic-residue roles for Gly240
+  - subject: ser241
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser241 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/731/
+      snippet: nucleofuge, nucleophile, proton acceptor, proton donor
+      notes: M-CSA entry 731, mechanism 1; M-CSA cites PMID:10433686, PMID:12734197, PMID:16136230, PMID:17177441,
+        PMID:21365225; M-CSA catalytic-residue roles for Ser241
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/731/
+      snippet: FAAH has a catalytic triad consisting of Ser217, Ser241 and Lys142.  Initially Lys142 deprotonates
+        Ser217.  Ser241 acts as a nucleophile, attacking the carbonyl carbon of the substrate.  The tetrahedral
+        intermediate is formed in a concerted process with the deprotonation of Ser241 by the alkoxide
+        of Ser217.  The negative charge on the tetrahedral intermediate is stabilised by strong hydrogen
+        bonds
+      notes: M-CSA entry 731, mechanism 1; M-CSA cites PMID:10433686, PMID:12734197, PMID:16136230, PMID:17177441,
+        PMID:21365225; CATH domain 3.90.1300.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/731/
+      snippet: FAAH has a catalytic triad consisting of Ser217, Ser241 and Lys142.  Initially Lys142 deprotonates
+        Ser217.  Ser241 acts as a nucleophile, attacking the carbonyl carbon of the substrate.  The tetrahedral
+        intermediate is formed in a concerted process with the deprotonation of Ser241 by the alkoxide
+        of Ser217.  The negative charge on the tetrahedral intermediate is stabilised by strong hydrogen
+        bonds
+      notes: M-CSA entry 731, mechanism 1; M-CSA cites PMID:10433686, PMID:12734197, PMID:16136230, PMID:17177441,
+        PMID:21365225; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/731/
+      snippet: FAAH has a catalytic triad consisting of Ser217, Ser241 and Lys142.  Initially Lys142 deprotonates
+        Ser217.  Ser241 acts as a nucleophile, attacking the carbonyl carbon of the substrate.  The tetrahedral
+        intermediate is formed in a concerted process with the deprotonation of Ser241 by the alkoxide
+        of Ser217.  The negative charge on the tetrahedral intermediate is stabilised by strong hydrogen
+        bonds
+      notes: M-CSA entry 731, mechanism 1; M-CSA cites PMID:10433686, PMID:12734197, PMID:16136230, PMID:17177441,
+        PMID:21365225; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/731/
+      snippet: FAAH has a catalytic triad consisting of Ser217, Ser241 and Lys142.  Initially Lys142 deprotonates
+        Ser217.  Ser241 acts as a nucleophile, attacking the carbonyl carbon of the substrate.  The tetrahedral
+        intermediate is formed in a concerted process with the deprotonation of Ser241 by the alkoxide
+        of Ser217.  The negative charge on the tetrahedral intermediate is stabilised by strong hydrogen
+        bonds
+      notes: M-CSA entry 731, mechanism 1; M-CSA cites PMID:10433686, PMID:12734197, PMID:16136230, PMID:17177441,
+        PMID:21365225; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/731/
+      snippet: FAAH has a catalytic triad consisting of Ser217, Ser241 and Lys142.  Initially Lys142 deprotonates
+        Ser217.  Ser241 acts as a nucleophile, attacking the carbonyl carbon of the substrate.  The tetrahedral
+        intermediate is formed in a concerted process with the deprotonation of Ser241 by the alkoxide
+        of Ser217.  The negative charge on the tetrahedral intermediate is stabilised by strong hydrogen
+        bonds
+      notes: M-CSA entry 731, mechanism 1; M-CSA cites PMID:10433686, PMID:12734197, PMID:16136230, PMID:17177441,
+        PMID:21365225; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/731/
+      snippet: FAAH has a catalytic triad consisting of Ser217, Ser241 and Lys142.  Initially Lys142 deprotonates
+        Ser217.  Ser241 acts as a nucleophile, attacking the carbonyl carbon of the substrate.  The tetrahedral
+        intermediate is formed in a concerted process with the deprotonation of Ser241 by the alkoxide
+        of Ser217.  The negative charge on the tetrahedral intermediate is stabilised by strong hydrogen
+        bonds
+      notes: M-CSA entry 731, mechanism 1; M-CSA cites PMID:10433686, PMID:12734197, PMID:16136230, PMID:17177441,
+        PMID:21365225; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (27 evidence-backed edges) transcribed from M-CSA entry 731;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

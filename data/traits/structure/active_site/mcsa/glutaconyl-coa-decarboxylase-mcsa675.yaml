@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:7.2.4.5
 - CHEBI:57353
@@ -330,4 +330,274 @@ definitions:
       Bacterial Glutaconyl-CoA decarboxylase is an unusual ion transport holozyme, which uses the free energy released from the decarboxylation of glutaconyl CoA to crotonyl CoA in order to power the active transport of sodium ions into the periplasm. The carboxyl transferase subunit, GCDalpha is responsible for the first step in this process whereby the transfer of carbon dioxide to the biotin cofactor on GCDalpha is carried out. This subunit displays structural homology to the family of crotonases such as methylmalonoyl CoA decarboxylase, but little sequence identity, so although it clearly shares a common ancestor, divergence is likely to have occurred a long time in the past.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of glutaconyl-CoA decarboxylase
+  description: Stepwise mechanism transcribed from M-CSA entry 675 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +1).
+  nodes:
+  - node_id: val151
+    label: catalytic Val151 (M-CSA/PDB numbering; UniProt residue 152)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q06700
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: gly194
+    label: catalytic Gly194 (M-CSA/PDB numbering; UniProt residue 195)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q06700
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ile417
+    label: catalytic Ile417 (M-CSA/PDB numbering; UniProt residue 418)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q06700
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ala457
+    label: catalytic Ala457 (M-CSA/PDB numbering; UniProt residue 458)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q06700
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: trans-4-carboxybut-2-enoyl-CoA(5-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57353
+  - node_id: reactant1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product0
+    label: crotonoyl-CoA(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57332
+  - node_id: product1
+    label: carbon dioxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glutaconyl-CoA is decarboxylated forming a  crotonyl coA intermediate which is stabilized
+      by Val151 and Gly194.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The  crotonyl coA intermediate accepts a proton from the biotin cofactor, forming a biotinate
+      which is stabilized by Ile 417 and Ala 457.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Nucelophilic attack from the biotinate leads to it becoming carboxylated.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: glutaconyl-CoA decarboxylase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:675
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.226.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.226.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: glutaconyl-CoA decarboxylase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:7.2.4.5
+  edges:
+  - subject: val151
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Val151 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/675/
+      snippet: Glutaconyl-CoA is decarboxylated forming a  crotonyl coA intermediate which is stabilized
+        by Val151 and Gly194.
+      notes: M-CSA entry 675, mechanism 1; M-CSA cites PMID:12853465; step 1
+  - subject: gly194
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Gly194 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/675/
+      snippet: Glutaconyl-CoA is decarboxylated forming a  crotonyl coA intermediate which is stabilized
+        by Val151 and Gly194.
+      notes: M-CSA entry 675, mechanism 1; M-CSA cites PMID:12853465; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/675/
+      snippet: The  crotonyl coA intermediate accepts a proton from the biotin cofactor, forming a biotinate
+        which is stabilized by Ile 417 and Ala 457.
+      notes: M-CSA entry 675, mechanism 1; M-CSA cites PMID:12853465; step 2
+  - subject: ile417
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Ile417 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/675/
+      snippet: The  crotonyl coA intermediate accepts a proton from the biotin cofactor, forming a biotinate
+        which is stabilized by Ile 417 and Ala 457.
+      notes: M-CSA entry 675, mechanism 1; M-CSA cites PMID:12853465; step 2
+  - subject: ala457
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Ala457 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/675/
+      snippet: The  crotonyl coA intermediate accepts a proton from the biotin cofactor, forming a biotinate
+        which is stabilized by Ile 417 and Ala 457.
+      notes: M-CSA entry 675, mechanism 1; M-CSA cites PMID:12853465; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/675/
+      snippet: Nucelophilic attack from the biotinate leads to it becoming carboxylated.
+      notes: M-CSA entry 675, mechanism 1; M-CSA cites PMID:12853465; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/675/
+      snippet: Products.
+      notes: M-CSA entry 675, mechanism 1; M-CSA cites PMID:12853465; step 4
+  - subject: val151
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Val151 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/675/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 675, mechanism 1; M-CSA cites PMID:12853465; M-CSA catalytic-residue roles for
+        Val151
+  - subject: gly194
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly194 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/675/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 675, mechanism 1; M-CSA cites PMID:12853465; M-CSA catalytic-residue roles for
+        Gly194
+  - subject: ile417
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ile417 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/675/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 675, mechanism 1; M-CSA cites PMID:12853465; M-CSA catalytic-residue roles for
+        Ile417
+  - subject: ala457
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ala457 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/675/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 675, mechanism 1; M-CSA cites PMID:12853465; M-CSA catalytic-residue roles for
+        Ala457
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/675/
+      snippet: In the first stage of the reaction, the decarboxylation of glutaconyl coA occurs spontaneously,
+        forming an enolate intermediate stabilised by an oxyanion hole composed of Gly 194 and Val 151.
+        Protonation of this enolate occurs with biotin acting as the general acid, resulting in the crotonyl
+        CoA product and the enolate form of biotin, stabilised by an oxyanion hole composed of Ile 415
+        and Ala 457.
+      notes: M-CSA entry 675, mechanism 1; M-CSA cites PMID:12853465; CATH domain 3.90.226.10 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/675/
+      snippet: In the first stage of the reaction, the decarboxylation of glutaconyl coA occurs spontaneously,
+        forming an enolate intermediate stabilised by an oxyanion hole composed of Gly 194 and Val 151.
+        Protonation of this enolate occurs with biotin acting as the general acid, resulting in the crotonyl
+        CoA product and the enolate form of biotin, stabilised by an oxyanion hole composed of Ile 415
+        and Ala 457.
+      notes: M-CSA entry 675, mechanism 1; M-CSA cites PMID:12853465; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/675/
+      snippet: In the first stage of the reaction, the decarboxylation of glutaconyl coA occurs spontaneously,
+        forming an enolate intermediate stabilised by an oxyanion hole composed of Gly 194 and Val 151.
+        Protonation of this enolate occurs with biotin acting as the general acid, resulting in the crotonyl
+        CoA product and the enolate form of biotin, stabilised by an oxyanion hole composed of Ile 415
+        and Ala 457.
+      notes: M-CSA entry 675, mechanism 1; M-CSA cites PMID:12853465; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/675/
+      snippet: In the first stage of the reaction, the decarboxylation of glutaconyl coA occurs spontaneously,
+        forming an enolate intermediate stabilised by an oxyanion hole composed of Gly 194 and Val 151.
+        Protonation of this enolate occurs with biotin acting as the general acid, resulting in the crotonyl
+        CoA product and the enolate form of biotin, stabilised by an oxyanion hole composed of Ile 415
+        and Ala 457.
+      notes: M-CSA entry 675, mechanism 1; M-CSA cites PMID:12853465; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/675/
+      snippet: In the first stage of the reaction, the decarboxylation of glutaconyl coA occurs spontaneously,
+        forming an enolate intermediate stabilised by an oxyanion hole composed of Gly 194 and Val 151.
+        Protonation of this enolate occurs with biotin acting as the general acid, resulting in the crotonyl
+        CoA product and the enolate form of biotin, stabilised by an oxyanion hole composed of Ile 415
+        and Ala 457.
+      notes: M-CSA entry 675, mechanism 1; M-CSA cites PMID:12853465; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/675/
+      snippet: In the first stage of the reaction, the decarboxylation of glutaconyl coA occurs spontaneously,
+        forming an enolate intermediate stabilised by an oxyanion hole composed of Gly 194 and Val 151.
+        Protonation of this enolate occurs with biotin acting as the general acid, resulting in the crotonyl
+        CoA product and the enolate form of biotin, stabilised by an oxyanion hole composed of Ile 415
+        and Ala 457.
+      notes: M-CSA entry 675, mechanism 1; M-CSA cites PMID:12853465; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (17 evidence-backed edges) transcribed from M-CSA entry 675;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

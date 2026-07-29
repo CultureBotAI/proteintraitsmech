@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.6.2.1
 - CHEBI:9160
@@ -432,4 +432,275 @@ definitions:
       Topoisomerases catalyse the winding and unwinding of super-coiled DNA, a process vital during DNA replication, transcription and repair. Type I topoisomerases reversibly cut one strand of the DNA helix, and can only relax supercoils. Analysis of sequence and mutagenesis data indicates that the type Ia topoisomerases (those found in prokaryotes, and the example given here) may be related to the major family of type II topoisomerases (found in all life apart from some archaea). Type II topoisomerases cut both strands and can either relax or tighten super-coils, but require ATP hydrolysis for catalytic turnover. All topoisomerases recorded form an intermediate with a tyr-DNA covalent bond during catalysis.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of DNA topoisomerase (type III)
+  description: Stepwise mechanism transcribed from M-CSA entry 64 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: glu7
+    label: catalytic Glu7 (M-CSA/PDB numbering; UniProt residue 7)
+    node_type: RESIDUE
+    grounding: UniProtKB:P14294
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, metal ligand, proton acceptor,
+      proton donor.'
+  - node_id: lys8
+    label: catalytic Lys8 (M-CSA/PDB numbering; UniProt residue 8)
+    node_type: RESIDUE
+    grounding: UniProtKB:P14294
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: asp103
+    label: catalytic Asp103 (M-CSA/PDB numbering; UniProt residue 103)
+    node_type: RESIDUE
+    grounding: UniProtKB:P14294
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp105
+    label: catalytic Asp105 (M-CSA/PDB numbering; UniProt residue 105)
+    node_type: RESIDUE
+    grounding: UniProtKB:P14294
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: tyr328
+    label: catalytic Tyr328 (M-CSA/PDB numbering; UniProt residue 328)
+    node_type: RESIDUE
+    grounding: UniProtKB:P14294
+    description: 'M-CSA roles: hydrogen bond acceptor, nucleofuge, nucleophile.'
+  - node_id: arg330
+    label: catalytic Arg330 (M-CSA/PDB numbering; UniProt residue 330)
+    node_type: RESIDUE
+    grounding: UniProtKB:P14294
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: reactant0
+    label: single-stranded DNA
+    node_type: CHEMICAL
+    grounding: CHEBI:9160
+  - node_id: product0
+    label: single-stranded DNA
+    node_type: CHEMICAL
+    grounding: CHEBI:9160
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Tyr328 acts as a nucleophile, attacking the phosphorous of the DNA molecule, which proceeds
+      through a pentavalent transition state, before eliminating the 5' DNA, with concomitant deprotonation
+      of Glu7.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The DNA uncoils before Glu7 deprotonates the 5'-OH, which initiates a nucleophilic attack
+      upon the phosphorous atom, which  proceeds through a pentavalent transition state, before eliminating
+      Tyr328.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: DNA topoisomerase (type III) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:64
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.140 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.140
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: DNA topoisomerase (type III) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.6.2.1
+  edges:
+  - subject: glu7
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu7 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/64/
+      snippet: Tyr328 acts as a nucleophile, attacking the phosphorous of the DNA molecule, which proceeds
+        through a pentavalent transition state, before eliminating the 5' DNA, with concomitant deprotonation
+        of Glu7.
+      notes: M-CSA entry 64, mechanism 1; M-CSA cites PMID:11429611, PMID:12007989, PMID:18186484, PMID:20210704,
+        PMID:21478161, PMID:21482796, PMID:9497321; step 1
+  - subject: tyr328
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr328 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/64/
+      snippet: Tyr328 acts as a nucleophile, attacking the phosphorous of the DNA molecule, which proceeds
+        through a pentavalent transition state, before eliminating the 5' DNA, with concomitant deprotonation
+        of Glu7.
+      notes: M-CSA entry 64, mechanism 1; M-CSA cites PMID:11429611, PMID:12007989, PMID:18186484, PMID:20210704,
+        PMID:21478161, PMID:21482796, PMID:9497321; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/64/
+      snippet: The DNA uncoils before Glu7 deprotonates the 5'-OH, which initiates a nucleophilic attack
+        upon the phosphorous atom, which  proceeds through a pentavalent transition state, before eliminating
+        Tyr328.
+      notes: M-CSA entry 64, mechanism 1; M-CSA cites PMID:11429611, PMID:12007989, PMID:18186484, PMID:20210704,
+        PMID:21478161, PMID:21482796, PMID:9497321; step 2
+  - subject: glu7
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu7 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/64/
+      snippet: The DNA uncoils before Glu7 deprotonates the 5'-OH, which initiates a nucleophilic attack
+        upon the phosphorous atom, which  proceeds through a pentavalent transition state, before eliminating
+        Tyr328.
+      notes: M-CSA entry 64, mechanism 1; M-CSA cites PMID:11429611, PMID:12007989, PMID:18186484, PMID:20210704,
+        PMID:21478161, PMID:21482796, PMID:9497321; step 2
+  - subject: tyr328
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Tyr328 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/64/
+      snippet: The DNA uncoils before Glu7 deprotonates the 5'-OH, which initiates a nucleophilic attack
+        upon the phosphorous atom, which  proceeds through a pentavalent transition state, before eliminating
+        Tyr328.
+      notes: M-CSA entry 64, mechanism 1; M-CSA cites PMID:11429611, PMID:12007989, PMID:18186484, PMID:20210704,
+        PMID:21478161, PMID:21482796, PMID:9497321; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/64/
+      snippet: Products
+      notes: M-CSA entry 64, mechanism 1; M-CSA cites PMID:11429611, PMID:12007989, PMID:18186484, PMID:20210704,
+        PMID:21478161, PMID:21482796, PMID:9497321; step 3
+  - subject: glu7
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu7 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/64/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, metal ligand, proton acceptor, proton donor
+      notes: M-CSA entry 64, mechanism 1; M-CSA cites PMID:11429611, PMID:12007989, PMID:18186484, PMID:20210704,
+        PMID:21478161, PMID:21482796, PMID:9497321; M-CSA catalytic-residue roles for Glu7
+  - subject: lys8
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys8 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/64/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 64, mechanism 1; M-CSA cites PMID:11429611, PMID:12007989, PMID:18186484, PMID:20210704,
+        PMID:21478161, PMID:21482796, PMID:9497321; M-CSA catalytic-residue roles for Lys8
+  - subject: asp103
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp103 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/64/
+      snippet: metal ligand
+      notes: M-CSA entry 64, mechanism 1; M-CSA cites PMID:11429611, PMID:12007989, PMID:18186484, PMID:20210704,
+        PMID:21478161, PMID:21482796, PMID:9497321; M-CSA catalytic-residue roles for Asp103
+  - subject: asp105
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp105 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/64/
+      snippet: metal ligand
+      notes: M-CSA entry 64, mechanism 1; M-CSA cites PMID:11429611, PMID:12007989, PMID:18186484, PMID:20210704,
+        PMID:21478161, PMID:21482796, PMID:9497321; M-CSA catalytic-residue roles for Asp105
+  - subject: tyr328
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr328 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/64/
+      snippet: hydrogen bond acceptor, nucleofuge, nucleophile
+      notes: M-CSA entry 64, mechanism 1; M-CSA cites PMID:11429611, PMID:12007989, PMID:18186484, PMID:20210704,
+        PMID:21478161, PMID:21482796, PMID:9497321; M-CSA catalytic-residue roles for Tyr328
+  - subject: arg330
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg330 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/64/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 64, mechanism 1; M-CSA cites PMID:11429611, PMID:12007989, PMID:18186484, PMID:20210704,
+        PMID:21478161, PMID:21482796, PMID:9497321; M-CSA catalytic-residue roles for Arg330
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/64/
+      snippet: The Tyr328 acts as a nucleophile towards the phosphorous of the DNA molecule, forming a
+        pentavalent transition state before eliminating the 5' DNA with concomitant deprotonation of Glu7.
+        The DNA uncoils before Glu7 can deprotonate the 5'-OH, which initiates a nucleophilic attack upon
+        the phosphorous atom. This again proceeds through a pentavalent transition state before eliminating
+        Tyr328 and rest
+      notes: M-CSA entry 64, mechanism 1; M-CSA cites PMID:11429611, PMID:12007989, PMID:18186484, PMID:20210704,
+        PMID:21478161, PMID:21482796, PMID:9497321; CATH domain 3.40.50.140 assigned to the catalytic
+        chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/64/
+      snippet: The Tyr328 acts as a nucleophile towards the phosphorous of the DNA molecule, forming a
+        pentavalent transition state before eliminating the 5' DNA with concomitant deprotonation of Glu7.
+        The DNA uncoils before Glu7 can deprotonate the 5'-OH, which initiates a nucleophilic attack upon
+        the phosphorous atom. This again proceeds through a pentavalent transition state before eliminating
+        Tyr328 and rest
+      notes: M-CSA entry 64, mechanism 1; M-CSA cites PMID:11429611, PMID:12007989, PMID:18186484, PMID:20210704,
+        PMID:21478161, PMID:21482796, PMID:9497321; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/64/
+      snippet: The Tyr328 acts as a nucleophile towards the phosphorous of the DNA molecule, forming a
+        pentavalent transition state before eliminating the 5' DNA with concomitant deprotonation of Glu7.
+        The DNA uncoils before Glu7 can deprotonate the 5'-OH, which initiates a nucleophilic attack upon
+        the phosphorous atom. This again proceeds through a pentavalent transition state before eliminating
+        Tyr328 and rest
+      notes: M-CSA entry 64, mechanism 1; M-CSA cites PMID:11429611, PMID:12007989, PMID:18186484, PMID:20210704,
+        PMID:21478161, PMID:21482796, PMID:9497321; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/64/
+      snippet: The Tyr328 acts as a nucleophile towards the phosphorous of the DNA molecule, forming a
+        pentavalent transition state before eliminating the 5' DNA with concomitant deprotonation of Glu7.
+        The DNA uncoils before Glu7 can deprotonate the 5'-OH, which initiates a nucleophilic attack upon
+        the phosphorous atom. This again proceeds through a pentavalent transition state before eliminating
+        Tyr328 and rest
+      notes: M-CSA entry 64, mechanism 1; M-CSA cites PMID:11429611, PMID:12007989, PMID:18186484, PMID:20210704,
+        PMID:21478161, PMID:21482796, PMID:9497321; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (16 evidence-backed edges) transcribed from M-CSA entry 64;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

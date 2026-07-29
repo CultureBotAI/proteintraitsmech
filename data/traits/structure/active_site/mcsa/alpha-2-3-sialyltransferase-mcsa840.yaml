@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.4.99.-
 - CHEBI:57812
@@ -96,4 +96,280 @@ definitions:
       Sialyltransferase (CstII) from Campylobacter jejuni catalyses the transfer of the sialic acid moiety from cytidine-5'-monophospho-N-acetyl-neuramic acid (CMP-NeuAc) to the terminal positions of glycoconjugates. The products play critical roles in recognition and adherence. Campylobacter jejuni has been shown to express variable cell surface carbohydrate mimics of human gangliosides that are associated with virulence.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of alpha-2,3-sialyltransferase
+  description: Stepwise mechanism transcribed from M-CSA entry 840 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: arg129
+    label: catalytic Arg129 (M-CSA/PDB numbering; UniProt residue 129)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9LAK3
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: tyr156
+    label: catalytic Tyr156 (M-CSA/PDB numbering; UniProt residue 156)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9LAK3
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: tyr162
+    label: catalytic Tyr162 (M-CSA/PDB numbering; UniProt residue 162)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9LAK3
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his188
+    label: catalytic His188 (M-CSA/PDB numbering; UniProt residue 188)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9LAK3
+    description: 'M-CSA roles: activator, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: CMP-N-acetyl-beta-neuraminate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57812
+  - node_id: reactant1
+    label: beta-D-galactosyl-(1->3)-N-acetyl-alpha-D-galactosaminyl group
+    node_type: CHEMICAL
+    grounding: CHEBI:16117
+  - node_id: product0
+    label: alpha-N-acetylneuraminyl-2,3-beta-D-galactosyl-1,3-N-acetyl-alpha-D-galactosaminyl group(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:60068
+  - node_id: product1
+    label: cytidine 5'-monophosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:60377
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Cleavage of C2-O glycosidic bond, stabilised by Tyr156 and Tyr162.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: His188 deprotonates the  3′-OH of galactose, increasing it's nucleophilicity to then
+      attack the oxocarbenium ion intermediate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Proton transfer from His188 to CMP.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: alpha-2,3-sialyltransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:840
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.1480.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.1480.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: alpha-2,3-sialyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.4.99.-
+  edges:
+  - subject: tyr156
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr156 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/840/
+      snippet: Cleavage of C2-O glycosidic bond, stabilised by Tyr156 and Tyr162.
+      notes: M-CSA entry 840, mechanism 1; M-CSA cites PMID:14730352, PMID:27644888; step 1
+  - subject: tyr162
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr162 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/840/
+      snippet: Cleavage of C2-O glycosidic bond, stabilised by Tyr156 and Tyr162.
+      notes: M-CSA entry 840, mechanism 1; M-CSA cites PMID:14730352, PMID:27644888; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/840/
+      snippet: His188 deprotonates the  3′-OH of galactose, increasing it's nucleophilicity to then attack
+        the oxocarbenium ion intermediate.
+      notes: M-CSA entry 840, mechanism 1; M-CSA cites PMID:14730352, PMID:27644888; step 2
+  - subject: his188
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His188 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/840/
+      snippet: His188 deprotonates the  3′-OH of galactose, increasing it's nucleophilicity to then attack
+        the oxocarbenium ion intermediate.
+      notes: M-CSA entry 840, mechanism 1; M-CSA cites PMID:14730352, PMID:27644888; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/840/
+      snippet: Proton transfer from His188 to CMP.
+      notes: M-CSA entry 840, mechanism 1; M-CSA cites PMID:14730352, PMID:27644888; step 3
+  - subject: his188
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His188 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/840/
+      snippet: Proton transfer from His188 to CMP.
+      notes: M-CSA entry 840, mechanism 1; M-CSA cites PMID:14730352, PMID:27644888; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/840/
+      snippet: Products.
+      notes: M-CSA entry 840, mechanism 1; M-CSA cites PMID:14730352, PMID:27644888; step 4
+  - subject: arg129
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg129 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/840/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 840, mechanism 1; M-CSA cites PMID:14730352, PMID:27644888; M-CSA catalytic-residue
+        roles for Arg129
+  - subject: tyr156
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr156 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/840/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 840, mechanism 1; M-CSA cites PMID:14730352, PMID:27644888; M-CSA catalytic-residue
+        roles for Tyr156
+  - subject: tyr162
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr162 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/840/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 840, mechanism 1; M-CSA cites PMID:14730352, PMID:27644888; M-CSA catalytic-residue
+        roles for Tyr162
+  - subject: his188
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His188 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/840/
+      snippet: activator, proton acceptor, proton donor
+      notes: M-CSA entry 840, mechanism 1; M-CSA cites PMID:14730352, PMID:27644888; M-CSA catalytic-residue
+        roles for His188
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/840/
+      snippet: Unlike other inverting glucosyltransferases, the reaction proceeds in an Sn1 manner, initiated
+        by elimination of CMP (promoted by Tyr156 and Tyr162). His 188 is stabilised in its unprotonated
+        state by Arg 129. His 188 accepts a proton from the O3' hydroxyl, activating it for nucleophilic
+        attack on the donor C2' atom.
+      notes: M-CSA entry 840, mechanism 1; M-CSA cites PMID:14730352, PMID:27644888; CATH domain 3.90.1480.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/840/
+      snippet: Unlike other inverting glucosyltransferases, the reaction proceeds in an Sn1 manner, initiated
+        by elimination of CMP (promoted by Tyr156 and Tyr162). His 188 is stabilised in its unprotonated
+        state by Arg 129. His 188 accepts a proton from the O3' hydroxyl, activating it for nucleophilic
+        attack on the donor C2' atom.
+      notes: M-CSA entry 840, mechanism 1; M-CSA cites PMID:14730352, PMID:27644888; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/840/
+      snippet: Unlike other inverting glucosyltransferases, the reaction proceeds in an Sn1 manner, initiated
+        by elimination of CMP (promoted by Tyr156 and Tyr162). His 188 is stabilised in its unprotonated
+        state by Arg 129. His 188 accepts a proton from the O3' hydroxyl, activating it for nucleophilic
+        attack on the donor C2' atom.
+      notes: M-CSA entry 840, mechanism 1; M-CSA cites PMID:14730352, PMID:27644888; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/840/
+      snippet: Unlike other inverting glucosyltransferases, the reaction proceeds in an Sn1 manner, initiated
+        by elimination of CMP (promoted by Tyr156 and Tyr162). His 188 is stabilised in its unprotonated
+        state by Arg 129. His 188 accepts a proton from the O3' hydroxyl, activating it for nucleophilic
+        attack on the donor C2' atom.
+      notes: M-CSA entry 840, mechanism 1; M-CSA cites PMID:14730352, PMID:27644888; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/840/
+      snippet: Unlike other inverting glucosyltransferases, the reaction proceeds in an Sn1 manner, initiated
+        by elimination of CMP (promoted by Tyr156 and Tyr162). His 188 is stabilised in its unprotonated
+        state by Arg 129. His 188 accepts a proton from the O3' hydroxyl, activating it for nucleophilic
+        attack on the donor C2' atom.
+      notes: M-CSA entry 840, mechanism 1; M-CSA cites PMID:14730352, PMID:27644888; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/840/
+      snippet: Unlike other inverting glucosyltransferases, the reaction proceeds in an Sn1 manner, initiated
+        by elimination of CMP (promoted by Tyr156 and Tyr162). His 188 is stabilised in its unprotonated
+        state by Arg 129. His 188 accepts a proton from the O3' hydroxyl, activating it for nucleophilic
+        attack on the donor C2' atom.
+      notes: M-CSA entry 840, mechanism 1; M-CSA cites PMID:14730352, PMID:27644888; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/840/
+      snippet: Unlike other inverting glucosyltransferases, the reaction proceeds in an Sn1 manner, initiated
+        by elimination of CMP (promoted by Tyr156 and Tyr162). His 188 is stabilised in its unprotonated
+        state by Arg 129. His 188 accepts a proton from the O3' hydroxyl, activating it for nucleophilic
+        attack on the donor C2' atom.
+      notes: M-CSA entry 840, mechanism 1; M-CSA cites PMID:14730352, PMID:27644888; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (18 evidence-backed edges) transcribed from M-CSA entry 840;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

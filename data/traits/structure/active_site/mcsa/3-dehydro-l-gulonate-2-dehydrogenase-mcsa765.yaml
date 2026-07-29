@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.1.1.130
 - CHEBI:57441
@@ -207,4 +207,209 @@ definitions:
       2,3-Diketo-L-gulonate reductase (yiaK) is from Escherichia coli. It is the first gene in a nine-gene sequence operon, which is believed to be required for the utilisation of rare sugars for growth. YiaK catalyses the reduction of 2,3-diketo-L-gulonate (DKG) in the presence of NADH to give 3-keto-L-gulonate.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 3-dehydro-L-gulonate 2-dehydrogenase
+  description: Stepwise mechanism transcribed from M-CSA entry 765 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: his44
+    label: catalytic His44 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P37672
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: 2,3-diketogulonate
+    node_type: CHEMICAL
+    grounding: CHEBI:57441
+  - node_id: reactant1
+    label: NADH(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+  - node_id: reactant2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product0
+    label: 3-dehydro-L-gulonate
+    node_type: CHEMICAL
+    grounding: CHEBI:57655
+  - node_id: product1
+    label: NAD(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The protonated form of the His44 side chain acts as a general acid catalyst and polarises
+      the C-2 carbonyl of the substrate. This facilitates the hydride transfer from NADH to C-2 of the
+      substrate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: In an inferred reaction step His44 is reprotonated to regenerate the native state of
+      the enzyme.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: 3-dehydro-L-gulonate 2-dehydrogenase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:765
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.10.1530.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.10.1530.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: 3-dehydro-L-gulonate 2-dehydrogenase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.1.1.130
+  edges:
+  - subject: his44
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His44 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/765/
+      snippet: The protonated form of the His44 side chain acts as a general acid catalyst and polarises
+        the C-2 carbonyl of the substrate. This facilitates the hydride transfer from NADH to C-2 of the
+        substrate.
+      notes: M-CSA entry 765, mechanism 1; M-CSA cites PMID:11741871, PMID:14718529; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/765/
+      snippet: In an inferred reaction step His44 is reprotonated to regenerate the native state of the
+        enzyme.
+      notes: M-CSA entry 765, mechanism 1; M-CSA cites PMID:11741871, PMID:14718529; step 2
+  - subject: his44
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His44 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/765/
+      snippet: In an inferred reaction step His44 is reprotonated to regenerate the native state of the
+        enzyme.
+      notes: M-CSA entry 765, mechanism 1; M-CSA cites PMID:11741871, PMID:14718529; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/765/
+      snippet: Products.
+      notes: M-CSA entry 765, mechanism 1; M-CSA cites PMID:11741871, PMID:14718529; step 3
+  - subject: his44
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His44 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/765/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 765, mechanism 1; M-CSA cites PMID:11741871, PMID:14718529; M-CSA catalytic-residue
+        roles for His44
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/765/
+      snippet: "His 44 protonates the oxygen attached to C2 of the substrate. 
+ NADH is the source\
+        \ of a hydride, which nucleophilically attacks C2 of the substrate to give the product, and NAD+.\
+        \ The proposed mechanism is based on the crystal structure only."
+      notes: M-CSA entry 765, mechanism 1; M-CSA cites PMID:11741871, PMID:14718529; CATH domain 1.10.1530.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/765/
+      snippet: "His 44 protonates the oxygen attached to C2 of the substrate. 
+ NADH is the source\
+        \ of a hydride, which nucleophilically attacks C2 of the substrate to give the product, and NAD+.\
+        \ The proposed mechanism is based on the crystal structure only."
+      notes: M-CSA entry 765, mechanism 1; M-CSA cites PMID:11741871, PMID:14718529; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/765/
+      snippet: "His 44 protonates the oxygen attached to C2 of the substrate. 
+ NADH is the source\
+        \ of a hydride, which nucleophilically attacks C2 of the substrate to give the product, and NAD+.\
+        \ The proposed mechanism is based on the crystal structure only."
+      notes: M-CSA entry 765, mechanism 1; M-CSA cites PMID:11741871, PMID:14718529; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/765/
+      snippet: "His 44 protonates the oxygen attached to C2 of the substrate. 
+ NADH is the source\
+        \ of a hydride, which nucleophilically attacks C2 of the substrate to give the product, and NAD+.\
+        \ The proposed mechanism is based on the crystal structure only."
+      notes: M-CSA entry 765, mechanism 1; M-CSA cites PMID:11741871, PMID:14718529; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/765/
+      snippet: "His 44 protonates the oxygen attached to C2 of the substrate. 
+ NADH is the source\
+        \ of a hydride, which nucleophilically attacks C2 of the substrate to give the product, and NAD+.\
+        \ The proposed mechanism is based on the crystal structure only."
+      notes: M-CSA entry 765, mechanism 1; M-CSA cites PMID:11741871, PMID:14718529; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/765/
+      snippet: "His 44 protonates the oxygen attached to C2 of the substrate. 
+ NADH is the source\
+        \ of a hydride, which nucleophilically attacks C2 of the substrate to give the product, and NAD+.\
+        \ The proposed mechanism is based on the crystal structure only."
+      notes: M-CSA entry 765, mechanism 1; M-CSA cites PMID:11741871, PMID:14718529; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/765/
+      snippet: "His 44 protonates the oxygen attached to C2 of the substrate. 
+ NADH is the source\
+        \ of a hydride, which nucleophilically attacks C2 of the substrate to give the product, and NAD+.\
+        \ The proposed mechanism is based on the crystal structure only."
+      notes: M-CSA entry 765, mechanism 1; M-CSA cites PMID:11741871, PMID:14718529; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (12 evidence-backed edges) transcribed from M-CSA entry 765;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

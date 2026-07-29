@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.7.1.40
 - CHEBI:15378
@@ -629,4 +629,292 @@ definitions:
       Pyruvate kinase catalyses the final step of glycolysis and is allosterically regulated by fructose-1,6-bisphosphate. It requires two equivalents divalent cation, one of which binds to the enzyme as a complex with the nucleotide substrate, as well as activation by K+. As opposed to mammalian pyruvate kinase, the bacterial enzyme works in a K+ independent manner. The enzyme is also known to catalyse a variety of side reactions, including the decarboxylation of oxalacetate, the enolisation of pyruvate, ATP-dependent phosphorylation of alpha-hydroxy or alpha-thio carboxylates, ATP- and bicarbonate-dependent phosphorylations of fluoride and of hydroxylamine and to also function as an ATP- and bicarbonate-dependent ATPase. These side activities reflect the capacity of the active site to labilise the gamma-phosphate of ATP or to stabilise the enolate of pyruvate [PMID:9308890]. There are four isozymes of pyruvate kinase in mammals (L, R, M1, M2) encoded by two different genes: PKLR and PKM. The L and R isozymes are generated from the PKLR by differential splicing of RNA; the M1 and M2 forms are produced from the PKM gene by differential splicing. L type is major isozyme in the liver, R is found in red cells, M1 is the main form in muscle, heart and brain, and M2 is found in early fetal tissues as well as in most cancer cells. This entry represents the PKM gene products.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of pyruvate kinase
+  description: Stepwise mechanism transcribed from M-CSA entry 326 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +1).
+  nodes:
+  - node_id: arg72
+    label: catalytic Arg72 (M-CSA/PDB numbering; UniProt residue 73)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11974
+    description: 'M-CSA roles: attractive charge-charge interaction, electrostatic stabiliser, steric
+      role.'
+  - node_id: arg119
+    label: catalytic Arg119 (M-CSA/PDB numbering; UniProt residue 120)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11974
+    description: 'M-CSA roles: attractive charge-charge interaction, electrostatic stabiliser, steric
+      role.'
+  - node_id: lys269
+    label: catalytic Lys269 (M-CSA/PDB numbering; UniProt residue 270)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11974
+    description: 'M-CSA roles: attractive charge-charge interaction, electrostatic stabiliser, hydrogen
+      bond donor, steric role.'
+  - node_id: thr327
+    label: catalytic Thr327 (M-CSA/PDB numbering; UniProt residue 328)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11974
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor, increase acidity.'
+  - node_id: reactant0
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: reactant1
+    label: phosphonatoenolpyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:58702
+  - node_id: reactant2
+    label: ADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+  - node_id: product0
+    label: ATP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+  - node_id: product1
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Phosphoryl transfer from PEP to M(II)ADP occurs by an apparent S<sub>N</sub>2 mechanism
+      with an inversion of configuration at the phosphoryl group, to yield the enolate of pyruvate and
+      M(II)ATP. The presence of either a Mn or Mg divalent cation is essential for catalytic activity
+      [PMID:8193145]. The monovalent cation, K<sup>+</sup>, does not directly contact the substrate or
+      intermediate, but inst
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Thr237 and the Mn(II) cation increase the acidity of water through hydrogen bonding and
+      charge stabilisation, respectively, generating a specific acid to act towards the enolate intermediate.
+      A solvent molecule at the active site stereospecifically protonates the enolate at the 2-si face
+      of the double bond to form keto pyruvate. Kinetic and pH studies have shown the proton to originate
+      from a solv
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: pyruvate kinase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:326
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.60 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.60
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: pyruvate kinase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.7.1.40
+  edges:
+  - subject: arg72
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg72 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/326/
+      snippet: Phosphoryl transfer from PEP to M(II)ADP occurs by an apparent S<sub>N</sub>2 mechanism
+        with an inversion of configuration at the phosphoryl group, to yield the enolate of pyruvate and
+        M(II)ATP. The presence of either a Mn or Mg divalent cation is essential for catalytic activity
+        [PMID:8193145]. The monovalent cation, K<sup>+</sup>, does not directly contact the substrate
+        or intermediate, but instead is thought to influence the structure of the active site though interactions
+        with the positively charged resides Arg72, Arg119 and Lys269 [PMID:8193145].
+      notes: M-CSA entry 326, mechanism 1; M-CSA cites PMID:10413488, PMID:12562754, PMID:15568816, PMID:25474090,
+        PMID:26277545, PMID:8193145, PMID:9308890; step 1
+  - subject: arg119
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg119 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/326/
+      snippet: Phosphoryl transfer from PEP to M(II)ADP occurs by an apparent S<sub>N</sub>2 mechanism
+        with an inversion of configuration at the phosphoryl group, to yield the enolate of pyruvate and
+        M(II)ATP. The presence of either a Mn or Mg divalent cation is essential for catalytic activity
+        [PMID:8193145]. The monovalent cation, K<sup>+</sup>, does not directly contact the substrate
+        or intermediate, but instead is thought to influence the structure of the active site though interactions
+        with the positively charged resides Arg72, Arg119 and Lys269 [PMID:8193145].
+      notes: M-CSA entry 326, mechanism 1; M-CSA cites PMID:10413488, PMID:12562754, PMID:15568816, PMID:25474090,
+        PMID:26277545, PMID:8193145, PMID:9308890; step 1
+  - subject: lys269
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys269 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/326/
+      snippet: Phosphoryl transfer from PEP to M(II)ADP occurs by an apparent S<sub>N</sub>2 mechanism
+        with an inversion of configuration at the phosphoryl group, to yield the enolate of pyruvate and
+        M(II)ATP. The presence of either a Mn or Mg divalent cation is essential for catalytic activity
+        [PMID:8193145]. The monovalent cation, K<sup>+</sup>, does not directly contact the substrate
+        or intermediate, but instead is thought to influence the structure of the active site though interactions
+        with the positively charged resides Arg72, Arg119 and Lys269 [PMID:8193145].
+      notes: M-CSA entry 326, mechanism 1; M-CSA cites PMID:10413488, PMID:12562754, PMID:15568816, PMID:25474090,
+        PMID:26277545, PMID:8193145, PMID:9308890; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/326/
+      snippet: Thr237 and the Mn(II) cation increase the acidity of water through hydrogen bonding and
+        charge stabilisation, respectively, generating a specific acid to act towards the enolate intermediate.
+        A solvent molecule at the active site stereospecifically protonates the enolate at the 2-si face
+        of the double bond to form keto pyruvate. Kinetic and pH studies have shown the proton to originate
+        from a solvent molecule [PMID:15568816]. The divalent cation is thought to enhance the acidity
+        of the solvent molecule, rather than the monovalent cation [PMID:12562754].
+      notes: M-CSA entry 326, mechanism 1; M-CSA cites PMID:10413488, PMID:12562754, PMID:15568816, PMID:25474090,
+        PMID:26277545, PMID:8193145, PMID:9308890; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/326/
+      snippet: Products.
+      notes: M-CSA entry 326, mechanism 1; M-CSA cites PMID:10413488, PMID:12562754, PMID:15568816, PMID:25474090,
+        PMID:26277545, PMID:8193145, PMID:9308890; step 3
+  - subject: arg72
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg72 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/326/
+      snippet: attractive charge-charge interaction, electrostatic stabiliser, steric role
+      notes: M-CSA entry 326, mechanism 1; M-CSA cites PMID:10413488, PMID:12562754, PMID:15568816, PMID:25474090,
+        PMID:26277545, PMID:8193145, PMID:9308890; M-CSA catalytic-residue roles for Arg72
+  - subject: arg119
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg119 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/326/
+      snippet: attractive charge-charge interaction, electrostatic stabiliser, steric role
+      notes: M-CSA entry 326, mechanism 1; M-CSA cites PMID:10413488, PMID:12562754, PMID:15568816, PMID:25474090,
+        PMID:26277545, PMID:8193145, PMID:9308890; M-CSA catalytic-residue roles for Arg119
+  - subject: lys269
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys269 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/326/
+      snippet: attractive charge-charge interaction, electrostatic stabiliser, hydrogen bond donor, steric
+        role
+      notes: M-CSA entry 326, mechanism 1; M-CSA cites PMID:10413488, PMID:12562754, PMID:15568816, PMID:25474090,
+        PMID:26277545, PMID:8193145, PMID:9308890; M-CSA catalytic-residue roles for Lys269
+  - subject: thr327
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr327 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/326/
+      snippet: electrostatic stabiliser, hydrogen bond donor, increase acidity
+      notes: M-CSA entry 326, mechanism 1; M-CSA cites PMID:10413488, PMID:12562754, PMID:15568816, PMID:25474090,
+        PMID:26277545, PMID:8193145, PMID:9308890; M-CSA catalytic-residue roles for Thr327
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/326/
+      snippet: The reaction of pyruvate kinase is a two step reaction. In the first reaction the phosphate
+        group of PEP is transferred to ADP to produce ATP. The bound enol is then protonated to produce
+        pyruvate in its keto form.
+      notes: M-CSA entry 326, mechanism 1; M-CSA cites PMID:10413488, PMID:12562754, PMID:15568816, PMID:25474090,
+        PMID:26277545, PMID:8193145, PMID:9308890; CATH domain 3.20.20.60 assigned to the catalytic chain
+        by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/326/
+      snippet: The reaction of pyruvate kinase is a two step reaction. In the first reaction the phosphate
+        group of PEP is transferred to ADP to produce ATP. The bound enol is then protonated to produce
+        pyruvate in its keto form.
+      notes: M-CSA entry 326, mechanism 1; M-CSA cites PMID:10413488, PMID:12562754, PMID:15568816, PMID:25474090,
+        PMID:26277545, PMID:8193145, PMID:9308890; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/326/
+      snippet: The reaction of pyruvate kinase is a two step reaction. In the first reaction the phosphate
+        group of PEP is transferred to ADP to produce ATP. The bound enol is then protonated to produce
+        pyruvate in its keto form.
+      notes: M-CSA entry 326, mechanism 1; M-CSA cites PMID:10413488, PMID:12562754, PMID:15568816, PMID:25474090,
+        PMID:26277545, PMID:8193145, PMID:9308890; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/326/
+      snippet: The reaction of pyruvate kinase is a two step reaction. In the first reaction the phosphate
+        group of PEP is transferred to ADP to produce ATP. The bound enol is then protonated to produce
+        pyruvate in its keto form.
+      notes: M-CSA entry 326, mechanism 1; M-CSA cites PMID:10413488, PMID:12562754, PMID:15568816, PMID:25474090,
+        PMID:26277545, PMID:8193145, PMID:9308890; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/326/
+      snippet: The reaction of pyruvate kinase is a two step reaction. In the first reaction the phosphate
+        group of PEP is transferred to ADP to produce ATP. The bound enol is then protonated to produce
+        pyruvate in its keto form.
+      notes: M-CSA entry 326, mechanism 1; M-CSA cites PMID:10413488, PMID:12562754, PMID:15568816, PMID:25474090,
+        PMID:26277545, PMID:8193145, PMID:9308890; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/326/
+      snippet: The reaction of pyruvate kinase is a two step reaction. In the first reaction the phosphate
+        group of PEP is transferred to ADP to produce ATP. The bound enol is then protonated to produce
+        pyruvate in its keto form.
+      notes: M-CSA entry 326, mechanism 1; M-CSA cites PMID:10413488, PMID:12562754, PMID:15568816, PMID:25474090,
+        PMID:26277545, PMID:8193145, PMID:9308890; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/326/
+      snippet: The reaction of pyruvate kinase is a two step reaction. In the first reaction the phosphate
+        group of PEP is transferred to ADP to produce ATP. The bound enol is then protonated to produce
+        pyruvate in its keto form.
+      notes: M-CSA entry 326, mechanism 1; M-CSA cites PMID:10413488, PMID:12562754, PMID:15568816, PMID:25474090,
+        PMID:26277545, PMID:8193145, PMID:9308890; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (16 evidence-backed edges) transcribed from M-CSA entry 326;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

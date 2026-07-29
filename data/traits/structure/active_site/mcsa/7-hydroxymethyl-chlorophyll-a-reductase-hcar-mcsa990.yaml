@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.17.7.2
 - CHEBI:58416
@@ -262,4 +262,311 @@ definitions:
       7-Hydroxymethyl chlorophyll (HCAR) is a member of the family of chlorophyll catabolic enzymes (CCEs). Its a reductase that catalyses one of the reactions in chlorophyll conversion. HCAR is required for the degradation of light-harvesting complexes and is necessary for efficient photosynthesis by balancing the chlorophyll A/B ratio. Specifically, its a protein containing both 4Fe-4S complexes and FAD cofactor that converts 7-hydroxymethyl chlorophyll (HMChl) a to chlorophyll A using ferredoxin for reduction of the substrate. HCAR catalyses the reduction of a hydroxymethyl group to a methyl group.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 7-hydroxymethyl chlorophyll A reductase (HCAR)
+  description: Stepwise mechanism transcribed from M-CSA entry 990 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: asp237
+    label: catalytic Asp237 (M-CSA/PDB numbering; UniProt residue 237)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8GS60
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: glu262
+    label: catalytic Glu262 (M-CSA/PDB numbering; UniProt residue 262)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8GS60
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: gln332
+    label: catalytic Gln332 (M-CSA/PDB numbering; UniProt residue 332)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8GS60
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his417
+    label: catalytic His417 (M-CSA/PDB numbering; UniProt residue 417)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8GS60
+    description: 'M-CSA roles: electrostatic stabiliser, metal ligand.'
+  - node_id: reactant0
+    label: 7(1)-hydroxychlorophyll a(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:83377
+  - node_id: reactant1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: reactant2
+    label: di-mu-sulfido-diiron(1+)
+    node_type: CHEMICAL
+    grounding: CHEBI:33738
+  - node_id: product0
+    label: chlorophyll a(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58416
+  - node_id: product1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product2
+    label: di-mu-sulfido-diiron(2+)
+    node_type: CHEMICAL
+    grounding: CHEBI:33737
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp237 protonates the OH group on the 7-hydroxychlorophyll a (HMChl). This causes a water
+      molecule to leave HMChl. The substrate then goes through bond rearrangement and creates a double
+      bond towards the carbon atom that lost its hydroxyl group to stabilise the molecule.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Ferrodoxin donates a electron to the 4Fe-4S molecules which relay them to FAD. This process
+      is stabilised by Gln332 and Glu262. The protonation from the bulk solvent is inferred.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Ferrodoxin donates a second electron which is used to fully reduce FAD. Another proton
+      from solution is used to stabilise the negative charge.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The electrons gained by FAD are given to the chlorophyll substrate in the form of a hydride
+      transfer. Asp237 is regenerated to its protonated state. The chlorophyll substrate undergoes some
+      bond rearrangements to stabilise the added electrons.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Final product.
+  - node_id: active_site
+    label: 7-hydroxymethyl chlorophyll A reductase (HCAR) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:990
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: activity
+    label: 7-hydroxymethyl chlorophyll A reductase (HCAR) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.17.7.2
+  edges:
+  - subject: asp237
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp237 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/990/
+      snippet: Asp237 protonates the OH group on the 7-hydroxychlorophyll a (HMChl). This causes a water
+        molecule to leave HMChl. The substrate then goes through bond rearrangement and creates a double
+        bond towards the carbon atom that lost its hydroxyl group to stabilise the molecule.
+      notes: M-CSA entry 990, mechanism 1; M-CSA cites PMID:27072131; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/990/
+      snippet: Ferrodoxin donates a electron to the 4Fe-4S molecules which relay them to FAD. This process
+        is stabilised by Gln332 and Glu262. The protonation from the bulk solvent is inferred.
+      notes: M-CSA entry 990, mechanism 1; M-CSA cites PMID:27072131; step 2
+  - subject: glu262
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu262 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/990/
+      snippet: Ferrodoxin donates a electron to the 4Fe-4S molecules which relay them to FAD. This process
+        is stabilised by Gln332 and Glu262. The protonation from the bulk solvent is inferred.
+      notes: M-CSA entry 990, mechanism 1; M-CSA cites PMID:27072131; step 2
+  - subject: gln332
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Gln332 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/990/
+      snippet: Ferrodoxin donates a electron to the 4Fe-4S molecules which relay them to FAD. This process
+        is stabilised by Gln332 and Glu262. The protonation from the bulk solvent is inferred.
+      notes: M-CSA entry 990, mechanism 1; M-CSA cites PMID:27072131; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/990/
+      snippet: Ferrodoxin donates a second electron which is used to fully reduce FAD. Another proton
+        from solution is used to stabilise the negative charge.
+      notes: M-CSA entry 990, mechanism 1; M-CSA cites PMID:27072131; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/990/
+      snippet: The electrons gained by FAD are given to the chlorophyll substrate in the form of a hydride
+        transfer. Asp237 is regenerated to its protonated state. The chlorophyll substrate undergoes some
+        bond rearrangements to stabilise the added electrons.
+      notes: M-CSA entry 990, mechanism 1; M-CSA cites PMID:27072131; step 4
+  - subject: asp237
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Asp237 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/990/
+      snippet: The electrons gained by FAD are given to the chlorophyll substrate in the form of a hydride
+        transfer. Asp237 is regenerated to its protonated state. The chlorophyll substrate undergoes some
+        bond rearrangements to stabilise the added electrons.
+      notes: M-CSA entry 990, mechanism 1; M-CSA cites PMID:27072131; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/990/
+      snippet: Final product.
+      notes: M-CSA entry 990, mechanism 1; M-CSA cites PMID:27072131; step 5
+  - subject: asp237
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp237 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/990/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 990, mechanism 1; M-CSA cites PMID:27072131; M-CSA catalytic-residue roles for
+        Asp237
+  - subject: glu262
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu262 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/990/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 990, mechanism 1; M-CSA cites PMID:27072131; M-CSA catalytic-residue roles for
+        Glu262
+  - subject: gln332
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln332 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/990/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 990, mechanism 1; M-CSA cites PMID:27072131; M-CSA catalytic-residue roles for
+        Gln332
+  - subject: his417
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His417 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/990/
+      snippet: electrostatic stabiliser, metal ligand
+      notes: M-CSA entry 990, mechanism 1; M-CSA cites PMID:27072131; M-CSA catalytic-residue roles for
+        His417
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/990/
+      snippet: The 7-hydroxychlorophyll (HMChl) to chlorophyll A (ChlA) reaction is done by a mechanism
+        in which protons coming from Asp237 and solution and electrons coming from ferrodoxin, through
+        2 4Fe-4S molecules and to an FAD molecule, are able to dehydrate and reduce the HMChl. Asp237
+        donates a proton to dehydrate the HMChl, this causes bond rearrangement in the chlorophyll structure
+        and the formation of
+      notes: M-CSA entry 990, mechanism 1; M-CSA cites PMID:27072131; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/990/
+      snippet: The 7-hydroxychlorophyll (HMChl) to chlorophyll A (ChlA) reaction is done by a mechanism
+        in which protons coming from Asp237 and solution and electrons coming from ferrodoxin, through
+        2 4Fe-4S molecules and to an FAD molecule, are able to dehydrate and reduce the HMChl. Asp237
+        donates a proton to dehydrate the HMChl, this causes bond rearrangement in the chlorophyll structure
+        and the formation of
+      notes: M-CSA entry 990, mechanism 1; M-CSA cites PMID:27072131; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/990/
+      snippet: The 7-hydroxychlorophyll (HMChl) to chlorophyll A (ChlA) reaction is done by a mechanism
+        in which protons coming from Asp237 and solution and electrons coming from ferrodoxin, through
+        2 4Fe-4S molecules and to an FAD molecule, are able to dehydrate and reduce the HMChl. Asp237
+        donates a proton to dehydrate the HMChl, this causes bond rearrangement in the chlorophyll structure
+        and the formation of
+      notes: M-CSA entry 990, mechanism 1; M-CSA cites PMID:27072131; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/990/
+      snippet: The 7-hydroxychlorophyll (HMChl) to chlorophyll A (ChlA) reaction is done by a mechanism
+        in which protons coming from Asp237 and solution and electrons coming from ferrodoxin, through
+        2 4Fe-4S molecules and to an FAD molecule, are able to dehydrate and reduce the HMChl. Asp237
+        donates a proton to dehydrate the HMChl, this causes bond rearrangement in the chlorophyll structure
+        and the formation of
+      notes: M-CSA entry 990, mechanism 1; M-CSA cites PMID:27072131; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/990/
+      snippet: The 7-hydroxychlorophyll (HMChl) to chlorophyll A (ChlA) reaction is done by a mechanism
+        in which protons coming from Asp237 and solution and electrons coming from ferrodoxin, through
+        2 4Fe-4S molecules and to an FAD molecule, are able to dehydrate and reduce the HMChl. Asp237
+        donates a proton to dehydrate the HMChl, this causes bond rearrangement in the chlorophyll structure
+        and the formation of
+      notes: M-CSA entry 990, mechanism 1; M-CSA cites PMID:27072131; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/990/
+      snippet: The 7-hydroxychlorophyll (HMChl) to chlorophyll A (ChlA) reaction is done by a mechanism
+        in which protons coming from Asp237 and solution and electrons coming from ferrodoxin, through
+        2 4Fe-4S molecules and to an FAD molecule, are able to dehydrate and reduce the HMChl. Asp237
+        donates a proton to dehydrate the HMChl, this causes bond rearrangement in the chlorophyll structure
+        and the formation of
+      notes: M-CSA entry 990, mechanism 1; M-CSA cites PMID:27072131; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/990/
+      snippet: The 7-hydroxychlorophyll (HMChl) to chlorophyll A (ChlA) reaction is done by a mechanism
+        in which protons coming from Asp237 and solution and electrons coming from ferrodoxin, through
+        2 4Fe-4S molecules and to an FAD molecule, are able to dehydrate and reduce the HMChl. Asp237
+        donates a proton to dehydrate the HMChl, this causes bond rearrangement in the chlorophyll structure
+        and the formation of
+      notes: M-CSA entry 990, mechanism 1; M-CSA cites PMID:27072131; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (19 evidence-backed edges) transcribed from M-CSA entry 990;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

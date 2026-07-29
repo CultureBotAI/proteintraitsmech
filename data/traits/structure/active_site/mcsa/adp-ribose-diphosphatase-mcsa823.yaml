@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.6.1.13
 - CHEBI:57967
@@ -96,4 +96,251 @@ definitions:
       The ADP-ribose-specific Nudix hydrolase from Mycobacterium tuberculosis (MT-ADPRase or ADPR pyrophosphatase) is part of the family of Nudix hydrolases with the characteristic Nudix box that catalyse hydrolysis of nucleoside diphosphate derivatives. Divalent magnesium or manganese ions are required for activity. Differences in binding sites of the M. tuberculosis enzyme and the human homologue suggest a possible target for antituberculosis drug treatment.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of ADP-ribose diphosphatase
+  description: Stepwise mechanism transcribed from M-CSA entry 823 (2 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: arg64
+    label: catalytic Arg64 (M-CSA/PDB numbering; UniProt residue 64)
+    node_type: RESIDUE
+    grounding: UniProtKB:O33199
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ala76
+    label: catalytic Ala76 (M-CSA/PDB numbering; UniProt residue 76)
+    node_type: RESIDUE
+    grounding: UniProtKB:O33199
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu93
+    label: catalytic Glu93 (M-CSA/PDB numbering; UniProt residue 93)
+    node_type: RESIDUE
+    grounding: UniProtKB:O33199
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu97
+    label: catalytic Glu97 (M-CSA/PDB numbering; UniProt residue 97)
+    node_type: RESIDUE
+    grounding: UniProtKB:O33199
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu142
+    label: catalytic Glu142 (M-CSA/PDB numbering; UniProt residue 142)
+    node_type: RESIDUE
+    grounding: UniProtKB:O33199
+    description: 'M-CSA roles: metal ligand, proton acceptor.'
+  - node_id: reactant0
+    label: ADP-D-ribose(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57967
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: aldehydo-D-ribose 5-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58273
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: adenosine 5'-monophosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: A water molecule is activated for nucleophilic attack through polarization by Mn2+ and
+      through its deprotonation by Glu 142. The activated water then attacks the Phosphorus of the alpha-phosphate
+      which results in the cleavage of the phosphoanhydride bond.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Product
+  - node_id: active_site
+    label: ADP-ribose diphosphatase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:823
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.79.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.79.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: ADP-ribose diphosphatase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.6.1.13
+  edges:
+  - subject: glu142
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu142 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/823/
+      snippet: A water molecule is activated for nucleophilic attack through polarization by Mn2+ and
+        through its deprotonation by Glu 142. The activated water then attacks the Phosphorus of the alpha-phosphate
+        which results in the cleavage of the phosphoanhydride bond.
+      notes: M-CSA entry 823, mechanism 1; M-CSA cites PMID:12135348, PMID:12906832, PMID:15581572, PMID:26979298;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/823/
+      snippet: Product
+      notes: M-CSA entry 823, mechanism 1; M-CSA cites PMID:12135348, PMID:12906832, PMID:15581572, PMID:26979298;
+        step 2
+  - subject: arg64
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg64 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/823/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 823, mechanism 1; M-CSA cites PMID:12135348, PMID:12906832, PMID:15581572, PMID:26979298;
+        M-CSA catalytic-residue roles for Arg64
+  - subject: ala76
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ala76 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/823/
+      snippet: metal ligand
+      notes: M-CSA entry 823, mechanism 1; M-CSA cites PMID:12135348, PMID:12906832, PMID:15581572, PMID:26979298;
+        M-CSA catalytic-residue roles for Ala76
+  - subject: glu93
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu93 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/823/
+      snippet: metal ligand
+      notes: M-CSA entry 823, mechanism 1; M-CSA cites PMID:12135348, PMID:12906832, PMID:15581572, PMID:26979298;
+        M-CSA catalytic-residue roles for Glu93
+  - subject: glu97
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu97 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/823/
+      snippet: metal ligand
+      notes: M-CSA entry 823, mechanism 1; M-CSA cites PMID:12135348, PMID:12906832, PMID:15581572, PMID:26979298;
+        M-CSA catalytic-residue roles for Glu97
+  - subject: glu142
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu142 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/823/
+      snippet: metal ligand, proton acceptor
+      notes: M-CSA entry 823, mechanism 1; M-CSA cites PMID:12135348, PMID:12906832, PMID:15581572, PMID:26979298;
+        M-CSA catalytic-residue roles for Glu142
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/823/
+      snippet: Glu 142, activated by a metal ion, acts as a general base catalyst in activating a water
+        molecule for nucleophilic attack on the alpha-phosphate of the substrate. the water is also activated
+        by binding to two manganese ions. The charges in the alpha-phosphate are stabilised by the metal
+        ions. Charges in the beta-phosphate are stabilised by a metal ion and the Arg 64 side-chain.
+      notes: M-CSA entry 823, mechanism 1; M-CSA cites PMID:12135348, PMID:12906832, PMID:15581572, PMID:26979298;
+        CATH domain 3.90.79.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/823/
+      snippet: Glu 142, activated by a metal ion, acts as a general base catalyst in activating a water
+        molecule for nucleophilic attack on the alpha-phosphate of the substrate. the water is also activated
+        by binding to two manganese ions. The charges in the alpha-phosphate are stabilised by the metal
+        ions. Charges in the beta-phosphate are stabilised by a metal ion and the Arg 64 side-chain.
+      notes: M-CSA entry 823, mechanism 1; M-CSA cites PMID:12135348, PMID:12906832, PMID:15581572, PMID:26979298;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/823/
+      snippet: Glu 142, activated by a metal ion, acts as a general base catalyst in activating a water
+        molecule for nucleophilic attack on the alpha-phosphate of the substrate. the water is also activated
+        by binding to two manganese ions. The charges in the alpha-phosphate are stabilised by the metal
+        ions. Charges in the beta-phosphate are stabilised by a metal ion and the Arg 64 side-chain.
+      notes: M-CSA entry 823, mechanism 1; M-CSA cites PMID:12135348, PMID:12906832, PMID:15581572, PMID:26979298;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/823/
+      snippet: Glu 142, activated by a metal ion, acts as a general base catalyst in activating a water
+        molecule for nucleophilic attack on the alpha-phosphate of the substrate. the water is also activated
+        by binding to two manganese ions. The charges in the alpha-phosphate are stabilised by the metal
+        ions. Charges in the beta-phosphate are stabilised by a metal ion and the Arg 64 side-chain.
+      notes: M-CSA entry 823, mechanism 1; M-CSA cites PMID:12135348, PMID:12906832, PMID:15581572, PMID:26979298;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/823/
+      snippet: Glu 142, activated by a metal ion, acts as a general base catalyst in activating a water
+        molecule for nucleophilic attack on the alpha-phosphate of the substrate. the water is also activated
+        by binding to two manganese ions. The charges in the alpha-phosphate are stabilised by the metal
+        ions. Charges in the beta-phosphate are stabilised by a metal ion and the Arg 64 side-chain.
+      notes: M-CSA entry 823, mechanism 1; M-CSA cites PMID:12135348, PMID:12906832, PMID:15581572, PMID:26979298;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/823/
+      snippet: Glu 142, activated by a metal ion, acts as a general base catalyst in activating a water
+        molecule for nucleophilic attack on the alpha-phosphate of the substrate. the water is also activated
+        by binding to two manganese ions. The charges in the alpha-phosphate are stabilised by the metal
+        ions. Charges in the beta-phosphate are stabilised by a metal ion and the Arg 64 side-chain.
+      notes: M-CSA entry 823, mechanism 1; M-CSA cites PMID:12135348, PMID:12906832, PMID:15581572, PMID:26979298;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/823/
+      snippet: Glu 142, activated by a metal ion, acts as a general base catalyst in activating a water
+        molecule for nucleophilic attack on the alpha-phosphate of the substrate. the water is also activated
+        by binding to two manganese ions. The charges in the alpha-phosphate are stabilised by the metal
+        ions. Charges in the beta-phosphate are stabilised by a metal ion and the Arg 64 side-chain.
+      notes: M-CSA entry 823, mechanism 1; M-CSA cites PMID:12135348, PMID:12906832, PMID:15581572, PMID:26979298;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (14 evidence-backed edges) transcribed from M-CSA entry 823;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

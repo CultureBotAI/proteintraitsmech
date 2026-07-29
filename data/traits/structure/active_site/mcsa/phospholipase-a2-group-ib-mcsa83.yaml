@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.1.4
 - CHEBI:57643
@@ -230,4 +230,361 @@ definitions:
       PLA2 catalyses the hydroylsis of the 2-acyl ester of 1,2-diacylphosphatides. Two forms of PLA2 are known: the small secretory PLA2s which are amphipathic molecules usually found associated with lipid membranes, and the larger cytosolic forms. This annotation is for the small secretory form. Secretory PLA2s form part of the neurotoxic component of many snake and bee venoms due to its ability to block acetylcholine release. Secretory PLA2s have been divided into 3 main groups: I, II, and III. Class I (present in some snake venoms and in mammalian exocrine pancrease) and II (present in some snake venoms and also broadly distributed among a variety of mammalian cell types) are closely related to each other. The class III enzymes (including venom enzymes from the honeybee and the Gila monster) appear to form a separate divergent group though their active site and mechanism is similar. The key catalytic histidine and aspartate are in very similar orientations however the residues making up the rest of the hydrogen bond network are not conserved spatially.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of phospholipase A2 (group IB)
+  description: Stepwise mechanism transcribed from M-CSA entry 83 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +22).
+  nodes:
+  - node_id: tyr28
+    label: catalytic Tyr28 (M-CSA/PDB numbering; UniProt residue 50)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00592
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: gly30
+    label: catalytic Gly30 (M-CSA/PDB numbering; UniProt residue 52)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00592
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: gly32
+    label: catalytic Gly32 (M-CSA/PDB numbering; UniProt residue 54)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00592
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his48
+    label: catalytic His48 (M-CSA/PDB numbering; UniProt residue 70)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00592
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      proton acceptor, proton donor.'
+  - node_id: asp49
+    label: catalytic Asp49 (M-CSA/PDB numbering; UniProt residue 71)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00592
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: tyr52
+    label: catalytic Tyr52 (M-CSA/PDB numbering; UniProt residue 74)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00592
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: tyr73
+    label: catalytic Tyr73 (M-CSA/PDB numbering; UniProt residue 95)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00592
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: asp99
+    label: catalytic Asp99 (M-CSA/PDB numbering; UniProt residue 121)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00592
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: reactant0
+    label: 1,2-diacyl-sn-glycero-3-phosphocholine
+    node_type: CHEMICAL
+    grounding: CHEBI:57643
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: 1-O-acyl-sn-glycero-3-phosphocholine
+    node_type: CHEMICAL
+    grounding: CHEBI:58168
+  - node_id: product1
+    label: fatty acid anion
+    node_type: CHEMICAL
+    grounding: CHEBI:28868
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His48 deprotonates water which initiates a nucleophilic attack on the carbonyl carbon
+      of the substrate in an addition reaction.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The oxyanion collapses, eliminating the phosphocholine which deprotonates His48.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: phospholipase A2 (group IB) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:83
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.20.90.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.20.90.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: phospholipase A2 (group IB) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.1.4
+  edges:
+  - subject: his48
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His48 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/83/
+      snippet: His48 deprotonates water which initiates a nucleophilic attack on the carbonyl carbon of
+        the substrate in an addition reaction.
+      notes: M-CSA entry 83, mechanism 1; M-CSA cites PMID:11749391, PMID:12475227, PMID:12501175, PMID:16790927,
+        PMID:17827229, PMID:20718411, PMID:21561115, PMID:2274788, PMID:8154374, PMID:8203286, PMID:8831753,
+        PMID:9115986, PMID:9369492, PMID:9636712, PMID:9663694; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/83/
+      snippet: The oxyanion collapses, eliminating the phosphocholine which deprotonates His48.
+      notes: M-CSA entry 83, mechanism 1; M-CSA cites PMID:11749391, PMID:12475227, PMID:12501175, PMID:16790927,
+        PMID:17827229, PMID:20718411, PMID:21561115, PMID:2274788, PMID:8154374, PMID:8203286, PMID:8831753,
+        PMID:9115986, PMID:9369492, PMID:9636712, PMID:9663694; step 2
+  - subject: his48
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His48 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/83/
+      snippet: The oxyanion collapses, eliminating the phosphocholine which deprotonates His48.
+      notes: M-CSA entry 83, mechanism 1; M-CSA cites PMID:11749391, PMID:12475227, PMID:12501175, PMID:16790927,
+        PMID:17827229, PMID:20718411, PMID:21561115, PMID:2274788, PMID:8154374, PMID:8203286, PMID:8831753,
+        PMID:9115986, PMID:9369492, PMID:9636712, PMID:9663694; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/83/
+      snippet: Products
+      notes: M-CSA entry 83, mechanism 1; M-CSA cites PMID:11749391, PMID:12475227, PMID:12501175, PMID:16790927,
+        PMID:17827229, PMID:20718411, PMID:21561115, PMID:2274788, PMID:8154374, PMID:8203286, PMID:8831753,
+        PMID:9115986, PMID:9369492, PMID:9636712, PMID:9663694; step 3
+  - subject: tyr28
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr28 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/83/
+      snippet: metal ligand
+      notes: M-CSA entry 83, mechanism 1; M-CSA cites PMID:11749391, PMID:12475227, PMID:12501175, PMID:16790927,
+        PMID:17827229, PMID:20718411, PMID:21561115, PMID:2274788, PMID:8154374, PMID:8203286, PMID:8831753,
+        PMID:9115986, PMID:9369492, PMID:9636712, PMID:9663694; M-CSA catalytic-residue roles for Tyr28
+  - subject: gly30
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly30 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/83/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 83, mechanism 1; M-CSA cites PMID:11749391, PMID:12475227, PMID:12501175, PMID:16790927,
+        PMID:17827229, PMID:20718411, PMID:21561115, PMID:2274788, PMID:8154374, PMID:8203286, PMID:8831753,
+        PMID:9115986, PMID:9369492, PMID:9636712, PMID:9663694; M-CSA catalytic-residue roles for Gly30
+  - subject: gly32
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly32 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/83/
+      snippet: metal ligand
+      notes: M-CSA entry 83, mechanism 1; M-CSA cites PMID:11749391, PMID:12475227, PMID:12501175, PMID:16790927,
+        PMID:17827229, PMID:20718411, PMID:21561115, PMID:2274788, PMID:8154374, PMID:8203286, PMID:8831753,
+        PMID:9115986, PMID:9369492, PMID:9636712, PMID:9663694; M-CSA catalytic-residue roles for Gly32
+  - subject: his48
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His48 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/83/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+        proton donor
+      notes: M-CSA entry 83, mechanism 1; M-CSA cites PMID:11749391, PMID:12475227, PMID:12501175, PMID:16790927,
+        PMID:17827229, PMID:20718411, PMID:21561115, PMID:2274788, PMID:8154374, PMID:8203286, PMID:8831753,
+        PMID:9115986, PMID:9369492, PMID:9636712, PMID:9663694; M-CSA catalytic-residue roles for His48
+  - subject: asp49
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp49 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/83/
+      snippet: metal ligand
+      notes: M-CSA entry 83, mechanism 1; M-CSA cites PMID:11749391, PMID:12475227, PMID:12501175, PMID:16790927,
+        PMID:17827229, PMID:20718411, PMID:21561115, PMID:2274788, PMID:8154374, PMID:8203286, PMID:8831753,
+        PMID:9115986, PMID:9369492, PMID:9636712, PMID:9663694; M-CSA catalytic-residue roles for Asp49
+  - subject: tyr52
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr52 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/83/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 83, mechanism 1; M-CSA cites PMID:11749391, PMID:12475227, PMID:12501175, PMID:16790927,
+        PMID:17827229, PMID:20718411, PMID:21561115, PMID:2274788, PMID:8154374, PMID:8203286, PMID:8831753,
+        PMID:9115986, PMID:9369492, PMID:9636712, PMID:9663694; M-CSA catalytic-residue roles for Tyr52
+  - subject: tyr73
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr73 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/83/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 83, mechanism 1; M-CSA cites PMID:11749391, PMID:12475227, PMID:12501175, PMID:16790927,
+        PMID:17827229, PMID:20718411, PMID:21561115, PMID:2274788, PMID:8154374, PMID:8203286, PMID:8831753,
+        PMID:9115986, PMID:9369492, PMID:9636712, PMID:9663694; M-CSA catalytic-residue roles for Tyr73
+  - subject: asp99
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp99 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/83/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 83, mechanism 1; M-CSA cites PMID:11749391, PMID:12475227, PMID:12501175, PMID:16790927,
+        PMID:17827229, PMID:20718411, PMID:21561115, PMID:2274788, PMID:8154374, PMID:8203286, PMID:8831753,
+        PMID:9115986, PMID:9369492, PMID:9636712, PMID:9663694; M-CSA catalytic-residue roles for Asp99
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/83/
+      snippet: "A standard numbering system exists for class I and class II enzymes; in this system the\
+        \ catalytic residues are Gly 30, His 48, and Asp 99.   
+<br/><br/>
+The reaction involves\
+        \ attack by a water molecule on the ester carbonyl to give a tetrahedral intermediate which then\
+        \ collapses with loss of the alcoholate leaving group. A Ca(II) ion and the backbone NH of Gly\
+        \ 30 form an oxyanion hole to stabili"
+      notes: M-CSA entry 83, mechanism 1; M-CSA cites PMID:11749391, PMID:12475227, PMID:12501175, PMID:16790927,
+        PMID:17827229, PMID:20718411, PMID:21561115, PMID:2274788, PMID:8154374, PMID:8203286, PMID:8831753,
+        PMID:9115986, PMID:9369492, PMID:9636712, PMID:9663694; CATH domain 1.20.90.10 assigned to the
+        catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/83/
+      snippet: "A standard numbering system exists for class I and class II enzymes; in this system the\
+        \ catalytic residues are Gly 30, His 48, and Asp 99.   
+<br/><br/>
+The reaction involves\
+        \ attack by a water molecule on the ester carbonyl to give a tetrahedral intermediate which then\
+        \ collapses with loss of the alcoholate leaving group. A Ca(II) ion and the backbone NH of Gly\
+        \ 30 form an oxyanion hole to stabili"
+      notes: M-CSA entry 83, mechanism 1; M-CSA cites PMID:11749391, PMID:12475227, PMID:12501175, PMID:16790927,
+        PMID:17827229, PMID:20718411, PMID:21561115, PMID:2274788, PMID:8154374, PMID:8203286, PMID:8831753,
+        PMID:9115986, PMID:9369492, PMID:9636712, PMID:9663694; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/83/
+      snippet: "A standard numbering system exists for class I and class II enzymes; in this system the\
+        \ catalytic residues are Gly 30, His 48, and Asp 99.   
+<br/><br/>
+The reaction involves\
+        \ attack by a water molecule on the ester carbonyl to give a tetrahedral intermediate which then\
+        \ collapses with loss of the alcoholate leaving group. A Ca(II) ion and the backbone NH of Gly\
+        \ 30 form an oxyanion hole to stabili"
+      notes: M-CSA entry 83, mechanism 1; M-CSA cites PMID:11749391, PMID:12475227, PMID:12501175, PMID:16790927,
+        PMID:17827229, PMID:20718411, PMID:21561115, PMID:2274788, PMID:8154374, PMID:8203286, PMID:8831753,
+        PMID:9115986, PMID:9369492, PMID:9636712, PMID:9663694; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/83/
+      snippet: "A standard numbering system exists for class I and class II enzymes; in this system the\
+        \ catalytic residues are Gly 30, His 48, and Asp 99.   
+<br/><br/>
+The reaction involves\
+        \ attack by a water molecule on the ester carbonyl to give a tetrahedral intermediate which then\
+        \ collapses with loss of the alcoholate leaving group. A Ca(II) ion and the backbone NH of Gly\
+        \ 30 form an oxyanion hole to stabili"
+      notes: M-CSA entry 83, mechanism 1; M-CSA cites PMID:11749391, PMID:12475227, PMID:12501175, PMID:16790927,
+        PMID:17827229, PMID:20718411, PMID:21561115, PMID:2274788, PMID:8154374, PMID:8203286, PMID:8831753,
+        PMID:9115986, PMID:9369492, PMID:9636712, PMID:9663694; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/83/
+      snippet: "A standard numbering system exists for class I and class II enzymes; in this system the\
+        \ catalytic residues are Gly 30, His 48, and Asp 99.   
+<br/><br/>
+The reaction involves\
+        \ attack by a water molecule on the ester carbonyl to give a tetrahedral intermediate which then\
+        \ collapses with loss of the alcoholate leaving group. A Ca(II) ion and the backbone NH of Gly\
+        \ 30 form an oxyanion hole to stabili"
+      notes: M-CSA entry 83, mechanism 1; M-CSA cites PMID:11749391, PMID:12475227, PMID:12501175, PMID:16790927,
+        PMID:17827229, PMID:20718411, PMID:21561115, PMID:2274788, PMID:8154374, PMID:8203286, PMID:8831753,
+        PMID:9115986, PMID:9369492, PMID:9636712, PMID:9663694; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/83/
+      snippet: "A standard numbering system exists for class I and class II enzymes; in this system the\
+        \ catalytic residues are Gly 30, His 48, and Asp 99.   
+<br/><br/>
+The reaction involves\
+        \ attack by a water molecule on the ester carbonyl to give a tetrahedral intermediate which then\
+        \ collapses with loss of the alcoholate leaving group. A Ca(II) ion and the backbone NH of Gly\
+        \ 30 form an oxyanion hole to stabili"
+      notes: M-CSA entry 83, mechanism 1; M-CSA cites PMID:11749391, PMID:12475227, PMID:12501175, PMID:16790927,
+        PMID:17827229, PMID:20718411, PMID:21561115, PMID:2274788, PMID:8154374, PMID:8203286, PMID:8831753,
+        PMID:9115986, PMID:9369492, PMID:9636712, PMID:9663694; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/83/
+      snippet: "A standard numbering system exists for class I and class II enzymes; in this system the\
+        \ catalytic residues are Gly 30, His 48, and Asp 99.   
+<br/><br/>
+The reaction involves\
+        \ attack by a water molecule on the ester carbonyl to give a tetrahedral intermediate which then\
+        \ collapses with loss of the alcoholate leaving group. A Ca(II) ion and the backbone NH of Gly\
+        \ 30 form an oxyanion hole to stabili"
+      notes: M-CSA entry 83, mechanism 1; M-CSA cites PMID:11749391, PMID:12475227, PMID:12501175, PMID:16790927,
+        PMID:17827229, PMID:20718411, PMID:21561115, PMID:2274788, PMID:8154374, PMID:8203286, PMID:8831753,
+        PMID:9115986, PMID:9369492, PMID:9636712, PMID:9663694; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (19 evidence-backed edges) transcribed from M-CSA entry 83;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

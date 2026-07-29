@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.2.1.10
 - CHEBI:15377
@@ -231,4 +231,516 @@ definitions:
       3-dehydroquinate dehydratase catalyses the third step in the biosynthesis of chorismate within the Shikimate pathway which synthesises aromatic compounds as well as in the degradative quinate pathway. It is a type I dehydroquinase which catalyses a cis-dehydration of the hexane ring of 3-dehydroquinate via a covalent imine intermediate (unlike the type II dehydroquinase which catalyses a trans-dehydration via an enolate intermediate). Type I dehydroquinases use a Schiff base mechanism. The pathway is essential in microorganisms and plants for the biosynthesis of compounds such as folate, ubiquinone and aromatic amino acids. The absence of this pathway in animals makes it an attractive target for antimicrobial agents.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 3-dehydroquinate dehydratase (type I)
+  description: Stepwise mechanism transcribed from M-CSA entry 54 (10 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: glu86
+    label: catalytic Glu86 (M-CSA/PDB numbering; UniProt residue 86)
+    node_type: RESIDUE
+    grounding: UniProtKB:P24670
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: his143
+    label: catalytic His143 (M-CSA/PDB numbering; UniProt residue 143)
+    node_type: RESIDUE
+    grounding: UniProtKB:P24670
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor,
+      proton relay.'
+  - node_id: lys170
+    label: catalytic Lys170 (M-CSA/PDB numbering; UniProt residue 170)
+    node_type: RESIDUE
+    grounding: UniProtKB:P24670
+    description: 'M-CSA roles: covalently attached, electron pair acceptor, electron pair donor, hydrogen
+      bond acceptor, hydrogen bond donor, nucleofuge, nucleophile, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: 3-dehydroquinate
+    node_type: CHEMICAL
+    grounding: CHEBI:32364
+  - node_id: product0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product1
+    label: 3-dehydroshikimate
+    node_type: CHEMICAL
+    grounding: CHEBI:16630
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu86 deprotonates His143, which deprotonates Lys170, activating it.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Lys170 attacks the carbonyl carbon of the substrate in a nucleophilic addition.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: A proton is transferred from the covalently attached lysine to the newly formed hydroxide.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Lys170 initiates an elimination of water (which obtains its proton from His143, which
+      deprotonates Glu86) forming the Schiff base intermediate.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Glu86 deprotonates His143, which deprotonates the intermediate at the carbon adjacent
+      to the covalently bound lysine which acts as an electron sink.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Lys170 donates its lone pair of electrons back into the ring, initiating a double bond
+      rearrangement and elimination of water, which obtains its proton from His143, which deprotonates
+      Glu86.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: Glu86 deprotonates His143, which deprotonates water, which then attacks the carbon to
+      which Lys170 is covalently attached.
+  - node_id: step8
+    label: mechanism step 8
+    node_type: STATE
+    description: Lys170 deprotonates the hydroxide, which causes Lys170 to be eliminated and the product
+      to be formed.
+  - node_id: step9
+    label: mechanism step 9
+    node_type: STATE
+    description: Lys170 deprotonates His143, which deprotonates Glu86 in an inferred step that returns
+      the enzyme to its starting state.
+  - node_id: step10
+    label: mechanism step 10
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: 3-dehydroquinate dehydratase (type I) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:54
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.70 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.70
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: 3-dehydroquinate dehydratase (type I) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.2.1.10
+  edges:
+  - subject: glu86
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu86 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/54/
+      snippet: Glu86 deprotonates His143, which deprotonates Lys170, activating it.
+      notes: M-CSA entry 54, mechanism 1; M-CSA cites PMID:10360352, PMID:11976491, PMID:23341204, PMID:24437575,
+        PMID:24957267, PMID:25370445, PMID:9545291; step 1
+  - subject: his143
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His143 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/54/
+      snippet: Glu86 deprotonates His143, which deprotonates Lys170, activating it.
+      notes: M-CSA entry 54, mechanism 1; M-CSA cites PMID:10360352, PMID:11976491, PMID:23341204, PMID:24437575,
+        PMID:24957267, PMID:25370445, PMID:9545291; step 1
+  - subject: lys170
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys170 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/54/
+      snippet: Glu86 deprotonates His143, which deprotonates Lys170, activating it.
+      notes: M-CSA entry 54, mechanism 1; M-CSA cites PMID:10360352, PMID:11976491, PMID:23341204, PMID:24437575,
+        PMID:24957267, PMID:25370445, PMID:9545291; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/54/
+      snippet: Lys170 attacks the carbonyl carbon of the substrate in a nucleophilic addition.
+      notes: M-CSA entry 54, mechanism 1; M-CSA cites PMID:10360352, PMID:11976491, PMID:23341204, PMID:24437575,
+        PMID:24957267, PMID:25370445, PMID:9545291; step 2
+  - subject: lys170
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Lys170 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/54/
+      snippet: Lys170 attacks the carbonyl carbon of the substrate in a nucleophilic addition.
+      notes: M-CSA entry 54, mechanism 1; M-CSA cites PMID:10360352, PMID:11976491, PMID:23341204, PMID:24437575,
+        PMID:24957267, PMID:25370445, PMID:9545291; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/54/
+      snippet: A proton is transferred from the covalently attached lysine to the newly formed hydroxide.
+      notes: M-CSA entry 54, mechanism 1; M-CSA cites PMID:10360352, PMID:11976491, PMID:23341204, PMID:24437575,
+        PMID:24957267, PMID:25370445, PMID:9545291; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/54/
+      snippet: Lys170 initiates an elimination of water (which obtains its proton from His143, which deprotonates
+        Glu86) forming the Schiff base intermediate.
+      notes: M-CSA entry 54, mechanism 1; M-CSA cites PMID:10360352, PMID:11976491, PMID:23341204, PMID:24437575,
+        PMID:24957267, PMID:25370445, PMID:9545291; step 4
+  - subject: glu86
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Glu86 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/54/
+      snippet: Lys170 initiates an elimination of water (which obtains its proton from His143, which deprotonates
+        Glu86) forming the Schiff base intermediate.
+      notes: M-CSA entry 54, mechanism 1; M-CSA cites PMID:10360352, PMID:11976491, PMID:23341204, PMID:24437575,
+        PMID:24957267, PMID:25370445, PMID:9545291; step 4
+  - subject: his143
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: His143 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/54/
+      snippet: Lys170 initiates an elimination of water (which obtains its proton from His143, which deprotonates
+        Glu86) forming the Schiff base intermediate.
+      notes: M-CSA entry 54, mechanism 1; M-CSA cites PMID:10360352, PMID:11976491, PMID:23341204, PMID:24437575,
+        PMID:24957267, PMID:25370445, PMID:9545291; step 4
+  - subject: lys170
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Lys170 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/54/
+      snippet: Lys170 initiates an elimination of water (which obtains its proton from His143, which deprotonates
+        Glu86) forming the Schiff base intermediate.
+      notes: M-CSA entry 54, mechanism 1; M-CSA cites PMID:10360352, PMID:11976491, PMID:23341204, PMID:24437575,
+        PMID:24957267, PMID:25370445, PMID:9545291; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/54/
+      snippet: Glu86 deprotonates His143, which deprotonates the intermediate at the carbon adjacent to
+        the covalently bound lysine which acts as an electron sink.
+      notes: M-CSA entry 54, mechanism 1; M-CSA cites PMID:10360352, PMID:11976491, PMID:23341204, PMID:24437575,
+        PMID:24957267, PMID:25370445, PMID:9545291; step 5
+  - subject: glu86
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Glu86 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/54/
+      snippet: Glu86 deprotonates His143, which deprotonates the intermediate at the carbon adjacent to
+        the covalently bound lysine which acts as an electron sink.
+      notes: M-CSA entry 54, mechanism 1; M-CSA cites PMID:10360352, PMID:11976491, PMID:23341204, PMID:24437575,
+        PMID:24957267, PMID:25370445, PMID:9545291; step 5
+  - subject: his143
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: His143 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/54/
+      snippet: Glu86 deprotonates His143, which deprotonates the intermediate at the carbon adjacent to
+        the covalently bound lysine which acts as an electron sink.
+      notes: M-CSA entry 54, mechanism 1; M-CSA cites PMID:10360352, PMID:11976491, PMID:23341204, PMID:24437575,
+        PMID:24957267, PMID:25370445, PMID:9545291; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/54/
+      snippet: Lys170 donates its lone pair of electrons back into the ring, initiating a double bond
+        rearrangement and elimination of water, which obtains its proton from His143, which deprotonates
+        Glu86.
+      notes: M-CSA entry 54, mechanism 1; M-CSA cites PMID:10360352, PMID:11976491, PMID:23341204, PMID:24437575,
+        PMID:24957267, PMID:25370445, PMID:9545291; step 6
+  - subject: glu86
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: Glu86 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/54/
+      snippet: Lys170 donates its lone pair of electrons back into the ring, initiating a double bond
+        rearrangement and elimination of water, which obtains its proton from His143, which deprotonates
+        Glu86.
+      notes: M-CSA entry 54, mechanism 1; M-CSA cites PMID:10360352, PMID:11976491, PMID:23341204, PMID:24437575,
+        PMID:24957267, PMID:25370445, PMID:9545291; step 6
+  - subject: his143
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: His143 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/54/
+      snippet: Lys170 donates its lone pair of electrons back into the ring, initiating a double bond
+        rearrangement and elimination of water, which obtains its proton from His143, which deprotonates
+        Glu86.
+      notes: M-CSA entry 54, mechanism 1; M-CSA cites PMID:10360352, PMID:11976491, PMID:23341204, PMID:24437575,
+        PMID:24957267, PMID:25370445, PMID:9545291; step 6
+  - subject: lys170
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: Lys170 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/54/
+      snippet: Lys170 donates its lone pair of electrons back into the ring, initiating a double bond
+        rearrangement and elimination of water, which obtains its proton from His143, which deprotonates
+        Glu86.
+      notes: M-CSA entry 54, mechanism 1; M-CSA cites PMID:10360352, PMID:11976491, PMID:23341204, PMID:24437575,
+        PMID:24957267, PMID:25370445, PMID:9545291; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/54/
+      snippet: Glu86 deprotonates His143, which deprotonates water, which then attacks the carbon to which
+        Lys170 is covalently attached.
+      notes: M-CSA entry 54, mechanism 1; M-CSA cites PMID:10360352, PMID:11976491, PMID:23341204, PMID:24437575,
+        PMID:24957267, PMID:25370445, PMID:9545291; step 7
+  - subject: glu86
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step7
+    description: Glu86 acts in step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/54/
+      snippet: Glu86 deprotonates His143, which deprotonates water, which then attacks the carbon to which
+        Lys170 is covalently attached.
+      notes: M-CSA entry 54, mechanism 1; M-CSA cites PMID:10360352, PMID:11976491, PMID:23341204, PMID:24437575,
+        PMID:24957267, PMID:25370445, PMID:9545291; step 7
+  - subject: his143
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step7
+    description: His143 acts in step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/54/
+      snippet: Glu86 deprotonates His143, which deprotonates water, which then attacks the carbon to which
+        Lys170 is covalently attached.
+      notes: M-CSA entry 54, mechanism 1; M-CSA cites PMID:10360352, PMID:11976491, PMID:23341204, PMID:24437575,
+        PMID:24957267, PMID:25370445, PMID:9545291; step 7
+  - subject: lys170
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step7
+    description: Lys170 acts in step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/54/
+      snippet: Glu86 deprotonates His143, which deprotonates water, which then attacks the carbon to which
+        Lys170 is covalently attached.
+      notes: M-CSA entry 54, mechanism 1; M-CSA cites PMID:10360352, PMID:11976491, PMID:23341204, PMID:24437575,
+        PMID:24957267, PMID:25370445, PMID:9545291; step 7
+  - subject: step7
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step8
+    description: Step 7 leads to step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/54/
+      snippet: Lys170 deprotonates the hydroxide, which causes Lys170 to be eliminated and the product
+        to be formed.
+      notes: M-CSA entry 54, mechanism 1; M-CSA cites PMID:10360352, PMID:11976491, PMID:23341204, PMID:24437575,
+        PMID:24957267, PMID:25370445, PMID:9545291; step 8
+  - subject: lys170
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step8
+    description: Lys170 acts in step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/54/
+      snippet: Lys170 deprotonates the hydroxide, which causes Lys170 to be eliminated and the product
+        to be formed.
+      notes: M-CSA entry 54, mechanism 1; M-CSA cites PMID:10360352, PMID:11976491, PMID:23341204, PMID:24437575,
+        PMID:24957267, PMID:25370445, PMID:9545291; step 8
+  - subject: step8
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step9
+    description: Step 8 leads to step 9.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/54/
+      snippet: Lys170 deprotonates His143, which deprotonates Glu86 in an inferred step that returns the
+        enzyme to its starting state.
+      notes: M-CSA entry 54, mechanism 1; M-CSA cites PMID:10360352, PMID:11976491, PMID:23341204, PMID:24437575,
+        PMID:24957267, PMID:25370445, PMID:9545291; step 9
+  - subject: glu86
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step9
+    description: Glu86 acts in step 9.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/54/
+      snippet: Lys170 deprotonates His143, which deprotonates Glu86 in an inferred step that returns the
+        enzyme to its starting state.
+      notes: M-CSA entry 54, mechanism 1; M-CSA cites PMID:10360352, PMID:11976491, PMID:23341204, PMID:24437575,
+        PMID:24957267, PMID:25370445, PMID:9545291; step 9
+  - subject: his143
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step9
+    description: His143 acts in step 9.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/54/
+      snippet: Lys170 deprotonates His143, which deprotonates Glu86 in an inferred step that returns the
+        enzyme to its starting state.
+      notes: M-CSA entry 54, mechanism 1; M-CSA cites PMID:10360352, PMID:11976491, PMID:23341204, PMID:24437575,
+        PMID:24957267, PMID:25370445, PMID:9545291; step 9
+  - subject: lys170
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step9
+    description: Lys170 acts in step 9.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/54/
+      snippet: Lys170 deprotonates His143, which deprotonates Glu86 in an inferred step that returns the
+        enzyme to its starting state.
+      notes: M-CSA entry 54, mechanism 1; M-CSA cites PMID:10360352, PMID:11976491, PMID:23341204, PMID:24437575,
+        PMID:24957267, PMID:25370445, PMID:9545291; step 9
+  - subject: step9
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step10
+    description: Step 9 leads to step 10.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/54/
+      snippet: Products
+      notes: M-CSA entry 54, mechanism 1; M-CSA cites PMID:10360352, PMID:11976491, PMID:23341204, PMID:24437575,
+        PMID:24957267, PMID:25370445, PMID:9545291; step 10
+  - subject: glu86
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu86 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/54/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 54, mechanism 1; M-CSA cites PMID:10360352, PMID:11976491, PMID:23341204, PMID:24437575,
+        PMID:24957267, PMID:25370445, PMID:9545291; M-CSA catalytic-residue roles for Glu86
+  - subject: his143
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His143 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/54/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 54, mechanism 1; M-CSA cites PMID:10360352, PMID:11976491, PMID:23341204, PMID:24437575,
+        PMID:24957267, PMID:25370445, PMID:9545291; M-CSA catalytic-residue roles for His143
+  - subject: lys170
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys170 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/54/
+      snippet: covalently attached, electron pair acceptor, electron pair donor, hydrogen bond acceptor,
+        hydrogen bond donor, nucleofuge, nucleophile, proton acceptor, proton donor
+      notes: M-CSA entry 54, mechanism 1; M-CSA cites PMID:10360352, PMID:11976491, PMID:23341204, PMID:24437575,
+        PMID:24957267, PMID:25370445, PMID:9545291; M-CSA catalytic-residue roles for Lys170
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/54/
+      snippet: 'His143 is thought to play a part as a general acid in the formation of a Schiff base:
+        a covalent adduct between the substrate and Lys170 of the enzyme. The role of the Schiff base
+        is to act as an electron sink . It may also play a role in distorting the carbocyclic ring of
+        dehydroquinate to render it more reactive. His143 is then thought to play a role in proton abstraction.
+        Glu86 is positioned to'
+      notes: M-CSA entry 54, mechanism 1; M-CSA cites PMID:10360352, PMID:11976491, PMID:23341204, PMID:24437575,
+        PMID:24957267, PMID:25370445, PMID:9545291; CATH domain 3.20.20.70 assigned to the catalytic chain
+        by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/54/
+      snippet: 'His143 is thought to play a part as a general acid in the formation of a Schiff base:
+        a covalent adduct between the substrate and Lys170 of the enzyme. The role of the Schiff base
+        is to act as an electron sink . It may also play a role in distorting the carbocyclic ring of
+        dehydroquinate to render it more reactive. His143 is then thought to play a role in proton abstraction.
+        Glu86 is positioned to'
+      notes: M-CSA entry 54, mechanism 1; M-CSA cites PMID:10360352, PMID:11976491, PMID:23341204, PMID:24437575,
+        PMID:24957267, PMID:25370445, PMID:9545291; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/54/
+      snippet: 'His143 is thought to play a part as a general acid in the formation of a Schiff base:
+        a covalent adduct between the substrate and Lys170 of the enzyme. The role of the Schiff base
+        is to act as an electron sink . It may also play a role in distorting the carbocyclic ring of
+        dehydroquinate to render it more reactive. His143 is then thought to play a role in proton abstraction.
+        Glu86 is positioned to'
+      notes: M-CSA entry 54, mechanism 1; M-CSA cites PMID:10360352, PMID:11976491, PMID:23341204, PMID:24437575,
+        PMID:24957267, PMID:25370445, PMID:9545291; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/54/
+      snippet: 'His143 is thought to play a part as a general acid in the formation of a Schiff base:
+        a covalent adduct between the substrate and Lys170 of the enzyme. The role of the Schiff base
+        is to act as an electron sink . It may also play a role in distorting the carbocyclic ring of
+        dehydroquinate to render it more reactive. His143 is then thought to play a role in proton abstraction.
+        Glu86 is positioned to'
+      notes: M-CSA entry 54, mechanism 1; M-CSA cites PMID:10360352, PMID:11976491, PMID:23341204, PMID:24437575,
+        PMID:24957267, PMID:25370445, PMID:9545291; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/54/
+      snippet: 'His143 is thought to play a part as a general acid in the formation of a Schiff base:
+        a covalent adduct between the substrate and Lys170 of the enzyme. The role of the Schiff base
+        is to act as an electron sink . It may also play a role in distorting the carbocyclic ring of
+        dehydroquinate to render it more reactive. His143 is then thought to play a role in proton abstraction.
+        Glu86 is positioned to'
+      notes: M-CSA entry 54, mechanism 1; M-CSA cites PMID:10360352, PMID:11976491, PMID:23341204, PMID:24437575,
+        PMID:24957267, PMID:25370445, PMID:9545291; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (36 evidence-backed edges) transcribed from M-CSA entry 54;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

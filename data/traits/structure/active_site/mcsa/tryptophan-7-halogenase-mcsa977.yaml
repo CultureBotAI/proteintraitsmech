@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.14.19.9
 - CHEBI:17996
@@ -452,4 +452,356 @@ definitions:
       Tryptophan 7-halogenase catalyses the chlorination of free tryptophan to 7-chlorotryptophan, which is the first step in the synthesis of the antibiotic pyrrolnitrin. Enzyme-catalysed chlorination of organic compounds in the laboratory remains a challenge, thus understanding the reaction mechanism of tryptophan 7-halogenase is important.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of tryptophan 7-halogenase
+  description: Stepwise mechanism transcribed from M-CSA entry 977 (8 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: lys79
+    label: catalytic Lys79 (M-CSA/PDB numbering; UniProt residue 79)
+    node_type: RESIDUE
+    grounding: UniProtKB:P95480
+    description: 'M-CSA roles: activator, hydrogen bond donor, proton donor.'
+  - node_id: glu346
+    label: catalytic Glu346 (M-CSA/PDB numbering; UniProt residue 346)
+    node_type: RESIDUE
+    grounding: UniProtKB:P95480
+    description: 'M-CSA roles: proton acceptor.'
+  - node_id: reactant0
+    label: chloride
+    node_type: CHEMICAL
+    grounding: CHEBI:17996
+  - node_id: reactant1
+    label: FADH2(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58307
+  - node_id: reactant2
+    label: L-tryptophan zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57912
+  - node_id: reactant3
+    label: dioxygen
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+  - node_id: product0
+    label: 7-chloro-L-tryptophan zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:58713
+  - node_id: product1
+    label: FAD(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57692
+  - node_id: product2
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: NADPH donates a hydride to FAD. Mechanism inferred by curator.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Proton-coupled electron transfer (PCET) from FADH<sup>-</sup> to molecular oxygen and
+      to the C4a-carbon atom of the isoalloxazine ring, leading to formation of FADH• and OOH• radicals.
+      Inferred by curator.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: FADH• and OOH• radicals colligate, in which each of the molecular fragments donate one
+      of the bonding electrons, resulting in formation of C4a-hydroperoxyflavin (C4aOOH) intermediate.
+      Inferred by curator.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: A chloride anion makes a nucleophilic attack on the flavin peroxide yielding hypochlorous
+      acid (HClO) and C(4a) hydroxyflavin.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Dehydration of C(4a) hydroxyflavin gives oxidised FAD (not shown). HOCl formed in the
+      FAD binding site moves through a tunnel in the enzyme and becomes activated to chlorinate the substrate
+      in the tryptophan binding site.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: A hydrogen bonding interaction between HOCl and Lys79 activates HOCl by increasing its
+      electrophilicity. The chlorine atom is inserted and forms a Wheland intermediate.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: Deprotonation of the Wheland intermediate by Glu346 forms the product. This is rate-limiting.
+  - node_id: step8
+    label: mechanism step 8
+    node_type: STATE
+    description: '-'
+  - node_id: active_site
+    label: tryptophan 7-halogenase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:977
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.50.50.60 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.50.50.60
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: tryptophan 7-halogenase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.14.19.9
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/977/
+      snippet: Proton-coupled electron transfer (PCET) from FADH<sup>-</sup> to molecular oxygen and to
+        the C4a-carbon atom of the isoalloxazine ring, leading to formation of FADH• and OOH• radicals.
+        Inferred by curator.
+      notes: M-CSA entry 977, mechanism 1; M-CSA cites PMID:28106994, PMID:29234124, PMID:29323892; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/977/
+      snippet: FADH• and OOH• radicals colligate, in which each of the molecular fragments donate one
+        of the bonding electrons, resulting in formation of C4a-hydroperoxyflavin (C4aOOH) intermediate.
+        Inferred by curator.
+      notes: M-CSA entry 977, mechanism 1; M-CSA cites PMID:28106994, PMID:29234124, PMID:29323892; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/977/
+      snippet: A chloride anion makes a nucleophilic attack on the flavin peroxide yielding hypochlorous
+        acid (HClO) and C(4a) hydroxyflavin.
+      notes: M-CSA entry 977, mechanism 1; M-CSA cites PMID:28106994, PMID:29234124, PMID:29323892; step
+        4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/977/
+      snippet: Dehydration of C(4a) hydroxyflavin gives oxidised FAD (not shown). HOCl formed in the FAD
+        binding site moves through a tunnel in the enzyme and becomes activated to chlorinate the substrate
+        in the tryptophan binding site.
+      notes: M-CSA entry 977, mechanism 1; M-CSA cites PMID:28106994, PMID:29234124, PMID:29323892; step
+        5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/977/
+      snippet: A hydrogen bonding interaction between HOCl and Lys79 activates HOCl by increasing its
+        electrophilicity. The chlorine atom is inserted and forms a Wheland intermediate.
+      notes: M-CSA entry 977, mechanism 1; M-CSA cites PMID:28106994, PMID:29234124, PMID:29323892; step
+        6
+  - subject: lys79
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: Lys79 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/977/
+      snippet: A hydrogen bonding interaction between HOCl and Lys79 activates HOCl by increasing its
+        electrophilicity. The chlorine atom is inserted and forms a Wheland intermediate.
+      notes: M-CSA entry 977, mechanism 1; M-CSA cites PMID:28106994, PMID:29234124, PMID:29323892; step
+        6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/977/
+      snippet: Deprotonation of the Wheland intermediate by Glu346 forms the product. This is rate-limiting.
+      notes: M-CSA entry 977, mechanism 1; M-CSA cites PMID:28106994, PMID:29234124, PMID:29323892; step
+        7
+  - subject: glu346
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step7
+    description: Glu346 acts in step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/977/
+      snippet: Deprotonation of the Wheland intermediate by Glu346 forms the product. This is rate-limiting.
+      notes: M-CSA entry 977, mechanism 1; M-CSA cites PMID:28106994, PMID:29234124, PMID:29323892; step
+        7
+  - subject: step7
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step8
+    description: Step 7 leads to step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/977/
+      snippet: '-'
+      notes: M-CSA entry 977, mechanism 1; M-CSA cites PMID:28106994, PMID:29234124, PMID:29323892; step
+        8
+  - subject: lys79
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys79 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/977/
+      snippet: activator, hydrogen bond donor, proton donor
+      notes: M-CSA entry 977, mechanism 1; M-CSA cites PMID:28106994, PMID:29234124, PMID:29323892; M-CSA
+        catalytic-residue roles for Lys79
+  - subject: glu346
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu346 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/977/
+      snippet: proton acceptor
+      notes: M-CSA entry 977, mechanism 1; M-CSA cites PMID:28106994, PMID:29234124, PMID:29323892; M-CSA
+        catalytic-residue roles for Glu346
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/977/
+      snippet: In the FAD binding site, FADH<sub>2</sub> reacts with molecular oxygen and subsequently
+        with chlorine to form hypochlorous acid (HOCl). HOCl moves through a tunnel in the enzyme and
+        becomes activated (Lys79) in order to chlorinate the substrate in the tryptophan binding site.
+        The chlorine atom is inserted forming an arenium ion (Wheland intermediate). Proton removal of
+        this reactive intermediate b
+      notes: M-CSA entry 977, mechanism 1; M-CSA cites PMID:28106994, PMID:29234124, PMID:29323892; CATH
+        domain 3.50.50.60 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/977/
+      snippet: In the FAD binding site, FADH<sub>2</sub> reacts with molecular oxygen and subsequently
+        with chlorine to form hypochlorous acid (HOCl). HOCl moves through a tunnel in the enzyme and
+        becomes activated (Lys79) in order to chlorinate the substrate in the tryptophan binding site.
+        The chlorine atom is inserted forming an arenium ion (Wheland intermediate). Proton removal of
+        this reactive intermediate b
+      notes: M-CSA entry 977, mechanism 1; M-CSA cites PMID:28106994, PMID:29234124, PMID:29323892; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/977/
+      snippet: In the FAD binding site, FADH<sub>2</sub> reacts with molecular oxygen and subsequently
+        with chlorine to form hypochlorous acid (HOCl). HOCl moves through a tunnel in the enzyme and
+        becomes activated (Lys79) in order to chlorinate the substrate in the tryptophan binding site.
+        The chlorine atom is inserted forming an arenium ion (Wheland intermediate). Proton removal of
+        this reactive intermediate b
+      notes: M-CSA entry 977, mechanism 1; M-CSA cites PMID:28106994, PMID:29234124, PMID:29323892; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/977/
+      snippet: In the FAD binding site, FADH<sub>2</sub> reacts with molecular oxygen and subsequently
+        with chlorine to form hypochlorous acid (HOCl). HOCl moves through a tunnel in the enzyme and
+        becomes activated (Lys79) in order to chlorinate the substrate in the tryptophan binding site.
+        The chlorine atom is inserted forming an arenium ion (Wheland intermediate). Proton removal of
+        this reactive intermediate b
+      notes: M-CSA entry 977, mechanism 1; M-CSA cites PMID:28106994, PMID:29234124, PMID:29323892; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/977/
+      snippet: In the FAD binding site, FADH<sub>2</sub> reacts with molecular oxygen and subsequently
+        with chlorine to form hypochlorous acid (HOCl). HOCl moves through a tunnel in the enzyme and
+        becomes activated (Lys79) in order to chlorinate the substrate in the tryptophan binding site.
+        The chlorine atom is inserted forming an arenium ion (Wheland intermediate). Proton removal of
+        this reactive intermediate b
+      notes: M-CSA entry 977, mechanism 1; M-CSA cites PMID:28106994, PMID:29234124, PMID:29323892; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant3
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/977/
+      snippet: In the FAD binding site, FADH<sub>2</sub> reacts with molecular oxygen and subsequently
+        with chlorine to form hypochlorous acid (HOCl). HOCl moves through a tunnel in the enzyme and
+        becomes activated (Lys79) in order to chlorinate the substrate in the tryptophan binding site.
+        The chlorine atom is inserted forming an arenium ion (Wheland intermediate). Proton removal of
+        this reactive intermediate b
+      notes: M-CSA entry 977, mechanism 1; M-CSA cites PMID:28106994, PMID:29234124, PMID:29323892; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/977/
+      snippet: In the FAD binding site, FADH<sub>2</sub> reacts with molecular oxygen and subsequently
+        with chlorine to form hypochlorous acid (HOCl). HOCl moves through a tunnel in the enzyme and
+        becomes activated (Lys79) in order to chlorinate the substrate in the tryptophan binding site.
+        The chlorine atom is inserted forming an arenium ion (Wheland intermediate). Proton removal of
+        this reactive intermediate b
+      notes: M-CSA entry 977, mechanism 1; M-CSA cites PMID:28106994, PMID:29234124, PMID:29323892; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/977/
+      snippet: In the FAD binding site, FADH<sub>2</sub> reacts with molecular oxygen and subsequently
+        with chlorine to form hypochlorous acid (HOCl). HOCl moves through a tunnel in the enzyme and
+        becomes activated (Lys79) in order to chlorinate the substrate in the tryptophan binding site.
+        The chlorine atom is inserted forming an arenium ion (Wheland intermediate). Proton removal of
+        this reactive intermediate b
+      notes: M-CSA entry 977, mechanism 1; M-CSA cites PMID:28106994, PMID:29234124, PMID:29323892; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/977/
+      snippet: In the FAD binding site, FADH<sub>2</sub> reacts with molecular oxygen and subsequently
+        with chlorine to form hypochlorous acid (HOCl). HOCl moves through a tunnel in the enzyme and
+        becomes activated (Lys79) in order to chlorinate the substrate in the tryptophan binding site.
+        The chlorine atom is inserted forming an arenium ion (Wheland intermediate). Proton removal of
+        this reactive intermediate b
+      notes: M-CSA entry 977, mechanism 1; M-CSA cites PMID:28106994, PMID:29234124, PMID:29323892; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (20 evidence-backed edges) transcribed from M-CSA entry 977;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

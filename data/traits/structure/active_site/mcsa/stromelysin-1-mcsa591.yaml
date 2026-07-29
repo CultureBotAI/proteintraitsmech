@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.24.17
 - CHEBI:15377
@@ -334,4 +334,259 @@ definitions:
       Human stromelysin-1 (matrix metalloproteinase 3, MMP-3) is one of the most attractive targets in drug discovery today because of its broad physiological specificity.This extracellular endopeptidase of vertebrate tissues degrades various proteoglycan components of the extracellular matrix as well as fibronectin and laminin. Stromelysin also plays a unique role among the MMPs because of its involvement in activation of other MMP proenzymes.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of stromelysin 1
+  description: Stepwise mechanism transcribed from M-CSA entry 591 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +17).
+  nodes:
+  - node_id: his201
+    label: catalytic His201 (M-CSA/PDB numbering; UniProt residue 218)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08254
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu202
+    label: catalytic Glu202 (M-CSA/PDB numbering; UniProt residue 219)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08254
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: his205
+    label: catalytic His205 (M-CSA/PDB numbering; UniProt residue 222)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08254
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his211
+    label: catalytic His211 (M-CSA/PDB numbering; UniProt residue 228)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08254
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: dipeptide zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:90799
+  - node_id: product0
+    label: L-alpha-amino acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:59869
+  - node_id: product1
+    label: L-alpha-amino acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:59869
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu202 deprotonates water, which attacks the peptide bond in a nucleophilic addition.
+      Zinc coordinates to water and carbonyl oxygen which means His218 is not coordinated to Zinc.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The oxyanion initiates an elimination that cleaves the peptide bond. The N-terminal product
+      deprotonates Glu202. Zn is no longer coordinated to the carbonyl oxygen and so instead coordinates
+      to His231.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The N-terminal product then deprotonates the C-terminal product to form the kinetically
+      favourable products.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Product
+  - node_id: active_site
+    label: stromelysin 1 catalytic site
+    node_type: MOTIF
+    grounding: MCSA:591
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.390.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.390.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: stromelysin 1 activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.24.17
+  edges:
+  - subject: glu202
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu202 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/591/
+      snippet: Glu202 deprotonates water, which attacks the peptide bond in a nucleophilic addition. Zinc
+        coordinates to water and carbonyl oxygen which means His218 is not coordinated to Zinc.
+      notes: M-CSA entry 591, mechanism 1; M-CSA cites PMID:12401069, PMID:16603129; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/591/
+      snippet: The oxyanion initiates an elimination that cleaves the peptide bond. The N-terminal product
+        deprotonates Glu202. Zn is no longer coordinated to the carbonyl oxygen and so instead coordinates
+        to His231.
+      notes: M-CSA entry 591, mechanism 1; M-CSA cites PMID:12401069, PMID:16603129; step 2
+  - subject: glu202
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu202 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/591/
+      snippet: The oxyanion initiates an elimination that cleaves the peptide bond. The N-terminal product
+        deprotonates Glu202. Zn is no longer coordinated to the carbonyl oxygen and so instead coordinates
+        to His231.
+      notes: M-CSA entry 591, mechanism 1; M-CSA cites PMID:12401069, PMID:16603129; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/591/
+      snippet: The N-terminal product then deprotonates the C-terminal product to form the kinetically
+        favourable products.
+      notes: M-CSA entry 591, mechanism 1; M-CSA cites PMID:12401069, PMID:16603129; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/591/
+      snippet: Product
+      notes: M-CSA entry 591, mechanism 1; M-CSA cites PMID:12401069, PMID:16603129; step 4
+  - subject: his201
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His201 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/591/
+      snippet: metal ligand
+      notes: M-CSA entry 591, mechanism 1; M-CSA cites PMID:12401069, PMID:16603129; M-CSA catalytic-residue
+        roles for His201
+  - subject: glu202
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu202 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/591/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 591, mechanism 1; M-CSA cites PMID:12401069, PMID:16603129; M-CSA catalytic-residue
+        roles for Glu202
+  - subject: his205
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His205 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/591/
+      snippet: metal ligand
+      notes: M-CSA entry 591, mechanism 1; M-CSA cites PMID:12401069, PMID:16603129; M-CSA catalytic-residue
+        roles for His205
+  - subject: his211
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His211 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/591/
+      snippet: metal ligand
+      notes: M-CSA entry 591, mechanism 1; M-CSA cites PMID:12401069, PMID:16603129; M-CSA catalytic-residue
+        roles for His211
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/591/
+      snippet: The general base role is assigned to the Glu202 in MMPs. The water molecule, coordinated
+        to the metal in the reactant complex, is being extremely polarised between the glutamate base
+        and zinc Lewis acid in the Glu-water- Zn bridge.Upon substrate delivery, the water oxygen performs
+        a nucleophilic attack on the peptide carbon.Concertedly, the glutamate abstracts the proton from
+        the water and shuttle
+      notes: M-CSA entry 591, mechanism 1; M-CSA cites PMID:12401069, PMID:16603129; CATH domain 3.40.390.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/591/
+      snippet: The general base role is assigned to the Glu202 in MMPs. The water molecule, coordinated
+        to the metal in the reactant complex, is being extremely polarised between the glutamate base
+        and zinc Lewis acid in the Glu-water- Zn bridge.Upon substrate delivery, the water oxygen performs
+        a nucleophilic attack on the peptide carbon.Concertedly, the glutamate abstracts the proton from
+        the water and shuttle
+      notes: M-CSA entry 591, mechanism 1; M-CSA cites PMID:12401069, PMID:16603129; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/591/
+      snippet: The general base role is assigned to the Glu202 in MMPs. The water molecule, coordinated
+        to the metal in the reactant complex, is being extremely polarised between the glutamate base
+        and zinc Lewis acid in the Glu-water- Zn bridge.Upon substrate delivery, the water oxygen performs
+        a nucleophilic attack on the peptide carbon.Concertedly, the glutamate abstracts the proton from
+        the water and shuttle
+      notes: M-CSA entry 591, mechanism 1; M-CSA cites PMID:12401069, PMID:16603129; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/591/
+      snippet: The general base role is assigned to the Glu202 in MMPs. The water molecule, coordinated
+        to the metal in the reactant complex, is being extremely polarised between the glutamate base
+        and zinc Lewis acid in the Glu-water- Zn bridge.Upon substrate delivery, the water oxygen performs
+        a nucleophilic attack on the peptide carbon.Concertedly, the glutamate abstracts the proton from
+        the water and shuttle
+      notes: M-CSA entry 591, mechanism 1; M-CSA cites PMID:12401069, PMID:16603129; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/591/
+      snippet: The general base role is assigned to the Glu202 in MMPs. The water molecule, coordinated
+        to the metal in the reactant complex, is being extremely polarised between the glutamate base
+        and zinc Lewis acid in the Glu-water- Zn bridge.Upon substrate delivery, the water oxygen performs
+        a nucleophilic attack on the peptide carbon.Concertedly, the glutamate abstracts the proton from
+        the water and shuttle
+      notes: M-CSA entry 591, mechanism 1; M-CSA cites PMID:12401069, PMID:16603129; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/591/
+      snippet: The general base role is assigned to the Glu202 in MMPs. The water molecule, coordinated
+        to the metal in the reactant complex, is being extremely polarised between the glutamate base
+        and zinc Lewis acid in the Glu-water- Zn bridge.Upon substrate delivery, the water oxygen performs
+        a nucleophilic attack on the peptide carbon.Concertedly, the glutamate abstracts the proton from
+        the water and shuttle
+      notes: M-CSA entry 591, mechanism 1; M-CSA cites PMID:12401069, PMID:16603129; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 591;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

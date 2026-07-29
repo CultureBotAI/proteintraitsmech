@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.1.2.47
 - CHEBI:15348
@@ -241,4 +241,300 @@ definitions:
       Hydroxynitrile lyases (HNLs) are important members of the alpha/beta-hydrolase superfamily, and they catalyze the cleavage of cyanohydrins into aldehyde (or ketone) and hydrocyanic acid (HCN). The release of HCN not only protects plant systems from herbivores and microbial attack, but also provides a nitrogen source for the biosynthesis of asparagine. The enzyme from Hevea brasiliensis tolerates aliphatic (including alpha,beta-unsaturated), aromatic and heterocyclic aldehydes, whereas the enzyme from Manihot esculenta catalyses the addition of hydrogen cyanide to aliphatic, aromatic, heteroaromatic aldehydes and methyl ketones. Both are specific to the S enantiomer. The overall reaction catalysed is very reversible and of importance to synthetic organic chemists.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of (S)-hydroxynitrile lyase
+  description: Stepwise mechanism transcribed from M-CSA entry 217 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: thr11
+    label: catalytic Thr11 (M-CSA/PDB numbering; UniProt residue 11)
+    node_type: RESIDUE
+    grounding: UniProtKB:P52704
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: ser80
+    label: catalytic Ser80 (M-CSA/PDB numbering; UniProt residue 80)
+    node_type: RESIDUE
+    grounding: UniProtKB:P52704
+    description: 'M-CSA roles: electrostatic stabiliser, proton acceptor, proton donor, proton relay.'
+  - node_id: cys81
+    label: catalytic Cys81 (M-CSA/PDB numbering; UniProt residue 81)
+    node_type: RESIDUE
+    grounding: UniProtKB:P52704
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp207
+    label: catalytic Asp207 (M-CSA/PDB numbering; UniProt residue 207)
+    node_type: RESIDUE
+    grounding: UniProtKB:P52704
+    description: 'M-CSA roles: electrostatic stabiliser, increase acidity, increase basicity.'
+  - node_id: his235
+    label: catalytic His235 (M-CSA/PDB numbering; UniProt residue 235)
+    node_type: RESIDUE
+    grounding: UniProtKB:P52704
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: lys236
+    label: catalytic Lys236 (M-CSA/PDB numbering; UniProt residue 236)
+    node_type: RESIDUE
+    grounding: UniProtKB:P52704
+    description: 'M-CSA roles: activator, electrostatic stabiliser, hydrogen bond donor, steric role.'
+  - node_id: reactant0
+    label: 2-hydroxy-2-methylpropanenitrile
+    node_type: CHEMICAL
+    grounding: CHEBI:15348
+  - node_id: product0
+    label: acetone
+    node_type: CHEMICAL
+    grounding: CHEBI:15347
+  - node_id: product1
+    label: hydrogen cyanide
+    node_type: CHEMICAL
+    grounding: CHEBI:18407
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: "His235 (which is present as part of a Ser-His-Asp triad) deprotonates Ser80, deprotonates\
+      \ the hydroxide of the nitrile, initiating an elimination of the cyanate ion.
+<br/><br/>
+\
+      Binding of the cyanohydrin causes a change in conformation of the Ser80, bringing it into hydrogen\
+      \ bonding distance of the His235. Cleavage of the C-C bond is facilitated by the stabilisation of\
+      \ the evolving negative char"
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The cyanate ion deprotonates His235. Upon protonation of the cyanide ion by His235, the
+      hydrogen cyanide is displaced by water. The HCN leaves the active site first, followed by the aldehyde
+      product.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: (S)-hydroxynitrile lyase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:217
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1820 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1820
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: (S)-hydroxynitrile lyase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.1.2.47
+  edges:
+  - subject: ser80
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser80 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/217/
+      snippet: "His235 (which is present as part of a Ser-His-Asp triad) deprotonates Ser80, deprotonates\
+        \ the hydroxide of the nitrile, initiating an elimination of the cyanate ion.
+<br/><br/>
+\
+        Binding of the cyanohydrin causes a change in conformation of the Ser80, bringing it into hydrogen\
+        \ bonding distance of the His235. Cleavage of the C-C bond is facilitated by the stabilisation\
+        \ of the evolving negative charge by the positive charge of Lys236, which also shifts the pKa\
+        \ of His235 from 2.5 to 10 [PMID:14998991]."
+      notes: M-CSA entry 217, mechanism 1; M-CSA cites PMID:11173464, PMID:11316882, PMID:14998991, PMID:17250917,
+        PMID:25375265, PMID:8621461; step 1
+  - subject: his235
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His235 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/217/
+      snippet: "His235 (which is present as part of a Ser-His-Asp triad) deprotonates Ser80, deprotonates\
+        \ the hydroxide of the nitrile, initiating an elimination of the cyanate ion.
+<br/><br/>
+\
+        Binding of the cyanohydrin causes a change in conformation of the Ser80, bringing it into hydrogen\
+        \ bonding distance of the His235. Cleavage of the C-C bond is facilitated by the stabilisation\
+        \ of the evolving negative charge by the positive charge of Lys236, which also shifts the pKa\
+        \ of His235 from 2.5 to 10 [PMID:14998991]."
+      notes: M-CSA entry 217, mechanism 1; M-CSA cites PMID:11173464, PMID:11316882, PMID:14998991, PMID:17250917,
+        PMID:25375265, PMID:8621461; step 1
+  - subject: lys236
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys236 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/217/
+      snippet: "His235 (which is present as part of a Ser-His-Asp triad) deprotonates Ser80, deprotonates\
+        \ the hydroxide of the nitrile, initiating an elimination of the cyanate ion.
+<br/><br/>
+\
+        Binding of the cyanohydrin causes a change in conformation of the Ser80, bringing it into hydrogen\
+        \ bonding distance of the His235. Cleavage of the C-C bond is facilitated by the stabilisation\
+        \ of the evolving negative charge by the positive charge of Lys236, which also shifts the pKa\
+        \ of His235 from 2.5 to 10 [PMID:14998991]."
+      notes: M-CSA entry 217, mechanism 1; M-CSA cites PMID:11173464, PMID:11316882, PMID:14998991, PMID:17250917,
+        PMID:25375265, PMID:8621461; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/217/
+      snippet: The cyanate ion deprotonates His235. Upon protonation of the cyanide ion by His235, the
+        hydrogen cyanide is displaced by water. The HCN leaves the active site first, followed by the
+        aldehyde product.
+      notes: M-CSA entry 217, mechanism 1; M-CSA cites PMID:11173464, PMID:11316882, PMID:14998991, PMID:17250917,
+        PMID:25375265, PMID:8621461; step 2
+  - subject: his235
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His235 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/217/
+      snippet: The cyanate ion deprotonates His235. Upon protonation of the cyanide ion by His235, the
+        hydrogen cyanide is displaced by water. The HCN leaves the active site first, followed by the
+        aldehyde product.
+      notes: M-CSA entry 217, mechanism 1; M-CSA cites PMID:11173464, PMID:11316882, PMID:14998991, PMID:17250917,
+        PMID:25375265, PMID:8621461; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/217/
+      snippet: Products
+      notes: M-CSA entry 217, mechanism 1; M-CSA cites PMID:11173464, PMID:11316882, PMID:14998991, PMID:17250917,
+        PMID:25375265, PMID:8621461; step 3
+  - subject: thr11
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr11 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/217/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 217, mechanism 1; M-CSA cites PMID:11173464, PMID:11316882, PMID:14998991, PMID:17250917,
+        PMID:25375265, PMID:8621461; M-CSA catalytic-residue roles for Thr11
+  - subject: ser80
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser80 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/217/
+      snippet: electrostatic stabiliser, proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 217, mechanism 1; M-CSA cites PMID:11173464, PMID:11316882, PMID:14998991, PMID:17250917,
+        PMID:25375265, PMID:8621461; M-CSA catalytic-residue roles for Ser80
+  - subject: cys81
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys81 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/217/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 217, mechanism 1; M-CSA cites PMID:11173464, PMID:11316882, PMID:14998991, PMID:17250917,
+        PMID:25375265, PMID:8621461; M-CSA catalytic-residue roles for Cys81
+  - subject: asp207
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp207 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/217/
+      snippet: electrostatic stabiliser, increase acidity, increase basicity
+      notes: M-CSA entry 217, mechanism 1; M-CSA cites PMID:11173464, PMID:11316882, PMID:14998991, PMID:17250917,
+        PMID:25375265, PMID:8621461; M-CSA catalytic-residue roles for Asp207
+  - subject: his235
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His235 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/217/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 217, mechanism 1; M-CSA cites PMID:11173464, PMID:11316882, PMID:14998991, PMID:17250917,
+        PMID:25375265, PMID:8621461; M-CSA catalytic-residue roles for His235
+  - subject: lys236
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys236 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/217/
+      snippet: activator, electrostatic stabiliser, hydrogen bond donor, steric role
+      notes: M-CSA entry 217, mechanism 1; M-CSA cites PMID:11173464, PMID:11316882, PMID:14998991, PMID:17250917,
+        PMID:25375265, PMID:8621461; M-CSA catalytic-residue roles for Lys236
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/217/
+      snippet: Although this mechanism utilises the traditional Ser-His-Asp triad of the alpha/beta-hydrolase
+        superfamily, it proceeds <i>via</i> general acid/base catalysis, rather than nucleophilic attack
+        of the serine.
+      notes: M-CSA entry 217, mechanism 1; M-CSA cites PMID:11173464, PMID:11316882, PMID:14998991, PMID:17250917,
+        PMID:25375265, PMID:8621461; CATH domain 3.40.50.1820 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/217/
+      snippet: Although this mechanism utilises the traditional Ser-His-Asp triad of the alpha/beta-hydrolase
+        superfamily, it proceeds <i>via</i> general acid/base catalysis, rather than nucleophilic attack
+        of the serine.
+      notes: M-CSA entry 217, mechanism 1; M-CSA cites PMID:11173464, PMID:11316882, PMID:14998991, PMID:17250917,
+        PMID:25375265, PMID:8621461; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/217/
+      snippet: Although this mechanism utilises the traditional Ser-His-Asp triad of the alpha/beta-hydrolase
+        superfamily, it proceeds <i>via</i> general acid/base catalysis, rather than nucleophilic attack
+        of the serine.
+      notes: M-CSA entry 217, mechanism 1; M-CSA cites PMID:11173464, PMID:11316882, PMID:14998991, PMID:17250917,
+        PMID:25375265, PMID:8621461; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/217/
+      snippet: Although this mechanism utilises the traditional Ser-His-Asp triad of the alpha/beta-hydrolase
+        superfamily, it proceeds <i>via</i> general acid/base catalysis, rather than nucleophilic attack
+        of the serine.
+      notes: M-CSA entry 217, mechanism 1; M-CSA cites PMID:11173464, PMID:11316882, PMID:14998991, PMID:17250917,
+        PMID:25375265, PMID:8621461; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/217/
+      snippet: Although this mechanism utilises the traditional Ser-His-Asp triad of the alpha/beta-hydrolase
+        superfamily, it proceeds <i>via</i> general acid/base catalysis, rather than nucleophilic attack
+        of the serine.
+      notes: M-CSA entry 217, mechanism 1; M-CSA cites PMID:11173464, PMID:11316882, PMID:14998991, PMID:17250917,
+        PMID:25375265, PMID:8621461; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (17 evidence-backed edges) transcribed from M-CSA entry 217;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

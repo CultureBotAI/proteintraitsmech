@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.1.2.-
 - CHEBI:58457
@@ -344,4 +344,352 @@ definitions:
       The PurT encoded ribonucleotide transformylase is involved in the step of purine biosynthesis that is specific to bacteria, namely the formylation of GAR (glycinamide ribonucleotide). It displays sequence homology of around 20% to PurK, the enzyme which catalyses the equivalent reaction for the adenine biosynthetic pathway, but uses a different intermediate in the reaction, thus has a slightly different mechanism. Consequently, structural differences between the active sites of the two enzymes exist. However, the similarities are also important as both are members of the ATP grasp superfamily of enzymes that includes biotin carboxylase and sugar kinases amongst others, so analysis of the binding of ATP to this enzyme will give clues as to the overall evolutionary relationship between these enzymes.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of Formate-dependent phosphoribosylglycinamide formyltransferase
+  description: Stepwise mechanism transcribed from M-CSA entry 665 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: ser160
+    label: catalytic Ser160 (M-CSA/PDB numbering; UniProt residue 160)
+    node_type: RESIDUE
+    grounding: UniProtKB:P33221
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: gly162
+    label: catalytic Gly162 (M-CSA/PDB numbering; UniProt residue 162)
+    node_type: RESIDUE
+    grounding: UniProtKB:P33221
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: glu267
+    label: catalytic Glu267 (M-CSA/PDB numbering; UniProt residue 267)
+    node_type: RESIDUE
+    grounding: UniProtKB:P33221
+    description: 'M-CSA roles: electrostatic stabiliser, metal ligand.'
+  - node_id: glu279
+    label: catalytic Glu279 (M-CSA/PDB numbering; UniProt residue 279)
+    node_type: RESIDUE
+    grounding: UniProtKB:P33221
+    description: 'M-CSA roles: electrostatic stabiliser, metal ligand.'
+  - node_id: asp286
+    label: catalytic Asp286 (M-CSA/PDB numbering; UniProt residue 286)
+    node_type: RESIDUE
+    grounding: UniProtKB:P33221
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, metal ligand, proton acceptor,
+      proton donor.'
+  - node_id: thr287
+    label: catalytic Thr287 (M-CSA/PDB numbering; UniProt residue 287)
+    node_type: RESIDUE
+    grounding: UniProtKB:P33221
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: arg363
+    label: catalytic Arg363 (M-CSA/PDB numbering; UniProt residue 363)
+    node_type: RESIDUE
+    grounding: UniProtKB:P33221
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: reactant0
+    label: N(1)-(5-phospho-D-ribosyl)glycinamide(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58457
+  - node_id: reactant1
+    label: ATP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+  - node_id: reactant2
+    label: formate
+    node_type: CHEMICAL
+    grounding: CHEBI:15740
+  - node_id: product0
+    label: N(2)-formyl-N(1)-(5-phospho-D-ribosyl)glycinamide(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58426
+  - node_id: product1
+    label: ADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product3
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Formate acts as a nucleophile and attacks ATP, breaking the beta-gamma phosphate bond.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Asp286 acts as a base to deprotonate the nitrogen of GAR. This nitrogen then attacks
+      the carbonyl carbon of the formyl phosphate intermediate to form the product.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: In an inferred mechanism step Asp286 is deprotonated to regenerate the native state of
+      the enzyme.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: Formate-dependent phosphoribosylglycinamide formyltransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:665
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.1490.20 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.1490.20
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: Formate-dependent phosphoribosylglycinamide formyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.1.2.-
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/665/
+      snippet: Asp286 acts as a base to deprotonate the nitrogen of GAR. This nitrogen then attacks the
+        carbonyl carbon of the formyl phosphate intermediate to form the product.
+      notes: M-CSA entry 665, mechanism 1; M-CSA cites PMID:10913290, PMID:11953435; step 2
+  - subject: asp286
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Asp286 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/665/
+      snippet: Asp286 acts as a base to deprotonate the nitrogen of GAR. This nitrogen then attacks the
+        carbonyl carbon of the formyl phosphate intermediate to form the product.
+      notes: M-CSA entry 665, mechanism 1; M-CSA cites PMID:10913290, PMID:11953435; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/665/
+      snippet: In an inferred mechanism step Asp286 is deprotonated to regenerate the native state of
+        the enzyme.
+      notes: M-CSA entry 665, mechanism 1; M-CSA cites PMID:10913290, PMID:11953435; step 3
+  - subject: asp286
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Asp286 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/665/
+      snippet: In an inferred mechanism step Asp286 is deprotonated to regenerate the native state of
+        the enzyme.
+      notes: M-CSA entry 665, mechanism 1; M-CSA cites PMID:10913290, PMID:11953435; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/665/
+      snippet: Products.
+      notes: M-CSA entry 665, mechanism 1; M-CSA cites PMID:10913290, PMID:11953435; step 4
+  - subject: ser160
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser160 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/665/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 665, mechanism 1; M-CSA cites PMID:10913290, PMID:11953435; M-CSA catalytic-residue
+        roles for Ser160
+  - subject: gly162
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly162 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/665/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 665, mechanism 1; M-CSA cites PMID:10913290, PMID:11953435; M-CSA catalytic-residue
+        roles for Gly162
+  - subject: glu267
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu267 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/665/
+      snippet: electrostatic stabiliser, metal ligand
+      notes: M-CSA entry 665, mechanism 1; M-CSA cites PMID:10913290, PMID:11953435; M-CSA catalytic-residue
+        roles for Glu267
+  - subject: glu279
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu279 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/665/
+      snippet: electrostatic stabiliser, metal ligand
+      notes: M-CSA entry 665, mechanism 1; M-CSA cites PMID:10913290, PMID:11953435; M-CSA catalytic-residue
+        roles for Glu279
+  - subject: asp286
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp286 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/665/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, metal ligand, proton acceptor, proton donor
+      notes: M-CSA entry 665, mechanism 1; M-CSA cites PMID:10913290, PMID:11953435; M-CSA catalytic-residue
+        roles for Asp286
+  - subject: thr287
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr287 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/665/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 665, mechanism 1; M-CSA cites PMID:10913290, PMID:11953435; M-CSA catalytic-residue
+        roles for Thr287
+  - subject: arg363
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg363 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/665/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 665, mechanism 1; M-CSA cites PMID:10913290, PMID:11953435; M-CSA catalytic-residue
+        roles for Arg363
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/665/
+      snippet: The reaction proceeds via initial nucleophilic attack by the formate substrate on ATP,
+        forming a pentavalent phosphate transition state, stabilised by Mg2+, Ser 160 and Gly 162 at the
+        active site. This releases ADP and the formyl phosphate intermediate that characterises this reaction
+        mechanism as opposed to that catalysed by PurK for instance, where a carboxyphosphate intermediate
+        is formed. This
+      notes: M-CSA entry 665, mechanism 1; M-CSA cites PMID:10913290, PMID:11953435; CATH domain 3.30.1490.20
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/665/
+      snippet: The reaction proceeds via initial nucleophilic attack by the formate substrate on ATP,
+        forming a pentavalent phosphate transition state, stabilised by Mg2+, Ser 160 and Gly 162 at the
+        active site. This releases ADP and the formyl phosphate intermediate that characterises this reaction
+        mechanism as opposed to that catalysed by PurK for instance, where a carboxyphosphate intermediate
+        is formed. This
+      notes: M-CSA entry 665, mechanism 1; M-CSA cites PMID:10913290, PMID:11953435; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/665/
+      snippet: The reaction proceeds via initial nucleophilic attack by the formate substrate on ATP,
+        forming a pentavalent phosphate transition state, stabilised by Mg2+, Ser 160 and Gly 162 at the
+        active site. This releases ADP and the formyl phosphate intermediate that characterises this reaction
+        mechanism as opposed to that catalysed by PurK for instance, where a carboxyphosphate intermediate
+        is formed. This
+      notes: M-CSA entry 665, mechanism 1; M-CSA cites PMID:10913290, PMID:11953435; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/665/
+      snippet: The reaction proceeds via initial nucleophilic attack by the formate substrate on ATP,
+        forming a pentavalent phosphate transition state, stabilised by Mg2+, Ser 160 and Gly 162 at the
+        active site. This releases ADP and the formyl phosphate intermediate that characterises this reaction
+        mechanism as opposed to that catalysed by PurK for instance, where a carboxyphosphate intermediate
+        is formed. This
+      notes: M-CSA entry 665, mechanism 1; M-CSA cites PMID:10913290, PMID:11953435; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/665/
+      snippet: The reaction proceeds via initial nucleophilic attack by the formate substrate on ATP,
+        forming a pentavalent phosphate transition state, stabilised by Mg2+, Ser 160 and Gly 162 at the
+        active site. This releases ADP and the formyl phosphate intermediate that characterises this reaction
+        mechanism as opposed to that catalysed by PurK for instance, where a carboxyphosphate intermediate
+        is formed. This
+      notes: M-CSA entry 665, mechanism 1; M-CSA cites PMID:10913290, PMID:11953435; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/665/
+      snippet: The reaction proceeds via initial nucleophilic attack by the formate substrate on ATP,
+        forming a pentavalent phosphate transition state, stabilised by Mg2+, Ser 160 and Gly 162 at the
+        active site. This releases ADP and the formyl phosphate intermediate that characterises this reaction
+        mechanism as opposed to that catalysed by PurK for instance, where a carboxyphosphate intermediate
+        is formed. This
+      notes: M-CSA entry 665, mechanism 1; M-CSA cites PMID:10913290, PMID:11953435; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/665/
+      snippet: The reaction proceeds via initial nucleophilic attack by the formate substrate on ATP,
+        forming a pentavalent phosphate transition state, stabilised by Mg2+, Ser 160 and Gly 162 at the
+        active site. This releases ADP and the formyl phosphate intermediate that characterises this reaction
+        mechanism as opposed to that catalysed by PurK for instance, where a carboxyphosphate intermediate
+        is formed. This
+      notes: M-CSA entry 665, mechanism 1; M-CSA cites PMID:10913290, PMID:11953435; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/665/
+      snippet: The reaction proceeds via initial nucleophilic attack by the formate substrate on ATP,
+        forming a pentavalent phosphate transition state, stabilised by Mg2+, Ser 160 and Gly 162 at the
+        active site. This releases ADP and the formyl phosphate intermediate that characterises this reaction
+        mechanism as opposed to that catalysed by PurK for instance, where a carboxyphosphate intermediate
+        is formed. This
+      notes: M-CSA entry 665, mechanism 1; M-CSA cites PMID:10913290, PMID:11953435; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product3
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/665/
+      snippet: The reaction proceeds via initial nucleophilic attack by the formate substrate on ATP,
+        forming a pentavalent phosphate transition state, stabilised by Mg2+, Ser 160 and Gly 162 at the
+        active site. This releases ADP and the formyl phosphate intermediate that characterises this reaction
+        mechanism as opposed to that catalysed by PurK for instance, where a carboxyphosphate intermediate
+        is formed. This
+      notes: M-CSA entry 665, mechanism 1; M-CSA cites PMID:10913290, PMID:11953435; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (21 evidence-backed edges) transcribed from M-CSA entry 665;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

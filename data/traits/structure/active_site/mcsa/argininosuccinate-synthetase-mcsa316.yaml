@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:6.3.4.5
 - CHEBI:30616
@@ -311,4 +311,324 @@ definitions:
       Argininosuccinate synthase (EC:6.3.4.5) (AS) is a urea cycle enzyme that catalyzes the penultimate (seventh) step in arginine biosynthesis: the condensation of glutamate and citrulline to form agininosuccinate, AMP and diphosphate. In humans, a defect in the AS gene causes citrullinemia, a genetic disease characterised by severe vomiting spells and mental retardation [PMID:19006241]. AS is a homotetrameric enzyme of chains of about 400 amino-acid residues. An arginine seems to be important for the enzyme's catalytic mechanism. The sequences of AS from various prokaryotes, archaebacteria and eukaryotes show significant similarity. Although there are two sub-types of argininosuccinate synthase, they appear to have the same mechanism and so are both represented by this entry.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of argininosuccinate synthetase
+  description: Stepwise mechanism transcribed from M-CSA entry 316 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: asp12
+    label: catalytic Asp12 (M-CSA/PDB numbering; UniProt residue 12)
+    node_type: RESIDUE
+    grounding: UniProtKB:P59846
+    description: 'M-CSA roles: steric role.'
+  - node_id: arg92
+    label: catalytic Arg92 (M-CSA/PDB numbering; UniProt residue 92)
+    node_type: RESIDUE
+    grounding: UniProtKB:P59846
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: asp121
+    label: catalytic Asp121 (M-CSA/PDB numbering; UniProt residue 121)
+    node_type: RESIDUE
+    grounding: UniProtKB:P59846
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: ser173
+    label: catalytic Ser173 (M-CSA/PDB numbering; UniProt residue 173)
+    node_type: RESIDUE
+    grounding: UniProtKB:P59846
+    description: 'M-CSA roles: hydrogen bond donor, steric role.'
+  - node_id: reactant0
+    label: ATP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+  - node_id: reactant1
+    label: L-aspartate(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:29991
+  - node_id: reactant2
+    label: L-citrulline zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57743
+  - node_id: product0
+    label: (N(omega)-L-arginino)succinate(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57472
+  - node_id: product1
+    label: adenosine 5'-monophosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+  - node_id: product2
+    label: diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+  - node_id: product3
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Citrulline attacks at the alpha phosphate of ATP, which is held in a reactive S conformation
+      by surrounding residues.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The amine group of aspartate is deprotonated by Asp121, activating the nitrogen towards
+      nucleophilic attack at the AMP-imine adduct. This results in the formation of a tetrahedral intermediate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Asp121A is deprotonated by the unprotonated amine group of the tetrahedral intermediate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The tetrahedral intermediate collapses, generating protonated AMP and arginosuccinate
+      - a biosynthetic precursor of arginine.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: argininosuccinate synthetase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:316
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.620 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.620
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: argininosuccinate synthetase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:6.3.4.5
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/316/
+      snippet: The amine group of aspartate is deprotonated by Asp121, activating the nitrogen towards
+        nucleophilic attack at the AMP-imine adduct. This results in the formation of a tetrahedral intermediate.
+      notes: M-CSA entry 316, mechanism 1; M-CSA cites PMID:11738042, PMID:11809762, PMID:11844799, PMID:12684518,
+        PMID:16082501, PMID:18323623, PMID:19006241, PMID:2867775; step 2
+  - subject: asp121
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Asp121 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/316/
+      snippet: The amine group of aspartate is deprotonated by Asp121, activating the nitrogen towards
+        nucleophilic attack at the AMP-imine adduct. This results in the formation of a tetrahedral intermediate.
+      notes: M-CSA entry 316, mechanism 1; M-CSA cites PMID:11738042, PMID:11809762, PMID:11844799, PMID:12684518,
+        PMID:16082501, PMID:18323623, PMID:19006241, PMID:2867775; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/316/
+      snippet: Asp121A is deprotonated by the unprotonated amine group of the tetrahedral intermediate.
+      notes: M-CSA entry 316, mechanism 1; M-CSA cites PMID:11738042, PMID:11809762, PMID:11844799, PMID:12684518,
+        PMID:16082501, PMID:18323623, PMID:19006241, PMID:2867775; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/316/
+      snippet: The tetrahedral intermediate collapses, generating protonated AMP and arginosuccinate -
+        a biosynthetic precursor of arginine.
+      notes: M-CSA entry 316, mechanism 1; M-CSA cites PMID:11738042, PMID:11809762, PMID:11844799, PMID:12684518,
+        PMID:16082501, PMID:18323623, PMID:19006241, PMID:2867775; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/316/
+      snippet: Products
+      notes: M-CSA entry 316, mechanism 1; M-CSA cites PMID:11738042, PMID:11809762, PMID:11844799, PMID:12684518,
+        PMID:16082501, PMID:18323623, PMID:19006241, PMID:2867775; step 5
+  - subject: asp12
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp12 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/316/
+      snippet: steric role
+      notes: M-CSA entry 316, mechanism 1; M-CSA cites PMID:11738042, PMID:11809762, PMID:11844799, PMID:12684518,
+        PMID:16082501, PMID:18323623, PMID:19006241, PMID:2867775; M-CSA catalytic-residue roles for Asp12
+  - subject: arg92
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg92 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/316/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 316, mechanism 1; M-CSA cites PMID:11738042, PMID:11809762, PMID:11844799, PMID:12684518,
+        PMID:16082501, PMID:18323623, PMID:19006241, PMID:2867775; M-CSA catalytic-residue roles for Arg92
+  - subject: asp121
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp121 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/316/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 316, mechanism 1; M-CSA cites PMID:11738042, PMID:11809762, PMID:11844799, PMID:12684518,
+        PMID:16082501, PMID:18323623, PMID:19006241, PMID:2867775; M-CSA catalytic-residue roles for Asp121
+  - subject: ser173
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser173 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/316/
+      snippet: hydrogen bond donor, steric role
+      notes: M-CSA entry 316, mechanism 1; M-CSA cites PMID:11738042, PMID:11809762, PMID:11844799, PMID:12684518,
+        PMID:16082501, PMID:18323623, PMID:19006241, PMID:2867775; M-CSA catalytic-residue roles for Ser173
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/316/
+      snippet: The catalytic reaction has been proposed to be initiated by the nucleophilic attack of
+        the citrulline ureido oxygen on the alpha-phopshate of ATP, followed by the formation of a citrullyl-AMP
+        intermediate, if aspartate is bound at this stage, the kinetics of the step are stimulated by
+        a factor of 600. This activated citrulline AMP intermediate is formed via a pentavalent phosphate
+        intermediate sta
+      notes: M-CSA entry 316, mechanism 1; M-CSA cites PMID:11738042, PMID:11809762, PMID:11844799, PMID:12684518,
+        PMID:16082501, PMID:18323623, PMID:19006241, PMID:2867775; CATH domain 3.40.50.620 assigned to
+        the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/316/
+      snippet: The catalytic reaction has been proposed to be initiated by the nucleophilic attack of
+        the citrulline ureido oxygen on the alpha-phopshate of ATP, followed by the formation of a citrullyl-AMP
+        intermediate, if aspartate is bound at this stage, the kinetics of the step are stimulated by
+        a factor of 600. This activated citrulline AMP intermediate is formed via a pentavalent phosphate
+        intermediate sta
+      notes: M-CSA entry 316, mechanism 1; M-CSA cites PMID:11738042, PMID:11809762, PMID:11844799, PMID:12684518,
+        PMID:16082501, PMID:18323623, PMID:19006241, PMID:2867775; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/316/
+      snippet: The catalytic reaction has been proposed to be initiated by the nucleophilic attack of
+        the citrulline ureido oxygen on the alpha-phopshate of ATP, followed by the formation of a citrullyl-AMP
+        intermediate, if aspartate is bound at this stage, the kinetics of the step are stimulated by
+        a factor of 600. This activated citrulline AMP intermediate is formed via a pentavalent phosphate
+        intermediate sta
+      notes: M-CSA entry 316, mechanism 1; M-CSA cites PMID:11738042, PMID:11809762, PMID:11844799, PMID:12684518,
+        PMID:16082501, PMID:18323623, PMID:19006241, PMID:2867775; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/316/
+      snippet: The catalytic reaction has been proposed to be initiated by the nucleophilic attack of
+        the citrulline ureido oxygen on the alpha-phopshate of ATP, followed by the formation of a citrullyl-AMP
+        intermediate, if aspartate is bound at this stage, the kinetics of the step are stimulated by
+        a factor of 600. This activated citrulline AMP intermediate is formed via a pentavalent phosphate
+        intermediate sta
+      notes: M-CSA entry 316, mechanism 1; M-CSA cites PMID:11738042, PMID:11809762, PMID:11844799, PMID:12684518,
+        PMID:16082501, PMID:18323623, PMID:19006241, PMID:2867775; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/316/
+      snippet: The catalytic reaction has been proposed to be initiated by the nucleophilic attack of
+        the citrulline ureido oxygen on the alpha-phopshate of ATP, followed by the formation of a citrullyl-AMP
+        intermediate, if aspartate is bound at this stage, the kinetics of the step are stimulated by
+        a factor of 600. This activated citrulline AMP intermediate is formed via a pentavalent phosphate
+        intermediate sta
+      notes: M-CSA entry 316, mechanism 1; M-CSA cites PMID:11738042, PMID:11809762, PMID:11844799, PMID:12684518,
+        PMID:16082501, PMID:18323623, PMID:19006241, PMID:2867775; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/316/
+      snippet: The catalytic reaction has been proposed to be initiated by the nucleophilic attack of
+        the citrulline ureido oxygen on the alpha-phopshate of ATP, followed by the formation of a citrullyl-AMP
+        intermediate, if aspartate is bound at this stage, the kinetics of the step are stimulated by
+        a factor of 600. This activated citrulline AMP intermediate is formed via a pentavalent phosphate
+        intermediate sta
+      notes: M-CSA entry 316, mechanism 1; M-CSA cites PMID:11738042, PMID:11809762, PMID:11844799, PMID:12684518,
+        PMID:16082501, PMID:18323623, PMID:19006241, PMID:2867775; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/316/
+      snippet: The catalytic reaction has been proposed to be initiated by the nucleophilic attack of
+        the citrulline ureido oxygen on the alpha-phopshate of ATP, followed by the formation of a citrullyl-AMP
+        intermediate, if aspartate is bound at this stage, the kinetics of the step are stimulated by
+        a factor of 600. This activated citrulline AMP intermediate is formed via a pentavalent phosphate
+        intermediate sta
+      notes: M-CSA entry 316, mechanism 1; M-CSA cites PMID:11738042, PMID:11809762, PMID:11844799, PMID:12684518,
+        PMID:16082501, PMID:18323623, PMID:19006241, PMID:2867775; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/316/
+      snippet: The catalytic reaction has been proposed to be initiated by the nucleophilic attack of
+        the citrulline ureido oxygen on the alpha-phopshate of ATP, followed by the formation of a citrullyl-AMP
+        intermediate, if aspartate is bound at this stage, the kinetics of the step are stimulated by
+        a factor of 600. This activated citrulline AMP intermediate is formed via a pentavalent phosphate
+        intermediate sta
+      notes: M-CSA entry 316, mechanism 1; M-CSA cites PMID:11738042, PMID:11809762, PMID:11844799, PMID:12684518,
+        PMID:16082501, PMID:18323623, PMID:19006241, PMID:2867775; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product3
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/316/
+      snippet: The catalytic reaction has been proposed to be initiated by the nucleophilic attack of
+        the citrulline ureido oxygen on the alpha-phopshate of ATP, followed by the formation of a citrullyl-AMP
+        intermediate, if aspartate is bound at this stage, the kinetics of the step are stimulated by
+        a factor of 600. This activated citrulline AMP intermediate is formed via a pentavalent phosphate
+        intermediate sta
+      notes: M-CSA entry 316, mechanism 1; M-CSA cites PMID:11738042, PMID:11809762, PMID:11844799, PMID:12684518,
+        PMID:16082501, PMID:18323623, PMID:19006241, PMID:2867775; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (18 evidence-backed edges) transcribed from M-CSA entry 316;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.7.4.3
 - CHEBI:30616
@@ -237,4 +237,215 @@ definitions:
       This family of small, monomeric enzymes is most well known for the ubiquitous Adenylate kinase (EC 2.7.4.3) which serves a crucial role in adenosine phosphate homeostasis; in times of energy need, it enables ADP to be broken down to produce some more ATP, and then when energy is once more abundant it enables the recovery of AMP produced in this and other reactions. At least two other closely related enzymes have been identified - yeast uridylate kinase (no EC no. yet) and slime mould UMP/CMP kinase (EC 2.7.4.14). In all cases Mg(2+) is required for activity.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of adenylate kinase
+  description: Stepwise mechanism transcribed from M-CSA entry 290 (2 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: lys13
+    label: catalytic Lys13 (M-CSA/PDB numbering; UniProt residue 13)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27142
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: arg88
+    label: catalytic Arg88 (M-CSA/PDB numbering; UniProt residue 88)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27142
+    description: 'M-CSA roles: attractive charge-charge interaction, electrostatic stabiliser, hydrogen
+      bond donor.'
+  - node_id: arg127
+    label: catalytic Arg127 (M-CSA/PDB numbering; UniProt residue 127)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27142
+    description: 'M-CSA roles: attractive charge-charge interaction, electrostatic stabiliser, hydrogen
+      bond donor.'
+  - node_id: arg160
+    label: catalytic Arg160 (M-CSA/PDB numbering; UniProt residue 160)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27142
+    description: 'M-CSA roles: attractive charge-charge interaction, electrostatic stabiliser, hydrogen
+      bond donor.'
+  - node_id: arg171
+    label: catalytic Arg171 (M-CSA/PDB numbering; UniProt residue 171)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27142
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: ATP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+  - node_id: reactant1
+    label: adenosine 5'-monophosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+  - node_id: product0
+    label: ADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Stereochemical studies on this enzyme suggest  the transferred phosphoryl group is inverted
+      during the course of the reaction, indicating a single step, in-line mechanism [PMID:15521058].
+      The magnesium divalent cation acts to neutralise the anionic ATP terminal phosphate, enhancing its
+      electrophilicity while also directing ATP into an 'open' conformation which also facilitates the
+      reaction [PMID:1
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: adenylate kinase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:290
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.300 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.300
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: adenylate kinase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.7.4.3
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/290/
+      snippet: Products
+      notes: M-CSA entry 290, mechanism 1; M-CSA cites PMID:1548697, PMID:15521058, PMID:1627570, PMID:16672241,
+        PMID:9228065, PMID:9715904; step 2
+  - subject: lys13
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys13 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/290/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 290, mechanism 1; M-CSA cites PMID:1548697, PMID:15521058, PMID:1627570, PMID:16672241,
+        PMID:9228065, PMID:9715904; M-CSA catalytic-residue roles for Lys13
+  - subject: arg88
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg88 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/290/
+      snippet: attractive charge-charge interaction, electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 290, mechanism 1; M-CSA cites PMID:1548697, PMID:15521058, PMID:1627570, PMID:16672241,
+        PMID:9228065, PMID:9715904; M-CSA catalytic-residue roles for Arg88
+  - subject: arg127
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg127 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/290/
+      snippet: attractive charge-charge interaction, electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 290, mechanism 1; M-CSA cites PMID:1548697, PMID:15521058, PMID:1627570, PMID:16672241,
+        PMID:9228065, PMID:9715904; M-CSA catalytic-residue roles for Arg127
+  - subject: arg160
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg160 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/290/
+      snippet: attractive charge-charge interaction, electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 290, mechanism 1; M-CSA cites PMID:1548697, PMID:15521058, PMID:1627570, PMID:16672241,
+        PMID:9228065, PMID:9715904; M-CSA catalytic-residue roles for Arg160
+  - subject: arg171
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg171 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/290/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 290, mechanism 1; M-CSA cites PMID:1548697, PMID:15521058, PMID:1627570, PMID:16672241,
+        PMID:9228065, PMID:9715904; M-CSA catalytic-residue roles for Arg171
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/290/
+      snippet: Stereochemical studies on this enzyme indicate that the transferred phosphoryl group is
+        inverted, indicating a single step, in-line reaction. Accordingly, structures solved with the
+        inhibitor A-P5-A (Bis(adenosine)-5'-pentaphosphate) have enabled residues which interact with
+        the substrate to be identified, and their position related to kinetic data. Accordingly, mutations
+        of Lys13, Arg127, Arg160
+      notes: M-CSA entry 290, mechanism 1; M-CSA cites PMID:1548697, PMID:15521058, PMID:1627570, PMID:16672241,
+        PMID:9228065, PMID:9715904; CATH domain 3.40.50.300 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/290/
+      snippet: Stereochemical studies on this enzyme indicate that the transferred phosphoryl group is
+        inverted, indicating a single step, in-line reaction. Accordingly, structures solved with the
+        inhibitor A-P5-A (Bis(adenosine)-5'-pentaphosphate) have enabled residues which interact with
+        the substrate to be identified, and their position related to kinetic data. Accordingly, mutations
+        of Lys13, Arg127, Arg160
+      notes: M-CSA entry 290, mechanism 1; M-CSA cites PMID:1548697, PMID:15521058, PMID:1627570, PMID:16672241,
+        PMID:9228065, PMID:9715904; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/290/
+      snippet: Stereochemical studies on this enzyme indicate that the transferred phosphoryl group is
+        inverted, indicating a single step, in-line reaction. Accordingly, structures solved with the
+        inhibitor A-P5-A (Bis(adenosine)-5'-pentaphosphate) have enabled residues which interact with
+        the substrate to be identified, and their position related to kinetic data. Accordingly, mutations
+        of Lys13, Arg127, Arg160
+      notes: M-CSA entry 290, mechanism 1; M-CSA cites PMID:1548697, PMID:15521058, PMID:1627570, PMID:16672241,
+        PMID:9228065, PMID:9715904; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/290/
+      snippet: Stereochemical studies on this enzyme indicate that the transferred phosphoryl group is
+        inverted, indicating a single step, in-line reaction. Accordingly, structures solved with the
+        inhibitor A-P5-A (Bis(adenosine)-5'-pentaphosphate) have enabled residues which interact with
+        the substrate to be identified, and their position related to kinetic data. Accordingly, mutations
+        of Lys13, Arg127, Arg160
+      notes: M-CSA entry 290, mechanism 1; M-CSA cites PMID:1548697, PMID:15521058, PMID:1627570, PMID:16672241,
+        PMID:9228065, PMID:9715904; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/290/
+      snippet: Stereochemical studies on this enzyme indicate that the transferred phosphoryl group is
+        inverted, indicating a single step, in-line reaction. Accordingly, structures solved with the
+        inhibitor A-P5-A (Bis(adenosine)-5'-pentaphosphate) have enabled residues which interact with
+        the substrate to be identified, and their position related to kinetic data. Accordingly, mutations
+        of Lys13, Arg127, Arg160
+      notes: M-CSA entry 290, mechanism 1; M-CSA cites PMID:1548697, PMID:15521058, PMID:1627570, PMID:16672241,
+        PMID:9228065, PMID:9715904; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (11 evidence-backed edges) transcribed from M-CSA entry 290;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

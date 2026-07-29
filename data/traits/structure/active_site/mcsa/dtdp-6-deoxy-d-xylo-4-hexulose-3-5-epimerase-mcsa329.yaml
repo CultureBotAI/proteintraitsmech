@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.1.3.13
 - CHEBI:57649
@@ -195,4 +195,358 @@ definitions:
       dTDP-4-dehydrorhamnose 3,5-epimerase is the third enzyme in the biosynthetic pathway of dTDP-L-rhamnose, a saccharide required for the virulence of some pathogenic bacteria. The pathway does not exist in humans and therefore the enzymes in it are potential drug targets. The enzyme fold is unlike that of any other known epimerase and so represents a novel class of epimerase.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of dTDP-6-deoxy-D-xylo-4-hexulose 3,5 epimerase
+  description: Stepwise mechanism transcribed from M-CSA entry 329 (7 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset -3).
+  nodes:
+  - node_id: his65
+    label: catalytic His65 (M-CSA/PDB numbering; UniProt residue 62)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9HU21
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: lys74
+    label: catalytic Lys74 (M-CSA/PDB numbering; UniProt residue 71)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9HU21
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: tyr134
+    label: catalytic Tyr134 (M-CSA/PDB numbering; UniProt residue 131)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9HU21
+    description: 'M-CSA roles: proton acceptor, proton donor, proton relay.'
+  - node_id: asp171
+    label: catalytic Asp171 (M-CSA/PDB numbering; UniProt residue 168)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9HU21
+    description: 'M-CSA roles: electrostatic stabiliser, increase acidity, increase basicity.'
+  - node_id: reactant0
+    label: dTDP-4-dehydro-6-deoxy-alpha-D-glucose(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57649
+  - node_id: product0
+    label: dTDP-4-dehydro-beta-L-rhamnose(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:62830
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His65 abstracts a proton from the acidic 5' position, accelerated by the electrostatic
+      interaction with Asp171, to form the enolate-tautomer. Biochemical investigations suggest that epimerisation
+      at the 5' centre occurs before that at the 3' centre [PMID:17046787].
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Inorder for His65 to act as a general base in the following reaction steps the residue
+      must be deprotonated. Crystallography shows solvent molecules to be present within the active site
+      [PMID:17046787]. Water may potentially act as a specific base, deprotonating His65 for the next
+      round of catalysis.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Tyr134 acts as a general base towards the C3' carbon in a stereo-selective manner. Solvent
+      molecules within the active site have been shown to be involved in the stereo-selectve reprotonation
+      stages, although mutagenesis and kinetics studies have shown Tyr134 to be crucial for catalyic activity
+      [PMID:17046787].
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The second epimerisation is initiated by His65 at the C3' position. Inorder for the C3'
+      proton to be made acidic enough to be removed, it must be orientated orthogonally to the carbonyl
+      group. This is acheived by a ring inversion at the C4' carbonyl between step four and step five
+      [PMID:17046787].
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: The enolate collapses with stereo-selective reprotonation of the C3' by Tyr134.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: The regeneration of the active site by reprotonation of Tyr134 and His65.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: dTDP-6-deoxy-D-xylo-4-hexulose 3,5 epimerase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:329
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.60.120.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.60.120.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: dTDP-6-deoxy-D-xylo-4-hexulose 3,5 epimerase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.1.3.13
+  edges:
+  - subject: his65
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His65 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/329/
+      snippet: His65 abstracts a proton from the acidic 5' position, accelerated by the electrostatic
+        interaction with Asp171, to form the enolate-tautomer. Biochemical investigations suggest that
+        epimerisation at the 5' centre occurs before that at the 3' centre [PMID:17046787].
+      notes: M-CSA entry 329, mechanism 2; M-CSA cites PMID:10802738, PMID:17046787, PMID:18425854; step
+        1
+  - subject: asp171
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp171 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/329/
+      snippet: His65 abstracts a proton from the acidic 5' position, accelerated by the electrostatic
+        interaction with Asp171, to form the enolate-tautomer. Biochemical investigations suggest that
+        epimerisation at the 5' centre occurs before that at the 3' centre [PMID:17046787].
+      notes: M-CSA entry 329, mechanism 2; M-CSA cites PMID:10802738, PMID:17046787, PMID:18425854; step
+        1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/329/
+      snippet: Inorder for His65 to act as a general base in the following reaction steps the residue
+        must be deprotonated. Crystallography shows solvent molecules to be present within the active
+        site [PMID:17046787]. Water may potentially act as a specific base, deprotonating His65 for the
+        next round of catalysis.
+      notes: M-CSA entry 329, mechanism 2; M-CSA cites PMID:10802738, PMID:17046787, PMID:18425854; step
+        2
+  - subject: his65
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His65 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/329/
+      snippet: Inorder for His65 to act as a general base in the following reaction steps the residue
+        must be deprotonated. Crystallography shows solvent molecules to be present within the active
+        site [PMID:17046787]. Water may potentially act as a specific base, deprotonating His65 for the
+        next round of catalysis.
+      notes: M-CSA entry 329, mechanism 2; M-CSA cites PMID:10802738, PMID:17046787, PMID:18425854; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/329/
+      snippet: Tyr134 acts as a general base towards the C3' carbon in a stereo-selective manner. Solvent
+        molecules within the active site have been shown to be involved in the stereo-selectve reprotonation
+        stages, although mutagenesis and kinetics studies have shown Tyr134 to be crucial for catalyic
+        activity [PMID:17046787].
+      notes: M-CSA entry 329, mechanism 2; M-CSA cites PMID:10802738, PMID:17046787, PMID:18425854; step
+        3
+  - subject: tyr134
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Tyr134 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/329/
+      snippet: Tyr134 acts as a general base towards the C3' carbon in a stereo-selective manner. Solvent
+        molecules within the active site have been shown to be involved in the stereo-selectve reprotonation
+        stages, although mutagenesis and kinetics studies have shown Tyr134 to be crucial for catalyic
+        activity [PMID:17046787].
+      notes: M-CSA entry 329, mechanism 2; M-CSA cites PMID:10802738, PMID:17046787, PMID:18425854; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/329/
+      snippet: The second epimerisation is initiated by His65 at the C3' position. Inorder for the C3'
+        proton to be made acidic enough to be removed, it must be orientated orthogonally to the carbonyl
+        group. This is acheived by a ring inversion at the C4' carbonyl between step four and step five
+        [PMID:17046787].
+      notes: M-CSA entry 329, mechanism 2; M-CSA cites PMID:10802738, PMID:17046787, PMID:18425854; step
+        4
+  - subject: his65
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: His65 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/329/
+      snippet: The second epimerisation is initiated by His65 at the C3' position. Inorder for the C3'
+        proton to be made acidic enough to be removed, it must be orientated orthogonally to the carbonyl
+        group. This is acheived by a ring inversion at the C4' carbonyl between step four and step five
+        [PMID:17046787].
+      notes: M-CSA entry 329, mechanism 2; M-CSA cites PMID:10802738, PMID:17046787, PMID:18425854; step
+        4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/329/
+      snippet: The enolate collapses with stereo-selective reprotonation of the C3' by Tyr134.
+      notes: M-CSA entry 329, mechanism 2; M-CSA cites PMID:10802738, PMID:17046787, PMID:18425854; step
+        5
+  - subject: tyr134
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Tyr134 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/329/
+      snippet: The enolate collapses with stereo-selective reprotonation of the C3' by Tyr134.
+      notes: M-CSA entry 329, mechanism 2; M-CSA cites PMID:10802738, PMID:17046787, PMID:18425854; step
+        5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/329/
+      snippet: The regeneration of the active site by reprotonation of Tyr134 and His65.
+      notes: M-CSA entry 329, mechanism 2; M-CSA cites PMID:10802738, PMID:17046787, PMID:18425854; step
+        6
+  - subject: his65
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: His65 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/329/
+      snippet: The regeneration of the active site by reprotonation of Tyr134 and His65.
+      notes: M-CSA entry 329, mechanism 2; M-CSA cites PMID:10802738, PMID:17046787, PMID:18425854; step
+        6
+  - subject: tyr134
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: Tyr134 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/329/
+      snippet: The regeneration of the active site by reprotonation of Tyr134 and His65.
+      notes: M-CSA entry 329, mechanism 2; M-CSA cites PMID:10802738, PMID:17046787, PMID:18425854; step
+        6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/329/
+      snippet: Products.
+      notes: M-CSA entry 329, mechanism 2; M-CSA cites PMID:10802738, PMID:17046787, PMID:18425854; step
+        7
+  - subject: his65
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His65 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/329/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 329, mechanism 2; M-CSA cites PMID:10802738, PMID:17046787, PMID:18425854; M-CSA
+        catalytic-residue roles for His65
+  - subject: lys74
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys74 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/329/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 329, mechanism 2; M-CSA cites PMID:10802738, PMID:17046787, PMID:18425854; M-CSA
+        catalytic-residue roles for Lys74
+  - subject: tyr134
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr134 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/329/
+      snippet: proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 329, mechanism 2; M-CSA cites PMID:10802738, PMID:17046787, PMID:18425854; M-CSA
+        catalytic-residue roles for Tyr134
+  - subject: asp171
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp171 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/329/
+      snippet: electrostatic stabiliser, increase acidity, increase basicity
+      notes: M-CSA entry 329, mechanism 2; M-CSA cites PMID:10802738, PMID:17046787, PMID:18425854; M-CSA
+        catalytic-residue roles for Asp171
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/329/
+      snippet: The reaction is thought to be a novel one. His65 abstracts a proton from the acidic 5'
+        position, accelerated by the electrostatic interaction with Glu171, to form the enolate-tautomer.
+        Inorder for His65 to act as a general base in the following reaction steps the residue must be
+        deprotonated. Tyr134 acts as a general base towards the C3' carbon in a stereo-selective manner.
+        The second epimerisatio
+      notes: M-CSA entry 329, mechanism 2; M-CSA cites PMID:10802738, PMID:17046787, PMID:18425854; CATH
+        domain 2.60.120.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/329/
+      snippet: The reaction is thought to be a novel one. His65 abstracts a proton from the acidic 5'
+        position, accelerated by the electrostatic interaction with Glu171, to form the enolate-tautomer.
+        Inorder for His65 to act as a general base in the following reaction steps the residue must be
+        deprotonated. Tyr134 acts as a general base towards the C3' carbon in a stereo-selective manner.
+        The second epimerisatio
+      notes: M-CSA entry 329, mechanism 2; M-CSA cites PMID:10802738, PMID:17046787, PMID:18425854; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/329/
+      snippet: The reaction is thought to be a novel one. His65 abstracts a proton from the acidic 5'
+        position, accelerated by the electrostatic interaction with Glu171, to form the enolate-tautomer.
+        Inorder for His65 to act as a general base in the following reaction steps the residue must be
+        deprotonated. Tyr134 acts as a general base towards the C3' carbon in a stereo-selective manner.
+        The second epimerisatio
+      notes: M-CSA entry 329, mechanism 2; M-CSA cites PMID:10802738, PMID:17046787, PMID:18425854; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/329/
+      snippet: The reaction is thought to be a novel one. His65 abstracts a proton from the acidic 5'
+        position, accelerated by the electrostatic interaction with Glu171, to form the enolate-tautomer.
+        Inorder for His65 to act as a general base in the following reaction steps the residue must be
+        deprotonated. Tyr134 acts as a general base towards the C3' carbon in a stereo-selective manner.
+        The second epimerisatio
+      notes: M-CSA entry 329, mechanism 2; M-CSA cites PMID:10802738, PMID:17046787, PMID:18425854; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (22 evidence-backed edges) transcribed from M-CSA entry 329;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.-.-
 - CHEBI:8756
@@ -459,4 +459,332 @@ definitions:
       Colicin E3 kills Escherichia coli cells by binding to a surface receptor, entering the cell and inactivating protein biosynthetic machinery by ribonucleolytic cleavage of the ribosomal subunit 16S rRNA. The mechanism shows homology to ribonuclease T1.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of colicin-E3
+  description: Stepwise mechanism transcribed from M-CSA entry 530 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: asp510
+    label: catalytic Asp510 (M-CSA/PDB numbering; UniProt residue 510)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00646
+    description: 'M-CSA roles: electrostatic stabiliser, increase acidity.'
+  - node_id: his513
+    label: catalytic His513 (M-CSA/PDB numbering; UniProt residue 513)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00646
+    description: 'M-CSA roles: promote heterolysis, proton acceptor, proton donor.'
+  - node_id: glu517
+    label: catalytic Glu517 (M-CSA/PDB numbering; UniProt residue 517)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00646
+    description: 'M-CSA roles: increase nucleophilicity, promote heterolysis, proton acceptor, proton
+      donor.'
+  - node_id: arg545
+    label: catalytic Arg545 (M-CSA/PDB numbering; UniProt residue 545)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00646
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: RNA (poly(A))
+    node_type: CHEMICAL
+    grounding: CHEBI:8756
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: RNA (poly(A))
+    node_type: CHEMICAL
+    grounding: CHEBI:8756
+  - node_id: product1
+    label: RNA (poly(A))
+    node_type: CHEMICAL
+    grounding: CHEBI:8756
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu517 acts as a base abstracting a proton from the 2' hydroxyl group of the A1493 sub-unit.
+      This increases the nucleophilicity of the group allowing it to attack the phosphate group and form
+      a penta-covalent intermediate which is stabilized by Arg545.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Asp510 activates His513 enabling His513 to act as an acid donating a proton to the 5'
+      hydroxyl. The penta-covalent intermediate collapses and the bond between the phosphate and the 5'
+      hydroxyl is cleaved.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: His513 now acts as a base activating a water molecule for nucleophillic attack on the
+      phosphate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The penta-covalent intermediate collapses breaking the bond between the 2' hydroxyl and
+      the phosphate with Glu517 acting as an acid.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: colicin-E3 catalytic site
+    node_type: MOTIF
+    grounding: MCSA:530
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.10.380.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.10.380.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: colicin-E3 activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.-.-
+  edges:
+  - subject: glu517
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu517 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/530/
+      snippet: Glu517 acts as a base abstracting a proton from the 2' hydroxyl group of the A1493 sub-unit.
+        This increases the nucleophilicity of the group allowing it to attack the phosphate group and
+        form a penta-covalent intermediate which is stabilized by Arg545.
+      notes: M-CSA entry 530, mechanism 1; M-CSA cites PMID:11741540, PMID:12423788, PMID:20852642; step
+        1
+  - subject: arg545
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg545 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/530/
+      snippet: Glu517 acts as a base abstracting a proton from the 2' hydroxyl group of the A1493 sub-unit.
+        This increases the nucleophilicity of the group allowing it to attack the phosphate group and
+        form a penta-covalent intermediate which is stabilized by Arg545.
+      notes: M-CSA entry 530, mechanism 1; M-CSA cites PMID:11741540, PMID:12423788, PMID:20852642; step
+        1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/530/
+      snippet: Asp510 activates His513 enabling His513 to act as an acid donating a proton to the 5' hydroxyl.
+        The penta-covalent intermediate collapses and the bond between the phosphate and the 5' hydroxyl
+        is cleaved.
+      notes: M-CSA entry 530, mechanism 1; M-CSA cites PMID:11741540, PMID:12423788, PMID:20852642; step
+        2
+  - subject: asp510
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Asp510 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/530/
+      snippet: Asp510 activates His513 enabling His513 to act as an acid donating a proton to the 5' hydroxyl.
+        The penta-covalent intermediate collapses and the bond between the phosphate and the 5' hydroxyl
+        is cleaved.
+      notes: M-CSA entry 530, mechanism 1; M-CSA cites PMID:11741540, PMID:12423788, PMID:20852642; step
+        2
+  - subject: his513
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His513 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/530/
+      snippet: Asp510 activates His513 enabling His513 to act as an acid donating a proton to the 5' hydroxyl.
+        The penta-covalent intermediate collapses and the bond between the phosphate and the 5' hydroxyl
+        is cleaved.
+      notes: M-CSA entry 530, mechanism 1; M-CSA cites PMID:11741540, PMID:12423788, PMID:20852642; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/530/
+      snippet: His513 now acts as a base activating a water molecule for nucleophillic attack on the phosphate.
+      notes: M-CSA entry 530, mechanism 1; M-CSA cites PMID:11741540, PMID:12423788, PMID:20852642; step
+        3
+  - subject: his513
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His513 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/530/
+      snippet: His513 now acts as a base activating a water molecule for nucleophillic attack on the phosphate.
+      notes: M-CSA entry 530, mechanism 1; M-CSA cites PMID:11741540, PMID:12423788, PMID:20852642; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/530/
+      snippet: The penta-covalent intermediate collapses breaking the bond between the 2' hydroxyl and
+        the phosphate with Glu517 acting as an acid.
+      notes: M-CSA entry 530, mechanism 1; M-CSA cites PMID:11741540, PMID:12423788, PMID:20852642; step
+        4
+  - subject: glu517
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Glu517 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/530/
+      snippet: The penta-covalent intermediate collapses breaking the bond between the 2' hydroxyl and
+        the phosphate with Glu517 acting as an acid.
+      notes: M-CSA entry 530, mechanism 1; M-CSA cites PMID:11741540, PMID:12423788, PMID:20852642; step
+        4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/530/
+      snippet: Products.
+      notes: M-CSA entry 530, mechanism 1; M-CSA cites PMID:11741540, PMID:12423788, PMID:20852642; step
+        5
+  - subject: asp510
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp510 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/530/
+      snippet: electrostatic stabiliser, increase acidity
+      notes: M-CSA entry 530, mechanism 1; M-CSA cites PMID:11741540, PMID:12423788, PMID:20852642; M-CSA
+        catalytic-residue roles for Asp510
+  - subject: his513
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His513 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/530/
+      snippet: promote heterolysis, proton acceptor, proton donor
+      notes: M-CSA entry 530, mechanism 1; M-CSA cites PMID:11741540, PMID:12423788, PMID:20852642; M-CSA
+        catalytic-residue roles for His513
+  - subject: glu517
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu517 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/530/
+      snippet: increase nucleophilicity, promote heterolysis, proton acceptor, proton donor
+      notes: M-CSA entry 530, mechanism 1; M-CSA cites PMID:11741540, PMID:12423788, PMID:20852642; M-CSA
+        catalytic-residue roles for Glu517
+  - subject: arg545
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg545 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/530/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 530, mechanism 1; M-CSA cites PMID:11741540, PMID:12423788, PMID:20852642; M-CSA
+        catalytic-residue roles for Arg545
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/530/
+      snippet: The mechanism of colicin E3 involves a Glu-His-Asp catalytic triad. The carboxylate of
+        Glu 517 acts as a general base catalyst to abstract a proton from the ribose O2'-hydroxyl of adenine
+        1493 of the ribosomal subunit. This increases the nucleophilicity of the oxygen atom so that it
+        makes a nucleophilic attack on the phosphate to form a cyclic 2'-3' phosphate with a negative
+        charge. The pentacoord
+      notes: M-CSA entry 530, mechanism 1; M-CSA cites PMID:11741540, PMID:12423788, PMID:20852642; CATH
+        domain 3.10.380.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/530/
+      snippet: The mechanism of colicin E3 involves a Glu-His-Asp catalytic triad. The carboxylate of
+        Glu 517 acts as a general base catalyst to abstract a proton from the ribose O2'-hydroxyl of adenine
+        1493 of the ribosomal subunit. This increases the nucleophilicity of the oxygen atom so that it
+        makes a nucleophilic attack on the phosphate to form a cyclic 2'-3' phosphate with a negative
+        charge. The pentacoord
+      notes: M-CSA entry 530, mechanism 1; M-CSA cites PMID:11741540, PMID:12423788, PMID:20852642; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/530/
+      snippet: The mechanism of colicin E3 involves a Glu-His-Asp catalytic triad. The carboxylate of
+        Glu 517 acts as a general base catalyst to abstract a proton from the ribose O2'-hydroxyl of adenine
+        1493 of the ribosomal subunit. This increases the nucleophilicity of the oxygen atom so that it
+        makes a nucleophilic attack on the phosphate to form a cyclic 2'-3' phosphate with a negative
+        charge. The pentacoord
+      notes: M-CSA entry 530, mechanism 1; M-CSA cites PMID:11741540, PMID:12423788, PMID:20852642; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/530/
+      snippet: The mechanism of colicin E3 involves a Glu-His-Asp catalytic triad. The carboxylate of
+        Glu 517 acts as a general base catalyst to abstract a proton from the ribose O2'-hydroxyl of adenine
+        1493 of the ribosomal subunit. This increases the nucleophilicity of the oxygen atom so that it
+        makes a nucleophilic attack on the phosphate to form a cyclic 2'-3' phosphate with a negative
+        charge. The pentacoord
+      notes: M-CSA entry 530, mechanism 1; M-CSA cites PMID:11741540, PMID:12423788, PMID:20852642; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/530/
+      snippet: The mechanism of colicin E3 involves a Glu-His-Asp catalytic triad. The carboxylate of
+        Glu 517 acts as a general base catalyst to abstract a proton from the ribose O2'-hydroxyl of adenine
+        1493 of the ribosomal subunit. This increases the nucleophilicity of the oxygen atom so that it
+        makes a nucleophilic attack on the phosphate to form a cyclic 2'-3' phosphate with a negative
+        charge. The pentacoord
+      notes: M-CSA entry 530, mechanism 1; M-CSA cites PMID:11741540, PMID:12423788, PMID:20852642; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/530/
+      snippet: The mechanism of colicin E3 involves a Glu-His-Asp catalytic triad. The carboxylate of
+        Glu 517 acts as a general base catalyst to abstract a proton from the ribose O2'-hydroxyl of adenine
+        1493 of the ribosomal subunit. This increases the nucleophilicity of the oxygen atom so that it
+        makes a nucleophilic attack on the phosphate to form a cyclic 2'-3' phosphate with a negative
+        charge. The pentacoord
+      notes: M-CSA entry 530, mechanism 1; M-CSA cites PMID:11741540, PMID:12423788, PMID:20852642; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (20 evidence-backed edges) transcribed from M-CSA entry 530;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

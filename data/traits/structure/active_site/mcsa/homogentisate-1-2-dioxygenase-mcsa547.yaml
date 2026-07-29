@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.13.11.5
 - CHEBI:15378
@@ -289,4 +289,353 @@ definitions:
       Homogentistate dioxygenase (HGO) catalyses the metabolic degredation of Phe and Tyr amino acids. The ring opening reaction requires non-heme Fe(2+) to incorporate both atoms of molecular oxygen into homogentisate. The accumulation of this substrate, when insufficient levels of HGO are present, results in the deposition of of insoluble ochromotic pigments in conective tissues, leading to degenerative arthritis.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of homogentisate 1,2-dioxygenase
+  description: Stepwise mechanism transcribed from M-CSA entry 547 (9 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: his292
+    label: catalytic His292 (M-CSA/PDB numbering; UniProt residue 292)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q93099
+    description: 'M-CSA roles: electrostatic stabiliser, enhance reactivity.'
+  - node_id: his335
+    label: catalytic His335 (M-CSA/PDB numbering; UniProt residue 335)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q93099
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu341
+    label: catalytic Glu341 (M-CSA/PDB numbering; UniProt residue 341)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q93099
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his365
+    label: catalytic His365 (M-CSA/PDB numbering; UniProt residue 365)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q93099
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: his371
+    label: catalytic His371 (M-CSA/PDB numbering; UniProt residue 371)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q93099
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: dioxygen
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+  - node_id: reactant1
+    label: homogentisate
+    node_type: CHEMICAL
+    grounding: CHEBI:16169
+  - node_id: product0
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product1
+    label: 4-maleylacetoacetate
+    node_type: CHEMICAL
+    grounding: CHEBI:17105
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The iron-bound dioxygen attacks the aromatic ring at the C2 carbon
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The peroxo group abstracts a proton from His365.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: A single electron from the iron(II) ion is donated to the peroxo group, which initiates
+      the homolytic cleavage of the peroxo bond.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: An epoxide ring is formed via homolytic rearrangement.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: The hydroxide group attacks the carbonyl group bound to the iron(III) ion to form the
+      new carboxylic acid group.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: The epoxide group collapses.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: The hydroxyl radical initiates a homolytic rearrangement that results in the formation
+      of the final product and a single electron transfer to the Fe(III) centre to regenerate the cofactor.
+  - node_id: step8
+    label: mechanism step 8
+    node_type: STATE
+    description: Inferred step in which His365 abstracts a proton from the product to regenerate the active
+      site.
+  - node_id: step9
+    label: mechanism step 9
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: homogentisate 1,2-dioxygenase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:547
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.60.120.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.60.120.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: homogentisate 1,2-dioxygenase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.13.11.5
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/547/
+      snippet: The peroxo group abstracts a proton from His365.
+      notes: M-CSA entry 547, mechanism 1; M-CSA cites PMID:10876237, PMID:16332080, PMID:24850951; step
+        2
+  - subject: his365
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His365 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/547/
+      snippet: The peroxo group abstracts a proton from His365.
+      notes: M-CSA entry 547, mechanism 1; M-CSA cites PMID:10876237, PMID:16332080, PMID:24850951; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/547/
+      snippet: A single electron from the iron(II) ion is donated to the peroxo group, which initiates
+        the homolytic cleavage of the peroxo bond.
+      notes: M-CSA entry 547, mechanism 1; M-CSA cites PMID:10876237, PMID:16332080, PMID:24850951; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/547/
+      snippet: An epoxide ring is formed via homolytic rearrangement.
+      notes: M-CSA entry 547, mechanism 1; M-CSA cites PMID:10876237, PMID:16332080, PMID:24850951; step
+        4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/547/
+      snippet: The hydroxide group attacks the carbonyl group bound to the iron(III) ion to form the new
+        carboxylic acid group.
+      notes: M-CSA entry 547, mechanism 1; M-CSA cites PMID:10876237, PMID:16332080, PMID:24850951; step
+        5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/547/
+      snippet: The epoxide group collapses.
+      notes: M-CSA entry 547, mechanism 1; M-CSA cites PMID:10876237, PMID:16332080, PMID:24850951; step
+        6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/547/
+      snippet: The hydroxyl radical initiates a homolytic rearrangement that results in the formation
+        of the final product and a single electron transfer to the Fe(III) centre to regenerate the cofactor.
+      notes: M-CSA entry 547, mechanism 1; M-CSA cites PMID:10876237, PMID:16332080, PMID:24850951; step
+        7
+  - subject: step7
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step8
+    description: Step 7 leads to step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/547/
+      snippet: Inferred step in which His365 abstracts a proton from the product to regenerate the active
+        site.
+      notes: M-CSA entry 547, mechanism 1; M-CSA cites PMID:10876237, PMID:16332080, PMID:24850951; step
+        8
+  - subject: his365
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step8
+    description: His365 acts in step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/547/
+      snippet: Inferred step in which His365 abstracts a proton from the product to regenerate the active
+        site.
+      notes: M-CSA entry 547, mechanism 1; M-CSA cites PMID:10876237, PMID:16332080, PMID:24850951; step
+        8
+  - subject: step8
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step9
+    description: Step 8 leads to step 9.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/547/
+      snippet: Products.
+      notes: M-CSA entry 547, mechanism 1; M-CSA cites PMID:10876237, PMID:16332080, PMID:24850951; step
+        9
+  - subject: his292
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His292 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/547/
+      snippet: electrostatic stabiliser, enhance reactivity
+      notes: M-CSA entry 547, mechanism 1; M-CSA cites PMID:10876237, PMID:16332080, PMID:24850951; M-CSA
+        catalytic-residue roles for His292
+  - subject: his335
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His335 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/547/
+      snippet: metal ligand
+      notes: M-CSA entry 547, mechanism 1; M-CSA cites PMID:10876237, PMID:16332080, PMID:24850951; M-CSA
+        catalytic-residue roles for His335
+  - subject: glu341
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu341 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/547/
+      snippet: metal ligand
+      notes: M-CSA entry 547, mechanism 1; M-CSA cites PMID:10876237, PMID:16332080, PMID:24850951; M-CSA
+        catalytic-residue roles for Glu341
+  - subject: his365
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His365 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/547/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 547, mechanism 1; M-CSA cites PMID:10876237, PMID:16332080, PMID:24850951; M-CSA
+        catalytic-residue roles for His365
+  - subject: his371
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His371 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/547/
+      snippet: metal ligand
+      notes: M-CSA entry 547, mechanism 1; M-CSA cites PMID:10876237, PMID:16332080, PMID:24850951; M-CSA
+        catalytic-residue roles for His371
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/547/
+      snippet: Direct bidentate coordination occurs between Fe(2+) and the homogentisate 1-acetate and
+        2-hydroxylate groups, while His 292 hydrogen bonds to to the 5-hydroxyl group. The essential metal
+        ion is coordinated to His 371, His 335 and Glu 341. Molecular dioxygen binds to iron and reacts
+        with homogentisate, forming a peroxo-bridged intermediate. The second step is a homolytic cleave
+        of the O-O bond in t
+      notes: M-CSA entry 547, mechanism 1; M-CSA cites PMID:10876237, PMID:16332080, PMID:24850951; CATH
+        domain 2.60.120.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/547/
+      snippet: Direct bidentate coordination occurs between Fe(2+) and the homogentisate 1-acetate and
+        2-hydroxylate groups, while His 292 hydrogen bonds to to the 5-hydroxyl group. The essential metal
+        ion is coordinated to His 371, His 335 and Glu 341. Molecular dioxygen binds to iron and reacts
+        with homogentisate, forming a peroxo-bridged intermediate. The second step is a homolytic cleave
+        of the O-O bond in t
+      notes: M-CSA entry 547, mechanism 1; M-CSA cites PMID:10876237, PMID:16332080, PMID:24850951; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/547/
+      snippet: Direct bidentate coordination occurs between Fe(2+) and the homogentisate 1-acetate and
+        2-hydroxylate groups, while His 292 hydrogen bonds to to the 5-hydroxyl group. The essential metal
+        ion is coordinated to His 371, His 335 and Glu 341. Molecular dioxygen binds to iron and reacts
+        with homogentisate, forming a peroxo-bridged intermediate. The second step is a homolytic cleave
+        of the O-O bond in t
+      notes: M-CSA entry 547, mechanism 1; M-CSA cites PMID:10876237, PMID:16332080, PMID:24850951; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/547/
+      snippet: Direct bidentate coordination occurs between Fe(2+) and the homogentisate 1-acetate and
+        2-hydroxylate groups, while His 292 hydrogen bonds to to the 5-hydroxyl group. The essential metal
+        ion is coordinated to His 371, His 335 and Glu 341. Molecular dioxygen binds to iron and reacts
+        with homogentisate, forming a peroxo-bridged intermediate. The second step is a homolytic cleave
+        of the O-O bond in t
+      notes: M-CSA entry 547, mechanism 1; M-CSA cites PMID:10876237, PMID:16332080, PMID:24850951; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/547/
+      snippet: Direct bidentate coordination occurs between Fe(2+) and the homogentisate 1-acetate and
+        2-hydroxylate groups, while His 292 hydrogen bonds to to the 5-hydroxyl group. The essential metal
+        ion is coordinated to His 371, His 335 and Glu 341. Molecular dioxygen binds to iron and reacts
+        with homogentisate, forming a peroxo-bridged intermediate. The second step is a homolytic cleave
+        of the O-O bond in t
+      notes: M-CSA entry 547, mechanism 1; M-CSA cites PMID:10876237, PMID:16332080, PMID:24850951; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/547/
+      snippet: Direct bidentate coordination occurs between Fe(2+) and the homogentisate 1-acetate and
+        2-hydroxylate groups, while His 292 hydrogen bonds to to the 5-hydroxyl group. The essential metal
+        ion is coordinated to His 371, His 335 and Glu 341. Molecular dioxygen binds to iron and reacts
+        with homogentisate, forming a peroxo-bridged intermediate. The second step is a homolytic cleave
+        of the O-O bond in t
+      notes: M-CSA entry 547, mechanism 1; M-CSA cites PMID:10876237, PMID:16332080, PMID:24850951; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (21 evidence-backed edges) transcribed from M-CSA entry 547;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

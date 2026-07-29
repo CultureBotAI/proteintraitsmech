@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.6.4.6
 - CHEBI:15378
@@ -476,4 +476,265 @@ definitions:
       N-ethylmaleimide sensitive factor is responsible for the destabilisation and disassembly of the proteins in the SNARE complex thus has a key role in vesicular trafficking inside the cell. The structure described in this pdb code is of the ATP binding domain which contains the active site necessary for ATP hydrolysis: conformational changes that occur as a result of the hydrolysis lead to the breaking up of the SNARE complex. The ATP binding domain of the protein shares homology with other Rossmann fold containing proteins, particularly with E. coli DNA polymerase III.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of vesicle-fusing ATPase
+  description: Stepwise mechanism transcribed from M-CSA entry 642 (2 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: lys549
+    label: catalytic Lys549 (M-CSA/PDB numbering; UniProt residue 549)
+    node_type: RESIDUE
+    grounding: UniProtKB:P18708
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: thr550
+    label: catalytic Thr550 (M-CSA/PDB numbering; UniProt residue 550)
+    node_type: RESIDUE
+    grounding: UniProtKB:P18708
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp603
+    label: catalytic Asp603 (M-CSA/PDB numbering; UniProt residue 603)
+    node_type: RESIDUE
+    grounding: UniProtKB:P18708
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp604
+    label: catalytic Asp604 (M-CSA/PDB numbering; UniProt residue 604)
+    node_type: RESIDUE
+    grounding: UniProtKB:P18708
+    description: 'M-CSA roles: proton acceptor.'
+  - node_id: lys631
+    label: catalytic Lys631 (M-CSA/PDB numbering; UniProt residue 631)
+    node_type: RESIDUE
+    grounding: UniProtKB:P18708
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: lys708
+    label: catalytic Lys708 (M-CSA/PDB numbering; UniProt residue 708)
+    node_type: RESIDUE
+    grounding: UniProtKB:P18708
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: ATP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product1
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: product2
+    label: ADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp 604 deprotonates the polarised water molecule which activates it to nucleophilically
+      attack the gamma phosphate which results in the cleavage of the phosphoanhydride bond and release
+      of the gamma phosphate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Product
+  - node_id: active_site
+    label: vesicle-fusing ATPase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:642
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.300 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.300
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: vesicle-fusing ATPase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.6.4.6
+  edges:
+  - subject: asp604
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp604 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/642/
+      snippet: Asp 604 deprotonates the polarised water molecule which activates it to nucleophilically
+        attack the gamma phosphate which results in the cleavage of the phosphoanhydride bond and release
+        of the gamma phosphate.
+      notes: M-CSA entry 642, mechanism 1; M-CSA cites PMID:21689688, PMID:9731775; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/642/
+      snippet: Product
+      notes: M-CSA entry 642, mechanism 1; M-CSA cites PMID:21689688, PMID:9731775; step 2
+  - subject: lys549
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys549 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/642/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 642, mechanism 1; M-CSA cites PMID:21689688, PMID:9731775; M-CSA catalytic-residue
+        roles for Lys549
+  - subject: thr550
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr550 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/642/
+      snippet: metal ligand
+      notes: M-CSA entry 642, mechanism 1; M-CSA cites PMID:21689688, PMID:9731775; M-CSA catalytic-residue
+        roles for Thr550
+  - subject: asp603
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp603 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/642/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 642, mechanism 1; M-CSA cites PMID:21689688, PMID:9731775; M-CSA catalytic-residue
+        roles for Asp603
+  - subject: asp604
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp604 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/642/
+      snippet: proton acceptor
+      notes: M-CSA entry 642, mechanism 1; M-CSA cites PMID:21689688, PMID:9731775; M-CSA catalytic-residue
+        roles for Asp604
+  - subject: lys631
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys631 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/642/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 642, mechanism 1; M-CSA cites PMID:21689688, PMID:9731775; M-CSA catalytic-residue
+        roles for Lys631
+  - subject: lys708
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys708 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/642/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 642, mechanism 1; M-CSA cites PMID:21689688, PMID:9731775; M-CSA catalytic-residue
+        roles for Lys708
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/642/
+      snippet: Hydrolysis of ATP is facilitated by a Mg2+ ion and two Lysine residues (Lys 549 and Lys
+        708) and Thr 550 which contact the beta and gamma phosphates of the ATP and Asp 504 and Mg2+ aid
+        in the deprotonation of water so that it can nucleophilically attack the gamma phosphate of ATP.
+        This enables the conformational changes that cause the breaking up of the hexameric protein and
+        the collapse of the SN
+      notes: M-CSA entry 642, mechanism 1; M-CSA cites PMID:21689688, PMID:9731775; CATH domain 3.40.50.300
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/642/
+      snippet: Hydrolysis of ATP is facilitated by a Mg2+ ion and two Lysine residues (Lys 549 and Lys
+        708) and Thr 550 which contact the beta and gamma phosphates of the ATP and Asp 504 and Mg2+ aid
+        in the deprotonation of water so that it can nucleophilically attack the gamma phosphate of ATP.
+        This enables the conformational changes that cause the breaking up of the hexameric protein and
+        the collapse of the SN
+      notes: M-CSA entry 642, mechanism 1; M-CSA cites PMID:21689688, PMID:9731775; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/642/
+      snippet: Hydrolysis of ATP is facilitated by a Mg2+ ion and two Lysine residues (Lys 549 and Lys
+        708) and Thr 550 which contact the beta and gamma phosphates of the ATP and Asp 504 and Mg2+ aid
+        in the deprotonation of water so that it can nucleophilically attack the gamma phosphate of ATP.
+        This enables the conformational changes that cause the breaking up of the hexameric protein and
+        the collapse of the SN
+      notes: M-CSA entry 642, mechanism 1; M-CSA cites PMID:21689688, PMID:9731775; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/642/
+      snippet: Hydrolysis of ATP is facilitated by a Mg2+ ion and two Lysine residues (Lys 549 and Lys
+        708) and Thr 550 which contact the beta and gamma phosphates of the ATP and Asp 504 and Mg2+ aid
+        in the deprotonation of water so that it can nucleophilically attack the gamma phosphate of ATP.
+        This enables the conformational changes that cause the breaking up of the hexameric protein and
+        the collapse of the SN
+      notes: M-CSA entry 642, mechanism 1; M-CSA cites PMID:21689688, PMID:9731775; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/642/
+      snippet: Hydrolysis of ATP is facilitated by a Mg2+ ion and two Lysine residues (Lys 549 and Lys
+        708) and Thr 550 which contact the beta and gamma phosphates of the ATP and Asp 504 and Mg2+ aid
+        in the deprotonation of water so that it can nucleophilically attack the gamma phosphate of ATP.
+        This enables the conformational changes that cause the breaking up of the hexameric protein and
+        the collapse of the SN
+      notes: M-CSA entry 642, mechanism 1; M-CSA cites PMID:21689688, PMID:9731775; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/642/
+      snippet: Hydrolysis of ATP is facilitated by a Mg2+ ion and two Lysine residues (Lys 549 and Lys
+        708) and Thr 550 which contact the beta and gamma phosphates of the ATP and Asp 504 and Mg2+ aid
+        in the deprotonation of water so that it can nucleophilically attack the gamma phosphate of ATP.
+        This enables the conformational changes that cause the breaking up of the hexameric protein and
+        the collapse of the SN
+      notes: M-CSA entry 642, mechanism 1; M-CSA cites PMID:21689688, PMID:9731775; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/642/
+      snippet: Hydrolysis of ATP is facilitated by a Mg2+ ion and two Lysine residues (Lys 549 and Lys
+        708) and Thr 550 which contact the beta and gamma phosphates of the ATP and Asp 504 and Mg2+ aid
+        in the deprotonation of water so that it can nucleophilically attack the gamma phosphate of ATP.
+        This enables the conformational changes that cause the breaking up of the hexameric protein and
+        the collapse of the SN
+      notes: M-CSA entry 642, mechanism 1; M-CSA cites PMID:21689688, PMID:9731775; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 642;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

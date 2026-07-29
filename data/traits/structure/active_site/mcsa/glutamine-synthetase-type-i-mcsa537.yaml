@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:6.3.1.2
 - CHEBI:29985
@@ -433,4 +433,389 @@ definitions:
       Glutamine synthetase catalyses the condensation reaction of ammonium and glutamate to form glutamine, using ATP. This is observed in the early stages of infection by Mycobacterium tuberculosis as an extracellular component in the synthesis of poly(L-glutamine-L-glutamate) chains requires for cell wall formation. Therefore this enzyme is an important drug target for halting tuberculosis infection.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of glutamine synthetase (type I)
+  description: Stepwise mechanism transcribed from M-CSA entry 537 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: asp54
+    label: catalytic Asp54 (M-CSA/PDB numbering; UniProt residue 54)
+    node_type: RESIDUE
+    grounding: UniProtKB:P9WN39
+    description: 'M-CSA roles: activator, proton acceptor.'
+  - node_id: glu133
+    label: catalytic Glu133 (M-CSA/PDB numbering; UniProt residue 133)
+    node_type: RESIDUE
+    grounding: UniProtKB:P9WN39
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu135
+    label: catalytic Glu135 (M-CSA/PDB numbering; UniProt residue 135)
+    node_type: RESIDUE
+    grounding: UniProtKB:P9WN39
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu219
+    label: catalytic Glu219 (M-CSA/PDB numbering; UniProt residue 219)
+    node_type: RESIDUE
+    grounding: UniProtKB:P9WN39
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu227
+    label: catalytic Glu227 (M-CSA/PDB numbering; UniProt residue 227)
+    node_type: RESIDUE
+    grounding: UniProtKB:P9WN39
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his276
+    label: catalytic His276 (M-CSA/PDB numbering; UniProt residue 276)
+    node_type: RESIDUE
+    grounding: UniProtKB:P9WN39
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: arg347
+    label: catalytic Arg347 (M-CSA/PDB numbering; UniProt residue 347)
+    node_type: RESIDUE
+    grounding: UniProtKB:P9WN39
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu366
+    label: catalytic Glu366 (M-CSA/PDB numbering; UniProt residue 366)
+    node_type: RESIDUE
+    grounding: UniProtKB:P9WN39
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: arg368
+    label: catalytic Arg368 (M-CSA/PDB numbering; UniProt residue 368)
+    node_type: RESIDUE
+    grounding: UniProtKB:P9WN39
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: L-glutamate(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:29985
+  - node_id: reactant1
+    label: ammonium
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+  - node_id: reactant2
+    label: ATP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+  - node_id: product0
+    label: L-glutamine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:58359
+  - node_id: product1
+    label: ADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product3
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp50 deprotonates the ammonium ion to produce ammonia. This activates ammonia.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Substrate nucleophilically attacks Phosphorus on ATP resulting in the γ-phosphate being
+      transferred to glutamate. This activates glutamate by increasing its electerophilicity.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Ammonia nucleophilically attacks the δ‐carbon of γ‐glutamyl phosphate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Phosphate deprotonates Glutamine. The enzyme is not regenerated in this last step since
+      Asp50 is still protonated. This proton will probably be released into the solution to return the
+      enzyme to its original state.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Product
+  - node_id: active_site
+    label: glutamine synthetase (type I) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:537
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.10.20.70 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.10.20.70
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: glutamine synthetase (type I) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:6.3.1.2
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/537/
+      snippet: Substrate nucleophilically attacks Phosphorus on ATP resulting in the γ-phosphate being
+        transferred to glutamate. This activates glutamate by increasing its electerophilicity.
+      notes: M-CSA entry 537, mechanism 1; M-CSA cites PMID:10708854, PMID:12146952, PMID:16027359, PMID:27225077,
+        PMID:28587465, PMID:7904828, PMID:7904829; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/537/
+      snippet: Ammonia nucleophilically attacks the δ‐carbon of γ‐glutamyl phosphate.
+      notes: M-CSA entry 537, mechanism 1; M-CSA cites PMID:10708854, PMID:12146952, PMID:16027359, PMID:27225077,
+        PMID:28587465, PMID:7904828, PMID:7904829; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/537/
+      snippet: Phosphate deprotonates Glutamine. The enzyme is not regenerated in this last step since
+        Asp50 is still protonated. This proton will probably be released into the solution to return the
+        enzyme to its original state.
+      notes: M-CSA entry 537, mechanism 1; M-CSA cites PMID:10708854, PMID:12146952, PMID:16027359, PMID:27225077,
+        PMID:28587465, PMID:7904828, PMID:7904829; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/537/
+      snippet: Product
+      notes: M-CSA entry 537, mechanism 1; M-CSA cites PMID:10708854, PMID:12146952, PMID:16027359, PMID:27225077,
+        PMID:28587465, PMID:7904828, PMID:7904829; step 5
+  - subject: asp54
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp54 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/537/
+      snippet: activator, proton acceptor
+      notes: M-CSA entry 537, mechanism 1; M-CSA cites PMID:10708854, PMID:12146952, PMID:16027359, PMID:27225077,
+        PMID:28587465, PMID:7904828, PMID:7904829; M-CSA catalytic-residue roles for Asp54
+  - subject: glu133
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu133 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/537/
+      snippet: metal ligand
+      notes: M-CSA entry 537, mechanism 1; M-CSA cites PMID:10708854, PMID:12146952, PMID:16027359, PMID:27225077,
+        PMID:28587465, PMID:7904828, PMID:7904829; M-CSA catalytic-residue roles for Glu133
+  - subject: glu135
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu135 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/537/
+      snippet: metal ligand
+      notes: M-CSA entry 537, mechanism 1; M-CSA cites PMID:10708854, PMID:12146952, PMID:16027359, PMID:27225077,
+        PMID:28587465, PMID:7904828, PMID:7904829; M-CSA catalytic-residue roles for Glu135
+  - subject: glu219
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu219 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/537/
+      snippet: metal ligand
+      notes: M-CSA entry 537, mechanism 1; M-CSA cites PMID:10708854, PMID:12146952, PMID:16027359, PMID:27225077,
+        PMID:28587465, PMID:7904828, PMID:7904829; M-CSA catalytic-residue roles for Glu219
+  - subject: glu227
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu227 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/537/
+      snippet: metal ligand
+      notes: M-CSA entry 537, mechanism 1; M-CSA cites PMID:10708854, PMID:12146952, PMID:16027359, PMID:27225077,
+        PMID:28587465, PMID:7904828, PMID:7904829; M-CSA catalytic-residue roles for Glu227
+  - subject: his276
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His276 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/537/
+      snippet: metal ligand
+      notes: M-CSA entry 537, mechanism 1; M-CSA cites PMID:10708854, PMID:12146952, PMID:16027359, PMID:27225077,
+        PMID:28587465, PMID:7904828, PMID:7904829; M-CSA catalytic-residue roles for His276
+  - subject: arg347
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg347 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/537/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 537, mechanism 1; M-CSA cites PMID:10708854, PMID:12146952, PMID:16027359, PMID:27225077,
+        PMID:28587465, PMID:7904828, PMID:7904829; M-CSA catalytic-residue roles for Arg347
+  - subject: glu366
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu366 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/537/
+      snippet: metal ligand
+      notes: M-CSA entry 537, mechanism 1; M-CSA cites PMID:10708854, PMID:12146952, PMID:16027359, PMID:27225077,
+        PMID:28587465, PMID:7904828, PMID:7904829; M-CSA catalytic-residue roles for Glu366
+  - subject: arg368
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg368 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/537/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 537, mechanism 1; M-CSA cites PMID:10708854, PMID:12146952, PMID:16027359, PMID:27225077,
+        PMID:28587465, PMID:7904828, PMID:7904829; M-CSA catalytic-residue roles for Arg368
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/537/
+      snippet: The reaction mechanism can be described as a series of loop and side-chain movements. ATP
+        binds within the top of the bifunnel, its terminal phosphate group binding adjacent to an Mn ion.
+        The binding of ATP results in loop movements. Glutamate enters the cavity and binds with its carboxylate
+        group binding adjacent to a Mn ion or a Mg ion as these are interchangeable and do not affect
+        the reaction
+      notes: M-CSA entry 537, mechanism 1; M-CSA cites PMID:10708854, PMID:12146952, PMID:16027359, PMID:27225077,
+        PMID:28587465, PMID:7904828, PMID:7904829; CATH domain 3.10.20.70 assigned to the catalytic chain
+        by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/537/
+      snippet: The reaction mechanism can be described as a series of loop and side-chain movements. ATP
+        binds within the top of the bifunnel, its terminal phosphate group binding adjacent to an Mn ion.
+        The binding of ATP results in loop movements. Glutamate enters the cavity and binds with its carboxylate
+        group binding adjacent to a Mn ion or a Mg ion as these are interchangeable and do not affect
+        the reaction
+      notes: M-CSA entry 537, mechanism 1; M-CSA cites PMID:10708854, PMID:12146952, PMID:16027359, PMID:27225077,
+        PMID:28587465, PMID:7904828, PMID:7904829; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/537/
+      snippet: The reaction mechanism can be described as a series of loop and side-chain movements. ATP
+        binds within the top of the bifunnel, its terminal phosphate group binding adjacent to an Mn ion.
+        The binding of ATP results in loop movements. Glutamate enters the cavity and binds with its carboxylate
+        group binding adjacent to a Mn ion or a Mg ion as these are interchangeable and do not affect
+        the reaction
+      notes: M-CSA entry 537, mechanism 1; M-CSA cites PMID:10708854, PMID:12146952, PMID:16027359, PMID:27225077,
+        PMID:28587465, PMID:7904828, PMID:7904829; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/537/
+      snippet: The reaction mechanism can be described as a series of loop and side-chain movements. ATP
+        binds within the top of the bifunnel, its terminal phosphate group binding adjacent to an Mn ion.
+        The binding of ATP results in loop movements. Glutamate enters the cavity and binds with its carboxylate
+        group binding adjacent to a Mn ion or a Mg ion as these are interchangeable and do not affect
+        the reaction
+      notes: M-CSA entry 537, mechanism 1; M-CSA cites PMID:10708854, PMID:12146952, PMID:16027359, PMID:27225077,
+        PMID:28587465, PMID:7904828, PMID:7904829; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/537/
+      snippet: The reaction mechanism can be described as a series of loop and side-chain movements. ATP
+        binds within the top of the bifunnel, its terminal phosphate group binding adjacent to an Mn ion.
+        The binding of ATP results in loop movements. Glutamate enters the cavity and binds with its carboxylate
+        group binding adjacent to a Mn ion or a Mg ion as these are interchangeable and do not affect
+        the reaction
+      notes: M-CSA entry 537, mechanism 1; M-CSA cites PMID:10708854, PMID:12146952, PMID:16027359, PMID:27225077,
+        PMID:28587465, PMID:7904828, PMID:7904829; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/537/
+      snippet: The reaction mechanism can be described as a series of loop and side-chain movements. ATP
+        binds within the top of the bifunnel, its terminal phosphate group binding adjacent to an Mn ion.
+        The binding of ATP results in loop movements. Glutamate enters the cavity and binds with its carboxylate
+        group binding adjacent to a Mn ion or a Mg ion as these are interchangeable and do not affect
+        the reaction
+      notes: M-CSA entry 537, mechanism 1; M-CSA cites PMID:10708854, PMID:12146952, PMID:16027359, PMID:27225077,
+        PMID:28587465, PMID:7904828, PMID:7904829; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/537/
+      snippet: The reaction mechanism can be described as a series of loop and side-chain movements. ATP
+        binds within the top of the bifunnel, its terminal phosphate group binding adjacent to an Mn ion.
+        The binding of ATP results in loop movements. Glutamate enters the cavity and binds with its carboxylate
+        group binding adjacent to a Mn ion or a Mg ion as these are interchangeable and do not affect
+        the reaction
+      notes: M-CSA entry 537, mechanism 1; M-CSA cites PMID:10708854, PMID:12146952, PMID:16027359, PMID:27225077,
+        PMID:28587465, PMID:7904828, PMID:7904829; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/537/
+      snippet: The reaction mechanism can be described as a series of loop and side-chain movements. ATP
+        binds within the top of the bifunnel, its terminal phosphate group binding adjacent to an Mn ion.
+        The binding of ATP results in loop movements. Glutamate enters the cavity and binds with its carboxylate
+        group binding adjacent to a Mn ion or a Mg ion as these are interchangeable and do not affect
+        the reaction
+      notes: M-CSA entry 537, mechanism 1; M-CSA cites PMID:10708854, PMID:12146952, PMID:16027359, PMID:27225077,
+        PMID:28587465, PMID:7904828, PMID:7904829; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product3
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/537/
+      snippet: The reaction mechanism can be described as a series of loop and side-chain movements. ATP
+        binds within the top of the bifunnel, its terminal phosphate group binding adjacent to an Mn ion.
+        The binding of ATP results in loop movements. Glutamate enters the cavity and binds with its carboxylate
+        group binding adjacent to a Mn ion or a Mg ion as these are interchangeable and do not affect
+        the reaction
+      notes: M-CSA entry 537, mechanism 1; M-CSA cites PMID:10708854, PMID:12146952, PMID:16027359, PMID:27225077,
+        PMID:28587465, PMID:7904828, PMID:7904829; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (22 evidence-backed edges) transcribed from M-CSA entry 537;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

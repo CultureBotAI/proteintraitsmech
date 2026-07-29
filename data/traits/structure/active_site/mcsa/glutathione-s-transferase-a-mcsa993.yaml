@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.5.1.18
 - CHEBI:57925
@@ -257,4 +257,267 @@ definitions:
       Glutathione transferase (GST) is a detoxification enzyme found in the liver. GSTs are the most important enzymes involved in the metabolism of electrophilic xenobiotic/endobiotic compounds. These enzymes are able to catalyze the nucleophilic addition of glutathione (GSH) sulfur thiolate to a wide range of electrophilic substrates, building up a less toxic and more soluble compound. Classes alpha, pi, and mu are the most extensively studied GSTs. GSTA and GSTP are similar in active site residues and have the same mechanism for glutathione transfer.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of Glutathione S-transferase A
+  description: Stepwise mechanism transcribed from M-CSA entry 993 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: tyr7
+    label: catalytic Tyr7 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09211
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: tyr9
+    label: catalytic Tyr9 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09211
+    description: 'M-CSA roles: hydrogen bond donor, modifies pKa.'
+  - node_id: arg15
+    label: catalytic Arg15 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09211
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: glutathionate(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57925
+  - node_id: reactant1
+    label: organic halide
+    node_type: CHEMICAL
+    grounding: CHEBI:17792
+  - node_id: product0
+    label: halide anion
+    node_type: CHEMICAL
+    grounding: CHEBI:16042
+  - node_id: product1
+    label: S-substitued glutathione(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:90779
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Tyr7 gets deprotonated by the canfosfamide COO<sup>-</sup> end through a water bridge
+      molecule.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: "Tyr7 works as a base and
+receives a proton from canfosfamides α-C atom."
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: "The bond between canfosfamide β-C and the
+adjacent oxygen breaks and consequentially\
+      \ releases the phosphorodiamidate."
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: Glutathione S-transferase A catalytic site
+    node_type: MOTIF
+    grounding: MCSA:993
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.30.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.30.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: Glutathione S-transferase A activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.5.1.18
+  edges:
+  - subject: tyr7
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr7 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/993/
+      snippet: Tyr7 gets deprotonated by the canfosfamide COO<sup>-</sup> end through a water bridge molecule.
+      notes: M-CSA entry 993, mechanism 2; M-CSA cites PMID:20853826, PMID:24066958; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/993/
+      snippet: "Tyr7 works as a base and
+receives a proton from canfosfamides α-C atom."
+      notes: M-CSA entry 993, mechanism 2; M-CSA cites PMID:20853826, PMID:24066958; step 2
+  - subject: tyr7
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Tyr7 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/993/
+      snippet: "Tyr7 works as a base and
+receives a proton from canfosfamides α-C atom."
+      notes: M-CSA entry 993, mechanism 2; M-CSA cites PMID:20853826, PMID:24066958; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/993/
+      snippet: "The bond between canfosfamide β-C and the
+adjacent oxygen breaks and consequentially\
+        \ releases the phosphorodiamidate."
+      notes: M-CSA entry 993, mechanism 2; M-CSA cites PMID:20853826, PMID:24066958; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/993/
+      snippet: Products.
+      notes: M-CSA entry 993, mechanism 2; M-CSA cites PMID:20853826, PMID:24066958; step 4
+  - subject: tyr7
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr7 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/993/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 993, mechanism 2; M-CSA cites PMID:20853826, PMID:24066958; M-CSA catalytic-residue
+        roles for Tyr7
+  - subject: tyr9
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr9 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/993/
+      snippet: hydrogen bond donor, modifies pKa
+      notes: M-CSA entry 993, mechanism 2; M-CSA cites PMID:20853826, PMID:24066958; M-CSA catalytic-residue
+        roles for Tyr9
+  - subject: arg15
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg15 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/993/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 993, mechanism 2; M-CSA cites PMID:20853826, PMID:24066958; M-CSA catalytic-residue
+        roles for Arg15
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/993/
+      snippet: "This is the mechanism of the activation of the prodrug canfosfamide.
+A proton is transferred\
+        \ from the Tyr7 hydroxyl group to the canfosfamide  COO<sup>-</sup> oxygen atom via a water molecule\
+        \ bridge. Then the negatively charged Tyr7 works as a base and receives a proton from the substrates\
+        \ α-C atom. Lastly, we observe the breaking of the bond between canfosfamides β-C and the adjacent\
+        \ oxygen and"
+      notes: M-CSA entry 993, mechanism 2; M-CSA cites PMID:20853826, PMID:24066958; CATH domain 3.40.30.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/993/
+      snippet: "This is the mechanism of the activation of the prodrug canfosfamide.
+A proton is transferred\
+        \ from the Tyr7 hydroxyl group to the canfosfamide  COO<sup>-</sup> oxygen atom via a water molecule\
+        \ bridge. Then the negatively charged Tyr7 works as a base and receives a proton from the substrates\
+        \ α-C atom. Lastly, we observe the breaking of the bond between canfosfamides β-C and the adjacent\
+        \ oxygen and"
+      notes: M-CSA entry 993, mechanism 2; M-CSA cites PMID:20853826, PMID:24066958; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/993/
+      snippet: "This is the mechanism of the activation of the prodrug canfosfamide.
+A proton is transferred\
+        \ from the Tyr7 hydroxyl group to the canfosfamide  COO<sup>-</sup> oxygen atom via a water molecule\
+        \ bridge. Then the negatively charged Tyr7 works as a base and receives a proton from the substrates\
+        \ α-C atom. Lastly, we observe the breaking of the bond between canfosfamides β-C and the adjacent\
+        \ oxygen and"
+      notes: M-CSA entry 993, mechanism 2; M-CSA cites PMID:20853826, PMID:24066958; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/993/
+      snippet: "This is the mechanism of the activation of the prodrug canfosfamide.
+A proton is transferred\
+        \ from the Tyr7 hydroxyl group to the canfosfamide  COO<sup>-</sup> oxygen atom via a water molecule\
+        \ bridge. Then the negatively charged Tyr7 works as a base and receives a proton from the substrates\
+        \ α-C atom. Lastly, we observe the breaking of the bond between canfosfamides β-C and the adjacent\
+        \ oxygen and"
+      notes: M-CSA entry 993, mechanism 2; M-CSA cites PMID:20853826, PMID:24066958; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/993/
+      snippet: "This is the mechanism of the activation of the prodrug canfosfamide.
+A proton is transferred\
+        \ from the Tyr7 hydroxyl group to the canfosfamide  COO<sup>-</sup> oxygen atom via a water molecule\
+        \ bridge. Then the negatively charged Tyr7 works as a base and receives a proton from the substrates\
+        \ α-C atom. Lastly, we observe the breaking of the bond between canfosfamides β-C and the adjacent\
+        \ oxygen and"
+      notes: M-CSA entry 993, mechanism 2; M-CSA cites PMID:20853826, PMID:24066958; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/993/
+      snippet: "This is the mechanism of the activation of the prodrug canfosfamide.
+A proton is transferred\
+        \ from the Tyr7 hydroxyl group to the canfosfamide  COO<sup>-</sup> oxygen atom via a water molecule\
+        \ bridge. Then the negatively charged Tyr7 works as a base and receives a proton from the substrates\
+        \ α-C atom. Lastly, we observe the breaking of the bond between canfosfamides β-C and the adjacent\
+        \ oxygen and"
+      notes: M-CSA entry 993, mechanism 2; M-CSA cites PMID:20853826, PMID:24066958; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/993/
+      snippet: "This is the mechanism of the activation of the prodrug canfosfamide.
+A proton is transferred\
+        \ from the Tyr7 hydroxyl group to the canfosfamide  COO<sup>-</sup> oxygen atom via a water molecule\
+        \ bridge. Then the negatively charged Tyr7 works as a base and receives a proton from the substrates\
+        \ α-C atom. Lastly, we observe the breaking of the bond between canfosfamides β-C and the adjacent\
+        \ oxygen and"
+      notes: M-CSA entry 993, mechanism 2; M-CSA cites PMID:20853826, PMID:24066958; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 993;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.4.99.2
 - CHEBI:57326
@@ -928,4 +928,323 @@ definitions:
       Isomerising two important metabolites gives this enzyme significance in the degradation of some amino acids and odd-chain fatty acids, as well as (in bacteria) the biosynthesis of propionate. Like several other mutases, it uses adenosylcobalamin (Vitamin B12) to produce the free radicals essential for the rearrangement, and its sequence is rather well conserved between prokaryotes and eukaryotes.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of methylmalonyl-CoA mutase
+  description: Stepwise mechanism transcribed from M-CSA entry 62 (7 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: tyr89
+    label: catalytic Tyr89 (M-CSA/PDB numbering; UniProt residue 89)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11653
+    description: 'M-CSA roles: electrostatic stabiliser, radical stabiliser.'
+  - node_id: tyr243
+    label: catalytic Tyr243 (M-CSA/PDB numbering; UniProt residue 243)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11653
+    description: 'M-CSA roles: electrostatic stabiliser, radical stabiliser.'
+  - node_id: his244
+    label: catalytic His244 (M-CSA/PDB numbering; UniProt residue 244)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11653
+    description: 'M-CSA roles: electrostatic stabiliser, proton acceptor, proton donor.'
+  - node_id: lys604
+    label: catalytic Lys604 (M-CSA/PDB numbering; UniProt residue 604)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11653
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp608
+    label: catalytic Asp608 (M-CSA/PDB numbering; UniProt residue 608)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11653
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his610
+    label: catalytic His610 (M-CSA/PDB numbering; UniProt residue 610)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11653
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: succinyl-CoA(5-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57292
+  - node_id: product0
+    label: (R)-methylmalonyl-CoA(5-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57326
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The Co(II)-C bond of the B12 cofactor undergoes homoloysis, forming the adenosyl radical
+      and Co(I).
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The adenosyl radical abstracts a hydrogen from the substrate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The substrate radical attacks its own carbonyl carbon, forcing the radical onto the oxygen,
+      which deprotonates His244.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: His244 deprotonates the oxygen, which causes radical rearrangement and the cleavage of
+      the propane ring formed, the radical ends up on the newly formed CH<sub>2</sub> branch.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: The substrate radical abstracts a hydrogen from the adenosine, re-forming the adenosyl
+      radical.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: The adenosyl radical and Co(I) undergo colligation, reforming the B12 cofactor.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: methylmalonyl-CoA mutase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:62
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.240 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.240
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: methylmalonyl-CoA mutase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.4.99.2
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/62/
+      snippet: The adenosyl radical abstracts a hydrogen from the substrate.
+      notes: M-CSA entry 62, mechanism 2; M-CSA cites PMID:10387043, PMID:10924114, PMID:11456766, PMID:11578922,
+        PMID:15736925, PMID:16503649, PMID:16873121, PMID:17581872, PMID:22661206, PMID:23311430, PMID:26286568,
+        PMID:8805541, PMID:9655823, PMID:9772164; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/62/
+      snippet: The substrate radical attacks its own carbonyl carbon, forcing the radical onto the oxygen,
+        which deprotonates His244.
+      notes: M-CSA entry 62, mechanism 2; M-CSA cites PMID:10387043, PMID:10924114, PMID:11456766, PMID:11578922,
+        PMID:15736925, PMID:16503649, PMID:16873121, PMID:17581872, PMID:22661206, PMID:23311430, PMID:26286568,
+        PMID:8805541, PMID:9655823, PMID:9772164; step 3
+  - subject: his244
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His244 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/62/
+      snippet: The substrate radical attacks its own carbonyl carbon, forcing the radical onto the oxygen,
+        which deprotonates His244.
+      notes: M-CSA entry 62, mechanism 2; M-CSA cites PMID:10387043, PMID:10924114, PMID:11456766, PMID:11578922,
+        PMID:15736925, PMID:16503649, PMID:16873121, PMID:17581872, PMID:22661206, PMID:23311430, PMID:26286568,
+        PMID:8805541, PMID:9655823, PMID:9772164; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/62/
+      snippet: His244 deprotonates the oxygen, which causes radical rearrangement and the cleavage of
+        the propane ring formed, the radical ends up on the newly formed CH<sub>2</sub> branch.
+      notes: M-CSA entry 62, mechanism 2; M-CSA cites PMID:10387043, PMID:10924114, PMID:11456766, PMID:11578922,
+        PMID:15736925, PMID:16503649, PMID:16873121, PMID:17581872, PMID:22661206, PMID:23311430, PMID:26286568,
+        PMID:8805541, PMID:9655823, PMID:9772164; step 4
+  - subject: his244
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: His244 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/62/
+      snippet: His244 deprotonates the oxygen, which causes radical rearrangement and the cleavage of
+        the propane ring formed, the radical ends up on the newly formed CH<sub>2</sub> branch.
+      notes: M-CSA entry 62, mechanism 2; M-CSA cites PMID:10387043, PMID:10924114, PMID:11456766, PMID:11578922,
+        PMID:15736925, PMID:16503649, PMID:16873121, PMID:17581872, PMID:22661206, PMID:23311430, PMID:26286568,
+        PMID:8805541, PMID:9655823, PMID:9772164; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/62/
+      snippet: The substrate radical abstracts a hydrogen from the adenosine, re-forming the adenosyl
+        radical.
+      notes: M-CSA entry 62, mechanism 2; M-CSA cites PMID:10387043, PMID:10924114, PMID:11456766, PMID:11578922,
+        PMID:15736925, PMID:16503649, PMID:16873121, PMID:17581872, PMID:22661206, PMID:23311430, PMID:26286568,
+        PMID:8805541, PMID:9655823, PMID:9772164; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/62/
+      snippet: The adenosyl radical and Co(I) undergo colligation, reforming the B12 cofactor.
+      notes: M-CSA entry 62, mechanism 2; M-CSA cites PMID:10387043, PMID:10924114, PMID:11456766, PMID:11578922,
+        PMID:15736925, PMID:16503649, PMID:16873121, PMID:17581872, PMID:22661206, PMID:23311430, PMID:26286568,
+        PMID:8805541, PMID:9655823, PMID:9772164; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/62/
+      snippet: Products
+      notes: M-CSA entry 62, mechanism 2; M-CSA cites PMID:10387043, PMID:10924114, PMID:11456766, PMID:11578922,
+        PMID:15736925, PMID:16503649, PMID:16873121, PMID:17581872, PMID:22661206, PMID:23311430, PMID:26286568,
+        PMID:8805541, PMID:9655823, PMID:9772164; step 7
+  - subject: tyr89
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr89 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/62/
+      snippet: electrostatic stabiliser, radical stabiliser
+      notes: M-CSA entry 62, mechanism 2; M-CSA cites PMID:10387043, PMID:10924114, PMID:11456766, PMID:11578922,
+        PMID:15736925, PMID:16503649, PMID:16873121, PMID:17581872, PMID:22661206, PMID:23311430, PMID:26286568,
+        PMID:8805541, PMID:9655823, PMID:9772164; M-CSA catalytic-residue roles for Tyr89
+  - subject: tyr243
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr243 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/62/
+      snippet: electrostatic stabiliser, radical stabiliser
+      notes: M-CSA entry 62, mechanism 2; M-CSA cites PMID:10387043, PMID:10924114, PMID:11456766, PMID:11578922,
+        PMID:15736925, PMID:16503649, PMID:16873121, PMID:17581872, PMID:22661206, PMID:23311430, PMID:26286568,
+        PMID:8805541, PMID:9655823, PMID:9772164; M-CSA catalytic-residue roles for Tyr243
+  - subject: his244
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His244 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/62/
+      snippet: electrostatic stabiliser, proton acceptor, proton donor
+      notes: M-CSA entry 62, mechanism 2; M-CSA cites PMID:10387043, PMID:10924114, PMID:11456766, PMID:11578922,
+        PMID:15736925, PMID:16503649, PMID:16873121, PMID:17581872, PMID:22661206, PMID:23311430, PMID:26286568,
+        PMID:8805541, PMID:9655823, PMID:9772164; M-CSA catalytic-residue roles for His244
+  - subject: lys604
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys604 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/62/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 62, mechanism 2; M-CSA cites PMID:10387043, PMID:10924114, PMID:11456766, PMID:11578922,
+        PMID:15736925, PMID:16503649, PMID:16873121, PMID:17581872, PMID:22661206, PMID:23311430, PMID:26286568,
+        PMID:8805541, PMID:9655823, PMID:9772164; M-CSA catalytic-residue roles for Lys604
+  - subject: asp608
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp608 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/62/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 62, mechanism 2; M-CSA cites PMID:10387043, PMID:10924114, PMID:11456766, PMID:11578922,
+        PMID:15736925, PMID:16503649, PMID:16873121, PMID:17581872, PMID:22661206, PMID:23311430, PMID:26286568,
+        PMID:8805541, PMID:9655823, PMID:9772164; M-CSA catalytic-residue roles for Asp608
+  - subject: his610
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His610 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/62/
+      snippet: metal ligand
+      notes: M-CSA entry 62, mechanism 2; M-CSA cites PMID:10387043, PMID:10924114, PMID:11456766, PMID:11578922,
+        PMID:15736925, PMID:16503649, PMID:16873121, PMID:17581872, PMID:22661206, PMID:23311430, PMID:26286568,
+        PMID:8805541, PMID:9655823, PMID:9772164; M-CSA catalytic-residue roles for His610
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/62/
+      snippet: The protein can assist in catalysis in two ways; firstly by encouraging the homolytic cleavage
+        of the Co-C bond in the cofactor, and then during the rearrangement itself. In the first of these
+        two considerations, the axial ligand His610 is clearly important - the 2.5 A bond it forms to
+        Co encourages formation of the active Co(II) species. To maintain this bond length, Asp608 forms
+        a strong H-bond
+      notes: M-CSA entry 62, mechanism 2; M-CSA cites PMID:10387043, PMID:10924114, PMID:11456766, PMID:11578922,
+        PMID:15736925, PMID:16503649, PMID:16873121, PMID:17581872, PMID:22661206, PMID:23311430, PMID:26286568,
+        PMID:8805541, PMID:9655823, PMID:9772164; CATH domain 3.20.20.240 assigned to the catalytic chain
+        by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/62/
+      snippet: The protein can assist in catalysis in two ways; firstly by encouraging the homolytic cleavage
+        of the Co-C bond in the cofactor, and then during the rearrangement itself. In the first of these
+        two considerations, the axial ligand His610 is clearly important - the 2.5 A bond it forms to
+        Co encourages formation of the active Co(II) species. To maintain this bond length, Asp608 forms
+        a strong H-bond
+      notes: M-CSA entry 62, mechanism 2; M-CSA cites PMID:10387043, PMID:10924114, PMID:11456766, PMID:11578922,
+        PMID:15736925, PMID:16503649, PMID:16873121, PMID:17581872, PMID:22661206, PMID:23311430, PMID:26286568,
+        PMID:8805541, PMID:9655823, PMID:9772164; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/62/
+      snippet: The protein can assist in catalysis in two ways; firstly by encouraging the homolytic cleavage
+        of the Co-C bond in the cofactor, and then during the rearrangement itself. In the first of these
+        two considerations, the axial ligand His610 is clearly important - the 2.5 A bond it forms to
+        Co encourages formation of the active Co(II) species. To maintain this bond length, Asp608 forms
+        a strong H-bond
+      notes: M-CSA entry 62, mechanism 2; M-CSA cites PMID:10387043, PMID:10924114, PMID:11456766, PMID:11578922,
+        PMID:15736925, PMID:16503649, PMID:16873121, PMID:17581872, PMID:22661206, PMID:23311430, PMID:26286568,
+        PMID:8805541, PMID:9655823, PMID:9772164; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/62/
+      snippet: The protein can assist in catalysis in two ways; firstly by encouraging the homolytic cleavage
+        of the Co-C bond in the cofactor, and then during the rearrangement itself. In the first of these
+        two considerations, the axial ligand His610 is clearly important - the 2.5 A bond it forms to
+        Co encourages formation of the active Co(II) species. To maintain this bond length, Asp608 forms
+        a strong H-bond
+      notes: M-CSA entry 62, mechanism 2; M-CSA cites PMID:10387043, PMID:10924114, PMID:11456766, PMID:11578922,
+        PMID:15736925, PMID:16503649, PMID:16873121, PMID:17581872, PMID:22661206, PMID:23311430, PMID:26286568,
+        PMID:8805541, PMID:9655823, PMID:9772164; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (18 evidence-backed edges) transcribed from M-CSA entry 62;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

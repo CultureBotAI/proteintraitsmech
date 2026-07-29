@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.6.1.1
 - CHEBI:30616
@@ -496,4 +496,235 @@ definitions:
       Adenylate cyclase converts adenosine triphosphate (ATP) into cyclic adenosine monophosphate (cAMP), a ubiquitous second messenger that regulates many functions. Many signalling pathways triggered by hormones and other biological processes converge on and regulate the integral membrane enzyme, including those of the heterotrimeric GTP-binding proteins. There are over 30 related proteins, including bacterial and fungal adenylyl cyclases as well as guanylyl cyclases.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of adenylate cyclase
+  description: Stepwise mechanism transcribed from M-CSA entry 58 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: asp396
+    label: catalytic Asp396 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P26769
+    description: 'M-CSA roles: metal ligand, proton acceptor, proton donor.'
+  - node_id: ile397
+    label: catalytic Ile397 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P26769
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp440
+    label: catalytic Asp440 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P26769
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: arg1029
+    label: catalytic Arg1029 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P26769
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: lys1065
+    label: catalytic Lys1065 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P26769
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: ATP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+  - node_id: product0
+    label: diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+  - node_id: product1
+    label: 3',5'-cyclic AMP(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58165
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp396 deprotonates the 3'-hydroxyl of ATP, which in turn attacks the phosphorus atom
+      in a nucleophilic addition, forming a cyclic pentacoordinate phosphorus intermediate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Inferred return step to regenerate the active site.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: adenylate cyclase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:58
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.70.1230 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.70.1230
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: adenylate cyclase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.6.1.1
+  edges:
+  - subject: asp396
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp396 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/58/
+      snippet: Asp396 deprotonates the 3'-hydroxyl of ATP, which in turn attacks the phosphorus atom in
+        a nucleophilic addition, forming a cyclic pentacoordinate phosphorus intermediate.
+      notes: M-CSA entry 58, mechanism 1; M-CSA cites PMID:10427002, PMID:11087399, PMID:11368183, PMID:26393535,
+        PMID:9139678, PMID:9417641; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/58/
+      snippet: Inferred return step to regenerate the active site.
+      notes: M-CSA entry 58, mechanism 1; M-CSA cites PMID:10427002, PMID:11087399, PMID:11368183, PMID:26393535,
+        PMID:9139678, PMID:9417641; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/58/
+      snippet: Products
+      notes: M-CSA entry 58, mechanism 1; M-CSA cites PMID:10427002, PMID:11087399, PMID:11368183, PMID:26393535,
+        PMID:9139678, PMID:9417641; step 3
+  - subject: asp396
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp396 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/58/
+      snippet: metal ligand, proton acceptor, proton donor
+      notes: M-CSA entry 58, mechanism 1; M-CSA cites PMID:10427002, PMID:11087399, PMID:11368183, PMID:26393535,
+        PMID:9139678, PMID:9417641; M-CSA catalytic-residue roles for Asp396
+  - subject: ile397
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ile397 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/58/
+      snippet: metal ligand
+      notes: M-CSA entry 58, mechanism 1; M-CSA cites PMID:10427002, PMID:11087399, PMID:11368183, PMID:26393535,
+        PMID:9139678, PMID:9417641; M-CSA catalytic-residue roles for Ile397
+  - subject: asp440
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp440 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/58/
+      snippet: metal ligand
+      notes: M-CSA entry 58, mechanism 1; M-CSA cites PMID:10427002, PMID:11087399, PMID:11368183, PMID:26393535,
+        PMID:9139678, PMID:9417641; M-CSA catalytic-residue roles for Asp440
+  - subject: arg1029
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg1029 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/58/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 58, mechanism 1; M-CSA cites PMID:10427002, PMID:11087399, PMID:11368183, PMID:26393535,
+        PMID:9139678, PMID:9417641; M-CSA catalytic-residue roles for Arg1029
+  - subject: lys1065
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys1065 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/58/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 58, mechanism 1; M-CSA cites PMID:10427002, PMID:11087399, PMID:11368183, PMID:26393535,
+        PMID:9139678, PMID:9417641; M-CSA catalytic-residue roles for Lys1065
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/58/
+      snippet: The alpha-phosphate deprotonates the 3'-hydroxyl of ATP, which in turn attacks the phosphorus
+        atom in a nucleophilic addition, forming a cyclic pentacoordinate phosphorus intermediate. The
+        cyclic pentacoordinate phosphorus intermediate collapses eliminating the diphosphate molecule.
+        One or two magnesium ions have been suggested as playing a part in the catalytic mechanism, for
+        example by stabilisi
+      notes: M-CSA entry 58, mechanism 1; M-CSA cites PMID:10427002, PMID:11087399, PMID:11368183, PMID:26393535,
+        PMID:9139678, PMID:9417641; CATH domain 3.30.70.1230 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/58/
+      snippet: The alpha-phosphate deprotonates the 3'-hydroxyl of ATP, which in turn attacks the phosphorus
+        atom in a nucleophilic addition, forming a cyclic pentacoordinate phosphorus intermediate. The
+        cyclic pentacoordinate phosphorus intermediate collapses eliminating the diphosphate molecule.
+        One or two magnesium ions have been suggested as playing a part in the catalytic mechanism, for
+        example by stabilisi
+      notes: M-CSA entry 58, mechanism 1; M-CSA cites PMID:10427002, PMID:11087399, PMID:11368183, PMID:26393535,
+        PMID:9139678, PMID:9417641; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/58/
+      snippet: The alpha-phosphate deprotonates the 3'-hydroxyl of ATP, which in turn attacks the phosphorus
+        atom in a nucleophilic addition, forming a cyclic pentacoordinate phosphorus intermediate. The
+        cyclic pentacoordinate phosphorus intermediate collapses eliminating the diphosphate molecule.
+        One or two magnesium ions have been suggested as playing a part in the catalytic mechanism, for
+        example by stabilisi
+      notes: M-CSA entry 58, mechanism 1; M-CSA cites PMID:10427002, PMID:11087399, PMID:11368183, PMID:26393535,
+        PMID:9139678, PMID:9417641; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/58/
+      snippet: The alpha-phosphate deprotonates the 3'-hydroxyl of ATP, which in turn attacks the phosphorus
+        atom in a nucleophilic addition, forming a cyclic pentacoordinate phosphorus intermediate. The
+        cyclic pentacoordinate phosphorus intermediate collapses eliminating the diphosphate molecule.
+        One or two magnesium ions have been suggested as playing a part in the catalytic mechanism, for
+        example by stabilisi
+      notes: M-CSA entry 58, mechanism 1; M-CSA cites PMID:10427002, PMID:11087399, PMID:11368183, PMID:26393535,
+        PMID:9139678, PMID:9417641; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/58/
+      snippet: The alpha-phosphate deprotonates the 3'-hydroxyl of ATP, which in turn attacks the phosphorus
+        atom in a nucleophilic addition, forming a cyclic pentacoordinate phosphorus intermediate. The
+        cyclic pentacoordinate phosphorus intermediate collapses eliminating the diphosphate molecule.
+        One or two magnesium ions have been suggested as playing a part in the catalytic mechanism, for
+        example by stabilisi
+      notes: M-CSA entry 58, mechanism 1; M-CSA cites PMID:10427002, PMID:11087399, PMID:11368183, PMID:26393535,
+        PMID:9139678, PMID:9417641; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 58;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.1.1.10
 - CHEBI:85535
@@ -299,4 +299,272 @@ definitions:
       N-succinylamino acid racemase (NAAAR) catalyses the racemisation of N-succinyl-D/L-amino acids, as part of a pathway for the conversion of D- to L-amino acids. NAAARs act on a broad range of N-acylamino acids rather than amino acids. This function is of significant interest in industry where enantiopure amino acids are inportant as chiral building blocks for antibiotics, herbicides, and drugs. The experimentally characterised enzyme from Geobacillus kaustophilus efficiently catalyses the racemisation of hydrophobic, polar, and some basic N-succinyl-D/L-amino acids. These enzymes are members of the enolase superfamily and highly similar to enzymes in the o-succinylbenzoate synthase family, and some may also function biologically as OSBSs. Although the reaction catalyzed by this family is similar to that catalyzed by the NSAR2 family (differing only in the preference of N-succinyl arginine/lysine for NSAR2 versus N-succinyl hydrophobic amino acids for NSAR), phylogenetic analysis suggests that these two families have independent evolutionary origins within the enolase superfamily. Not surprisingly, the amino acids responsible for substrate recognition appear to differ between the two families.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of N-succinylamino acid racemase
+  description: Stepwise mechanism transcribed from M-CSA entry 377 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: ser142
+    label: catalytic Ser142 (M-CSA/PDB numbering; UniProt residue 142)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9RYA6
+    description: 'M-CSA roles: transition state stabiliser.'
+  - node_id: lys168
+    label: catalytic Lys168 (M-CSA/PDB numbering; UniProt residue 168)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9RYA6
+    description: 'M-CSA roles: transition state stabiliser.'
+  - node_id: lys170
+    label: catalytic Lys170 (M-CSA/PDB numbering; UniProt residue 170)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9RYA6
+    description: 'M-CSA roles: proton donor.'
+  - node_id: asp195
+    label: catalytic Asp195 (M-CSA/PDB numbering; UniProt residue 195)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9RYA6
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu220
+    label: catalytic Glu220 (M-CSA/PDB numbering; UniProt residue 220)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9RYA6
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp245
+    label: catalytic Asp245 (M-CSA/PDB numbering; UniProt residue 245)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9RYA6
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: lys269
+    label: catalytic Lys269 (M-CSA/PDB numbering; UniProt residue 269)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9RYA6
+    description: 'M-CSA roles: proton acceptor.'
+  - node_id: gly297
+    label: catalytic Gly297 (M-CSA/PDB numbering; UniProt residue 297)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9RYA6
+    description: 'M-CSA roles: transition state stabiliser.'
+  - node_id: reactant0
+    label: N-succinyl-L-amino acid residue
+    node_type: CHEMICAL
+    grounding: CHEBI:85535
+  - node_id: product0
+    label: N-succinyl-D-amino acid
+    node_type: CHEMICAL
+    grounding: CHEBI:85536
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Lys269 abstracts a proton from the substrate with concomitant double bond rearrangement.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The oxyanion intermediate collapses, with concomitant double bond rearrangement and deprotonation
+      of Lys170.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: N-succinylamino acid racemase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:377
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.120 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.120
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: N-succinylamino acid racemase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.1.1.10
+  edges:
+  - subject: lys269
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys269 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/377/
+      snippet: Lys269 abstracts a proton from the substrate with concomitant double bond rearrangement.
+      notes: M-CSA entry 377, mechanism 1; M-CSA cites PMID:15313614, PMID:16584181, PMID:16650857, PMID:25875730;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/377/
+      snippet: The oxyanion intermediate collapses, with concomitant double bond rearrangement and deprotonation
+        of Lys170.
+      notes: M-CSA entry 377, mechanism 1; M-CSA cites PMID:15313614, PMID:16584181, PMID:16650857, PMID:25875730;
+        step 2
+  - subject: lys170
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Lys170 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/377/
+      snippet: The oxyanion intermediate collapses, with concomitant double bond rearrangement and deprotonation
+        of Lys170.
+      notes: M-CSA entry 377, mechanism 1; M-CSA cites PMID:15313614, PMID:16584181, PMID:16650857, PMID:25875730;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/377/
+      snippet: Products
+      notes: M-CSA entry 377, mechanism 1; M-CSA cites PMID:15313614, PMID:16584181, PMID:16650857, PMID:25875730;
+        step 3
+  - subject: ser142
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser142 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/377/
+      snippet: transition state stabiliser
+      notes: M-CSA entry 377, mechanism 1; M-CSA cites PMID:15313614, PMID:16584181, PMID:16650857, PMID:25875730;
+        M-CSA catalytic-residue roles for Ser142
+  - subject: lys168
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys168 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/377/
+      snippet: transition state stabiliser
+      notes: M-CSA entry 377, mechanism 1; M-CSA cites PMID:15313614, PMID:16584181, PMID:16650857, PMID:25875730;
+        M-CSA catalytic-residue roles for Lys168
+  - subject: lys170
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys170 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/377/
+      snippet: proton donor
+      notes: M-CSA entry 377, mechanism 1; M-CSA cites PMID:15313614, PMID:16584181, PMID:16650857, PMID:25875730;
+        M-CSA catalytic-residue roles for Lys170
+  - subject: asp195
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp195 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/377/
+      snippet: metal ligand
+      notes: M-CSA entry 377, mechanism 1; M-CSA cites PMID:15313614, PMID:16584181, PMID:16650857, PMID:25875730;
+        M-CSA catalytic-residue roles for Asp195
+  - subject: glu220
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu220 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/377/
+      snippet: metal ligand
+      notes: M-CSA entry 377, mechanism 1; M-CSA cites PMID:15313614, PMID:16584181, PMID:16650857, PMID:25875730;
+        M-CSA catalytic-residue roles for Glu220
+  - subject: asp245
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp245 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/377/
+      snippet: metal ligand
+      notes: M-CSA entry 377, mechanism 1; M-CSA cites PMID:15313614, PMID:16584181, PMID:16650857, PMID:25875730;
+        M-CSA catalytic-residue roles for Asp245
+  - subject: lys269
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys269 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/377/
+      snippet: proton acceptor
+      notes: M-CSA entry 377, mechanism 1; M-CSA cites PMID:15313614, PMID:16584181, PMID:16650857, PMID:25875730;
+        M-CSA catalytic-residue roles for Lys269
+  - subject: gly297
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly297 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/377/
+      snippet: transition state stabiliser
+      notes: M-CSA entry 377, mechanism 1; M-CSA cites PMID:15313614, PMID:16584181, PMID:16650857, PMID:25875730;
+        M-CSA catalytic-residue roles for Gly297
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/377/
+      snippet: The mechanism is proposed to proceed via a two-base proton abstraction. The alpha-proton
+        of an N-acylamino acid is abstracted by a neutral Lys to produce the enolic intermediate stabilized
+        by the divalent metal ion. A proton is donated by the other (positive) Lys to the intermediate
+        to yield the racemised product.This second Lys can then can then reversibly act as the principle
+        base as shown in th
+      notes: M-CSA entry 377, mechanism 1; M-CSA cites PMID:15313614, PMID:16584181, PMID:16650857, PMID:25875730;
+        CATH domain 3.20.20.120 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/377/
+      snippet: The mechanism is proposed to proceed via a two-base proton abstraction. The alpha-proton
+        of an N-acylamino acid is abstracted by a neutral Lys to produce the enolic intermediate stabilized
+        by the divalent metal ion. A proton is donated by the other (positive) Lys to the intermediate
+        to yield the racemised product.This second Lys can then can then reversibly act as the principle
+        base as shown in th
+      notes: M-CSA entry 377, mechanism 1; M-CSA cites PMID:15313614, PMID:16584181, PMID:16650857, PMID:25875730;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/377/
+      snippet: The mechanism is proposed to proceed via a two-base proton abstraction. The alpha-proton
+        of an N-acylamino acid is abstracted by a neutral Lys to produce the enolic intermediate stabilized
+        by the divalent metal ion. A proton is donated by the other (positive) Lys to the intermediate
+        to yield the racemised product.This second Lys can then can then reversibly act as the principle
+        base as shown in th
+      notes: M-CSA entry 377, mechanism 1; M-CSA cites PMID:15313614, PMID:16584181, PMID:16650857, PMID:25875730;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/377/
+      snippet: The mechanism is proposed to proceed via a two-base proton abstraction. The alpha-proton
+        of an N-acylamino acid is abstracted by a neutral Lys to produce the enolic intermediate stabilized
+        by the divalent metal ion. A proton is donated by the other (positive) Lys to the intermediate
+        to yield the racemised product.This second Lys can then can then reversibly act as the principle
+        base as shown in th
+      notes: M-CSA entry 377, mechanism 1; M-CSA cites PMID:15313614, PMID:16584181, PMID:16650857, PMID:25875730;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (16 evidence-backed edges) transcribed from M-CSA entry 377;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

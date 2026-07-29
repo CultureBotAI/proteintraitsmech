@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.2.99.7
 - CHEBI:17478
@@ -535,4 +535,295 @@ definitions:
       The sulfate-reducing bacteria Desulfovibrio gigas synthesises a xanthine oxidase-related molybdenum-iron protein aldehyde oxidoreductase (Mop) which catalyses the oxidation of aldehydes to carboxylic acids. Mop contains two separate [2Fe-2S] clusters, and an Mo ion held by a pterin derivative called molybdopterin cytosine dinucleotide (together called the molybedenum cofactor, Mo-co).
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of aldehyde dehydrogenase (FAD-independent)
+  description: Stepwise mechanism transcribed from M-CSA entry 105 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: glu869
+    label: catalytic Glu869 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q46509
+    description: 'M-CSA roles: covalently attached, hydrogen bond acceptor, hydrogen bond donor, metal
+      ligand, nucleofuge, nucleophile, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: aldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:17478
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant2
+    label: 1,4-benzoquinones
+    node_type: CHEMICAL
+    grounding: CHEBI:132124
+  - node_id: product0
+    label: carboxylic acid
+    node_type: CHEMICAL
+    grounding: CHEBI:33575
+  - node_id: product1
+    label: hydroquinones
+    node_type: CHEMICAL
+    grounding: CHEBI:24646
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu869 deprotonates the water in the coordination sphere of Mo(VI), which initiates a
+      nucleophilic attack on the aldehyde in a substitution reaction, which eliminates a hydride ion,
+      which adds to the sulfur dianion which is also in the Mo(VI) coordination sphere, eventually reducing
+      Mo(VI) to Mo(IV).
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Water deprotonates Glu869, which initiates a nucleophilic attack on the Mo(IV) centre,
+      displacing the carboxylic acid product in a substitution reaction.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: A single electron is transferred from Mo(IV) to an acceptor via two iron-sulfur clusters.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Water deprotonates the thiolate group part of the Mo(V) coordination sphere, causing
+      the elimination of Glu869 from the Mo(V) coordination sphere, and transfer of the second electron
+      from Mo(V) to the acceptor via two iron-sulfur clusters.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: aldehyde dehydrogenase (FAD-independent) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:105
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.365.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.365.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: aldehyde dehydrogenase (FAD-independent) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.2.99.7
+  edges:
+  - subject: glu869
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu869 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/105/
+      snippet: Glu869 deprotonates the water in the coordination sphere of Mo(VI), which initiates a nucleophilic
+        attack on the aldehyde in a substitution reaction, which eliminates a hydride ion, which adds
+        to the sulfur dianion which is also in the Mo(VI) coordination sphere, eventually reducing Mo(VI)
+        to Mo(IV).
+      notes: M-CSA entry 105, mechanism 1; M-CSA cites PMID:16480912, PMID:19459677, PMID:25261288, PMID:8218223,
+        PMID:8799115, PMID:9242907; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/105/
+      snippet: Water deprotonates Glu869, which initiates a nucleophilic attack on the Mo(IV) centre,
+        displacing the carboxylic acid product in a substitution reaction.
+      notes: M-CSA entry 105, mechanism 1; M-CSA cites PMID:16480912, PMID:19459677, PMID:25261288, PMID:8218223,
+        PMID:8799115, PMID:9242907; step 2
+  - subject: glu869
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu869 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/105/
+      snippet: Water deprotonates Glu869, which initiates a nucleophilic attack on the Mo(IV) centre,
+        displacing the carboxylic acid product in a substitution reaction.
+      notes: M-CSA entry 105, mechanism 1; M-CSA cites PMID:16480912, PMID:19459677, PMID:25261288, PMID:8218223,
+        PMID:8799115, PMID:9242907; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/105/
+      snippet: A single electron is transferred from Mo(IV) to an acceptor via two iron-sulfur clusters.
+      notes: M-CSA entry 105, mechanism 1; M-CSA cites PMID:16480912, PMID:19459677, PMID:25261288, PMID:8218223,
+        PMID:8799115, PMID:9242907; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/105/
+      snippet: Water deprotonates the thiolate group part of the Mo(V) coordination sphere, causing the
+        elimination of Glu869 from the Mo(V) coordination sphere, and transfer of the second electron
+        from Mo(V) to the acceptor via two iron-sulfur clusters.
+      notes: M-CSA entry 105, mechanism 1; M-CSA cites PMID:16480912, PMID:19459677, PMID:25261288, PMID:8218223,
+        PMID:8799115, PMID:9242907; step 4
+  - subject: glu869
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Glu869 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/105/
+      snippet: Water deprotonates the thiolate group part of the Mo(V) coordination sphere, causing the
+        elimination of Glu869 from the Mo(V) coordination sphere, and transfer of the second electron
+        from Mo(V) to the acceptor via two iron-sulfur clusters.
+      notes: M-CSA entry 105, mechanism 1; M-CSA cites PMID:16480912, PMID:19459677, PMID:25261288, PMID:8218223,
+        PMID:8799115, PMID:9242907; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/105/
+      snippet: Products.
+      notes: M-CSA entry 105, mechanism 1; M-CSA cites PMID:16480912, PMID:19459677, PMID:25261288, PMID:8218223,
+        PMID:8799115, PMID:9242907; step 5
+  - subject: glu869
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu869 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/105/
+      snippet: covalently attached, hydrogen bond acceptor, hydrogen bond donor, metal ligand, nucleofuge,
+        nucleophile, proton acceptor, proton donor
+      notes: M-CSA entry 105, mechanism 1; M-CSA cites PMID:16480912, PMID:19459677, PMID:25261288, PMID:8218223,
+        PMID:8799115, PMID:9242907; M-CSA catalytic-residue roles for Glu869
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/105/
+      snippet: "The general reaction is attack of hydroxide on the aldehyde, while the terminal aldehyde\
+        \ hydride is transferred to the sulfido ligand of Mo. The mechanism proceeds as follows:
+<ol>\
+        
+<li>In the resting enzyme, moldybdenum is Mo(VI) and coordinated to molybdopterin and water,\
+        \ with oxo and sulfido ligands.</li>
+<li>Glu 869 deprotonates the coordinated water as it attacks,\
+        \ as hydroxide, the electrop"
+      notes: M-CSA entry 105, mechanism 1; M-CSA cites PMID:16480912, PMID:19459677, PMID:25261288, PMID:8218223,
+        PMID:8799115, PMID:9242907; CATH domain 3.30.365.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/105/
+      snippet: "The general reaction is attack of hydroxide on the aldehyde, while the terminal aldehyde\
+        \ hydride is transferred to the sulfido ligand of Mo. The mechanism proceeds as follows:
+<ol>\
+        
+<li>In the resting enzyme, moldybdenum is Mo(VI) and coordinated to molybdopterin and water,\
+        \ with oxo and sulfido ligands.</li>
+<li>Glu 869 deprotonates the coordinated water as it attacks,\
+        \ as hydroxide, the electrop"
+      notes: M-CSA entry 105, mechanism 1; M-CSA cites PMID:16480912, PMID:19459677, PMID:25261288, PMID:8218223,
+        PMID:8799115, PMID:9242907; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/105/
+      snippet: "The general reaction is attack of hydroxide on the aldehyde, while the terminal aldehyde\
+        \ hydride is transferred to the sulfido ligand of Mo. The mechanism proceeds as follows:
+<ol>\
+        
+<li>In the resting enzyme, moldybdenum is Mo(VI) and coordinated to molybdopterin and water,\
+        \ with oxo and sulfido ligands.</li>
+<li>Glu 869 deprotonates the coordinated water as it attacks,\
+        \ as hydroxide, the electrop"
+      notes: M-CSA entry 105, mechanism 1; M-CSA cites PMID:16480912, PMID:19459677, PMID:25261288, PMID:8218223,
+        PMID:8799115, PMID:9242907; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/105/
+      snippet: "The general reaction is attack of hydroxide on the aldehyde, while the terminal aldehyde\
+        \ hydride is transferred to the sulfido ligand of Mo. The mechanism proceeds as follows:
+<ol>\
+        
+<li>In the resting enzyme, moldybdenum is Mo(VI) and coordinated to molybdopterin and water,\
+        \ with oxo and sulfido ligands.</li>
+<li>Glu 869 deprotonates the coordinated water as it attacks,\
+        \ as hydroxide, the electrop"
+      notes: M-CSA entry 105, mechanism 1; M-CSA cites PMID:16480912, PMID:19459677, PMID:25261288, PMID:8218223,
+        PMID:8799115, PMID:9242907; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/105/
+      snippet: "The general reaction is attack of hydroxide on the aldehyde, while the terminal aldehyde\
+        \ hydride is transferred to the sulfido ligand of Mo. The mechanism proceeds as follows:
+<ol>\
+        
+<li>In the resting enzyme, moldybdenum is Mo(VI) and coordinated to molybdopterin and water,\
+        \ with oxo and sulfido ligands.</li>
+<li>Glu 869 deprotonates the coordinated water as it attacks,\
+        \ as hydroxide, the electrop"
+      notes: M-CSA entry 105, mechanism 1; M-CSA cites PMID:16480912, PMID:19459677, PMID:25261288, PMID:8218223,
+        PMID:8799115, PMID:9242907; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/105/
+      snippet: "The general reaction is attack of hydroxide on the aldehyde, while the terminal aldehyde\
+        \ hydride is transferred to the sulfido ligand of Mo. The mechanism proceeds as follows:
+<ol>\
+        
+<li>In the resting enzyme, moldybdenum is Mo(VI) and coordinated to molybdopterin and water,\
+        \ with oxo and sulfido ligands.</li>
+<li>Glu 869 deprotonates the coordinated water as it attacks,\
+        \ as hydroxide, the electrop"
+      notes: M-CSA entry 105, mechanism 1; M-CSA cites PMID:16480912, PMID:19459677, PMID:25261288, PMID:8218223,
+        PMID:8799115, PMID:9242907; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/105/
+      snippet: "The general reaction is attack of hydroxide on the aldehyde, while the terminal aldehyde\
+        \ hydride is transferred to the sulfido ligand of Mo. The mechanism proceeds as follows:
+<ol>\
+        
+<li>In the resting enzyme, moldybdenum is Mo(VI) and coordinated to molybdopterin and water,\
+        \ with oxo and sulfido ligands.</li>
+<li>Glu 869 deprotonates the coordinated water as it attacks,\
+        \ as hydroxide, the electrop"
+      notes: M-CSA entry 105, mechanism 1; M-CSA cites PMID:16480912, PMID:19459677, PMID:25261288, PMID:8218223,
+        PMID:8799115, PMID:9242907; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 105;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

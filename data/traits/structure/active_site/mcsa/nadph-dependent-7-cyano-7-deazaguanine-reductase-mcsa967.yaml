@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.7.1.13
 - CHEBI:45075
@@ -226,4 +226,404 @@ definitions:
       First discovered from the biosynthetic pathway of queuosine, QueF nitrile reductase is part of the tRNA biosynthetic pathway in the cytosol of bacteria. The role of QueF in this pathway is to catalyse the NADPH-dependent reduction of 7-cyano-7-deazaguanine (preQ0) to 7-aminomethyl-7-deazaguanine (preQ1) by a unique four-electron reduction of nitrile to amine. This pathway is crucial for the pathogenicity of bacteria and has the potential to be used in industrial catalysis of organic compounds.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of NADPH-dependent 7-cyano-7-deazaguanine reductase
+  description: Stepwise mechanism transcribed from M-CSA entry 967 (9 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset -6).
+  nodes:
+  - node_id: cys194
+    label: catalytic Cys194 (M-CSA/PDB numbering; UniProt residue 188)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9KTK0
+    description: 'M-CSA roles: covalently attached, nucleofuge, nucleophile, proton acceptor, proton donor.'
+  - node_id: thr197
+    label: catalytic Thr197 (M-CSA/PDB numbering; UniProt residue 191)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9KTK0
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp201
+    label: catalytic Asp201 (M-CSA/PDB numbering; UniProt residue 195)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9KTK0
+    description: 'M-CSA roles: activator, proton acceptor, proton donor.'
+  - node_id: his233
+    label: catalytic His233 (M-CSA/PDB numbering; UniProt residue 227)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9KTK0
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu234
+    label: catalytic Glu234 (M-CSA/PDB numbering; UniProt residue 228)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9KTK0
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: 7-cyano-7-deazaguanine
+    node_type: CHEMICAL
+    grounding: CHEBI:45075
+  - node_id: reactant1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: reactant2
+    label: NADPH(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+  - node_id: product0
+    label: 7-ammoniomethyl-7-deazaguanine
+    node_type: CHEMICAL
+    grounding: CHEBI:58703
+  - node_id: product1
+    label: NADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp201 activates Cys194 by deprotonation.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Cys194 performs a nucleophilic attack on the nitrile carbon, forming a thioimidate intermediate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Protonation of Asp201 and the substrate; inferred by curator.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Hydride transfer from NADPH to substrate.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Cleavage of C-S covalent bond.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Cys194 protonation by Asp201.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: Hydride transfer from a second NADPH molecule to carbon atom of imine.
+  - node_id: step8
+    label: mechanism step 8
+    node_type: STATE
+    description: Protonation of amine group by water molecule from bulk solvent. Inferred by curator;
+      protonation may occur outside active site.
+  - node_id: step9
+    label: mechanism step 9
+    node_type: STATE
+    description: Product formed.
+  - node_id: active_site
+    label: NADPH-dependent 7-cyano-7-deazaguanine reductase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:967
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.1130.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.1130.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: NADPH-dependent 7-cyano-7-deazaguanine reductase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.7.1.13
+  edges:
+  - subject: cys194
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys194 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/967/
+      snippet: Asp201 activates Cys194 by deprotonation.
+      notes: M-CSA entry 967, mechanism 1; M-CSA cites PMID:17929836, PMID:20875425, PMID:23595998, PMID:27754868,
+        PMID:29339556; step 1
+  - subject: asp201
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp201 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/967/
+      snippet: Asp201 activates Cys194 by deprotonation.
+      notes: M-CSA entry 967, mechanism 1; M-CSA cites PMID:17929836, PMID:20875425, PMID:23595998, PMID:27754868,
+        PMID:29339556; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/967/
+      snippet: Cys194 performs a nucleophilic attack on the nitrile carbon, forming a thioimidate intermediate.
+      notes: M-CSA entry 967, mechanism 1; M-CSA cites PMID:17929836, PMID:20875425, PMID:23595998, PMID:27754868,
+        PMID:29339556; step 2
+  - subject: cys194
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Cys194 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/967/
+      snippet: Cys194 performs a nucleophilic attack on the nitrile carbon, forming a thioimidate intermediate.
+      notes: M-CSA entry 967, mechanism 1; M-CSA cites PMID:17929836, PMID:20875425, PMID:23595998, PMID:27754868,
+        PMID:29339556; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/967/
+      snippet: Protonation of Asp201 and the substrate; inferred by curator.
+      notes: M-CSA entry 967, mechanism 1; M-CSA cites PMID:17929836, PMID:20875425, PMID:23595998, PMID:27754868,
+        PMID:29339556; step 3
+  - subject: asp201
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Asp201 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/967/
+      snippet: Protonation of Asp201 and the substrate; inferred by curator.
+      notes: M-CSA entry 967, mechanism 1; M-CSA cites PMID:17929836, PMID:20875425, PMID:23595998, PMID:27754868,
+        PMID:29339556; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/967/
+      snippet: Hydride transfer from NADPH to substrate.
+      notes: M-CSA entry 967, mechanism 1; M-CSA cites PMID:17929836, PMID:20875425, PMID:23595998, PMID:27754868,
+        PMID:29339556; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/967/
+      snippet: Cleavage of C-S covalent bond.
+      notes: M-CSA entry 967, mechanism 1; M-CSA cites PMID:17929836, PMID:20875425, PMID:23595998, PMID:27754868,
+        PMID:29339556; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/967/
+      snippet: Cys194 protonation by Asp201.
+      notes: M-CSA entry 967, mechanism 1; M-CSA cites PMID:17929836, PMID:20875425, PMID:23595998, PMID:27754868,
+        PMID:29339556; step 6
+  - subject: cys194
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: Cys194 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/967/
+      snippet: Cys194 protonation by Asp201.
+      notes: M-CSA entry 967, mechanism 1; M-CSA cites PMID:17929836, PMID:20875425, PMID:23595998, PMID:27754868,
+        PMID:29339556; step 6
+  - subject: asp201
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: Asp201 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/967/
+      snippet: Cys194 protonation by Asp201.
+      notes: M-CSA entry 967, mechanism 1; M-CSA cites PMID:17929836, PMID:20875425, PMID:23595998, PMID:27754868,
+        PMID:29339556; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/967/
+      snippet: Hydride transfer from a second NADPH molecule to carbon atom of imine.
+      notes: M-CSA entry 967, mechanism 1; M-CSA cites PMID:17929836, PMID:20875425, PMID:23595998, PMID:27754868,
+        PMID:29339556; step 7
+  - subject: step7
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step8
+    description: Step 7 leads to step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/967/
+      snippet: Protonation of amine group by water molecule from bulk solvent. Inferred by curator; protonation
+        may occur outside active site.
+      notes: M-CSA entry 967, mechanism 1; M-CSA cites PMID:17929836, PMID:20875425, PMID:23595998, PMID:27754868,
+        PMID:29339556; step 8
+  - subject: step8
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step9
+    description: Step 8 leads to step 9.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/967/
+      snippet: Product formed.
+      notes: M-CSA entry 967, mechanism 1; M-CSA cites PMID:17929836, PMID:20875425, PMID:23595998, PMID:27754868,
+        PMID:29339556; step 9
+  - subject: cys194
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys194 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/967/
+      snippet: covalently attached, nucleofuge, nucleophile, proton acceptor, proton donor
+      notes: M-CSA entry 967, mechanism 1; M-CSA cites PMID:17929836, PMID:20875425, PMID:23595998, PMID:27754868,
+        PMID:29339556; M-CSA catalytic-residue roles for Cys194
+  - subject: thr197
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr197 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/967/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 967, mechanism 1; M-CSA cites PMID:17929836, PMID:20875425, PMID:23595998, PMID:27754868,
+        PMID:29339556; M-CSA catalytic-residue roles for Thr197
+  - subject: asp201
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp201 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/967/
+      snippet: activator, proton acceptor, proton donor
+      notes: M-CSA entry 967, mechanism 1; M-CSA cites PMID:17929836, PMID:20875425, PMID:23595998, PMID:27754868,
+        PMID:29339556; M-CSA catalytic-residue roles for Asp201
+  - subject: his233
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His233 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/967/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 967, mechanism 1; M-CSA cites PMID:17929836, PMID:20875425, PMID:23595998, PMID:27754868,
+        PMID:29339556; M-CSA catalytic-residue roles for His233
+  - subject: glu234
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu234 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/967/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 967, mechanism 1; M-CSA cites PMID:17929836, PMID:20875425, PMID:23595998, PMID:27754868,
+        PMID:29339556; M-CSA catalytic-residue roles for Glu234
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/967/
+      snippet: The nitrile to amine conversion begins with the orientation of the substrate by seven key
+        residues. The first stage of the mechanism is the activation of Cys194 by Asp201 which subsequently
+        attacks the carbon of the nitrile group to form a C-S covalent bond. Secondly, NADPH facilitates
+        a hydride transfer to the thoimidate intermediate. Then, following cleavage of the C-S bond a
+        second hydride tran
+      notes: M-CSA entry 967, mechanism 1; M-CSA cites PMID:17929836, PMID:20875425, PMID:23595998, PMID:27754868,
+        PMID:29339556; CATH domain 3.30.1130.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/967/
+      snippet: The nitrile to amine conversion begins with the orientation of the substrate by seven key
+        residues. The first stage of the mechanism is the activation of Cys194 by Asp201 which subsequently
+        attacks the carbon of the nitrile group to form a C-S covalent bond. Secondly, NADPH facilitates
+        a hydride transfer to the thoimidate intermediate. Then, following cleavage of the C-S bond a
+        second hydride tran
+      notes: M-CSA entry 967, mechanism 1; M-CSA cites PMID:17929836, PMID:20875425, PMID:23595998, PMID:27754868,
+        PMID:29339556; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/967/
+      snippet: The nitrile to amine conversion begins with the orientation of the substrate by seven key
+        residues. The first stage of the mechanism is the activation of Cys194 by Asp201 which subsequently
+        attacks the carbon of the nitrile group to form a C-S covalent bond. Secondly, NADPH facilitates
+        a hydride transfer to the thoimidate intermediate. Then, following cleavage of the C-S bond a
+        second hydride tran
+      notes: M-CSA entry 967, mechanism 1; M-CSA cites PMID:17929836, PMID:20875425, PMID:23595998, PMID:27754868,
+        PMID:29339556; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/967/
+      snippet: The nitrile to amine conversion begins with the orientation of the substrate by seven key
+        residues. The first stage of the mechanism is the activation of Cys194 by Asp201 which subsequently
+        attacks the carbon of the nitrile group to form a C-S covalent bond. Secondly, NADPH facilitates
+        a hydride transfer to the thoimidate intermediate. Then, following cleavage of the C-S bond a
+        second hydride tran
+      notes: M-CSA entry 967, mechanism 1; M-CSA cites PMID:17929836, PMID:20875425, PMID:23595998, PMID:27754868,
+        PMID:29339556; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/967/
+      snippet: The nitrile to amine conversion begins with the orientation of the substrate by seven key
+        residues. The first stage of the mechanism is the activation of Cys194 by Asp201 which subsequently
+        attacks the carbon of the nitrile group to form a C-S covalent bond. Secondly, NADPH facilitates
+        a hydride transfer to the thoimidate intermediate. Then, following cleavage of the C-S bond a
+        second hydride tran
+      notes: M-CSA entry 967, mechanism 1; M-CSA cites PMID:17929836, PMID:20875425, PMID:23595998, PMID:27754868,
+        PMID:29339556; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/967/
+      snippet: The nitrile to amine conversion begins with the orientation of the substrate by seven key
+        residues. The first stage of the mechanism is the activation of Cys194 by Asp201 which subsequently
+        attacks the carbon of the nitrile group to form a C-S covalent bond. Secondly, NADPH facilitates
+        a hydride transfer to the thoimidate intermediate. Then, following cleavage of the C-S bond a
+        second hydride tran
+      notes: M-CSA entry 967, mechanism 1; M-CSA cites PMID:17929836, PMID:20875425, PMID:23595998, PMID:27754868,
+        PMID:29339556; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/967/
+      snippet: The nitrile to amine conversion begins with the orientation of the substrate by seven key
+        residues. The first stage of the mechanism is the activation of Cys194 by Asp201 which subsequently
+        attacks the carbon of the nitrile group to form a C-S covalent bond. Secondly, NADPH facilitates
+        a hydride transfer to the thoimidate intermediate. Then, following cleavage of the C-S bond a
+        second hydride tran
+      notes: M-CSA entry 967, mechanism 1; M-CSA cites PMID:17929836, PMID:20875425, PMID:23595998, PMID:27754868,
+        PMID:29339556; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (26 evidence-backed edges) transcribed from M-CSA entry 967;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

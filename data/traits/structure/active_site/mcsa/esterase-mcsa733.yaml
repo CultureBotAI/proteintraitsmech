@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.1.-
 - CHEBI:137432
@@ -56,4 +56,351 @@ definitions:
       Esterase (EST), isolated from Pseudomonas putida, catalyses the hydrolysis of methyl esters. Of particular interest is the stereoselective hydrolysis of DL-beta-acetylthioisobutyrate acid (DL-MATI) to D-beta-acetylthioisobutyric acid (DAT). This is because DAT is an important intermediate in the synthesis of the medicinally important angiotensin-converting enzyme inhibitors. The mechanism of action of EST is similar to the serine protease mechanism.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of esterase
+  description: Stepwise mechanism transcribed from M-CSA entry 733 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: trp31
+    label: catalytic Trp31 (M-CSA/PDB numbering; UniProt residue 31)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q3HWU8
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ser97
+    label: catalytic Ser97 (M-CSA/PDB numbering; UniProt residue 97)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q3HWU8
+    description: 'M-CSA roles: nucleofuge, nucleophile, proton acceptor, proton donor.'
+  - node_id: thr98
+    label: catalytic Thr98 (M-CSA/PDB numbering; UniProt residue 98)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q3HWU8
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ala122
+    label: catalytic Ala122 (M-CSA/PDB numbering; UniProt residue 122)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q3HWU8
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp227
+    label: catalytic Asp227 (M-CSA/PDB numbering; UniProt residue 227)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q3HWU8
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his256
+    label: catalytic His256 (M-CSA/PDB numbering; UniProt residue 256)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q3HWU8
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: methyl beta-(acetylthio)isobutyrate
+    node_type: CHEMICAL
+    grounding: CHEBI:137432
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: (R)-3-(acetylthio)isobutyric acid
+    node_type: CHEMICAL
+    grounding: CHEBI:137433
+  - node_id: product1
+    label: methanol
+    node_type: CHEMICAL
+    grounding: CHEBI:17790
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His256 deprotonates Ser97 which activates it to nucleophilically attack the carbonyl
+      carbon.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The intermediate collapses to eliminate methoxide, which is protonated by His256.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: His256 abstracts a proton from a water which then attacks the carbonyl carbon of the
+      acylenzyme intermediate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The tetrahedral intermediate is stabilised by the oxyanion hole and then collapses to
+      eliminate Ser97, which is protonated by His256.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: esterase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:733
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1820 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1820
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: esterase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.1.-
+  edges:
+  - subject: ser97
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser97 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/733/
+      snippet: His256 deprotonates Ser97 which activates it to nucleophilically attack the carbonyl carbon.
+      notes: M-CSA entry 733, mechanism 1; M-CSA cites PMID:10404588, PMID:12475199, PMID:16321951, PMID:8051710;
+        step 1
+  - subject: his256
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His256 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/733/
+      snippet: His256 deprotonates Ser97 which activates it to nucleophilically attack the carbonyl carbon.
+      notes: M-CSA entry 733, mechanism 1; M-CSA cites PMID:10404588, PMID:12475199, PMID:16321951, PMID:8051710;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/733/
+      snippet: The intermediate collapses to eliminate methoxide, which is protonated by His256.
+      notes: M-CSA entry 733, mechanism 1; M-CSA cites PMID:10404588, PMID:12475199, PMID:16321951, PMID:8051710;
+        step 2
+  - subject: his256
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His256 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/733/
+      snippet: The intermediate collapses to eliminate methoxide, which is protonated by His256.
+      notes: M-CSA entry 733, mechanism 1; M-CSA cites PMID:10404588, PMID:12475199, PMID:16321951, PMID:8051710;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/733/
+      snippet: His256 abstracts a proton from a water which then attacks the carbonyl carbon of the acylenzyme
+        intermediate.
+      notes: M-CSA entry 733, mechanism 1; M-CSA cites PMID:10404588, PMID:12475199, PMID:16321951, PMID:8051710;
+        step 3
+  - subject: his256
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His256 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/733/
+      snippet: His256 abstracts a proton from a water which then attacks the carbonyl carbon of the acylenzyme
+        intermediate.
+      notes: M-CSA entry 733, mechanism 1; M-CSA cites PMID:10404588, PMID:12475199, PMID:16321951, PMID:8051710;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/733/
+      snippet: The tetrahedral intermediate is stabilised by the oxyanion hole and then collapses to eliminate
+        Ser97, which is protonated by His256.
+      notes: M-CSA entry 733, mechanism 1; M-CSA cites PMID:10404588, PMID:12475199, PMID:16321951, PMID:8051710;
+        step 4
+  - subject: ser97
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Ser97 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/733/
+      snippet: The tetrahedral intermediate is stabilised by the oxyanion hole and then collapses to eliminate
+        Ser97, which is protonated by His256.
+      notes: M-CSA entry 733, mechanism 1; M-CSA cites PMID:10404588, PMID:12475199, PMID:16321951, PMID:8051710;
+        step 4
+  - subject: his256
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: His256 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/733/
+      snippet: The tetrahedral intermediate is stabilised by the oxyanion hole and then collapses to eliminate
+        Ser97, which is protonated by His256.
+      notes: M-CSA entry 733, mechanism 1; M-CSA cites PMID:10404588, PMID:12475199, PMID:16321951, PMID:8051710;
+        step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/733/
+      snippet: Products
+      notes: M-CSA entry 733, mechanism 1; M-CSA cites PMID:10404588, PMID:12475199, PMID:16321951, PMID:8051710;
+        step 5
+  - subject: trp31
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp31 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/733/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 733, mechanism 1; M-CSA cites PMID:10404588, PMID:12475199, PMID:16321951, PMID:8051710;
+        M-CSA catalytic-residue roles for Trp31
+  - subject: ser97
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser97 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/733/
+      snippet: nucleofuge, nucleophile, proton acceptor, proton donor
+      notes: M-CSA entry 733, mechanism 1; M-CSA cites PMID:10404588, PMID:12475199, PMID:16321951, PMID:8051710;
+        M-CSA catalytic-residue roles for Ser97
+  - subject: thr98
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr98 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/733/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 733, mechanism 1; M-CSA cites PMID:10404588, PMID:12475199, PMID:16321951, PMID:8051710;
+        M-CSA catalytic-residue roles for Thr98
+  - subject: ala122
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ala122 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/733/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 733, mechanism 1; M-CSA cites PMID:10404588, PMID:12475199, PMID:16321951, PMID:8051710;
+        M-CSA catalytic-residue roles for Ala122
+  - subject: asp227
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp227 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/733/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 733, mechanism 1; M-CSA cites PMID:10404588, PMID:12475199, PMID:16321951, PMID:8051710;
+        M-CSA catalytic-residue roles for Asp227
+  - subject: his256
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His256 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/733/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 733, mechanism 1; M-CSA cites PMID:10404588, PMID:12475199, PMID:16321951, PMID:8051710;
+        M-CSA catalytic-residue roles for His256
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/733/
+      snippet: His256 deprotonates Ser97 and is stabilised by Asp227. Ser97 is then involved in nucleophilic
+        attack on the carbonyl carbon of D-MALTI. The resulting tetrahedral oxyanion is stabilised by
+        hydrogen bonds to the backbone amines of Trp31 and Thr98, which together form the oxyanion hole.
+        The intermediate collapses to eliminate methoxide, which is protonated by His256. His256 then
+        deprotonates water an
+      notes: M-CSA entry 733, mechanism 1; M-CSA cites PMID:10404588, PMID:12475199, PMID:16321951, PMID:8051710;
+        CATH domain 3.40.50.1820 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/733/
+      snippet: His256 deprotonates Ser97 and is stabilised by Asp227. Ser97 is then involved in nucleophilic
+        attack on the carbonyl carbon of D-MALTI. The resulting tetrahedral oxyanion is stabilised by
+        hydrogen bonds to the backbone amines of Trp31 and Thr98, which together form the oxyanion hole.
+        The intermediate collapses to eliminate methoxide, which is protonated by His256. His256 then
+        deprotonates water an
+      notes: M-CSA entry 733, mechanism 1; M-CSA cites PMID:10404588, PMID:12475199, PMID:16321951, PMID:8051710;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/733/
+      snippet: His256 deprotonates Ser97 and is stabilised by Asp227. Ser97 is then involved in nucleophilic
+        attack on the carbonyl carbon of D-MALTI. The resulting tetrahedral oxyanion is stabilised by
+        hydrogen bonds to the backbone amines of Trp31 and Thr98, which together form the oxyanion hole.
+        The intermediate collapses to eliminate methoxide, which is protonated by His256. His256 then
+        deprotonates water an
+      notes: M-CSA entry 733, mechanism 1; M-CSA cites PMID:10404588, PMID:12475199, PMID:16321951, PMID:8051710;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/733/
+      snippet: His256 deprotonates Ser97 and is stabilised by Asp227. Ser97 is then involved in nucleophilic
+        attack on the carbonyl carbon of D-MALTI. The resulting tetrahedral oxyanion is stabilised by
+        hydrogen bonds to the backbone amines of Trp31 and Thr98, which together form the oxyanion hole.
+        The intermediate collapses to eliminate methoxide, which is protonated by His256. His256 then
+        deprotonates water an
+      notes: M-CSA entry 733, mechanism 1; M-CSA cites PMID:10404588, PMID:12475199, PMID:16321951, PMID:8051710;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/733/
+      snippet: His256 deprotonates Ser97 and is stabilised by Asp227. Ser97 is then involved in nucleophilic
+        attack on the carbonyl carbon of D-MALTI. The resulting tetrahedral oxyanion is stabilised by
+        hydrogen bonds to the backbone amines of Trp31 and Thr98, which together form the oxyanion hole.
+        The intermediate collapses to eliminate methoxide, which is protonated by His256. His256 then
+        deprotonates water an
+      notes: M-CSA entry 733, mechanism 1; M-CSA cites PMID:10404588, PMID:12475199, PMID:16321951, PMID:8051710;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/733/
+      snippet: His256 deprotonates Ser97 and is stabilised by Asp227. Ser97 is then involved in nucleophilic
+        attack on the carbonyl carbon of D-MALTI. The resulting tetrahedral oxyanion is stabilised by
+        hydrogen bonds to the backbone amines of Trp31 and Thr98, which together form the oxyanion hole.
+        The intermediate collapses to eliminate methoxide, which is protonated by His256. His256 then
+        deprotonates water an
+      notes: M-CSA entry 733, mechanism 1; M-CSA cites PMID:10404588, PMID:12475199, PMID:16321951, PMID:8051710;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (22 evidence-backed edges) transcribed from M-CSA entry 733;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

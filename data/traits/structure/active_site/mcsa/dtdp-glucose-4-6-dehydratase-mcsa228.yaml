@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.2.1.46
 - CHEBI:15377
@@ -279,4 +279,310 @@ definitions:
       The conversion of dTDP-glucose into dTDP-4-keto-6-deoxyglucose by Escherichia coli dTDP-glucose 4,6-dehydratase) takes place in the active site in three steps: dehydrogenation to dTDP-4-ketoglucose, dehydration to dTDP-4-ketoglucose-5,6-ene, and rereduction of C6 to the methyl group. The 4,6-dehydratase makes use of tightly bound NAD+ as the coenzyme for transiently oxidizing the substrate, activating it for the dehydration step.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of dTDP-glucose 4,6-dehydratase
+  description: Stepwise mechanism transcribed from M-CSA entry 228 (6 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: thr134
+    label: catalytic Thr134 (M-CSA/PDB numbering; UniProt residue 134)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27830
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor, increase acidity, increase
+      basicity.'
+  - node_id: asp135
+    label: catalytic Asp135 (M-CSA/PDB numbering; UniProt residue 135)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27830
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: glu136
+    label: catalytic Glu136 (M-CSA/PDB numbering; UniProt residue 136)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27830
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: tyr160
+    label: catalytic Tyr160 (M-CSA/PDB numbering; UniProt residue 160)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27830
+    description: 'M-CSA roles: attractive charge-charge interaction, hydrogen bond acceptor, hydrogen
+      bond donor, proton acceptor, proton donor.'
+  - node_id: lys164
+    label: catalytic Lys164 (M-CSA/PDB numbering; UniProt residue 164)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27830
+    description: 'M-CSA roles: attractive charge-charge interaction, electrostatic stabiliser, increase
+      acidity, increase basicity.'
+  - node_id: reactant0
+    label: dTDP-alpha-D-glucose(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57477
+  - node_id: product0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product1
+    label: dTDP-4-dehydro-6-deoxy-alpha-D-glucose(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57649
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Tyr160 deprotonates the 4-hydroxyl group of the substrate, which initiates the elimination
+      of the substrate C4 hydride to the C4 position of NAD<sup>+</sup>.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Glu136 removes the C5 proton this leads to an oxyanion forming on C4, in the first step
+      of an E1cb elimination.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The collapse of the oxyanion causes water to be eliminated from C6 with Asp135 acting
+      as the proton donor.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: NADH eliminates a hydride from its C4 position to the C6 position of the intermediate,
+      resulting in concomitant protonation of the C5 position with the proton donor being Glu136.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Asp135 deprotonates water, which in turn deprotonated Tyr160 in an inferred return step.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: dTDP-glucose 4,6-dehydratase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:228
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.720 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.720
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: dTDP-glucose 4,6-dehydratase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.2.1.46
+  edges:
+  - subject: tyr160
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr160 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/228/
+      snippet: Tyr160 deprotonates the 4-hydroxyl group of the substrate, which initiates the elimination
+        of the substrate C4 hydride to the C4 position of NAD<sup>+</sup>.
+      notes: M-CSA entry 228, mechanism 2; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/228/
+      snippet: Glu136 removes the C5 proton this leads to an oxyanion forming on C4, in the first step
+        of an E1cb elimination.
+      notes: M-CSA entry 228, mechanism 2; step 2
+  - subject: glu136
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu136 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/228/
+      snippet: Glu136 removes the C5 proton this leads to an oxyanion forming on C4, in the first step
+        of an E1cb elimination.
+      notes: M-CSA entry 228, mechanism 2; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/228/
+      snippet: The collapse of the oxyanion causes water to be eliminated from C6 with Asp135 acting as
+        the proton donor.
+      notes: M-CSA entry 228, mechanism 2; step 3
+  - subject: asp135
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Asp135 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/228/
+      snippet: The collapse of the oxyanion causes water to be eliminated from C6 with Asp135 acting as
+        the proton donor.
+      notes: M-CSA entry 228, mechanism 2; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/228/
+      snippet: NADH eliminates a hydride from its C4 position to the C6 position of the intermediate,
+        resulting in concomitant protonation of the C5 position with the proton donor being Glu136.
+      notes: M-CSA entry 228, mechanism 2; step 4
+  - subject: glu136
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Glu136 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/228/
+      snippet: NADH eliminates a hydride from its C4 position to the C6 position of the intermediate,
+        resulting in concomitant protonation of the C5 position with the proton donor being Glu136.
+      notes: M-CSA entry 228, mechanism 2; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/228/
+      snippet: Asp135 deprotonates water, which in turn deprotonated Tyr160 in an inferred return step.
+      notes: M-CSA entry 228, mechanism 2; step 5
+  - subject: asp135
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Asp135 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/228/
+      snippet: Asp135 deprotonates water, which in turn deprotonated Tyr160 in an inferred return step.
+      notes: M-CSA entry 228, mechanism 2; step 5
+  - subject: tyr160
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Tyr160 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/228/
+      snippet: Asp135 deprotonates water, which in turn deprotonated Tyr160 in an inferred return step.
+      notes: M-CSA entry 228, mechanism 2; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/228/
+      snippet: Products.
+      notes: M-CSA entry 228, mechanism 2; step 6
+  - subject: thr134
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr134 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/228/
+      snippet: electrostatic stabiliser, hydrogen bond donor, increase acidity, increase basicity
+      notes: M-CSA entry 228, mechanism 2; M-CSA catalytic-residue roles for Thr134
+  - subject: asp135
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp135 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/228/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 228, mechanism 2; M-CSA catalytic-residue roles for Asp135
+  - subject: glu136
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu136 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/228/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 228, mechanism 2; M-CSA catalytic-residue roles for Glu136
+  - subject: tyr160
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr160 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/228/
+      snippet: attractive charge-charge interaction, hydrogen bond acceptor, hydrogen bond donor, proton
+        acceptor, proton donor
+      notes: M-CSA entry 228, mechanism 2; M-CSA catalytic-residue roles for Tyr160
+  - subject: lys164
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys164 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/228/
+      snippet: attractive charge-charge interaction, electrostatic stabiliser, increase acidity, increase
+        basicity
+      notes: M-CSA entry 228, mechanism 2; M-CSA catalytic-residue roles for Lys164
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/228/
+      snippet: "QM/MM studies found water is more likely to be eliminated via a step-wise E1cb mechanism.\
+        \ 
+See other mechanism for further references."
+      notes: M-CSA entry 228, mechanism 2; CATH domain 3.40.50.720 assigned to the catalytic chain by
+        M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/228/
+      snippet: "QM/MM studies found water is more likely to be eliminated via a step-wise E1cb mechanism.\
+        \ 
+See other mechanism for further references."
+      notes: M-CSA entry 228, mechanism 2; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/228/
+      snippet: "QM/MM studies found water is more likely to be eliminated via a step-wise E1cb mechanism.\
+        \ 
+See other mechanism for further references."
+      notes: M-CSA entry 228, mechanism 2; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/228/
+      snippet: "QM/MM studies found water is more likely to be eliminated via a step-wise E1cb mechanism.\
+        \ 
+See other mechanism for further references."
+      notes: M-CSA entry 228, mechanism 2; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/228/
+      snippet: "QM/MM studies found water is more likely to be eliminated via a step-wise E1cb mechanism.\
+        \ 
+See other mechanism for further references."
+      notes: M-CSA entry 228, mechanism 2; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (21 evidence-backed edges) transcribed from M-CSA entry 228;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

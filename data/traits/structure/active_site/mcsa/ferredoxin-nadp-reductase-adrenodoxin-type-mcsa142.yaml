@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.18.1.2
 - CHEBI:33737
@@ -327,4 +327,323 @@ definitions:
       Bovine adrenodoxin (Adx) is a ferredoxin involved in the electron transfer from the flavoenzyme NADPH-adrenodoxin-reductase (AdR) to two P450 cytochromes; this process occurs in the production of steroid hormones.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of ferredoxin-NADP+ reductase (adrenodoxin-type)
+  description: Stepwise mechanism transcribed from M-CSA entry 142 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +32).
+  nodes:
+  - node_id: his55
+    label: catalytic His55 (M-CSA/PDB numbering; UniProt residue 87)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08165
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: asp159
+    label: catalytic Asp159 (M-CSA/PDB numbering; UniProt residue 191)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08165
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: ile376
+    label: catalytic Ile376 (M-CSA/PDB numbering; UniProt residue 408)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08165
+    description: 'M-CSA roles: polar interaction, single electron acceptor, single electron donor, single
+      electron relay.'
+  - node_id: thr377
+    label: catalytic Thr377 (M-CSA/PDB numbering; UniProt residue 409)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08165
+    description: 'M-CSA roles: polar interaction, single electron acceptor, single electron donor, single
+      electron relay.'
+  - node_id: reactant0
+    label: di-mu-sulfido-diiron(2+)
+    node_type: CHEMICAL
+    grounding: CHEBI:33737
+  - node_id: reactant1
+    label: NADPH(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+  - node_id: product0
+    label: di-mu-sulfido-diiron(1+)
+    node_type: CHEMICAL
+    grounding: CHEBI:33738
+  - node_id: product1
+    label: NADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: A hydride ion is transferred from the substrate NADP to the cofactor, FAD461.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: A single electron is transferred from the FAD461 to one of the substrate adrenodoxin
+      dmers via the main chains of Ile376 and Thr377 and a second adrenodoxin dimer.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: FAD461 is deprotonated by a water molecule activated by Asp159. This results in the second
+      electron transfer from FAD461 to the second adrenodoxin dimer via the main chains of Ile376 and
+      Thr377.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: ferredoxin-NADP+ reductase (adrenodoxin-type) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:142
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.50.50.60 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.50.50.60
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: ferredoxin-NADP+ reductase (adrenodoxin-type) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.18.1.2
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/142/
+      snippet: A single electron is transferred from the FAD461 to one of the substrate adrenodoxin dmers
+        via the main chains of Ile376 and Thr377 and a second adrenodoxin dimer.
+      notes: M-CSA entry 142, mechanism 1; M-CSA cites PMID:10998235, PMID:11053423, PMID:12069587; step
+        2
+  - subject: ile376
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Ile376 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/142/
+      snippet: A single electron is transferred from the FAD461 to one of the substrate adrenodoxin dmers
+        via the main chains of Ile376 and Thr377 and a second adrenodoxin dimer.
+      notes: M-CSA entry 142, mechanism 1; M-CSA cites PMID:10998235, PMID:11053423, PMID:12069587; step
+        2
+  - subject: thr377
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Thr377 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/142/
+      snippet: A single electron is transferred from the FAD461 to one of the substrate adrenodoxin dmers
+        via the main chains of Ile376 and Thr377 and a second adrenodoxin dimer.
+      notes: M-CSA entry 142, mechanism 1; M-CSA cites PMID:10998235, PMID:11053423, PMID:12069587; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/142/
+      snippet: FAD461 is deprotonated by a water molecule activated by Asp159. This results in the second
+        electron transfer from FAD461 to the second adrenodoxin dimer via the main chains of Ile376 and
+        Thr377.
+      notes: M-CSA entry 142, mechanism 1; M-CSA cites PMID:10998235, PMID:11053423, PMID:12069587; step
+        3
+  - subject: asp159
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Asp159 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/142/
+      snippet: FAD461 is deprotonated by a water molecule activated by Asp159. This results in the second
+        electron transfer from FAD461 to the second adrenodoxin dimer via the main chains of Ile376 and
+        Thr377.
+      notes: M-CSA entry 142, mechanism 1; M-CSA cites PMID:10998235, PMID:11053423, PMID:12069587; step
+        3
+  - subject: ile376
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Ile376 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/142/
+      snippet: FAD461 is deprotonated by a water molecule activated by Asp159. This results in the second
+        electron transfer from FAD461 to the second adrenodoxin dimer via the main chains of Ile376 and
+        Thr377.
+      notes: M-CSA entry 142, mechanism 1; M-CSA cites PMID:10998235, PMID:11053423, PMID:12069587; step
+        3
+  - subject: thr377
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Thr377 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/142/
+      snippet: FAD461 is deprotonated by a water molecule activated by Asp159. This results in the second
+        electron transfer from FAD461 to the second adrenodoxin dimer via the main chains of Ile376 and
+        Thr377.
+      notes: M-CSA entry 142, mechanism 1; M-CSA cites PMID:10998235, PMID:11053423, PMID:12069587; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/142/
+      snippet: Products.
+      notes: M-CSA entry 142, mechanism 1; M-CSA cites PMID:10998235, PMID:11053423, PMID:12069587; step
+        4
+  - subject: his55
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His55 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/142/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 142, mechanism 1; M-CSA cites PMID:10998235, PMID:11053423, PMID:12069587; M-CSA
+        catalytic-residue roles for His55
+  - subject: asp159
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp159 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/142/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 142, mechanism 1; M-CSA cites PMID:10998235, PMID:11053423, PMID:12069587; M-CSA
+        catalytic-residue roles for Asp159
+  - subject: ile376
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ile376 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/142/
+      snippet: polar interaction, single electron acceptor, single electron donor, single electron relay
+      notes: M-CSA entry 142, mechanism 1; M-CSA cites PMID:10998235, PMID:11053423, PMID:12069587; M-CSA
+        catalytic-residue roles for Ile376
+  - subject: thr377
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr377 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/142/
+      snippet: polar interaction, single electron acceptor, single electron donor, single electron relay
+      notes: M-CSA entry 142, mechanism 1; M-CSA cites PMID:10998235, PMID:11053423, PMID:12069587; M-CSA
+        catalytic-residue roles for Thr377
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/142/
+      snippet: AdR has a bound FAD cofactor. NADPH docks and transfers its hydride to FAD. An electron
+        from FADH- is transferred, via the main chain atoms of Ile 376 and then Thr 377, to the bound
+        half of an Adx dimer (to its Cys 52, then to the [2Fe-2S] centre). The electron is then transferred
+        to the non-AdR-bound Adx molecule which dissociates. The second electron from FADH. is transferred
+        the remaining Adx b
+      notes: M-CSA entry 142, mechanism 1; M-CSA cites PMID:10998235, PMID:11053423, PMID:12069587; CATH
+        domain 3.50.50.60 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/142/
+      snippet: AdR has a bound FAD cofactor. NADPH docks and transfers its hydride to FAD. An electron
+        from FADH- is transferred, via the main chain atoms of Ile 376 and then Thr 377, to the bound
+        half of an Adx dimer (to its Cys 52, then to the [2Fe-2S] centre). The electron is then transferred
+        to the non-AdR-bound Adx molecule which dissociates. The second electron from FADH. is transferred
+        the remaining Adx b
+      notes: M-CSA entry 142, mechanism 1; M-CSA cites PMID:10998235, PMID:11053423, PMID:12069587; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/142/
+      snippet: AdR has a bound FAD cofactor. NADPH docks and transfers its hydride to FAD. An electron
+        from FADH- is transferred, via the main chain atoms of Ile 376 and then Thr 377, to the bound
+        half of an Adx dimer (to its Cys 52, then to the [2Fe-2S] centre). The electron is then transferred
+        to the non-AdR-bound Adx molecule which dissociates. The second electron from FADH. is transferred
+        the remaining Adx b
+      notes: M-CSA entry 142, mechanism 1; M-CSA cites PMID:10998235, PMID:11053423, PMID:12069587; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/142/
+      snippet: AdR has a bound FAD cofactor. NADPH docks and transfers its hydride to FAD. An electron
+        from FADH- is transferred, via the main chain atoms of Ile 376 and then Thr 377, to the bound
+        half of an Adx dimer (to its Cys 52, then to the [2Fe-2S] centre). The electron is then transferred
+        to the non-AdR-bound Adx molecule which dissociates. The second electron from FADH. is transferred
+        the remaining Adx b
+      notes: M-CSA entry 142, mechanism 1; M-CSA cites PMID:10998235, PMID:11053423, PMID:12069587; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/142/
+      snippet: AdR has a bound FAD cofactor. NADPH docks and transfers its hydride to FAD. An electron
+        from FADH- is transferred, via the main chain atoms of Ile 376 and then Thr 377, to the bound
+        half of an Adx dimer (to its Cys 52, then to the [2Fe-2S] centre). The electron is then transferred
+        to the non-AdR-bound Adx molecule which dissociates. The second electron from FADH. is transferred
+        the remaining Adx b
+      notes: M-CSA entry 142, mechanism 1; M-CSA cites PMID:10998235, PMID:11053423, PMID:12069587; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/142/
+      snippet: AdR has a bound FAD cofactor. NADPH docks and transfers its hydride to FAD. An electron
+        from FADH- is transferred, via the main chain atoms of Ile 376 and then Thr 377, to the bound
+        half of an Adx dimer (to its Cys 52, then to the [2Fe-2S] centre). The electron is then transferred
+        to the non-AdR-bound Adx molecule which dissociates. The second electron from FADH. is transferred
+        the remaining Adx b
+      notes: M-CSA entry 142, mechanism 1; M-CSA cites PMID:10998235, PMID:11053423, PMID:12069587; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/142/
+      snippet: AdR has a bound FAD cofactor. NADPH docks and transfers its hydride to FAD. An electron
+        from FADH- is transferred, via the main chain atoms of Ile 376 and then Thr 377, to the bound
+        half of an Adx dimer (to its Cys 52, then to the [2Fe-2S] centre). The electron is then transferred
+        to the non-AdR-bound Adx molecule which dissociates. The second electron from FADH. is transferred
+        the remaining Adx b
+      notes: M-CSA entry 142, mechanism 1; M-CSA cites PMID:10998235, PMID:11053423, PMID:12069587; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (19 evidence-backed edges) transcribed from M-CSA entry 142;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

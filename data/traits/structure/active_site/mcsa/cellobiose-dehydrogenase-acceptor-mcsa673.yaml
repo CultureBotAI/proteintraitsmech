@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.1.99.18
 - CHEBI:15379
@@ -452,4 +452,256 @@ definitions:
       Fungal cellobiose dehydrogenase (CDH) participates in the rotting of wood by catalysing a key step in the breakdown of cellulose (and lignin), namely the oxidation of cellobiose (a reaction product in cellulose hydrolysis) to cellobiono-1,5-lactone. This is used to provide a carbon source for the micro-organism. CDH is the only known extracellular flavocytochrome, a small and heterogeneous group of redox-active proteins that carry both haem and flavin prosthetic groups. Applications of CDH include degradation of various environmental pollutants. It shows sequence and structural homology with glucose and cholesterol oxidase, two other known enzymes catalysing similar processes, so the mechanism is likely to be the same between the three. FAD is used as a cofactor for the reaction, being reduced by the substrate and subsequently reoxidised by a cytochromal haem group contained in the non-active site containing domain (PDB:1d7b)
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of cellobiose dehydrogenase (acceptor)
+  description: Stepwise mechanism transcribed from M-CSA entry 673 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +18).
+  nodes:
+  - node_id: tyr609
+    label: catalytic Tyr609 (M-CSA/PDB numbering; UniProt residue 627)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q01738
+    description: 'M-CSA roles: activator, electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: his689
+    label: catalytic His689 (M-CSA/PDB numbering; UniProt residue 707)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q01738
+    description: 'M-CSA roles: electrostatic stabiliser, proton acceptor, proton donor.'
+  - node_id: asn732
+    label: catalytic Asn732 (M-CSA/PDB numbering; UniProt residue 750)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q01738
+    description: 'M-CSA roles: activator, electrostatic stabiliser, enhance reactivity.'
+  - node_id: reactant0
+    label: dioxygen
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+  - node_id: reactant1
+    label: cellobiose
+    node_type: CHEMICAL
+    grounding: CHEBI:17057
+  - node_id: product0
+    label: hydrogen peroxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+  - node_id: product1
+    label: cellobiono-1,5-lactone
+    node_type: CHEMICAL
+    grounding: CHEBI:17863
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His689 acts as a general base and deprotonates the 1-hydroxyl group of the reactant.
+      Simultaneously, a hydride is transferred from C1 to a nitrogen atom of the 6-hydroxy FAD in a nucleophilic
+      addition reaction, forming the product and FADH-. Asn732 promotes deprotonation of the hydroxyl
+      group by forming a hydrogen bond to it.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Tyr609 interacts with the water molecule near the protonated His689, promoting deprotonation
+      and restoring His689 to its neutral state. Following this step FADH2 is oxidised back to FAD using
+      a haem and oxygen.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: cellobiose dehydrogenase (acceptor) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:673
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.410.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.410.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: cellobiose dehydrogenase (acceptor) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.1.99.18
+  edges:
+  - subject: his689
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His689 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/673/
+      snippet: His689 acts as a general base and deprotonates the 1-hydroxyl group of the reactant. Simultaneously,
+        a hydride is transferred from C1 to a nitrogen atom of the 6-hydroxy FAD in a nucleophilic addition
+        reaction, forming the product and FADH-. Asn732 promotes deprotonation of the hydroxyl group by
+        forming a hydrogen bond to it.
+      notes: M-CSA entry 673, mechanism 1; M-CSA cites PMID:11786022, PMID:12493734; step 1
+  - subject: asn732
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asn732 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/673/
+      snippet: His689 acts as a general base and deprotonates the 1-hydroxyl group of the reactant. Simultaneously,
+        a hydride is transferred from C1 to a nitrogen atom of the 6-hydroxy FAD in a nucleophilic addition
+        reaction, forming the product and FADH-. Asn732 promotes deprotonation of the hydroxyl group by
+        forming a hydrogen bond to it.
+      notes: M-CSA entry 673, mechanism 1; M-CSA cites PMID:11786022, PMID:12493734; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/673/
+      snippet: Tyr609 interacts with the water molecule near the protonated His689, promoting deprotonation
+        and restoring His689 to its neutral state. Following this step FADH2 is oxidised back to FAD using
+        a haem and oxygen.
+      notes: M-CSA entry 673, mechanism 1; M-CSA cites PMID:11786022, PMID:12493734; step 2
+  - subject: tyr609
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Tyr609 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/673/
+      snippet: Tyr609 interacts with the water molecule near the protonated His689, promoting deprotonation
+        and restoring His689 to its neutral state. Following this step FADH2 is oxidised back to FAD using
+        a haem and oxygen.
+      notes: M-CSA entry 673, mechanism 1; M-CSA cites PMID:11786022, PMID:12493734; step 2
+  - subject: his689
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His689 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/673/
+      snippet: Tyr609 interacts with the water molecule near the protonated His689, promoting deprotonation
+        and restoring His689 to its neutral state. Following this step FADH2 is oxidised back to FAD using
+        a haem and oxygen.
+      notes: M-CSA entry 673, mechanism 1; M-CSA cites PMID:11786022, PMID:12493734; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/673/
+      snippet: Products.
+      notes: M-CSA entry 673, mechanism 1; M-CSA cites PMID:11786022, PMID:12493734; step 3
+  - subject: tyr609
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr609 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/673/
+      snippet: activator, electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 673, mechanism 1; M-CSA cites PMID:11786022, PMID:12493734; M-CSA catalytic-residue
+        roles for Tyr609
+  - subject: his689
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His689 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/673/
+      snippet: electrostatic stabiliser, proton acceptor, proton donor
+      notes: M-CSA entry 673, mechanism 1; M-CSA cites PMID:11786022, PMID:12493734; M-CSA catalytic-residue
+        roles for His689
+  - subject: asn732
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn732 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/673/
+      snippet: activator, electrostatic stabiliser, enhance reactivity
+      notes: M-CSA entry 673, mechanism 1; M-CSA cites PMID:11786022, PMID:12493734; M-CSA catalytic-residue
+        roles for Asn732
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/673/
+      snippet: 'The generally agreed on mechanism for this reaction is that of the hydride transfer: His
+        689 acts as a general base by deprotonating the C1 hydroxyl group of the cellobiose substrate,
+        causing hydride transfer from C1 of the substrate to FAD. Asn 732, by hydrogen bonding to O1 of
+        the substrate, facilitates proton transfer to His 689. Tyr 609 hydrogen bonds to a water molecule,
+        increasing the water'''
+      notes: M-CSA entry 673, mechanism 1; M-CSA cites PMID:11786022, PMID:12493734; CATH domain 3.30.410.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/673/
+      snippet: 'The generally agreed on mechanism for this reaction is that of the hydride transfer: His
+        689 acts as a general base by deprotonating the C1 hydroxyl group of the cellobiose substrate,
+        causing hydride transfer from C1 of the substrate to FAD. Asn 732, by hydrogen bonding to O1 of
+        the substrate, facilitates proton transfer to His 689. Tyr 609 hydrogen bonds to a water molecule,
+        increasing the water'''
+      notes: M-CSA entry 673, mechanism 1; M-CSA cites PMID:11786022, PMID:12493734; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/673/
+      snippet: 'The generally agreed on mechanism for this reaction is that of the hydride transfer: His
+        689 acts as a general base by deprotonating the C1 hydroxyl group of the cellobiose substrate,
+        causing hydride transfer from C1 of the substrate to FAD. Asn 732, by hydrogen bonding to O1 of
+        the substrate, facilitates proton transfer to His 689. Tyr 609 hydrogen bonds to a water molecule,
+        increasing the water'''
+      notes: M-CSA entry 673, mechanism 1; M-CSA cites PMID:11786022, PMID:12493734; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/673/
+      snippet: 'The generally agreed on mechanism for this reaction is that of the hydride transfer: His
+        689 acts as a general base by deprotonating the C1 hydroxyl group of the cellobiose substrate,
+        causing hydride transfer from C1 of the substrate to FAD. Asn 732, by hydrogen bonding to O1 of
+        the substrate, facilitates proton transfer to His 689. Tyr 609 hydrogen bonds to a water molecule,
+        increasing the water'''
+      notes: M-CSA entry 673, mechanism 1; M-CSA cites PMID:11786022, PMID:12493734; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/673/
+      snippet: 'The generally agreed on mechanism for this reaction is that of the hydride transfer: His
+        689 acts as a general base by deprotonating the C1 hydroxyl group of the cellobiose substrate,
+        causing hydride transfer from C1 of the substrate to FAD. Asn 732, by hydrogen bonding to O1 of
+        the substrate, facilitates proton transfer to His 689. Tyr 609 hydrogen bonds to a water molecule,
+        increasing the water'''
+      notes: M-CSA entry 673, mechanism 1; M-CSA cites PMID:11786022, PMID:12493734; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/673/
+      snippet: 'The generally agreed on mechanism for this reaction is that of the hydride transfer: His
+        689 acts as a general base by deprotonating the C1 hydroxyl group of the cellobiose substrate,
+        causing hydride transfer from C1 of the substrate to FAD. Asn 732, by hydrogen bonding to O1 of
+        the substrate, facilitates proton transfer to His 689. Tyr 609 hydrogen bonds to a water molecule,
+        increasing the water'''
+      notes: M-CSA entry 673, mechanism 1; M-CSA cites PMID:11786022, PMID:12493734; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 673;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.8.5.4
 - CHEBI:26833
@@ -270,4 +270,346 @@ definitions:
       Catalyses the oxidation of sulfides, such as hydrogen sulfide, with the help of a quinone to form sulfur globules. Consecutive reaction cycles lead to the accumulation of a polysulfide product on the active site Cys residues; these products are released when they exceed a critical length, typically as cyclooctasulfur. This is an important step in anoxygenic bacterial photosynthesis.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of sulfide:quinone oxidoreductase
+  description: Stepwise mechanism transcribed from M-CSA entry 320 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: cys129
+    label: catalytic Cys129 (M-CSA/PDB numbering; UniProt residue 129)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q7ZAG8
+    description: 'M-CSA roles: activator, covalently attached.'
+  - node_id: cys178
+    label: catalytic Cys178 (M-CSA/PDB numbering; UniProt residue 178)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q7ZAG8
+    description: 'M-CSA roles: activator, covalently attached, electrofuge, electrophile, nucleofuge,
+      nucleophile.'
+  - node_id: asp215
+    label: catalytic Asp215 (M-CSA/PDB numbering; UniProt residue 215)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q7ZAG8
+    description: 'M-CSA roles: activator, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+      proton donor.'
+  - node_id: cys350
+    label: catalytic Cys350 (M-CSA/PDB numbering; UniProt residue 350)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q7ZAG8
+    description: 'M-CSA roles: activator, covalently attached, electrofuge, electrophile.'
+  - node_id: asp353
+    label: catalytic Asp353 (M-CSA/PDB numbering; UniProt residue 353)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q7ZAG8
+    description: 'M-CSA roles: activator, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+      proton donor, proton relay.'
+  - node_id: lys386
+    label: catalytic Lys386 (M-CSA/PDB numbering; UniProt residue 386)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q7ZAG8
+    description: 'M-CSA roles: activator.'
+  - node_id: reactant0
+    label: 1,4-benzoquinones
+    node_type: CHEMICAL
+    grounding: CHEBI:132124
+  - node_id: reactant1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: reactant2
+    label: hydrosulfide
+    node_type: CHEMICAL
+    grounding: CHEBI:29919
+  - node_id: product0
+    label: sulfur atom
+    node_type: CHEMICAL
+    grounding: CHEBI:26833
+  - node_id: product1
+    label: hydroquinones
+    node_type: CHEMICAL
+    grounding: CHEBI:24646
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The substrate hydrogen sulfide is deprotonated by Asp353, activating the sulfur as a
+      nucleophile towards the protein disulfide bridge. The sulfide oxidation occurs on the re face of
+      the FAD cofactor [PMID:19438211].
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The anionic Cys178A attacks the C4 position of FAD, initiating protonation of the N5
+      position.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The Cys350 dithiolate acts as a nucleophile towards the enzyme cofactor adduct, forming
+      a three centre sulfur intermediate and the reduced form of FAD. The steric bulk brought about by
+      the presence of an elongated sulfur chain attached Cys350A directs the anionic Cys178A towards nucleophilic
+      attack at Cys350A, reforming the active site disulfide bridge.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: 'Ubiquinone, the physiological electron acceptor accepts a hydride from reduced FAD,
+      regenerating the cofactor for the next round of sulfide oxidiation. While potential proton donors
+      to the ubiquinone identified in <i>Acidithiobacillus ferrooxidans</i> are conserved in the <i>Acidianus
+      ambivalens</i> homolouge listed here, no general base to the FAD cofactor has been suggested in
+      either case [PMID:'
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: sulfide:quinone oxidoreductase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:320
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.50.50.60 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.50.50.60
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: sulfide:quinone oxidoreductase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.8.5.4
+  edges:
+  - subject: asp353
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp353 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/320/
+      snippet: The substrate hydrogen sulfide is deprotonated by Asp353, activating the sulfur as a nucleophile
+        towards the protein disulfide bridge. The sulfide oxidation occurs on the re face of the FAD cofactor
+        [PMID:19438211].
+      notes: M-CSA entry 320, mechanism 1; M-CSA cites PMID:19438211, PMID:19487671, PMID:20303979; step
+        1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/320/
+      snippet: The anionic Cys178A attacks the C4 position of FAD, initiating protonation of the N5 position.
+      notes: M-CSA entry 320, mechanism 1; M-CSA cites PMID:19438211, PMID:19487671, PMID:20303979; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/320/
+      snippet: The Cys350 dithiolate acts as a nucleophile towards the enzyme cofactor adduct, forming
+        a three centre sulfur intermediate and the reduced form of FAD. The steric bulk brought about
+        by the presence of an elongated sulfur chain attached Cys350A directs the anionic Cys178A towards
+        nucleophilic attack at Cys350A, reforming the active site disulfide bridge.
+      notes: M-CSA entry 320, mechanism 1; M-CSA cites PMID:19438211, PMID:19487671, PMID:20303979; step
+        3
+  - subject: cys350
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Cys350 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/320/
+      snippet: The Cys350 dithiolate acts as a nucleophile towards the enzyme cofactor adduct, forming
+        a three centre sulfur intermediate and the reduced form of FAD. The steric bulk brought about
+        by the presence of an elongated sulfur chain attached Cys350A directs the anionic Cys178A towards
+        nucleophilic attack at Cys350A, reforming the active site disulfide bridge.
+      notes: M-CSA entry 320, mechanism 1; M-CSA cites PMID:19438211, PMID:19487671, PMID:20303979; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/320/
+      snippet: Ubiquinone, the physiological electron acceptor accepts a hydride from reduced FAD, regenerating
+        the cofactor for the next round of sulfide oxidiation. While potential proton donors to the ubiquinone
+        identified in <i>Acidithiobacillus ferrooxidans</i> are conserved in the <i>Acidianus ambivalens</i>
+        homolouge listed here, no general base to the FAD cofactor has been suggested in either case [PMID:20303979].
+      notes: M-CSA entry 320, mechanism 1; M-CSA cites PMID:19438211, PMID:19487671, PMID:20303979; step
+        4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/320/
+      snippet: Products.
+      notes: M-CSA entry 320, mechanism 1; M-CSA cites PMID:19438211, PMID:19487671, PMID:20303979; step
+        5
+  - subject: cys129
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys129 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/320/
+      snippet: activator, covalently attached
+      notes: M-CSA entry 320, mechanism 1; M-CSA cites PMID:19438211, PMID:19487671, PMID:20303979; M-CSA
+        catalytic-residue roles for Cys129
+  - subject: cys178
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys178 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/320/
+      snippet: activator, covalently attached, electrofuge, electrophile, nucleofuge, nucleophile
+      notes: M-CSA entry 320, mechanism 1; M-CSA cites PMID:19438211, PMID:19487671, PMID:20303979; M-CSA
+        catalytic-residue roles for Cys178
+  - subject: asp215
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp215 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/320/
+      snippet: activator, hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 320, mechanism 1; M-CSA cites PMID:19438211, PMID:19487671, PMID:20303979; M-CSA
+        catalytic-residue roles for Asp215
+  - subject: cys350
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys350 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/320/
+      snippet: activator, covalently attached, electrofuge, electrophile
+      notes: M-CSA entry 320, mechanism 1; M-CSA cites PMID:19438211, PMID:19487671, PMID:20303979; M-CSA
+        catalytic-residue roles for Cys350
+  - subject: asp353
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp353 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/320/
+      snippet: activator, hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor,
+        proton relay
+      notes: M-CSA entry 320, mechanism 1; M-CSA cites PMID:19438211, PMID:19487671, PMID:20303979; M-CSA
+        catalytic-residue roles for Asp353
+  - subject: lys386
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys386 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/320/
+      snippet: activator
+      notes: M-CSA entry 320, mechanism 1; M-CSA cites PMID:19438211, PMID:19487671, PMID:20303979; M-CSA
+        catalytic-residue roles for Lys386
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/320/
+      snippet: This enzyme has the highest activity with caldariella quinone and decylubiquinone, and
+        lower activity with naphtoquinones. The substrate hydrogen sulfide is deprotonated by Asp353,
+        activating the sulfur as a nucleophile towards the protein disulfide bridge. The anionic Cys178A
+        attacks the C4 position of FAD, initiating protonation of the N5 position. The Cys350 dithiolate
+        acts as a nucleophile tow
+      notes: M-CSA entry 320, mechanism 1; M-CSA cites PMID:19438211, PMID:19487671, PMID:20303979; CATH
+        domain 3.50.50.60 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/320/
+      snippet: This enzyme has the highest activity with caldariella quinone and decylubiquinone, and
+        lower activity with naphtoquinones. The substrate hydrogen sulfide is deprotonated by Asp353,
+        activating the sulfur as a nucleophile towards the protein disulfide bridge. The anionic Cys178A
+        attacks the C4 position of FAD, initiating protonation of the N5 position. The Cys350 dithiolate
+        acts as a nucleophile tow
+      notes: M-CSA entry 320, mechanism 1; M-CSA cites PMID:19438211, PMID:19487671, PMID:20303979; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/320/
+      snippet: This enzyme has the highest activity with caldariella quinone and decylubiquinone, and
+        lower activity with naphtoquinones. The substrate hydrogen sulfide is deprotonated by Asp353,
+        activating the sulfur as a nucleophile towards the protein disulfide bridge. The anionic Cys178A
+        attacks the C4 position of FAD, initiating protonation of the N5 position. The Cys350 dithiolate
+        acts as a nucleophile tow
+      notes: M-CSA entry 320, mechanism 1; M-CSA cites PMID:19438211, PMID:19487671, PMID:20303979; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/320/
+      snippet: This enzyme has the highest activity with caldariella quinone and decylubiquinone, and
+        lower activity with naphtoquinones. The substrate hydrogen sulfide is deprotonated by Asp353,
+        activating the sulfur as a nucleophile towards the protein disulfide bridge. The anionic Cys178A
+        attacks the C4 position of FAD, initiating protonation of the N5 position. The Cys350 dithiolate
+        acts as a nucleophile tow
+      notes: M-CSA entry 320, mechanism 1; M-CSA cites PMID:19438211, PMID:19487671, PMID:20303979; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/320/
+      snippet: This enzyme has the highest activity with caldariella quinone and decylubiquinone, and
+        lower activity with naphtoquinones. The substrate hydrogen sulfide is deprotonated by Asp353,
+        activating the sulfur as a nucleophile towards the protein disulfide bridge. The anionic Cys178A
+        attacks the C4 position of FAD, initiating protonation of the N5 position. The Cys350 dithiolate
+        acts as a nucleophile tow
+      notes: M-CSA entry 320, mechanism 1; M-CSA cites PMID:19438211, PMID:19487671, PMID:20303979; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/320/
+      snippet: This enzyme has the highest activity with caldariella quinone and decylubiquinone, and
+        lower activity with naphtoquinones. The substrate hydrogen sulfide is deprotonated by Asp353,
+        activating the sulfur as a nucleophile towards the protein disulfide bridge. The anionic Cys178A
+        attacks the C4 position of FAD, initiating protonation of the N5 position. The Cys350 dithiolate
+        acts as a nucleophile tow
+      notes: M-CSA entry 320, mechanism 1; M-CSA cites PMID:19438211, PMID:19487671, PMID:20303979; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/320/
+      snippet: This enzyme has the highest activity with caldariella quinone and decylubiquinone, and
+        lower activity with naphtoquinones. The substrate hydrogen sulfide is deprotonated by Asp353,
+        activating the sulfur as a nucleophile towards the protein disulfide bridge. The anionic Cys178A
+        attacks the C4 position of FAD, initiating protonation of the N5 position. The Cys350 dithiolate
+        acts as a nucleophile tow
+      notes: M-CSA entry 320, mechanism 1; M-CSA cites PMID:19438211, PMID:19487671, PMID:20303979; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (19 evidence-backed edges) transcribed from M-CSA entry 320;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

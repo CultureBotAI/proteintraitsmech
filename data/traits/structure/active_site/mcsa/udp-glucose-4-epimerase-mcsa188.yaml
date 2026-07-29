@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.1.3.2
 - CHEBI:66914
@@ -304,4 +304,202 @@ definitions:
       UDP-glucose 4-epimerase (EC:5.1.3.2) interconverts UDP-glucose and UDP-galactose which are precursors of glucose- and galactose-containing exopolysaccharides (EPS) via the transient reduction of NAD.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of UDP-glucose 4-epimerase
+  description: Stepwise mechanism transcribed from M-CSA entry 188 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: ser124
+    label: catalytic Ser124 (M-CSA/PDB numbering; UniProt residue 124)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09147
+    description: 'M-CSA roles: activator, electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond
+      donor, proton acceptor, proton donor, proton relay.'
+  - node_id: tyr149
+    label: catalytic Tyr149 (M-CSA/PDB numbering; UniProt residue 149)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09147
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: lys153
+    label: catalytic Lys153 (M-CSA/PDB numbering; UniProt residue 153)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09147
+    description: 'M-CSA roles: activator, hydrogen bond donor.'
+  - node_id: reactant0
+    label: UDP-alpha-D-galactose(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:66914
+  - node_id: product0
+    label: UDP-alpha-D-glucose(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58885
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Tyr149 deprotonates the 4-hydroxide of the substrate, resulting in an elimination of
+      the hydride from the C4 position. The hydride then attacks the NAD cofactor in a nucleophilic addition
+      reaction.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The 4-ketohexopyranosyl ring of the intermediate rotates to place opposite faces of the
+      4-keto group in position for hydride from NADH. This conformational change potentates non-stereospecific
+      hydride transfer, an essential mechanistic process in epimerisation [PMID:11380265]. The hydride
+      transfer initiates the deprotonation of Tyr149.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: UDP-glucose 4-epimerase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:188
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.720 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.720
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: UDP-glucose 4-epimerase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.1.3.2
+  edges:
+  - subject: tyr149
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr149 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/188/
+      snippet: Tyr149 deprotonates the 4-hydroxide of the substrate, resulting in an elimination of the
+        hydride from the C4 position. The hydride then attacks the NAD cofactor in a nucleophilic addition
+        reaction.
+      notes: M-CSA entry 188, mechanism 1; M-CSA cites PMID:11380265; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/188/
+      snippet: The 4-ketohexopyranosyl ring of the intermediate rotates to place opposite faces of the
+        4-keto group in position for hydride from NADH. This conformational change potentates non-stereospecific
+        hydride transfer, an essential mechanistic process in epimerisation [PMID:11380265]. The hydride
+        transfer initiates the deprotonation of Tyr149.
+      notes: M-CSA entry 188, mechanism 1; M-CSA cites PMID:11380265; step 2
+  - subject: tyr149
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Tyr149 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/188/
+      snippet: The 4-ketohexopyranosyl ring of the intermediate rotates to place opposite faces of the
+        4-keto group in position for hydride from NADH. This conformational change potentates non-stereospecific
+        hydride transfer, an essential mechanistic process in epimerisation [PMID:11380265]. The hydride
+        transfer initiates the deprotonation of Tyr149.
+      notes: M-CSA entry 188, mechanism 1; M-CSA cites PMID:11380265; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/188/
+      snippet: Products.
+      notes: M-CSA entry 188, mechanism 1; M-CSA cites PMID:11380265; step 3
+  - subject: ser124
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser124 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/188/
+      snippet: activator, electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, proton
+        acceptor, proton donor, proton relay
+      notes: M-CSA entry 188, mechanism 1; M-CSA cites PMID:11380265; M-CSA catalytic-residue roles for
+        Ser124
+  - subject: tyr149
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr149 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/188/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 188, mechanism 1; M-CSA cites PMID:11380265; M-CSA catalytic-residue roles for
+        Tyr149
+  - subject: lys153
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys153 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/188/
+      snippet: activator, hydrogen bond donor
+      notes: M-CSA entry 188, mechanism 1; M-CSA cites PMID:11380265; M-CSA catalytic-residue roles for
+        Lys153
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/188/
+      snippet: Tyr149 initiates the reaction via the abstraction of a proton from the substrate, which
+        results in a hydride being transferred to the NAD cofactor. The intermediate then undergoes a
+        conformational change in the active site. The rate-determining step of this reaction is the conformational
+        change induced upon binding of the substrate. This is due to the fact that the mutation Tyr149Phe
+        decreases the
+      notes: M-CSA entry 188, mechanism 1; M-CSA cites PMID:11380265; CATH domain 3.40.50.720 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/188/
+      snippet: Tyr149 initiates the reaction via the abstraction of a proton from the substrate, which
+        results in a hydride being transferred to the NAD cofactor. The intermediate then undergoes a
+        conformational change in the active site. The rate-determining step of this reaction is the conformational
+        change induced upon binding of the substrate. This is due to the fact that the mutation Tyr149Phe
+        decreases the
+      notes: M-CSA entry 188, mechanism 1; M-CSA cites PMID:11380265; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/188/
+      snippet: Tyr149 initiates the reaction via the abstraction of a proton from the substrate, which
+        results in a hydride being transferred to the NAD cofactor. The intermediate then undergoes a
+        conformational change in the active site. The rate-determining step of this reaction is the conformational
+        change induced upon binding of the substrate. This is due to the fact that the mutation Tyr149Phe
+        decreases the
+      notes: M-CSA entry 188, mechanism 1; M-CSA cites PMID:11380265; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/188/
+      snippet: Tyr149 initiates the reaction via the abstraction of a proton from the substrate, which
+        results in a hydride being transferred to the NAD cofactor. The intermediate then undergoes a
+        conformational change in the active site. The rate-determining step of this reaction is the conformational
+        change induced upon binding of the substrate. This is due to the fact that the mutation Tyr149Phe
+        decreases the
+      notes: M-CSA entry 188, mechanism 1; M-CSA cites PMID:11380265; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (11 evidence-backed edges) transcribed from M-CSA entry 188;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

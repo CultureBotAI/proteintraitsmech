@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:6.1.1.3
 - CHEBI:78442
@@ -533,4 +533,340 @@ definitions:
       threonyl tRNA synthase from E.coli is able to catalyse the attachment of a threonine residue to its corresponding tRNA, displaying remarkable specificity as it only works on the specific amino acid and on the specific tRNA. It is part of the class II tRNA synthases, which make up approximately half of the known tRNA synthases. It is rare among class II synthases because of the presence of a Zinc ion in the active site, which is catalytic rather than structural.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of threonine---tRNA ligase
+  description: Stepwise mechanism transcribed from M-CSA entry 540 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: cys334
+    label: catalytic Cys334 (M-CSA/PDB numbering; UniProt residue 334)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A8M3
+    description: 'M-CSA roles: electrostatic stabiliser, metal ligand.'
+  - node_id: arg363
+    label: catalytic Arg363 (M-CSA/PDB numbering; UniProt residue 363)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A8M3
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: gln381
+    label: catalytic Gln381 (M-CSA/PDB numbering; UniProt residue 381)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A8M3
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp383
+    label: catalytic Asp383 (M-CSA/PDB numbering; UniProt residue 383)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A8M3
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his385
+    label: catalytic His385 (M-CSA/PDB numbering; UniProt residue 385)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A8M3
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: lys465
+    label: catalytic Lys465 (M-CSA/PDB numbering; UniProt residue 465)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A8M3
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his511
+    label: catalytic His511 (M-CSA/PDB numbering; UniProt residue 511)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A8M3
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: AMP 3'-end(1-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:78442
+  - node_id: reactant1
+    label: L-threonine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57926
+  - node_id: reactant2
+    label: ATP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+  - node_id: product0
+    label: 3'-(L-threonyl)adenylyl(1-) group
+    node_type: CHEMICAL
+    grounding: CHEBI:78534
+  - node_id: product1
+    label: adenosine 5'-monophosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+  - node_id: product2
+    label: diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+  - node_id: product3
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The first step of the reaction involves nucleophilic attack from the carboxy terminal
+      of the threonine on the alpha phosphate of the ATP. This forms threonylAMP and releases PPi. The
+      reaction is stabilised by the positively charged Arg363 side chain.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The amine group of threonylAMP deprotonates the 3'-OH group of the tRNA. This is followed
+      by nucleophilic attack of the oxygen on the carbonyl group of the threoylAMP, eliminating AMP.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: threonine---tRNA ligase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:540
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.930.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.930.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: threonine---tRNA ligase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:6.1.1.3
+  edges:
+  - subject: arg363
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg363 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/540/
+      snippet: The first step of the reaction involves nucleophilic attack from the carboxy terminal of
+        the threonine on the alpha phosphate of the ATP. This forms threonylAMP and releases PPi. The
+        reaction is stabilised by the positively charged Arg363 side chain.
+      notes: M-CSA entry 540, mechanism 1; M-CSA cites PMID:10319817, PMID:10881182, PMID:10881191, PMID:12875846,
+        PMID:23852030, PMID:28592109; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/540/
+      snippet: The amine group of threonylAMP deprotonates the 3'-OH group of the tRNA. This is followed
+        by nucleophilic attack of the oxygen on the carbonyl group of the threoylAMP, eliminating AMP.
+      notes: M-CSA entry 540, mechanism 1; M-CSA cites PMID:10319817, PMID:10881182, PMID:10881191, PMID:12875846,
+        PMID:23852030, PMID:28592109; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/540/
+      snippet: Products
+      notes: M-CSA entry 540, mechanism 1; M-CSA cites PMID:10319817, PMID:10881182, PMID:10881191, PMID:12875846,
+        PMID:23852030, PMID:28592109; step 3
+  - subject: cys334
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys334 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/540/
+      snippet: electrostatic stabiliser, metal ligand
+      notes: M-CSA entry 540, mechanism 1; M-CSA cites PMID:10319817, PMID:10881182, PMID:10881191, PMID:12875846,
+        PMID:23852030, PMID:28592109; M-CSA catalytic-residue roles for Cys334
+  - subject: arg363
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg363 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/540/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 540, mechanism 1; M-CSA cites PMID:10319817, PMID:10881182, PMID:10881191, PMID:12875846,
+        PMID:23852030, PMID:28592109; M-CSA catalytic-residue roles for Arg363
+  - subject: gln381
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln381 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/540/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 540, mechanism 1; M-CSA cites PMID:10319817, PMID:10881182, PMID:10881191, PMID:12875846,
+        PMID:23852030, PMID:28592109; M-CSA catalytic-residue roles for Gln381
+  - subject: asp383
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp383 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/540/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 540, mechanism 1; M-CSA cites PMID:10319817, PMID:10881182, PMID:10881191, PMID:12875846,
+        PMID:23852030, PMID:28592109; M-CSA catalytic-residue roles for Asp383
+  - subject: his385
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His385 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/540/
+      snippet: metal ligand
+      notes: M-CSA entry 540, mechanism 1; M-CSA cites PMID:10319817, PMID:10881182, PMID:10881191, PMID:12875846,
+        PMID:23852030, PMID:28592109; M-CSA catalytic-residue roles for His385
+  - subject: lys465
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys465 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/540/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 540, mechanism 1; M-CSA cites PMID:10319817, PMID:10881182, PMID:10881191, PMID:12875846,
+        PMID:23852030, PMID:28592109; M-CSA catalytic-residue roles for Lys465
+  - subject: his511
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His511 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/540/
+      snippet: metal ligand
+      notes: M-CSA entry 540, mechanism 1; M-CSA cites PMID:10319817, PMID:10881182, PMID:10881191, PMID:12875846,
+        PMID:23852030, PMID:28592109; M-CSA catalytic-residue roles for His511
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/540/
+      snippet: The reaction proceeds through direct nucleophilic attack from the carboxy terminal of the
+        threonine on the alpha phosphate of ATP to form threonylAMP and releasing PPi in the process.
+        This part of the reaction passes through a pentavalent phosphate intermediate, stabilised by Arg
+        363's positively charged side chain. The threonylAMP binds specifically to the Zinc ion, which
+        therefore prevents other
+      notes: M-CSA entry 540, mechanism 1; M-CSA cites PMID:10319817, PMID:10881182, PMID:10881191, PMID:12875846,
+        PMID:23852030, PMID:28592109; CATH domain 3.30.930.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/540/
+      snippet: The reaction proceeds through direct nucleophilic attack from the carboxy terminal of the
+        threonine on the alpha phosphate of ATP to form threonylAMP and releasing PPi in the process.
+        This part of the reaction passes through a pentavalent phosphate intermediate, stabilised by Arg
+        363's positively charged side chain. The threonylAMP binds specifically to the Zinc ion, which
+        therefore prevents other
+      notes: M-CSA entry 540, mechanism 1; M-CSA cites PMID:10319817, PMID:10881182, PMID:10881191, PMID:12875846,
+        PMID:23852030, PMID:28592109; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/540/
+      snippet: The reaction proceeds through direct nucleophilic attack from the carboxy terminal of the
+        threonine on the alpha phosphate of ATP to form threonylAMP and releasing PPi in the process.
+        This part of the reaction passes through a pentavalent phosphate intermediate, stabilised by Arg
+        363's positively charged side chain. The threonylAMP binds specifically to the Zinc ion, which
+        therefore prevents other
+      notes: M-CSA entry 540, mechanism 1; M-CSA cites PMID:10319817, PMID:10881182, PMID:10881191, PMID:12875846,
+        PMID:23852030, PMID:28592109; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/540/
+      snippet: The reaction proceeds through direct nucleophilic attack from the carboxy terminal of the
+        threonine on the alpha phosphate of ATP to form threonylAMP and releasing PPi in the process.
+        This part of the reaction passes through a pentavalent phosphate intermediate, stabilised by Arg
+        363's positively charged side chain. The threonylAMP binds specifically to the Zinc ion, which
+        therefore prevents other
+      notes: M-CSA entry 540, mechanism 1; M-CSA cites PMID:10319817, PMID:10881182, PMID:10881191, PMID:12875846,
+        PMID:23852030, PMID:28592109; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/540/
+      snippet: The reaction proceeds through direct nucleophilic attack from the carboxy terminal of the
+        threonine on the alpha phosphate of ATP to form threonylAMP and releasing PPi in the process.
+        This part of the reaction passes through a pentavalent phosphate intermediate, stabilised by Arg
+        363's positively charged side chain. The threonylAMP binds specifically to the Zinc ion, which
+        therefore prevents other
+      notes: M-CSA entry 540, mechanism 1; M-CSA cites PMID:10319817, PMID:10881182, PMID:10881191, PMID:12875846,
+        PMID:23852030, PMID:28592109; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/540/
+      snippet: The reaction proceeds through direct nucleophilic attack from the carboxy terminal of the
+        threonine on the alpha phosphate of ATP to form threonylAMP and releasing PPi in the process.
+        This part of the reaction passes through a pentavalent phosphate intermediate, stabilised by Arg
+        363's positively charged side chain. The threonylAMP binds specifically to the Zinc ion, which
+        therefore prevents other
+      notes: M-CSA entry 540, mechanism 1; M-CSA cites PMID:10319817, PMID:10881182, PMID:10881191, PMID:12875846,
+        PMID:23852030, PMID:28592109; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/540/
+      snippet: The reaction proceeds through direct nucleophilic attack from the carboxy terminal of the
+        threonine on the alpha phosphate of ATP to form threonylAMP and releasing PPi in the process.
+        This part of the reaction passes through a pentavalent phosphate intermediate, stabilised by Arg
+        363's positively charged side chain. The threonylAMP binds specifically to the Zinc ion, which
+        therefore prevents other
+      notes: M-CSA entry 540, mechanism 1; M-CSA cites PMID:10319817, PMID:10881182, PMID:10881191, PMID:12875846,
+        PMID:23852030, PMID:28592109; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/540/
+      snippet: The reaction proceeds through direct nucleophilic attack from the carboxy terminal of the
+        threonine on the alpha phosphate of ATP to form threonylAMP and releasing PPi in the process.
+        This part of the reaction passes through a pentavalent phosphate intermediate, stabilised by Arg
+        363's positively charged side chain. The threonylAMP binds specifically to the Zinc ion, which
+        therefore prevents other
+      notes: M-CSA entry 540, mechanism 1; M-CSA cites PMID:10319817, PMID:10881182, PMID:10881191, PMID:12875846,
+        PMID:23852030, PMID:28592109; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product3
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/540/
+      snippet: The reaction proceeds through direct nucleophilic attack from the carboxy terminal of the
+        threonine on the alpha phosphate of ATP to form threonylAMP and releasing PPi in the process.
+        This part of the reaction passes through a pentavalent phosphate intermediate, stabilised by Arg
+        363's positively charged side chain. The threonylAMP binds specifically to the Zinc ion, which
+        therefore prevents other
+      notes: M-CSA entry 540, mechanism 1; M-CSA cites PMID:10319817, PMID:10881182, PMID:10881191, PMID:12875846,
+        PMID:23852030, PMID:28592109; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (19 evidence-backed edges) transcribed from M-CSA entry 540;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

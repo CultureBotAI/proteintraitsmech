@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.7.2.1
 - CHEBI:30616
@@ -280,4 +280,221 @@ definitions:
       Acetate kinase is a key enzyme for many methanogenic bacteria as it is able to catalyse the interconversion of acetate and acetyl phosphate using the removal of a phosphate from ATP. Structural analysis of the enzyme from Methanosarcina thermophila, an Archaea, shows that it is a member of the sugar kinase superfamily which includes hexokinase, and geochemical studies suggest that it is most likely to be the urkinase- the ancestor of all of the members of the superfamily.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of acetate kinase
+  description: Stepwise mechanism transcribed from M-CSA entry 643 (2 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: asn7
+    label: catalytic Asn7 (M-CSA/PDB numbering; UniProt residue 7)
+    node_type: RESIDUE
+    grounding: UniProtKB:P38502
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: arg91
+    label: catalytic Arg91 (M-CSA/PDB numbering; UniProt residue 91)
+    node_type: RESIDUE
+    grounding: UniProtKB:P38502
+    description: 'M-CSA roles: electrostatic stabiliser, polar interaction.'
+  - node_id: his180
+    label: catalytic His180 (M-CSA/PDB numbering; UniProt residue 180)
+    node_type: RESIDUE
+    grounding: UniProtKB:P38502
+    description: 'M-CSA roles: electrostatic stabiliser, polar interaction.'
+  - node_id: arg241
+    label: catalytic Arg241 (M-CSA/PDB numbering; UniProt residue 241)
+    node_type: RESIDUE
+    grounding: UniProtKB:P38502
+    description: 'M-CSA roles: electrostatic stabiliser, polar interaction.'
+  - node_id: glu384
+    label: catalytic Glu384 (M-CSA/PDB numbering; UniProt residue 384)
+    node_type: RESIDUE
+    grounding: UniProtKB:P38502
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: ATP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+  - node_id: reactant1
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+  - node_id: product0
+    label: acetyl phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:22191
+  - node_id: product1
+    label: ADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Acetate's carboxyl group acts as a nucleophile and attacks and displaces the gamma-phosphate
+      on ATP via a trigonal bypyramidal transition state.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: acetate kinase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:643
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.420.40 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.420.40
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: acetate kinase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.7.2.1
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/643/
+      snippet: Products.
+      notes: M-CSA entry 643, mechanism 1; M-CSA cites PMID:11133963, PMID:11562377, PMID:15647264; step
+        2
+  - subject: asn7
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn7 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/643/
+      snippet: metal ligand
+      notes: M-CSA entry 643, mechanism 1; M-CSA cites PMID:11133963, PMID:11562377, PMID:15647264; M-CSA
+        catalytic-residue roles for Asn7
+  - subject: arg91
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg91 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/643/
+      snippet: electrostatic stabiliser, polar interaction
+      notes: M-CSA entry 643, mechanism 1; M-CSA cites PMID:11133963, PMID:11562377, PMID:15647264; M-CSA
+        catalytic-residue roles for Arg91
+  - subject: his180
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His180 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/643/
+      snippet: electrostatic stabiliser, polar interaction
+      notes: M-CSA entry 643, mechanism 1; M-CSA cites PMID:11133963, PMID:11562377, PMID:15647264; M-CSA
+        catalytic-residue roles for His180
+  - subject: arg241
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg241 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/643/
+      snippet: electrostatic stabiliser, polar interaction
+      notes: M-CSA entry 643, mechanism 1; M-CSA cites PMID:11133963, PMID:11562377, PMID:15647264; M-CSA
+        catalytic-residue roles for Arg241
+  - subject: glu384
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu384 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/643/
+      snippet: metal ligand
+      notes: M-CSA entry 643, mechanism 1; M-CSA cites PMID:11133963, PMID:11562377, PMID:15647264; M-CSA
+        catalytic-residue roles for Glu384
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/643/
+      snippet: The proposed mechanism is an in-line single displacement reaction where the acetate acts
+        as the nucleophile to attack the gamma phosphate of ATP, resulting in acetyl phosphate and ADP.
+        For this reaction to take place, a magnesium ion, His180,  Arg241 and Arg91 are important in stabilising
+        the reaction transition state.
+      notes: M-CSA entry 643, mechanism 1; M-CSA cites PMID:11133963, PMID:11562377, PMID:15647264; CATH
+        domain 3.30.420.40 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/643/
+      snippet: The proposed mechanism is an in-line single displacement reaction where the acetate acts
+        as the nucleophile to attack the gamma phosphate of ATP, resulting in acetyl phosphate and ADP.
+        For this reaction to take place, a magnesium ion, His180,  Arg241 and Arg91 are important in stabilising
+        the reaction transition state.
+      notes: M-CSA entry 643, mechanism 1; M-CSA cites PMID:11133963, PMID:11562377, PMID:15647264; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/643/
+      snippet: The proposed mechanism is an in-line single displacement reaction where the acetate acts
+        as the nucleophile to attack the gamma phosphate of ATP, resulting in acetyl phosphate and ADP.
+        For this reaction to take place, a magnesium ion, His180,  Arg241 and Arg91 are important in stabilising
+        the reaction transition state.
+      notes: M-CSA entry 643, mechanism 1; M-CSA cites PMID:11133963, PMID:11562377, PMID:15647264; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/643/
+      snippet: The proposed mechanism is an in-line single displacement reaction where the acetate acts
+        as the nucleophile to attack the gamma phosphate of ATP, resulting in acetyl phosphate and ADP.
+        For this reaction to take place, a magnesium ion, His180,  Arg241 and Arg91 are important in stabilising
+        the reaction transition state.
+      notes: M-CSA entry 643, mechanism 1; M-CSA cites PMID:11133963, PMID:11562377, PMID:15647264; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/643/
+      snippet: The proposed mechanism is an in-line single displacement reaction where the acetate acts
+        as the nucleophile to attack the gamma phosphate of ATP, resulting in acetyl phosphate and ADP.
+        For this reaction to take place, a magnesium ion, His180,  Arg241 and Arg91 are important in stabilising
+        the reaction transition state.
+      notes: M-CSA entry 643, mechanism 1; M-CSA cites PMID:11133963, PMID:11562377, PMID:15647264; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/643/
+      snippet: The proposed mechanism is an in-line single displacement reaction where the acetate acts
+        as the nucleophile to attack the gamma phosphate of ATP, resulting in acetyl phosphate and ADP.
+        For this reaction to take place, a magnesium ion, His180,  Arg241 and Arg91 are important in stabilising
+        the reaction transition state.
+      notes: M-CSA entry 643, mechanism 1; M-CSA cites PMID:11133963, PMID:11562377, PMID:15647264; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (12 evidence-backed edges) transcribed from M-CSA entry 643;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.2.99.18
 - CHEBI:137051
@@ -417,4 +417,415 @@ definitions:
       Human apurinic/apyrimidinic endonuclease I (HAP1) sourced from Homo sapiens is an essential DNA repair enzyme that initiates the removal of apurinic/apyrimidinic sites from DNA, excises 3' replication-blocking moieties and modulates DNA binding activity of several transcriptional regulators. HAP1 recognises abasic sites in ds DNA and makes a single nick in the backbone 5' to the abasic site generating the 3' hydroxyl required by the repair polymerase. Abasic lesions arise at high frequency in DNA due to spontaneous, mutagen induced or glycosylase-mediated hydrolysis of the N-glycosylic bond and represent cytotoxic and mutagenic lesions if uncorrected. HAP1 also exhibits 3'phosphodiesterase, 3'->5' exonuclease and RNase H activity. The Ref-1 (redox effector factor) activity of HAP1 is to regulate the DNA-binding affinity of transcription factors such as Jun/Fos and NF-kB through a redox mechanism.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 8-oxoguanine DNA-glycosylase (ExoA family)
+  description: Stepwise mechanism transcribed from M-CSA entry 510 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: asp70
+    label: catalytic Asp70 (M-CSA/PDB numbering; UniProt residue 70)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27695
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu96
+    label: catalytic Glu96 (M-CSA/PDB numbering; UniProt residue 96)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27695
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: tyr171
+    label: catalytic Tyr171 (M-CSA/PDB numbering; UniProt residue 171)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27695
+    description: 'M-CSA roles: electrostatic stabiliser, metal ligand.'
+  - node_id: asp210
+    label: catalytic Asp210 (M-CSA/PDB numbering; UniProt residue 210)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27695
+    description: 'M-CSA roles: increase nucleophilicity, metal ligand, proton acceptor.'
+  - node_id: asn212
+    label: catalytic Asn212 (M-CSA/PDB numbering; UniProt residue 212)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27695
+  - node_id: asp283
+    label: catalytic Asp283 (M-CSA/PDB numbering; UniProt residue 283)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27695
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp308
+    label: catalytic Asp308 (M-CSA/PDB numbering; UniProt residue 308)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27695
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his309
+    label: catalytic His309 (M-CSA/PDB numbering; UniProt residue 309)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27695
+    description: 'M-CSA roles: electrostatic stabiliser, metal ligand.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: DNA 8-oxoguanine
+    node_type: CHEMICAL
+    grounding: CHEBI:137052
+  - node_id: product0
+    label: DNA with 3-terminal trans-a,b-unsaturated sugar
+    node_type: CHEMICAL
+    grounding: CHEBI:137051
+  - node_id: product1
+    label: DNA 5'-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:4294
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product3
+    label: 7,8-dihydro-8-oxoguanine
+    node_type: CHEMICAL
+    grounding: CHEBI:52617
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: "Asp210 acts as a general base activating the water molecule for nucleophilic attack\
+      \ on the scissile phosphate.
+Asn212 positions the water for nucleophilic attack in a hydrogen\
+      \ bond network with Asp210.
+The pentaphosphate intermediate formed is stabilized  by His309,\
+      \ Asp283, the Mg ions and Tyr171."
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: 7,8-dihydro-8-oxoguanine is then cleaved from the phosphate, this cleavage is catalyzed
+      through electrostatic stabilization.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: 8-oxoguanine DNA-glycosylase (ExoA family) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:510
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.60.10.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.60.10.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: 8-oxoguanine DNA-glycosylase (ExoA family) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.2.99.18
+  edges:
+  - subject: tyr171
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr171 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/510/
+      snippet: "Asp210 acts as a general base activating the water molecule for nucleophilic attack on\
+        \ the scissile phosphate.
+Asn212 positions the water for nucleophilic attack in a hydrogen\
+        \ bond network with Asp210.
+The pentaphosphate intermediate formed is stabilized  by His309,\
+        \ Asp283, the Mg ions and Tyr171."
+      notes: M-CSA entry 510, mechanism 1; M-CSA cites PMID:10390343, PMID:10871340, PMID:12758078, PMID:15380100,
+        PMID:22209979, PMID:29344998; step 1
+  - subject: asp210
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp210 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/510/
+      snippet: "Asp210 acts as a general base activating the water molecule for nucleophilic attack on\
+        \ the scissile phosphate.
+Asn212 positions the water for nucleophilic attack in a hydrogen\
+        \ bond network with Asp210.
+The pentaphosphate intermediate formed is stabilized  by His309,\
+        \ Asp283, the Mg ions and Tyr171."
+      notes: M-CSA entry 510, mechanism 1; M-CSA cites PMID:10390343, PMID:10871340, PMID:12758078, PMID:15380100,
+        PMID:22209979, PMID:29344998; step 1
+  - subject: asn212
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asn212 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/510/
+      snippet: "Asp210 acts as a general base activating the water molecule for nucleophilic attack on\
+        \ the scissile phosphate.
+Asn212 positions the water for nucleophilic attack in a hydrogen\
+        \ bond network with Asp210.
+The pentaphosphate intermediate formed is stabilized  by His309,\
+        \ Asp283, the Mg ions and Tyr171."
+      notes: M-CSA entry 510, mechanism 1; M-CSA cites PMID:10390343, PMID:10871340, PMID:12758078, PMID:15380100,
+        PMID:22209979, PMID:29344998; step 1
+  - subject: asp283
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp283 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/510/
+      snippet: "Asp210 acts as a general base activating the water molecule for nucleophilic attack on\
+        \ the scissile phosphate.
+Asn212 positions the water for nucleophilic attack in a hydrogen\
+        \ bond network with Asp210.
+The pentaphosphate intermediate formed is stabilized  by His309,\
+        \ Asp283, the Mg ions and Tyr171."
+      notes: M-CSA entry 510, mechanism 1; M-CSA cites PMID:10390343, PMID:10871340, PMID:12758078, PMID:15380100,
+        PMID:22209979, PMID:29344998; step 1
+  - subject: his309
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His309 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/510/
+      snippet: "Asp210 acts as a general base activating the water molecule for nucleophilic attack on\
+        \ the scissile phosphate.
+Asn212 positions the water for nucleophilic attack in a hydrogen\
+        \ bond network with Asp210.
+The pentaphosphate intermediate formed is stabilized  by His309,\
+        \ Asp283, the Mg ions and Tyr171."
+      notes: M-CSA entry 510, mechanism 1; M-CSA cites PMID:10390343, PMID:10871340, PMID:12758078, PMID:15380100,
+        PMID:22209979, PMID:29344998; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/510/
+      snippet: 7,8-dihydro-8-oxoguanine is then cleaved from the phosphate, this cleavage is catalyzed
+        through electrostatic stabilization.
+      notes: M-CSA entry 510, mechanism 1; M-CSA cites PMID:10390343, PMID:10871340, PMID:12758078, PMID:15380100,
+        PMID:22209979, PMID:29344998; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/510/
+      snippet: Products.
+      notes: M-CSA entry 510, mechanism 1; M-CSA cites PMID:10390343, PMID:10871340, PMID:12758078, PMID:15380100,
+        PMID:22209979, PMID:29344998; step 3
+  - subject: asp70
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp70 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/510/
+      snippet: metal ligand
+      notes: M-CSA entry 510, mechanism 1; M-CSA cites PMID:10390343, PMID:10871340, PMID:12758078, PMID:15380100,
+        PMID:22209979, PMID:29344998; M-CSA catalytic-residue roles for Asp70
+  - subject: glu96
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu96 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/510/
+      snippet: metal ligand
+      notes: M-CSA entry 510, mechanism 1; M-CSA cites PMID:10390343, PMID:10871340, PMID:12758078, PMID:15380100,
+        PMID:22209979, PMID:29344998; M-CSA catalytic-residue roles for Glu96
+  - subject: tyr171
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr171 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/510/
+      snippet: electrostatic stabiliser, metal ligand
+      notes: M-CSA entry 510, mechanism 1; M-CSA cites PMID:10390343, PMID:10871340, PMID:12758078, PMID:15380100,
+        PMID:22209979, PMID:29344998; M-CSA catalytic-residue roles for Tyr171
+  - subject: asp210
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp210 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/510/
+      snippet: increase nucleophilicity, metal ligand, proton acceptor
+      notes: M-CSA entry 510, mechanism 1; M-CSA cites PMID:10390343, PMID:10871340, PMID:12758078, PMID:15380100,
+        PMID:22209979, PMID:29344998; M-CSA catalytic-residue roles for Asp210
+  - subject: asn212
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn212 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/510/
+      snippet: "Asp210 acts as a general base activating the water molecule for nucleophilic attack on\
+        \ the scissile phosphate. Asn212 positions the water for nucleophilic attack in a hydrogen bond\
+        \ network with Asp210. The pentaphosphate intermediate formed is stabilized by His309, Asp283,\
+        \ the Mg ions and Tyr171.
+7,8-dihydro-8-oxoguanine is then cleaved from the phosphate, this\
+        \ cleavage is catalyzed through elect"
+      notes: M-CSA entry 510, mechanism 1; M-CSA cites PMID:10390343, PMID:10871340, PMID:12758078, PMID:15380100,
+        PMID:22209979, PMID:29344998; M-CSA catalytic-residue roles for Asn212
+  - subject: asp283
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp283 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/510/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 510, mechanism 1; M-CSA cites PMID:10390343, PMID:10871340, PMID:12758078, PMID:15380100,
+        PMID:22209979, PMID:29344998; M-CSA catalytic-residue roles for Asp283
+  - subject: asp308
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp308 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/510/
+      snippet: metal ligand
+      notes: M-CSA entry 510, mechanism 1; M-CSA cites PMID:10390343, PMID:10871340, PMID:12758078, PMID:15380100,
+        PMID:22209979, PMID:29344998; M-CSA catalytic-residue roles for Asp308
+  - subject: his309
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His309 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/510/
+      snippet: electrostatic stabiliser, metal ligand
+      notes: M-CSA entry 510, mechanism 1; M-CSA cites PMID:10390343, PMID:10871340, PMID:12758078, PMID:15380100,
+        PMID:22209979, PMID:29344998; M-CSA catalytic-residue roles for His309
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/510/
+      snippet: "Asp210 acts as a general base activating the water molecule for nucleophilic attack on\
+        \ the scissile phosphate. Asn212 positions the water for nucleophilic attack in a hydrogen bond\
+        \ network with Asp210. The pentaphosphate intermediate formed is stabilized by His309, Asp283,\
+        \ the Mg ions and Tyr171.
+7,8-dihydro-8-oxoguanine is then cleaved from the phosphate, this\
+        \ cleavage is catalyzed through elect"
+      notes: M-CSA entry 510, mechanism 1; M-CSA cites PMID:10390343, PMID:10871340, PMID:12758078, PMID:15380100,
+        PMID:22209979, PMID:29344998; CATH domain 3.60.10.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/510/
+      snippet: "Asp210 acts as a general base activating the water molecule for nucleophilic attack on\
+        \ the scissile phosphate. Asn212 positions the water for nucleophilic attack in a hydrogen bond\
+        \ network with Asp210. The pentaphosphate intermediate formed is stabilized by His309, Asp283,\
+        \ the Mg ions and Tyr171.
+7,8-dihydro-8-oxoguanine is then cleaved from the phosphate, this\
+        \ cleavage is catalyzed through elect"
+      notes: M-CSA entry 510, mechanism 1; M-CSA cites PMID:10390343, PMID:10871340, PMID:12758078, PMID:15380100,
+        PMID:22209979, PMID:29344998; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/510/
+      snippet: "Asp210 acts as a general base activating the water molecule for nucleophilic attack on\
+        \ the scissile phosphate. Asn212 positions the water for nucleophilic attack in a hydrogen bond\
+        \ network with Asp210. The pentaphosphate intermediate formed is stabilized by His309, Asp283,\
+        \ the Mg ions and Tyr171.
+7,8-dihydro-8-oxoguanine is then cleaved from the phosphate, this\
+        \ cleavage is catalyzed through elect"
+      notes: M-CSA entry 510, mechanism 1; M-CSA cites PMID:10390343, PMID:10871340, PMID:12758078, PMID:15380100,
+        PMID:22209979, PMID:29344998; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/510/
+      snippet: "Asp210 acts as a general base activating the water molecule for nucleophilic attack on\
+        \ the scissile phosphate. Asn212 positions the water for nucleophilic attack in a hydrogen bond\
+        \ network with Asp210. The pentaphosphate intermediate formed is stabilized by His309, Asp283,\
+        \ the Mg ions and Tyr171.
+7,8-dihydro-8-oxoguanine is then cleaved from the phosphate, this\
+        \ cleavage is catalyzed through elect"
+      notes: M-CSA entry 510, mechanism 1; M-CSA cites PMID:10390343, PMID:10871340, PMID:12758078, PMID:15380100,
+        PMID:22209979, PMID:29344998; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/510/
+      snippet: "Asp210 acts as a general base activating the water molecule for nucleophilic attack on\
+        \ the scissile phosphate. Asn212 positions the water for nucleophilic attack in a hydrogen bond\
+        \ network with Asp210. The pentaphosphate intermediate formed is stabilized by His309, Asp283,\
+        \ the Mg ions and Tyr171.
+7,8-dihydro-8-oxoguanine is then cleaved from the phosphate, this\
+        \ cleavage is catalyzed through elect"
+      notes: M-CSA entry 510, mechanism 1; M-CSA cites PMID:10390343, PMID:10871340, PMID:12758078, PMID:15380100,
+        PMID:22209979, PMID:29344998; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/510/
+      snippet: "Asp210 acts as a general base activating the water molecule for nucleophilic attack on\
+        \ the scissile phosphate. Asn212 positions the water for nucleophilic attack in a hydrogen bond\
+        \ network with Asp210. The pentaphosphate intermediate formed is stabilized by His309, Asp283,\
+        \ the Mg ions and Tyr171.
+7,8-dihydro-8-oxoguanine is then cleaved from the phosphate, this\
+        \ cleavage is catalyzed through elect"
+      notes: M-CSA entry 510, mechanism 1; M-CSA cites PMID:10390343, PMID:10871340, PMID:12758078, PMID:15380100,
+        PMID:22209979, PMID:29344998; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/510/
+      snippet: "Asp210 acts as a general base activating the water molecule for nucleophilic attack on\
+        \ the scissile phosphate. Asn212 positions the water for nucleophilic attack in a hydrogen bond\
+        \ network with Asp210. The pentaphosphate intermediate formed is stabilized by His309, Asp283,\
+        \ the Mg ions and Tyr171.
+7,8-dihydro-8-oxoguanine is then cleaved from the phosphate, this\
+        \ cleavage is catalyzed through elect"
+      notes: M-CSA entry 510, mechanism 1; M-CSA cites PMID:10390343, PMID:10871340, PMID:12758078, PMID:15380100,
+        PMID:22209979, PMID:29344998; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product3
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/510/
+      snippet: "Asp210 acts as a general base activating the water molecule for nucleophilic attack on\
+        \ the scissile phosphate. Asn212 positions the water for nucleophilic attack in a hydrogen bond\
+        \ network with Asp210. The pentaphosphate intermediate formed is stabilized by His309, Asp283,\
+        \ the Mg ions and Tyr171.
+7,8-dihydro-8-oxoguanine is then cleaved from the phosphate, this\
+        \ cleavage is catalyzed through elect"
+      notes: M-CSA entry 510, mechanism 1; M-CSA cites PMID:10390343, PMID:10871340, PMID:12758078, PMID:15380100,
+        PMID:22209979, PMID:29344998; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (23 evidence-backed edges) transcribed from M-CSA entry 510;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

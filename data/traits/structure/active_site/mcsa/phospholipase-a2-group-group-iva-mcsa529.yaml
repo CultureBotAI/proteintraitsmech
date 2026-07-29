@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.1.4
 - CHEBI:57643
@@ -502,4 +502,361 @@ definitions:
       Cytosolic phospholipases A2 (cPLA2) are hydrolytic enzymes which catalyse the cleavage of the ester bond at the sn-2 position of phospholipid membranes to generate arachidonic acid, which is the precursor in the metabolic pathway of several lipid messengers, for instance, it is metabolised to prostaglandins by the cyclooxygenase pathway and to leukotrienes by the 5-lipooxygenase pathway. In addition, platelet-activating factor (PAF) can also be generated from a subset of the lysophospholipid produced.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of phospholipase A2 (group group IVA)
+  description: Stepwise mechanism transcribed from M-CSA entry 529 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: gly197
+    label: catalytic Gly197 (M-CSA/PDB numbering; UniProt residue 197)
+    node_type: RESIDUE
+    grounding: UniProtKB:P47712
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: gly198
+    label: catalytic Gly198 (M-CSA/PDB numbering; UniProt residue 198)
+    node_type: RESIDUE
+    grounding: UniProtKB:P47712
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: arg200
+    label: catalytic Arg200 (M-CSA/PDB numbering; UniProt residue 200)
+    node_type: RESIDUE
+    grounding: UniProtKB:P47712
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ser228
+    label: catalytic Ser228 (M-CSA/PDB numbering; UniProt residue 228)
+    node_type: RESIDUE
+    grounding: UniProtKB:P47712
+    description: 'M-CSA roles: covalently attached, nucleofuge, nucleophile, proton acceptor, proton donor.'
+  - node_id: asp549
+    label: catalytic Asp549 (M-CSA/PDB numbering; UniProt residue 549)
+    node_type: RESIDUE
+    grounding: UniProtKB:P47712
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: 1,2-diacyl-sn-glycero-3-phosphocholine
+    node_type: CHEMICAL
+    grounding: CHEBI:57643
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product1
+    label: fatty acid anion
+    node_type: CHEMICAL
+    grounding: CHEBI:28868
+  - node_id: product2
+    label: 1-O-acyl-sn-glycero-3-phosphocholine
+    node_type: CHEMICAL
+    grounding: CHEBI:58168
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp549 acts as a general base activating the Ser228 hydroxyl group for nucleophilic attack
+      on the carbonyl carbon of the ester bond. The oxyanion intermediate formed is stabilized by the
+      amide groups of Gly197 and Gly198. Arg200 stabilizes the phosphate group.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The tetrahedral intermediate collapses and 1-acyl-sn-glycero-3-phosphocholine is eliminated.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Asp549 activates water for nucleophilic attack and another oxyanion intermediate is formed.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The tetrahedral intermediate collapses and Ser228 is eliminated.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: phospholipase A2 (group group IVA) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:529
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.1090.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.1090.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: phospholipase A2 (group group IVA) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.1.4
+  edges:
+  - subject: gly197
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Gly197 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/529/
+      snippet: Asp549 acts as a general base activating the Ser228 hydroxyl group for nucleophilic attack
+        on the carbonyl carbon of the ester bond. The oxyanion intermediate formed is stabilized by the
+        amide groups of Gly197 and Gly198. Arg200 stabilizes the phosphate group.
+      notes: M-CSA entry 529, mechanism 1; M-CSA cites PMID:10319815, PMID:25703463, PMID:27220631, PMID:8619991,
+        PMID:8702602; step 1
+  - subject: gly198
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Gly198 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/529/
+      snippet: Asp549 acts as a general base activating the Ser228 hydroxyl group for nucleophilic attack
+        on the carbonyl carbon of the ester bond. The oxyanion intermediate formed is stabilized by the
+        amide groups of Gly197 and Gly198. Arg200 stabilizes the phosphate group.
+      notes: M-CSA entry 529, mechanism 1; M-CSA cites PMID:10319815, PMID:25703463, PMID:27220631, PMID:8619991,
+        PMID:8702602; step 1
+  - subject: arg200
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg200 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/529/
+      snippet: Asp549 acts as a general base activating the Ser228 hydroxyl group for nucleophilic attack
+        on the carbonyl carbon of the ester bond. The oxyanion intermediate formed is stabilized by the
+        amide groups of Gly197 and Gly198. Arg200 stabilizes the phosphate group.
+      notes: M-CSA entry 529, mechanism 1; M-CSA cites PMID:10319815, PMID:25703463, PMID:27220631, PMID:8619991,
+        PMID:8702602; step 1
+  - subject: ser228
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser228 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/529/
+      snippet: Asp549 acts as a general base activating the Ser228 hydroxyl group for nucleophilic attack
+        on the carbonyl carbon of the ester bond. The oxyanion intermediate formed is stabilized by the
+        amide groups of Gly197 and Gly198. Arg200 stabilizes the phosphate group.
+      notes: M-CSA entry 529, mechanism 1; M-CSA cites PMID:10319815, PMID:25703463, PMID:27220631, PMID:8619991,
+        PMID:8702602; step 1
+  - subject: asp549
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp549 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/529/
+      snippet: Asp549 acts as a general base activating the Ser228 hydroxyl group for nucleophilic attack
+        on the carbonyl carbon of the ester bond. The oxyanion intermediate formed is stabilized by the
+        amide groups of Gly197 and Gly198. Arg200 stabilizes the phosphate group.
+      notes: M-CSA entry 529, mechanism 1; M-CSA cites PMID:10319815, PMID:25703463, PMID:27220631, PMID:8619991,
+        PMID:8702602; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/529/
+      snippet: The tetrahedral intermediate collapses and 1-acyl-sn-glycero-3-phosphocholine is eliminated.
+      notes: M-CSA entry 529, mechanism 1; M-CSA cites PMID:10319815, PMID:25703463, PMID:27220631, PMID:8619991,
+        PMID:8702602; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/529/
+      snippet: Asp549 activates water for nucleophilic attack and another oxyanion intermediate is formed.
+      notes: M-CSA entry 529, mechanism 1; M-CSA cites PMID:10319815, PMID:25703463, PMID:27220631, PMID:8619991,
+        PMID:8702602; step 3
+  - subject: asp549
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Asp549 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/529/
+      snippet: Asp549 activates water for nucleophilic attack and another oxyanion intermediate is formed.
+      notes: M-CSA entry 529, mechanism 1; M-CSA cites PMID:10319815, PMID:25703463, PMID:27220631, PMID:8619991,
+        PMID:8702602; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/529/
+      snippet: The tetrahedral intermediate collapses and Ser228 is eliminated.
+      notes: M-CSA entry 529, mechanism 1; M-CSA cites PMID:10319815, PMID:25703463, PMID:27220631, PMID:8619991,
+        PMID:8702602; step 4
+  - subject: ser228
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Ser228 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/529/
+      snippet: The tetrahedral intermediate collapses and Ser228 is eliminated.
+      notes: M-CSA entry 529, mechanism 1; M-CSA cites PMID:10319815, PMID:25703463, PMID:27220631, PMID:8619991,
+        PMID:8702602; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/529/
+      snippet: Products.
+      notes: M-CSA entry 529, mechanism 1; M-CSA cites PMID:10319815, PMID:25703463, PMID:27220631, PMID:8619991,
+        PMID:8702602; step 5
+  - subject: gly197
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly197 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/529/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 529, mechanism 1; M-CSA cites PMID:10319815, PMID:25703463, PMID:27220631, PMID:8619991,
+        PMID:8702602; M-CSA catalytic-residue roles for Gly197
+  - subject: gly198
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly198 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/529/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 529, mechanism 1; M-CSA cites PMID:10319815, PMID:25703463, PMID:27220631, PMID:8619991,
+        PMID:8702602; M-CSA catalytic-residue roles for Gly198
+  - subject: arg200
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg200 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/529/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 529, mechanism 1; M-CSA cites PMID:10319815, PMID:25703463, PMID:27220631, PMID:8619991,
+        PMID:8702602; M-CSA catalytic-residue roles for Arg200
+  - subject: ser228
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser228 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/529/
+      snippet: covalently attached, nucleofuge, nucleophile, proton acceptor, proton donor
+      notes: M-CSA entry 529, mechanism 1; M-CSA cites PMID:10319815, PMID:25703463, PMID:27220631, PMID:8619991,
+        PMID:8702602; M-CSA catalytic-residue roles for Ser228
+  - subject: asp549
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp549 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/529/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 529, mechanism 1; M-CSA cites PMID:10319815, PMID:25703463, PMID:27220631, PMID:8619991,
+        PMID:8702602; M-CSA catalytic-residue roles for Asp549
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/529/
+      snippet: Asp549 acts as a general base, directly activating Ser228. Ser228 acts as a nucleophile
+        to attack the ester bond to form an acyl-enzyme. The developing tetrahedral transition state is
+        stabilised by backbone amide of Gly197 and 198. Arg200 stabilizes the phosphate group. Hydrolysis
+        of the intermediate occurs through an analogous mechanism.
+      notes: M-CSA entry 529, mechanism 1; M-CSA cites PMID:10319815, PMID:25703463, PMID:27220631, PMID:8619991,
+        PMID:8702602; CATH domain 3.40.1090.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/529/
+      snippet: Asp549 acts as a general base, directly activating Ser228. Ser228 acts as a nucleophile
+        to attack the ester bond to form an acyl-enzyme. The developing tetrahedral transition state is
+        stabilised by backbone amide of Gly197 and 198. Arg200 stabilizes the phosphate group. Hydrolysis
+        of the intermediate occurs through an analogous mechanism.
+      notes: M-CSA entry 529, mechanism 1; M-CSA cites PMID:10319815, PMID:25703463, PMID:27220631, PMID:8619991,
+        PMID:8702602; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/529/
+      snippet: Asp549 acts as a general base, directly activating Ser228. Ser228 acts as a nucleophile
+        to attack the ester bond to form an acyl-enzyme. The developing tetrahedral transition state is
+        stabilised by backbone amide of Gly197 and 198. Arg200 stabilizes the phosphate group. Hydrolysis
+        of the intermediate occurs through an analogous mechanism.
+      notes: M-CSA entry 529, mechanism 1; M-CSA cites PMID:10319815, PMID:25703463, PMID:27220631, PMID:8619991,
+        PMID:8702602; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/529/
+      snippet: Asp549 acts as a general base, directly activating Ser228. Ser228 acts as a nucleophile
+        to attack the ester bond to form an acyl-enzyme. The developing tetrahedral transition state is
+        stabilised by backbone amide of Gly197 and 198. Arg200 stabilizes the phosphate group. Hydrolysis
+        of the intermediate occurs through an analogous mechanism.
+      notes: M-CSA entry 529, mechanism 1; M-CSA cites PMID:10319815, PMID:25703463, PMID:27220631, PMID:8619991,
+        PMID:8702602; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/529/
+      snippet: Asp549 acts as a general base, directly activating Ser228. Ser228 acts as a nucleophile
+        to attack the ester bond to form an acyl-enzyme. The developing tetrahedral transition state is
+        stabilised by backbone amide of Gly197 and 198. Arg200 stabilizes the phosphate group. Hydrolysis
+        of the intermediate occurs through an analogous mechanism.
+      notes: M-CSA entry 529, mechanism 1; M-CSA cites PMID:10319815, PMID:25703463, PMID:27220631, PMID:8619991,
+        PMID:8702602; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/529/
+      snippet: Asp549 acts as a general base, directly activating Ser228. Ser228 acts as a nucleophile
+        to attack the ester bond to form an acyl-enzyme. The developing tetrahedral transition state is
+        stabilised by backbone amide of Gly197 and 198. Arg200 stabilizes the phosphate group. Hydrolysis
+        of the intermediate occurs through an analogous mechanism.
+      notes: M-CSA entry 529, mechanism 1; M-CSA cites PMID:10319815, PMID:25703463, PMID:27220631, PMID:8619991,
+        PMID:8702602; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/529/
+      snippet: Asp549 acts as a general base, directly activating Ser228. Ser228 acts as a nucleophile
+        to attack the ester bond to form an acyl-enzyme. The developing tetrahedral transition state is
+        stabilised by backbone amide of Gly197 and 198. Arg200 stabilizes the phosphate group. Hydrolysis
+        of the intermediate occurs through an analogous mechanism.
+      notes: M-CSA entry 529, mechanism 1; M-CSA cites PMID:10319815, PMID:25703463, PMID:27220631, PMID:8619991,
+        PMID:8702602; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (23 evidence-backed edges) transcribed from M-CSA entry 529;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

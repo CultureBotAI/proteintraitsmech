@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.3.2.6
 - CHEBI:28080
@@ -123,4 +123,207 @@ definitions:
       2-hydroxymuconate tautomerase is also known as 4-oxalocrotonate tautomerase (4-OT). Converts 2-hydroxymuconate to the alpha-beta-unsaturated ketone, 2-oxo-3-hexenedioate [PMID:1339435]. This enzyme forms part of a bacterial metabolic pathway that oxidatively catabolises toluene, o-xylene, 3-ethyltoluene, and 1,2,4-trimethylbenzene into intermediates of the citric acid cycle. 4-OT has only 62 residues in each chain, making it one of the smallest enzyme subunits known [PMID:12051677]. In solution, however, the enzyme forms a hexamer of six identical subunits, so the active site may be formed by amino acid residues from several subunits [PMID:8547259]. The rate of catalysis approaches the diffusion-controlled limit. The gene for the enzyme is carried by the TOL plasmid in Pseudomonas putrida, and is involved in the catabolism of aromatic carbon sources. This entry represents a group of 4-oxalocrotonate tautomerases found in Pseudomonas [PMID:1339435] and other species of bacteria and archaea.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 2-hydroxymuconate tautomerase
+  description: Stepwise mechanism transcribed from M-CSA entry 61 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +1).
+  nodes:
+  - node_id: pro1
+    label: catalytic Pro1 (M-CSA/PDB numbering; UniProt residue 2)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q01468
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, polar/non-polar interaction,
+      proton acceptor, proton donor.'
+  - node_id: arg39
+    label: catalytic Arg39 (M-CSA/PDB numbering; UniProt residue 40)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q01468
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: phe50
+    label: catalytic Phe50 (M-CSA/PDB numbering; UniProt residue 51)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q01468
+    description: 'M-CSA roles: activator, polar/non-polar interaction.'
+  - node_id: arg61
+    label: catalytic Arg61 (M-CSA/PDB numbering; UniProt residue 62)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q01468
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: (2Z,4E)-2-hydroxymuconate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:28080
+  - node_id: product0
+    label: (3E)-2-oxohex-3-enedioate
+    node_type: CHEMICAL
+    grounding: CHEBI:64908
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The N-terminal proline deprotonates the CH<sub>2</sub> of the substrate, initiating double
+      bond rearrangement and forming the enol form of the substrate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The oxyanion collapses back, initiating double bond rearrangement, and the terminal double
+      bond then accepts a proton from the N-terminal proline.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: 2-hydroxymuconate tautomerase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:61
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.429.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.429.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: 2-hydroxymuconate tautomerase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.3.2.6
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/61/
+      snippet: The oxyanion collapses back, initiating double bond rearrangement, and the terminal double
+        bond then accepts a proton from the N-terminal proline.
+      notes: M-CSA entry 61, mechanism 1; M-CSA cites PMID:10397792, PMID:10493802, PMID:11329265, PMID:12051677,
+        PMID:12926963, PMID:1339435, PMID:15170325, PMID:15909987, PMID:17004838, PMID:17567166, PMID:17902707,
+        PMID:17904194, PMID:19199636, PMID:19717587, PMID:22417185, PMID:23831510, PMID:25219626, PMID:26952338,
+        PMID:8547259, PMID:8547260, PMID:9778344; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/61/
+      snippet: Products
+      notes: M-CSA entry 61, mechanism 1; M-CSA cites PMID:10397792, PMID:10493802, PMID:11329265, PMID:12051677,
+        PMID:12926963, PMID:1339435, PMID:15170325, PMID:15909987, PMID:17004838, PMID:17567166, PMID:17902707,
+        PMID:17904194, PMID:19199636, PMID:19717587, PMID:22417185, PMID:23831510, PMID:25219626, PMID:26952338,
+        PMID:8547259, PMID:8547260, PMID:9778344; step 3
+  - subject: pro1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Pro1 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/61/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, polar/non-polar interaction, proton acceptor,
+        proton donor
+      notes: M-CSA entry 61, mechanism 1; M-CSA cites PMID:10397792, PMID:10493802, PMID:11329265, PMID:12051677,
+        PMID:12926963, PMID:1339435, PMID:15170325, PMID:15909987, PMID:17004838, PMID:17567166, PMID:17902707,
+        PMID:17904194, PMID:19199636, PMID:19717587, PMID:22417185, PMID:23831510, PMID:25219626, PMID:26952338,
+        PMID:8547259, PMID:8547260, PMID:9778344; M-CSA catalytic-residue roles for Pro1
+  - subject: arg39
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg39 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/61/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 61, mechanism 1; M-CSA cites PMID:10397792, PMID:10493802, PMID:11329265, PMID:12051677,
+        PMID:12926963, PMID:1339435, PMID:15170325, PMID:15909987, PMID:17004838, PMID:17567166, PMID:17902707,
+        PMID:17904194, PMID:19199636, PMID:19717587, PMID:22417185, PMID:23831510, PMID:25219626, PMID:26952338,
+        PMID:8547259, PMID:8547260, PMID:9778344; M-CSA catalytic-residue roles for Arg39
+  - subject: phe50
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Phe50 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/61/
+      snippet: activator, polar/non-polar interaction
+      notes: M-CSA entry 61, mechanism 1; M-CSA cites PMID:10397792, PMID:10493802, PMID:11329265, PMID:12051677,
+        PMID:12926963, PMID:1339435, PMID:15170325, PMID:15909987, PMID:17004838, PMID:17567166, PMID:17902707,
+        PMID:17904194, PMID:19199636, PMID:19717587, PMID:22417185, PMID:23831510, PMID:25219626, PMID:26952338,
+        PMID:8547259, PMID:8547260, PMID:9778344; M-CSA catalytic-residue roles for Phe50
+  - subject: arg61
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg61 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/61/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 61, mechanism 1; M-CSA cites PMID:10397792, PMID:10493802, PMID:11329265, PMID:12051677,
+        PMID:12926963, PMID:1339435, PMID:15170325, PMID:15909987, PMID:17004838, PMID:17567166, PMID:17902707,
+        PMID:17904194, PMID:19199636, PMID:19717587, PMID:22417185, PMID:23831510, PMID:25219626, PMID:26952338,
+        PMID:8547259, PMID:8547260, PMID:9778344; M-CSA catalytic-residue roles for Arg61
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/61/
+      snippet: The N-terminal proline, is thought to act as a catalytic base (the only known enzyme for
+        which this is the case). Arg39 and Arg11 are thought to stabilise the binding of the carboxylate
+        groups on the substrate and Arg39 may also play a role in altering the pKa of Pro1.
+      notes: M-CSA entry 61, mechanism 1; M-CSA cites PMID:10397792, PMID:10493802, PMID:11329265, PMID:12051677,
+        PMID:12926963, PMID:1339435, PMID:15170325, PMID:15909987, PMID:17004838, PMID:17567166, PMID:17902707,
+        PMID:17904194, PMID:19199636, PMID:19717587, PMID:22417185, PMID:23831510, PMID:25219626, PMID:26952338,
+        PMID:8547259, PMID:8547260, PMID:9778344; CATH domain 3.30.429.10 assigned to the catalytic chain
+        by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/61/
+      snippet: The N-terminal proline, is thought to act as a catalytic base (the only known enzyme for
+        which this is the case). Arg39 and Arg11 are thought to stabilise the binding of the carboxylate
+        groups on the substrate and Arg39 may also play a role in altering the pKa of Pro1.
+      notes: M-CSA entry 61, mechanism 1; M-CSA cites PMID:10397792, PMID:10493802, PMID:11329265, PMID:12051677,
+        PMID:12926963, PMID:1339435, PMID:15170325, PMID:15909987, PMID:17004838, PMID:17567166, PMID:17902707,
+        PMID:17904194, PMID:19199636, PMID:19717587, PMID:22417185, PMID:23831510, PMID:25219626, PMID:26952338,
+        PMID:8547259, PMID:8547260, PMID:9778344; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/61/
+      snippet: The N-terminal proline, is thought to act as a catalytic base (the only known enzyme for
+        which this is the case). Arg39 and Arg11 are thought to stabilise the binding of the carboxylate
+        groups on the substrate and Arg39 may also play a role in altering the pKa of Pro1.
+      notes: M-CSA entry 61, mechanism 1; M-CSA cites PMID:10397792, PMID:10493802, PMID:11329265, PMID:12051677,
+        PMID:12926963, PMID:1339435, PMID:15170325, PMID:15909987, PMID:17004838, PMID:17567166, PMID:17902707,
+        PMID:17904194, PMID:19199636, PMID:19717587, PMID:22417185, PMID:23831510, PMID:25219626, PMID:26952338,
+        PMID:8547259, PMID:8547260, PMID:9778344; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/61/
+      snippet: The N-terminal proline, is thought to act as a catalytic base (the only known enzyme for
+        which this is the case). Arg39 and Arg11 are thought to stabilise the binding of the carboxylate
+        groups on the substrate and Arg39 may also play a role in altering the pKa of Pro1.
+      notes: M-CSA entry 61, mechanism 1; M-CSA cites PMID:10397792, PMID:10493802, PMID:11329265, PMID:12051677,
+        PMID:12926963, PMID:1339435, PMID:15170325, PMID:15909987, PMID:17004838, PMID:17567166, PMID:17902707,
+        PMID:17904194, PMID:19199636, PMID:19717587, PMID:22417185, PMID:23831510, PMID:25219626, PMID:26952338,
+        PMID:8547259, PMID:8547260, PMID:9778344; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (10 evidence-backed edges) transcribed from M-CSA entry 61;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

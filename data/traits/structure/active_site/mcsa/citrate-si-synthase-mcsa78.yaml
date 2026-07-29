@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.3.3.1
 - CHEBI:16452
@@ -287,4 +287,337 @@ definitions:
       Citrate synthase catalyses the condensation between the carbonyl of oxaloacetate and the acetyl methyl group of acetyl CoA. A reaction considered to be the first step in the citric acid cycle (Krebs cycle) proper. The product of this reaction, citryl-CoA, remains tightly bound to the enzyme and is hydrolysed to citrate and CoA in a separate chemical step that nevertheless uses the same catalytic residues. Conformational changes of the enzyme during the reaction are believed to be important in the catalytic mechanism. Although most studies have been done on pig citrate synthase, but the structural equivalence of the amino acid residues implicated in catalysis for the Pyrococcus protein implies that the mechanism proceeds via the same acid/base catalytic process.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of citrate (Si)-synthase
+  description: Stepwise mechanism transcribed from M-CSA entry 78 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: ser244
+    label: catalytic Ser244 (M-CSA/PDB numbering; UniProt residue 244)
+    node_type: RESIDUE
+    grounding: UniProtKB:P23007
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: his274
+    label: catalytic His274 (M-CSA/PDB numbering; UniProt residue 274)
+    node_type: RESIDUE
+    grounding: UniProtKB:P23007
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor.'
+  - node_id: his320
+    label: catalytic His320 (M-CSA/PDB numbering; UniProt residue 320)
+    node_type: RESIDUE
+    grounding: UniProtKB:P23007
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor.'
+  - node_id: arg329
+    label: catalytic Arg329 (M-CSA/PDB numbering; UniProt residue 329)
+    node_type: RESIDUE
+    grounding: UniProtKB:P23007
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp375
+    label: catalytic Asp375 (M-CSA/PDB numbering; UniProt residue 375)
+    node_type: RESIDUE
+    grounding: UniProtKB:P23007
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: oxaloacetate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:16452
+  - node_id: reactant1
+    label: acetyl-CoA(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+  - node_id: reactant2
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: coenzyme A(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+  - node_id: product1
+    label: citrate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:16947
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp375 deprotonates the CH<sub>3</sub> of acetyl-CoA, with concomitant double bond rearrangement.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The oxyanion collapses, initiating a nucleophilic attack on the carbonyl carbon of oxaloacetate
+      in an addition reaction.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The substrate oxyanion deprotonates water, initiating a nucleophilic attack on the carbonyl
+      carbon of the CoA intermediate in a substitution reaction that eliminates CoA with concomitant deprotonation
+      of Asp375.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: citrate (Si)-synthase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:78
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.10.580.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.10.580.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: citrate (Si)-synthase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.3.3.1
+  edges:
+  - subject: asp375
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp375 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/78/
+      snippet: Asp375 deprotonates the CH<sub>3</sub> of acetyl-CoA, with concomitant double bond rearrangement.
+      notes: M-CSA entry 78, mechanism 1; M-CSA cites PMID:10387046, PMID:16830149, PMID:17623847, PMID:18401503,
+        PMID:20690673, PMID:2337600, PMID:24720842, PMID:27159381, PMID:7120407, PMID:8011640, PMID:8718855,
+        PMID:9036855, PMID:9092828, PMID:9254593, PMID:9657685; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/78/
+      snippet: The oxyanion collapses, initiating a nucleophilic attack on the carbonyl carbon of oxaloacetate
+        in an addition reaction.
+      notes: M-CSA entry 78, mechanism 1; M-CSA cites PMID:10387046, PMID:16830149, PMID:17623847, PMID:18401503,
+        PMID:20690673, PMID:2337600, PMID:24720842, PMID:27159381, PMID:7120407, PMID:8011640, PMID:8718855,
+        PMID:9036855, PMID:9092828, PMID:9254593, PMID:9657685; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/78/
+      snippet: The substrate oxyanion deprotonates water, initiating a nucleophilic attack on the carbonyl
+        carbon of the CoA intermediate in a substitution reaction that eliminates CoA with concomitant
+        deprotonation of Asp375.
+      notes: M-CSA entry 78, mechanism 1; M-CSA cites PMID:10387046, PMID:16830149, PMID:17623847, PMID:18401503,
+        PMID:20690673, PMID:2337600, PMID:24720842, PMID:27159381, PMID:7120407, PMID:8011640, PMID:8718855,
+        PMID:9036855, PMID:9092828, PMID:9254593, PMID:9657685; step 3
+  - subject: asp375
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Asp375 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/78/
+      snippet: The substrate oxyanion deprotonates water, initiating a nucleophilic attack on the carbonyl
+        carbon of the CoA intermediate in a substitution reaction that eliminates CoA with concomitant
+        deprotonation of Asp375.
+      notes: M-CSA entry 78, mechanism 1; M-CSA cites PMID:10387046, PMID:16830149, PMID:17623847, PMID:18401503,
+        PMID:20690673, PMID:2337600, PMID:24720842, PMID:27159381, PMID:7120407, PMID:8011640, PMID:8718855,
+        PMID:9036855, PMID:9092828, PMID:9254593, PMID:9657685; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/78/
+      snippet: Products
+      notes: M-CSA entry 78, mechanism 1; M-CSA cites PMID:10387046, PMID:16830149, PMID:17623847, PMID:18401503,
+        PMID:20690673, PMID:2337600, PMID:24720842, PMID:27159381, PMID:7120407, PMID:8011640, PMID:8718855,
+        PMID:9036855, PMID:9092828, PMID:9254593, PMID:9657685; step 4
+  - subject: ser244
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser244 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/78/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 78, mechanism 1; M-CSA cites PMID:10387046, PMID:16830149, PMID:17623847, PMID:18401503,
+        PMID:20690673, PMID:2337600, PMID:24720842, PMID:27159381, PMID:7120407, PMID:8011640, PMID:8718855,
+        PMID:9036855, PMID:9092828, PMID:9254593, PMID:9657685; M-CSA catalytic-residue roles for Ser244
+  - subject: his274
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His274 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/78/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor
+      notes: M-CSA entry 78, mechanism 1; M-CSA cites PMID:10387046, PMID:16830149, PMID:17623847, PMID:18401503,
+        PMID:20690673, PMID:2337600, PMID:24720842, PMID:27159381, PMID:7120407, PMID:8011640, PMID:8718855,
+        PMID:9036855, PMID:9092828, PMID:9254593, PMID:9657685; M-CSA catalytic-residue roles for His274
+  - subject: his320
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His320 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/78/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor
+      notes: M-CSA entry 78, mechanism 1; M-CSA cites PMID:10387046, PMID:16830149, PMID:17623847, PMID:18401503,
+        PMID:20690673, PMID:2337600, PMID:24720842, PMID:27159381, PMID:7120407, PMID:8011640, PMID:8718855,
+        PMID:9036855, PMID:9092828, PMID:9254593, PMID:9657685; M-CSA catalytic-residue roles for His320
+  - subject: arg329
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg329 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/78/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 78, mechanism 1; M-CSA cites PMID:10387046, PMID:16830149, PMID:17623847, PMID:18401503,
+        PMID:20690673, PMID:2337600, PMID:24720842, PMID:27159381, PMID:7120407, PMID:8011640, PMID:8718855,
+        PMID:9036855, PMID:9092828, PMID:9254593, PMID:9657685; M-CSA catalytic-residue roles for Arg329
+  - subject: asp375
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp375 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/78/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 78, mechanism 1; M-CSA cites PMID:10387046, PMID:16830149, PMID:17623847, PMID:18401503,
+        PMID:20690673, PMID:2337600, PMID:24720842, PMID:27159381, PMID:7120407, PMID:8011640, PMID:8718855,
+        PMID:9036855, PMID:9092828, PMID:9254593, PMID:9657685; M-CSA catalytic-residue roles for Asp375
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/78/
+      snippet: The condensation reaction occurs via formation of an enolate intermediate that is produced
+        on removal of a proton from the methyl group of acetyl CoA by Asp 375. Accumulation of negative
+        charge on the carbonyl oxygen during formation of the enolate is stabilised by donation of hydrogen
+        bonds from His 274 and from a water molecule. The enolate now acts as a nucleophile to attack
+        the C2 carbonyl of
+      notes: M-CSA entry 78, mechanism 1; M-CSA cites PMID:10387046, PMID:16830149, PMID:17623847, PMID:18401503,
+        PMID:20690673, PMID:2337600, PMID:24720842, PMID:27159381, PMID:7120407, PMID:8011640, PMID:8718855,
+        PMID:9036855, PMID:9092828, PMID:9254593, PMID:9657685; CATH domain 1.10.580.10 assigned to the
+        catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/78/
+      snippet: The condensation reaction occurs via formation of an enolate intermediate that is produced
+        on removal of a proton from the methyl group of acetyl CoA by Asp 375. Accumulation of negative
+        charge on the carbonyl oxygen during formation of the enolate is stabilised by donation of hydrogen
+        bonds from His 274 and from a water molecule. The enolate now acts as a nucleophile to attack
+        the C2 carbonyl of
+      notes: M-CSA entry 78, mechanism 1; M-CSA cites PMID:10387046, PMID:16830149, PMID:17623847, PMID:18401503,
+        PMID:20690673, PMID:2337600, PMID:24720842, PMID:27159381, PMID:7120407, PMID:8011640, PMID:8718855,
+        PMID:9036855, PMID:9092828, PMID:9254593, PMID:9657685; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/78/
+      snippet: The condensation reaction occurs via formation of an enolate intermediate that is produced
+        on removal of a proton from the methyl group of acetyl CoA by Asp 375. Accumulation of negative
+        charge on the carbonyl oxygen during formation of the enolate is stabilised by donation of hydrogen
+        bonds from His 274 and from a water molecule. The enolate now acts as a nucleophile to attack
+        the C2 carbonyl of
+      notes: M-CSA entry 78, mechanism 1; M-CSA cites PMID:10387046, PMID:16830149, PMID:17623847, PMID:18401503,
+        PMID:20690673, PMID:2337600, PMID:24720842, PMID:27159381, PMID:7120407, PMID:8011640, PMID:8718855,
+        PMID:9036855, PMID:9092828, PMID:9254593, PMID:9657685; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/78/
+      snippet: The condensation reaction occurs via formation of an enolate intermediate that is produced
+        on removal of a proton from the methyl group of acetyl CoA by Asp 375. Accumulation of negative
+        charge on the carbonyl oxygen during formation of the enolate is stabilised by donation of hydrogen
+        bonds from His 274 and from a water molecule. The enolate now acts as a nucleophile to attack
+        the C2 carbonyl of
+      notes: M-CSA entry 78, mechanism 1; M-CSA cites PMID:10387046, PMID:16830149, PMID:17623847, PMID:18401503,
+        PMID:20690673, PMID:2337600, PMID:24720842, PMID:27159381, PMID:7120407, PMID:8011640, PMID:8718855,
+        PMID:9036855, PMID:9092828, PMID:9254593, PMID:9657685; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/78/
+      snippet: The condensation reaction occurs via formation of an enolate intermediate that is produced
+        on removal of a proton from the methyl group of acetyl CoA by Asp 375. Accumulation of negative
+        charge on the carbonyl oxygen during formation of the enolate is stabilised by donation of hydrogen
+        bonds from His 274 and from a water molecule. The enolate now acts as a nucleophile to attack
+        the C2 carbonyl of
+      notes: M-CSA entry 78, mechanism 1; M-CSA cites PMID:10387046, PMID:16830149, PMID:17623847, PMID:18401503,
+        PMID:20690673, PMID:2337600, PMID:24720842, PMID:27159381, PMID:7120407, PMID:8011640, PMID:8718855,
+        PMID:9036855, PMID:9092828, PMID:9254593, PMID:9657685; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/78/
+      snippet: The condensation reaction occurs via formation of an enolate intermediate that is produced
+        on removal of a proton from the methyl group of acetyl CoA by Asp 375. Accumulation of negative
+        charge on the carbonyl oxygen during formation of the enolate is stabilised by donation of hydrogen
+        bonds from His 274 and from a water molecule. The enolate now acts as a nucleophile to attack
+        the C2 carbonyl of
+      notes: M-CSA entry 78, mechanism 1; M-CSA cites PMID:10387046, PMID:16830149, PMID:17623847, PMID:18401503,
+        PMID:20690673, PMID:2337600, PMID:24720842, PMID:27159381, PMID:7120407, PMID:8011640, PMID:8718855,
+        PMID:9036855, PMID:9092828, PMID:9254593, PMID:9657685; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/78/
+      snippet: The condensation reaction occurs via formation of an enolate intermediate that is produced
+        on removal of a proton from the methyl group of acetyl CoA by Asp 375. Accumulation of negative
+        charge on the carbonyl oxygen during formation of the enolate is stabilised by donation of hydrogen
+        bonds from His 274 and from a water molecule. The enolate now acts as a nucleophile to attack
+        the C2 carbonyl of
+      notes: M-CSA entry 78, mechanism 1; M-CSA cites PMID:10387046, PMID:16830149, PMID:17623847, PMID:18401503,
+        PMID:20690673, PMID:2337600, PMID:24720842, PMID:27159381, PMID:7120407, PMID:8011640, PMID:8718855,
+        PMID:9036855, PMID:9092828, PMID:9254593, PMID:9657685; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/78/
+      snippet: The condensation reaction occurs via formation of an enolate intermediate that is produced
+        on removal of a proton from the methyl group of acetyl CoA by Asp 375. Accumulation of negative
+        charge on the carbonyl oxygen during formation of the enolate is stabilised by donation of hydrogen
+        bonds from His 274 and from a water molecule. The enolate now acts as a nucleophile to attack
+        the C2 carbonyl of
+      notes: M-CSA entry 78, mechanism 1; M-CSA cites PMID:10387046, PMID:16830149, PMID:17623847, PMID:18401503,
+        PMID:20690673, PMID:2337600, PMID:24720842, PMID:27159381, PMID:7120407, PMID:8011640, PMID:8718855,
+        PMID:9036855, PMID:9092828, PMID:9254593, PMID:9657685; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (18 evidence-backed edges) transcribed from M-CSA entry 78;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

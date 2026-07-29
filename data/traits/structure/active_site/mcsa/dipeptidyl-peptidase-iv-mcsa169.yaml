@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.14.5
 - CHEBI:4635
@@ -627,4 +627,367 @@ definitions:
       Catalyses the release of an N-terminal dipeptide, Xaa-Yaa-|-Zaa-, from a polypeptide, preferentially when Yaa is Pro, provided Zaa is neither Pro nor hydroxyproline. An integral protein of the plasma membrane of lymphocytes and other mammalian cells, in peptidase family S9 (prolyl oligopeptidase family). The reaction is similar to that of the unrelated Xaa-Pro dipeptidyl-peptidase of lactococci.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of dipeptidyl-peptidase IV
+  description: Stepwise mechanism transcribed from M-CSA entry 169 (6 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: tyr547
+    label: catalytic Tyr547 (M-CSA/PDB numbering; UniProt residue 547)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27487
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: ser630
+    label: catalytic Ser630 (M-CSA/PDB numbering; UniProt residue 630)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27487
+    description: 'M-CSA roles: covalently attached, hydrogen bond acceptor, hydrogen bond donor, nucleofuge,
+      nucleophile, proton acceptor, proton donor.'
+  - node_id: tyr631
+    label: catalytic Tyr631 (M-CSA/PDB numbering; UniProt residue 631)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27487
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: asp708
+    label: catalytic Asp708 (M-CSA/PDB numbering; UniProt residue 708)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27487
+    description: 'M-CSA roles: activator, electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: his740
+    label: catalytic His740 (M-CSA/PDB numbering; UniProt residue 740)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27487
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: Xaa-Pro-Zaa
+    node_type: CHEMICAL
+    grounding: CHEBI:137048
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: Dipeptide (Xaa-Pro)
+    node_type: CHEMICAL
+    grounding: CHEBI:4635
+  - node_id: product1
+    label: alpha-amino acid
+    node_type: CHEMICAL
+    grounding: CHEBI:33704
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His740 in a Ser-His-Asp triad deprotonates Ser630.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Ser730 attacks the carbonyl carbon of the peptide bond in a nucleophilic addition.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The oxyanion initiates an elimination reaction that cleaves the peptide bond, releasing
+      the new N-terminus of the protein, which protonates from His740.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: His740 deprotonates water, which attacks the carbonyl carbon bound to Ser630 in a nucleophilic
+      addition.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: The oxyanion initiates an elimination that cleaves the acyl bond to Ser630, releasing
+      the L-aminoacyl-Lproline product. Ser630 then deprotonates His740, regenerating the active site.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Product
+  - node_id: active_site
+    label: dipeptidyl-peptidase IV catalytic site
+    node_type: MOTIF
+    grounding: MCSA:169
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1820 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1820
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: dipeptidyl-peptidase IV activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.14.5
+  edges:
+  - subject: ser630
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser630 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/169/
+      snippet: His740 in a Ser-His-Asp triad deprotonates Ser630.
+      notes: M-CSA entry 169, mechanism 1; M-CSA cites PMID:12832764, PMID:15175333, PMID:18227430, PMID:8102366;
+        step 1
+  - subject: his740
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His740 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/169/
+      snippet: His740 in a Ser-His-Asp triad deprotonates Ser630.
+      notes: M-CSA entry 169, mechanism 1; M-CSA cites PMID:12832764, PMID:15175333, PMID:18227430, PMID:8102366;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/169/
+      snippet: Ser730 attacks the carbonyl carbon of the peptide bond in a nucleophilic addition.
+      notes: M-CSA entry 169, mechanism 1; M-CSA cites PMID:12832764, PMID:15175333, PMID:18227430, PMID:8102366;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/169/
+      snippet: The oxyanion initiates an elimination reaction that cleaves the peptide bond, releasing
+        the new N-terminus of the protein, which protonates from His740.
+      notes: M-CSA entry 169, mechanism 1; M-CSA cites PMID:12832764, PMID:15175333, PMID:18227430, PMID:8102366;
+        step 3
+  - subject: his740
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His740 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/169/
+      snippet: The oxyanion initiates an elimination reaction that cleaves the peptide bond, releasing
+        the new N-terminus of the protein, which protonates from His740.
+      notes: M-CSA entry 169, mechanism 1; M-CSA cites PMID:12832764, PMID:15175333, PMID:18227430, PMID:8102366;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/169/
+      snippet: His740 deprotonates water, which attacks the carbonyl carbon bound to Ser630 in a nucleophilic
+        addition.
+      notes: M-CSA entry 169, mechanism 1; M-CSA cites PMID:12832764, PMID:15175333, PMID:18227430, PMID:8102366;
+        step 4
+  - subject: ser630
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Ser630 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/169/
+      snippet: His740 deprotonates water, which attacks the carbonyl carbon bound to Ser630 in a nucleophilic
+        addition.
+      notes: M-CSA entry 169, mechanism 1; M-CSA cites PMID:12832764, PMID:15175333, PMID:18227430, PMID:8102366;
+        step 4
+  - subject: his740
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: His740 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/169/
+      snippet: His740 deprotonates water, which attacks the carbonyl carbon bound to Ser630 in a nucleophilic
+        addition.
+      notes: M-CSA entry 169, mechanism 1; M-CSA cites PMID:12832764, PMID:15175333, PMID:18227430, PMID:8102366;
+        step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/169/
+      snippet: The oxyanion initiates an elimination that cleaves the acyl bond to Ser630, releasing the
+        L-aminoacyl-Lproline product. Ser630 then deprotonates His740, regenerating the active site.
+      notes: M-CSA entry 169, mechanism 1; M-CSA cites PMID:12832764, PMID:15175333, PMID:18227430, PMID:8102366;
+        step 5
+  - subject: ser630
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Ser630 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/169/
+      snippet: The oxyanion initiates an elimination that cleaves the acyl bond to Ser630, releasing the
+        L-aminoacyl-Lproline product. Ser630 then deprotonates His740, regenerating the active site.
+      notes: M-CSA entry 169, mechanism 1; M-CSA cites PMID:12832764, PMID:15175333, PMID:18227430, PMID:8102366;
+        step 5
+  - subject: his740
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: His740 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/169/
+      snippet: The oxyanion initiates an elimination that cleaves the acyl bond to Ser630, releasing the
+        L-aminoacyl-Lproline product. Ser630 then deprotonates His740, regenerating the active site.
+      notes: M-CSA entry 169, mechanism 1; M-CSA cites PMID:12832764, PMID:15175333, PMID:18227430, PMID:8102366;
+        step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/169/
+      snippet: Product
+      notes: M-CSA entry 169, mechanism 1; M-CSA cites PMID:12832764, PMID:15175333, PMID:18227430, PMID:8102366;
+        step 6
+  - subject: tyr547
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr547 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/169/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 169, mechanism 1; M-CSA cites PMID:12832764, PMID:15175333, PMID:18227430, PMID:8102366;
+        M-CSA catalytic-residue roles for Tyr547
+  - subject: ser630
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser630 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/169/
+      snippet: covalently attached, hydrogen bond acceptor, hydrogen bond donor, nucleofuge, nucleophile,
+        proton acceptor, proton donor
+      notes: M-CSA entry 169, mechanism 1; M-CSA cites PMID:12832764, PMID:15175333, PMID:18227430, PMID:8102366;
+        M-CSA catalytic-residue roles for Ser630
+  - subject: tyr631
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr631 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/169/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 169, mechanism 1; M-CSA cites PMID:12832764, PMID:15175333, PMID:18227430, PMID:8102366;
+        M-CSA catalytic-residue roles for Tyr631
+  - subject: asp708
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp708 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/169/
+      snippet: activator, electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 169, mechanism 1; M-CSA cites PMID:12832764, PMID:15175333, PMID:18227430, PMID:8102366;
+        M-CSA catalytic-residue roles for Asp708
+  - subject: his740
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His740 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/169/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+        proton donor
+      notes: M-CSA entry 169, mechanism 1; M-CSA cites PMID:12832764, PMID:15175333, PMID:18227430, PMID:8102366;
+        M-CSA catalytic-residue roles for His740
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/169/
+      snippet: The serine nuelcophile is activated by the Ser-His-Asp triad and attacks the carbonyl carbon
+        of the peptide bond in a nucleophilic addition. The oxyanion initiates an elimination reaction
+        that cleaves the peptide bond, releasing the new N-terminus of the protein, which protonates from
+        the His of the catalytic triad. His740 deprotonates water, which attacks the carbonyl carbon bound
+        to the catalyti
+      notes: M-CSA entry 169, mechanism 1; M-CSA cites PMID:12832764, PMID:15175333, PMID:18227430, PMID:8102366;
+        CATH domain 3.40.50.1820 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/169/
+      snippet: The serine nuelcophile is activated by the Ser-His-Asp triad and attacks the carbonyl carbon
+        of the peptide bond in a nucleophilic addition. The oxyanion initiates an elimination reaction
+        that cleaves the peptide bond, releasing the new N-terminus of the protein, which protonates from
+        the His of the catalytic triad. His740 deprotonates water, which attacks the carbonyl carbon bound
+        to the catalyti
+      notes: M-CSA entry 169, mechanism 1; M-CSA cites PMID:12832764, PMID:15175333, PMID:18227430, PMID:8102366;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/169/
+      snippet: The serine nuelcophile is activated by the Ser-His-Asp triad and attacks the carbonyl carbon
+        of the peptide bond in a nucleophilic addition. The oxyanion initiates an elimination reaction
+        that cleaves the peptide bond, releasing the new N-terminus of the protein, which protonates from
+        the His of the catalytic triad. His740 deprotonates water, which attacks the carbonyl carbon bound
+        to the catalyti
+      notes: M-CSA entry 169, mechanism 1; M-CSA cites PMID:12832764, PMID:15175333, PMID:18227430, PMID:8102366;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/169/
+      snippet: The serine nuelcophile is activated by the Ser-His-Asp triad and attacks the carbonyl carbon
+        of the peptide bond in a nucleophilic addition. The oxyanion initiates an elimination reaction
+        that cleaves the peptide bond, releasing the new N-terminus of the protein, which protonates from
+        the His of the catalytic triad. His740 deprotonates water, which attacks the carbonyl carbon bound
+        to the catalyti
+      notes: M-CSA entry 169, mechanism 1; M-CSA cites PMID:12832764, PMID:15175333, PMID:18227430, PMID:8102366;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/169/
+      snippet: The serine nuelcophile is activated by the Ser-His-Asp triad and attacks the carbonyl carbon
+        of the peptide bond in a nucleophilic addition. The oxyanion initiates an elimination reaction
+        that cleaves the peptide bond, releasing the new N-terminus of the protein, which protonates from
+        the His of the catalytic triad. His740 deprotonates water, which attacks the carbonyl carbon bound
+        to the catalyti
+      notes: M-CSA entry 169, mechanism 1; M-CSA cites PMID:12832764, PMID:15175333, PMID:18227430, PMID:8102366;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/169/
+      snippet: The serine nuelcophile is activated by the Ser-His-Asp triad and attacks the carbonyl carbon
+        of the peptide bond in a nucleophilic addition. The oxyanion initiates an elimination reaction
+        that cleaves the peptide bond, releasing the new N-terminus of the protein, which protonates from
+        the His of the catalytic triad. His740 deprotonates water, which attacks the carbonyl carbon bound
+        to the catalyti
+      notes: M-CSA entry 169, mechanism 1; M-CSA cites PMID:12832764, PMID:15175333, PMID:18227430, PMID:8102366;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (23 evidence-backed edges) transcribed from M-CSA entry 169;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

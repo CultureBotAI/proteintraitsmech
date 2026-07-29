@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.2.21
 - CHEBI:15377
@@ -203,4 +203,230 @@ definitions:
       A variety of environmental toxins can react with DNA and chemically alkylate the bases. This blocks the replicative polymerases and interferes with binding of regulatory proteins to DNA resulting in widespread cellular responses including activation of cell cycle checkpoints and programmed cell death. There are a number of repair strategies - direct reversal, nucleotide excision repair and base excision repair. Most single base modifications are corrected using base excision repair. Firstly a lesion specific DNA glycosylase removes the damaged base by hydrolysis of the deoxyribose glycosidic bond of alkylated DNA. The abasic site is then excised and filled by DNA polymerase. AlkA lacks an obvious residue that could fulfill the role of a general acid to protonate the leaving group and later activate a water molecule. It is thought that AlkA's positively charged, alkylated substrates might not require this type of assistance. The lack of a general acid in AlkA's active site provides a means of catalytic selectivity. Positively charged bases, which do not require protonation and have a weakened glycosylic bond, can be removed effectively, and in turn it may function as a general base to activate a nearby water molecule. Unmodified bases require protonation by a general acid prior to hydrolysis and therefore are poor substrates. [PMID:10675345]
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of DNA-3-methyladenine glycosylase II
+  description: Stepwise mechanism transcribed from M-CSA entry 313 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: trp218
+    label: catalytic Trp218 (M-CSA/PDB numbering; UniProt residue 218)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04395
+    description: 'M-CSA roles: electrostatic stabiliser, van der waals interaction.'
+  - node_id: tyr222
+    label: catalytic Tyr222 (M-CSA/PDB numbering; UniProt residue 222)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04395
+    description: 'M-CSA roles: electrostatic stabiliser, van der waals interaction.'
+  - node_id: asp238
+    label: catalytic Asp238 (M-CSA/PDB numbering; UniProt residue 238)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04395
+    description: 'M-CSA roles: attractive charge-charge interaction, electrostatic stabiliser, promote
+      heterolysis.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: 3-methyladenine DNA
+    node_type: CHEMICAL
+    grounding: CHEBI:137218
+  - node_id: product0
+    label: 3-methyladenine
+    node_type: CHEMICAL
+    grounding: CHEBI:38635
+  - node_id: product1
+    label: DNA without the base
+    node_type: CHEMICAL
+    grounding: CHEBI:137219
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The DNA substrate undergoes heterolysis, eliminating the alkylated base. This is the
+      first step in the S<sub>N</sub>1 reaction, the heterolytic cleavage of the weakened glycosidic bond.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The eliminated base deprotonates water, which adds to the DNA.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: DNA-3-methyladenine glycosylase II catalytic site
+    node_type: MOTIF
+    grounding: MCSA:313
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.10.340.30 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.10.340.30
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: DNA-3-methyladenine glycosylase II activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.2.21
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/313/
+      snippet: The eliminated base deprotonates water, which adds to the DNA.
+      notes: M-CSA entry 313, mechanism 1; M-CSA cites PMID:10675345, PMID:10946229, PMID:8706136; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/313/
+      snippet: Products
+      notes: M-CSA entry 313, mechanism 1; M-CSA cites PMID:10675345, PMID:10946229, PMID:8706136; step
+        3
+  - subject: trp218
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp218 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/313/
+      snippet: electrostatic stabiliser, van der waals interaction
+      notes: M-CSA entry 313, mechanism 1; M-CSA cites PMID:10675345, PMID:10946229, PMID:8706136; M-CSA
+        catalytic-residue roles for Trp218
+  - subject: tyr222
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr222 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/313/
+      snippet: electrostatic stabiliser, van der waals interaction
+      notes: M-CSA entry 313, mechanism 1; M-CSA cites PMID:10675345, PMID:10946229, PMID:8706136; M-CSA
+        catalytic-residue roles for Tyr222
+  - subject: asp238
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp238 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/313/
+      snippet: attractive charge-charge interaction, electrostatic stabiliser, promote heterolysis
+      notes: M-CSA entry 313, mechanism 1; M-CSA cites PMID:10675345, PMID:10946229, PMID:8706136; M-CSA
+        catalytic-residue roles for Asp238
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/313/
+      snippet: The bound DNA is highly distorted. This is achieved by surprisingly few contacts. Lys170
+        interacts with the DNA phosphate backbone. The active site cleft is flanked by a wedge tipped
+        with Leu125 which juts into the minor groove and displaces the base targeted for excision. It
+        also causes a 66 degree bend in the DNA away from the protein which disrupts base pair stacking
+        interactions either side of
+      notes: M-CSA entry 313, mechanism 1; M-CSA cites PMID:10675345, PMID:10946229, PMID:8706136; CATH
+        domain 1.10.340.30 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/313/
+      snippet: The bound DNA is highly distorted. This is achieved by surprisingly few contacts. Lys170
+        interacts with the DNA phosphate backbone. The active site cleft is flanked by a wedge tipped
+        with Leu125 which juts into the minor groove and displaces the base targeted for excision. It
+        also causes a 66 degree bend in the DNA away from the protein which disrupts base pair stacking
+        interactions either side of
+      notes: M-CSA entry 313, mechanism 1; M-CSA cites PMID:10675345, PMID:10946229, PMID:8706136; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/313/
+      snippet: The bound DNA is highly distorted. This is achieved by surprisingly few contacts. Lys170
+        interacts with the DNA phosphate backbone. The active site cleft is flanked by a wedge tipped
+        with Leu125 which juts into the minor groove and displaces the base targeted for excision. It
+        also causes a 66 degree bend in the DNA away from the protein which disrupts base pair stacking
+        interactions either side of
+      notes: M-CSA entry 313, mechanism 1; M-CSA cites PMID:10675345, PMID:10946229, PMID:8706136; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/313/
+      snippet: The bound DNA is highly distorted. This is achieved by surprisingly few contacts. Lys170
+        interacts with the DNA phosphate backbone. The active site cleft is flanked by a wedge tipped
+        with Leu125 which juts into the minor groove and displaces the base targeted for excision. It
+        also causes a 66 degree bend in the DNA away from the protein which disrupts base pair stacking
+        interactions either side of
+      notes: M-CSA entry 313, mechanism 1; M-CSA cites PMID:10675345, PMID:10946229, PMID:8706136; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/313/
+      snippet: The bound DNA is highly distorted. This is achieved by surprisingly few contacts. Lys170
+        interacts with the DNA phosphate backbone. The active site cleft is flanked by a wedge tipped
+        with Leu125 which juts into the minor groove and displaces the base targeted for excision. It
+        also causes a 66 degree bend in the DNA away from the protein which disrupts base pair stacking
+        interactions either side of
+      notes: M-CSA entry 313, mechanism 1; M-CSA cites PMID:10675345, PMID:10946229, PMID:8706136; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/313/
+      snippet: The bound DNA is highly distorted. This is achieved by surprisingly few contacts. Lys170
+        interacts with the DNA phosphate backbone. The active site cleft is flanked by a wedge tipped
+        with Leu125 which juts into the minor groove and displaces the base targeted for excision. It
+        also causes a 66 degree bend in the DNA away from the protein which disrupts base pair stacking
+        interactions either side of
+      notes: M-CSA entry 313, mechanism 1; M-CSA cites PMID:10675345, PMID:10946229, PMID:8706136; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/313/
+      snippet: The bound DNA is highly distorted. This is achieved by surprisingly few contacts. Lys170
+        interacts with the DNA phosphate backbone. The active site cleft is flanked by a wedge tipped
+        with Leu125 which juts into the minor groove and displaces the base targeted for excision. It
+        also causes a 66 degree bend in the DNA away from the protein which disrupts base pair stacking
+        interactions either side of
+      notes: M-CSA entry 313, mechanism 1; M-CSA cites PMID:10675345, PMID:10946229, PMID:8706136; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (12 evidence-backed edges) transcribed from M-CSA entry 313;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

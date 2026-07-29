@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.1.1.38
 - CHEBI:18009
@@ -490,4 +490,381 @@ definitions:
       Malic enzymes are found in most living organisms, including bacteria and humans. They catalyse the conversion of L-malate to pyruvate with the concomitant reduction of the cofactor NAD+ or NADP+. In mammals three isoforms have been identified, a cytosolic NADP+ dependent enzyme, a mitochondrial NADP+ dependent enzyme and a mitochondrial NAD+ dependent enzyme. Each has a specific role, for example the mitochondrial NAD+ dependent enzyme is important for the metabolism of glutamine for energy production in rapidly proliferating tissues and tumours.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of malate dehydrogenase (oxaloacetate-decarboxylating)
+  description: Stepwise mechanism transcribed from M-CSA entry 21 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: tyr112
+    label: catalytic Tyr112 (M-CSA/PDB numbering; UniProt residue 112)
+    node_type: RESIDUE
+    grounding: UniProtKB:P23368
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      proton acceptor, proton donor.'
+  - node_id: arg165
+    label: catalytic Arg165 (M-CSA/PDB numbering; UniProt residue 165)
+    node_type: RESIDUE
+    grounding: UniProtKB:P23368
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: lys183
+    label: catalytic Lys183 (M-CSA/PDB numbering; UniProt residue 183)
+    node_type: RESIDUE
+    grounding: UniProtKB:P23368
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor, proton acceptor, proton
+      donor, proton relay.'
+  - node_id: glu255
+    label: catalytic Glu255 (M-CSA/PDB numbering; UniProt residue 255)
+    node_type: RESIDUE
+    grounding: UniProtKB:P23368
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp256
+    label: catalytic Asp256 (M-CSA/PDB numbering; UniProt residue 256)
+    node_type: RESIDUE
+    grounding: UniProtKB:P23368
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp278
+    label: catalytic Asp278 (M-CSA/PDB numbering; UniProt residue 278)
+    node_type: RESIDUE
+    grounding: UniProtKB:P23368
+    description: 'M-CSA roles: hydrogen bond acceptor, proton acceptor, proton donor.'
+  - node_id: asp279
+    label: catalytic Asp279 (M-CSA/PDB numbering; UniProt residue 279)
+    node_type: RESIDUE
+    grounding: UniProtKB:P23368
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asn421
+    label: catalytic Asn421 (M-CSA/PDB numbering; UniProt residue 421)
+    node_type: RESIDUE
+    grounding: UniProtKB:P23368
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: reactant0
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:18009
+  - node_id: reactant1
+    label: (S)-malate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:15589
+  - node_id: product0
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:16474
+  - node_id: product1
+    label: carbon dioxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+  - node_id: product2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp278 deprotonates Lys183, which deprotonates the hydroxyl group of malate, which eliminates
+      a hydride ion that is added to NADP.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The reduced intermediate decarboxylates with concomitant double bond rearrangement.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The oxyanion collapses, reducing the C=C with concomitant deprotonation of Tyr112.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Tyr112 deprotonates Lys183 which deprotonates Asp278 in an inferred return step.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: malate dehydrogenase (oxaloacetate-decarboxylating) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:21
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.10380 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.10380
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: malate dehydrogenase (oxaloacetate-decarboxylating) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.1.1.38
+  edges:
+  - subject: lys183
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys183 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/21/
+      snippet: Asp278 deprotonates Lys183, which deprotonates the hydroxyl group of malate, which eliminates
+        a hydride ion that is added to NADP.
+      notes: M-CSA entry 21, mechanism 1; M-CSA cites PMID:10700286, PMID:12962632; step 1
+  - subject: asp278
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp278 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/21/
+      snippet: Asp278 deprotonates Lys183, which deprotonates the hydroxyl group of malate, which eliminates
+        a hydride ion that is added to NADP.
+      notes: M-CSA entry 21, mechanism 1; M-CSA cites PMID:10700286, PMID:12962632; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/21/
+      snippet: The reduced intermediate decarboxylates with concomitant double bond rearrangement.
+      notes: M-CSA entry 21, mechanism 1; M-CSA cites PMID:10700286, PMID:12962632; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/21/
+      snippet: The oxyanion collapses, reducing the C=C with concomitant deprotonation of Tyr112.
+      notes: M-CSA entry 21, mechanism 1; M-CSA cites PMID:10700286, PMID:12962632; step 3
+  - subject: tyr112
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Tyr112 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/21/
+      snippet: The oxyanion collapses, reducing the C=C with concomitant deprotonation of Tyr112.
+      notes: M-CSA entry 21, mechanism 1; M-CSA cites PMID:10700286, PMID:12962632; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/21/
+      snippet: Tyr112 deprotonates Lys183 which deprotonates Asp278 in an inferred return step.
+      notes: M-CSA entry 21, mechanism 1; M-CSA cites PMID:10700286, PMID:12962632; step 4
+  - subject: tyr112
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Tyr112 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/21/
+      snippet: Tyr112 deprotonates Lys183 which deprotonates Asp278 in an inferred return step.
+      notes: M-CSA entry 21, mechanism 1; M-CSA cites PMID:10700286, PMID:12962632; step 4
+  - subject: lys183
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Lys183 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/21/
+      snippet: Tyr112 deprotonates Lys183 which deprotonates Asp278 in an inferred return step.
+      notes: M-CSA entry 21, mechanism 1; M-CSA cites PMID:10700286, PMID:12962632; step 4
+  - subject: asp278
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Asp278 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/21/
+      snippet: Tyr112 deprotonates Lys183 which deprotonates Asp278 in an inferred return step.
+      notes: M-CSA entry 21, mechanism 1; M-CSA cites PMID:10700286, PMID:12962632; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/21/
+      snippet: Products.
+      notes: M-CSA entry 21, mechanism 1; M-CSA cites PMID:10700286, PMID:12962632; step 5
+  - subject: tyr112
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr112 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/21/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+        proton donor
+      notes: M-CSA entry 21, mechanism 1; M-CSA cites PMID:10700286, PMID:12962632; M-CSA catalytic-residue
+        roles for Tyr112
+  - subject: arg165
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg165 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/21/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 21, mechanism 1; M-CSA cites PMID:10700286, PMID:12962632; M-CSA catalytic-residue
+        roles for Arg165
+  - subject: lys183
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys183 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/21/
+      snippet: electrostatic stabiliser, hydrogen bond donor, proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 21, mechanism 1; M-CSA cites PMID:10700286, PMID:12962632; M-CSA catalytic-residue
+        roles for Lys183
+  - subject: glu255
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu255 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/21/
+      snippet: metal ligand
+      notes: M-CSA entry 21, mechanism 1; M-CSA cites PMID:10700286, PMID:12962632; M-CSA catalytic-residue
+        roles for Glu255
+  - subject: asp256
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp256 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/21/
+      snippet: metal ligand
+      notes: M-CSA entry 21, mechanism 1; M-CSA cites PMID:10700286, PMID:12962632; M-CSA catalytic-residue
+        roles for Asp256
+  - subject: asp278
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp278 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/21/
+      snippet: hydrogen bond acceptor, proton acceptor, proton donor
+      notes: M-CSA entry 21, mechanism 1; M-CSA cites PMID:10700286, PMID:12962632; M-CSA catalytic-residue
+        roles for Asp278
+  - subject: asp279
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp279 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/21/
+      snippet: metal ligand
+      notes: M-CSA entry 21, mechanism 1; M-CSA cites PMID:10700286, PMID:12962632; M-CSA catalytic-residue
+        roles for Asp279
+  - subject: asn421
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn421 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/21/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 21, mechanism 1; M-CSA cites PMID:10700286, PMID:12962632; M-CSA catalytic-residue
+        roles for Asn421
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/21/
+      snippet: The catalysis by malate enzymes generally proceeds in two steps - dehydrogenation of the
+        malate to produce oxaloacetate and then decarboxylation to produce pyruvate. A bound metal divalent
+        cation (Mg2+ or Mn2+) polarises the C2 hydroxyl of malate for dehydrogenation and stabilises the
+        C2 enolic oxygen for decarboxylation. Lys183 is the most likely candidate for a general acid to
+        protonate the enol
+      notes: M-CSA entry 21, mechanism 1; M-CSA cites PMID:10700286, PMID:12962632; CATH domain 3.40.50.10380
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/21/
+      snippet: The catalysis by malate enzymes generally proceeds in two steps - dehydrogenation of the
+        malate to produce oxaloacetate and then decarboxylation to produce pyruvate. A bound metal divalent
+        cation (Mg2+ or Mn2+) polarises the C2 hydroxyl of malate for dehydrogenation and stabilises the
+        C2 enolic oxygen for decarboxylation. Lys183 is the most likely candidate for a general acid to
+        protonate the enol
+      notes: M-CSA entry 21, mechanism 1; M-CSA cites PMID:10700286, PMID:12962632; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/21/
+      snippet: The catalysis by malate enzymes generally proceeds in two steps - dehydrogenation of the
+        malate to produce oxaloacetate and then decarboxylation to produce pyruvate. A bound metal divalent
+        cation (Mg2+ or Mn2+) polarises the C2 hydroxyl of malate for dehydrogenation and stabilises the
+        C2 enolic oxygen for decarboxylation. Lys183 is the most likely candidate for a general acid to
+        protonate the enol
+      notes: M-CSA entry 21, mechanism 1; M-CSA cites PMID:10700286, PMID:12962632; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/21/
+      snippet: The catalysis by malate enzymes generally proceeds in two steps - dehydrogenation of the
+        malate to produce oxaloacetate and then decarboxylation to produce pyruvate. A bound metal divalent
+        cation (Mg2+ or Mn2+) polarises the C2 hydroxyl of malate for dehydrogenation and stabilises the
+        C2 enolic oxygen for decarboxylation. Lys183 is the most likely candidate for a general acid to
+        protonate the enol
+      notes: M-CSA entry 21, mechanism 1; M-CSA cites PMID:10700286, PMID:12962632; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/21/
+      snippet: The catalysis by malate enzymes generally proceeds in two steps - dehydrogenation of the
+        malate to produce oxaloacetate and then decarboxylation to produce pyruvate. A bound metal divalent
+        cation (Mg2+ or Mn2+) polarises the C2 hydroxyl of malate for dehydrogenation and stabilises the
+        C2 enolic oxygen for decarboxylation. Lys183 is the most likely candidate for a general acid to
+        protonate the enol
+      notes: M-CSA entry 21, mechanism 1; M-CSA cites PMID:10700286, PMID:12962632; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/21/
+      snippet: The catalysis by malate enzymes generally proceeds in two steps - dehydrogenation of the
+        malate to produce oxaloacetate and then decarboxylation to produce pyruvate. A bound metal divalent
+        cation (Mg2+ or Mn2+) polarises the C2 hydroxyl of malate for dehydrogenation and stabilises the
+        C2 enolic oxygen for decarboxylation. Lys183 is the most likely candidate for a general acid to
+        protonate the enol
+      notes: M-CSA entry 21, mechanism 1; M-CSA cites PMID:10700286, PMID:12962632; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/21/
+      snippet: The catalysis by malate enzymes generally proceeds in two steps - dehydrogenation of the
+        malate to produce oxaloacetate and then decarboxylation to produce pyruvate. A bound metal divalent
+        cation (Mg2+ or Mn2+) polarises the C2 hydroxyl of malate for dehydrogenation and stabilises the
+        C2 enolic oxygen for decarboxylation. Lys183 is the most likely candidate for a general acid to
+        protonate the enol
+      notes: M-CSA entry 21, mechanism 1; M-CSA cites PMID:10700286, PMID:12962632; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (25 evidence-backed edges) transcribed from M-CSA entry 21;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

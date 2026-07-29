@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.6.1.21
 - CHEBI:29986
@@ -225,4 +225,475 @@ definitions:
       D-Amino acid aminotransferase (D-aAt) catalyses the transamination of various D-amino acids, forming their respective keto acids. The enzyme has no sequence similarity to the well studied L-amino acid aminotransferase but does have significant sequence overlap with a bacterial branched-chain L-amino acid aminotransferase and 4-amino-4-deoxychorismate lyase. D-aAt is essential for the synthesis of bacterial cell wall components and has been a target of research in the development of antimicrobial agents. Acts on the D-isomers of alanine, leucine, aspartate, glutamate, aminobutyrate, norvaline and asparagine. The enzyme transfers an amino group from a substrate D-amino acid to the pyridoxal phosphate cofactor to form pyridoxamine and an alpha-keto acid in the first half-reaction. The second-half reaction is the reverse of the first, transferring the amino group from the pyridoxamine to a second alpha-keto acid to form the product D-amino acid via a ping-pong mechanism. This is an important process in the formation of D-alanine and D-glutamate, which are essential bacterial cell wall components.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of D-alanine transaminase
+  description: Stepwise mechanism transcribed from M-CSA entry 66 (13 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +1).
+  nodes:
+  - node_id: tyr31
+    label: catalytic Tyr31 (M-CSA/PDB numbering; UniProt residue 32)
+    node_type: RESIDUE
+    grounding: UniProtKB:P19938
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor.'
+  - node_id: lys145
+    label: catalytic Lys145 (M-CSA/PDB numbering; UniProt residue 146)
+    node_type: RESIDUE
+    grounding: UniProtKB:P19938
+    description: 'M-CSA roles: covalently attached, electron pair acceptor, electron pair donor, hydrogen
+      bond acceptor, hydrogen bond donor, nucleofuge, nucleophile, proton acceptor, proton donor.'
+  - node_id: glu177
+    label: catalytic Glu177 (M-CSA/PDB numbering; UniProt residue 178)
+    node_type: RESIDUE
+    grounding: UniProtKB:P19938
+    description: 'M-CSA roles: activator, electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: leu201
+    label: catalytic Leu201 (M-CSA/PDB numbering; UniProt residue 202)
+    node_type: RESIDUE
+    grounding: UniProtKB:P19938
+    description: 'M-CSA roles: steric role, van der waals interaction.'
+  - node_id: reactant0
+    label: D-glutamate(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:29986
+  - node_id: reactant1
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+  - node_id: product0
+    label: 2-oxoglutarate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:16810
+  - node_id: product1
+    label: D-alanine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57416
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The amine of the substrate L-glutamate attacks the PLP cofactor in a nucleophilic addition
+      and the bound Lys145 deprotonates the newly attached amine.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The secondary amine that results from the initial attack initiates an elimination of
+      the covalently bound lysine, resulting in free PLP and lysine in a neutral state.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Lys145 deprotonates the CH adjacent to the bound amine, resulting in double bond rearrangement
+      as the PLP acts as an electron sink.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The PLP feeds the electrons back, resulting in the C=C attached to the aromatic ring
+      deprotonates Lys145.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Lys145 deprotonates water, which initiates a nucleophilic attack on the carbon of the
+      C=N group in an addition reaction.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: The secondary amine deprotonates the attached hydroxyl group, initiating an elimination
+      which releases 2-oxoglutarate.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: The amine of PMP initiates a nucleophilic attack on the carbonyl carbon of pyruvate.
+      The oxyanion deprotonates the newly formed secondary amine in the first step of a Schiff base formation.
+  - node_id: step8
+    label: mechanism step 8
+    node_type: STATE
+    description: The secondary amine initiates an elimination, forming the Schiff base and releasing water
+      with concomitant deprotonation of Lys145.
+  - node_id: step9
+    label: mechanism step 9
+    node_type: STATE
+    description: Lys145 deprotonates the CH2 adjacent to the nitrogen, resulting in double bond rearrangement
+      as the PLP acts as an electron sink.
+  - node_id: step10
+    label: mechanism step 10
+    node_type: STATE
+    description: The PLP feeds the electrons back, the N<sup>+</sup>=C bond deprotonates Lys145.
+  - node_id: step11
+    label: mechanism step 11
+    node_type: STATE
+    description: The amine of Lys145 attacks the PLP in a nucleophilic addition reaction, the secondary
+      amine of the attached substrate reprotonates from the bound Lys145.
+  - node_id: step12
+    label: mechanism step 12
+    node_type: STATE
+    description: The secondary amine that results from the initial attack initiates an elimination of
+      the covalently bound product, resulting in alanine and the regenerated PLP cofactor.
+  - node_id: step13
+    label: mechanism step 13
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: D-alanine transaminase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:66
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.470.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.470.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: D-alanine transaminase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.6.1.21
+  edges:
+  - subject: lys145
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys145 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/66/
+      snippet: The amine of the substrate L-glutamate attacks the PLP cofactor in a nucleophilic addition
+        and the bound Lys145 deprotonates the newly attached amine.
+      notes: M-CSA entry 66, mechanism 1; M-CSA cites PMID:2914916, PMID:7626635, PMID:9538014, PMID:9749913,
+        PMID:9930994; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/66/
+      snippet: The secondary amine that results from the initial attack initiates an elimination of the
+        covalently bound lysine, resulting in free PLP and lysine in a neutral state.
+      notes: M-CSA entry 66, mechanism 1; M-CSA cites PMID:2914916, PMID:7626635, PMID:9538014, PMID:9749913,
+        PMID:9930994; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/66/
+      snippet: Lys145 deprotonates the CH adjacent to the bound amine, resulting in double bond rearrangement
+        as the PLP acts as an electron sink.
+      notes: M-CSA entry 66, mechanism 1; M-CSA cites PMID:2914916, PMID:7626635, PMID:9538014, PMID:9749913,
+        PMID:9930994; step 3
+  - subject: lys145
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Lys145 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/66/
+      snippet: Lys145 deprotonates the CH adjacent to the bound amine, resulting in double bond rearrangement
+        as the PLP acts as an electron sink.
+      notes: M-CSA entry 66, mechanism 1; M-CSA cites PMID:2914916, PMID:7626635, PMID:9538014, PMID:9749913,
+        PMID:9930994; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/66/
+      snippet: The PLP feeds the electrons back, resulting in the C=C attached to the aromatic ring deprotonates
+        Lys145.
+      notes: M-CSA entry 66, mechanism 1; M-CSA cites PMID:2914916, PMID:7626635, PMID:9538014, PMID:9749913,
+        PMID:9930994; step 4
+  - subject: lys145
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Lys145 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/66/
+      snippet: The PLP feeds the electrons back, resulting in the C=C attached to the aromatic ring deprotonates
+        Lys145.
+      notes: M-CSA entry 66, mechanism 1; M-CSA cites PMID:2914916, PMID:7626635, PMID:9538014, PMID:9749913,
+        PMID:9930994; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/66/
+      snippet: Lys145 deprotonates water, which initiates a nucleophilic attack on the carbon of the C=N
+        group in an addition reaction.
+      notes: M-CSA entry 66, mechanism 1; M-CSA cites PMID:2914916, PMID:7626635, PMID:9538014, PMID:9749913,
+        PMID:9930994; step 5
+  - subject: lys145
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Lys145 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/66/
+      snippet: Lys145 deprotonates water, which initiates a nucleophilic attack on the carbon of the C=N
+        group in an addition reaction.
+      notes: M-CSA entry 66, mechanism 1; M-CSA cites PMID:2914916, PMID:7626635, PMID:9538014, PMID:9749913,
+        PMID:9930994; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/66/
+      snippet: The secondary amine deprotonates the attached hydroxyl group, initiating an elimination
+        which releases 2-oxoglutarate.
+      notes: M-CSA entry 66, mechanism 1; M-CSA cites PMID:2914916, PMID:7626635, PMID:9538014, PMID:9749913,
+        PMID:9930994; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/66/
+      snippet: The amine of PMP initiates a nucleophilic attack on the carbonyl carbon of pyruvate. The
+        oxyanion deprotonates the newly formed secondary amine in the first step of a Schiff base formation.
+      notes: M-CSA entry 66, mechanism 1; M-CSA cites PMID:2914916, PMID:7626635, PMID:9538014, PMID:9749913,
+        PMID:9930994; step 7
+  - subject: step7
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step8
+    description: Step 7 leads to step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/66/
+      snippet: The secondary amine initiates an elimination, forming the Schiff base and releasing water
+        with concomitant deprotonation of Lys145.
+      notes: M-CSA entry 66, mechanism 1; M-CSA cites PMID:2914916, PMID:7626635, PMID:9538014, PMID:9749913,
+        PMID:9930994; step 8
+  - subject: lys145
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step8
+    description: Lys145 acts in step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/66/
+      snippet: The secondary amine initiates an elimination, forming the Schiff base and releasing water
+        with concomitant deprotonation of Lys145.
+      notes: M-CSA entry 66, mechanism 1; M-CSA cites PMID:2914916, PMID:7626635, PMID:9538014, PMID:9749913,
+        PMID:9930994; step 8
+  - subject: step8
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step9
+    description: Step 8 leads to step 9.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/66/
+      snippet: Lys145 deprotonates the CH2 adjacent to the nitrogen, resulting in double bond rearrangement
+        as the PLP acts as an electron sink.
+      notes: M-CSA entry 66, mechanism 1; M-CSA cites PMID:2914916, PMID:7626635, PMID:9538014, PMID:9749913,
+        PMID:9930994; step 9
+  - subject: lys145
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step9
+    description: Lys145 acts in step 9.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/66/
+      snippet: Lys145 deprotonates the CH2 adjacent to the nitrogen, resulting in double bond rearrangement
+        as the PLP acts as an electron sink.
+      notes: M-CSA entry 66, mechanism 1; M-CSA cites PMID:2914916, PMID:7626635, PMID:9538014, PMID:9749913,
+        PMID:9930994; step 9
+  - subject: step9
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step10
+    description: Step 9 leads to step 10.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/66/
+      snippet: The PLP feeds the electrons back, the N<sup>+</sup>=C bond deprotonates Lys145.
+      notes: M-CSA entry 66, mechanism 1; M-CSA cites PMID:2914916, PMID:7626635, PMID:9538014, PMID:9749913,
+        PMID:9930994; step 10
+  - subject: lys145
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step10
+    description: Lys145 acts in step 10.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/66/
+      snippet: The PLP feeds the electrons back, the N<sup>+</sup>=C bond deprotonates Lys145.
+      notes: M-CSA entry 66, mechanism 1; M-CSA cites PMID:2914916, PMID:7626635, PMID:9538014, PMID:9749913,
+        PMID:9930994; step 10
+  - subject: step10
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step11
+    description: Step 10 leads to step 11.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/66/
+      snippet: The amine of Lys145 attacks the PLP in a nucleophilic addition reaction, the secondary
+        amine of the attached substrate reprotonates from the bound Lys145.
+      notes: M-CSA entry 66, mechanism 1; M-CSA cites PMID:2914916, PMID:7626635, PMID:9538014, PMID:9749913,
+        PMID:9930994; step 11
+  - subject: lys145
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step11
+    description: Lys145 acts in step 11.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/66/
+      snippet: The amine of Lys145 attacks the PLP in a nucleophilic addition reaction, the secondary
+        amine of the attached substrate reprotonates from the bound Lys145.
+      notes: M-CSA entry 66, mechanism 1; M-CSA cites PMID:2914916, PMID:7626635, PMID:9538014, PMID:9749913,
+        PMID:9930994; step 11
+  - subject: step11
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step12
+    description: Step 11 leads to step 12.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/66/
+      snippet: The secondary amine that results from the initial attack initiates an elimination of the
+        covalently bound product, resulting in alanine and the regenerated PLP cofactor.
+      notes: M-CSA entry 66, mechanism 1; M-CSA cites PMID:2914916, PMID:7626635, PMID:9538014, PMID:9749913,
+        PMID:9930994; step 12
+  - subject: step12
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step13
+    description: Step 12 leads to step 13.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/66/
+      snippet: Products
+      notes: M-CSA entry 66, mechanism 1; M-CSA cites PMID:2914916, PMID:7626635, PMID:9538014, PMID:9749913,
+        PMID:9930994; step 13
+  - subject: tyr31
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr31 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/66/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor
+      notes: M-CSA entry 66, mechanism 1; M-CSA cites PMID:2914916, PMID:7626635, PMID:9538014, PMID:9749913,
+        PMID:9930994; M-CSA catalytic-residue roles for Tyr31
+  - subject: lys145
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys145 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/66/
+      snippet: covalently attached, electron pair acceptor, electron pair donor, hydrogen bond acceptor,
+        hydrogen bond donor, nucleofuge, nucleophile, proton acceptor, proton donor
+      notes: M-CSA entry 66, mechanism 1; M-CSA cites PMID:2914916, PMID:7626635, PMID:9538014, PMID:9749913,
+        PMID:9930994; M-CSA catalytic-residue roles for Lys145
+  - subject: glu177
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu177 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/66/
+      snippet: activator, electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 66, mechanism 1; M-CSA cites PMID:2914916, PMID:7626635, PMID:9538014, PMID:9749913,
+        PMID:9930994; M-CSA catalytic-residue roles for Glu177
+  - subject: leu201
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Leu201 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/66/
+      snippet: steric role, van der waals interaction
+      notes: M-CSA entry 66, mechanism 1; M-CSA cites PMID:2914916, PMID:7626635, PMID:9538014, PMID:9749913,
+        PMID:9930994; M-CSA catalytic-residue roles for Leu201
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/66/
+      snippet: Upon binding of a substrate amino acid, a transaldimation reaction occurs, releasing Lys145
+        from the internal aldimine and forming an external aldimine between the substrate and PLP cofactor.
+        Lys145 then acts as the general base in the next step, driving the 1,3 prototropic shift that
+        converts the internal aldimine into a ketimine intermediate. Next, this ketimine is hydrolysed
+        to form pyridoxamin
+      notes: M-CSA entry 66, mechanism 1; M-CSA cites PMID:2914916, PMID:7626635, PMID:9538014, PMID:9749913,
+        PMID:9930994; CATH domain 3.30.470.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/66/
+      snippet: Upon binding of a substrate amino acid, a transaldimation reaction occurs, releasing Lys145
+        from the internal aldimine and forming an external aldimine between the substrate and PLP cofactor.
+        Lys145 then acts as the general base in the next step, driving the 1,3 prototropic shift that
+        converts the internal aldimine into a ketimine intermediate. Next, this ketimine is hydrolysed
+        to form pyridoxamin
+      notes: M-CSA entry 66, mechanism 1; M-CSA cites PMID:2914916, PMID:7626635, PMID:9538014, PMID:9749913,
+        PMID:9930994; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/66/
+      snippet: Upon binding of a substrate amino acid, a transaldimation reaction occurs, releasing Lys145
+        from the internal aldimine and forming an external aldimine between the substrate and PLP cofactor.
+        Lys145 then acts as the general base in the next step, driving the 1,3 prototropic shift that
+        converts the internal aldimine into a ketimine intermediate. Next, this ketimine is hydrolysed
+        to form pyridoxamin
+      notes: M-CSA entry 66, mechanism 1; M-CSA cites PMID:2914916, PMID:7626635, PMID:9538014, PMID:9749913,
+        PMID:9930994; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/66/
+      snippet: Upon binding of a substrate amino acid, a transaldimation reaction occurs, releasing Lys145
+        from the internal aldimine and forming an external aldimine between the substrate and PLP cofactor.
+        Lys145 then acts as the general base in the next step, driving the 1,3 prototropic shift that
+        converts the internal aldimine into a ketimine intermediate. Next, this ketimine is hydrolysed
+        to form pyridoxamin
+      notes: M-CSA entry 66, mechanism 1; M-CSA cites PMID:2914916, PMID:7626635, PMID:9538014, PMID:9749913,
+        PMID:9930994; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/66/
+      snippet: Upon binding of a substrate amino acid, a transaldimation reaction occurs, releasing Lys145
+        from the internal aldimine and forming an external aldimine between the substrate and PLP cofactor.
+        Lys145 then acts as the general base in the next step, driving the 1,3 prototropic shift that
+        converts the internal aldimine into a ketimine intermediate. Next, this ketimine is hydrolysed
+        to form pyridoxamin
+      notes: M-CSA entry 66, mechanism 1; M-CSA cites PMID:2914916, PMID:7626635, PMID:9538014, PMID:9749913,
+        PMID:9930994; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/66/
+      snippet: Upon binding of a substrate amino acid, a transaldimation reaction occurs, releasing Lys145
+        from the internal aldimine and forming an external aldimine between the substrate and PLP cofactor.
+        Lys145 then acts as the general base in the next step, driving the 1,3 prototropic shift that
+        converts the internal aldimine into a ketimine intermediate. Next, this ketimine is hydrolysed
+        to form pyridoxamin
+      notes: M-CSA entry 66, mechanism 1; M-CSA cites PMID:2914916, PMID:7626635, PMID:9538014, PMID:9749913,
+        PMID:9930994; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (30 evidence-backed edges) transcribed from M-CSA entry 66;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

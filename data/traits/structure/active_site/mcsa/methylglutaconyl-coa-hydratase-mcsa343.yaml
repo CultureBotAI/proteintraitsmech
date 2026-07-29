@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.2.1.18
 - CHEBI:57346
@@ -272,4 +272,253 @@ definitions:
       AU binding protein/enoyl-coA hydratase (AUH) is from Homo sapiens. It binds to AUUU repeats in RNA and also weakly catalyses the hydration of 2-trans-enoyl-coenzyme A (enoyl-coA). The hydration of enoyl-coA is necessary for the break-down of fatty acids. [PMID:12655555]. This entry represents the 3-hydroxy-3-methylglutaconyl- CoA dehydratase activity. It is a member of the crotonase superfamily.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of methylglutaconyl-CoA hydratase
+  description: Stepwise mechanism transcribed from M-CSA entry 343 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: ala141
+    label: catalytic Ala141 (M-CSA/PDB numbering; UniProt residue 141)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q13825
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: gly186
+    label: catalytic Gly186 (M-CSA/PDB numbering; UniProt residue 186)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q13825
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: glu189
+    label: catalytic Glu189 (M-CSA/PDB numbering; UniProt residue 189)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q13825
+    description: 'M-CSA roles: hydrogen bond acceptor.'
+  - node_id: glu209
+    label: catalytic Glu209 (M-CSA/PDB numbering; UniProt residue 209)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q13825
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: trans-3-methylglutaconyl-CoA(5-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57346
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: (3S)-3-hydroxy-3-methylglutaryl-CoA(5-)
+    node_type: CHEMICAL
+    grounding: CHEBI:43074
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu209 abstracts a proton from water, with the concomitant attack of the hydroxyl group
+      to C3 in the substrate. This is facilitated by the binding of the thioester oxygen atom to an oxyanion
+      hole formed by the peptide nitrogens of Ala141 and of Gly186.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The oxyanion intermediate tautomerises to give product with the help of a proton donated
+      by Glu209
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: methylglutaconyl-CoA hydratase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:343
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.226.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.226.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: methylglutaconyl-CoA hydratase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.2.1.18
+  edges:
+  - subject: ala141
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ala141 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/343/
+      snippet: Glu209 abstracts a proton from water, with the concomitant attack of the hydroxyl group
+        to C3 in the substrate. This is facilitated by the binding of the thioester oxygen atom to an
+        oxyanion hole formed by the peptide nitrogens of Ala141 and of Gly186.
+      notes: M-CSA entry 343, mechanism 1; M-CSA cites PMID:10413528, PMID:11738050, PMID:12467702, PMID:12655555,
+        PMID:16640564, PMID:27271456; step 1
+  - subject: gly186
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Gly186 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/343/
+      snippet: Glu209 abstracts a proton from water, with the concomitant attack of the hydroxyl group
+        to C3 in the substrate. This is facilitated by the binding of the thioester oxygen atom to an
+        oxyanion hole formed by the peptide nitrogens of Ala141 and of Gly186.
+      notes: M-CSA entry 343, mechanism 1; M-CSA cites PMID:10413528, PMID:11738050, PMID:12467702, PMID:12655555,
+        PMID:16640564, PMID:27271456; step 1
+  - subject: glu209
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu209 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/343/
+      snippet: Glu209 abstracts a proton from water, with the concomitant attack of the hydroxyl group
+        to C3 in the substrate. This is facilitated by the binding of the thioester oxygen atom to an
+        oxyanion hole formed by the peptide nitrogens of Ala141 and of Gly186.
+      notes: M-CSA entry 343, mechanism 1; M-CSA cites PMID:10413528, PMID:11738050, PMID:12467702, PMID:12655555,
+        PMID:16640564, PMID:27271456; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/343/
+      snippet: The oxyanion intermediate tautomerises to give product with the help of a proton donated
+        by Glu209
+      notes: M-CSA entry 343, mechanism 1; M-CSA cites PMID:10413528, PMID:11738050, PMID:12467702, PMID:12655555,
+        PMID:16640564, PMID:27271456; step 2
+  - subject: glu209
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu209 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/343/
+      snippet: The oxyanion intermediate tautomerises to give product with the help of a proton donated
+        by Glu209
+      notes: M-CSA entry 343, mechanism 1; M-CSA cites PMID:10413528, PMID:11738050, PMID:12467702, PMID:12655555,
+        PMID:16640564, PMID:27271456; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/343/
+      snippet: Products.
+      notes: M-CSA entry 343, mechanism 1; M-CSA cites PMID:10413528, PMID:11738050, PMID:12467702, PMID:12655555,
+        PMID:16640564, PMID:27271456; step 3
+  - subject: ala141
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ala141 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/343/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 343, mechanism 1; M-CSA cites PMID:10413528, PMID:11738050, PMID:12467702, PMID:12655555,
+        PMID:16640564, PMID:27271456; M-CSA catalytic-residue roles for Ala141
+  - subject: gly186
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly186 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/343/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 343, mechanism 1; M-CSA cites PMID:10413528, PMID:11738050, PMID:12467702, PMID:12655555,
+        PMID:16640564, PMID:27271456; M-CSA catalytic-residue roles for Gly186
+  - subject: glu189
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu189 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/343/
+      snippet: hydrogen bond acceptor
+      notes: M-CSA entry 343, mechanism 1; M-CSA cites PMID:10413528, PMID:11738050, PMID:12467702, PMID:12655555,
+        PMID:16640564, PMID:27271456; M-CSA catalytic-residue roles for Glu189
+  - subject: glu209
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu209 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/343/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 343, mechanism 1; M-CSA cites PMID:10413528, PMID:11738050, PMID:12467702, PMID:12655555,
+        PMID:16640564, PMID:27271456; M-CSA catalytic-residue roles for Glu209
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/343/
+      snippet: The substrate is activated by the polarisation of the enone pi-system through a strong
+        hydrogen bond between the backbone amide of Gly186 and the thioester carbonyl of the bound enoyl-CoA.
+        Glu189 acts as a general base and activates a water molecule for attack on the C3 atom. The C2
+        atom then accepts a proton from protonated Glu209.
+      notes: M-CSA entry 343, mechanism 1; M-CSA cites PMID:10413528, PMID:11738050, PMID:12467702, PMID:12655555,
+        PMID:16640564, PMID:27271456; CATH domain 3.90.226.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/343/
+      snippet: The substrate is activated by the polarisation of the enone pi-system through a strong
+        hydrogen bond between the backbone amide of Gly186 and the thioester carbonyl of the bound enoyl-CoA.
+        Glu189 acts as a general base and activates a water molecule for attack on the C3 atom. The C2
+        atom then accepts a proton from protonated Glu209.
+      notes: M-CSA entry 343, mechanism 1; M-CSA cites PMID:10413528, PMID:11738050, PMID:12467702, PMID:12655555,
+        PMID:16640564, PMID:27271456; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/343/
+      snippet: The substrate is activated by the polarisation of the enone pi-system through a strong
+        hydrogen bond between the backbone amide of Gly186 and the thioester carbonyl of the bound enoyl-CoA.
+        Glu189 acts as a general base and activates a water molecule for attack on the C3 atom. The C2
+        atom then accepts a proton from protonated Glu209.
+      notes: M-CSA entry 343, mechanism 1; M-CSA cites PMID:10413528, PMID:11738050, PMID:12467702, PMID:12655555,
+        PMID:16640564, PMID:27271456; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/343/
+      snippet: The substrate is activated by the polarisation of the enone pi-system through a strong
+        hydrogen bond between the backbone amide of Gly186 and the thioester carbonyl of the bound enoyl-CoA.
+        Glu189 acts as a general base and activates a water molecule for attack on the C3 atom. The C2
+        atom then accepts a proton from protonated Glu209.
+      notes: M-CSA entry 343, mechanism 1; M-CSA cites PMID:10413528, PMID:11738050, PMID:12467702, PMID:12655555,
+        PMID:16640564, PMID:27271456; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/343/
+      snippet: The substrate is activated by the polarisation of the enone pi-system through a strong
+        hydrogen bond between the backbone amide of Gly186 and the thioester carbonyl of the bound enoyl-CoA.
+        Glu189 acts as a general base and activates a water molecule for attack on the C3 atom. The C2
+        atom then accepts a proton from protonated Glu209.
+      notes: M-CSA entry 343, mechanism 1; M-CSA cites PMID:10413528, PMID:11738050, PMID:12467702, PMID:12655555,
+        PMID:16640564, PMID:27271456; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 343;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

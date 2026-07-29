@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.4.2.2
 - CHEBI:58601
@@ -529,4 +529,304 @@ definitions:
       Phosphoglucomutase catalyses the transfer of a phosphate fragment between the 1- and 6-O atoms of glucose. As suggested by the enzyme's name, in its stable form it exists esterified, at the gamma-hydroxyl group of Ser116. The enzyme is involved in the glycogenolysis pathway. Once a 1-phosphate glucose molecule is released from glycogen by glycogen phosphorylase, phosphoglucomutase catalyses the interconversion of this relatively useless metabolic intermediate into 6-phosphate glucose. This metabolite can then be utilised in multiple cellular pathways including the glycolytic, pentose phosphate or biosynthetic pathways. When glucose levels are high, phosphoglucomutase can act in the opposite fashion, converting 6-phosphate glucose to 1-phosphate glucose. In combination with UDP-glucose-pyrophosphorylase and glycogen synthase, this change in equilibrium will result in the reformation of the 1-phosphate glucose monomer with a glycogen polymer.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of phosphoglucomutase
+  description: Stepwise mechanism transcribed from M-CSA entry 352 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +1).
+  nodes:
+  - node_id: ser116
+    label: catalytic Ser116 (M-CSA/PDB numbering; UniProt residue 117)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00949
+    description: 'M-CSA roles: activator, covalently attached, metal ligand, nucleofuge, nucleophile,
+      proton acceptor, proton donor.'
+  - node_id: his117
+    label: catalytic His117 (M-CSA/PDB numbering; UniProt residue 118)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00949
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: asp287
+    label: catalytic Asp287 (M-CSA/PDB numbering; UniProt residue 288)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00949
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp289
+    label: catalytic Asp289 (M-CSA/PDB numbering; UniProt residue 290)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00949
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp291
+    label: catalytic Asp291 (M-CSA/PDB numbering; UniProt residue 292)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00949
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: arg292
+    label: catalytic Arg292 (M-CSA/PDB numbering; UniProt residue 293)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00949
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: lys388
+    label: catalytic Lys388 (M-CSA/PDB numbering; UniProt residue 389)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00949
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: alpha-D-glucose 1-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58601
+  - node_id: product0
+    label: alpha-D-glucose 6-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58225
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: "The phosphorylated Ser116 attacks at the O6 position, forming a phospho-enzyme-substrate\
+      \ intermediate.
+This is assisted by Lys389 acting as a general acid, protonating the water molecule-\
+      \ the leaving group from C6."
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: "Ser116 is displaced by a  water molecule which is activated by Lys398. The intermediate\
+      \ retains the phosphate group.
+Ser116 accepts a proton from His118 upon displacement."
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: "Ser166 is re-phosphorylated, regenerating the active site and forming the 6-phosphate\
+      \ glucose product.
+Ser116 is activated by His118.
+Lys389 donates a proton to the  water which\
+      \ is displaced from the phosphate group."
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: phosphoglucomutase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:352
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.120.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.120.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: phosphoglucomutase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.4.2.2
+  edges:
+  - subject: ser116
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser116 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/352/
+      snippet: "The phosphorylated Ser116 attacks at the O6 position, forming a phospho-enzyme-substrate\
+        \ intermediate.
+This is assisted by Lys389 acting as a general acid, protonating the water\
+        \ molecule- the leaving group from C6."
+      notes: M-CSA entry 352, mechanism 1; M-CSA cites PMID:1531026, PMID:1532581, PMID:29131453, PMID:4830239,
+        PMID:9337869; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/352/
+      snippet: "Ser116 is displaced by a  water molecule which is activated by Lys398. The intermediate\
+        \ retains the phosphate group.
+Ser116 accepts a proton from His118 upon displacement."
+      notes: M-CSA entry 352, mechanism 1; M-CSA cites PMID:1531026, PMID:1532581, PMID:29131453, PMID:4830239,
+        PMID:9337869; step 2
+  - subject: ser116
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Ser116 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/352/
+      snippet: "Ser116 is displaced by a  water molecule which is activated by Lys398. The intermediate\
+        \ retains the phosphate group.
+Ser116 accepts a proton from His118 upon displacement."
+      notes: M-CSA entry 352, mechanism 1; M-CSA cites PMID:1531026, PMID:1532581, PMID:29131453, PMID:4830239,
+        PMID:9337869; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/352/
+      snippet: "Ser166 is re-phosphorylated, regenerating the active site and forming the 6-phosphate\
+        \ glucose product.
+Ser116 is activated by His118.
+Lys389 donates a proton to the  water\
+        \ which is displaced from the phosphate group."
+      notes: M-CSA entry 352, mechanism 1; M-CSA cites PMID:1531026, PMID:1532581, PMID:29131453, PMID:4830239,
+        PMID:9337869; step 3
+  - subject: ser116
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Ser116 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/352/
+      snippet: "Ser166 is re-phosphorylated, regenerating the active site and forming the 6-phosphate\
+        \ glucose product.
+Ser116 is activated by His118.
+Lys389 donates a proton to the  water\
+        \ which is displaced from the phosphate group."
+      notes: M-CSA entry 352, mechanism 1; M-CSA cites PMID:1531026, PMID:1532581, PMID:29131453, PMID:4830239,
+        PMID:9337869; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/352/
+      snippet: Products.
+      notes: M-CSA entry 352, mechanism 1; M-CSA cites PMID:1531026, PMID:1532581, PMID:29131453, PMID:4830239,
+        PMID:9337869; step 4
+  - subject: ser116
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser116 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/352/
+      snippet: activator, covalently attached, metal ligand, nucleofuge, nucleophile, proton acceptor,
+        proton donor
+      notes: M-CSA entry 352, mechanism 1; M-CSA cites PMID:1531026, PMID:1532581, PMID:29131453, PMID:4830239,
+        PMID:9337869; M-CSA catalytic-residue roles for Ser116
+  - subject: his117
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His117 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/352/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 352, mechanism 1; M-CSA cites PMID:1531026, PMID:1532581, PMID:29131453, PMID:4830239,
+        PMID:9337869; M-CSA catalytic-residue roles for His117
+  - subject: asp287
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp287 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/352/
+      snippet: metal ligand
+      notes: M-CSA entry 352, mechanism 1; M-CSA cites PMID:1531026, PMID:1532581, PMID:29131453, PMID:4830239,
+        PMID:9337869; M-CSA catalytic-residue roles for Asp287
+  - subject: asp289
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp289 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/352/
+      snippet: metal ligand
+      notes: M-CSA entry 352, mechanism 1; M-CSA cites PMID:1531026, PMID:1532581, PMID:29131453, PMID:4830239,
+        PMID:9337869; M-CSA catalytic-residue roles for Asp289
+  - subject: asp291
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp291 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/352/
+      snippet: metal ligand
+      notes: M-CSA entry 352, mechanism 1; M-CSA cites PMID:1531026, PMID:1532581, PMID:29131453, PMID:4830239,
+        PMID:9337869; M-CSA catalytic-residue roles for Asp291
+  - subject: arg292
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg292 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/352/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 352, mechanism 1; M-CSA cites PMID:1531026, PMID:1532581, PMID:29131453, PMID:4830239,
+        PMID:9337869; M-CSA catalytic-residue roles for Arg292
+  - subject: lys388
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys388 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/352/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 352, mechanism 1; M-CSA cites PMID:1531026, PMID:1532581, PMID:29131453, PMID:4830239,
+        PMID:9337869; M-CSA catalytic-residue roles for Lys388
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/352/
+      snippet: This mechanism involves the di-phosphate intermediate flipping in the active site. Such
+        a conformational rearrangement has been identified by phosphorous and fluorine NMR studies, indicating
+        that two glucose-phosphate binding sites are present within the active site. The final product
+        is shown with undefined stereochemistry at the anomeric carbon, even though no direct substitution
+        has occurred at
+      notes: M-CSA entry 352, mechanism 1; M-CSA cites PMID:1531026, PMID:1532581, PMID:29131453, PMID:4830239,
+        PMID:9337869; CATH domain 3.40.120.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/352/
+      snippet: This mechanism involves the di-phosphate intermediate flipping in the active site. Such
+        a conformational rearrangement has been identified by phosphorous and fluorine NMR studies, indicating
+        that two glucose-phosphate binding sites are present within the active site. The final product
+        is shown with undefined stereochemistry at the anomeric carbon, even though no direct substitution
+        has occurred at
+      notes: M-CSA entry 352, mechanism 1; M-CSA cites PMID:1531026, PMID:1532581, PMID:29131453, PMID:4830239,
+        PMID:9337869; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/352/
+      snippet: This mechanism involves the di-phosphate intermediate flipping in the active site. Such
+        a conformational rearrangement has been identified by phosphorous and fluorine NMR studies, indicating
+        that two glucose-phosphate binding sites are present within the active site. The final product
+        is shown with undefined stereochemistry at the anomeric carbon, even though no direct substitution
+        has occurred at
+      notes: M-CSA entry 352, mechanism 1; M-CSA cites PMID:1531026, PMID:1532581, PMID:29131453, PMID:4830239,
+        PMID:9337869; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/352/
+      snippet: This mechanism involves the di-phosphate intermediate flipping in the active site. Such
+        a conformational rearrangement has been identified by phosphorous and fluorine NMR studies, indicating
+        that two glucose-phosphate binding sites are present within the active site. The final product
+        is shown with undefined stereochemistry at the anomeric carbon, even though no direct substitution
+        has occurred at
+      notes: M-CSA entry 352, mechanism 1; M-CSA cites PMID:1531026, PMID:1532581, PMID:29131453, PMID:4830239,
+        PMID:9337869; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (17 evidence-backed edges) transcribed from M-CSA entry 352;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

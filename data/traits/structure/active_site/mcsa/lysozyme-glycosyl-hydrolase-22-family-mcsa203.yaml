@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.1.17
 - CHEBI:15377
@@ -194,4 +194,333 @@ definitions:
       Lysozymes have primarily a bacteriolytic function, it hydrolyses specific bonds between NAG and NAM in peptidoglycan, which forms the bacterial cell wall. Lysosymes in tissues and body fluids are associated with the monocyte- macrophage system and enhance the activity of immunoagents. Historically there has been much debate about the mechanism of the enzyme, but recent evidence overwhelmingly supports the presence of a covalently bound intermediate. This discredits the Phillips mechanism which proposed an oxycarbenium intermediate.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of lysozyme (glycosyl hydrolase 22 family)
+  description: Stepwise mechanism transcribed from M-CSA entry 203 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +18).
+  nodes:
+  - node_id: glu35
+    label: catalytic Glu35 (M-CSA/PDB numbering; UniProt residue 53)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00698
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: asn46
+    label: catalytic Asn46 (M-CSA/PDB numbering; UniProt residue 64)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00698
+  - node_id: asp48
+    label: catalytic Asp48 (M-CSA/PDB numbering; UniProt residue 66)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00698
+  - node_id: ser50
+    label: catalytic Ser50 (M-CSA/PDB numbering; UniProt residue 68)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00698
+  - node_id: asp52
+    label: catalytic Asp52 (M-CSA/PDB numbering; UniProt residue 70)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00698
+    description: 'M-CSA roles: covalently attached, electrostatic stabiliser, nucleofuge, nucleophile,
+      polar/non-polar interaction.'
+  - node_id: asn59
+    label: catalytic Asn59 (M-CSA/PDB numbering; UniProt residue 77)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00698
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: beta-MurNAc-(1->4)-beta-D-GlcpNAc
+    node_type: CHEMICAL
+    grounding: CHEBI:87004
+  - node_id: product0
+    label: N-acetyl-beta-D-muramic acid
+    node_type: CHEMICAL
+    grounding: CHEBI:40729
+  - node_id: product1
+    label: N-acetyl-beta-D-glucosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:28009
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: 'During this step, the C1 migrates (in an electrophilic manner) from above the ring plane
+      to below the ring plane to approach the catalytic nucleophile (Asp52), which hardly changes its
+      position during the course of the reaction. Asp52 then attacks the C1 of the peptidoglycan in a
+      nucleophilic substitution that results in the NAG portion of the peptidoglycan being covalently
+      attached to the enzyme '
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: During this step, the C1 migrates from its position below the ring plane to form a bond
+      with a water molecule positioned in the location previously occupied by the substrate glycosidic
+      oxygen [PMID:11518970]. Glu35 deprotonates water, which attacks the C1 of the covalently bound NAG
+      intermediate in a nucleophilic substitution that results in the NAG product and free Asp52.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: lysozyme (glycosyl hydrolase 22 family) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:203
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.10.530.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.10.530.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: lysozyme (glycosyl hydrolase 22 family) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.1.17
+  edges:
+  - subject: glu35
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu35 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/203/
+      snippet: During this step, the C1 migrates (in an electrophilic manner) from above the ring plane
+        to below the ring plane to approach the catalytic nucleophile (Asp52), which hardly changes its
+        position during the course of the reaction. Asp52 then attacks the C1 of the peptidoglycan in
+        a nucleophilic substitution that results in the NAG portion of the peptidoglycan being covalently
+        attached to the enzyme and the NAM being released. NAM deprotonates Glu35.
+      notes: M-CSA entry 203, mechanism 1; M-CSA cites PMID:11518970, PMID:11524668, PMID:15688446, PMID:24699657,
+        PMID:25514638; step 1
+  - subject: asp52
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp52 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/203/
+      snippet: During this step, the C1 migrates (in an electrophilic manner) from above the ring plane
+        to below the ring plane to approach the catalytic nucleophile (Asp52), which hardly changes its
+        position during the course of the reaction. Asp52 then attacks the C1 of the peptidoglycan in
+        a nucleophilic substitution that results in the NAG portion of the peptidoglycan being covalently
+        attached to the enzyme and the NAM being released. NAM deprotonates Glu35.
+      notes: M-CSA entry 203, mechanism 1; M-CSA cites PMID:11518970, PMID:11524668, PMID:15688446, PMID:24699657,
+        PMID:25514638; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/203/
+      snippet: During this step, the C1 migrates from its position below the ring plane to form a bond
+        with a water molecule positioned in the location previously occupied by the substrate glycosidic
+        oxygen [PMID:11518970]. Glu35 deprotonates water, which attacks the C1 of the covalently bound
+        NAG intermediate in a nucleophilic substitution that results in the NAG product and free Asp52.
+      notes: M-CSA entry 203, mechanism 1; M-CSA cites PMID:11518970, PMID:11524668, PMID:15688446, PMID:24699657,
+        PMID:25514638; step 2
+  - subject: glu35
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu35 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/203/
+      snippet: During this step, the C1 migrates from its position below the ring plane to form a bond
+        with a water molecule positioned in the location previously occupied by the substrate glycosidic
+        oxygen [PMID:11518970]. Glu35 deprotonates water, which attacks the C1 of the covalently bound
+        NAG intermediate in a nucleophilic substitution that results in the NAG product and free Asp52.
+      notes: M-CSA entry 203, mechanism 1; M-CSA cites PMID:11518970, PMID:11524668, PMID:15688446, PMID:24699657,
+        PMID:25514638; step 2
+  - subject: asp52
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Asp52 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/203/
+      snippet: During this step, the C1 migrates from its position below the ring plane to form a bond
+        with a water molecule positioned in the location previously occupied by the substrate glycosidic
+        oxygen [PMID:11518970]. Glu35 deprotonates water, which attacks the C1 of the covalently bound
+        NAG intermediate in a nucleophilic substitution that results in the NAG product and free Asp52.
+      notes: M-CSA entry 203, mechanism 1; M-CSA cites PMID:11518970, PMID:11524668, PMID:15688446, PMID:24699657,
+        PMID:25514638; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/203/
+      snippet: Products
+      notes: M-CSA entry 203, mechanism 1; M-CSA cites PMID:11518970, PMID:11524668, PMID:15688446, PMID:24699657,
+        PMID:25514638; step 3
+  - subject: glu35
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu35 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/203/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 203, mechanism 1; M-CSA cites PMID:11518970, PMID:11524668, PMID:15688446, PMID:24699657,
+        PMID:25514638; M-CSA catalytic-residue roles for Glu35
+  - subject: asn46
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn46 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/203/
+      snippet: Asp52 attacks the C1 of the peptidoglycan in a nucleophilic substitution that results in
+        the NAG portion of the peptidoglycan being covalently attached to the enzyme and the NAM being
+        released. NAM deprotonates Glu35. Glu35 deprotonates water, which attacks the C1 of the covalently
+        bound NAG intermediate in a nucleophilic substitution that results in the NAG product and free
+        Asp52
+      notes: M-CSA entry 203, mechanism 1; M-CSA cites PMID:11518970, PMID:11524668, PMID:15688446, PMID:24699657,
+        PMID:25514638; M-CSA catalytic-residue roles for Asn46
+  - subject: asp48
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp48 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/203/
+      snippet: Asp52 attacks the C1 of the peptidoglycan in a nucleophilic substitution that results in
+        the NAG portion of the peptidoglycan being covalently attached to the enzyme and the NAM being
+        released. NAM deprotonates Glu35. Glu35 deprotonates water, which attacks the C1 of the covalently
+        bound NAG intermediate in a nucleophilic substitution that results in the NAG product and free
+        Asp52
+      notes: M-CSA entry 203, mechanism 1; M-CSA cites PMID:11518970, PMID:11524668, PMID:15688446, PMID:24699657,
+        PMID:25514638; M-CSA catalytic-residue roles for Asp48
+  - subject: ser50
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser50 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/203/
+      snippet: Asp52 attacks the C1 of the peptidoglycan in a nucleophilic substitution that results in
+        the NAG portion of the peptidoglycan being covalently attached to the enzyme and the NAM being
+        released. NAM deprotonates Glu35. Glu35 deprotonates water, which attacks the C1 of the covalently
+        bound NAG intermediate in a nucleophilic substitution that results in the NAG product and free
+        Asp52
+      notes: M-CSA entry 203, mechanism 1; M-CSA cites PMID:11518970, PMID:11524668, PMID:15688446, PMID:24699657,
+        PMID:25514638; M-CSA catalytic-residue roles for Ser50
+  - subject: asp52
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp52 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/203/
+      snippet: covalently attached, electrostatic stabiliser, nucleofuge, nucleophile, polar/non-polar
+        interaction
+      notes: M-CSA entry 203, mechanism 1; M-CSA cites PMID:11518970, PMID:11524668, PMID:15688446, PMID:24699657,
+        PMID:25514638; M-CSA catalytic-residue roles for Asp52
+  - subject: asn59
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn59 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/203/
+      snippet: Asp52 attacks the C1 of the peptidoglycan in a nucleophilic substitution that results in
+        the NAG portion of the peptidoglycan being covalently attached to the enzyme and the NAM being
+        released. NAM deprotonates Glu35. Glu35 deprotonates water, which attacks the C1 of the covalently
+        bound NAG intermediate in a nucleophilic substitution that results in the NAG product and free
+        Asp52
+      notes: M-CSA entry 203, mechanism 1; M-CSA cites PMID:11518970, PMID:11524668, PMID:15688446, PMID:24699657,
+        PMID:25514638; M-CSA catalytic-residue roles for Asn59
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/203/
+      snippet: Asp52 attacks the C1 of the peptidoglycan in a nucleophilic substitution that results in
+        the NAG portion of the peptidoglycan being covalently attached to the enzyme and the NAM being
+        released. NAM deprotonates Glu35. Glu35 deprotonates water, which attacks the C1 of the covalently
+        bound NAG intermediate in a nucleophilic substitution that results in the NAG product and free
+        Asp52
+      notes: M-CSA entry 203, mechanism 1; M-CSA cites PMID:11518970, PMID:11524668, PMID:15688446, PMID:24699657,
+        PMID:25514638; CATH domain 1.10.530.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/203/
+      snippet: Asp52 attacks the C1 of the peptidoglycan in a nucleophilic substitution that results in
+        the NAG portion of the peptidoglycan being covalently attached to the enzyme and the NAM being
+        released. NAM deprotonates Glu35. Glu35 deprotonates water, which attacks the C1 of the covalently
+        bound NAG intermediate in a nucleophilic substitution that results in the NAG product and free
+        Asp52
+      notes: M-CSA entry 203, mechanism 1; M-CSA cites PMID:11518970, PMID:11524668, PMID:15688446, PMID:24699657,
+        PMID:25514638; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/203/
+      snippet: Asp52 attacks the C1 of the peptidoglycan in a nucleophilic substitution that results in
+        the NAG portion of the peptidoglycan being covalently attached to the enzyme and the NAM being
+        released. NAM deprotonates Glu35. Glu35 deprotonates water, which attacks the C1 of the covalently
+        bound NAG intermediate in a nucleophilic substitution that results in the NAG product and free
+        Asp52
+      notes: M-CSA entry 203, mechanism 1; M-CSA cites PMID:11518970, PMID:11524668, PMID:15688446, PMID:24699657,
+        PMID:25514638; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/203/
+      snippet: Asp52 attacks the C1 of the peptidoglycan in a nucleophilic substitution that results in
+        the NAG portion of the peptidoglycan being covalently attached to the enzyme and the NAM being
+        released. NAM deprotonates Glu35. Glu35 deprotonates water, which attacks the C1 of the covalently
+        bound NAG intermediate in a nucleophilic substitution that results in the NAG product and free
+        Asp52
+      notes: M-CSA entry 203, mechanism 1; M-CSA cites PMID:11518970, PMID:11524668, PMID:15688446, PMID:24699657,
+        PMID:25514638; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/203/
+      snippet: Asp52 attacks the C1 of the peptidoglycan in a nucleophilic substitution that results in
+        the NAG portion of the peptidoglycan being covalently attached to the enzyme and the NAM being
+        released. NAM deprotonates Glu35. Glu35 deprotonates water, which attacks the C1 of the covalently
+        bound NAG intermediate in a nucleophilic substitution that results in the NAG product and free
+        Asp52
+      notes: M-CSA entry 203, mechanism 1; M-CSA cites PMID:11518970, PMID:11524668, PMID:15688446, PMID:24699657,
+        PMID:25514638; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/203/
+      snippet: Asp52 attacks the C1 of the peptidoglycan in a nucleophilic substitution that results in
+        the NAG portion of the peptidoglycan being covalently attached to the enzyme and the NAM being
+        released. NAM deprotonates Glu35. Glu35 deprotonates water, which attacks the C1 of the covalently
+        bound NAG intermediate in a nucleophilic substitution that results in the NAG product and free
+        Asp52
+      notes: M-CSA entry 203, mechanism 1; M-CSA cites PMID:11518970, PMID:11524668, PMID:15688446, PMID:24699657,
+        PMID:25514638; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (18 evidence-backed edges) transcribed from M-CSA entry 203;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

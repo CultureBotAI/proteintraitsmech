@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.6.1.7
 - CHEBI:30616
@@ -353,4 +353,268 @@ definitions:
       Chaperonins are essential multisubunit assemblies that promote facilitated protein folding in concert with ATP hydrolysis - forming a 'cage' around the protein as it folds, with the 'timer' for protein release provided by ATP hydrolysis. Group II chaperonins are found in archaea and the eukaryotic cytosol. The mechanism for ATP hydrolysis of all chaperonins is the same, but the way this is linked to opening and closing of the cavity is different.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of chaperonin ATPase
+  description: Stepwise mechanism transcribed from M-CSA entry 179 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: asp64
+    label: catalytic Asp64 (M-CSA/PDB numbering; UniProt residue 64)
+    node_type: RESIDUE
+    grounding: UniProtKB:P61112
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: thr97
+    label: catalytic Thr97 (M-CSA/PDB numbering; UniProt residue 97)
+    node_type: RESIDUE
+    grounding: UniProtKB:P61112
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: thr98
+    label: catalytic Thr98 (M-CSA/PDB numbering; UniProt residue 98)
+    node_type: RESIDUE
+    grounding: UniProtKB:P61112
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: asp393
+    label: catalytic Asp393 (M-CSA/PDB numbering; UniProt residue 393)
+    node_type: RESIDUE
+    grounding: UniProtKB:P61112
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: ATP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: ADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp393 deprotonates water, which attacks the gamma phosphate of ATP in a nucleophilic
+      addition, resulting in a pentavalent phosphate intermediate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The pentavalent intermediate collapses, releasing orthophosphate and ADP, which deprotonates
+      Asp393.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: chaperonin ATPase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:179
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.10.560.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.10.560.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: chaperonin ATPase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.6.1.7
+  edges:
+  - subject: asp393
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp393 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/179/
+      snippet: Asp393 deprotonates water, which attacks the gamma phosphate of ATP in a nucleophilic addition,
+        resulting in a pentavalent phosphate intermediate.
+      notes: M-CSA entry 179, mechanism 1; M-CSA cites PMID:14729342, PMID:29018216, PMID:9546398; step
+        1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/179/
+      snippet: The pentavalent intermediate collapses, releasing orthophosphate and ADP, which deprotonates
+        Asp393.
+      notes: M-CSA entry 179, mechanism 1; M-CSA cites PMID:14729342, PMID:29018216, PMID:9546398; step
+        2
+  - subject: asp393
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Asp393 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/179/
+      snippet: The pentavalent intermediate collapses, releasing orthophosphate and ADP, which deprotonates
+        Asp393.
+      notes: M-CSA entry 179, mechanism 1; M-CSA cites PMID:14729342, PMID:29018216, PMID:9546398; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/179/
+      snippet: Products
+      notes: M-CSA entry 179, mechanism 1; M-CSA cites PMID:14729342, PMID:29018216, PMID:9546398; step
+        3
+  - subject: asp64
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp64 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/179/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 179, mechanism 1; M-CSA cites PMID:14729342, PMID:29018216, PMID:9546398; M-CSA
+        catalytic-residue roles for Asp64
+  - subject: thr97
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr97 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/179/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 179, mechanism 1; M-CSA cites PMID:14729342, PMID:29018216, PMID:9546398; M-CSA
+        catalytic-residue roles for Thr97
+  - subject: thr98
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr98 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/179/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 179, mechanism 1; M-CSA cites PMID:14729342, PMID:29018216, PMID:9546398; M-CSA
+        catalytic-residue roles for Thr98
+  - subject: asp393
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp393 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/179/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 179, mechanism 1; M-CSA cites PMID:14729342, PMID:29018216, PMID:9546398; M-CSA
+        catalytic-residue roles for Asp393
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/179/
+      snippet: Asp 64 and Asp 393 bind and polarise a water molecule, which becomes nucleophilic enough
+        to perform inline displacement on the gamma-phosphate of ATP.  A pentacovalent intermediate is
+        formed. The negative charges on the gamma-phosphate group are stabilised by contacts with Thr
+        97, Thr 98 and an Mg(II) ion, lowering the free energies of transition states and the intermediate.
+        The intermediate colla
+      notes: M-CSA entry 179, mechanism 1; M-CSA cites PMID:14729342, PMID:29018216, PMID:9546398; CATH
+        domain 1.10.560.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/179/
+      snippet: Asp 64 and Asp 393 bind and polarise a water molecule, which becomes nucleophilic enough
+        to perform inline displacement on the gamma-phosphate of ATP.  A pentacovalent intermediate is
+        formed. The negative charges on the gamma-phosphate group are stabilised by contacts with Thr
+        97, Thr 98 and an Mg(II) ion, lowering the free energies of transition states and the intermediate.
+        The intermediate colla
+      notes: M-CSA entry 179, mechanism 1; M-CSA cites PMID:14729342, PMID:29018216, PMID:9546398; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/179/
+      snippet: Asp 64 and Asp 393 bind and polarise a water molecule, which becomes nucleophilic enough
+        to perform inline displacement on the gamma-phosphate of ATP.  A pentacovalent intermediate is
+        formed. The negative charges on the gamma-phosphate group are stabilised by contacts with Thr
+        97, Thr 98 and an Mg(II) ion, lowering the free energies of transition states and the intermediate.
+        The intermediate colla
+      notes: M-CSA entry 179, mechanism 1; M-CSA cites PMID:14729342, PMID:29018216, PMID:9546398; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/179/
+      snippet: Asp 64 and Asp 393 bind and polarise a water molecule, which becomes nucleophilic enough
+        to perform inline displacement on the gamma-phosphate of ATP.  A pentacovalent intermediate is
+        formed. The negative charges on the gamma-phosphate group are stabilised by contacts with Thr
+        97, Thr 98 and an Mg(II) ion, lowering the free energies of transition states and the intermediate.
+        The intermediate colla
+      notes: M-CSA entry 179, mechanism 1; M-CSA cites PMID:14729342, PMID:29018216, PMID:9546398; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/179/
+      snippet: Asp 64 and Asp 393 bind and polarise a water molecule, which becomes nucleophilic enough
+        to perform inline displacement on the gamma-phosphate of ATP.  A pentacovalent intermediate is
+        formed. The negative charges on the gamma-phosphate group are stabilised by contacts with Thr
+        97, Thr 98 and an Mg(II) ion, lowering the free energies of transition states and the intermediate.
+        The intermediate colla
+      notes: M-CSA entry 179, mechanism 1; M-CSA cites PMID:14729342, PMID:29018216, PMID:9546398; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/179/
+      snippet: Asp 64 and Asp 393 bind and polarise a water molecule, which becomes nucleophilic enough
+        to perform inline displacement on the gamma-phosphate of ATP.  A pentacovalent intermediate is
+        formed. The negative charges on the gamma-phosphate group are stabilised by contacts with Thr
+        97, Thr 98 and an Mg(II) ion, lowering the free energies of transition states and the intermediate.
+        The intermediate colla
+      notes: M-CSA entry 179, mechanism 1; M-CSA cites PMID:14729342, PMID:29018216, PMID:9546398; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/179/
+      snippet: Asp 64 and Asp 393 bind and polarise a water molecule, which becomes nucleophilic enough
+        to perform inline displacement on the gamma-phosphate of ATP.  A pentacovalent intermediate is
+        formed. The negative charges on the gamma-phosphate group are stabilised by contacts with Thr
+        97, Thr 98 and an Mg(II) ion, lowering the free energies of transition states and the intermediate.
+        The intermediate colla
+      notes: M-CSA entry 179, mechanism 1; M-CSA cites PMID:14729342, PMID:29018216, PMID:9546398; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 179;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

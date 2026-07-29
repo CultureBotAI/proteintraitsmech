@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.7.1.11
 - CHEBI:30616
@@ -277,4 +277,281 @@ definitions:
       Phosphofructokinase (PFK) is a key enzyme in glycolysis. It transfers a phosphate group to fructose and in doing so controls entry into the pathway. PFK is highly regulated and is cooperative for fructose and shows allosteric inhibition by phosphoenolpyruvate and activation by ADP. The enzyme changes from the R state to the T state by a rotation around the 'p' axis of the molecule, resulting in a change in the subunit-subunit interactions that are communicated to the active site. The ATP binding site remains fixed during the transition from R to T state except for the residue arg 72 that is important for bridging the substrate phosphates during catalysis. In the T state this Arg residue forms a salt bridge with glu241. The T state is also characterised by a large change in the substrate binding site, the movement of the '6-F' loop leads to the collapse of this binding site.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of Phosphofructokinase I
+  description: Stepwise mechanism transcribed from M-CSA entry 365 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +1).
+  nodes:
+  - node_id: gly11
+    label: catalytic Gly11 (M-CSA/PDB numbering; UniProt residue 12)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A796
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: arg72
+    label: catalytic Arg72 (M-CSA/PDB numbering; UniProt residue 73)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A796
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp103
+    label: catalytic Asp103 (M-CSA/PDB numbering; UniProt residue 104)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A796
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: thr125
+    label: catalytic Thr125 (M-CSA/PDB numbering; UniProt residue 126)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A796
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp127
+    label: catalytic Asp127 (M-CSA/PDB numbering; UniProt residue 128)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A796
+    description: 'M-CSA roles: activator, hydrogen bond acceptor, proton acceptor, proton donor.'
+  - node_id: asp129
+    label: catalytic Asp129 (M-CSA/PDB numbering; UniProt residue 130)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A796
+    description: 'M-CSA roles: hydrogen bond acceptor, increase acidity, increase basicity.'
+  - node_id: arg171
+    label: catalytic Arg171 (M-CSA/PDB numbering; UniProt residue 172)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A796
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: ATP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+  - node_id: reactant1
+    label: beta-D-fructofuranose 6-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57634
+  - node_id: product0
+    label: D-fructofuranose 1,6-bisphosphate(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:49299
+  - node_id: product1
+    label: ADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: 6-phosphofructose acts as an allosteric activator. On binding, 6-phosphofructose induces
+      a reactive conformation which orientates both itself and ATP for base-catalysed phosphate transfer.
+      6-phosphofructose is activated as a nucleophile on deprotonation of the O-1 functional group by
+      Asp128. The oxygen abstracts the gamma phosphate from ATP, forming ADP.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Asp128 is deprotonated. Kinetic studies indicate that for the reverse reaction, Asp128
+      must be protonated. Crystal structures show a water molecule within the active site. This is thought
+      to facilitate proton transfer from and to Asp128.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: Phosphofructokinase I catalytic site
+    node_type: MOTIF
+    grounding: MCSA:365
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.450 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.450
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: Phosphofructokinase I activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.7.1.11
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/365/
+      snippet: Asp128 is deprotonated. Kinetic studies indicate that for the reverse reaction, Asp128
+        must be protonated. Crystal structures show a water molecule within the active site. This is thought
+        to facilitate proton transfer from and to Asp128.
+      notes: M-CSA entry 365, mechanism 2; M-CSA cites PMID:1304907, PMID:17207816, PMID:2527305, PMID:26205495,
+        PMID:9675201; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/365/
+      snippet: Products.
+      notes: M-CSA entry 365, mechanism 2; M-CSA cites PMID:1304907, PMID:17207816, PMID:2527305, PMID:26205495,
+        PMID:9675201; step 3
+  - subject: gly11
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly11 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/365/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 365, mechanism 2; M-CSA cites PMID:1304907, PMID:17207816, PMID:2527305, PMID:26205495,
+        PMID:9675201; M-CSA catalytic-residue roles for Gly11
+  - subject: arg72
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg72 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/365/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 365, mechanism 2; M-CSA cites PMID:1304907, PMID:17207816, PMID:2527305, PMID:26205495,
+        PMID:9675201; M-CSA catalytic-residue roles for Arg72
+  - subject: asp103
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp103 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/365/
+      snippet: metal ligand
+      notes: M-CSA entry 365, mechanism 2; M-CSA cites PMID:1304907, PMID:17207816, PMID:2527305, PMID:26205495,
+        PMID:9675201; M-CSA catalytic-residue roles for Asp103
+  - subject: thr125
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr125 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/365/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 365, mechanism 2; M-CSA cites PMID:1304907, PMID:17207816, PMID:2527305, PMID:26205495,
+        PMID:9675201; M-CSA catalytic-residue roles for Thr125
+  - subject: asp127
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp127 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/365/
+      snippet: activator, hydrogen bond acceptor, proton acceptor, proton donor
+      notes: M-CSA entry 365, mechanism 2; M-CSA cites PMID:1304907, PMID:17207816, PMID:2527305, PMID:26205495,
+        PMID:9675201; M-CSA catalytic-residue roles for Asp127
+  - subject: asp129
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp129 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/365/
+      snippet: hydrogen bond acceptor, increase acidity, increase basicity
+      notes: M-CSA entry 365, mechanism 2; M-CSA cites PMID:1304907, PMID:17207816, PMID:2527305, PMID:26205495,
+        PMID:9675201; M-CSA catalytic-residue roles for Asp129
+  - subject: arg171
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg171 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/365/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 365, mechanism 2; M-CSA cites PMID:1304907, PMID:17207816, PMID:2527305, PMID:26205495,
+        PMID:9675201; M-CSA catalytic-residue roles for Arg171
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/365/
+      snippet: Asp128 is proposed to act as a base, abstracting a proton from 1-OH of 6-phosphofructose.
+        This increases the nucleophilicity of the functional group which then attacks at the gamma phosphate
+        of ATP in an SN2 reaction, forming 1,6-bisphosphate fructose and ADP.
+      notes: M-CSA entry 365, mechanism 2; M-CSA cites PMID:1304907, PMID:17207816, PMID:2527305, PMID:26205495,
+        PMID:9675201; CATH domain 3.40.50.450 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/365/
+      snippet: Asp128 is proposed to act as a base, abstracting a proton from 1-OH of 6-phosphofructose.
+        This increases the nucleophilicity of the functional group which then attacks at the gamma phosphate
+        of ATP in an SN2 reaction, forming 1,6-bisphosphate fructose and ADP.
+      notes: M-CSA entry 365, mechanism 2; M-CSA cites PMID:1304907, PMID:17207816, PMID:2527305, PMID:26205495,
+        PMID:9675201; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/365/
+      snippet: Asp128 is proposed to act as a base, abstracting a proton from 1-OH of 6-phosphofructose.
+        This increases the nucleophilicity of the functional group which then attacks at the gamma phosphate
+        of ATP in an SN2 reaction, forming 1,6-bisphosphate fructose and ADP.
+      notes: M-CSA entry 365, mechanism 2; M-CSA cites PMID:1304907, PMID:17207816, PMID:2527305, PMID:26205495,
+        PMID:9675201; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/365/
+      snippet: Asp128 is proposed to act as a base, abstracting a proton from 1-OH of 6-phosphofructose.
+        This increases the nucleophilicity of the functional group which then attacks at the gamma phosphate
+        of ATP in an SN2 reaction, forming 1,6-bisphosphate fructose and ADP.
+      notes: M-CSA entry 365, mechanism 2; M-CSA cites PMID:1304907, PMID:17207816, PMID:2527305, PMID:26205495,
+        PMID:9675201; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/365/
+      snippet: Asp128 is proposed to act as a base, abstracting a proton from 1-OH of 6-phosphofructose.
+        This increases the nucleophilicity of the functional group which then attacks at the gamma phosphate
+        of ATP in an SN2 reaction, forming 1,6-bisphosphate fructose and ADP.
+      notes: M-CSA entry 365, mechanism 2; M-CSA cites PMID:1304907, PMID:17207816, PMID:2527305, PMID:26205495,
+        PMID:9675201; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/365/
+      snippet: Asp128 is proposed to act as a base, abstracting a proton from 1-OH of 6-phosphofructose.
+        This increases the nucleophilicity of the functional group which then attacks at the gamma phosphate
+        of ATP in an SN2 reaction, forming 1,6-bisphosphate fructose and ADP.
+      notes: M-CSA entry 365, mechanism 2; M-CSA cites PMID:1304907, PMID:17207816, PMID:2527305, PMID:26205495,
+        PMID:9675201; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/365/
+      snippet: Asp128 is proposed to act as a base, abstracting a proton from 1-OH of 6-phosphofructose.
+        This increases the nucleophilicity of the functional group which then attacks at the gamma phosphate
+        of ATP in an SN2 reaction, forming 1,6-bisphosphate fructose and ADP.
+      notes: M-CSA entry 365, mechanism 2; M-CSA cites PMID:1304907, PMID:17207816, PMID:2527305, PMID:26205495,
+        PMID:9675201; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (16 evidence-backed edges) transcribed from M-CSA entry 365;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

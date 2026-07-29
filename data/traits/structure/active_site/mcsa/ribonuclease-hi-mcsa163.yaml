@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.26.4
 - CHEBI:33699
@@ -159,4 +159,296 @@ definitions:
       Members of the RNase H family hydrolyze the P-O3' bond of the RNA strand of an RNA-DNA hybrid duplex in the presence of divalent cations such as Mg(II) and Mn(II). RNase HI is found in Escherichia coli and is structurally homologous to the RNase H domain of HIV-1 reverse transcriptase, a target for anti-HIV therapy. Two alternative mechanisms have been proposed for this enzyme. One is a two-metal-ion mechanism where one of the two metal ions activates the attacking hydroxide ion and the other is a general acid-base mechanism where an amino acid residue fulfils this role. Computational studies seem to favour the two metal ion proposal, however NMR and kinetic studies suggest only one metal binds to this protein and that the protein is inactivated by subsequent metal binding events.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of ribonuclease HI
+  description: Stepwise mechanism transcribed from M-CSA entry 163 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: asp10
+    label: catalytic Asp10 (M-CSA/PDB numbering; UniProt residue 10)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A7Y4
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: gly11
+    label: catalytic Gly11 (M-CSA/PDB numbering; UniProt residue 11)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A7Y4
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu48
+    label: catalytic Glu48 (M-CSA/PDB numbering; UniProt residue 48)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A7Y4
+    description: 'M-CSA roles: increase acidity, increase basicity, unknown.'
+  - node_id: asp70
+    label: catalytic Asp70 (M-CSA/PDB numbering; UniProt residue 70)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A7Y4
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his124
+    label: catalytic His124 (M-CSA/PDB numbering; UniProt residue 124)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A7Y4
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor,
+      unknown.'
+  - node_id: asp134
+    label: catalytic Asp134 (M-CSA/PDB numbering; UniProt residue 134)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A7Y4
+    description: 'M-CSA roles: increase acidity, metal ligand, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: messenger RNA
+    node_type: CHEMICAL
+    grounding: CHEBI:33699
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: 3'-end ribonucleotide(1-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:74896
+  - node_id: product1
+    label: 5'-end ribonucleotide(1-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:137923
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp134 abstracts a proton from the metal bound nucleophilic water.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The catalytic water is activated by its position in the Mg(II) coordination sphere. The
+      hydroxide attacks the phosphate of RNA in a nucleophilic substitution that results in the cleavage
+      of the phosphate bond, the 5' end of the RNA molecule becomes part of the second Mg(II) coordination
+      sphere. The reaction likely proceeds through a pentavalent transition state.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The alkoxide group abstracts a proton from Asp134 to form the second product of the reaction.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: ribonuclease HI catalytic site
+    node_type: MOTIF
+    grounding: MCSA:163
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.420.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.420.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: ribonuclease HI activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.26.4
+  edges:
+  - subject: asp134
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp134 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/163/
+      snippet: Asp134 abstracts a proton from the metal bound nucleophilic water.
+      notes: M-CSA entry 163, mechanism 2; M-CSA cites PMID:15989951, PMID:18662000, PMID:21539371; step
+        1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/163/
+      snippet: The catalytic water is activated by its position in the Mg(II) coordination sphere. The
+        hydroxide attacks the phosphate of RNA in a nucleophilic substitution that results in the cleavage
+        of the phosphate bond, the 5' end of the RNA molecule becomes part of the second Mg(II) coordination
+        sphere. The reaction likely proceeds through a pentavalent transition state.
+      notes: M-CSA entry 163, mechanism 2; M-CSA cites PMID:15989951, PMID:18662000, PMID:21539371; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/163/
+      snippet: The alkoxide group abstracts a proton from Asp134 to form the second product of the reaction.
+      notes: M-CSA entry 163, mechanism 2; M-CSA cites PMID:15989951, PMID:18662000, PMID:21539371; step
+        3
+  - subject: asp134
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Asp134 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/163/
+      snippet: The alkoxide group abstracts a proton from Asp134 to form the second product of the reaction.
+      notes: M-CSA entry 163, mechanism 2; M-CSA cites PMID:15989951, PMID:18662000, PMID:21539371; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/163/
+      snippet: Products
+      notes: M-CSA entry 163, mechanism 2; M-CSA cites PMID:15989951, PMID:18662000, PMID:21539371; step
+        4
+  - subject: asp10
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp10 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/163/
+      snippet: metal ligand
+      notes: M-CSA entry 163, mechanism 2; M-CSA cites PMID:15989951, PMID:18662000, PMID:21539371; M-CSA
+        catalytic-residue roles for Asp10
+  - subject: gly11
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly11 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/163/
+      snippet: metal ligand
+      notes: M-CSA entry 163, mechanism 2; M-CSA cites PMID:15989951, PMID:18662000, PMID:21539371; M-CSA
+        catalytic-residue roles for Gly11
+  - subject: glu48
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu48 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/163/
+      snippet: increase acidity, increase basicity, unknown
+      notes: M-CSA entry 163, mechanism 2; M-CSA cites PMID:15989951, PMID:18662000, PMID:21539371; M-CSA
+        catalytic-residue roles for Glu48
+  - subject: asp70
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp70 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/163/
+      snippet: metal ligand
+      notes: M-CSA entry 163, mechanism 2; M-CSA cites PMID:15989951, PMID:18662000, PMID:21539371; M-CSA
+        catalytic-residue roles for Asp70
+  - subject: his124
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His124 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/163/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor, unknown
+      notes: M-CSA entry 163, mechanism 2; M-CSA cites PMID:15989951, PMID:18662000, PMID:21539371; M-CSA
+        catalytic-residue roles for His124
+  - subject: asp134
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp134 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/163/
+      snippet: increase acidity, metal ligand, proton acceptor, proton donor
+      notes: M-CSA entry 163, mechanism 2; M-CSA cites PMID:15989951, PMID:18662000, PMID:21539371; M-CSA
+        catalytic-residue roles for Asp134
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/163/
+      snippet: 'This proposal represents the two metal mechanism. Here the water molecules are activated
+        by Mg(II). Computational studies propose that the reaction proceeds in two steps: (1) catalysed
+        primarily by magnesium ion A and its ligands, a water molecule attacks the scissile phosphate.
+        The transient phosphorane formed as a result of this nucleophilic attack decays by breaking the
+        bond between the phospha'
+      notes: M-CSA entry 163, mechanism 2; M-CSA cites PMID:15989951, PMID:18662000, PMID:21539371; CATH
+        domain 3.30.420.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/163/
+      snippet: 'This proposal represents the two metal mechanism. Here the water molecules are activated
+        by Mg(II). Computational studies propose that the reaction proceeds in two steps: (1) catalysed
+        primarily by magnesium ion A and its ligands, a water molecule attacks the scissile phosphate.
+        The transient phosphorane formed as a result of this nucleophilic attack decays by breaking the
+        bond between the phospha'
+      notes: M-CSA entry 163, mechanism 2; M-CSA cites PMID:15989951, PMID:18662000, PMID:21539371; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/163/
+      snippet: 'This proposal represents the two metal mechanism. Here the water molecules are activated
+        by Mg(II). Computational studies propose that the reaction proceeds in two steps: (1) catalysed
+        primarily by magnesium ion A and its ligands, a water molecule attacks the scissile phosphate.
+        The transient phosphorane formed as a result of this nucleophilic attack decays by breaking the
+        bond between the phospha'
+      notes: M-CSA entry 163, mechanism 2; M-CSA cites PMID:15989951, PMID:18662000, PMID:21539371; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/163/
+      snippet: 'This proposal represents the two metal mechanism. Here the water molecules are activated
+        by Mg(II). Computational studies propose that the reaction proceeds in two steps: (1) catalysed
+        primarily by magnesium ion A and its ligands, a water molecule attacks the scissile phosphate.
+        The transient phosphorane formed as a result of this nucleophilic attack decays by breaking the
+        bond between the phospha'
+      notes: M-CSA entry 163, mechanism 2; M-CSA cites PMID:15989951, PMID:18662000, PMID:21539371; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/163/
+      snippet: 'This proposal represents the two metal mechanism. Here the water molecules are activated
+        by Mg(II). Computational studies propose that the reaction proceeds in two steps: (1) catalysed
+        primarily by magnesium ion A and its ligands, a water molecule attacks the scissile phosphate.
+        The transient phosphorane formed as a result of this nucleophilic attack decays by breaking the
+        bond between the phospha'
+      notes: M-CSA entry 163, mechanism 2; M-CSA cites PMID:15989951, PMID:18662000, PMID:21539371; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/163/
+      snippet: 'This proposal represents the two metal mechanism. Here the water molecules are activated
+        by Mg(II). Computational studies propose that the reaction proceeds in two steps: (1) catalysed
+        primarily by magnesium ion A and its ligands, a water molecule attacks the scissile phosphate.
+        The transient phosphorane formed as a result of this nucleophilic attack decays by breaking the
+        bond between the phospha'
+      notes: M-CSA entry 163, mechanism 2; M-CSA cites PMID:15989951, PMID:18662000, PMID:21539371; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (17 evidence-backed edges) transcribed from M-CSA entry 163;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

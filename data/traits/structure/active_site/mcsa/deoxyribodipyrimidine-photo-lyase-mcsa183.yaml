@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.1.99.3
 - CHEBI:30212
@@ -309,4 +309,448 @@ definitions:
       DNA is very sensitive to UV-radiation and other damaging agents. One result of UV radiation is the production of cyclobutane-type dimers formed from adjacent pyrimidine bases which block replication and thus have cytotoxic and mutagenic effects. Such damage is, however, effectively repaired by photolyases. Photoreactivation comprises several steps: damage recognition and binding of photolyase to DNA, photon absorption, interchromophoric energy transfer and electron transfer from the chromophore to the DNA. Two cofactors are required by the enzyme, the first, FAD, is essential for the light dependent repair process whilst the second (either 8-hydroxy-5-deazaflavin or 5,10-methenyltetrahydro-folic acid) acts as a light harvesting chromophore. The photolyases are divided into two groups according to their second cofactor.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of deoxyribodipyrimidine photo-lyase
+  description: Stepwise mechanism transcribed from M-CSA entry 183 (7 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +1).
+  nodes:
+  - node_id: glu274
+    label: catalytic Glu274 (M-CSA/PDB numbering; UniProt residue 275)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00914
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      proton acceptor, proton donor.'
+  - node_id: trp277
+    label: catalytic Trp277 (M-CSA/PDB numbering; UniProt residue 278)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00914
+    description: 'M-CSA roles: electron tunneling medium, polar/non-polar interaction, single electron
+      acceptor, single electron donor, single electron relay, van der waals interaction.'
+  - node_id: trp306
+    label: catalytic Trp306 (M-CSA/PDB numbering; UniProt residue 307)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00914
+    description: 'M-CSA roles: single electron acceptor, single electron donor, single electron relay.'
+  - node_id: asn341
+    label: catalytic Asn341 (M-CSA/PDB numbering; UniProt residue 342)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00914
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor.'
+  - node_id: trp359
+    label: catalytic Trp359 (M-CSA/PDB numbering; UniProt residue 360)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00914
+    description: 'M-CSA roles: single electron acceptor, single electron donor, single electron relay.'
+  - node_id: trp382
+    label: catalytic Trp382 (M-CSA/PDB numbering; UniProt residue 383)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00914
+    description: 'M-CSA roles: single electron acceptor, single electron donor, single electron relay.'
+  - node_id: reactant0
+    label: photon
+    node_type: CHEMICAL
+    grounding: CHEBI:30212
+  - node_id: reactant1
+    label: Thymine dimer
+    node_type: CHEMICAL
+    grounding: CHEBI:81145
+  - node_id: product0
+    label: Two thymine residues (in DNA)
+    node_type: CHEMICAL
+    grounding: CHEBI:81146
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Photoexcitation of the 5,10-Methenyltetrahydrofolate cofactor. The function of the 5,10-Methenyltetrahydrofolate
+      cofactor is to gather light by absorption in the regions of near-UV and visible wavelengths [PMID:15721603].
+      The FAD cofactor is unusually bind in the C terminal domain by adopting a U shape conformation this
+      allows the adenine moiety to contact the redox active isoalloxazine group.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The 5,10-Methenyltetrahydrofolate cofactor donates activation energy to the FAD cofactor.
+      To achieve its active state the flavin is reduced by a light driven process to a deprotonated FADH<sup>-</sup>
+      species utilising an electron transfer pathway involving 3 conserved tryptophan residues with the
+      order Trp306 -> Trp359 -> Trp382 -> FAD(H.). Transfer of the excitation energy from excited MHF473
+      to
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The FAD cofactor donates a single electron to Trp277, which relays it to the waiting
+      DNA substrate. The substrate then deprotonates Glu274. Protonation of the electron-rich O<sub>4</sub>
+      oxygen of the 5' pyrimidine base (from the protonated Glu274) is concurrent with the electron transfer.
+      This might be crucial to stabilise the radical anion cyclobutane pyrimidine dimer so that non-productive
+      back
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The radical intermediate undergoes a homolytic elimination which results in the cleavage
+      of the four membered ring between the two nucleoside bases.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: The radical intermediate undergoes a second homolytic elimination which results in the
+      cleavage of the second C-C bond between the two nucleoside bases.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: "Glu274 deprotonates the DNA radical intermediate, which results in a single electron\
+      \ being transferred to Trp277, which relays the electron to FAD472. Releasing the DNA product and\
+      \ regenerating the active site.
+This is again thought to involve tunneling."
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: deoxyribodipyrimidine photo-lyase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:183
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.25.40.80 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.25.40.80
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: deoxyribodipyrimidine photo-lyase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.1.99.3
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/183/
+      snippet: "The 5,10-Methenyltetrahydrofolate cofactor donates activation energy to the FAD cofactor.\
+        \ To achieve its active state the flavin is reduced by a light driven process to a deprotonated\
+        \ FADH<sup>-</sup> species utilising an electron transfer pathway involving 3 conserved tryptophan\
+        \ residues with the order Trp306 -> Trp359 -> Trp382 -> FAD(H.). Transfer of the excitation energy\
+        \ from excited MHF473 to FADH<sup>-</sup> yields the excited singlet state FADH<sup>-*</sup>.\
+        \ In the absence of this second chromophore (MTHF) FADH<sup>-*</sup> can also be generated by\
+        \ direct photoexcitation of FADH<sup>-</sup> [PMID:15721603].
+Evidence suggests the transfer\
+        \ of energy from the antennae pigments to FADH is via a Intermolecular Coulombic Decay."
+      notes: M-CSA entry 183, mechanism 1; M-CSA cites PMID:15721603, PMID:16699813, PMID:24145385, PMID:27362906,
+        PMID:29401372, PMID:7604260, PMID:9360600; step 2
+  - subject: trp306
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Trp306 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/183/
+      snippet: "The 5,10-Methenyltetrahydrofolate cofactor donates activation energy to the FAD cofactor.\
+        \ To achieve its active state the flavin is reduced by a light driven process to a deprotonated\
+        \ FADH<sup>-</sup> species utilising an electron transfer pathway involving 3 conserved tryptophan\
+        \ residues with the order Trp306 -> Trp359 -> Trp382 -> FAD(H.). Transfer of the excitation energy\
+        \ from excited MHF473 to FADH<sup>-</sup> yields the excited singlet state FADH<sup>-*</sup>.\
+        \ In the absence of this second chromophore (MTHF) FADH<sup>-*</sup> can also be generated by\
+        \ direct photoexcitation of FADH<sup>-</sup> [PMID:15721603].
+Evidence suggests the transfer\
+        \ of energy from the antennae pigments to FADH is via a Intermolecular Coulombic Decay."
+      notes: M-CSA entry 183, mechanism 1; M-CSA cites PMID:15721603, PMID:16699813, PMID:24145385, PMID:27362906,
+        PMID:29401372, PMID:7604260, PMID:9360600; step 2
+  - subject: trp359
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Trp359 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/183/
+      snippet: "The 5,10-Methenyltetrahydrofolate cofactor donates activation energy to the FAD cofactor.\
+        \ To achieve its active state the flavin is reduced by a light driven process to a deprotonated\
+        \ FADH<sup>-</sup> species utilising an electron transfer pathway involving 3 conserved tryptophan\
+        \ residues with the order Trp306 -> Trp359 -> Trp382 -> FAD(H.). Transfer of the excitation energy\
+        \ from excited MHF473 to FADH<sup>-</sup> yields the excited singlet state FADH<sup>-*</sup>.\
+        \ In the absence of this second chromophore (MTHF) FADH<sup>-*</sup> can also be generated by\
+        \ direct photoexcitation of FADH<sup>-</sup> [PMID:15721603].
+Evidence suggests the transfer\
+        \ of energy from the antennae pigments to FADH is via a Intermolecular Coulombic Decay."
+      notes: M-CSA entry 183, mechanism 1; M-CSA cites PMID:15721603, PMID:16699813, PMID:24145385, PMID:27362906,
+        PMID:29401372, PMID:7604260, PMID:9360600; step 2
+  - subject: trp382
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Trp382 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/183/
+      snippet: "The 5,10-Methenyltetrahydrofolate cofactor donates activation energy to the FAD cofactor.\
+        \ To achieve its active state the flavin is reduced by a light driven process to a deprotonated\
+        \ FADH<sup>-</sup> species utilising an electron transfer pathway involving 3 conserved tryptophan\
+        \ residues with the order Trp306 -> Trp359 -> Trp382 -> FAD(H.). Transfer of the excitation energy\
+        \ from excited MHF473 to FADH<sup>-</sup> yields the excited singlet state FADH<sup>-*</sup>.\
+        \ In the absence of this second chromophore (MTHF) FADH<sup>-*</sup> can also be generated by\
+        \ direct photoexcitation of FADH<sup>-</sup> [PMID:15721603].
+Evidence suggests the transfer\
+        \ of energy from the antennae pigments to FADH is via a Intermolecular Coulombic Decay."
+      notes: M-CSA entry 183, mechanism 1; M-CSA cites PMID:15721603, PMID:16699813, PMID:24145385, PMID:27362906,
+        PMID:29401372, PMID:7604260, PMID:9360600; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/183/
+      snippet: "The FAD cofactor donates a single electron to Trp277, which relays it to the waiting DNA\
+        \ substrate. The substrate then deprotonates Glu274. Protonation of the electron-rich O<sub>4</sub>\
+        \ oxygen of the 5' pyrimidine base (from the protonated Glu274) is concurrent with the electron\
+        \ transfer. This might be crucial to stabilise the radical anion cyclobutane pyrimidine dimer\
+        \ so that non-productive back-transfer of the electron onto the FADH. radical is avoided and bond\
+        \ cleavage is favoured [PMID:16699813].
+It is thought that the electron transfer from FADH\
+        \ to the lesion occurs via electron tunneling."
+      notes: M-CSA entry 183, mechanism 1; M-CSA cites PMID:15721603, PMID:16699813, PMID:24145385, PMID:27362906,
+        PMID:29401372, PMID:7604260, PMID:9360600; step 3
+  - subject: glu274
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Glu274 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/183/
+      snippet: "The FAD cofactor donates a single electron to Trp277, which relays it to the waiting DNA\
+        \ substrate. The substrate then deprotonates Glu274. Protonation of the electron-rich O<sub>4</sub>\
+        \ oxygen of the 5' pyrimidine base (from the protonated Glu274) is concurrent with the electron\
+        \ transfer. This might be crucial to stabilise the radical anion cyclobutane pyrimidine dimer\
+        \ so that non-productive back-transfer of the electron onto the FADH. radical is avoided and bond\
+        \ cleavage is favoured [PMID:16699813].
+It is thought that the electron transfer from FADH\
+        \ to the lesion occurs via electron tunneling."
+      notes: M-CSA entry 183, mechanism 1; M-CSA cites PMID:15721603, PMID:16699813, PMID:24145385, PMID:27362906,
+        PMID:29401372, PMID:7604260, PMID:9360600; step 3
+  - subject: trp277
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Trp277 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/183/
+      snippet: "The FAD cofactor donates a single electron to Trp277, which relays it to the waiting DNA\
+        \ substrate. The substrate then deprotonates Glu274. Protonation of the electron-rich O<sub>4</sub>\
+        \ oxygen of the 5' pyrimidine base (from the protonated Glu274) is concurrent with the electron\
+        \ transfer. This might be crucial to stabilise the radical anion cyclobutane pyrimidine dimer\
+        \ so that non-productive back-transfer of the electron onto the FADH. radical is avoided and bond\
+        \ cleavage is favoured [PMID:16699813].
+It is thought that the electron transfer from FADH\
+        \ to the lesion occurs via electron tunneling."
+      notes: M-CSA entry 183, mechanism 1; M-CSA cites PMID:15721603, PMID:16699813, PMID:24145385, PMID:27362906,
+        PMID:29401372, PMID:7604260, PMID:9360600; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/183/
+      snippet: The radical intermediate undergoes a homolytic elimination which results in the cleavage
+        of the four membered ring between the two nucleoside bases.
+      notes: M-CSA entry 183, mechanism 1; M-CSA cites PMID:15721603, PMID:16699813, PMID:24145385, PMID:27362906,
+        PMID:29401372, PMID:7604260, PMID:9360600; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/183/
+      snippet: The radical intermediate undergoes a second homolytic elimination which results in the
+        cleavage of the second C-C bond between the two nucleoside bases.
+      notes: M-CSA entry 183, mechanism 1; M-CSA cites PMID:15721603, PMID:16699813, PMID:24145385, PMID:27362906,
+        PMID:29401372, PMID:7604260, PMID:9360600; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/183/
+      snippet: "Glu274 deprotonates the DNA radical intermediate, which results in a single electron being\
+        \ transferred to Trp277, which relays the electron to FAD472. Releasing the DNA product and regenerating\
+        \ the active site.
+This is again thought to involve tunneling."
+      notes: M-CSA entry 183, mechanism 1; M-CSA cites PMID:15721603, PMID:16699813, PMID:24145385, PMID:27362906,
+        PMID:29401372, PMID:7604260, PMID:9360600; step 6
+  - subject: glu274
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: Glu274 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/183/
+      snippet: "Glu274 deprotonates the DNA radical intermediate, which results in a single electron being\
+        \ transferred to Trp277, which relays the electron to FAD472. Releasing the DNA product and regenerating\
+        \ the active site.
+This is again thought to involve tunneling."
+      notes: M-CSA entry 183, mechanism 1; M-CSA cites PMID:15721603, PMID:16699813, PMID:24145385, PMID:27362906,
+        PMID:29401372, PMID:7604260, PMID:9360600; step 6
+  - subject: trp277
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: Trp277 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/183/
+      snippet: "Glu274 deprotonates the DNA radical intermediate, which results in a single electron being\
+        \ transferred to Trp277, which relays the electron to FAD472. Releasing the DNA product and regenerating\
+        \ the active site.
+This is again thought to involve tunneling."
+      notes: M-CSA entry 183, mechanism 1; M-CSA cites PMID:15721603, PMID:16699813, PMID:24145385, PMID:27362906,
+        PMID:29401372, PMID:7604260, PMID:9360600; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/183/
+      snippet: Products.
+      notes: M-CSA entry 183, mechanism 1; M-CSA cites PMID:15721603, PMID:16699813, PMID:24145385, PMID:27362906,
+        PMID:29401372, PMID:7604260, PMID:9360600; step 7
+  - subject: glu274
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu274 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/183/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+        proton donor
+      notes: M-CSA entry 183, mechanism 1; M-CSA cites PMID:15721603, PMID:16699813, PMID:24145385, PMID:27362906,
+        PMID:29401372, PMID:7604260, PMID:9360600; M-CSA catalytic-residue roles for Glu274
+  - subject: trp277
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp277 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/183/
+      snippet: electron tunneling medium, polar/non-polar interaction, single electron acceptor, single
+        electron donor, single electron relay, van der waals interaction
+      notes: M-CSA entry 183, mechanism 1; M-CSA cites PMID:15721603, PMID:16699813, PMID:24145385, PMID:27362906,
+        PMID:29401372, PMID:7604260, PMID:9360600; M-CSA catalytic-residue roles for Trp277
+  - subject: trp306
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp306 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/183/
+      snippet: single electron acceptor, single electron donor, single electron relay
+      notes: M-CSA entry 183, mechanism 1; M-CSA cites PMID:15721603, PMID:16699813, PMID:24145385, PMID:27362906,
+        PMID:29401372, PMID:7604260, PMID:9360600; M-CSA catalytic-residue roles for Trp306
+  - subject: asn341
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn341 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/183/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor
+      notes: M-CSA entry 183, mechanism 1; M-CSA cites PMID:15721603, PMID:16699813, PMID:24145385, PMID:27362906,
+        PMID:29401372, PMID:7604260, PMID:9360600; M-CSA catalytic-residue roles for Asn341
+  - subject: trp359
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp359 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/183/
+      snippet: single electron acceptor, single electron donor, single electron relay
+      notes: M-CSA entry 183, mechanism 1; M-CSA cites PMID:15721603, PMID:16699813, PMID:24145385, PMID:27362906,
+        PMID:29401372, PMID:7604260, PMID:9360600; M-CSA catalytic-residue roles for Trp359
+  - subject: trp382
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp382 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/183/
+      snippet: single electron acceptor, single electron donor, single electron relay
+      notes: M-CSA entry 183, mechanism 1; M-CSA cites PMID:15721603, PMID:16699813, PMID:24145385, PMID:27362906,
+        PMID:29401372, PMID:7604260, PMID:9360600; M-CSA catalytic-residue roles for Trp382
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/183/
+      snippet: The reaction can be divided into five steps. First the light-harvesting cofactor absorbs
+        a photon then the excitation energy is transferred to the catalytic cofactor. Thirdly an electron
+        is transferred to the pyridimine dimer in the substrate. Fourthly the C5-C5 and C6-C6 sigma bonds
+        of the cyclobutane ring are broken and finally the electron is transferred back to the flavin
+        and the now intact DN
+      notes: M-CSA entry 183, mechanism 1; M-CSA cites PMID:15721603, PMID:16699813, PMID:24145385, PMID:27362906,
+        PMID:29401372, PMID:7604260, PMID:9360600; CATH domain 1.25.40.80 assigned to the catalytic chain
+        by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/183/
+      snippet: The reaction can be divided into five steps. First the light-harvesting cofactor absorbs
+        a photon then the excitation energy is transferred to the catalytic cofactor. Thirdly an electron
+        is transferred to the pyridimine dimer in the substrate. Fourthly the C5-C5 and C6-C6 sigma bonds
+        of the cyclobutane ring are broken and finally the electron is transferred back to the flavin
+        and the now intact DN
+      notes: M-CSA entry 183, mechanism 1; M-CSA cites PMID:15721603, PMID:16699813, PMID:24145385, PMID:27362906,
+        PMID:29401372, PMID:7604260, PMID:9360600; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/183/
+      snippet: The reaction can be divided into five steps. First the light-harvesting cofactor absorbs
+        a photon then the excitation energy is transferred to the catalytic cofactor. Thirdly an electron
+        is transferred to the pyridimine dimer in the substrate. Fourthly the C5-C5 and C6-C6 sigma bonds
+        of the cyclobutane ring are broken and finally the electron is transferred back to the flavin
+        and the now intact DN
+      notes: M-CSA entry 183, mechanism 1; M-CSA cites PMID:15721603, PMID:16699813, PMID:24145385, PMID:27362906,
+        PMID:29401372, PMID:7604260, PMID:9360600; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/183/
+      snippet: The reaction can be divided into five steps. First the light-harvesting cofactor absorbs
+        a photon then the excitation energy is transferred to the catalytic cofactor. Thirdly an electron
+        is transferred to the pyridimine dimer in the substrate. Fourthly the C5-C5 and C6-C6 sigma bonds
+        of the cyclobutane ring are broken and finally the electron is transferred back to the flavin
+        and the now intact DN
+      notes: M-CSA entry 183, mechanism 1; M-CSA cites PMID:15721603, PMID:16699813, PMID:24145385, PMID:27362906,
+        PMID:29401372, PMID:7604260, PMID:9360600; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/183/
+      snippet: The reaction can be divided into five steps. First the light-harvesting cofactor absorbs
+        a photon then the excitation energy is transferred to the catalytic cofactor. Thirdly an electron
+        is transferred to the pyridimine dimer in the substrate. Fourthly the C5-C5 and C6-C6 sigma bonds
+        of the cyclobutane ring are broken and finally the electron is transferred back to the flavin
+        and the now intact DN
+      notes: M-CSA entry 183, mechanism 1; M-CSA cites PMID:15721603, PMID:16699813, PMID:24145385, PMID:27362906,
+        PMID:29401372, PMID:7604260, PMID:9360600; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (24 evidence-backed edges) transcribed from M-CSA entry 183;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

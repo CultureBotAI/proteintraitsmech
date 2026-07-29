@@ -6,7 +6,7 @@ definition_source: "M-CSA (Thornton lab, EBI; fetched via REST API)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - EC:4.2.2.3
   - CHEBI:1822
@@ -33,4 +33,215 @@ definitions:
       The enzyme alginate lyase from the bacteria Sphingomonas sp. is able to degrade the polymer alginate by eliminative cleavage. Alginate is made up of beta-d-mannuronate and beta-d-glucoronate linked together by a beta-1-4 glycosidic linkage, and alginate lyase is able to cleave this linkage to release two oligosaccharides. The enzyme may have potential therapeutic applications because one of the symptoms of cystic fibrosis is a thick layer of alginate that builds up inside the lungs making breathing difficult. The bacterial species produces three types of Alginate lyase, which are non-homologous but display similar organisation in the active site, suggesting that convergent evolution may account for their similar functions. Here, the structure and mechanism of Alginate lyase III is described.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of mannuronate-specific alginate lyase
+  description: Stepwise mechanism transcribed from M-CSA entry 684 (2 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: tyr68
+    label: catalytic Tyr68 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9KWU1
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asn191
+    label: catalytic Asn191 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9KWU1
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his192
+    label: catalytic His192 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9KWU1
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: arg239
+    label: catalytic Arg239 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9KWU1
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: tyr246
+    label: catalytic Tyr246 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9KWU1
+    description: 'M-CSA roles: proton acceptor, proton donor, proton relay.'
+  - node_id: reactant0
+    label: α-D,α-D-digalacturonic acid
+    node_type: CHEMICAL
+    grounding: CHEBI:22369
+  - node_id: product0
+    label: 4-Deoxy-alpha-L-erythro-hex-4-enopyranuronoside
+    node_type: CHEMICAL
+    grounding: CHEBI:1822
+  - node_id: product1
+    label: D-mannopyranuronic acid
+    node_type: CHEMICAL
+    grounding: CHEBI:79047
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: "The negative charge on the C5 carboxylate group is first
+neutralized by Arg287 and\
+      \ Asn239 so that the C5 proton can be more easily removed. Tyr294 extracts a proton from C5 of mannuronic\
+      \ acid, forming a carboxylate
+dianion intermediate. Tyr294 donates a proton to the oxygen of\
+      \ the glycosidic
+bond, forming a double bond between C4 and C5"
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: mannuronate-specific alginate lyase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:684
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.50.10.100 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.50.10.100
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: mannuronate-specific alginate lyase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.2.2.3
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/684/
+      snippet: Products
+      notes: M-CSA entry 684, mechanism 1; M-CSA cites PMID:11243798, PMID:22948922, PMID:29150496; step
+        2
+  - subject: tyr68
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr68 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/684/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 684, mechanism 1; M-CSA cites PMID:11243798, PMID:22948922, PMID:29150496; M-CSA
+        catalytic-residue roles for Tyr68
+  - subject: asn191
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn191 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/684/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 684, mechanism 1; M-CSA cites PMID:11243798, PMID:22948922, PMID:29150496; M-CSA
+        catalytic-residue roles for Asn191
+  - subject: his192
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His192 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/684/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 684, mechanism 1; M-CSA cites PMID:11243798, PMID:22948922, PMID:29150496; M-CSA
+        catalytic-residue roles for His192
+  - subject: arg239
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg239 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/684/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 684, mechanism 1; M-CSA cites PMID:11243798, PMID:22948922, PMID:29150496; M-CSA
+        catalytic-residue roles for Arg239
+  - subject: tyr246
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr246 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/684/
+      snippet: proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 684, mechanism 1; M-CSA cites PMID:11243798, PMID:22948922, PMID:29150496; M-CSA
+        catalytic-residue roles for Tyr246
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/684/
+      snippet: The alginate substrate is cleaved by elimination. To this end, Tyr 294 acts as a base for
+        deprotonation of the mannuronate moiety at C5 resulting in a carbanion whose negative charge can
+        be delocalised through the carboxylate group and is stabilised by Arg 287 and Asn 239. Arg 287
+        also acts to lower the pKa of Tyr 294 so that more molecules are in the ionised state at physiological
+        pH. In addition
+      notes: M-CSA entry 684, mechanism 1; M-CSA cites PMID:11243798, PMID:22948922, PMID:29150496; CATH
+        domain 1.50.10.100 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/684/
+      snippet: The alginate substrate is cleaved by elimination. To this end, Tyr 294 acts as a base for
+        deprotonation of the mannuronate moiety at C5 resulting in a carbanion whose negative charge can
+        be delocalised through the carboxylate group and is stabilised by Arg 287 and Asn 239. Arg 287
+        also acts to lower the pKa of Tyr 294 so that more molecules are in the ionised state at physiological
+        pH. In addition
+      notes: M-CSA entry 684, mechanism 1; M-CSA cites PMID:11243798, PMID:22948922, PMID:29150496; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/684/
+      snippet: The alginate substrate is cleaved by elimination. To this end, Tyr 294 acts as a base for
+        deprotonation of the mannuronate moiety at C5 resulting in a carbanion whose negative charge can
+        be delocalised through the carboxylate group and is stabilised by Arg 287 and Asn 239. Arg 287
+        also acts to lower the pKa of Tyr 294 so that more molecules are in the ionised state at physiological
+        pH. In addition
+      notes: M-CSA entry 684, mechanism 1; M-CSA cites PMID:11243798, PMID:22948922, PMID:29150496; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/684/
+      snippet: The alginate substrate is cleaved by elimination. To this end, Tyr 294 acts as a base for
+        deprotonation of the mannuronate moiety at C5 resulting in a carbanion whose negative charge can
+        be delocalised through the carboxylate group and is stabilised by Arg 287 and Asn 239. Arg 287
+        also acts to lower the pKa of Tyr 294 so that more molecules are in the ionised state at physiological
+        pH. In addition
+      notes: M-CSA entry 684, mechanism 1; M-CSA cites PMID:11243798, PMID:22948922, PMID:29150496; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/684/
+      snippet: The alginate substrate is cleaved by elimination. To this end, Tyr 294 acts as a base for
+        deprotonation of the mannuronate moiety at C5 resulting in a carbanion whose negative charge can
+        be delocalised through the carboxylate group and is stabilised by Arg 287 and Asn 239. Arg 287
+        also acts to lower the pKa of Tyr 294 so that more molecules are in the ionised state at physiological
+        pH. In addition
+      notes: M-CSA entry 684, mechanism 1; M-CSA cites PMID:11243798, PMID:22948922, PMID:29150496; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (11 evidence-backed edges) transcribed from M-CSA entry 684;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

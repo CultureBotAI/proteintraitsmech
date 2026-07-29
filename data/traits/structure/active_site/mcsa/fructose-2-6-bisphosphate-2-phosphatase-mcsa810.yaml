@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.3.46
 - CHEBI:58579
@@ -419,4 +419,394 @@ definitions:
       Fructose-6-phosphate-2-kinase/fructose-2,6-biphosphatase is a bifunctional enzyme. It is responsible to regulate the concentration of fructose-2,6-phosphate (Fru-2,6-P2), a potent physiological activator of phosphofructose kinase and an inhibitor of fructose-1,6-biphosphatase. Therefore, Fru-6-P,2-kinase/Fru-2,6-Pase is important in glucose homeostasis. The fructose-2,6-biphosphatase domain has been shown to be structurally and functionally homologous to phosphoglycerate mutase. It catalyses its reaction via a phosphoenzyme intermediate which utilises an active site histidine as a nucleophilic phosphoacceptor.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of fructose-2,6-bisphosphate 2-phosphatase
+  description: Stepwise mechanism transcribed from M-CSA entry 810 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: arg255
+    label: catalytic Arg255 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P25114
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ala256
+    label: catalytic Ala256 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P25114
+    description: 'M-CSA roles: covalently attached, nucleofuge, nucleophile.'
+  - node_id: asn262
+    label: catalytic Asn262 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P25114
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: arg305
+    label: catalytic Arg305 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P25114
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu325
+    label: catalytic Glu325 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P25114
+    description: 'M-CSA roles: activator, proton acceptor, proton donor.'
+  - node_id: his390
+    label: catalytic His390 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P25114
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: beta-D-fructofuranose 2,6-bisphosphate(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58579
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: beta-D-fructofuranose 6-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57634
+  - node_id: product1
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Nucleophilic attack of 2-phosphate by His256 resulting in a tetrahedral intermediate
+      which is stabilised by Arg205, Arg255, His390 and Asn262.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Fructose-6-phosphate is protonated by Glu325 and then exits the active site.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Glu325 abstracts a proton off the water molecule, causing it to act as a nucleophile
+      and attack phospho-His256. The tetrahedral intermediate formed is also stabilised by Arg305, Arg255,
+      His390 and Asn262.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The intermediate collapses, resulting in the cleavage of the phospho-His256 bond. The
+      phosphate group is held in the active site until displaced by an incoming substrate.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: fructose-2,6-bisphosphate 2-phosphatase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:810
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1240 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1240
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: fructose-2,6-bisphosphate 2-phosphatase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.3.46
+  edges:
+  - subject: arg255
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg255 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/810/
+      snippet: Nucleophilic attack of 2-phosphate by His256 resulting in a tetrahedral intermediate which
+        is stabilised by Arg205, Arg255, His390 and Asn262.
+      notes: M-CSA entry 810, mechanism 1; M-CSA cites PMID:11123954, PMID:1326547, PMID:9890980; step
+        1
+  - subject: asn262
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asn262 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/810/
+      snippet: Nucleophilic attack of 2-phosphate by His256 resulting in a tetrahedral intermediate which
+        is stabilised by Arg205, Arg255, His390 and Asn262.
+      notes: M-CSA entry 810, mechanism 1; M-CSA cites PMID:11123954, PMID:1326547, PMID:9890980; step
+        1
+  - subject: his390
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His390 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/810/
+      snippet: Nucleophilic attack of 2-phosphate by His256 resulting in a tetrahedral intermediate which
+        is stabilised by Arg205, Arg255, His390 and Asn262.
+      notes: M-CSA entry 810, mechanism 1; M-CSA cites PMID:11123954, PMID:1326547, PMID:9890980; step
+        1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/810/
+      snippet: Fructose-6-phosphate is protonated by Glu325 and then exits the active site.
+      notes: M-CSA entry 810, mechanism 1; M-CSA cites PMID:11123954, PMID:1326547, PMID:9890980; step
+        2
+  - subject: glu325
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu325 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/810/
+      snippet: Fructose-6-phosphate is protonated by Glu325 and then exits the active site.
+      notes: M-CSA entry 810, mechanism 1; M-CSA cites PMID:11123954, PMID:1326547, PMID:9890980; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/810/
+      snippet: Glu325 abstracts a proton off the water molecule, causing it to act as a nucleophile and
+        attack phospho-His256. The tetrahedral intermediate formed is also stabilised by Arg305, Arg255,
+        His390 and Asn262.
+      notes: M-CSA entry 810, mechanism 1; M-CSA cites PMID:11123954, PMID:1326547, PMID:9890980; step
+        3
+  - subject: arg255
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Arg255 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/810/
+      snippet: Glu325 abstracts a proton off the water molecule, causing it to act as a nucleophile and
+        attack phospho-His256. The tetrahedral intermediate formed is also stabilised by Arg305, Arg255,
+        His390 and Asn262.
+      notes: M-CSA entry 810, mechanism 1; M-CSA cites PMID:11123954, PMID:1326547, PMID:9890980; step
+        3
+  - subject: asn262
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Asn262 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/810/
+      snippet: Glu325 abstracts a proton off the water molecule, causing it to act as a nucleophile and
+        attack phospho-His256. The tetrahedral intermediate formed is also stabilised by Arg305, Arg255,
+        His390 and Asn262.
+      notes: M-CSA entry 810, mechanism 1; M-CSA cites PMID:11123954, PMID:1326547, PMID:9890980; step
+        3
+  - subject: arg305
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Arg305 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/810/
+      snippet: Glu325 abstracts a proton off the water molecule, causing it to act as a nucleophile and
+        attack phospho-His256. The tetrahedral intermediate formed is also stabilised by Arg305, Arg255,
+        His390 and Asn262.
+      notes: M-CSA entry 810, mechanism 1; M-CSA cites PMID:11123954, PMID:1326547, PMID:9890980; step
+        3
+  - subject: glu325
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Glu325 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/810/
+      snippet: Glu325 abstracts a proton off the water molecule, causing it to act as a nucleophile and
+        attack phospho-His256. The tetrahedral intermediate formed is also stabilised by Arg305, Arg255,
+        His390 and Asn262.
+      notes: M-CSA entry 810, mechanism 1; M-CSA cites PMID:11123954, PMID:1326547, PMID:9890980; step
+        3
+  - subject: his390
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His390 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/810/
+      snippet: Glu325 abstracts a proton off the water molecule, causing it to act as a nucleophile and
+        attack phospho-His256. The tetrahedral intermediate formed is also stabilised by Arg305, Arg255,
+        His390 and Asn262.
+      notes: M-CSA entry 810, mechanism 1; M-CSA cites PMID:11123954, PMID:1326547, PMID:9890980; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/810/
+      snippet: The intermediate collapses, resulting in the cleavage of the phospho-His256 bond. The phosphate
+        group is held in the active site until displaced by an incoming substrate.
+      notes: M-CSA entry 810, mechanism 1; M-CSA cites PMID:11123954, PMID:1326547, PMID:9890980; step
+        4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/810/
+      snippet: Products.
+      notes: M-CSA entry 810, mechanism 1; M-CSA cites PMID:11123954, PMID:1326547, PMID:9890980; step
+        5
+  - subject: arg255
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg255 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/810/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 810, mechanism 1; M-CSA cites PMID:11123954, PMID:1326547, PMID:9890980; M-CSA
+        catalytic-residue roles for Arg255
+  - subject: ala256
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ala256 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/810/
+      snippet: covalently attached, nucleofuge, nucleophile
+      notes: M-CSA entry 810, mechanism 1; M-CSA cites PMID:11123954, PMID:1326547, PMID:9890980; M-CSA
+        catalytic-residue roles for Ala256
+  - subject: asn262
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn262 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/810/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 810, mechanism 1; M-CSA cites PMID:11123954, PMID:1326547, PMID:9890980; M-CSA
+        catalytic-residue roles for Asn262
+  - subject: arg305
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg305 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/810/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 810, mechanism 1; M-CSA cites PMID:11123954, PMID:1326547, PMID:9890980; M-CSA
+        catalytic-residue roles for Arg305
+  - subject: glu325
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu325 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/810/
+      snippet: activator, proton acceptor, proton donor
+      notes: M-CSA entry 810, mechanism 1; M-CSA cites PMID:11123954, PMID:1326547, PMID:9890980; M-CSA
+        catalytic-residue roles for Glu325
+  - subject: his390
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His390 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/810/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 810, mechanism 1; M-CSA cites PMID:11123954, PMID:1326547, PMID:9890980; M-CSA
+        catalytic-residue roles for His390
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/810/
+      snippet: 'The catalytic reaction proceeds in two steps: (1) Formation of the phosphoryl-histidine
+        intermediate and release of fructose 6-phosphate; and (2) hydrolysis of the phosphoenzyme intermediate.
+        The proposed mechanism has His236 acting as a nucleophile to attack the phosphate, leading to
+        a pentacovalent transition state, where the excess negative charge is stabilised by Arg255, Asn262,
+        Arg305 and His'
+      notes: M-CSA entry 810, mechanism 1; M-CSA cites PMID:11123954, PMID:1326547, PMID:9890980; CATH
+        domain 3.40.50.1240 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/810/
+      snippet: 'The catalytic reaction proceeds in two steps: (1) Formation of the phosphoryl-histidine
+        intermediate and release of fructose 6-phosphate; and (2) hydrolysis of the phosphoenzyme intermediate.
+        The proposed mechanism has His236 acting as a nucleophile to attack the phosphate, leading to
+        a pentacovalent transition state, where the excess negative charge is stabilised by Arg255, Asn262,
+        Arg305 and His'
+      notes: M-CSA entry 810, mechanism 1; M-CSA cites PMID:11123954, PMID:1326547, PMID:9890980; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/810/
+      snippet: 'The catalytic reaction proceeds in two steps: (1) Formation of the phosphoryl-histidine
+        intermediate and release of fructose 6-phosphate; and (2) hydrolysis of the phosphoenzyme intermediate.
+        The proposed mechanism has His236 acting as a nucleophile to attack the phosphate, leading to
+        a pentacovalent transition state, where the excess negative charge is stabilised by Arg255, Asn262,
+        Arg305 and His'
+      notes: M-CSA entry 810, mechanism 1; M-CSA cites PMID:11123954, PMID:1326547, PMID:9890980; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/810/
+      snippet: 'The catalytic reaction proceeds in two steps: (1) Formation of the phosphoryl-histidine
+        intermediate and release of fructose 6-phosphate; and (2) hydrolysis of the phosphoenzyme intermediate.
+        The proposed mechanism has His236 acting as a nucleophile to attack the phosphate, leading to
+        a pentacovalent transition state, where the excess negative charge is stabilised by Arg255, Asn262,
+        Arg305 and His'
+      notes: M-CSA entry 810, mechanism 1; M-CSA cites PMID:11123954, PMID:1326547, PMID:9890980; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/810/
+      snippet: 'The catalytic reaction proceeds in two steps: (1) Formation of the phosphoryl-histidine
+        intermediate and release of fructose 6-phosphate; and (2) hydrolysis of the phosphoenzyme intermediate.
+        The proposed mechanism has His236 acting as a nucleophile to attack the phosphate, leading to
+        a pentacovalent transition state, where the excess negative charge is stabilised by Arg255, Asn262,
+        Arg305 and His'
+      notes: M-CSA entry 810, mechanism 1; M-CSA cites PMID:11123954, PMID:1326547, PMID:9890980; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/810/
+      snippet: 'The catalytic reaction proceeds in two steps: (1) Formation of the phosphoryl-histidine
+        intermediate and release of fructose 6-phosphate; and (2) hydrolysis of the phosphoenzyme intermediate.
+        The proposed mechanism has His236 acting as a nucleophile to attack the phosphate, leading to
+        a pentacovalent transition state, where the excess negative charge is stabilised by Arg255, Asn262,
+        Arg305 and His'
+      notes: M-CSA entry 810, mechanism 1; M-CSA cites PMID:11123954, PMID:1326547, PMID:9890980; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (25 evidence-backed edges) transcribed from M-CSA entry 810;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

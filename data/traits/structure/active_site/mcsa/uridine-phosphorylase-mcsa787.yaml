@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.4.2.3
 - CHEBI:43474
@@ -176,4 +176,236 @@ definitions:
       The enzyme uridine phosphorylase is very important in the pathway whereby uracil can be scavenged to increase blood uracil levels. The overall reaction thus results in the formation of ribose-1-phosphate in addition to uracil. The pathway is of particular interest because it provides a mechanism whereby the effect of base analogues such as 5BU can be minimised, thus may provide some defence against tumour formation. The enzyme itself shows significant homology to Purine nucleotide phosphorylases rather than to pyrimidine nucleotide phosphorylases, posing interesting questions about its evolution.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of uridine phosphorylase
+  description: Stepwise mechanism transcribed from M-CSA entry 787 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: his8
+    label: catalytic His8 (M-CSA/PDB numbering; UniProt residue 8)
+    node_type: RESIDUE
+    grounding: UniProtKB:P12758
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: glu80
+    label: catalytic Glu80 (M-CSA/PDB numbering; UniProt residue 80)
+    node_type: RESIDUE
+    grounding: UniProtKB:P12758
+    description: 'M-CSA roles: electrostatic stabiliser, polar interaction.'
+  - node_id: arg223
+    label: catalytic Arg223 (M-CSA/PDB numbering; UniProt residue 223)
+    node_type: RESIDUE
+    grounding: UniProtKB:P12758
+    description: 'M-CSA roles: electrostatic stabiliser, polar interaction.'
+  - node_id: reactant0
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: reactant1
+    label: uridine
+    node_type: CHEMICAL
+    grounding: CHEBI:16704
+  - node_id: product0
+    label: uracil
+    node_type: CHEMICAL
+    grounding: CHEBI:17568
+  - node_id: product1
+    label: alpha-D-ribose 1-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57720
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Arg 223 forms hydrogen bonds with the proton donating water that donates a proton to
+      the uracil base. This His8 deprotonates O5' on the phosphate group, making it more electron rich
+      and facilitating nucleophilic attack.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: His8 is deprotonated by the hydroxide ion, ready for another round of catalysis.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: uridine phosphorylase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:787
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1580 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1580
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: uridine phosphorylase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.4.2.3
+  edges:
+  - subject: his8
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His8 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/787/
+      snippet: Arg 223 forms hydrogen bonds with the proton donating water that donates a proton to the
+        uracil base. This His8 deprotonates O5' on the phosphate group, making it more electron rich and
+        facilitating nucleophilic attack.
+      notes: M-CSA entry 787, mechanism 1; M-CSA cites PMID:15003451; step 1
+  - subject: arg223
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg223 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/787/
+      snippet: Arg 223 forms hydrogen bonds with the proton donating water that donates a proton to the
+        uracil base. This His8 deprotonates O5' on the phosphate group, making it more electron rich and
+        facilitating nucleophilic attack.
+      notes: M-CSA entry 787, mechanism 1; M-CSA cites PMID:15003451; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/787/
+      snippet: His8 is deprotonated by the hydroxide ion, ready for another round of catalysis.
+      notes: M-CSA entry 787, mechanism 1; M-CSA cites PMID:15003451; step 2
+  - subject: his8
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His8 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/787/
+      snippet: His8 is deprotonated by the hydroxide ion, ready for another round of catalysis.
+      notes: M-CSA entry 787, mechanism 1; M-CSA cites PMID:15003451; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/787/
+      snippet: Products.
+      notes: M-CSA entry 787, mechanism 1; M-CSA cites PMID:15003451; step 3
+  - subject: his8
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His8 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/787/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 787, mechanism 1; M-CSA cites PMID:15003451; M-CSA catalytic-residue roles for
+        His8
+  - subject: glu80
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu80 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/787/
+      snippet: electrostatic stabiliser, polar interaction
+      notes: M-CSA entry 787, mechanism 1; M-CSA cites PMID:15003451; M-CSA catalytic-residue roles for
+        Glu80
+  - subject: arg223
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg223 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/787/
+      snippet: electrostatic stabiliser, polar interaction
+      notes: M-CSA entry 787, mechanism 1; M-CSA cites PMID:15003451; M-CSA catalytic-residue roles for
+        Arg223
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/787/
+      snippet: The reaction mechanism is believed to be similar to that of human purine nucleotide phosphorylase,
+        so involves an carboxenium ion transition state formed through electron density from the 4' oxygen
+        being pushed onto the 1' Carbon of the ribosyl moiety. The formation of this transition state
+        is assisted by transient deprotonation of the 5' OH group by His 8, primed by Glu 80, which is
+        positioned di
+      notes: M-CSA entry 787, mechanism 1; M-CSA cites PMID:15003451; CATH domain 3.40.50.1580 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/787/
+      snippet: The reaction mechanism is believed to be similar to that of human purine nucleotide phosphorylase,
+        so involves an carboxenium ion transition state formed through electron density from the 4' oxygen
+        being pushed onto the 1' Carbon of the ribosyl moiety. The formation of this transition state
+        is assisted by transient deprotonation of the 5' OH group by His 8, primed by Glu 80, which is
+        positioned di
+      notes: M-CSA entry 787, mechanism 1; M-CSA cites PMID:15003451; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/787/
+      snippet: The reaction mechanism is believed to be similar to that of human purine nucleotide phosphorylase,
+        so involves an carboxenium ion transition state formed through electron density from the 4' oxygen
+        being pushed onto the 1' Carbon of the ribosyl moiety. The formation of this transition state
+        is assisted by transient deprotonation of the 5' OH group by His 8, primed by Glu 80, which is
+        positioned di
+      notes: M-CSA entry 787, mechanism 1; M-CSA cites PMID:15003451; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/787/
+      snippet: The reaction mechanism is believed to be similar to that of human purine nucleotide phosphorylase,
+        so involves an carboxenium ion transition state formed through electron density from the 4' oxygen
+        being pushed onto the 1' Carbon of the ribosyl moiety. The formation of this transition state
+        is assisted by transient deprotonation of the 5' OH group by His 8, primed by Glu 80, which is
+        positioned di
+      notes: M-CSA entry 787, mechanism 1; M-CSA cites PMID:15003451; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/787/
+      snippet: The reaction mechanism is believed to be similar to that of human purine nucleotide phosphorylase,
+        so involves an carboxenium ion transition state formed through electron density from the 4' oxygen
+        being pushed onto the 1' Carbon of the ribosyl moiety. The formation of this transition state
+        is assisted by transient deprotonation of the 5' OH group by His 8, primed by Glu 80, which is
+        positioned di
+      notes: M-CSA entry 787, mechanism 1; M-CSA cites PMID:15003451; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/787/
+      snippet: The reaction mechanism is believed to be similar to that of human purine nucleotide phosphorylase,
+        so involves an carboxenium ion transition state formed through electron density from the 4' oxygen
+        being pushed onto the 1' Carbon of the ribosyl moiety. The formation of this transition state
+        is assisted by transient deprotonation of the 5' OH group by His 8, primed by Glu 80, which is
+        positioned di
+      notes: M-CSA entry 787, mechanism 1; M-CSA cites PMID:15003451; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (14 evidence-backed edges) transcribed from M-CSA entry 787;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

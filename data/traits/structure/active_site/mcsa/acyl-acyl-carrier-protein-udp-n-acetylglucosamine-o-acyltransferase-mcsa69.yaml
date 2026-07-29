@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.3.1.129
 - CHEBI:78474
@@ -162,4 +162,221 @@ definitions:
       UDP-N-acetylglucosamine (UDP-GlcNAc) acyltransferase catalyzes the first step in the biosynthesis of lipid A, the hydrophobic anchor of lipopolysaccharide in Gram-negative bacteria. This enzyme, the product of the lpxA gene, transfers an R-3-hydroxyacyl chain fromR-3-hydroxyacyl-acyl carrier protein (ACP) to the glucosamine 3-OH of UDP-GlcNAc. The acylation of UDP-GlcNAc is characterized by an unfavorable equilibrium constant (0.01). Therefore, the second reaction of lipid A biosynthesis, in which the LpxA product UDP-3-O-(R-3-hydroxyacyl)-GlcNAc is deacetylated, is the first irreversible step of the pathway. Lipid A is required for growth of E. coli and most other Gram-negative bacteria. Lipid A is also necessary for maintaining the integrity of the outer membrane as a barrier to toxic chemicals. Furthermore, lipid A is a potent activator of innate immunity in animal systems. The study of the enzymes involved in lipid A biosynthesis should therefore prove useful for the development of new anti-infective drugs.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of acyl-[acyl-carrier-protein]-UDP-N-acetylglucosamine O-acyltransferase
+  description: Stepwise mechanism transcribed from M-CSA entry 69 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: his125
+    label: catalytic His125 (M-CSA/PDB numbering; UniProt residue 125)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A722
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: asp126
+    label: catalytic Asp126 (M-CSA/PDB numbering; UniProt residue 126)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A722
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor.'
+  - node_id: gly143
+    label: catalytic Gly143 (M-CSA/PDB numbering; UniProt residue 143)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A722
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: reactant0
+    label: O-[S-(3R)-hydroxytetradecanoylpantetheine-4-phosphoryl]serine(1-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:78474
+  - node_id: reactant1
+    label: UDP-N-acetyl-alpha-D-glucosamine(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57705
+  - node_id: product0
+    label: O-(pantetheine-4'-phosphoryl)serine(1-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:64479
+  - node_id: product1
+    label: UDP-3-O-[(3R)-3-hydroxytetradecanoyl]-N-acetylglucosamine(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:61494
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His125 deprotonates UDP-N-acetyl-D-glucosamine hydroxyl group, initiating a nucleophilic
+      attack on the carbonyl carbon of the ACP in an addition reaction.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The oxyanion collapses, eliminating ACP with concomitant deprotonation of His125.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: acyl-[acyl-carrier-protein]-UDP-N-acetylglucosamine O-acyltransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:69
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.160.10.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.160.10.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: acyl-[acyl-carrier-protein]-UDP-N-acetylglucosamine O-acyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.3.1.129
+  edges:
+  - subject: his125
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His125 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/69/
+      snippet: His125 deprotonates UDP-N-acetyl-D-glucosamine hydroxyl group, initiating a nucleophilic
+        attack on the carbonyl carbon of the ACP in an addition reaction.
+      notes: M-CSA entry 69, mechanism 1; M-CSA cites PMID:10480918, PMID:14579368, PMID:15044493, PMID:15491619,
+        PMID:16835299, PMID:17434525, PMID:17698807; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/69/
+      snippet: The oxyanion collapses, eliminating ACP with concomitant deprotonation of His125.
+      notes: M-CSA entry 69, mechanism 1; M-CSA cites PMID:10480918, PMID:14579368, PMID:15044493, PMID:15491619,
+        PMID:16835299, PMID:17434525, PMID:17698807; step 2
+  - subject: his125
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His125 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/69/
+      snippet: The oxyanion collapses, eliminating ACP with concomitant deprotonation of His125.
+      notes: M-CSA entry 69, mechanism 1; M-CSA cites PMID:10480918, PMID:14579368, PMID:15044493, PMID:15491619,
+        PMID:16835299, PMID:17434525, PMID:17698807; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/69/
+      snippet: Products
+      notes: M-CSA entry 69, mechanism 1; M-CSA cites PMID:10480918, PMID:14579368, PMID:15044493, PMID:15491619,
+        PMID:16835299, PMID:17434525, PMID:17698807; step 3
+  - subject: his125
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His125 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/69/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 69, mechanism 1; M-CSA cites PMID:10480918, PMID:14579368, PMID:15044493, PMID:15491619,
+        PMID:16835299, PMID:17434525, PMID:17698807; M-CSA catalytic-residue roles for His125
+  - subject: asp126
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp126 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/69/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor
+      notes: M-CSA entry 69, mechanism 1; M-CSA cites PMID:10480918, PMID:14579368, PMID:15044493, PMID:15491619,
+        PMID:16835299, PMID:17434525, PMID:17698807; M-CSA catalytic-residue roles for Asp126
+  - subject: gly143
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly143 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/69/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 69, mechanism 1; M-CSA cites PMID:10480918, PMID:14579368, PMID:15044493, PMID:15491619,
+        PMID:16835299, PMID:17434525, PMID:17698807; M-CSA catalytic-residue roles for Gly143
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/69/
+      snippet: His125 deprotonates UDP-N-acetyl-D-glucosamine hydroxyl group, initiating a nucleophilic
+        attack on the carbonyl carbon of the ACP in an addition reaction. The oxyanion collapses, eliminating
+        ACP with concomitant deprotonation of His125.
+      notes: M-CSA entry 69, mechanism 1; M-CSA cites PMID:10480918, PMID:14579368, PMID:15044493, PMID:15491619,
+        PMID:16835299, PMID:17434525, PMID:17698807; CATH domain 2.160.10.10 assigned to the catalytic
+        chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/69/
+      snippet: His125 deprotonates UDP-N-acetyl-D-glucosamine hydroxyl group, initiating a nucleophilic
+        attack on the carbonyl carbon of the ACP in an addition reaction. The oxyanion collapses, eliminating
+        ACP with concomitant deprotonation of His125.
+      notes: M-CSA entry 69, mechanism 1; M-CSA cites PMID:10480918, PMID:14579368, PMID:15044493, PMID:15491619,
+        PMID:16835299, PMID:17434525, PMID:17698807; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/69/
+      snippet: His125 deprotonates UDP-N-acetyl-D-glucosamine hydroxyl group, initiating a nucleophilic
+        attack on the carbonyl carbon of the ACP in an addition reaction. The oxyanion collapses, eliminating
+        ACP with concomitant deprotonation of His125.
+      notes: M-CSA entry 69, mechanism 1; M-CSA cites PMID:10480918, PMID:14579368, PMID:15044493, PMID:15491619,
+        PMID:16835299, PMID:17434525, PMID:17698807; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/69/
+      snippet: His125 deprotonates UDP-N-acetyl-D-glucosamine hydroxyl group, initiating a nucleophilic
+        attack on the carbonyl carbon of the ACP in an addition reaction. The oxyanion collapses, eliminating
+        ACP with concomitant deprotonation of His125.
+      notes: M-CSA entry 69, mechanism 1; M-CSA cites PMID:10480918, PMID:14579368, PMID:15044493, PMID:15491619,
+        PMID:16835299, PMID:17434525, PMID:17698807; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/69/
+      snippet: His125 deprotonates UDP-N-acetyl-D-glucosamine hydroxyl group, initiating a nucleophilic
+        attack on the carbonyl carbon of the ACP in an addition reaction. The oxyanion collapses, eliminating
+        ACP with concomitant deprotonation of His125.
+      notes: M-CSA entry 69, mechanism 1; M-CSA cites PMID:10480918, PMID:14579368, PMID:15044493, PMID:15491619,
+        PMID:16835299, PMID:17434525, PMID:17698807; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/69/
+      snippet: His125 deprotonates UDP-N-acetyl-D-glucosamine hydroxyl group, initiating a nucleophilic
+        attack on the carbonyl carbon of the ACP in an addition reaction. The oxyanion collapses, eliminating
+        ACP with concomitant deprotonation of His125.
+      notes: M-CSA entry 69, mechanism 1; M-CSA cites PMID:10480918, PMID:14579368, PMID:15044493, PMID:15491619,
+        PMID:16835299, PMID:17434525, PMID:17698807; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 69;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

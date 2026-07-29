@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.-.-
 - CHEBI:15377
@@ -126,4 +126,219 @@ definitions:
       I-PpoI is a homing endonuclease of the His-Cys family. It is encoded by the nuclear 26S rRNA gene of Physarum polycephalum and cleaves a 16bp homing site to generate four-base 3' overhangs. It requires divalent metal cations, but a wide range are accommodated.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of intron-encoded endonuclease I-PpoI
+  description: Stepwise mechanism transcribed from M-CSA entry 837 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: arg61
+    label: catalytic Arg61 (M-CSA/PDB numbering; UniProt residue 61)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q94702
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his98
+    label: catalytic His98 (M-CSA/PDB numbering; UniProt residue 98)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q94702
+    description: 'M-CSA roles: proton acceptor.'
+  - node_id: cys105
+    label: catalytic Cys105 (M-CSA/PDB numbering; UniProt residue 105)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q94702
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asn119
+    label: catalytic Asn119 (M-CSA/PDB numbering; UniProt residue 119)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q94702
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: poly(deoxyadenylic acid)
+    node_type: CHEMICAL
+    grounding: CHEBI:73276
+  - node_id: product0
+    label: poly(deoxyadenylic acid)
+    node_type: CHEMICAL
+    grounding: CHEBI:73276
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His98 abstracts a proton from a water which activates it to nucleophilically attack the
+      phosphate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The 3' oxygen is protonated by a zinc bound water which initiates an elimination from
+      the oxyanion which results in the cleavage of the sugar-phosphate bond.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: intron-encoded endonuclease I-PpoI catalytic site
+    node_type: MOTIF
+    grounding: MCSA:837
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.75.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.75.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: intron-encoded endonuclease I-PpoI activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.-.-
+  edges:
+  - subject: his98
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His98 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/837/
+      snippet: His98 abstracts a proton from a water which activates it to nucleophilically attack the
+        phosphate.
+      notes: M-CSA entry 837, mechanism 1; M-CSA cites PMID:10581547; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/837/
+      snippet: The 3' oxygen is protonated by a zinc bound water which initiates an elimination from the
+        oxyanion which results in the cleavage of the sugar-phosphate bond.
+      notes: M-CSA entry 837, mechanism 1; M-CSA cites PMID:10581547; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/837/
+      snippet: Products
+      notes: M-CSA entry 837, mechanism 1; M-CSA cites PMID:10581547; step 3
+  - subject: arg61
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg61 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/837/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 837, mechanism 1; M-CSA cites PMID:10581547; M-CSA catalytic-residue roles for
+        Arg61
+  - subject: his98
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His98 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/837/
+      snippet: proton acceptor
+      notes: M-CSA entry 837, mechanism 1; M-CSA cites PMID:10581547; M-CSA catalytic-residue roles for
+        His98
+  - subject: cys105
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys105 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/837/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 837, mechanism 1; M-CSA cites PMID:10581547; M-CSA catalytic-residue roles for
+        Cys105
+  - subject: asn119
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn119 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/837/
+      snippet: metal ligand
+      notes: M-CSA entry 837, mechanism 1; M-CSA cites PMID:10581547; M-CSA catalytic-residue roles for
+        Asn119
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/837/
+      snippet: "The metal (likely to be magnesium in the native enzyme but is shown as Zinc in this pdb)\
+        \ is bound by Asn 119, a non-bridging oxygen of the scissile phosphate group, and the bridging\
+        \ 3' oxygen of the scissile bond. Zn(II) forces the DNA into a strained conformation.
+  A water\
+        \ molecule, activated by His 98 acting as a base, performs inline attack on the scissile phosphate.\
+        \ The backbone of Cys 105 m"
+      notes: M-CSA entry 837, mechanism 1; M-CSA cites PMID:10581547; CATH domain 3.90.75.10 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/837/
+      snippet: "The metal (likely to be magnesium in the native enzyme but is shown as Zinc in this pdb)\
+        \ is bound by Asn 119, a non-bridging oxygen of the scissile phosphate group, and the bridging\
+        \ 3' oxygen of the scissile bond. Zn(II) forces the DNA into a strained conformation.
+  A water\
+        \ molecule, activated by His 98 acting as a base, performs inline attack on the scissile phosphate.\
+        \ The backbone of Cys 105 m"
+      notes: M-CSA entry 837, mechanism 1; M-CSA cites PMID:10581547; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/837/
+      snippet: "The metal (likely to be magnesium in the native enzyme but is shown as Zinc in this pdb)\
+        \ is bound by Asn 119, a non-bridging oxygen of the scissile phosphate group, and the bridging\
+        \ 3' oxygen of the scissile bond. Zn(II) forces the DNA into a strained conformation.
+  A water\
+        \ molecule, activated by His 98 acting as a base, performs inline attack on the scissile phosphate.\
+        \ The backbone of Cys 105 m"
+      notes: M-CSA entry 837, mechanism 1; M-CSA cites PMID:10581547; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/837/
+      snippet: "The metal (likely to be magnesium in the native enzyme but is shown as Zinc in this pdb)\
+        \ is bound by Asn 119, a non-bridging oxygen of the scissile phosphate group, and the bridging\
+        \ 3' oxygen of the scissile bond. Zn(II) forces the DNA into a strained conformation.
+  A water\
+        \ molecule, activated by His 98 acting as a base, performs inline attack on the scissile phosphate.\
+        \ The backbone of Cys 105 m"
+      notes: M-CSA entry 837, mechanism 1; M-CSA cites PMID:10581547; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/837/
+      snippet: "The metal (likely to be magnesium in the native enzyme but is shown as Zinc in this pdb)\
+        \ is bound by Asn 119, a non-bridging oxygen of the scissile phosphate group, and the bridging\
+        \ 3' oxygen of the scissile bond. Zn(II) forces the DNA into a strained conformation.
+  A water\
+        \ molecule, activated by His 98 acting as a base, performs inline attack on the scissile phosphate.\
+        \ The backbone of Cys 105 m"
+      notes: M-CSA entry 837, mechanism 1; M-CSA cites PMID:10581547; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (12 evidence-backed edges) transcribed from M-CSA entry 837;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

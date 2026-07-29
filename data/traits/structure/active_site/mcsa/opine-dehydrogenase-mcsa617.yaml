@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.5.1.28
 - CHEBI:15377
@@ -251,4 +251,300 @@ definitions:
       N-(1-D-carboxylethyl)-L-norvaline dehydrogenase is part of the (D,L) stereochemistry family of opine dehydrogenases and is able to catalyse the reaction of pyruvate with hydrophobic L amino acids to form opines through reductive condensation using NAD(P)H as a cofactor. Of particular interest is the stereochemical specificity of this enzyme as its reaction is a key step in a number of synthetic routes for pharmaceuticals. The enzyme displays some sequence homology with (L,L) opine dehydrogenases and both families display homology with 2-hydroxy acid dehydrogenases.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of opine dehydrogenase
+  description: Stepwise mechanism transcribed from M-CSA entry 617 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: his202
+    label: catalytic His202 (M-CSA/PDB numbering; UniProt residue 202)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q44297
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: asp297
+    label: catalytic Asp297 (M-CSA/PDB numbering; UniProt residue 297)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q44297
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+  - node_id: reactant1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: reactant2
+    label: L-2-aminopentanoic acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:58441
+  - node_id: reactant3
+    label: NADH(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+  - node_id: product0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product1
+    label: NAD(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+  - node_id: product2
+    label: (2S)-2-{[(1R)-1-carboxylatoethyl]azaniumyl}pentanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:58799
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Catalysis begins with nucleophilic attack of the amino group of L-2-aminopentanoic acid
+      on the carbonyl of pyruvate, forming a carbinolamine intermediate. His202 acts as an acid and donates
+      a proton to the developing alkoxide on pyruvate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: His202 acts as a base to deprotonate the amine group of the intermediate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The hydroxyl group accepts a proton from His202 and the nitrogen lone pair facilitates
+      dehydration of the intermediate, forming and imine intermediate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Hydride transfer from NADH to the imine intermediate occurs, forming the product and
+      NAD.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: opine dehydrogenase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:617
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.10.1040.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.10.1040.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: opine dehydrogenase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.5.1.28
+  edges:
+  - subject: his202
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His202 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/617/
+      snippet: Catalysis begins with nucleophilic attack of the amino group of L-2-aminopentanoic acid
+        on the carbonyl of pyruvate, forming a carbinolamine intermediate. His202 acts as an acid and
+        donates a proton to the developing alkoxide on pyruvate.
+      notes: M-CSA entry 617, mechanism 1; M-CSA cites PMID:9665174; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/617/
+      snippet: His202 acts as a base to deprotonate the amine group of the intermediate.
+      notes: M-CSA entry 617, mechanism 1; M-CSA cites PMID:9665174; step 2
+  - subject: his202
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His202 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/617/
+      snippet: His202 acts as a base to deprotonate the amine group of the intermediate.
+      notes: M-CSA entry 617, mechanism 1; M-CSA cites PMID:9665174; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/617/
+      snippet: The hydroxyl group accepts a proton from His202 and the nitrogen lone pair facilitates
+        dehydration of the intermediate, forming and imine intermediate.
+      notes: M-CSA entry 617, mechanism 1; M-CSA cites PMID:9665174; step 3
+  - subject: his202
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His202 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/617/
+      snippet: The hydroxyl group accepts a proton from His202 and the nitrogen lone pair facilitates
+        dehydration of the intermediate, forming and imine intermediate.
+      notes: M-CSA entry 617, mechanism 1; M-CSA cites PMID:9665174; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/617/
+      snippet: Hydride transfer from NADH to the imine intermediate occurs, forming the product and NAD.
+      notes: M-CSA entry 617, mechanism 1; M-CSA cites PMID:9665174; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/617/
+      snippet: Products.
+      notes: M-CSA entry 617, mechanism 1; M-CSA cites PMID:9665174; step 5
+  - subject: his202
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His202 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/617/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 617, mechanism 1; M-CSA cites PMID:9665174; M-CSA catalytic-residue roles for
+        His202
+  - subject: asp297
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp297 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/617/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 617, mechanism 1; M-CSA cites PMID:9665174; M-CSA catalytic-residue roles for
+        Asp297
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/617/
+      snippet: The mechanism proposal is based on the similarity in the chemistry of the opine dehydrogenase
+        family to that of the amino acid dehydrogenases. The reaction is believed to proceed via nucleophilic
+        attack by the L amino acid on the pyruvate with a histidine residue acting as a general acid,
+        allowing the formation of a carbinolamine intermediate. Dehydration of this intermediate, again
+        facilitated by
+      notes: M-CSA entry 617, mechanism 1; M-CSA cites PMID:9665174; CATH domain 1.10.1040.10 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/617/
+      snippet: The mechanism proposal is based on the similarity in the chemistry of the opine dehydrogenase
+        family to that of the amino acid dehydrogenases. The reaction is believed to proceed via nucleophilic
+        attack by the L amino acid on the pyruvate with a histidine residue acting as a general acid,
+        allowing the formation of a carbinolamine intermediate. Dehydration of this intermediate, again
+        facilitated by
+      notes: M-CSA entry 617, mechanism 1; M-CSA cites PMID:9665174; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/617/
+      snippet: The mechanism proposal is based on the similarity in the chemistry of the opine dehydrogenase
+        family to that of the amino acid dehydrogenases. The reaction is believed to proceed via nucleophilic
+        attack by the L amino acid on the pyruvate with a histidine residue acting as a general acid,
+        allowing the formation of a carbinolamine intermediate. Dehydration of this intermediate, again
+        facilitated by
+      notes: M-CSA entry 617, mechanism 1; M-CSA cites PMID:9665174; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/617/
+      snippet: The mechanism proposal is based on the similarity in the chemistry of the opine dehydrogenase
+        family to that of the amino acid dehydrogenases. The reaction is believed to proceed via nucleophilic
+        attack by the L amino acid on the pyruvate with a histidine residue acting as a general acid,
+        allowing the formation of a carbinolamine intermediate. Dehydration of this intermediate, again
+        facilitated by
+      notes: M-CSA entry 617, mechanism 1; M-CSA cites PMID:9665174; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/617/
+      snippet: The mechanism proposal is based on the similarity in the chemistry of the opine dehydrogenase
+        family to that of the amino acid dehydrogenases. The reaction is believed to proceed via nucleophilic
+        attack by the L amino acid on the pyruvate with a histidine residue acting as a general acid,
+        allowing the formation of a carbinolamine intermediate. Dehydration of this intermediate, again
+        facilitated by
+      notes: M-CSA entry 617, mechanism 1; M-CSA cites PMID:9665174; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant3
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/617/
+      snippet: The mechanism proposal is based on the similarity in the chemistry of the opine dehydrogenase
+        family to that of the amino acid dehydrogenases. The reaction is believed to proceed via nucleophilic
+        attack by the L amino acid on the pyruvate with a histidine residue acting as a general acid,
+        allowing the formation of a carbinolamine intermediate. Dehydration of this intermediate, again
+        facilitated by
+      notes: M-CSA entry 617, mechanism 1; M-CSA cites PMID:9665174; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/617/
+      snippet: The mechanism proposal is based on the similarity in the chemistry of the opine dehydrogenase
+        family to that of the amino acid dehydrogenases. The reaction is believed to proceed via nucleophilic
+        attack by the L amino acid on the pyruvate with a histidine residue acting as a general acid,
+        allowing the formation of a carbinolamine intermediate. Dehydration of this intermediate, again
+        facilitated by
+      notes: M-CSA entry 617, mechanism 1; M-CSA cites PMID:9665174; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/617/
+      snippet: The mechanism proposal is based on the similarity in the chemistry of the opine dehydrogenase
+        family to that of the amino acid dehydrogenases. The reaction is believed to proceed via nucleophilic
+        attack by the L amino acid on the pyruvate with a histidine residue acting as a general acid,
+        allowing the formation of a carbinolamine intermediate. Dehydration of this intermediate, again
+        facilitated by
+      notes: M-CSA entry 617, mechanism 1; M-CSA cites PMID:9665174; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/617/
+      snippet: The mechanism proposal is based on the similarity in the chemistry of the opine dehydrogenase
+        family to that of the amino acid dehydrogenases. The reaction is believed to proceed via nucleophilic
+        attack by the L amino acid on the pyruvate with a histidine residue acting as a general acid,
+        allowing the formation of a carbinolamine intermediate. Dehydration of this intermediate, again
+        facilitated by
+      notes: M-CSA entry 617, mechanism 1; M-CSA cites PMID:9665174; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (18 evidence-backed edges) transcribed from M-CSA entry 617;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

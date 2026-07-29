@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.11.-
 - CHEBI:83828
@@ -203,4 +203,271 @@ definitions:
       Escherichia coli replicative DNA polymerase III, a member of family C of DNA polymerases, serves as the main DNA polymerase for E. coli. The polymerase activity is catalysed by the alpha subunit, with the epsilon subunit catalysing the 3'-5' exonuclease proofreading activity. The N-terminal domain of the epsilon subunit is the archetypal member of the DnaQ superfamily of 3'-5' exonucleases.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 3'-5' exonuclease
+  description: Stepwise mechanism transcribed from M-CSA entry 754 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: asp12
+    label: catalytic Asp12 (M-CSA/PDB numbering; UniProt residue 12)
+    node_type: RESIDUE
+    grounding: UniProtKB:P03007
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu14
+    label: catalytic Glu14 (M-CSA/PDB numbering; UniProt residue 14)
+    node_type: RESIDUE
+    grounding: UniProtKB:P03007
+    description: 'M-CSA roles: hydrogen bond acceptor, metal ligand, proton acceptor, proton donor.'
+  - node_id: glu61
+    label: catalytic Glu61 (M-CSA/PDB numbering; UniProt residue 61)
+    node_type: RESIDUE
+    grounding: UniProtKB:P03007
+    description: 'M-CSA roles: electrostatic stabiliser, increase basicity, polar interaction.'
+  - node_id: his162
+    label: catalytic His162 (M-CSA/PDB numbering; UniProt residue 162)
+    node_type: RESIDUE
+    grounding: UniProtKB:P03007
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: asp167
+    label: catalytic Asp167 (M-CSA/PDB numbering; UniProt residue 167)
+    node_type: RESIDUE
+    grounding: UniProtKB:P03007
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: DNA polyanion
+    node_type: CHEMICAL
+    grounding: CHEBI:83828
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: DNA polyanion
+    node_type: CHEMICAL
+    grounding: CHEBI:83828
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Catalytic metal ion coordinating to the water molecule bound increases the waters nucleophilicity
+      to attack the phosphate and promotes water deprotonation.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: After the phosphate ester bond has broken, Glu14 is protonated.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Water coordinated to Metal ion B protonates 3'-OH leaving group. Glu14 and His162 are
+      deprotonated ready for another round of catalysis.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: 3'-5' exonuclease catalytic site
+    node_type: MOTIF
+    grounding: MCSA:754
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.420.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.420.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: 3'-5' exonuclease activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.11.-
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/754/
+      snippet: After the phosphate ester bond has broken, Glu14 is protonated.
+      notes: M-CSA entry 754, mechanism 1; M-CSA cites PMID:11937058, PMID:19119875, PMID:20854710, PMID:23732474;
+        step 2
+  - subject: glu14
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu14 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/754/
+      snippet: After the phosphate ester bond has broken, Glu14 is protonated.
+      notes: M-CSA entry 754, mechanism 1; M-CSA cites PMID:11937058, PMID:19119875, PMID:20854710, PMID:23732474;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/754/
+      snippet: Water coordinated to Metal ion B protonates 3'-OH leaving group. Glu14 and His162 are deprotonated
+        ready for another round of catalysis.
+      notes: M-CSA entry 754, mechanism 1; M-CSA cites PMID:11937058, PMID:19119875, PMID:20854710, PMID:23732474;
+        step 3
+  - subject: glu14
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Glu14 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/754/
+      snippet: Water coordinated to Metal ion B protonates 3'-OH leaving group. Glu14 and His162 are deprotonated
+        ready for another round of catalysis.
+      notes: M-CSA entry 754, mechanism 1; M-CSA cites PMID:11937058, PMID:19119875, PMID:20854710, PMID:23732474;
+        step 3
+  - subject: his162
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His162 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/754/
+      snippet: Water coordinated to Metal ion B protonates 3'-OH leaving group. Glu14 and His162 are deprotonated
+        ready for another round of catalysis.
+      notes: M-CSA entry 754, mechanism 1; M-CSA cites PMID:11937058, PMID:19119875, PMID:20854710, PMID:23732474;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/754/
+      snippet: Products.
+      notes: M-CSA entry 754, mechanism 1; M-CSA cites PMID:11937058, PMID:19119875, PMID:20854710, PMID:23732474;
+        step 4
+  - subject: asp12
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp12 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/754/
+      snippet: metal ligand
+      notes: M-CSA entry 754, mechanism 1; M-CSA cites PMID:11937058, PMID:19119875, PMID:20854710, PMID:23732474;
+        M-CSA catalytic-residue roles for Asp12
+  - subject: glu14
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu14 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/754/
+      snippet: hydrogen bond acceptor, metal ligand, proton acceptor, proton donor
+      notes: M-CSA entry 754, mechanism 1; M-CSA cites PMID:11937058, PMID:19119875, PMID:20854710, PMID:23732474;
+        M-CSA catalytic-residue roles for Glu14
+  - subject: glu61
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu61 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/754/
+      snippet: electrostatic stabiliser, increase basicity, polar interaction
+      notes: M-CSA entry 754, mechanism 1; M-CSA cites PMID:11937058, PMID:19119875, PMID:20854710, PMID:23732474;
+        M-CSA catalytic-residue roles for Glu61
+  - subject: his162
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His162 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/754/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 754, mechanism 1; M-CSA cites PMID:11937058, PMID:19119875, PMID:20854710, PMID:23732474;
+        M-CSA catalytic-residue roles for His162
+  - subject: asp167
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp167 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/754/
+      snippet: metal ligand
+      notes: M-CSA entry 754, mechanism 1; M-CSA cites PMID:11937058, PMID:19119875, PMID:20854710, PMID:23732474;
+        M-CSA catalytic-residue roles for Asp167
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/754/
+      snippet: 'The active site contains two metal ions (A and B), which are likely to be magnesium in
+        the native enzyme, but manganese can also be accommodated resulting in a faster reaction rate.
+        They are coordinated to conserved acidic residues: Asp 12, Glu 14 and Asp 167. Asp 103 binds two
+        fixed water molecules that also coordinate Metal B. The overall reaction is back-side attack of
+        the water nucleophile on'
+      notes: M-CSA entry 754, mechanism 1; M-CSA cites PMID:11937058, PMID:19119875, PMID:20854710, PMID:23732474;
+        CATH domain 3.30.420.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/754/
+      snippet: 'The active site contains two metal ions (A and B), which are likely to be magnesium in
+        the native enzyme, but manganese can also be accommodated resulting in a faster reaction rate.
+        They are coordinated to conserved acidic residues: Asp 12, Glu 14 and Asp 167. Asp 103 binds two
+        fixed water molecules that also coordinate Metal B. The overall reaction is back-side attack of
+        the water nucleophile on'
+      notes: M-CSA entry 754, mechanism 1; M-CSA cites PMID:11937058, PMID:19119875, PMID:20854710, PMID:23732474;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/754/
+      snippet: 'The active site contains two metal ions (A and B), which are likely to be magnesium in
+        the native enzyme, but manganese can also be accommodated resulting in a faster reaction rate.
+        They are coordinated to conserved acidic residues: Asp 12, Glu 14 and Asp 167. Asp 103 binds two
+        fixed water molecules that also coordinate Metal B. The overall reaction is back-side attack of
+        the water nucleophile on'
+      notes: M-CSA entry 754, mechanism 1; M-CSA cites PMID:11937058, PMID:19119875, PMID:20854710, PMID:23732474;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/754/
+      snippet: 'The active site contains two metal ions (A and B), which are likely to be magnesium in
+        the native enzyme, but manganese can also be accommodated resulting in a faster reaction rate.
+        They are coordinated to conserved acidic residues: Asp 12, Glu 14 and Asp 167. Asp 103 binds two
+        fixed water molecules that also coordinate Metal B. The overall reaction is back-side attack of
+        the water nucleophile on'
+      notes: M-CSA entry 754, mechanism 1; M-CSA cites PMID:11937058, PMID:19119875, PMID:20854710, PMID:23732474;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/754/
+      snippet: 'The active site contains two metal ions (A and B), which are likely to be magnesium in
+        the native enzyme, but manganese can also be accommodated resulting in a faster reaction rate.
+        They are coordinated to conserved acidic residues: Asp 12, Glu 14 and Asp 167. Asp 103 binds two
+        fixed water molecules that also coordinate Metal B. The overall reaction is back-side attack of
+        the water nucleophile on'
+      notes: M-CSA entry 754, mechanism 1; M-CSA cites PMID:11937058, PMID:19119875, PMID:20854710, PMID:23732474;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (16 evidence-backed edges) transcribed from M-CSA entry 754;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

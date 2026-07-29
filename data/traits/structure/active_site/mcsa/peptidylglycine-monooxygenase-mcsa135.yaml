@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.14.17.3
 - CHEBI:15379
@@ -641,4 +641,451 @@ definitions:
       peptidylglycine monooxygenase is a copper protein that acts on the terminal glycine residue of peptidylglycines. Peptidylglycines with a neutral amino acid residue in the penultimate position are the best substrates for the enzyme. In Rattus norvegicus this is functionality is part of a bifunctional enzyme. The monooxygenase part produces an unstable peptidyl(2-hydroxyglycine) as its product, which is then transported and dismutated to glyoxylate and the corresponding desglycine peptide amide by the lyase part. The C-terminal amidation of peptides such as neuropeptides is essential for full biological activity and involved in the final step of biosynthesis of alpha-melanotropin and related biologically active peptides.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of peptidylglycine monooxygenase
+  description: Stepwise mechanism transcribed from M-CSA entry 135 (8 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: his107
+    label: catalytic His107 (M-CSA/PDB numbering; UniProt residue 107)
+    node_type: RESIDUE
+    grounding: UniProtKB:P14925
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his108
+    label: catalytic His108 (M-CSA/PDB numbering; UniProt residue 108)
+    node_type: RESIDUE
+    grounding: UniProtKB:P14925
+    description: 'M-CSA roles: hydrogen bond donor, metal ligand, single electron acceptor, single electron
+      donor, single electron relay.'
+  - node_id: gln170
+    label: catalytic Gln170 (M-CSA/PDB numbering; UniProt residue 170)
+    node_type: RESIDUE
+    grounding: UniProtKB:P14925
+    description: 'M-CSA roles: hydrogen bond acceptor, single electron acceptor, single electron donor,
+      single electron relay.'
+  - node_id: his172
+    label: catalytic His172 (M-CSA/PDB numbering; UniProt residue 172)
+    node_type: RESIDUE
+    grounding: UniProtKB:P14925
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his242
+    label: catalytic His242 (M-CSA/PDB numbering; UniProt residue 242)
+    node_type: RESIDUE
+    grounding: UniProtKB:P14925
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his244
+    label: catalytic His244 (M-CSA/PDB numbering; UniProt residue 244)
+    node_type: RESIDUE
+    grounding: UniProtKB:P14925
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: met314
+    label: catalytic Met314 (M-CSA/PDB numbering; UniProt residue 314)
+    node_type: RESIDUE
+    grounding: UniProtKB:P14925
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: dioxygen
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+  - node_id: reactant1
+    label: L-ascorbate
+    node_type: CHEMICAL
+    grounding: CHEBI:38290
+  - node_id: reactant2
+    label: glycino(1-) group
+    node_type: CHEMICAL
+    grounding: CHEBI:83148
+  - node_id: product0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product1
+    label: L-dehydroascorbate
+    node_type: CHEMICAL
+    grounding: CHEBI:58539
+  - node_id: product2
+    label: alpha-hydroxyglycino(1-) group
+    node_type: CHEMICAL
+    grounding: CHEBI:85224
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Ascorbate donates a single electron to one of the Cu(II) centres, which causes the hydroxide
+      ligand to dissociate from the Cu(II) centre.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: A second ascorbate donates a single electron to the other Cu(II) centre, which causes
+      the water ligand to dissociate from the Cu(II) centre.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: One of the Cu(I) centres donates a single electron to a dioxygen molecule, which causes
+      it to bind in a bidentate manner and displace the water ligand.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The bound superoxide abstracts a hydrogen from the peptide substrate, and water displaces
+      one of the bonds between the superoxide and the Cu(II) centre.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: In a homolytic substitution, the O-O bond is broken resulting in the hydroxylation of
+      the peptide intermediate and the Cu(II) bound peroxo.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Water coordinates to the Cu(I) centre, initiating a single electron relay through His108,
+      Gln170, water and the peptide product to the Cu(II) centre, which then donates the electron to the
+      bound oxo group, which deprotonates a water molecule to regenerate the active site.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: The two semidehydroascorbates disproportionate to yield ascorbate and dehydroascorbate
+      [PMID:11028916].
+  - node_id: step8
+    label: mechanism step 8
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: peptidylglycine monooxygenase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:135
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.60.120.310 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.60.120.310
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: peptidylglycine monooxygenase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.14.17.3
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/135/
+      snippet: A second ascorbate donates a single electron to the other Cu(II) centre, which causes the
+        water ligand to dissociate from the Cu(II) centre.
+      notes: M-CSA entry 135, mechanism 1; M-CSA cites PMID:10504734, PMID:11028916, PMID:15080705, PMID:15131304,
+        PMID:16100265, PMID:16330540, PMID:19569683, PMID:20857998, PMID:20958070, PMID:22080626, PMID:23247335,
+        PMID:23530865, PMID:24259416, PMID:24471980, PMID:24668808, PMID:9360928; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/135/
+      snippet: One of the Cu(I) centres donates a single electron to a dioxygen molecule, which causes
+        it to bind in a bidentate manner and displace the water ligand.
+      notes: M-CSA entry 135, mechanism 1; M-CSA cites PMID:10504734, PMID:11028916, PMID:15080705, PMID:15131304,
+        PMID:16100265, PMID:16330540, PMID:19569683, PMID:20857998, PMID:20958070, PMID:22080626, PMID:23247335,
+        PMID:23530865, PMID:24259416, PMID:24471980, PMID:24668808, PMID:9360928; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/135/
+      snippet: The bound superoxide abstracts a hydrogen from the peptide substrate, and water displaces
+        one of the bonds between the superoxide and the Cu(II) centre.
+      notes: M-CSA entry 135, mechanism 1; M-CSA cites PMID:10504734, PMID:11028916, PMID:15080705, PMID:15131304,
+        PMID:16100265, PMID:16330540, PMID:19569683, PMID:20857998, PMID:20958070, PMID:22080626, PMID:23247335,
+        PMID:23530865, PMID:24259416, PMID:24471980, PMID:24668808, PMID:9360928; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/135/
+      snippet: In a homolytic substitution, the O-O bond is broken resulting in the hydroxylation of the
+        peptide intermediate and the Cu(II) bound peroxo.
+      notes: M-CSA entry 135, mechanism 1; M-CSA cites PMID:10504734, PMID:11028916, PMID:15080705, PMID:15131304,
+        PMID:16100265, PMID:16330540, PMID:19569683, PMID:20857998, PMID:20958070, PMID:22080626, PMID:23247335,
+        PMID:23530865, PMID:24259416, PMID:24471980, PMID:24668808, PMID:9360928; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/135/
+      snippet: Water coordinates to the Cu(I) centre, initiating a single electron relay through His108,
+        Gln170, water and the peptide product to the Cu(II) centre, which then donates the electron to
+        the bound oxo group, which deprotonates a water molecule to regenerate the active site.
+      notes: M-CSA entry 135, mechanism 1; M-CSA cites PMID:10504734, PMID:11028916, PMID:15080705, PMID:15131304,
+        PMID:16100265, PMID:16330540, PMID:19569683, PMID:20857998, PMID:20958070, PMID:22080626, PMID:23247335,
+        PMID:23530865, PMID:24259416, PMID:24471980, PMID:24668808, PMID:9360928; step 6
+  - subject: his108
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: His108 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/135/
+      snippet: Water coordinates to the Cu(I) centre, initiating a single electron relay through His108,
+        Gln170, water and the peptide product to the Cu(II) centre, which then donates the electron to
+        the bound oxo group, which deprotonates a water molecule to regenerate the active site.
+      notes: M-CSA entry 135, mechanism 1; M-CSA cites PMID:10504734, PMID:11028916, PMID:15080705, PMID:15131304,
+        PMID:16100265, PMID:16330540, PMID:19569683, PMID:20857998, PMID:20958070, PMID:22080626, PMID:23247335,
+        PMID:23530865, PMID:24259416, PMID:24471980, PMID:24668808, PMID:9360928; step 6
+  - subject: gln170
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: Gln170 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/135/
+      snippet: Water coordinates to the Cu(I) centre, initiating a single electron relay through His108,
+        Gln170, water and the peptide product to the Cu(II) centre, which then donates the electron to
+        the bound oxo group, which deprotonates a water molecule to regenerate the active site.
+      notes: M-CSA entry 135, mechanism 1; M-CSA cites PMID:10504734, PMID:11028916, PMID:15080705, PMID:15131304,
+        PMID:16100265, PMID:16330540, PMID:19569683, PMID:20857998, PMID:20958070, PMID:22080626, PMID:23247335,
+        PMID:23530865, PMID:24259416, PMID:24471980, PMID:24668808, PMID:9360928; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/135/
+      snippet: The two semidehydroascorbates disproportionate to yield ascorbate and dehydroascorbate
+        [PMID:11028916].
+      notes: M-CSA entry 135, mechanism 1; M-CSA cites PMID:10504734, PMID:11028916, PMID:15080705, PMID:15131304,
+        PMID:16100265, PMID:16330540, PMID:19569683, PMID:20857998, PMID:20958070, PMID:22080626, PMID:23247335,
+        PMID:23530865, PMID:24259416, PMID:24471980, PMID:24668808, PMID:9360928; step 7
+  - subject: step7
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step8
+    description: Step 7 leads to step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/135/
+      snippet: Products.
+      notes: M-CSA entry 135, mechanism 1; M-CSA cites PMID:10504734, PMID:11028916, PMID:15080705, PMID:15131304,
+        PMID:16100265, PMID:16330540, PMID:19569683, PMID:20857998, PMID:20958070, PMID:22080626, PMID:23247335,
+        PMID:23530865, PMID:24259416, PMID:24471980, PMID:24668808, PMID:9360928; step 8
+  - subject: his107
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His107 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/135/
+      snippet: metal ligand
+      notes: M-CSA entry 135, mechanism 1; M-CSA cites PMID:10504734, PMID:11028916, PMID:15080705, PMID:15131304,
+        PMID:16100265, PMID:16330540, PMID:19569683, PMID:20857998, PMID:20958070, PMID:22080626, PMID:23247335,
+        PMID:23530865, PMID:24259416, PMID:24471980, PMID:24668808, PMID:9360928; M-CSA catalytic-residue
+        roles for His107
+  - subject: his108
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His108 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/135/
+      snippet: hydrogen bond donor, metal ligand, single electron acceptor, single electron donor, single
+        electron relay
+      notes: M-CSA entry 135, mechanism 1; M-CSA cites PMID:10504734, PMID:11028916, PMID:15080705, PMID:15131304,
+        PMID:16100265, PMID:16330540, PMID:19569683, PMID:20857998, PMID:20958070, PMID:22080626, PMID:23247335,
+        PMID:23530865, PMID:24259416, PMID:24471980, PMID:24668808, PMID:9360928; M-CSA catalytic-residue
+        roles for His108
+  - subject: gln170
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln170 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/135/
+      snippet: hydrogen bond acceptor, single electron acceptor, single electron donor, single electron
+        relay
+      notes: M-CSA entry 135, mechanism 1; M-CSA cites PMID:10504734, PMID:11028916, PMID:15080705, PMID:15131304,
+        PMID:16100265, PMID:16330540, PMID:19569683, PMID:20857998, PMID:20958070, PMID:22080626, PMID:23247335,
+        PMID:23530865, PMID:24259416, PMID:24471980, PMID:24668808, PMID:9360928; M-CSA catalytic-residue
+        roles for Gln170
+  - subject: his172
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His172 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/135/
+      snippet: metal ligand
+      notes: M-CSA entry 135, mechanism 1; M-CSA cites PMID:10504734, PMID:11028916, PMID:15080705, PMID:15131304,
+        PMID:16100265, PMID:16330540, PMID:19569683, PMID:20857998, PMID:20958070, PMID:22080626, PMID:23247335,
+        PMID:23530865, PMID:24259416, PMID:24471980, PMID:24668808, PMID:9360928; M-CSA catalytic-residue
+        roles for His172
+  - subject: his242
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His242 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/135/
+      snippet: metal ligand
+      notes: M-CSA entry 135, mechanism 1; M-CSA cites PMID:10504734, PMID:11028916, PMID:15080705, PMID:15131304,
+        PMID:16100265, PMID:16330540, PMID:19569683, PMID:20857998, PMID:20958070, PMID:22080626, PMID:23247335,
+        PMID:23530865, PMID:24259416, PMID:24471980, PMID:24668808, PMID:9360928; M-CSA catalytic-residue
+        roles for His242
+  - subject: his244
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His244 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/135/
+      snippet: metal ligand
+      notes: M-CSA entry 135, mechanism 1; M-CSA cites PMID:10504734, PMID:11028916, PMID:15080705, PMID:15131304,
+        PMID:16100265, PMID:16330540, PMID:19569683, PMID:20857998, PMID:20958070, PMID:22080626, PMID:23247335,
+        PMID:23530865, PMID:24259416, PMID:24471980, PMID:24668808, PMID:9360928; M-CSA catalytic-residue
+        roles for His244
+  - subject: met314
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Met314 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/135/
+      snippet: metal ligand
+      notes: M-CSA entry 135, mechanism 1; M-CSA cites PMID:10504734, PMID:11028916, PMID:15080705, PMID:15131304,
+        PMID:16100265, PMID:16330540, PMID:19569683, PMID:20857998, PMID:20958070, PMID:22080626, PMID:23247335,
+        PMID:23530865, PMID:24259416, PMID:24471980, PMID:24668808, PMID:9360928; M-CSA catalytic-residue
+        roles for Met314
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/135/
+      snippet: Ascorbate donates a single electron to one of the Cu(II) centres, which causes the hydroxide
+        ligand to dissociate from the Cu(II) centre. A second ascorbate donates a single electron to the
+        other Cu(II) centre, which causes the water ligand to dissociate from the Cu(II) centre. The two
+        semidehydroascorbates disproportionate to yield ascorbate and dehydroascorbate (it is not clear
+        at what stage thi
+      notes: M-CSA entry 135, mechanism 1; M-CSA cites PMID:10504734, PMID:11028916, PMID:15080705, PMID:15131304,
+        PMID:16100265, PMID:16330540, PMID:19569683, PMID:20857998, PMID:20958070, PMID:22080626, PMID:23247335,
+        PMID:23530865, PMID:24259416, PMID:24471980, PMID:24668808, PMID:9360928; CATH domain 2.60.120.310
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/135/
+      snippet: Ascorbate donates a single electron to one of the Cu(II) centres, which causes the hydroxide
+        ligand to dissociate from the Cu(II) centre. A second ascorbate donates a single electron to the
+        other Cu(II) centre, which causes the water ligand to dissociate from the Cu(II) centre. The two
+        semidehydroascorbates disproportionate to yield ascorbate and dehydroascorbate (it is not clear
+        at what stage thi
+      notes: M-CSA entry 135, mechanism 1; M-CSA cites PMID:10504734, PMID:11028916, PMID:15080705, PMID:15131304,
+        PMID:16100265, PMID:16330540, PMID:19569683, PMID:20857998, PMID:20958070, PMID:22080626, PMID:23247335,
+        PMID:23530865, PMID:24259416, PMID:24471980, PMID:24668808, PMID:9360928; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/135/
+      snippet: Ascorbate donates a single electron to one of the Cu(II) centres, which causes the hydroxide
+        ligand to dissociate from the Cu(II) centre. A second ascorbate donates a single electron to the
+        other Cu(II) centre, which causes the water ligand to dissociate from the Cu(II) centre. The two
+        semidehydroascorbates disproportionate to yield ascorbate and dehydroascorbate (it is not clear
+        at what stage thi
+      notes: M-CSA entry 135, mechanism 1; M-CSA cites PMID:10504734, PMID:11028916, PMID:15080705, PMID:15131304,
+        PMID:16100265, PMID:16330540, PMID:19569683, PMID:20857998, PMID:20958070, PMID:22080626, PMID:23247335,
+        PMID:23530865, PMID:24259416, PMID:24471980, PMID:24668808, PMID:9360928; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/135/
+      snippet: Ascorbate donates a single electron to one of the Cu(II) centres, which causes the hydroxide
+        ligand to dissociate from the Cu(II) centre. A second ascorbate donates a single electron to the
+        other Cu(II) centre, which causes the water ligand to dissociate from the Cu(II) centre. The two
+        semidehydroascorbates disproportionate to yield ascorbate and dehydroascorbate (it is not clear
+        at what stage thi
+      notes: M-CSA entry 135, mechanism 1; M-CSA cites PMID:10504734, PMID:11028916, PMID:15080705, PMID:15131304,
+        PMID:16100265, PMID:16330540, PMID:19569683, PMID:20857998, PMID:20958070, PMID:22080626, PMID:23247335,
+        PMID:23530865, PMID:24259416, PMID:24471980, PMID:24668808, PMID:9360928; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/135/
+      snippet: Ascorbate donates a single electron to one of the Cu(II) centres, which causes the hydroxide
+        ligand to dissociate from the Cu(II) centre. A second ascorbate donates a single electron to the
+        other Cu(II) centre, which causes the water ligand to dissociate from the Cu(II) centre. The two
+        semidehydroascorbates disproportionate to yield ascorbate and dehydroascorbate (it is not clear
+        at what stage thi
+      notes: M-CSA entry 135, mechanism 1; M-CSA cites PMID:10504734, PMID:11028916, PMID:15080705, PMID:15131304,
+        PMID:16100265, PMID:16330540, PMID:19569683, PMID:20857998, PMID:20958070, PMID:22080626, PMID:23247335,
+        PMID:23530865, PMID:24259416, PMID:24471980, PMID:24668808, PMID:9360928; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/135/
+      snippet: Ascorbate donates a single electron to one of the Cu(II) centres, which causes the hydroxide
+        ligand to dissociate from the Cu(II) centre. A second ascorbate donates a single electron to the
+        other Cu(II) centre, which causes the water ligand to dissociate from the Cu(II) centre. The two
+        semidehydroascorbates disproportionate to yield ascorbate and dehydroascorbate (it is not clear
+        at what stage thi
+      notes: M-CSA entry 135, mechanism 1; M-CSA cites PMID:10504734, PMID:11028916, PMID:15080705, PMID:15131304,
+        PMID:16100265, PMID:16330540, PMID:19569683, PMID:20857998, PMID:20958070, PMID:22080626, PMID:23247335,
+        PMID:23530865, PMID:24259416, PMID:24471980, PMID:24668808, PMID:9360928; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/135/
+      snippet: Ascorbate donates a single electron to one of the Cu(II) centres, which causes the hydroxide
+        ligand to dissociate from the Cu(II) centre. A second ascorbate donates a single electron to the
+        other Cu(II) centre, which causes the water ligand to dissociate from the Cu(II) centre. The two
+        semidehydroascorbates disproportionate to yield ascorbate and dehydroascorbate (it is not clear
+        at what stage thi
+      notes: M-CSA entry 135, mechanism 1; M-CSA cites PMID:10504734, PMID:11028916, PMID:15080705, PMID:15131304,
+        PMID:16100265, PMID:16330540, PMID:19569683, PMID:20857998, PMID:20958070, PMID:22080626, PMID:23247335,
+        PMID:23530865, PMID:24259416, PMID:24471980, PMID:24668808, PMID:9360928; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/135/
+      snippet: Ascorbate donates a single electron to one of the Cu(II) centres, which causes the hydroxide
+        ligand to dissociate from the Cu(II) centre. A second ascorbate donates a single electron to the
+        other Cu(II) centre, which causes the water ligand to dissociate from the Cu(II) centre. The two
+        semidehydroascorbates disproportionate to yield ascorbate and dehydroascorbate (it is not clear
+        at what stage thi
+      notes: M-CSA entry 135, mechanism 1; M-CSA cites PMID:10504734, PMID:11028916, PMID:15080705, PMID:15131304,
+        PMID:16100265, PMID:16330540, PMID:19569683, PMID:20857998, PMID:20958070, PMID:22080626, PMID:23247335,
+        PMID:23530865, PMID:24259416, PMID:24471980, PMID:24668808, PMID:9360928; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (24 evidence-backed edges) transcribed from M-CSA entry 135;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

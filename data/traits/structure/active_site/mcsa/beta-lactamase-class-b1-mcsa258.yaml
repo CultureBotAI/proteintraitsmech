@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.5.2.6
 - CHEBI:35627
@@ -251,4 +251,259 @@ definitions:
       The L1 metallo-beta-lactamase from Stenotrophomonas maltophilia is unique among beta-lactamases in that it is tetrameric. S. maltophilia has emerged as a significant hospital-derived pathogen of immunocompromised hosts such as cancer, cystic fibrosis and transplant patients. L1 is localised to the periplasm and hydrolyses carbapenem drugs, conferring antibiotic resistance. L1 is a Class B1 metallo-beta-lactamases as it binds two Zn(II) ions for the hydrolytic reaction, but its Zn2 binding site is different to most B1 type enzymes (it is also known as an L1 type 3 beta-lactamse).
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of beta-lactamase (Class B1)
+  description: Stepwise mechanism transcribed from M-CSA entry 258 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +21).
+  nodes:
+  - node_id: his84
+    label: catalytic His84 (M-CSA/PDB numbering; UniProt residue 105)
+    node_type: RESIDUE
+    grounding: UniProtKB:P52700
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his86
+    label: catalytic His86 (M-CSA/PDB numbering; UniProt residue 107)
+    node_type: RESIDUE
+    grounding: UniProtKB:P52700
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp88
+    label: catalytic Asp88 (M-CSA/PDB numbering; UniProt residue 109)
+    node_type: RESIDUE
+    grounding: UniProtKB:P52700
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his89
+    label: catalytic His89 (M-CSA/PDB numbering; UniProt residue 110)
+    node_type: RESIDUE
+    grounding: UniProtKB:P52700
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his160
+    label: catalytic His160 (M-CSA/PDB numbering; UniProt residue 181)
+    node_type: RESIDUE
+    grounding: UniProtKB:P52700
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: tyr191
+    label: catalytic Tyr191 (M-CSA/PDB numbering; UniProt residue 212)
+    node_type: RESIDUE
+    grounding: UniProtKB:P52700
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: his225
+    label: catalytic His225 (M-CSA/PDB numbering; UniProt residue 246)
+    node_type: RESIDUE
+    grounding: UniProtKB:P52700
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: beta-lactam
+    node_type: CHEMICAL
+    grounding: CHEBI:35627
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: substituted beta-amino acids
+    node_type: CHEMICAL
+    grounding: CHEBI:33705
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Zinc activated water initiates a nucleophilic attack on the carbonyl of the beta-lactam
+      ring, forming a tetrahedral transition state that is stabilised by Tyr191, before collapsing back
+      to break the C-N bond.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The negatively charged nitrogen group deprotonates an incoming water molecule.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: beta-lactamase (Class B1) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:258
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.60.15.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.60.15.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: beta-lactamase (Class B1) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.5.2.6
+  edges:
+  - subject: tyr191
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr191 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/258/
+      snippet: Zinc activated water initiates a nucleophilic attack on the carbonyl of the beta-lactam
+        ring, forming a tetrahedral transition state that is stabilised by Tyr191, before collapsing back
+        to break the C-N bond.
+      notes: M-CSA entry 258, mechanism 2; M-CSA cites PMID:17691780, PMID:9811546; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/258/
+      snippet: The negatively charged nitrogen group deprotonates an incoming water molecule.
+      notes: M-CSA entry 258, mechanism 2; M-CSA cites PMID:17691780, PMID:9811546; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/258/
+      snippet: Products
+      notes: M-CSA entry 258, mechanism 2; M-CSA cites PMID:17691780, PMID:9811546; step 3
+  - subject: his84
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His84 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/258/
+      snippet: metal ligand
+      notes: M-CSA entry 258, mechanism 2; M-CSA cites PMID:17691780, PMID:9811546; M-CSA catalytic-residue
+        roles for His84
+  - subject: his86
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His86 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/258/
+      snippet: metal ligand
+      notes: M-CSA entry 258, mechanism 2; M-CSA cites PMID:17691780, PMID:9811546; M-CSA catalytic-residue
+        roles for His86
+  - subject: asp88
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp88 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/258/
+      snippet: metal ligand
+      notes: M-CSA entry 258, mechanism 2; M-CSA cites PMID:17691780, PMID:9811546; M-CSA catalytic-residue
+        roles for Asp88
+  - subject: his89
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His89 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/258/
+      snippet: metal ligand
+      notes: M-CSA entry 258, mechanism 2; M-CSA cites PMID:17691780, PMID:9811546; M-CSA catalytic-residue
+        roles for His89
+  - subject: his160
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His160 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/258/
+      snippet: metal ligand
+      notes: M-CSA entry 258, mechanism 2; M-CSA cites PMID:17691780, PMID:9811546; M-CSA catalytic-residue
+        roles for His160
+  - subject: tyr191
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr191 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/258/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 258, mechanism 2; M-CSA cites PMID:17691780, PMID:9811546; M-CSA catalytic-residue
+        roles for Tyr191
+  - subject: his225
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His225 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/258/
+      snippet: metal ligand
+      notes: M-CSA entry 258, mechanism 2; M-CSA cites PMID:17691780, PMID:9811546; M-CSA catalytic-residue
+        roles for His225
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/258/
+      snippet: In this mechanism, the Zn1 polarises the substrate carbonyl to activate the group as an
+        electrophile. A hydroxide ion bridges the zinc ions. This is nucleophilic and attacks the substrate
+        carbonyl. The tetrahedral transition state is stabilised by Zn1, a helix dipole and Tyr 191. The
+        substrate ring amide is cleaved, with the nitrogen leaving as an anion, stabilised by Zn2 acting
+        as a superacid. Th
+      notes: M-CSA entry 258, mechanism 2; M-CSA cites PMID:17691780, PMID:9811546; CATH domain 3.60.15.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/258/
+      snippet: In this mechanism, the Zn1 polarises the substrate carbonyl to activate the group as an
+        electrophile. A hydroxide ion bridges the zinc ions. This is nucleophilic and attacks the substrate
+        carbonyl. The tetrahedral transition state is stabilised by Zn1, a helix dipole and Tyr 191. The
+        substrate ring amide is cleaved, with the nitrogen leaving as an anion, stabilised by Zn2 acting
+        as a superacid. Th
+      notes: M-CSA entry 258, mechanism 2; M-CSA cites PMID:17691780, PMID:9811546; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/258/
+      snippet: In this mechanism, the Zn1 polarises the substrate carbonyl to activate the group as an
+        electrophile. A hydroxide ion bridges the zinc ions. This is nucleophilic and attacks the substrate
+        carbonyl. The tetrahedral transition state is stabilised by Zn1, a helix dipole and Tyr 191. The
+        substrate ring amide is cleaved, with the nitrogen leaving as an anion, stabilised by Zn2 acting
+        as a superacid. Th
+      notes: M-CSA entry 258, mechanism 2; M-CSA cites PMID:17691780, PMID:9811546; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/258/
+      snippet: In this mechanism, the Zn1 polarises the substrate carbonyl to activate the group as an
+        electrophile. A hydroxide ion bridges the zinc ions. This is nucleophilic and attacks the substrate
+        carbonyl. The tetrahedral transition state is stabilised by Zn1, a helix dipole and Tyr 191. The
+        substrate ring amide is cleaved, with the nitrogen leaving as an anion, stabilised by Zn2 acting
+        as a superacid. Th
+      notes: M-CSA entry 258, mechanism 2; M-CSA cites PMID:17691780, PMID:9811546; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/258/
+      snippet: In this mechanism, the Zn1 polarises the substrate carbonyl to activate the group as an
+        electrophile. A hydroxide ion bridges the zinc ions. This is nucleophilic and attacks the substrate
+        carbonyl. The tetrahedral transition state is stabilised by Zn1, a helix dipole and Tyr 191. The
+        substrate ring amide is cleaved, with the nitrogen leaving as an anion, stabilised by Zn2 acting
+        as a superacid. Th
+      notes: M-CSA entry 258, mechanism 2; M-CSA cites PMID:17691780, PMID:9811546; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 258;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

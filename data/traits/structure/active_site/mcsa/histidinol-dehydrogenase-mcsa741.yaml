@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.1.1.23
 - CHEBI:57699
@@ -338,4 +338,392 @@ definitions:
       L-histidinol dehydrogenase, sourced from Escherichia coli, catalyses the last two steps of histidine biosynthesis: NAD dependent oxidation of L-histidinol to L-histinaldehyde and then to L-histidine. L-histidinol dehydrogenase is a homodimeric zinc metalloenzyme with one binding site per monomer. Each monomer contains four domains- the intertwined dimer possibly results from domain swapping. Two domains display a similar incomplete Rossmann fold, suggesting an ancient event of gene duplication.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of histidinol dehydrogenase
+  description: Stepwise mechanism transcribed from M-CSA entry 741 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: gln259
+    label: catalytic Gln259 (M-CSA/PDB numbering; UniProt residue 259)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06988
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his262
+    label: catalytic His262 (M-CSA/PDB numbering; UniProt residue 262)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06988
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu326
+    label: catalytic Glu326 (M-CSA/PDB numbering; UniProt residue 326)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06988
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: his327
+    label: catalytic His327 (M-CSA/PDB numbering; UniProt residue 327)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06988
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: asp360
+    label: catalytic Asp360 (M-CSA/PDB numbering; UniProt residue 360)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06988
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his419
+    label: catalytic His419 (M-CSA/PDB numbering; UniProt residue 419)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06988
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: L-histidinol(1+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57699
+  - node_id: reactant1
+    label: NAD(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+  - node_id: reactant2
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: L-histidine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57595
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: NADH(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His327 deprotonates the hydroxyl group of L-histidinol. The NAD+ molecule accepts a hydride
+      from the carbon bound to this hydroxide group in an aromatic bimolecular nucleophilic addition reaction,
+      forming L-histindinaldehyde and NADP. The reactive carbon centre now adopts the sp2 configuration.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Prior to this step the reduced NADH cofactor leaves and is replaced by a second NAD+
+      molecule. A water molecule is activated for nucleophilic attack at the L-histinaldehyde carbonyl
+      carbon by Glu326. The aldehyde oxygen is protonated by His327 and L-histidindiol is formed. The
+      reactive carbon centre is converted back to sp3 hybridisation.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: His327 abstracts a proton from one of the hydroxyl groups of L-histidiniol. The hydride
+      attached to the reactive carbon is transferred to a second NAD+ molecule in a second aromatic bimolecular
+      nucleophilic addition reaction, forming L-histidine and NADH. The reactive carbon now has the sp2
+      configuration.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: In an inferred reaction step His327 and Glu326 are deprotonated to regenerate the native
+      state of the enzyme.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: histidinol dehydrogenase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:741
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1980 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1980
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: histidinol dehydrogenase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.1.1.23
+  edges:
+  - subject: his327
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His327 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/741/
+      snippet: His327 deprotonates the hydroxyl group of L-histidinol. The NAD+ molecule accepts a hydride
+        from the carbon bound to this hydroxide group in an aromatic bimolecular nucleophilic addition
+        reaction, forming L-histindinaldehyde and NADP. The reactive carbon centre now adopts the sp2
+        configuration.
+      notes: M-CSA entry 741, mechanism 1; M-CSA cites PMID:11842181; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/741/
+      snippet: Prior to this step the reduced NADH cofactor leaves and is replaced by a second NAD+ molecule.
+        A water molecule is activated for nucleophilic attack at the L-histinaldehyde carbonyl carbon
+        by Glu326. The aldehyde oxygen is protonated by His327 and L-histidindiol is formed. The reactive
+        carbon centre is converted back to sp3 hybridisation.
+      notes: M-CSA entry 741, mechanism 1; M-CSA cites PMID:11842181; step 2
+  - subject: glu326
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu326 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/741/
+      snippet: Prior to this step the reduced NADH cofactor leaves and is replaced by a second NAD+ molecule.
+        A water molecule is activated for nucleophilic attack at the L-histinaldehyde carbonyl carbon
+        by Glu326. The aldehyde oxygen is protonated by His327 and L-histidindiol is formed. The reactive
+        carbon centre is converted back to sp3 hybridisation.
+      notes: M-CSA entry 741, mechanism 1; M-CSA cites PMID:11842181; step 2
+  - subject: his327
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His327 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/741/
+      snippet: Prior to this step the reduced NADH cofactor leaves and is replaced by a second NAD+ molecule.
+        A water molecule is activated for nucleophilic attack at the L-histinaldehyde carbonyl carbon
+        by Glu326. The aldehyde oxygen is protonated by His327 and L-histidindiol is formed. The reactive
+        carbon centre is converted back to sp3 hybridisation.
+      notes: M-CSA entry 741, mechanism 1; M-CSA cites PMID:11842181; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/741/
+      snippet: His327 abstracts a proton from one of the hydroxyl groups of L-histidiniol. The hydride
+        attached to the reactive carbon is transferred to a second NAD+ molecule in a second aromatic
+        bimolecular nucleophilic addition reaction, forming L-histidine and NADH. The reactive carbon
+        now has the sp2 configuration.
+      notes: M-CSA entry 741, mechanism 1; M-CSA cites PMID:11842181; step 3
+  - subject: his327
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His327 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/741/
+      snippet: His327 abstracts a proton from one of the hydroxyl groups of L-histidiniol. The hydride
+        attached to the reactive carbon is transferred to a second NAD+ molecule in a second aromatic
+        bimolecular nucleophilic addition reaction, forming L-histidine and NADH. The reactive carbon
+        now has the sp2 configuration.
+      notes: M-CSA entry 741, mechanism 1; M-CSA cites PMID:11842181; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/741/
+      snippet: In an inferred reaction step His327 and Glu326 are deprotonated to regenerate the native
+        state of the enzyme.
+      notes: M-CSA entry 741, mechanism 1; M-CSA cites PMID:11842181; step 4
+  - subject: glu326
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Glu326 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/741/
+      snippet: In an inferred reaction step His327 and Glu326 are deprotonated to regenerate the native
+        state of the enzyme.
+      notes: M-CSA entry 741, mechanism 1; M-CSA cites PMID:11842181; step 4
+  - subject: his327
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: His327 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/741/
+      snippet: In an inferred reaction step His327 and Glu326 are deprotonated to regenerate the native
+        state of the enzyme.
+      notes: M-CSA entry 741, mechanism 1; M-CSA cites PMID:11842181; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/741/
+      snippet: Products.
+      notes: M-CSA entry 741, mechanism 1; M-CSA cites PMID:11842181; step 5
+  - subject: gln259
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln259 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/741/
+      snippet: metal ligand
+      notes: M-CSA entry 741, mechanism 1; M-CSA cites PMID:11842181; M-CSA catalytic-residue roles for
+        Gln259
+  - subject: his262
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His262 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/741/
+      snippet: metal ligand
+      notes: M-CSA entry 741, mechanism 1; M-CSA cites PMID:11842181; M-CSA catalytic-residue roles for
+        His262
+  - subject: glu326
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu326 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/741/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 741, mechanism 1; M-CSA cites PMID:11842181; M-CSA catalytic-residue roles for
+        Glu326
+  - subject: his327
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His327 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/741/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 741, mechanism 1; M-CSA cites PMID:11842181; M-CSA catalytic-residue roles for
+        His327
+  - subject: asp360
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp360 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/741/
+      snippet: metal ligand
+      notes: M-CSA entry 741, mechanism 1; M-CSA cites PMID:11842181; M-CSA catalytic-residue roles for
+        Asp360
+  - subject: his419
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His419 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/741/
+      snippet: metal ligand
+      notes: M-CSA entry 741, mechanism 1; M-CSA cites PMID:11842181; M-CSA catalytic-residue roles for
+        His419
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/741/
+      snippet: His 327 acts as a general base and abstracts a proton from the hydroxyl group of the substrate.
+        NAD+ abstracts a hydride from the carbon bound to the deprotonated hydroxyl group. The carbon
+        atom adopts an sp2 configuration, resulting in the formation of L-histinaldehyde.  NADH leaves
+        and is replaced by a second NAD+ molecule. Glu 326 acts as a general base and activates a neighbouring
+        water molecu
+      notes: M-CSA entry 741, mechanism 1; M-CSA cites PMID:11842181; CATH domain 3.40.50.1980 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/741/
+      snippet: His 327 acts as a general base and abstracts a proton from the hydroxyl group of the substrate.
+        NAD+ abstracts a hydride from the carbon bound to the deprotonated hydroxyl group. The carbon
+        atom adopts an sp2 configuration, resulting in the formation of L-histinaldehyde.  NADH leaves
+        and is replaced by a second NAD+ molecule. Glu 326 acts as a general base and activates a neighbouring
+        water molecu
+      notes: M-CSA entry 741, mechanism 1; M-CSA cites PMID:11842181; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/741/
+      snippet: His 327 acts as a general base and abstracts a proton from the hydroxyl group of the substrate.
+        NAD+ abstracts a hydride from the carbon bound to the deprotonated hydroxyl group. The carbon
+        atom adopts an sp2 configuration, resulting in the formation of L-histinaldehyde.  NADH leaves
+        and is replaced by a second NAD+ molecule. Glu 326 acts as a general base and activates a neighbouring
+        water molecu
+      notes: M-CSA entry 741, mechanism 1; M-CSA cites PMID:11842181; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/741/
+      snippet: His 327 acts as a general base and abstracts a proton from the hydroxyl group of the substrate.
+        NAD+ abstracts a hydride from the carbon bound to the deprotonated hydroxyl group. The carbon
+        atom adopts an sp2 configuration, resulting in the formation of L-histinaldehyde.  NADH leaves
+        and is replaced by a second NAD+ molecule. Glu 326 acts as a general base and activates a neighbouring
+        water molecu
+      notes: M-CSA entry 741, mechanism 1; M-CSA cites PMID:11842181; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/741/
+      snippet: His 327 acts as a general base and abstracts a proton from the hydroxyl group of the substrate.
+        NAD+ abstracts a hydride from the carbon bound to the deprotonated hydroxyl group. The carbon
+        atom adopts an sp2 configuration, resulting in the formation of L-histinaldehyde.  NADH leaves
+        and is replaced by a second NAD+ molecule. Glu 326 acts as a general base and activates a neighbouring
+        water molecu
+      notes: M-CSA entry 741, mechanism 1; M-CSA cites PMID:11842181; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/741/
+      snippet: His 327 acts as a general base and abstracts a proton from the hydroxyl group of the substrate.
+        NAD+ abstracts a hydride from the carbon bound to the deprotonated hydroxyl group. The carbon
+        atom adopts an sp2 configuration, resulting in the formation of L-histinaldehyde.  NADH leaves
+        and is replaced by a second NAD+ molecule. Glu 326 acts as a general base and activates a neighbouring
+        water molecu
+      notes: M-CSA entry 741, mechanism 1; M-CSA cites PMID:11842181; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/741/
+      snippet: His 327 acts as a general base and abstracts a proton from the hydroxyl group of the substrate.
+        NAD+ abstracts a hydride from the carbon bound to the deprotonated hydroxyl group. The carbon
+        atom adopts an sp2 configuration, resulting in the formation of L-histinaldehyde.  NADH leaves
+        and is replaced by a second NAD+ molecule. Glu 326 acts as a general base and activates a neighbouring
+        water molecu
+      notes: M-CSA entry 741, mechanism 1; M-CSA cites PMID:11842181; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/741/
+      snippet: His 327 acts as a general base and abstracts a proton from the hydroxyl group of the substrate.
+        NAD+ abstracts a hydride from the carbon bound to the deprotonated hydroxyl group. The carbon
+        atom adopts an sp2 configuration, resulting in the formation of L-histinaldehyde.  NADH leaves
+        and is replaced by a second NAD+ molecule. Glu 326 acts as a general base and activates a neighbouring
+        water molecu
+      notes: M-CSA entry 741, mechanism 1; M-CSA cites PMID:11842181; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (24 evidence-backed edges) transcribed from M-CSA entry 741;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

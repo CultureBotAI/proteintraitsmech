@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.17.3.2
 - CHEBI:15377
@@ -834,4 +834,359 @@ definitions:
       Xanthine oxidase (XO) is a homodimer enzyme that gives its name to the xanthine oxidase structural family. XO catalyses the conversion of xanthine (XAN) to uric acid (URC) using a molybdenum cofactor (Moco). This is the last step of purine nucleotide catabolism in humans as well as primates, birds, reptiles and insects. Xanthine oxidase comes from the same gene product as xanthine dehydrogenase (XDH) (EC 1.17.1.4 - M-CSA ID:139). XO and XDH share the same basic mechanism but differ in regeneration of the cofactor. Unlike XDH, XO does not use NAD+ as an oxidising substrate and instead uses O2. The enzyme is of interest due to its relationship with certain diseases. For example, gout and uric acid stone formation are caused by intense activity of xanthine oxidase. Also, xanthinuria is a rare genetic disorder associated with low xanthine oxidase activity.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of xanthine oxidase
+  description: Stepwise mechanism transcribed from M-CSA entry 987 (11 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: glu802
+    label: catalytic Glu802 (M-CSA/PDB numbering; UniProt residue 802)
+    node_type: RESIDUE
+    grounding: UniProtKB:P80457
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: arg880
+    label: catalytic Arg880 (M-CSA/PDB numbering; UniProt residue 880)
+    node_type: RESIDUE
+    grounding: UniProtKB:P80457
+    description: 'M-CSA roles: proton donor.'
+  - node_id: glu1261
+    label: catalytic Glu1261 (M-CSA/PDB numbering; UniProt residue 1261)
+    node_type: RESIDUE
+    grounding: UniProtKB:P80457
+    description: 'M-CSA roles: proton acceptor.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: dioxygen
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+  - node_id: reactant2
+    label: 9H-xanthine
+    node_type: CHEMICAL
+    grounding: CHEBI:17712
+  - node_id: product0
+    label: hydrogen peroxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+  - node_id: product1
+    label: 7,9-dihydro-1H-purine-2,6,8(3H)-trione
+    node_type: CHEMICAL
+    grounding: CHEBI:17775
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu1261 abstracts a proton from the hydroxyl group that is coordinated to the Mo(VI)
+      ion.  This activates the oxygen for a nucleophilic attack on the carbon atom of the xanthine substrate.
+      The negative charge is stabilised via resonance throughout the substrate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Hydride transfer from the carbon atom of the substrate to sulfur on the Moco. Mo(VI)
+      is reduced to Mo(IV).
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Proton transfer from Arg880 to nitrogen of URT, mediated by a water molecule. At this
+      point, the product can be released from the active site.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The Mo ion is oxidised from Mo(IV) to Mo(V). A single electron is transferred to an FAD
+      cofactor via two [2Fe-2S] clusters. The mechanism inferred by curator.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: The Mo ion is oxidised from Mo(V) to Mo(VI). A single electron is transferred to the
+      FADH radical via two [2Fe-2S] clusters, forming reduced FAD. The mechanism is inferred by the curator.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: A water molecule coordinates to Mo.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: The coordinated water molecule is deprotonated, reforming the Moco.
+  - node_id: step8
+    label: mechanism step 8
+    node_type: STATE
+    description: Regeneration of FAD begins with double bond rearrangement, causing a single electron
+      to be transferred to a dioxygen molecule.
+  - node_id: step9
+    label: mechanism step 9
+    node_type: STATE
+    description: The dioxygen molecule undergoes a homolytic reaction in which it colligates to FAD. Proton
+      transfer from solvent.
+  - node_id: step10
+    label: mechanism step 10
+    node_type: STATE
+    description: The peroxo group deprotonates FAD, which initiates the elimination of hydrogen peroxide.
+  - node_id: step11
+    label: mechanism step 11
+    node_type: STATE
+    description: Products formed and active site regenerated.
+  - node_id: active_site
+    label: xanthine oxidase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:987
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.365.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.365.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: xanthine oxidase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.17.3.2
+  edges:
+  - subject: glu1261
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu1261 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/987/
+      snippet: Glu1261 abstracts a proton from the hydroxyl group that is coordinated to the Mo(VI) ion.  This
+        activates the oxygen for a nucleophilic attack on the carbon atom of the xanthine substrate. The
+        negative charge is stabilised via resonance throughout the substrate.
+      notes: M-CSA entry 987, mechanism 1; M-CSA cites PMID:29323892; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/987/
+      snippet: Hydride transfer from the carbon atom of the substrate to sulfur on the Moco. Mo(VI) is
+        reduced to Mo(IV).
+      notes: M-CSA entry 987, mechanism 1; M-CSA cites PMID:29323892; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/987/
+      snippet: Proton transfer from Arg880 to nitrogen of URT, mediated by a water molecule. At this point,
+        the product can be released from the active site.
+      notes: M-CSA entry 987, mechanism 1; M-CSA cites PMID:29323892; step 3
+  - subject: arg880
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Arg880 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/987/
+      snippet: Proton transfer from Arg880 to nitrogen of URT, mediated by a water molecule. At this point,
+        the product can be released from the active site.
+      notes: M-CSA entry 987, mechanism 1; M-CSA cites PMID:29323892; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/987/
+      snippet: The Mo ion is oxidised from Mo(IV) to Mo(V). A single electron is transferred to an FAD
+        cofactor via two [2Fe-2S] clusters. The mechanism inferred by curator.
+      notes: M-CSA entry 987, mechanism 1; M-CSA cites PMID:29323892; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/987/
+      snippet: The Mo ion is oxidised from Mo(V) to Mo(VI). A single electron is transferred to the FADH
+        radical via two [2Fe-2S] clusters, forming reduced FAD. The mechanism is inferred by the curator.
+      notes: M-CSA entry 987, mechanism 1; M-CSA cites PMID:29323892; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/987/
+      snippet: A water molecule coordinates to Mo.
+      notes: M-CSA entry 987, mechanism 1; M-CSA cites PMID:29323892; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/987/
+      snippet: The coordinated water molecule is deprotonated, reforming the Moco.
+      notes: M-CSA entry 987, mechanism 1; M-CSA cites PMID:29323892; step 7
+  - subject: step7
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step8
+    description: Step 7 leads to step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/987/
+      snippet: Regeneration of FAD begins with double bond rearrangement, causing a single electron to
+        be transferred to a dioxygen molecule.
+      notes: M-CSA entry 987, mechanism 1; M-CSA cites PMID:29323892; step 8
+  - subject: step8
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step9
+    description: Step 8 leads to step 9.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/987/
+      snippet: The dioxygen molecule undergoes a homolytic reaction in which it colligates to FAD. Proton
+        transfer from solvent.
+      notes: M-CSA entry 987, mechanism 1; M-CSA cites PMID:29323892; step 9
+  - subject: step9
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step10
+    description: Step 9 leads to step 10.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/987/
+      snippet: The peroxo group deprotonates FAD, which initiates the elimination of hydrogen peroxide.
+      notes: M-CSA entry 987, mechanism 1; M-CSA cites PMID:29323892; step 10
+  - subject: step10
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step11
+    description: Step 10 leads to step 11.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/987/
+      snippet: Products formed and active site regenerated.
+      notes: M-CSA entry 987, mechanism 1; M-CSA cites PMID:29323892; step 11
+  - subject: glu802
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu802 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/987/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 987, mechanism 1; M-CSA cites PMID:29323892; M-CSA catalytic-residue roles for
+        Glu802
+  - subject: arg880
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg880 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/987/
+      snippet: proton donor
+      notes: M-CSA entry 987, mechanism 1; M-CSA cites PMID:29323892; M-CSA catalytic-residue roles for
+        Arg880
+  - subject: glu1261
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu1261 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/987/
+      snippet: proton acceptor
+      notes: M-CSA entry 987, mechanism 1; M-CSA cites PMID:29323892; M-CSA catalytic-residue roles for
+        Glu1261
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/987/
+      snippet: The mechanism begins with proton transfer from the molybdenum cofactor (Moco) to Glu1261
+        and the activated hydroxyl group makes a nucleophilic attack on the xanthine (XAN) substrate.
+        Then a hydride is transferred from the tetrahedral intermediate to the sulfur atom of the Moco,
+        reducing Mo(VI) to Mo(IV). Protonation by Arg880 forms uric acid (URC) which can then leave the
+        active site. The Moco is
+      notes: M-CSA entry 987, mechanism 1; M-CSA cites PMID:29323892; CATH domain 3.30.365.10 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/987/
+      snippet: The mechanism begins with proton transfer from the molybdenum cofactor (Moco) to Glu1261
+        and the activated hydroxyl group makes a nucleophilic attack on the xanthine (XAN) substrate.
+        Then a hydride is transferred from the tetrahedral intermediate to the sulfur atom of the Moco,
+        reducing Mo(VI) to Mo(IV). Protonation by Arg880 forms uric acid (URC) which can then leave the
+        active site. The Moco is
+      notes: M-CSA entry 987, mechanism 1; M-CSA cites PMID:29323892; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/987/
+      snippet: The mechanism begins with proton transfer from the molybdenum cofactor (Moco) to Glu1261
+        and the activated hydroxyl group makes a nucleophilic attack on the xanthine (XAN) substrate.
+        Then a hydride is transferred from the tetrahedral intermediate to the sulfur atom of the Moco,
+        reducing Mo(VI) to Mo(IV). Protonation by Arg880 forms uric acid (URC) which can then leave the
+        active site. The Moco is
+      notes: M-CSA entry 987, mechanism 1; M-CSA cites PMID:29323892; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/987/
+      snippet: The mechanism begins with proton transfer from the molybdenum cofactor (Moco) to Glu1261
+        and the activated hydroxyl group makes a nucleophilic attack on the xanthine (XAN) substrate.
+        Then a hydride is transferred from the tetrahedral intermediate to the sulfur atom of the Moco,
+        reducing Mo(VI) to Mo(IV). Protonation by Arg880 forms uric acid (URC) which can then leave the
+        active site. The Moco is
+      notes: M-CSA entry 987, mechanism 1; M-CSA cites PMID:29323892; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/987/
+      snippet: The mechanism begins with proton transfer from the molybdenum cofactor (Moco) to Glu1261
+        and the activated hydroxyl group makes a nucleophilic attack on the xanthine (XAN) substrate.
+        Then a hydride is transferred from the tetrahedral intermediate to the sulfur atom of the Moco,
+        reducing Mo(VI) to Mo(IV). Protonation by Arg880 forms uric acid (URC) which can then leave the
+        active site. The Moco is
+      notes: M-CSA entry 987, mechanism 1; M-CSA cites PMID:29323892; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/987/
+      snippet: The mechanism begins with proton transfer from the molybdenum cofactor (Moco) to Glu1261
+        and the activated hydroxyl group makes a nucleophilic attack on the xanthine (XAN) substrate.
+        Then a hydride is transferred from the tetrahedral intermediate to the sulfur atom of the Moco,
+        reducing Mo(VI) to Mo(IV). Protonation by Arg880 forms uric acid (URC) which can then leave the
+        active site. The Moco is
+      notes: M-CSA entry 987, mechanism 1; M-CSA cites PMID:29323892; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/987/
+      snippet: The mechanism begins with proton transfer from the molybdenum cofactor (Moco) to Glu1261
+        and the activated hydroxyl group makes a nucleophilic attack on the xanthine (XAN) substrate.
+        Then a hydride is transferred from the tetrahedral intermediate to the sulfur atom of the Moco,
+        reducing Mo(VI) to Mo(IV). Protonation by Arg880 forms uric acid (URC) which can then leave the
+        active site. The Moco is
+      notes: M-CSA entry 987, mechanism 1; M-CSA cites PMID:29323892; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (22 evidence-backed edges) transcribed from M-CSA entry 987;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

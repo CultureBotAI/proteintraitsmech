@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.1.3.4
 - CHEBI:58226
@@ -207,4 +207,217 @@ definitions:
       L-ribulose-5-phosphate-4-epimerase catalyses the interconversion of L-ribulose 5-phosphate(L-Ru5P) and D-xylulose 5-phosphate(D-Xu5P). It belongs to a superfamily of epimerases/aldolases that catalyse carbon-carbon bond cleavage reactions via a metal stabilised enolate intermediate. The conversion from L-Ru5P to D-Xu5P allows bacteria to utilise arabinose as an energy source by converting it into an intermediate in the pentose phosphate pathway(D-Xu5P).
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of L-ribulose-5-phosphate 4-epimerase
+  description: Stepwise mechanism transcribed from M-CSA entry 273 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: his95
+    label: catalytic His95 (M-CSA/PDB numbering; UniProt residue 95)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08203
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his97
+    label: catalytic His97 (M-CSA/PDB numbering; UniProt residue 97)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08203
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp120
+    label: catalytic Asp120 (M-CSA/PDB numbering; UniProt residue 120)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08203
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: his171
+    label: catalytic His171 (M-CSA/PDB numbering; UniProt residue 171)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08203
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: L-ribulose 5-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58226
+  - node_id: product0
+    label: D-xylulose 5-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57737
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Initial retroaldol cleavage between C3 and C4 of the substrate after the deprotonation
+      of the C4-OH group by Tyr229. After the initial cleavege, the glycolaldehyde phosphate intermediate
+      rotates in the active site in order to present the opposite face to the enolate intermediate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Aldol addition of the same face of the enolate intermediate to the opposite face of the
+      glycolaldehyde phosphate intermediate
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Inferred return step. Asp120 deprotonates Tyr229.)ReactiveCentres=(O,H,O
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: L-ribulose-5-phosphate 4-epimerase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:273
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.225.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.225.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: L-ribulose-5-phosphate 4-epimerase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.1.3.4
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/273/
+      snippet: Aldol addition of the same face of the enolate intermediate to the opposite face of the
+        glycolaldehyde phosphate intermediate
+      notes: M-CSA entry 273, mechanism 1; M-CSA cites PMID:10769139, PMID:11732895, PMID:11732896; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/273/
+      snippet: Inferred return step. Asp120 deprotonates Tyr229.)ReactiveCentres=(O,H,O
+      notes: M-CSA entry 273, mechanism 1; M-CSA cites PMID:10769139, PMID:11732895, PMID:11732896; step
+        3
+  - subject: asp120
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Asp120 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/273/
+      snippet: Inferred return step. Asp120 deprotonates Tyr229.)ReactiveCentres=(O,H,O
+      notes: M-CSA entry 273, mechanism 1; M-CSA cites PMID:10769139, PMID:11732895, PMID:11732896; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/273/
+      snippet: Products.
+      notes: M-CSA entry 273, mechanism 1; M-CSA cites PMID:10769139, PMID:11732895, PMID:11732896; step
+        4
+  - subject: his95
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His95 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/273/
+      snippet: metal ligand
+      notes: M-CSA entry 273, mechanism 1; M-CSA cites PMID:10769139, PMID:11732895, PMID:11732896; M-CSA
+        catalytic-residue roles for His95
+  - subject: his97
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His97 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/273/
+      snippet: metal ligand
+      notes: M-CSA entry 273, mechanism 1; M-CSA cites PMID:10769139, PMID:11732895, PMID:11732896; M-CSA
+        catalytic-residue roles for His97
+  - subject: asp120
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp120 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/273/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 273, mechanism 1; M-CSA cites PMID:10769139, PMID:11732895, PMID:11732896; M-CSA
+        catalytic-residue roles for Asp120
+  - subject: his171
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His171 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/273/
+      snippet: metal ligand
+      notes: M-CSA entry 273, mechanism 1; M-CSA cites PMID:10769139, PMID:11732895, PMID:11732896; M-CSA
+        catalytic-residue roles for His171
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/273/
+      snippet: The mechanism involves the initial retroaldol cleavage between C3 and C4 of the substrate
+        after the deprotonation of the C4-OH group by a base. The cleavage generates glycolaldehyde phosphate
+        and metal -bound enolate of dihydroxyactone as intermediates. A subsequent aldol addition of the
+        same face of the enolate to the opposite face of the aldehyde generates the epimeric product.
+        Tyr229 acts as th
+      notes: M-CSA entry 273, mechanism 1; M-CSA cites PMID:10769139, PMID:11732895, PMID:11732896; CATH
+        domain 3.40.225.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/273/
+      snippet: The mechanism involves the initial retroaldol cleavage between C3 and C4 of the substrate
+        after the deprotonation of the C4-OH group by a base. The cleavage generates glycolaldehyde phosphate
+        and metal -bound enolate of dihydroxyactone as intermediates. A subsequent aldol addition of the
+        same face of the enolate to the opposite face of the aldehyde generates the epimeric product.
+        Tyr229 acts as th
+      notes: M-CSA entry 273, mechanism 1; M-CSA cites PMID:10769139, PMID:11732895, PMID:11732896; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/273/
+      snippet: The mechanism involves the initial retroaldol cleavage between C3 and C4 of the substrate
+        after the deprotonation of the C4-OH group by a base. The cleavage generates glycolaldehyde phosphate
+        and metal -bound enolate of dihydroxyactone as intermediates. A subsequent aldol addition of the
+        same face of the enolate to the opposite face of the aldehyde generates the epimeric product.
+        Tyr229 acts as th
+      notes: M-CSA entry 273, mechanism 1; M-CSA cites PMID:10769139, PMID:11732895, PMID:11732896; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/273/
+      snippet: The mechanism involves the initial retroaldol cleavage between C3 and C4 of the substrate
+        after the deprotonation of the C4-OH group by a base. The cleavage generates glycolaldehyde phosphate
+        and metal -bound enolate of dihydroxyactone as intermediates. A subsequent aldol addition of the
+        same face of the enolate to the opposite face of the aldehyde generates the epimeric product.
+        Tyr229 acts as th
+      notes: M-CSA entry 273, mechanism 1; M-CSA cites PMID:10769139, PMID:11732895, PMID:11732896; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (12 evidence-backed edges) transcribed from M-CSA entry 273;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

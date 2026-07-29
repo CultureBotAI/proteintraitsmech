@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.1.1.22
 - CHEBI:16526
@@ -257,4 +257,406 @@ definitions:
       Histidine decarboxylasses from Lactobacillus 30a is the best-studied of a class of enzyme which utilise the covalently bound cofactor, pyruvate. Models of the active site with and without the bound substrate analogue, histidine methyl ester (HisOMe), or the product, histamine, have been produced. Comparison of native and ligand-bound structures reveals no widespread differences in conformation but does reveal motion of a few key residues. The native enzyme is an (alpha-beta)6 "hexamer". Two trimers bind bottom-to-bottom across a crystallographic dyad, forming a dumbell-shaped hexamer with cavities at either end.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of histidine decarboxylase
+  description: Stepwise mechanism transcribed from M-CSA entry 49 (8 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +1).
+  nodes:
+  - node_id: tyr62
+    label: catalytic Tyr62 (M-CSA/PDB numbering; UniProt residue 63)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00862
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: asp63
+    label: catalytic Asp63 (M-CSA/PDB numbering; UniProt residue 64)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00862
+    description: 'M-CSA roles: steric role.'
+  - node_id: glu66
+    label: catalytic Glu66 (M-CSA/PDB numbering; UniProt residue 67)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00862
+    description: 'M-CSA roles: activator, hydrogen bond acceptor.'
+  - node_id: ser81
+    label: catalytic Ser81 (M-CSA/PDB numbering; UniProt residue 82)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00862
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: phe195
+    label: catalytic Phe195 (M-CSA/PDB numbering; UniProt residue 196)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00862
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: glu197
+    label: catalytic Glu197 (M-CSA/PDB numbering; UniProt residue 198)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00862
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: reactant1
+    label: L-histidine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57595
+  - node_id: product0
+    label: carbon dioxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+  - node_id: product1
+    label: histaminium
+    node_type: CHEMICAL
+    grounding: CHEBI:58432
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The C-terminal serine deprotonates the amine of the substrate, which attacked the terminal
+      carbonyl carbon of the PTM pyruvoyl residue in the first step of a Schiff base formation. The oxyanion
+      deprotonates Tyr62.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Tyr62 deprotonates the newly formed secondary amine, which causes the elimination of
+      water with concomitant deprotonation of the C-terminal serine residue, forming the Schiff base.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The intermediate undergoes decarboxylation, with double bond rearrangement in which the
+      pyruvoyl moiety acts as an electron sink.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The oxyanion formed initiates double bond rearrangement that results in the deprotonation
+      of Glu197F at the CA position of the covalently attached histamine.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: The C-terminal serine residue deprotonates water, which in turn attacks the imine carbon
+      in a nucleophilic addition, the nitrogen deprotonates Tyr62.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Tyr62 deprotonates the hydroxyl group of the pyruvoyl residue, which eliminated the histamine
+      substrate with concomitant deprotonation of the C-terminal residue.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: Glu197F deprotonates water in an inferred step.
+  - node_id: step8
+    label: mechanism step 8
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: histidine decarboxylase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:49
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 4.10.510.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:4.10.510.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: histidine decarboxylase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.1.1.22
+  edges:
+  - subject: tyr62
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr62 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/49/
+      snippet: The C-terminal serine deprotonates the amine of the substrate, which attacked the terminal
+        carbonyl carbon of the PTM pyruvoyl residue in the first step of a Schiff base formation. The
+        oxyanion deprotonates Tyr62.
+      notes: M-CSA entry 49, mechanism 1; M-CSA cites PMID:11243783, PMID:18756395, PMID:2197977, PMID:2745463,
+        PMID:8490030; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/49/
+      snippet: Tyr62 deprotonates the newly formed secondary amine, which causes the elimination of water
+        with concomitant deprotonation of the C-terminal serine residue, forming the Schiff base.
+      notes: M-CSA entry 49, mechanism 1; M-CSA cites PMID:11243783, PMID:18756395, PMID:2197977, PMID:2745463,
+        PMID:8490030; step 2
+  - subject: tyr62
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Tyr62 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/49/
+      snippet: Tyr62 deprotonates the newly formed secondary amine, which causes the elimination of water
+        with concomitant deprotonation of the C-terminal serine residue, forming the Schiff base.
+      notes: M-CSA entry 49, mechanism 1; M-CSA cites PMID:11243783, PMID:18756395, PMID:2197977, PMID:2745463,
+        PMID:8490030; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/49/
+      snippet: The intermediate undergoes decarboxylation, with double bond rearrangement in which the
+        pyruvoyl moiety acts as an electron sink.
+      notes: M-CSA entry 49, mechanism 1; M-CSA cites PMID:11243783, PMID:18756395, PMID:2197977, PMID:2745463,
+        PMID:8490030; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/49/
+      snippet: The oxyanion formed initiates double bond rearrangement that results in the deprotonation
+        of Glu197F at the CA position of the covalently attached histamine.
+      notes: M-CSA entry 49, mechanism 1; M-CSA cites PMID:11243783, PMID:18756395, PMID:2197977, PMID:2745463,
+        PMID:8490030; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/49/
+      snippet: The C-terminal serine residue deprotonates water, which in turn attacks the imine carbon
+        in a nucleophilic addition, the nitrogen deprotonates Tyr62.
+      notes: M-CSA entry 49, mechanism 1; M-CSA cites PMID:11243783, PMID:18756395, PMID:2197977, PMID:2745463,
+        PMID:8490030; step 5
+  - subject: tyr62
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Tyr62 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/49/
+      snippet: The C-terminal serine residue deprotonates water, which in turn attacks the imine carbon
+        in a nucleophilic addition, the nitrogen deprotonates Tyr62.
+      notes: M-CSA entry 49, mechanism 1; M-CSA cites PMID:11243783, PMID:18756395, PMID:2197977, PMID:2745463,
+        PMID:8490030; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/49/
+      snippet: Tyr62 deprotonates the hydroxyl group of the pyruvoyl residue, which eliminated the histamine
+        substrate with concomitant deprotonation of the C-terminal residue.
+      notes: M-CSA entry 49, mechanism 1; M-CSA cites PMID:11243783, PMID:18756395, PMID:2197977, PMID:2745463,
+        PMID:8490030; step 6
+  - subject: tyr62
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: Tyr62 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/49/
+      snippet: Tyr62 deprotonates the hydroxyl group of the pyruvoyl residue, which eliminated the histamine
+        substrate with concomitant deprotonation of the C-terminal residue.
+      notes: M-CSA entry 49, mechanism 1; M-CSA cites PMID:11243783, PMID:18756395, PMID:2197977, PMID:2745463,
+        PMID:8490030; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/49/
+      snippet: Glu197F deprotonates water in an inferred step.
+      notes: M-CSA entry 49, mechanism 1; M-CSA cites PMID:11243783, PMID:18756395, PMID:2197977, PMID:2745463,
+        PMID:8490030; step 7
+  - subject: step7
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step8
+    description: Step 7 leads to step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/49/
+      snippet: Products
+      notes: M-CSA entry 49, mechanism 1; M-CSA cites PMID:11243783, PMID:18756395, PMID:2197977, PMID:2745463,
+        PMID:8490030; step 8
+  - subject: tyr62
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr62 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/49/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 49, mechanism 1; M-CSA cites PMID:11243783, PMID:18756395, PMID:2197977, PMID:2745463,
+        PMID:8490030; M-CSA catalytic-residue roles for Tyr62
+  - subject: asp63
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp63 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/49/
+      snippet: steric role
+      notes: M-CSA entry 49, mechanism 1; M-CSA cites PMID:11243783, PMID:18756395, PMID:2197977, PMID:2745463,
+        PMID:8490030; M-CSA catalytic-residue roles for Asp63
+  - subject: glu66
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu66 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/49/
+      snippet: activator, hydrogen bond acceptor
+      notes: M-CSA entry 49, mechanism 1; M-CSA cites PMID:11243783, PMID:18756395, PMID:2197977, PMID:2745463,
+        PMID:8490030; M-CSA catalytic-residue roles for Glu66
+  - subject: ser81
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser81 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/49/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 49, mechanism 1; M-CSA cites PMID:11243783, PMID:18756395, PMID:2197977, PMID:2745463,
+        PMID:8490030; M-CSA catalytic-residue roles for Ser81
+  - subject: phe195
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Phe195 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/49/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 49, mechanism 1; M-CSA cites PMID:11243783, PMID:18756395, PMID:2197977, PMID:2745463,
+        PMID:8490030; M-CSA catalytic-residue roles for Phe195
+  - subject: glu197
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu197 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/49/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 49, mechanism 1; M-CSA cites PMID:11243783, PMID:18756395, PMID:2197977, PMID:2745463,
+        PMID:8490030; M-CSA catalytic-residue roles for Glu197
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/49/
+      snippet: "The binding site contains two pockets, one for the imidazole group, and another one for\
+        \ the carboxyl -COOMe group.    
+<br/><br/>
+The mechanism of histidine decarboxylation can\
+        \ be divided into three parts i) forming the Schiff base ii) decarboxylation/reprotonation iii)\
+        \ breaking the Schiff base.   
+<br/><br/>
+The substrate first condenses with the pyruvoyl\
+        \ residue Prv-82 to form a Schiff base"
+      notes: M-CSA entry 49, mechanism 1; M-CSA cites PMID:11243783, PMID:18756395, PMID:2197977, PMID:2745463,
+        PMID:8490030; CATH domain 4.10.510.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/49/
+      snippet: "The binding site contains two pockets, one for the imidazole group, and another one for\
+        \ the carboxyl -COOMe group.    
+<br/><br/>
+The mechanism of histidine decarboxylation can\
+        \ be divided into three parts i) forming the Schiff base ii) decarboxylation/reprotonation iii)\
+        \ breaking the Schiff base.   
+<br/><br/>
+The substrate first condenses with the pyruvoyl\
+        \ residue Prv-82 to form a Schiff base"
+      notes: M-CSA entry 49, mechanism 1; M-CSA cites PMID:11243783, PMID:18756395, PMID:2197977, PMID:2745463,
+        PMID:8490030; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/49/
+      snippet: "The binding site contains two pockets, one for the imidazole group, and another one for\
+        \ the carboxyl -COOMe group.    
+<br/><br/>
+The mechanism of histidine decarboxylation can\
+        \ be divided into three parts i) forming the Schiff base ii) decarboxylation/reprotonation iii)\
+        \ breaking the Schiff base.   
+<br/><br/>
+The substrate first condenses with the pyruvoyl\
+        \ residue Prv-82 to form a Schiff base"
+      notes: M-CSA entry 49, mechanism 1; M-CSA cites PMID:11243783, PMID:18756395, PMID:2197977, PMID:2745463,
+        PMID:8490030; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/49/
+      snippet: "The binding site contains two pockets, one for the imidazole group, and another one for\
+        \ the carboxyl -COOMe group.    
+<br/><br/>
+The mechanism of histidine decarboxylation can\
+        \ be divided into three parts i) forming the Schiff base ii) decarboxylation/reprotonation iii)\
+        \ breaking the Schiff base.   
+<br/><br/>
+The substrate first condenses with the pyruvoyl\
+        \ residue Prv-82 to form a Schiff base"
+      notes: M-CSA entry 49, mechanism 1; M-CSA cites PMID:11243783, PMID:18756395, PMID:2197977, PMID:2745463,
+        PMID:8490030; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/49/
+      snippet: "The binding site contains two pockets, one for the imidazole group, and another one for\
+        \ the carboxyl -COOMe group.    
+<br/><br/>
+The mechanism of histidine decarboxylation can\
+        \ be divided into three parts i) forming the Schiff base ii) decarboxylation/reprotonation iii)\
+        \ breaking the Schiff base.   
+<br/><br/>
+The substrate first condenses with the pyruvoyl\
+        \ residue Prv-82 to form a Schiff base"
+      notes: M-CSA entry 49, mechanism 1; M-CSA cites PMID:11243783, PMID:18756395, PMID:2197977, PMID:2745463,
+        PMID:8490030; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/49/
+      snippet: "The binding site contains two pockets, one for the imidazole group, and another one for\
+        \ the carboxyl -COOMe group.    
+<br/><br/>
+The mechanism of histidine decarboxylation can\
+        \ be divided into three parts i) forming the Schiff base ii) decarboxylation/reprotonation iii)\
+        \ breaking the Schiff base.   
+<br/><br/>
+The substrate first condenses with the pyruvoyl\
+        \ residue Prv-82 to form a Schiff base"
+      notes: M-CSA entry 49, mechanism 1; M-CSA cites PMID:11243783, PMID:18756395, PMID:2197977, PMID:2745463,
+        PMID:8490030; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (23 evidence-backed edges) transcribed from M-CSA entry 49;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

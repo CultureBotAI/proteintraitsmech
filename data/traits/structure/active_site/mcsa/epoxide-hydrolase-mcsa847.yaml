@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.3.2.10
 - CHEBI:27561
@@ -79,4 +79,316 @@ definitions:
       Epoxide hydrolases convert epoxides into more soluble and less toxic products, an essential process within cells. As a result, these enzymes have been found in a wide variety of organisms. Their ability to react enantioselectively with industrially important epoxides makes epoxide hydrolases promising bio-catalysts for the preparation of enantiomerically pure epoxides, and/or their corresponding vicinal diols.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of epoxide hydrolase
+  description: Stepwise mechanism transcribed from M-CSA entry 847 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: trp38
+    label: catalytic Trp38 (M-CSA/PDB numbering; UniProt residue 38)
+    node_type: RESIDUE
+    grounding: UniProtKB:O31243
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp107
+    label: catalytic Asp107 (M-CSA/PDB numbering; UniProt residue 107)
+    node_type: RESIDUE
+    grounding: UniProtKB:O31243
+    description: 'M-CSA roles: covalently attached, electrofuge, electrophile, increase acidity, nucleophile.'
+  - node_id: phe108
+    label: catalytic Phe108 (M-CSA/PDB numbering; UniProt residue 108)
+    node_type: RESIDUE
+    grounding: UniProtKB:O31243
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: tyr152
+    label: catalytic Tyr152 (M-CSA/PDB numbering; UniProt residue 152)
+    node_type: RESIDUE
+    grounding: UniProtKB:O31243
+    description: 'M-CSA roles: electrostatic stabiliser, increase basicity.'
+  - node_id: tyr215
+    label: catalytic Tyr215 (M-CSA/PDB numbering; UniProt residue 215)
+    node_type: RESIDUE
+    grounding: UniProtKB:O31243
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: asp246
+    label: catalytic Asp246 (M-CSA/PDB numbering; UniProt residue 246)
+    node_type: RESIDUE
+    grounding: UniProtKB:O31243
+    description: 'M-CSA roles: electrostatic stabiliser, increase basicity.'
+  - node_id: his275
+    label: catalytic His275 (M-CSA/PDB numbering; UniProt residue 275)
+    node_type: RESIDUE
+    grounding: UniProtKB:O31243
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: oxirane
+    node_type: CHEMICAL
+    grounding: CHEBI:27561
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: ethylene glycol
+    node_type: CHEMICAL
+    grounding: CHEBI:30742
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp107 initiates a nucleophilic attack on the epoxide, forming an covalently bound intermediate
+      with concommittant abstraction of a proton from Tyr215.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: His275 abstracts a proton from the substrate water, which attacks the bound aspartate
+      residue.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The oxyanion collapses, eliminating the product and re-forming the asparate residue.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Inferred return step in which water molecules are responsible for the return of the catalytic
+      residues to their correct protonation states.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: epoxide hydrolase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:847
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1820 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1820
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: epoxide hydrolase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.3.2.10
+  edges:
+  - subject: asp107
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp107 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/847/
+      snippet: Asp107 initiates a nucleophilic attack on the epoxide, forming an covalently bound intermediate
+        with concommittant abstraction of a proton from Tyr215.
+      notes: M-CSA entry 847, mechanism 1; M-CSA cites PMID:10329649, PMID:15596432, PMID:22280021; step
+        1
+  - subject: tyr215
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr215 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/847/
+      snippet: Asp107 initiates a nucleophilic attack on the epoxide, forming an covalently bound intermediate
+        with concommittant abstraction of a proton from Tyr215.
+      notes: M-CSA entry 847, mechanism 1; M-CSA cites PMID:10329649, PMID:15596432, PMID:22280021; step
+        1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/847/
+      snippet: His275 abstracts a proton from the substrate water, which attacks the bound aspartate residue.
+      notes: M-CSA entry 847, mechanism 1; M-CSA cites PMID:10329649, PMID:15596432, PMID:22280021; step
+        2
+  - subject: his275
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His275 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/847/
+      snippet: His275 abstracts a proton from the substrate water, which attacks the bound aspartate residue.
+      notes: M-CSA entry 847, mechanism 1; M-CSA cites PMID:10329649, PMID:15596432, PMID:22280021; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/847/
+      snippet: The oxyanion collapses, eliminating the product and re-forming the asparate residue.
+      notes: M-CSA entry 847, mechanism 1; M-CSA cites PMID:10329649, PMID:15596432, PMID:22280021; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/847/
+      snippet: Inferred return step in which water molecules are responsible for the return of the catalytic
+        residues to their correct protonation states.
+      notes: M-CSA entry 847, mechanism 1; M-CSA cites PMID:10329649, PMID:15596432, PMID:22280021; step
+        4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/847/
+      snippet: Products
+      notes: M-CSA entry 847, mechanism 1; M-CSA cites PMID:10329649, PMID:15596432, PMID:22280021; step
+        5
+  - subject: trp38
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp38 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/847/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 847, mechanism 1; M-CSA cites PMID:10329649, PMID:15596432, PMID:22280021; M-CSA
+        catalytic-residue roles for Trp38
+  - subject: asp107
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp107 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/847/
+      snippet: covalently attached, electrofuge, electrophile, increase acidity, nucleophile
+      notes: M-CSA entry 847, mechanism 1; M-CSA cites PMID:10329649, PMID:15596432, PMID:22280021; M-CSA
+        catalytic-residue roles for Asp107
+  - subject: phe108
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Phe108 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/847/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 847, mechanism 1; M-CSA cites PMID:10329649, PMID:15596432, PMID:22280021; M-CSA
+        catalytic-residue roles for Phe108
+  - subject: tyr152
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr152 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/847/
+      snippet: electrostatic stabiliser, increase basicity
+      notes: M-CSA entry 847, mechanism 1; M-CSA cites PMID:10329649, PMID:15596432, PMID:22280021; M-CSA
+        catalytic-residue roles for Tyr152
+  - subject: tyr215
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr215 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/847/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 847, mechanism 1; M-CSA cites PMID:10329649, PMID:15596432, PMID:22280021; M-CSA
+        catalytic-residue roles for Tyr215
+  - subject: asp246
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp246 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/847/
+      snippet: electrostatic stabiliser, increase basicity
+      notes: M-CSA entry 847, mechanism 1; M-CSA cites PMID:10329649, PMID:15596432, PMID:22280021; M-CSA
+        catalytic-residue roles for Asp246
+  - subject: his275
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His275 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/847/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 847, mechanism 1; M-CSA cites PMID:10329649, PMID:15596432, PMID:22280021; M-CSA
+        catalytic-residue roles for His275
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/847/
+      snippet: The mechanism involves two steps. In the first reaction an ester bond is formed between
+        the enzyme and substrate by attack of the nucleophilic Asp 107 on the primary carbon of the substrate;
+        in the second step this ester bond is hydrolysed by a water molecule, activated by the His275/Asp246
+        pair. The anionic tetrahedral intermediate is stabilised by hydrogen bond interactions with the
+        backbone ami
+      notes: M-CSA entry 847, mechanism 1; M-CSA cites PMID:10329649, PMID:15596432, PMID:22280021; CATH
+        domain 3.40.50.1820 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/847/
+      snippet: The mechanism involves two steps. In the first reaction an ester bond is formed between
+        the enzyme and substrate by attack of the nucleophilic Asp 107 on the primary carbon of the substrate;
+        in the second step this ester bond is hydrolysed by a water molecule, activated by the His275/Asp246
+        pair. The anionic tetrahedral intermediate is stabilised by hydrogen bond interactions with the
+        backbone ami
+      notes: M-CSA entry 847, mechanism 1; M-CSA cites PMID:10329649, PMID:15596432, PMID:22280021; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/847/
+      snippet: The mechanism involves two steps. In the first reaction an ester bond is formed between
+        the enzyme and substrate by attack of the nucleophilic Asp 107 on the primary carbon of the substrate;
+        in the second step this ester bond is hydrolysed by a water molecule, activated by the His275/Asp246
+        pair. The anionic tetrahedral intermediate is stabilised by hydrogen bond interactions with the
+        backbone ami
+      notes: M-CSA entry 847, mechanism 1; M-CSA cites PMID:10329649, PMID:15596432, PMID:22280021; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/847/
+      snippet: The mechanism involves two steps. In the first reaction an ester bond is formed between
+        the enzyme and substrate by attack of the nucleophilic Asp 107 on the primary carbon of the substrate;
+        in the second step this ester bond is hydrolysed by a water molecule, activated by the His275/Asp246
+        pair. The anionic tetrahedral intermediate is stabilised by hydrogen bond interactions with the
+        backbone ami
+      notes: M-CSA entry 847, mechanism 1; M-CSA cites PMID:10329649, PMID:15596432, PMID:22280021; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/847/
+      snippet: The mechanism involves two steps. In the first reaction an ester bond is formed between
+        the enzyme and substrate by attack of the nucleophilic Asp 107 on the primary carbon of the substrate;
+        in the second step this ester bond is hydrolysed by a water molecule, activated by the His275/Asp246
+        pair. The anionic tetrahedral intermediate is stabilised by hydrogen bond interactions with the
+        backbone ami
+      notes: M-CSA entry 847, mechanism 1; M-CSA cites PMID:10329649, PMID:15596432, PMID:22280021; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (19 evidence-backed edges) transcribed from M-CSA entry 847;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

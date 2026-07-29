@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.4.46
 - CHEBI:15377
@@ -202,4 +202,331 @@ definitions:
       Glycerophosphoryl diester phosphodiesterases display broad specificity for glycerophosphodiesters; glycerophosphocholine, glycerophosphoethanolamine, glycerophosphoglycerol, and bis(glycerophosphoglycerol) all of which are are hydrolysed by this enzyme. Although this enzyme will function with Ca(II) ions, it more active with Mg(II) ions.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of glycerophosphodiester phosphodiesterase
+  description: Stepwise mechanism transcribed from M-CSA entry 300 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset -9).
+  nodes:
+  - node_id: his17
+    label: catalytic His17 (M-CSA/PDB numbering; UniProt residue 8)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8RB32
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: arg18
+    label: catalytic Arg18 (M-CSA/PDB numbering; UniProt residue 9)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8RB32
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor, steric role.'
+  - node_id: glu44
+    label: catalytic Glu44 (M-CSA/PDB numbering; UniProt residue 35)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8RB32
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp46
+    label: catalytic Asp46 (M-CSA/PDB numbering; UniProt residue 37)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8RB32
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his59
+    label: catalytic His59 (M-CSA/PDB numbering; UniProt residue 50)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8RB32
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: glu119
+    label: catalytic Glu119 (M-CSA/PDB numbering; UniProt residue 110)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8RB32
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: lys121
+    label: catalytic Lys121 (M-CSA/PDB numbering; UniProt residue 112)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8RB32
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: asp239
+    label: catalytic Asp239 (M-CSA/PDB numbering; UniProt residue 230)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8RB32
+    description: 'M-CSA roles: hydrogen bond acceptor, increase acidity, increase basicity.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: sn-glycerophosphodiester(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:83408
+  - node_id: product0
+    label: alcohol
+    node_type: CHEMICAL
+    grounding: CHEBI:30879
+  - node_id: product1
+    label: sn-glycerol 3-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57597
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His17 deprotonates the substrate alcohol, which initiates a nucleophilic attack on the
+      phosphate group, eliminating the product alcohol with concomitant deprotonation of His59
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: His59 deprotonates water, which initiates a nucleophilic attack on the phosphate group,
+      destroying the cyclic intermediate with concomitant deprotonation of His17
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: glycerophosphodiester phosphodiesterase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:300
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.190 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.190
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: glycerophosphodiester phosphodiesterase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.4.46
+  edges:
+  - subject: his17
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His17 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/300/
+      snippet: His17 deprotonates the substrate alcohol, which initiates a nucleophilic attack on the
+        phosphate group, eliminating the product alcohol with concomitant deprotonation of His59
+      notes: M-CSA entry 300, mechanism 1; M-CSA cites PMID:18214974; step 1
+  - subject: his59
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His59 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/300/
+      snippet: His17 deprotonates the substrate alcohol, which initiates a nucleophilic attack on the
+        phosphate group, eliminating the product alcohol with concomitant deprotonation of His59
+      notes: M-CSA entry 300, mechanism 1; M-CSA cites PMID:18214974; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/300/
+      snippet: His59 deprotonates water, which initiates a nucleophilic attack on the phosphate group,
+        destroying the cyclic intermediate with concomitant deprotonation of His17
+      notes: M-CSA entry 300, mechanism 1; M-CSA cites PMID:18214974; step 2
+  - subject: his17
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His17 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/300/
+      snippet: His59 deprotonates water, which initiates a nucleophilic attack on the phosphate group,
+        destroying the cyclic intermediate with concomitant deprotonation of His17
+      notes: M-CSA entry 300, mechanism 1; M-CSA cites PMID:18214974; step 2
+  - subject: his59
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His59 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/300/
+      snippet: His59 deprotonates water, which initiates a nucleophilic attack on the phosphate group,
+        destroying the cyclic intermediate with concomitant deprotonation of His17
+      notes: M-CSA entry 300, mechanism 1; M-CSA cites PMID:18214974; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/300/
+      snippet: Products
+      notes: M-CSA entry 300, mechanism 1; M-CSA cites PMID:18214974; step 3
+  - subject: his17
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His17 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/300/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 300, mechanism 1; M-CSA cites PMID:18214974; M-CSA catalytic-residue roles for
+        His17
+  - subject: arg18
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg18 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/300/
+      snippet: electrostatic stabiliser, hydrogen bond donor, steric role
+      notes: M-CSA entry 300, mechanism 1; M-CSA cites PMID:18214974; M-CSA catalytic-residue roles for
+        Arg18
+  - subject: glu44
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu44 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/300/
+      snippet: metal ligand
+      notes: M-CSA entry 300, mechanism 1; M-CSA cites PMID:18214974; M-CSA catalytic-residue roles for
+        Glu44
+  - subject: asp46
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp46 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/300/
+      snippet: metal ligand
+      notes: M-CSA entry 300, mechanism 1; M-CSA cites PMID:18214974; M-CSA catalytic-residue roles for
+        Asp46
+  - subject: his59
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His59 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/300/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 300, mechanism 1; M-CSA cites PMID:18214974; M-CSA catalytic-residue roles for
+        His59
+  - subject: glu119
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu119 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/300/
+      snippet: metal ligand
+      notes: M-CSA entry 300, mechanism 1; M-CSA cites PMID:18214974; M-CSA catalytic-residue roles for
+        Glu119
+  - subject: lys121
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys121 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/300/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 300, mechanism 1; M-CSA cites PMID:18214974; M-CSA catalytic-residue roles for
+        Lys121
+  - subject: asp239
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp239 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/300/
+      snippet: hydrogen bond acceptor, increase acidity, increase basicity
+      notes: M-CSA entry 300, mechanism 1; M-CSA cites PMID:18214974; M-CSA catalytic-residue roles for
+        Asp239
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/300/
+      snippet: His17 deprotonates the substrate alcohol, which initiates a nucleophilic attack on the
+        phosphate group, eliminating the product alcohol with concomitant deprotonation of His59. His59
+        then deprotonates water, which initiates a nucleophilic attack on the phosphate group, destroying
+        the cyclic intermediate with concomitant deprotonation of His17.
+      notes: M-CSA entry 300, mechanism 1; M-CSA cites PMID:18214974; CATH domain 3.20.20.190 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/300/
+      snippet: His17 deprotonates the substrate alcohol, which initiates a nucleophilic attack on the
+        phosphate group, eliminating the product alcohol with concomitant deprotonation of His59. His59
+        then deprotonates water, which initiates a nucleophilic attack on the phosphate group, destroying
+        the cyclic intermediate with concomitant deprotonation of His17.
+      notes: M-CSA entry 300, mechanism 1; M-CSA cites PMID:18214974; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/300/
+      snippet: His17 deprotonates the substrate alcohol, which initiates a nucleophilic attack on the
+        phosphate group, eliminating the product alcohol with concomitant deprotonation of His59. His59
+        then deprotonates water, which initiates a nucleophilic attack on the phosphate group, destroying
+        the cyclic intermediate with concomitant deprotonation of His17.
+      notes: M-CSA entry 300, mechanism 1; M-CSA cites PMID:18214974; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/300/
+      snippet: His17 deprotonates the substrate alcohol, which initiates a nucleophilic attack on the
+        phosphate group, eliminating the product alcohol with concomitant deprotonation of His59. His59
+        then deprotonates water, which initiates a nucleophilic attack on the phosphate group, destroying
+        the cyclic intermediate with concomitant deprotonation of His17.
+      notes: M-CSA entry 300, mechanism 1; M-CSA cites PMID:18214974; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/300/
+      snippet: His17 deprotonates the substrate alcohol, which initiates a nucleophilic attack on the
+        phosphate group, eliminating the product alcohol with concomitant deprotonation of His59. His59
+        then deprotonates water, which initiates a nucleophilic attack on the phosphate group, destroying
+        the cyclic intermediate with concomitant deprotonation of His17.
+      notes: M-CSA entry 300, mechanism 1; M-CSA cites PMID:18214974; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/300/
+      snippet: His17 deprotonates the substrate alcohol, which initiates a nucleophilic attack on the
+        phosphate group, eliminating the product alcohol with concomitant deprotonation of His59. His59
+        then deprotonates water, which initiates a nucleophilic attack on the phosphate group, destroying
+        the cyclic intermediate with concomitant deprotonation of His17.
+      notes: M-CSA entry 300, mechanism 1; M-CSA cites PMID:18214974; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/300/
+      snippet: His17 deprotonates the substrate alcohol, which initiates a nucleophilic attack on the
+        phosphate group, eliminating the product alcohol with concomitant deprotonation of His59. His59
+        then deprotonates water, which initiates a nucleophilic attack on the phosphate group, destroying
+        the cyclic intermediate with concomitant deprotonation of His17.
+      notes: M-CSA entry 300, mechanism 1; M-CSA cites PMID:18214974; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (21 evidence-backed edges) transcribed from M-CSA entry 300;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.5.99.6
 - CHEBI:15377
@@ -242,4 +242,387 @@ definitions:
       The allosteric hexameric enzyme from Escherichia coli catalyses the regulatory step of N-acetyl glucosamine catabolism, which consists of the isomerisation and deamination of glucosamine 6-phosphate (GlcN6P) to form fructose 6-phosphate (Fru6P) and ammonia.The enzyme is a hexamer of identical subunits arranged as a dimer of trimers and the allosteric sites appear located in the clefts between the subunits forming the trimers. Glucosamine-6-phosphate isomerase is activated by N-acetyl-D-glucosamine 6-phosphate. Mechanistically, it belongs to the group of aldoseketose isomerases, but its reaction also accomplishes a simultaneous amination/deamination. The allosteric transition from T to R is generated upon binding of GlcNAc6P at the allosteric site or binding of active-site ligands (GlcN6P, Fru6P, GlcN-ol-6P). An important local conformational change relating allosteric control to catalysis is centred on residue Glu148. Glu148 participates in a proton-relay system that serves to polarise His143. This histidine is essential for the catalytic ring opening of the GlcN6P substrate. The His143 is primarily activated by its interaction with Glu148. The second residue in the His-Glu-Asx triangle appears to be either an Asp or Asn. Interestingly enough, in the work on Escherichia coli, Asn in this position severely disrupts the enzyme's activity.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of glucosamine-6-phosphate deaminase
+  description: Stepwise mechanism transcribed from M-CSA entry 60 (9 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: asp72
+    label: catalytic Asp72 (M-CSA/PDB numbering; UniProt residue 72)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A759
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      proton acceptor, proton donor.'
+  - node_id: asp141
+    label: catalytic Asp141 (M-CSA/PDB numbering; UniProt residue 141)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A759
+    description: 'M-CSA roles: activator, hydrogen bond acceptor.'
+  - node_id: his143
+    label: catalytic His143 (M-CSA/PDB numbering; UniProt residue 143)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A759
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor,
+      proton relay.'
+  - node_id: glu148
+    label: catalytic Glu148 (M-CSA/PDB numbering; UniProt residue 148)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A759
+    description: 'M-CSA roles: activator, hydrogen bond acceptor.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: alpha-D-glucosamine 6-phosphate(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:75989
+  - node_id: product0
+    label: beta-D-fructofuranose 6-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57634
+  - node_id: product1
+    label: ammonium
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: In a ring opening reaction, His143 deprotonates the C1 hydroxide.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The oxyanion collapses, cleaving the C-O bond with concomitant deprotonation of His143
+      by the newly formed oxyanion.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Asp72 deprotonates the carbon to which the amine group is attached.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The newly formed carbanion initiates a double bond rearrangement and deprotonates the
+      Asp72.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: In an electrophilic reaction, water is added across the C1-C2 pi bond. The water molecule
+      approaches the re-face of the intermediate (i.e. from the same side as Asp72).
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Asp72 deprotonates the newly added hydroxyl group, eliminating ammonia from the substrate.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: The released ammonia deprotonates Asp72 to form ammonium and regenerate the enzyme starting
+      state.
+  - node_id: step8
+    label: mechanism step 8
+    node_type: STATE
+    description: The linear product undergoes spontaneous cyclisation outside of the enzyme active site.
+  - node_id: step9
+    label: mechanism step 9
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: glucosamine-6-phosphate deaminase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:60
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1360 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1360
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: glucosamine-6-phosphate deaminase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.5.99.6
+  edges:
+  - subject: his143
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His143 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/60/
+      snippet: In a ring opening reaction, His143 deprotonates the C1 hydroxide.
+      notes: M-CSA entry 60, mechanism 1; M-CSA cites PMID:10378272, PMID:11513596, PMID:15755726, PMID:16168949,
+        PMID:1734962, PMID:18436239, PMID:25069951, PMID:8747459; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/60/
+      snippet: The oxyanion collapses, cleaving the C-O bond with concomitant deprotonation of His143
+        by the newly formed oxyanion.
+      notes: M-CSA entry 60, mechanism 1; M-CSA cites PMID:10378272, PMID:11513596, PMID:15755726, PMID:16168949,
+        PMID:1734962, PMID:18436239, PMID:25069951, PMID:8747459; step 2
+  - subject: his143
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His143 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/60/
+      snippet: The oxyanion collapses, cleaving the C-O bond with concomitant deprotonation of His143
+        by the newly formed oxyanion.
+      notes: M-CSA entry 60, mechanism 1; M-CSA cites PMID:10378272, PMID:11513596, PMID:15755726, PMID:16168949,
+        PMID:1734962, PMID:18436239, PMID:25069951, PMID:8747459; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/60/
+      snippet: Asp72 deprotonates the carbon to which the amine group is attached.
+      notes: M-CSA entry 60, mechanism 1; M-CSA cites PMID:10378272, PMID:11513596, PMID:15755726, PMID:16168949,
+        PMID:1734962, PMID:18436239, PMID:25069951, PMID:8747459; step 3
+  - subject: asp72
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Asp72 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/60/
+      snippet: Asp72 deprotonates the carbon to which the amine group is attached.
+      notes: M-CSA entry 60, mechanism 1; M-CSA cites PMID:10378272, PMID:11513596, PMID:15755726, PMID:16168949,
+        PMID:1734962, PMID:18436239, PMID:25069951, PMID:8747459; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/60/
+      snippet: The newly formed carbanion initiates a double bond rearrangement and deprotonates the Asp72.
+      notes: M-CSA entry 60, mechanism 1; M-CSA cites PMID:10378272, PMID:11513596, PMID:15755726, PMID:16168949,
+        PMID:1734962, PMID:18436239, PMID:25069951, PMID:8747459; step 4
+  - subject: asp72
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Asp72 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/60/
+      snippet: The newly formed carbanion initiates a double bond rearrangement and deprotonates the Asp72.
+      notes: M-CSA entry 60, mechanism 1; M-CSA cites PMID:10378272, PMID:11513596, PMID:15755726, PMID:16168949,
+        PMID:1734962, PMID:18436239, PMID:25069951, PMID:8747459; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/60/
+      snippet: In an electrophilic reaction, water is added across the C1-C2 pi bond. The water molecule
+        approaches the re-face of the intermediate (i.e. from the same side as Asp72).
+      notes: M-CSA entry 60, mechanism 1; M-CSA cites PMID:10378272, PMID:11513596, PMID:15755726, PMID:16168949,
+        PMID:1734962, PMID:18436239, PMID:25069951, PMID:8747459; step 5
+  - subject: asp72
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Asp72 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/60/
+      snippet: In an electrophilic reaction, water is added across the C1-C2 pi bond. The water molecule
+        approaches the re-face of the intermediate (i.e. from the same side as Asp72).
+      notes: M-CSA entry 60, mechanism 1; M-CSA cites PMID:10378272, PMID:11513596, PMID:15755726, PMID:16168949,
+        PMID:1734962, PMID:18436239, PMID:25069951, PMID:8747459; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/60/
+      snippet: Asp72 deprotonates the newly added hydroxyl group, eliminating ammonia from the substrate.
+      notes: M-CSA entry 60, mechanism 1; M-CSA cites PMID:10378272, PMID:11513596, PMID:15755726, PMID:16168949,
+        PMID:1734962, PMID:18436239, PMID:25069951, PMID:8747459; step 6
+  - subject: asp72
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: Asp72 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/60/
+      snippet: Asp72 deprotonates the newly added hydroxyl group, eliminating ammonia from the substrate.
+      notes: M-CSA entry 60, mechanism 1; M-CSA cites PMID:10378272, PMID:11513596, PMID:15755726, PMID:16168949,
+        PMID:1734962, PMID:18436239, PMID:25069951, PMID:8747459; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/60/
+      snippet: The released ammonia deprotonates Asp72 to form ammonium and regenerate the enzyme starting
+        state.
+      notes: M-CSA entry 60, mechanism 1; M-CSA cites PMID:10378272, PMID:11513596, PMID:15755726, PMID:16168949,
+        PMID:1734962, PMID:18436239, PMID:25069951, PMID:8747459; step 7
+  - subject: asp72
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step7
+    description: Asp72 acts in step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/60/
+      snippet: The released ammonia deprotonates Asp72 to form ammonium and regenerate the enzyme starting
+        state.
+      notes: M-CSA entry 60, mechanism 1; M-CSA cites PMID:10378272, PMID:11513596, PMID:15755726, PMID:16168949,
+        PMID:1734962, PMID:18436239, PMID:25069951, PMID:8747459; step 7
+  - subject: step7
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step8
+    description: Step 7 leads to step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/60/
+      snippet: The linear product undergoes spontaneous cyclisation outside of the enzyme active site.
+      notes: M-CSA entry 60, mechanism 1; M-CSA cites PMID:10378272, PMID:11513596, PMID:15755726, PMID:16168949,
+        PMID:1734962, PMID:18436239, PMID:25069951, PMID:8747459; step 8
+  - subject: step8
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step9
+    description: Step 8 leads to step 9.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/60/
+      snippet: Products
+      notes: M-CSA entry 60, mechanism 1; M-CSA cites PMID:10378272, PMID:11513596, PMID:15755726, PMID:16168949,
+        PMID:1734962, PMID:18436239, PMID:25069951, PMID:8747459; step 9
+  - subject: asp72
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp72 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/60/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+        proton donor
+      notes: M-CSA entry 60, mechanism 1; M-CSA cites PMID:10378272, PMID:11513596, PMID:15755726, PMID:16168949,
+        PMID:1734962, PMID:18436239, PMID:25069951, PMID:8747459; M-CSA catalytic-residue roles for Asp72
+  - subject: asp141
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp141 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/60/
+      snippet: activator, hydrogen bond acceptor
+      notes: M-CSA entry 60, mechanism 1; M-CSA cites PMID:10378272, PMID:11513596, PMID:15755726, PMID:16168949,
+        PMID:1734962, PMID:18436239, PMID:25069951, PMID:8747459; M-CSA catalytic-residue roles for Asp141
+  - subject: his143
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His143 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/60/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 60, mechanism 1; M-CSA cites PMID:10378272, PMID:11513596, PMID:15755726, PMID:16168949,
+        PMID:1734962, PMID:18436239, PMID:25069951, PMID:8747459; M-CSA catalytic-residue roles for His143
+  - subject: glu148
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu148 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/60/
+      snippet: activator, hydrogen bond acceptor
+      notes: M-CSA entry 60, mechanism 1; M-CSA cites PMID:10378272, PMID:11513596, PMID:15755726, PMID:16168949,
+        PMID:1734962, PMID:18436239, PMID:25069951, PMID:8747459; M-CSA catalytic-residue roles for Glu148
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/60/
+      snippet: Once the ring has been opened, Asp72 deprotonates the carbon to which the amine group is
+        attached in an assisted keto-enol tautomerisation reaction. Then water is added in an electrophlic
+        addition across the C1-C2 pi bond. Ammonia is then eliminated and the final product of the active
+        site is the linear product, which undergoes spontaneous cyclisation.
+      notes: M-CSA entry 60, mechanism 1; M-CSA cites PMID:10378272, PMID:11513596, PMID:15755726, PMID:16168949,
+        PMID:1734962, PMID:18436239, PMID:25069951, PMID:8747459; CATH domain 3.40.50.1360 assigned to
+        the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/60/
+      snippet: Once the ring has been opened, Asp72 deprotonates the carbon to which the amine group is
+        attached in an assisted keto-enol tautomerisation reaction. Then water is added in an electrophlic
+        addition across the C1-C2 pi bond. Ammonia is then eliminated and the final product of the active
+        site is the linear product, which undergoes spontaneous cyclisation.
+      notes: M-CSA entry 60, mechanism 1; M-CSA cites PMID:10378272, PMID:11513596, PMID:15755726, PMID:16168949,
+        PMID:1734962, PMID:18436239, PMID:25069951, PMID:8747459; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/60/
+      snippet: Once the ring has been opened, Asp72 deprotonates the carbon to which the amine group is
+        attached in an assisted keto-enol tautomerisation reaction. Then water is added in an electrophlic
+        addition across the C1-C2 pi bond. Ammonia is then eliminated and the final product of the active
+        site is the linear product, which undergoes spontaneous cyclisation.
+      notes: M-CSA entry 60, mechanism 1; M-CSA cites PMID:10378272, PMID:11513596, PMID:15755726, PMID:16168949,
+        PMID:1734962, PMID:18436239, PMID:25069951, PMID:8747459; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/60/
+      snippet: Once the ring has been opened, Asp72 deprotonates the carbon to which the amine group is
+        attached in an assisted keto-enol tautomerisation reaction. Then water is added in an electrophlic
+        addition across the C1-C2 pi bond. Ammonia is then eliminated and the final product of the active
+        site is the linear product, which undergoes spontaneous cyclisation.
+      notes: M-CSA entry 60, mechanism 1; M-CSA cites PMID:10378272, PMID:11513596, PMID:15755726, PMID:16168949,
+        PMID:1734962, PMID:18436239, PMID:25069951, PMID:8747459; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/60/
+      snippet: Once the ring has been opened, Asp72 deprotonates the carbon to which the amine group is
+        attached in an assisted keto-enol tautomerisation reaction. Then water is added in an electrophlic
+        addition across the C1-C2 pi bond. Ammonia is then eliminated and the final product of the active
+        site is the linear product, which undergoes spontaneous cyclisation.
+      notes: M-CSA entry 60, mechanism 1; M-CSA cites PMID:10378272, PMID:11513596, PMID:15755726, PMID:16168949,
+        PMID:1734962, PMID:18436239, PMID:25069951, PMID:8747459; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/60/
+      snippet: Once the ring has been opened, Asp72 deprotonates the carbon to which the amine group is
+        attached in an assisted keto-enol tautomerisation reaction. Then water is added in an electrophlic
+        addition across the C1-C2 pi bond. Ammonia is then eliminated and the final product of the active
+        site is the linear product, which undergoes spontaneous cyclisation.
+      notes: M-CSA entry 60, mechanism 1; M-CSA cites PMID:10378272, PMID:11513596, PMID:15755726, PMID:16168949,
+        PMID:1734962, PMID:18436239, PMID:25069951, PMID:8747459; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (25 evidence-backed edges) transcribed from M-CSA entry 60;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

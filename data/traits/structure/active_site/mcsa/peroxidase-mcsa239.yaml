@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.11.1.7
 - CHEBI:16240
@@ -366,4 +366,442 @@ definitions:
       Horseradish peroxidase C (HRPC) is the most studied member of the class III peroxidases. These enzymes occur in higher plants and catalyse the oxidation of phenolic compounds to phenol radicals using hydrogen peroxide which is reduced to water. Since plant peroxidases generally have broad substrate specificity and produce highly reactive radical products which can participate in non-enzymatic reactions, the biological functions of these enzymes have been difficult to verify. They have been proposed to have roles in lignin production and cell wall formation, for example by catalysing the formation of monolignol radicals which subsequently polymerise to lignin, and by catalysing cell wall cross-linking reactions involving ferulic acid.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of peroxidase
+  description: Stepwise mechanism transcribed from M-CSA entry 239 (10 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +30).
+  nodes:
+  - node_id: arg38
+    label: catalytic Arg38 (M-CSA/PDB numbering; UniProt residue 68)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00433
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      proton acceptor, proton donor.'
+  - node_id: his42
+    label: catalytic His42 (M-CSA/PDB numbering; UniProt residue 72)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00433
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      proton acceptor, proton donor.'
+  - node_id: asn70
+    label: catalytic Asn70 (M-CSA/PDB numbering; UniProt residue 100)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00433
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, increase acidity, increase
+      basicity.'
+  - node_id: his170
+    label: catalytic His170 (M-CSA/PDB numbering; UniProt residue 200)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00433
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: hydrogen peroxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+  - node_id: reactant1
+    label: phenol
+    node_type: CHEMICAL
+    grounding: CHEBI:15882
+  - node_id: product0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product1
+    label: phenolic radical
+    node_type: CHEMICAL
+    grounding: CHEBI:137811
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His42 deprotonates a water molecule which deprotonates hydrogen peroxide. The resulting
+      anion coordinates to the Fe(III) centre of Hem350, displacing water and forming Cpd0.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The O-O bond of Cpd0 undergoes heterolytic cleavage and the resulting hydroxide is protonated
+      by His42. The porphryin ring and Fe(III) donate an electron each to the oxygen bound to the metal.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: His42 deprotonates water, which then deprotonates the phenolic derivative substrate.
+      The phenolate transfers an electron to the porphyrin ring, forming a phenolic radical and Cpd1.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The oxygen of Cpd1 is protonated by water, which is in turn protonated by His42.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: The porphyrin ring transfers an electron to the Fe(IV) centre to give an isomer of Cpd1.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Arg38 transfers a proton to the oxygen of Cpd1.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: "Upon binding of the second phenol derivative, Arg38 deprotonates Cpd2.
+
+The doubly-protonated\
+      \ form of Cpd2 is less stable in the presence of the phenol derivative than in the presence of the\
+      \ phenolic radical. Therefore when the phenolic radical product dissociates and the phenolic derivative\
+      \ substrate associates, there is proton transfer to form the more stable isomer of Cpd2."
+  - node_id: step8
+    label: mechanism step 8
+    node_type: STATE
+    description: His42 deprotonates water, which then deprotonates the phenolic derivative substrate.
+      The phenolate transfers an electron to the porphyrin ring radical, forming a phenolic radical.
+  - node_id: step9
+    label: mechanism step 9
+    node_type: STATE
+    description: The metal-bound hydroxide is protonated by water, which is in turn protonated by His42.
+  - node_id: step10
+    label: mechanism step 10
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: peroxidase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:239
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.10.520.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.10.520.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: peroxidase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.11.1.7
+  edges:
+  - subject: his42
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His42 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/239/
+      snippet: His42 deprotonates a water molecule which deprotonates hydrogen peroxide. The resulting
+        anion coordinates to the Fe(III) centre of Hem350, displacing water and forming Cpd0.
+      notes: M-CSA entry 239, mechanism 2; M-CSA cites PMID:10574977, PMID:11356134, PMID:12351824, PMID:20345187;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/239/
+      snippet: The O-O bond of Cpd0 undergoes heterolytic cleavage and the resulting hydroxide is protonated
+        by His42. The porphryin ring and Fe(III) donate an electron each to the oxygen bound to the metal.
+      notes: M-CSA entry 239, mechanism 2; M-CSA cites PMID:10574977, PMID:11356134, PMID:12351824, PMID:20345187;
+        step 2
+  - subject: his42
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His42 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/239/
+      snippet: The O-O bond of Cpd0 undergoes heterolytic cleavage and the resulting hydroxide is protonated
+        by His42. The porphryin ring and Fe(III) donate an electron each to the oxygen bound to the metal.
+      notes: M-CSA entry 239, mechanism 2; M-CSA cites PMID:10574977, PMID:11356134, PMID:12351824, PMID:20345187;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/239/
+      snippet: His42 deprotonates water, which then deprotonates the phenolic derivative substrate. The
+        phenolate transfers an electron to the porphyrin ring, forming a phenolic radical and Cpd1.
+      notes: M-CSA entry 239, mechanism 2; M-CSA cites PMID:10574977, PMID:11356134, PMID:12351824, PMID:20345187;
+        step 3
+  - subject: his42
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His42 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/239/
+      snippet: His42 deprotonates water, which then deprotonates the phenolic derivative substrate. The
+        phenolate transfers an electron to the porphyrin ring, forming a phenolic radical and Cpd1.
+      notes: M-CSA entry 239, mechanism 2; M-CSA cites PMID:10574977, PMID:11356134, PMID:12351824, PMID:20345187;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/239/
+      snippet: The oxygen of Cpd1 is protonated by water, which is in turn protonated by His42.
+      notes: M-CSA entry 239, mechanism 2; M-CSA cites PMID:10574977, PMID:11356134, PMID:12351824, PMID:20345187;
+        step 4
+  - subject: his42
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: His42 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/239/
+      snippet: The oxygen of Cpd1 is protonated by water, which is in turn protonated by His42.
+      notes: M-CSA entry 239, mechanism 2; M-CSA cites PMID:10574977, PMID:11356134, PMID:12351824, PMID:20345187;
+        step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/239/
+      snippet: The porphyrin ring transfers an electron to the Fe(IV) centre to give an isomer of Cpd1.
+      notes: M-CSA entry 239, mechanism 2; M-CSA cites PMID:10574977, PMID:11356134, PMID:12351824, PMID:20345187;
+        step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/239/
+      snippet: Arg38 transfers a proton to the oxygen of Cpd1.
+      notes: M-CSA entry 239, mechanism 2; M-CSA cites PMID:10574977, PMID:11356134, PMID:12351824, PMID:20345187;
+        step 6
+  - subject: arg38
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: Arg38 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/239/
+      snippet: Arg38 transfers a proton to the oxygen of Cpd1.
+      notes: M-CSA entry 239, mechanism 2; M-CSA cites PMID:10574977, PMID:11356134, PMID:12351824, PMID:20345187;
+        step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/239/
+      snippet: "Upon binding of the second phenol derivative, Arg38 deprotonates Cpd2.
+
+The doubly-protonated\
+        \ form of Cpd2 is less stable in the presence of the phenol derivative than in the presence of\
+        \ the phenolic radical. Therefore when the phenolic radical product dissociates and the phenolic\
+        \ derivative substrate associates, there is proton transfer to form the more stable isomer of\
+        \ Cpd2."
+      notes: M-CSA entry 239, mechanism 2; M-CSA cites PMID:10574977, PMID:11356134, PMID:12351824, PMID:20345187;
+        step 7
+  - subject: arg38
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step7
+    description: Arg38 acts in step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/239/
+      snippet: "Upon binding of the second phenol derivative, Arg38 deprotonates Cpd2.
+
+The doubly-protonated\
+        \ form of Cpd2 is less stable in the presence of the phenol derivative than in the presence of\
+        \ the phenolic radical. Therefore when the phenolic radical product dissociates and the phenolic\
+        \ derivative substrate associates, there is proton transfer to form the more stable isomer of\
+        \ Cpd2."
+      notes: M-CSA entry 239, mechanism 2; M-CSA cites PMID:10574977, PMID:11356134, PMID:12351824, PMID:20345187;
+        step 7
+  - subject: step7
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step8
+    description: Step 7 leads to step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/239/
+      snippet: His42 deprotonates water, which then deprotonates the phenolic derivative substrate. The
+        phenolate transfers an electron to the porphyrin ring radical, forming a phenolic radical.
+      notes: M-CSA entry 239, mechanism 2; M-CSA cites PMID:10574977, PMID:11356134, PMID:12351824, PMID:20345187;
+        step 8
+  - subject: his42
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step8
+    description: His42 acts in step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/239/
+      snippet: His42 deprotonates water, which then deprotonates the phenolic derivative substrate. The
+        phenolate transfers an electron to the porphyrin ring radical, forming a phenolic radical.
+      notes: M-CSA entry 239, mechanism 2; M-CSA cites PMID:10574977, PMID:11356134, PMID:12351824, PMID:20345187;
+        step 8
+  - subject: step8
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step9
+    description: Step 8 leads to step 9.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/239/
+      snippet: The metal-bound hydroxide is protonated by water, which is in turn protonated by His42.
+      notes: M-CSA entry 239, mechanism 2; M-CSA cites PMID:10574977, PMID:11356134, PMID:12351824, PMID:20345187;
+        step 9
+  - subject: his42
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step9
+    description: His42 acts in step 9.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/239/
+      snippet: The metal-bound hydroxide is protonated by water, which is in turn protonated by His42.
+      notes: M-CSA entry 239, mechanism 2; M-CSA cites PMID:10574977, PMID:11356134, PMID:12351824, PMID:20345187;
+        step 9
+  - subject: step9
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step10
+    description: Step 9 leads to step 10.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/239/
+      snippet: Products.
+      notes: M-CSA entry 239, mechanism 2; M-CSA cites PMID:10574977, PMID:11356134, PMID:12351824, PMID:20345187;
+        step 10
+  - subject: arg38
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg38 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/239/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+        proton donor
+      notes: M-CSA entry 239, mechanism 2; M-CSA cites PMID:10574977, PMID:11356134, PMID:12351824, PMID:20345187;
+        M-CSA catalytic-residue roles for Arg38
+  - subject: his42
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His42 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/239/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+        proton donor
+      notes: M-CSA entry 239, mechanism 2; M-CSA cites PMID:10574977, PMID:11356134, PMID:12351824, PMID:20345187;
+        M-CSA catalytic-residue roles for His42
+  - subject: asn70
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn70 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/239/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, increase acidity, increase basicity
+      notes: M-CSA entry 239, mechanism 2; M-CSA cites PMID:10574977, PMID:11356134, PMID:12351824, PMID:20345187;
+        M-CSA catalytic-residue roles for Asn70
+  - subject: his170
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His170 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/239/
+      snippet: metal ligand
+      notes: M-CSA entry 239, mechanism 2; M-CSA cites PMID:10574977, PMID:11356134, PMID:12351824, PMID:20345187;
+        M-CSA catalytic-residue roles for His170
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/239/
+      snippet: "The reaction occurs in three steps: 
+<br>The enzyme is first oxidised by hydrogen peroxide\
+        \ and is then reduced in two sequential one-electron transfer steps from reducing substrates (typically\
+        \ small molecule phenol derivatives). The mechanism of the first step is believed to be common\
+        \ to all haem peroxidases. HOOH is deprotonated by a water molecule which is deprotonated by His\
+        \ 42 to produce sing"
+      notes: M-CSA entry 239, mechanism 2; M-CSA cites PMID:10574977, PMID:11356134, PMID:12351824, PMID:20345187;
+        CATH domain 1.10.520.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/239/
+      snippet: "The reaction occurs in three steps: 
+<br>The enzyme is first oxidised by hydrogen peroxide\
+        \ and is then reduced in two sequential one-electron transfer steps from reducing substrates (typically\
+        \ small molecule phenol derivatives). The mechanism of the first step is believed to be common\
+        \ to all haem peroxidases. HOOH is deprotonated by a water molecule which is deprotonated by His\
+        \ 42 to produce sing"
+      notes: M-CSA entry 239, mechanism 2; M-CSA cites PMID:10574977, PMID:11356134, PMID:12351824, PMID:20345187;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/239/
+      snippet: "The reaction occurs in three steps: 
+<br>The enzyme is first oxidised by hydrogen peroxide\
+        \ and is then reduced in two sequential one-electron transfer steps from reducing substrates (typically\
+        \ small molecule phenol derivatives). The mechanism of the first step is believed to be common\
+        \ to all haem peroxidases. HOOH is deprotonated by a water molecule which is deprotonated by His\
+        \ 42 to produce sing"
+      notes: M-CSA entry 239, mechanism 2; M-CSA cites PMID:10574977, PMID:11356134, PMID:12351824, PMID:20345187;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/239/
+      snippet: "The reaction occurs in three steps: 
+<br>The enzyme is first oxidised by hydrogen peroxide\
+        \ and is then reduced in two sequential one-electron transfer steps from reducing substrates (typically\
+        \ small molecule phenol derivatives). The mechanism of the first step is believed to be common\
+        \ to all haem peroxidases. HOOH is deprotonated by a water molecule which is deprotonated by His\
+        \ 42 to produce sing"
+      notes: M-CSA entry 239, mechanism 2; M-CSA cites PMID:10574977, PMID:11356134, PMID:12351824, PMID:20345187;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/239/
+      snippet: "The reaction occurs in three steps: 
+<br>The enzyme is first oxidised by hydrogen peroxide\
+        \ and is then reduced in two sequential one-electron transfer steps from reducing substrates (typically\
+        \ small molecule phenol derivatives). The mechanism of the first step is believed to be common\
+        \ to all haem peroxidases. HOOH is deprotonated by a water molecule which is deprotonated by His\
+        \ 42 to produce sing"
+      notes: M-CSA entry 239, mechanism 2; M-CSA cites PMID:10574977, PMID:11356134, PMID:12351824, PMID:20345187;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/239/
+      snippet: "The reaction occurs in three steps: 
+<br>The enzyme is first oxidised by hydrogen peroxide\
+        \ and is then reduced in two sequential one-electron transfer steps from reducing substrates (typically\
+        \ small molecule phenol derivatives). The mechanism of the first step is believed to be common\
+        \ to all haem peroxidases. HOOH is deprotonated by a water molecule which is deprotonated by His\
+        \ 42 to produce sing"
+      notes: M-CSA entry 239, mechanism 2; M-CSA cites PMID:10574977, PMID:11356134, PMID:12351824, PMID:20345187;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (27 evidence-backed edges) transcribed from M-CSA entry 239;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

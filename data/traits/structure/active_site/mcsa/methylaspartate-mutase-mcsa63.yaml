@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.4.99.1
 - CHEBI:29985
@@ -446,4 +446,293 @@ definitions:
       This vitamin B12 dependent enzyme catalyses the carbon skeleton rearrangement of L-glutamate to L-threo-3-methylaspartate ((2S,3S)-3-methylaspartate). It is involved in the subpathway that synthesises acetate and pyruvate from L-glutamate.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of methylaspartate mutase
+  description: Stepwise mechanism transcribed from M-CSA entry 63 (7 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: asp14
+    label: catalytic Asp14 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P80077
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his16
+    label: catalytic His16 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P80077
+    description: 'M-CSA roles: electrostatic stabiliser, metal ligand.'
+  - node_id: arg100
+    label: catalytic Arg100 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P80077
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu171
+    label: catalytic Glu171 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P80077
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: L-glutamate(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:29985
+  - node_id: product0
+    label: threo-3-methyl-L-aspartate(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58724
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The Co(II)-C bond of the B12 cofactor undergoes homoloysis, forming the adenosyl radical
+      and Co(I).
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The adenosyl radical abstracts a hydrogen from the substrate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The substrate undergoes homolytic elimination producing prop-2-enoic acid and a glycyl
+      radical with concomitant deprotonation of the positively charged amine of the glycyl radical by
+      Glu171B.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The glycyl radical adds to the double bond of prop-2-enoic acid, forming the product
+      radical with concomitant deprotonation of Glu171B by the glycyl amine.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: The substrate radical abstracts a hydrogen from the adenosine, re-forming the adenosyl
+      radical.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: The adenosyl radical and Co(I) undergo colligation, reforming the B12 cofactor.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: methylaspartate mutase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:63
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.280 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.280
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: methylaspartate mutase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.4.99.1
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/63/
+      snippet: The adenosyl radical abstracts a hydrogen from the substrate.
+      notes: M-CSA entry 63, mechanism 1; M-CSA cites PMID:10467146, PMID:10915555, PMID:11256957, PMID:11506551,
+        PMID:11578922, PMID:11592143, PMID:11755393, PMID:12797824, PMID:15023074, PMID:15709782, PMID:16285720,
+        PMID:16981724, PMID:17249667, PMID:23127187, PMID:7649266, PMID:9521732, PMID:9718309, PMID:9739092;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/63/
+      snippet: The substrate undergoes homolytic elimination producing prop-2-enoic acid and a glycyl
+        radical with concomitant deprotonation of the positively charged amine of the glycyl radical by
+        Glu171B.
+      notes: M-CSA entry 63, mechanism 1; M-CSA cites PMID:10467146, PMID:10915555, PMID:11256957, PMID:11506551,
+        PMID:11578922, PMID:11592143, PMID:11755393, PMID:12797824, PMID:15023074, PMID:15709782, PMID:16285720,
+        PMID:16981724, PMID:17249667, PMID:23127187, PMID:7649266, PMID:9521732, PMID:9718309, PMID:9739092;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/63/
+      snippet: The glycyl radical adds to the double bond of prop-2-enoic acid, forming the product radical
+        with concomitant deprotonation of Glu171B by the glycyl amine.
+      notes: M-CSA entry 63, mechanism 1; M-CSA cites PMID:10467146, PMID:10915555, PMID:11256957, PMID:11506551,
+        PMID:11578922, PMID:11592143, PMID:11755393, PMID:12797824, PMID:15023074, PMID:15709782, PMID:16285720,
+        PMID:16981724, PMID:17249667, PMID:23127187, PMID:7649266, PMID:9521732, PMID:9718309, PMID:9739092;
+        step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/63/
+      snippet: The substrate radical abstracts a hydrogen from the adenosine, re-forming the adenosyl
+        radical.
+      notes: M-CSA entry 63, mechanism 1; M-CSA cites PMID:10467146, PMID:10915555, PMID:11256957, PMID:11506551,
+        PMID:11578922, PMID:11592143, PMID:11755393, PMID:12797824, PMID:15023074, PMID:15709782, PMID:16285720,
+        PMID:16981724, PMID:17249667, PMID:23127187, PMID:7649266, PMID:9521732, PMID:9718309, PMID:9739092;
+        step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/63/
+      snippet: The adenosyl radical and Co(I) undergo colligation, reforming the B12 cofactor.
+      notes: M-CSA entry 63, mechanism 1; M-CSA cites PMID:10467146, PMID:10915555, PMID:11256957, PMID:11506551,
+        PMID:11578922, PMID:11592143, PMID:11755393, PMID:12797824, PMID:15023074, PMID:15709782, PMID:16285720,
+        PMID:16981724, PMID:17249667, PMID:23127187, PMID:7649266, PMID:9521732, PMID:9718309, PMID:9739092;
+        step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/63/
+      snippet: Products
+      notes: M-CSA entry 63, mechanism 1; M-CSA cites PMID:10467146, PMID:10915555, PMID:11256957, PMID:11506551,
+        PMID:11578922, PMID:11592143, PMID:11755393, PMID:12797824, PMID:15023074, PMID:15709782, PMID:16285720,
+        PMID:16981724, PMID:17249667, PMID:23127187, PMID:7649266, PMID:9521732, PMID:9718309, PMID:9739092;
+        step 7
+  - subject: asp14
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp14 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/63/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 63, mechanism 1; M-CSA cites PMID:10467146, PMID:10915555, PMID:11256957, PMID:11506551,
+        PMID:11578922, PMID:11592143, PMID:11755393, PMID:12797824, PMID:15023074, PMID:15709782, PMID:16285720,
+        PMID:16981724, PMID:17249667, PMID:23127187, PMID:7649266, PMID:9521732, PMID:9718309, PMID:9739092;
+        M-CSA catalytic-residue roles for Asp14
+  - subject: his16
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His16 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/63/
+      snippet: electrostatic stabiliser, metal ligand
+      notes: M-CSA entry 63, mechanism 1; M-CSA cites PMID:10467146, PMID:10915555, PMID:11256957, PMID:11506551,
+        PMID:11578922, PMID:11592143, PMID:11755393, PMID:12797824, PMID:15023074, PMID:15709782, PMID:16285720,
+        PMID:16981724, PMID:17249667, PMID:23127187, PMID:7649266, PMID:9521732, PMID:9718309, PMID:9739092;
+        M-CSA catalytic-residue roles for His16
+  - subject: arg100
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg100 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/63/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 63, mechanism 1; M-CSA cites PMID:10467146, PMID:10915555, PMID:11256957, PMID:11506551,
+        PMID:11578922, PMID:11592143, PMID:11755393, PMID:12797824, PMID:15023074, PMID:15709782, PMID:16285720,
+        PMID:16981724, PMID:17249667, PMID:23127187, PMID:7649266, PMID:9521732, PMID:9718309, PMID:9739092;
+        M-CSA catalytic-residue roles for Arg100
+  - subject: glu171
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu171 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/63/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+        proton donor
+      notes: M-CSA entry 63, mechanism 1; M-CSA cites PMID:10467146, PMID:10915555, PMID:11256957, PMID:11506551,
+        PMID:11578922, PMID:11592143, PMID:11755393, PMID:12797824, PMID:15023074, PMID:15709782, PMID:16285720,
+        PMID:16981724, PMID:17249667, PMID:23127187, PMID:7649266, PMID:9521732, PMID:9718309, PMID:9739092;
+        M-CSA catalytic-residue roles for Glu171
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/63/
+      snippet: "Glutamate mutase (Glm) equilibrates (S)-glutamate with (2S,3S)-3-methylaspartate.
+\
+        <br/><br/>
+The Co-C bond of AdoCbl cleaves to produce a 5'-deoxyadenosyl (Ado) radical and\
+        \ Cbl(II). This is coupled to the abstraction of the pro-S hydrogen on C4 of glutamate by the\
+        \ ado radical, which occurs by quantum tunnelling of the hydrogen. The glutamate radical fragments\
+        \ to form the glycyl radical and acryl"
+      notes: M-CSA entry 63, mechanism 1; M-CSA cites PMID:10467146, PMID:10915555, PMID:11256957, PMID:11506551,
+        PMID:11578922, PMID:11592143, PMID:11755393, PMID:12797824, PMID:15023074, PMID:15709782, PMID:16285720,
+        PMID:16981724, PMID:17249667, PMID:23127187, PMID:7649266, PMID:9521732, PMID:9718309, PMID:9739092;
+        CATH domain 3.40.50.280 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/63/
+      snippet: "Glutamate mutase (Glm) equilibrates (S)-glutamate with (2S,3S)-3-methylaspartate.
+\
+        <br/><br/>
+The Co-C bond of AdoCbl cleaves to produce a 5'-deoxyadenosyl (Ado) radical and\
+        \ Cbl(II). This is coupled to the abstraction of the pro-S hydrogen on C4 of glutamate by the\
+        \ ado radical, which occurs by quantum tunnelling of the hydrogen. The glutamate radical fragments\
+        \ to form the glycyl radical and acryl"
+      notes: M-CSA entry 63, mechanism 1; M-CSA cites PMID:10467146, PMID:10915555, PMID:11256957, PMID:11506551,
+        PMID:11578922, PMID:11592143, PMID:11755393, PMID:12797824, PMID:15023074, PMID:15709782, PMID:16285720,
+        PMID:16981724, PMID:17249667, PMID:23127187, PMID:7649266, PMID:9521732, PMID:9718309, PMID:9739092;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/63/
+      snippet: "Glutamate mutase (Glm) equilibrates (S)-glutamate with (2S,3S)-3-methylaspartate.
+\
+        <br/><br/>
+The Co-C bond of AdoCbl cleaves to produce a 5'-deoxyadenosyl (Ado) radical and\
+        \ Cbl(II). This is coupled to the abstraction of the pro-S hydrogen on C4 of glutamate by the\
+        \ ado radical, which occurs by quantum tunnelling of the hydrogen. The glutamate radical fragments\
+        \ to form the glycyl radical and acryl"
+      notes: M-CSA entry 63, mechanism 1; M-CSA cites PMID:10467146, PMID:10915555, PMID:11256957, PMID:11506551,
+        PMID:11578922, PMID:11592143, PMID:11755393, PMID:12797824, PMID:15023074, PMID:15709782, PMID:16285720,
+        PMID:16981724, PMID:17249667, PMID:23127187, PMID:7649266, PMID:9521732, PMID:9718309, PMID:9739092;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/63/
+      snippet: "Glutamate mutase (Glm) equilibrates (S)-glutamate with (2S,3S)-3-methylaspartate.
+\
+        <br/><br/>
+The Co-C bond of AdoCbl cleaves to produce a 5'-deoxyadenosyl (Ado) radical and\
+        \ Cbl(II). This is coupled to the abstraction of the pro-S hydrogen on C4 of glutamate by the\
+        \ ado radical, which occurs by quantum tunnelling of the hydrogen. The glutamate radical fragments\
+        \ to form the glycyl radical and acryl"
+      notes: M-CSA entry 63, mechanism 1; M-CSA cites PMID:10467146, PMID:10915555, PMID:11256957, PMID:11506551,
+        PMID:11578922, PMID:11592143, PMID:11755393, PMID:12797824, PMID:15023074, PMID:15709782, PMID:16285720,
+        PMID:16981724, PMID:17249667, PMID:23127187, PMID:7649266, PMID:9521732, PMID:9718309, PMID:9739092;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (14 evidence-backed edges) transcribed from M-CSA entry 63;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

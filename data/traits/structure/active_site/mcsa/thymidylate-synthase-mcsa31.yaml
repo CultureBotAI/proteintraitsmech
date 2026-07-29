@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.1.1.45
 - CHEBI:246422
@@ -300,4 +300,418 @@ definitions:
       Thymidylate synthase (TS) is an essential enzyme for the de novo synthesis of thymidine 5'-monophosphate (dTMP) via the addition of a methyl group to 2'-deoxyuridine 5'monophosphate (dUMP) from folate. TS is a highly conserved enzyme. dTMP is a nucleotide required for DNA synthesis, and therefore, it is an important drug target, especially for anticancer and antineoplastic drugs. TS also plays a role in regulating tissue folate levels. TS is a bisubstrate enzyme in which the cofactor, CH2 H4 folate, serves as both the one-carbon donor to the substrate dUMP and, subsequently, as the reductant. A one-carbon unit and hydride are transferred from different sites on the cofactor, and large contributions to the catalytic power of TS are achieved through the dynamic alignment and realignment of reactants at these chemical steps.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of thymidylate synthase
+  description: Stepwise mechanism transcribed from M-CSA entry 31 (7 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: glu60
+    label: catalytic Glu60 (M-CSA/PDB numbering; UniProt residue 60)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00469
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: trp82
+    label: catalytic Trp82 (M-CSA/PDB numbering; UniProt residue 82)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00469
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor, van der waals interaction.'
+  - node_id: tyr146
+    label: catalytic Tyr146 (M-CSA/PDB numbering; UniProt residue 146)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00469
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: cys198
+    label: catalytic Cys198 (M-CSA/PDB numbering; UniProt residue 198)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00469
+    description: 'M-CSA roles: covalently attached, nucleofuge, nucleophile, proton acceptor, proton donor.'
+  - node_id: arg218
+    label: catalytic Arg218 (M-CSA/PDB numbering; UniProt residue 218)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00469
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor, increase acidity.'
+  - node_id: asp221
+    label: catalytic Asp221 (M-CSA/PDB numbering; UniProt residue 221)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00469
+    description: 'M-CSA roles: activator, electrostatic stabiliser, hydrogen bond acceptor, steric role.'
+  - node_id: reactant0
+    label: dUMP(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:246422
+  - node_id: reactant1
+    label: (6R)-5,10-methylenetetrahydrofolate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:15636
+  - node_id: product0
+    label: dTMP(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:63528
+  - node_id: product1
+    label: dihydrofolate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57451
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The methylenetetrahydrofolate undergoes decyclisation, the secondary amine released deprotonates
+      Tyr146.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Cys198 initiates a nucleophilic attack on the ene carbon of dUMP in a Michael (1,4) addition
+      reaction. The oxyanion formed deprotonates water, which in turn deprotonates Glu60.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Glu60 deprotonates water, which deprotonates the hydroxyl group, which initiates a nucleophilic
+      attack upon the activated methylenetetrahydrofolate at the CH<sub>2</sub>=N carbon.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Tyr146 deprotonates water, which deprotonates the carbon newly connected to the methylenetetrahydrofolate.
+      This causes the formation of a C=C and the oxyanion formed deprotonates water, which in turn deprotonates
+      Glu60.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Glu60 deprotonates water, which deprotonates the hydroxyl group, eliminating the negatively
+      charged dihydrofolate.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: The negatively charged nitrogen of dihydrofolate eliminates a hydride ion, which adds
+      to the CH<sub>2</sub>=C group of the covalently attached methyl-dUMP, causing the elimination of
+      Cys198.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: thymidylate synthase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:31
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.572.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.572.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: thymidylate synthase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.1.1.45
+  edges:
+  - subject: tyr146
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr146 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/31/
+      snippet: The methylenetetrahydrofolate undergoes decyclisation, the secondary amine released deprotonates
+        Tyr146.
+      notes: M-CSA entry 31, mechanism 1; M-CSA cites PMID:12525151, PMID:12693951, PMID:17328531, PMID:2223755,
+        PMID:7574499, PMID:9109668, PMID:9636048; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/31/
+      snippet: Cys198 initiates a nucleophilic attack on the ene carbon of dUMP in a Michael (1,4) addition
+        reaction. The oxyanion formed deprotonates water, which in turn deprotonates Glu60.
+      notes: M-CSA entry 31, mechanism 1; M-CSA cites PMID:12525151, PMID:12693951, PMID:17328531, PMID:2223755,
+        PMID:7574499, PMID:9109668, PMID:9636048; step 2
+  - subject: glu60
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu60 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/31/
+      snippet: Cys198 initiates a nucleophilic attack on the ene carbon of dUMP in a Michael (1,4) addition
+        reaction. The oxyanion formed deprotonates water, which in turn deprotonates Glu60.
+      notes: M-CSA entry 31, mechanism 1; M-CSA cites PMID:12525151, PMID:12693951, PMID:17328531, PMID:2223755,
+        PMID:7574499, PMID:9109668, PMID:9636048; step 2
+  - subject: cys198
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Cys198 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/31/
+      snippet: Cys198 initiates a nucleophilic attack on the ene carbon of dUMP in a Michael (1,4) addition
+        reaction. The oxyanion formed deprotonates water, which in turn deprotonates Glu60.
+      notes: M-CSA entry 31, mechanism 1; M-CSA cites PMID:12525151, PMID:12693951, PMID:17328531, PMID:2223755,
+        PMID:7574499, PMID:9109668, PMID:9636048; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/31/
+      snippet: Glu60 deprotonates water, which deprotonates the hydroxyl group, which initiates a nucleophilic
+        attack upon the activated methylenetetrahydrofolate at the CH<sub>2</sub>=N carbon.
+      notes: M-CSA entry 31, mechanism 1; M-CSA cites PMID:12525151, PMID:12693951, PMID:17328531, PMID:2223755,
+        PMID:7574499, PMID:9109668, PMID:9636048; step 3
+  - subject: glu60
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Glu60 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/31/
+      snippet: Glu60 deprotonates water, which deprotonates the hydroxyl group, which initiates a nucleophilic
+        attack upon the activated methylenetetrahydrofolate at the CH<sub>2</sub>=N carbon.
+      notes: M-CSA entry 31, mechanism 1; M-CSA cites PMID:12525151, PMID:12693951, PMID:17328531, PMID:2223755,
+        PMID:7574499, PMID:9109668, PMID:9636048; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/31/
+      snippet: Tyr146 deprotonates water, which deprotonates the carbon newly connected to the methylenetetrahydrofolate.
+        This causes the formation of a C=C and the oxyanion formed deprotonates water, which in turn deprotonates
+        Glu60.
+      notes: M-CSA entry 31, mechanism 1; M-CSA cites PMID:12525151, PMID:12693951, PMID:17328531, PMID:2223755,
+        PMID:7574499, PMID:9109668, PMID:9636048; step 4
+  - subject: glu60
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Glu60 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/31/
+      snippet: Tyr146 deprotonates water, which deprotonates the carbon newly connected to the methylenetetrahydrofolate.
+        This causes the formation of a C=C and the oxyanion formed deprotonates water, which in turn deprotonates
+        Glu60.
+      notes: M-CSA entry 31, mechanism 1; M-CSA cites PMID:12525151, PMID:12693951, PMID:17328531, PMID:2223755,
+        PMID:7574499, PMID:9109668, PMID:9636048; step 4
+  - subject: tyr146
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Tyr146 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/31/
+      snippet: Tyr146 deprotonates water, which deprotonates the carbon newly connected to the methylenetetrahydrofolate.
+        This causes the formation of a C=C and the oxyanion formed deprotonates water, which in turn deprotonates
+        Glu60.
+      notes: M-CSA entry 31, mechanism 1; M-CSA cites PMID:12525151, PMID:12693951, PMID:17328531, PMID:2223755,
+        PMID:7574499, PMID:9109668, PMID:9636048; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/31/
+      snippet: Glu60 deprotonates water, which deprotonates the hydroxyl group, eliminating the negatively
+        charged dihydrofolate.
+      notes: M-CSA entry 31, mechanism 1; M-CSA cites PMID:12525151, PMID:12693951, PMID:17328531, PMID:2223755,
+        PMID:7574499, PMID:9109668, PMID:9636048; step 5
+  - subject: glu60
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Glu60 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/31/
+      snippet: Glu60 deprotonates water, which deprotonates the hydroxyl group, eliminating the negatively
+        charged dihydrofolate.
+      notes: M-CSA entry 31, mechanism 1; M-CSA cites PMID:12525151, PMID:12693951, PMID:17328531, PMID:2223755,
+        PMID:7574499, PMID:9109668, PMID:9636048; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/31/
+      snippet: The negatively charged nitrogen of dihydrofolate eliminates a hydride ion, which adds to
+        the CH<sub>2</sub>=C group of the covalently attached methyl-dUMP, causing the elimination of
+        Cys198.
+      notes: M-CSA entry 31, mechanism 1; M-CSA cites PMID:12525151, PMID:12693951, PMID:17328531, PMID:2223755,
+        PMID:7574499, PMID:9109668, PMID:9636048; step 6
+  - subject: cys198
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: Cys198 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/31/
+      snippet: The negatively charged nitrogen of dihydrofolate eliminates a hydride ion, which adds to
+        the CH<sub>2</sub>=C group of the covalently attached methyl-dUMP, causing the elimination of
+        Cys198.
+      notes: M-CSA entry 31, mechanism 1; M-CSA cites PMID:12525151, PMID:12693951, PMID:17328531, PMID:2223755,
+        PMID:7574499, PMID:9109668, PMID:9636048; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/31/
+      snippet: Products.
+      notes: M-CSA entry 31, mechanism 1; M-CSA cites PMID:12525151, PMID:12693951, PMID:17328531, PMID:2223755,
+        PMID:7574499, PMID:9109668, PMID:9636048; step 7
+  - subject: glu60
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu60 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/31/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 31, mechanism 1; M-CSA cites PMID:12525151, PMID:12693951, PMID:17328531, PMID:2223755,
+        PMID:7574499, PMID:9109668, PMID:9636048; M-CSA catalytic-residue roles for Glu60
+  - subject: trp82
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp82 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/31/
+      snippet: electrostatic stabiliser, hydrogen bond donor, van der waals interaction
+      notes: M-CSA entry 31, mechanism 1; M-CSA cites PMID:12525151, PMID:12693951, PMID:17328531, PMID:2223755,
+        PMID:7574499, PMID:9109668, PMID:9636048; M-CSA catalytic-residue roles for Trp82
+  - subject: tyr146
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr146 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/31/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 31, mechanism 1; M-CSA cites PMID:12525151, PMID:12693951, PMID:17328531, PMID:2223755,
+        PMID:7574499, PMID:9109668, PMID:9636048; M-CSA catalytic-residue roles for Tyr146
+  - subject: cys198
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys198 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/31/
+      snippet: covalently attached, nucleofuge, nucleophile, proton acceptor, proton donor
+      notes: M-CSA entry 31, mechanism 1; M-CSA cites PMID:12525151, PMID:12693951, PMID:17328531, PMID:2223755,
+        PMID:7574499, PMID:9109668, PMID:9636048; M-CSA catalytic-residue roles for Cys198
+  - subject: arg218
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg218 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/31/
+      snippet: electrostatic stabiliser, hydrogen bond donor, increase acidity
+      notes: M-CSA entry 31, mechanism 1; M-CSA cites PMID:12525151, PMID:12693951, PMID:17328531, PMID:2223755,
+        PMID:7574499, PMID:9109668, PMID:9636048; M-CSA catalytic-residue roles for Arg218
+  - subject: asp221
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp221 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/31/
+      snippet: activator, electrostatic stabiliser, hydrogen bond acceptor, steric role
+      notes: M-CSA entry 31, mechanism 1; M-CSA cites PMID:12525151, PMID:12693951, PMID:17328531, PMID:2223755,
+        PMID:7574499, PMID:9109668, PMID:9636048; M-CSA catalytic-residue roles for Asp221
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/31/
+      snippet: Active site closure upon the binding of the substrates correctly aligns the reactants,
+        allowing the reaction to proceed correctly [PMID:12525150]. Asp-221 is the only residue whose
+        side chain hydrogen bonds directly to the pterin ring of the cofactor. D221 variants that cannot
+        form this hydrogen bond either do not form a covalent ternary complex form the ternary complex
+        with a much higher Kd. Crys
+      notes: M-CSA entry 31, mechanism 1; M-CSA cites PMID:12525151, PMID:12693951, PMID:17328531, PMID:2223755,
+        PMID:7574499, PMID:9109668, PMID:9636048; CATH domain 3.30.572.10 assigned to the catalytic chain
+        by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/31/
+      snippet: Active site closure upon the binding of the substrates correctly aligns the reactants,
+        allowing the reaction to proceed correctly [PMID:12525150]. Asp-221 is the only residue whose
+        side chain hydrogen bonds directly to the pterin ring of the cofactor. D221 variants that cannot
+        form this hydrogen bond either do not form a covalent ternary complex form the ternary complex
+        with a much higher Kd. Crys
+      notes: M-CSA entry 31, mechanism 1; M-CSA cites PMID:12525151, PMID:12693951, PMID:17328531, PMID:2223755,
+        PMID:7574499, PMID:9109668, PMID:9636048; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/31/
+      snippet: Active site closure upon the binding of the substrates correctly aligns the reactants,
+        allowing the reaction to proceed correctly [PMID:12525150]. Asp-221 is the only residue whose
+        side chain hydrogen bonds directly to the pterin ring of the cofactor. D221 variants that cannot
+        form this hydrogen bond either do not form a covalent ternary complex form the ternary complex
+        with a much higher Kd. Crys
+      notes: M-CSA entry 31, mechanism 1; M-CSA cites PMID:12525151, PMID:12693951, PMID:17328531, PMID:2223755,
+        PMID:7574499, PMID:9109668, PMID:9636048; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/31/
+      snippet: Active site closure upon the binding of the substrates correctly aligns the reactants,
+        allowing the reaction to proceed correctly [PMID:12525150]. Asp-221 is the only residue whose
+        side chain hydrogen bonds directly to the pterin ring of the cofactor. D221 variants that cannot
+        form this hydrogen bond either do not form a covalent ternary complex form the ternary complex
+        with a much higher Kd. Crys
+      notes: M-CSA entry 31, mechanism 1; M-CSA cites PMID:12525151, PMID:12693951, PMID:17328531, PMID:2223755,
+        PMID:7574499, PMID:9109668, PMID:9636048; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/31/
+      snippet: Active site closure upon the binding of the substrates correctly aligns the reactants,
+        allowing the reaction to proceed correctly [PMID:12525150]. Asp-221 is the only residue whose
+        side chain hydrogen bonds directly to the pterin ring of the cofactor. D221 variants that cannot
+        form this hydrogen bond either do not form a covalent ternary complex form the ternary complex
+        with a much higher Kd. Crys
+      notes: M-CSA entry 31, mechanism 1; M-CSA cites PMID:12525151, PMID:12693951, PMID:17328531, PMID:2223755,
+        PMID:7574499, PMID:9109668, PMID:9636048; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/31/
+      snippet: Active site closure upon the binding of the substrates correctly aligns the reactants,
+        allowing the reaction to proceed correctly [PMID:12525150]. Asp-221 is the only residue whose
+        side chain hydrogen bonds directly to the pterin ring of the cofactor. D221 variants that cannot
+        form this hydrogen bond either do not form a covalent ternary complex form the ternary complex
+        with a much higher Kd. Crys
+      notes: M-CSA entry 31, mechanism 1; M-CSA cites PMID:12525151, PMID:12693951, PMID:17328531, PMID:2223755,
+        PMID:7574499, PMID:9109668, PMID:9636048; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (26 evidence-backed edges) transcribed from M-CSA entry 31;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

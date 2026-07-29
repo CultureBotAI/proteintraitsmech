@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.3.5.4
 - CHEBI:29806
@@ -299,4 +299,407 @@ definitions:
       Fumarate respiration is the most commonly occurring type of anaerobic respiration with fumarate acting as a terminal electron acceptor. The physiological reductant is unknown, but evidence indicates that flavocytochrome c participates in electron transfer from formate to fumarate and possibly also to trimethylamine oxide (TMAO). In Shewanella species, fumarate reductase is a soluble periplasmic, tetaheme, FAD-containing enzyme called flavocytochrome c3 (Fcc3). Fumarate reductases, which catalyse the interconversion of fumarate and succinate are known to be membrane bound in bacteria although soluble versions also exist in yeast, procyclic Trypanosoma brucei and several Shewanella species. The active site is located in the centre of the protein, at the interface between the three catalytic domains. Catalysis in the soluble fumarate reductase is essentially unidirectional (from fumarte to succinate).
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of fumarate reductase (quinol)
+  description: Stepwise mechanism transcribed from M-CSA entry 20 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +25).
+  nodes:
+  - node_id: his365
+    label: catalytic His365 (M-CSA/PDB numbering; UniProt residue 390)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q07WU7
+    description: 'M-CSA roles: increase acidity.'
+  - node_id: glu378
+    label: catalytic Glu378 (M-CSA/PDB numbering; UniProt residue 403)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q07WU7
+    description: 'M-CSA roles: proton acceptor, proton donor, proton relay.'
+  - node_id: arg381
+    label: catalytic Arg381 (M-CSA/PDB numbering; UniProt residue 406)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q07WU7
+    description: 'M-CSA roles: proton acceptor, proton donor, proton relay.'
+  - node_id: arg402
+    label: catalytic Arg402 (M-CSA/PDB numbering; UniProt residue 427)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q07WU7
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: his504
+    label: catalytic His504 (M-CSA/PDB numbering; UniProt residue 529)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q07WU7
+    description: 'M-CSA roles: electrostatic stabiliser, proton acceptor, proton donor.'
+  - node_id: his505
+    label: catalytic His505 (M-CSA/PDB numbering; UniProt residue 530)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q07WU7
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: arg544
+    label: catalytic Arg544 (M-CSA/PDB numbering; UniProt residue 569)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q07WU7
+    description: 'M-CSA roles: steric role.'
+  - node_id: reactant0
+    label: fumarate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:29806
+  - node_id: reactant1
+    label: menaquinol
+    node_type: CHEMICAL
+    grounding: CHEBI:18151
+  - node_id: product0
+    label: succinate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30031
+  - node_id: product1
+    label: menaquinone
+    node_type: CHEMICAL
+    grounding: CHEBI:16374
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The electron acceptors donates two electrons, through a chain of haem cofactors to the
+      FAD cofactor, which deprotonates a base, probably water.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: FAD eliminates a hydride ion, which adds to fumarate with concomitant double bond rearrangement,
+      the terminal carboxylate deprotonates His504.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: His504 deprotonates the newly formed hydroxyl group with concomitant deprotonation of
+      Arg402, across the C=C.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: A proton relay chain through Glu378 and Arg381 to bulk solvent reprotonates Arg402.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: fumarate reductase (quinol) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:20
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.700.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.700.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: fumarate reductase (quinol) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.3.5.4
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/20/
+      snippet: FAD eliminates a hydride ion, which adds to fumarate with concomitant double bond rearrangement,
+        the terminal carboxylate deprotonates His504.
+      notes: M-CSA entry 20, mechanism 1; M-CSA cites PMID:10581549, PMID:10581550, PMID:10581551, PMID:10978153,
+        PMID:11591148, PMID:12010043, PMID:12093271, PMID:12356299, PMID:12899636, PMID:15581582; step
+        2
+  - subject: his504
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His504 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/20/
+      snippet: FAD eliminates a hydride ion, which adds to fumarate with concomitant double bond rearrangement,
+        the terminal carboxylate deprotonates His504.
+      notes: M-CSA entry 20, mechanism 1; M-CSA cites PMID:10581549, PMID:10581550, PMID:10581551, PMID:10978153,
+        PMID:11591148, PMID:12010043, PMID:12093271, PMID:12356299, PMID:12899636, PMID:15581582; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/20/
+      snippet: His504 deprotonates the newly formed hydroxyl group with concomitant deprotonation of Arg402,
+        across the C=C.
+      notes: M-CSA entry 20, mechanism 1; M-CSA cites PMID:10581549, PMID:10581550, PMID:10581551, PMID:10978153,
+        PMID:11591148, PMID:12010043, PMID:12093271, PMID:12356299, PMID:12899636, PMID:15581582; step
+        3
+  - subject: arg402
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Arg402 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/20/
+      snippet: His504 deprotonates the newly formed hydroxyl group with concomitant deprotonation of Arg402,
+        across the C=C.
+      notes: M-CSA entry 20, mechanism 1; M-CSA cites PMID:10581549, PMID:10581550, PMID:10581551, PMID:10978153,
+        PMID:11591148, PMID:12010043, PMID:12093271, PMID:12356299, PMID:12899636, PMID:15581582; step
+        3
+  - subject: his504
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His504 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/20/
+      snippet: His504 deprotonates the newly formed hydroxyl group with concomitant deprotonation of Arg402,
+        across the C=C.
+      notes: M-CSA entry 20, mechanism 1; M-CSA cites PMID:10581549, PMID:10581550, PMID:10581551, PMID:10978153,
+        PMID:11591148, PMID:12010043, PMID:12093271, PMID:12356299, PMID:12899636, PMID:15581582; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/20/
+      snippet: A proton relay chain through Glu378 and Arg381 to bulk solvent reprotonates Arg402.
+      notes: M-CSA entry 20, mechanism 1; M-CSA cites PMID:10581549, PMID:10581550, PMID:10581551, PMID:10978153,
+        PMID:11591148, PMID:12010043, PMID:12093271, PMID:12356299, PMID:12899636, PMID:15581582; step
+        4
+  - subject: glu378
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Glu378 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/20/
+      snippet: A proton relay chain through Glu378 and Arg381 to bulk solvent reprotonates Arg402.
+      notes: M-CSA entry 20, mechanism 1; M-CSA cites PMID:10581549, PMID:10581550, PMID:10581551, PMID:10978153,
+        PMID:11591148, PMID:12010043, PMID:12093271, PMID:12356299, PMID:12899636, PMID:15581582; step
+        4
+  - subject: arg381
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Arg381 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/20/
+      snippet: A proton relay chain through Glu378 and Arg381 to bulk solvent reprotonates Arg402.
+      notes: M-CSA entry 20, mechanism 1; M-CSA cites PMID:10581549, PMID:10581550, PMID:10581551, PMID:10978153,
+        PMID:11591148, PMID:12010043, PMID:12093271, PMID:12356299, PMID:12899636, PMID:15581582; step
+        4
+  - subject: arg402
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Arg402 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/20/
+      snippet: A proton relay chain through Glu378 and Arg381 to bulk solvent reprotonates Arg402.
+      notes: M-CSA entry 20, mechanism 1; M-CSA cites PMID:10581549, PMID:10581550, PMID:10581551, PMID:10978153,
+        PMID:11591148, PMID:12010043, PMID:12093271, PMID:12356299, PMID:12899636, PMID:15581582; step
+        4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/20/
+      snippet: Products.
+      notes: M-CSA entry 20, mechanism 1; M-CSA cites PMID:10581549, PMID:10581550, PMID:10581551, PMID:10978153,
+        PMID:11591148, PMID:12010043, PMID:12093271, PMID:12356299, PMID:12899636, PMID:15581582; step
+        5
+  - subject: his365
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His365 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/20/
+      snippet: increase acidity
+      notes: M-CSA entry 20, mechanism 1; M-CSA cites PMID:10581549, PMID:10581550, PMID:10581551, PMID:10978153,
+        PMID:11591148, PMID:12010043, PMID:12093271, PMID:12356299, PMID:12899636, PMID:15581582; M-CSA
+        catalytic-residue roles for His365
+  - subject: glu378
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu378 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/20/
+      snippet: proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 20, mechanism 1; M-CSA cites PMID:10581549, PMID:10581550, PMID:10581551, PMID:10978153,
+        PMID:11591148, PMID:12010043, PMID:12093271, PMID:12356299, PMID:12899636, PMID:15581582; M-CSA
+        catalytic-residue roles for Glu378
+  - subject: arg381
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg381 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/20/
+      snippet: proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 20, mechanism 1; M-CSA cites PMID:10581549, PMID:10581550, PMID:10581551, PMID:10978153,
+        PMID:11591148, PMID:12010043, PMID:12093271, PMID:12356299, PMID:12899636, PMID:15581582; M-CSA
+        catalytic-residue roles for Arg381
+  - subject: arg402
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg402 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/20/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 20, mechanism 1; M-CSA cites PMID:10581549, PMID:10581550, PMID:10581551, PMID:10978153,
+        PMID:11591148, PMID:12010043, PMID:12093271, PMID:12356299, PMID:12899636, PMID:15581582; M-CSA
+        catalytic-residue roles for Arg402
+  - subject: his504
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His504 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/20/
+      snippet: electrostatic stabiliser, proton acceptor, proton donor
+      notes: M-CSA entry 20, mechanism 1; M-CSA cites PMID:10581549, PMID:10581550, PMID:10581551, PMID:10978153,
+        PMID:11591148, PMID:12010043, PMID:12093271, PMID:12356299, PMID:12899636, PMID:15581582; M-CSA
+        catalytic-residue roles for His504
+  - subject: his505
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His505 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/20/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 20, mechanism 1; M-CSA cites PMID:10581549, PMID:10581550, PMID:10581551, PMID:10978153,
+        PMID:11591148, PMID:12010043, PMID:12093271, PMID:12356299, PMID:12899636, PMID:15581582; M-CSA
+        catalytic-residue roles for His505
+  - subject: arg544
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg544 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/20/
+      snippet: steric role
+      notes: M-CSA entry 20, mechanism 1; M-CSA cites PMID:10581549, PMID:10581550, PMID:10581551, PMID:10978153,
+        PMID:11591148, PMID:12010043, PMID:12093271, PMID:12356299, PMID:12899636, PMID:15581582; M-CSA
+        catalytic-residue roles for Arg544
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/20/
+      snippet: "On binding at the active site, the C1 carboxylate group of the fumarate substrate is polarised\
+        \ and twisted out of the planar configuration by closure of the clamp domain and the resulting\
+        \ steric constraints. 
+<br/><br/>
+The substrate carbonyl groups are polarised through interactions\
+        \ with surrounding charged residues, facilitating hydride transfer from N5 of reduced FAD to the\
+        \ substrate C2. 
+<b"
+      notes: M-CSA entry 20, mechanism 1; M-CSA cites PMID:10581549, PMID:10581550, PMID:10581551, PMID:10978153,
+        PMID:11591148, PMID:12010043, PMID:12093271, PMID:12356299, PMID:12899636, PMID:15581582; CATH
+        domain 3.90.700.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/20/
+      snippet: "On binding at the active site, the C1 carboxylate group of the fumarate substrate is polarised\
+        \ and twisted out of the planar configuration by closure of the clamp domain and the resulting\
+        \ steric constraints. 
+<br/><br/>
+The substrate carbonyl groups are polarised through interactions\
+        \ with surrounding charged residues, facilitating hydride transfer from N5 of reduced FAD to the\
+        \ substrate C2. 
+<b"
+      notes: M-CSA entry 20, mechanism 1; M-CSA cites PMID:10581549, PMID:10581550, PMID:10581551, PMID:10978153,
+        PMID:11591148, PMID:12010043, PMID:12093271, PMID:12356299, PMID:12899636, PMID:15581582; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/20/
+      snippet: "On binding at the active site, the C1 carboxylate group of the fumarate substrate is polarised\
+        \ and twisted out of the planar configuration by closure of the clamp domain and the resulting\
+        \ steric constraints. 
+<br/><br/>
+The substrate carbonyl groups are polarised through interactions\
+        \ with surrounding charged residues, facilitating hydride transfer from N5 of reduced FAD to the\
+        \ substrate C2. 
+<b"
+      notes: M-CSA entry 20, mechanism 1; M-CSA cites PMID:10581549, PMID:10581550, PMID:10581551, PMID:10978153,
+        PMID:11591148, PMID:12010043, PMID:12093271, PMID:12356299, PMID:12899636, PMID:15581582; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/20/
+      snippet: "On binding at the active site, the C1 carboxylate group of the fumarate substrate is polarised\
+        \ and twisted out of the planar configuration by closure of the clamp domain and the resulting\
+        \ steric constraints. 
+<br/><br/>
+The substrate carbonyl groups are polarised through interactions\
+        \ with surrounding charged residues, facilitating hydride transfer from N5 of reduced FAD to the\
+        \ substrate C2. 
+<b"
+      notes: M-CSA entry 20, mechanism 1; M-CSA cites PMID:10581549, PMID:10581550, PMID:10581551, PMID:10978153,
+        PMID:11591148, PMID:12010043, PMID:12093271, PMID:12356299, PMID:12899636, PMID:15581582; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/20/
+      snippet: "On binding at the active site, the C1 carboxylate group of the fumarate substrate is polarised\
+        \ and twisted out of the planar configuration by closure of the clamp domain and the resulting\
+        \ steric constraints. 
+<br/><br/>
+The substrate carbonyl groups are polarised through interactions\
+        \ with surrounding charged residues, facilitating hydride transfer from N5 of reduced FAD to the\
+        \ substrate C2. 
+<b"
+      notes: M-CSA entry 20, mechanism 1; M-CSA cites PMID:10581549, PMID:10581550, PMID:10581551, PMID:10978153,
+        PMID:11591148, PMID:12010043, PMID:12093271, PMID:12356299, PMID:12899636, PMID:15581582; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/20/
+      snippet: "On binding at the active site, the C1 carboxylate group of the fumarate substrate is polarised\
+        \ and twisted out of the planar configuration by closure of the clamp domain and the resulting\
+        \ steric constraints. 
+<br/><br/>
+The substrate carbonyl groups are polarised through interactions\
+        \ with surrounding charged residues, facilitating hydride transfer from N5 of reduced FAD to the\
+        \ substrate C2. 
+<b"
+      notes: M-CSA entry 20, mechanism 1; M-CSA cites PMID:10581549, PMID:10581550, PMID:10581551, PMID:10978153,
+        PMID:11591148, PMID:12010043, PMID:12093271, PMID:12356299, PMID:12899636, PMID:15581582; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (23 evidence-backed edges) transcribed from M-CSA entry 20;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

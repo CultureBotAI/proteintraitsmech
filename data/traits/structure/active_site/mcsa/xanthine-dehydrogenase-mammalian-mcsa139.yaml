@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.17.1.4
 - CHEBI:15377
@@ -853,4 +853,321 @@ definitions:
       Mammalian xanthine oxidoreductase catalyses the hydroxylation of hypoxanthine and xanthine, the last two stages in the biosynthesis pathway of urate. The enzyme is first formed as xanthine dehydrogenase (XDH), and exists mostly in this form within the cell but it can be readily converted to the oxidase form xanthine oxidase (XO) by oxidation of sulfhydryl residues or by proteolysis. The active form of the enzyme is a homodimer of a three chain subunits, where both units contain one molybdenum centre, one flavin (FAD) centre and two Fe-S clusters. The oxidation of xanthine to uric acid takes place at the molybdenum centre and results in a two electron reduction of the metal from Mo(VI) to Mo(IV). The enzyme is subsequently reoxidised by molecular oxygen in a reaction that occurs at the FAD cofactor. Xanthine dehydrogenase (EC 1.17.1.4) and xanthine oxidase (EC 1.17.3.2 - M-CSA ID:987) are two variants of the same gene product. The former prefers NAD+ as the oxidising substrate whereas the latter uses dioxygen exclusively.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of xanthine dehydrogenase (mammalian)
+  description: Stepwise mechanism transcribed from M-CSA entry 139 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: glu802
+    label: catalytic Glu802 (M-CSA/PDB numbering; UniProt residue 802)
+    node_type: RESIDUE
+    grounding: UniProtKB:P80457
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: arg880
+    label: catalytic Arg880 (M-CSA/PDB numbering; UniProt residue 880)
+    node_type: RESIDUE
+    grounding: UniProtKB:P80457
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: glu1261
+    label: catalytic Glu1261 (M-CSA/PDB numbering; UniProt residue 1261)
+    node_type: RESIDUE
+    grounding: UniProtKB:P80457
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: NAD(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+  - node_id: reactant2
+    label: 9H-xanthine
+    node_type: CHEMICAL
+    grounding: CHEBI:17712
+  - node_id: product0
+    label: 7,9-dihydro-1H-purine-2,6,8(3H)-trione
+    node_type: CHEMICAL
+    grounding: CHEBI:17775
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: NADH(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu1261 deprotonates the MTE bound hydroxide, activating it for nucleophilic attack upon
+      the xanthine substrate, resulting in a nucleophilic addition of the substrate to the cofactor. Xanthine
+      then transfers a hydride to the sulfur bound to the molybdenum ion (Mo=S) resulting in a two electron
+      reduction of the Mo(VI) to Mo(IV) and a thiol bound to molybdenum.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Water deprotonates the molybdenum bound thiol, reforming the Mo=S species and a single
+      electron transfer from the Mo(IV) through the rest of the cofactor and two iron-sulfur clusters
+      to a bound FAD cofactor, forming Mo(V) and a radical on the FAD cofactor.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: A free hydroxide ion attacks the Mo(V), releasing the urate product (oxidised xanthine),
+      which is re-protonated from the Glu1261, in a nucleophilic substitution reaction. This also results
+      in the second electron transfer from the Mo(V) through the rest of the cofactor and two iron-sulfur
+      clusters to a bound FAD cofactor, which then deprotonates a hydroxonium ion.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: FAD is regenerated through a hydroxide transfer from the FAD cofactor to the substrate
+      NAD
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: xanthine dehydrogenase (mammalian) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:139
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.365.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.365.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: xanthine dehydrogenase (mammalian) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.17.1.4
+  edges:
+  - subject: glu1261
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu1261 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/139/
+      snippet: Glu1261 deprotonates the MTE bound hydroxide, activating it for nucleophilic attack upon
+        the xanthine substrate, resulting in a nucleophilic addition of the substrate to the cofactor.
+        Xanthine then transfers a hydride to the sulfur bound to the molybdenum ion (Mo=S) resulting in
+        a two electron reduction of the Mo(VI) to Mo(IV) and a thiol bound to molybdenum.
+      notes: M-CSA entry 139, mechanism 1; M-CSA cites PMID:15148401, PMID:15265866, PMID:15581570, PMID:15732988,
+        PMID:19109252, PMID:19788181, PMID:20050623, PMID:24397336, PMID:28170236; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/139/
+      snippet: Water deprotonates the molybdenum bound thiol, reforming the Mo=S species and a single
+        electron transfer from the Mo(IV) through the rest of the cofactor and two iron-sulfur clusters
+        to a bound FAD cofactor, forming Mo(V) and a radical on the FAD cofactor.
+      notes: M-CSA entry 139, mechanism 1; M-CSA cites PMID:15148401, PMID:15265866, PMID:15581570, PMID:15732988,
+        PMID:19109252, PMID:19788181, PMID:20050623, PMID:24397336, PMID:28170236; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/139/
+      snippet: A free hydroxide ion attacks the Mo(V), releasing the urate product (oxidised xanthine),
+        which is re-protonated from the Glu1261, in a nucleophilic substitution reaction. This also results
+        in the second electron transfer from the Mo(V) through the rest of the cofactor and two iron-sulfur
+        clusters to a bound FAD cofactor, which then deprotonates a hydroxonium ion.
+      notes: M-CSA entry 139, mechanism 1; M-CSA cites PMID:15148401, PMID:15265866, PMID:15581570, PMID:15732988,
+        PMID:19109252, PMID:19788181, PMID:20050623, PMID:24397336, PMID:28170236; step 3
+  - subject: glu1261
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Glu1261 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/139/
+      snippet: A free hydroxide ion attacks the Mo(V), releasing the urate product (oxidised xanthine),
+        which is re-protonated from the Glu1261, in a nucleophilic substitution reaction. This also results
+        in the second electron transfer from the Mo(V) through the rest of the cofactor and two iron-sulfur
+        clusters to a bound FAD cofactor, which then deprotonates a hydroxonium ion.
+      notes: M-CSA entry 139, mechanism 1; M-CSA cites PMID:15148401, PMID:15265866, PMID:15581570, PMID:15732988,
+        PMID:19109252, PMID:19788181, PMID:20050623, PMID:24397336, PMID:28170236; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/139/
+      snippet: FAD is regenerated through a hydroxide transfer from the FAD cofactor to the substrate
+        NAD
+      notes: M-CSA entry 139, mechanism 1; M-CSA cites PMID:15148401, PMID:15265866, PMID:15581570, PMID:15732988,
+        PMID:19109252, PMID:19788181, PMID:20050623, PMID:24397336, PMID:28170236; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/139/
+      snippet: Products.
+      notes: M-CSA entry 139, mechanism 1; M-CSA cites PMID:15148401, PMID:15265866, PMID:15581570, PMID:15732988,
+        PMID:19109252, PMID:19788181, PMID:20050623, PMID:24397336, PMID:28170236; step 5
+  - subject: glu802
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu802 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/139/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 139, mechanism 1; M-CSA cites PMID:15148401, PMID:15265866, PMID:15581570, PMID:15732988,
+        PMID:19109252, PMID:19788181, PMID:20050623, PMID:24397336, PMID:28170236; M-CSA catalytic-residue
+        roles for Glu802
+  - subject: arg880
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg880 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/139/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 139, mechanism 1; M-CSA cites PMID:15148401, PMID:15265866, PMID:15581570, PMID:15732988,
+        PMID:19109252, PMID:19788181, PMID:20050623, PMID:24397336, PMID:28170236; M-CSA catalytic-residue
+        roles for Arg880
+  - subject: glu1261
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu1261 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/139/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+        proton donor
+      notes: M-CSA entry 139, mechanism 1; M-CSA cites PMID:15148401, PMID:15265866, PMID:15581570, PMID:15732988,
+        PMID:19109252, PMID:19788181, PMID:20050623, PMID:24397336, PMID:28170236; M-CSA catalytic-residue
+        roles for Glu1261
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/139/
+      snippet: <p>The most recently proposed mechanism describes a catalytically labile Mo-OH group of
+        the oxidised Mo(VI) enzyme initiating catalysis by base assisted nucleophilic attack on the carbon  of
+        the centre to be hydroxylated, with concomitant hydride transfer. This yields a reduced Mo(IV)-SH,
+        derived from the Mo(VI)=S of the oxidised enzyme, with the product remaining coordinated to the
+        molybdenum via
+      notes: M-CSA entry 139, mechanism 1; M-CSA cites PMID:15148401, PMID:15265866, PMID:15581570, PMID:15732988,
+        PMID:19109252, PMID:19788181, PMID:20050623, PMID:24397336, PMID:28170236; CATH domain 3.30.365.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/139/
+      snippet: <p>The most recently proposed mechanism describes a catalytically labile Mo-OH group of
+        the oxidised Mo(VI) enzyme initiating catalysis by base assisted nucleophilic attack on the carbon  of
+        the centre to be hydroxylated, with concomitant hydride transfer. This yields a reduced Mo(IV)-SH,
+        derived from the Mo(VI)=S of the oxidised enzyme, with the product remaining coordinated to the
+        molybdenum via
+      notes: M-CSA entry 139, mechanism 1; M-CSA cites PMID:15148401, PMID:15265866, PMID:15581570, PMID:15732988,
+        PMID:19109252, PMID:19788181, PMID:20050623, PMID:24397336, PMID:28170236; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/139/
+      snippet: <p>The most recently proposed mechanism describes a catalytically labile Mo-OH group of
+        the oxidised Mo(VI) enzyme initiating catalysis by base assisted nucleophilic attack on the carbon  of
+        the centre to be hydroxylated, with concomitant hydride transfer. This yields a reduced Mo(IV)-SH,
+        derived from the Mo(VI)=S of the oxidised enzyme, with the product remaining coordinated to the
+        molybdenum via
+      notes: M-CSA entry 139, mechanism 1; M-CSA cites PMID:15148401, PMID:15265866, PMID:15581570, PMID:15732988,
+        PMID:19109252, PMID:19788181, PMID:20050623, PMID:24397336, PMID:28170236; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/139/
+      snippet: <p>The most recently proposed mechanism describes a catalytically labile Mo-OH group of
+        the oxidised Mo(VI) enzyme initiating catalysis by base assisted nucleophilic attack on the carbon  of
+        the centre to be hydroxylated, with concomitant hydride transfer. This yields a reduced Mo(IV)-SH,
+        derived from the Mo(VI)=S of the oxidised enzyme, with the product remaining coordinated to the
+        molybdenum via
+      notes: M-CSA entry 139, mechanism 1; M-CSA cites PMID:15148401, PMID:15265866, PMID:15581570, PMID:15732988,
+        PMID:19109252, PMID:19788181, PMID:20050623, PMID:24397336, PMID:28170236; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/139/
+      snippet: <p>The most recently proposed mechanism describes a catalytically labile Mo-OH group of
+        the oxidised Mo(VI) enzyme initiating catalysis by base assisted nucleophilic attack on the carbon  of
+        the centre to be hydroxylated, with concomitant hydride transfer. This yields a reduced Mo(IV)-SH,
+        derived from the Mo(VI)=S of the oxidised enzyme, with the product remaining coordinated to the
+        molybdenum via
+      notes: M-CSA entry 139, mechanism 1; M-CSA cites PMID:15148401, PMID:15265866, PMID:15581570, PMID:15732988,
+        PMID:19109252, PMID:19788181, PMID:20050623, PMID:24397336, PMID:28170236; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/139/
+      snippet: <p>The most recently proposed mechanism describes a catalytically labile Mo-OH group of
+        the oxidised Mo(VI) enzyme initiating catalysis by base assisted nucleophilic attack on the carbon  of
+        the centre to be hydroxylated, with concomitant hydride transfer. This yields a reduced Mo(IV)-SH,
+        derived from the Mo(VI)=S of the oxidised enzyme, with the product remaining coordinated to the
+        molybdenum via
+      notes: M-CSA entry 139, mechanism 1; M-CSA cites PMID:15148401, PMID:15265866, PMID:15581570, PMID:15732988,
+        PMID:19109252, PMID:19788181, PMID:20050623, PMID:24397336, PMID:28170236; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/139/
+      snippet: <p>The most recently proposed mechanism describes a catalytically labile Mo-OH group of
+        the oxidised Mo(VI) enzyme initiating catalysis by base assisted nucleophilic attack on the carbon  of
+        the centre to be hydroxylated, with concomitant hydride transfer. This yields a reduced Mo(IV)-SH,
+        derived from the Mo(VI)=S of the oxidised enzyme, with the product remaining coordinated to the
+        molybdenum via
+      notes: M-CSA entry 139, mechanism 1; M-CSA cites PMID:15148401, PMID:15265866, PMID:15581570, PMID:15732988,
+        PMID:19109252, PMID:19788181, PMID:20050623, PMID:24397336, PMID:28170236; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/139/
+      snippet: <p>The most recently proposed mechanism describes a catalytically labile Mo-OH group of
+        the oxidised Mo(VI) enzyme initiating catalysis by base assisted nucleophilic attack on the carbon  of
+        the centre to be hydroxylated, with concomitant hydride transfer. This yields a reduced Mo(IV)-SH,
+        derived from the Mo(VI)=S of the oxidised enzyme, with the product remaining coordinated to the
+        molybdenum via
+      notes: M-CSA entry 139, mechanism 1; M-CSA cites PMID:15148401, PMID:15265866, PMID:15581570, PMID:15732988,
+        PMID:19109252, PMID:19788181, PMID:20050623, PMID:24397336, PMID:28170236; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (17 evidence-backed edges) transcribed from M-CSA entry 139;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

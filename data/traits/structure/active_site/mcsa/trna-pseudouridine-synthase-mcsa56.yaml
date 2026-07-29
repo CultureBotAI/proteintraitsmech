@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.4.99.25
 - CHEBI:65314
@@ -256,4 +256,255 @@ definitions:
       tRNA-pseudouridine synthase II (TruB) from Thermotoga maritima catalyses the conversion of tRNA uridine to tRNA pseudouridine at position 55 in tRNA. The formation of pseudouridine is shown to be important for the structural integrity of tRNA. TruB is responsible for the pseudouridine residue present in the T loops of virtually all tRNAs. TruB recognises the preformed 3-D structure of the T loop primarily through shape complementarity. It accesses its substrate uridyl residue by flipping out the nucleotide and disrupts the tertiary structure of tRNA [PMID:11779468]. The catalytic domain consists of two subdomains, each of which has an alpha+beta structure that has some similarity to the ferredoxin-like fold (note: some pseudouridine synthases contain additional domains). The active site is the most conserved structural region of the superfamily and is located between the two homologous domains. There are four distinct families of pseudouridine synthases that share no global sequence similarity, but which do share the same fold of their catalytic domain(s) and uracil-binding site and are descended from a common molecular ancestor. [PMID:10529181] There is still much debate as to the exact mechanism of this enzyme.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of tRNA-pseudouridine synthase
+  description: Stepwise mechanism transcribed from M-CSA entry 56 (6 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: asp39
+    label: catalytic Asp39 (M-CSA/PDB numbering; UniProt residue 39)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9WZW0
+    description: 'M-CSA roles: covalently attached, nucleofuge, nucleophile, proton acceptor, proton donor.'
+  - node_id: tyr67
+    label: catalytic Tyr67 (M-CSA/PDB numbering; UniProt residue 67)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9WZW0
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      proton acceptor, proton donor, proton relay, van der waals interaction.'
+  - node_id: asp81
+    label: catalytic Asp81 (M-CSA/PDB numbering; UniProt residue 81)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9WZW0
+    description: 'M-CSA roles: activator, increase acidity, increase basicity, increase electrophilicity.'
+  - node_id: arg172
+    label: catalytic Arg172 (M-CSA/PDB numbering; UniProt residue 172)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9WZW0
+    description: 'M-CSA roles: activator, increase acidity, increase basicity, increase electrophilicity.'
+  - node_id: reactant0
+    label: uridine 5'-monophosphate(1-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:65315
+  - node_id: product0
+    label: pseudouridine 5'-phosphate(1-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:65314
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Intramolecular elimination of the uridine group to produce an oxycarbenium intermediate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Asp39 abstracts a proton from the riobse intermediate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The pyrimidine base rotates in the active site. The negative charge on the nitrogen then
+      initiates a nucleophilic attack onto the ribose intermediate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Asp39 abstracts a proton from the tetrahedral carbon intermediate, generating the pseudouridine
+      product.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Inferred return step.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: tRNA-pseudouridine synthase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:56
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.2350.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.2350.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: tRNA-pseudouridine synthase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.4.99.25
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/56/
+      snippet: Asp39 abstracts a proton from the riobse intermediate.
+      notes: M-CSA entry 56, mechanism 3; M-CSA cites PMID:11779468, PMID:15581587, PMID:16300397, PMID:24371284,
+        PMID:25616362, PMID:27292228, PMID:9425056; step 2
+  - subject: asp39
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Asp39 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/56/
+      snippet: Asp39 abstracts a proton from the riobse intermediate.
+      notes: M-CSA entry 56, mechanism 3; M-CSA cites PMID:11779468, PMID:15581587, PMID:16300397, PMID:24371284,
+        PMID:25616362, PMID:27292228, PMID:9425056; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/56/
+      snippet: The pyrimidine base rotates in the active site. The negative charge on the nitrogen then
+        initiates a nucleophilic attack onto the ribose intermediate.
+      notes: M-CSA entry 56, mechanism 3; M-CSA cites PMID:11779468, PMID:15581587, PMID:16300397, PMID:24371284,
+        PMID:25616362, PMID:27292228, PMID:9425056; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/56/
+      snippet: Asp39 abstracts a proton from the tetrahedral carbon intermediate, generating the pseudouridine
+        product.
+      notes: M-CSA entry 56, mechanism 3; M-CSA cites PMID:11779468, PMID:15581587, PMID:16300397, PMID:24371284,
+        PMID:25616362, PMID:27292228, PMID:9425056; step 4
+  - subject: asp39
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Asp39 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/56/
+      snippet: Asp39 abstracts a proton from the tetrahedral carbon intermediate, generating the pseudouridine
+        product.
+      notes: M-CSA entry 56, mechanism 3; M-CSA cites PMID:11779468, PMID:15581587, PMID:16300397, PMID:24371284,
+        PMID:25616362, PMID:27292228, PMID:9425056; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/56/
+      snippet: Inferred return step.
+      notes: M-CSA entry 56, mechanism 3; M-CSA cites PMID:11779468, PMID:15581587, PMID:16300397, PMID:24371284,
+        PMID:25616362, PMID:27292228, PMID:9425056; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/56/
+      snippet: Products
+      notes: M-CSA entry 56, mechanism 3; M-CSA cites PMID:11779468, PMID:15581587, PMID:16300397, PMID:24371284,
+        PMID:25616362, PMID:27292228, PMID:9425056; step 6
+  - subject: asp39
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp39 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/56/
+      snippet: covalently attached, nucleofuge, nucleophile, proton acceptor, proton donor
+      notes: M-CSA entry 56, mechanism 3; M-CSA cites PMID:11779468, PMID:15581587, PMID:16300397, PMID:24371284,
+        PMID:25616362, PMID:27292228, PMID:9425056; M-CSA catalytic-residue roles for Asp39
+  - subject: tyr67
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr67 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/56/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+        proton donor, proton relay, van der waals interaction
+      notes: M-CSA entry 56, mechanism 3; M-CSA cites PMID:11779468, PMID:15581587, PMID:16300397, PMID:24371284,
+        PMID:25616362, PMID:27292228, PMID:9425056; M-CSA catalytic-residue roles for Tyr67
+  - subject: asp81
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp81 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/56/
+      snippet: activator, increase acidity, increase basicity, increase electrophilicity
+      notes: M-CSA entry 56, mechanism 3; M-CSA cites PMID:11779468, PMID:15581587, PMID:16300397, PMID:24371284,
+        PMID:25616362, PMID:27292228, PMID:9425056; M-CSA catalytic-residue roles for Asp81
+  - subject: arg172
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg172 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/56/
+      snippet: activator, increase acidity, increase basicity, increase electrophilicity
+      notes: M-CSA entry 56, mechanism 3; M-CSA cites PMID:11779468, PMID:15581587, PMID:16300397, PMID:24371284,
+        PMID:25616362, PMID:27292228, PMID:9425056; M-CSA catalytic-residue roles for Arg172
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/56/
+      snippet: This entry represents the so-called "glycal mechanism." This mechanism begins with deprotonation
+        of C2′ to eliminate the pyrimidine ring and form the glycal intermediate followed by reattachment
+        of the repositioned pyrimidine ring to form the C-glycoside. In this proposal, Asp39 acts as a
+        general acid/base, rather than a catalytic nucleophile.
+      notes: M-CSA entry 56, mechanism 3; M-CSA cites PMID:11779468, PMID:15581587, PMID:16300397, PMID:24371284,
+        PMID:25616362, PMID:27292228, PMID:9425056; CATH domain 3.30.2350.10 assigned to the catalytic
+        chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/56/
+      snippet: This entry represents the so-called "glycal mechanism." This mechanism begins with deprotonation
+        of C2′ to eliminate the pyrimidine ring and form the glycal intermediate followed by reattachment
+        of the repositioned pyrimidine ring to form the C-glycoside. In this proposal, Asp39 acts as a
+        general acid/base, rather than a catalytic nucleophile.
+      notes: M-CSA entry 56, mechanism 3; M-CSA cites PMID:11779468, PMID:15581587, PMID:16300397, PMID:24371284,
+        PMID:25616362, PMID:27292228, PMID:9425056; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/56/
+      snippet: This entry represents the so-called "glycal mechanism." This mechanism begins with deprotonation
+        of C2′ to eliminate the pyrimidine ring and form the glycal intermediate followed by reattachment
+        of the repositioned pyrimidine ring to form the C-glycoside. In this proposal, Asp39 acts as a
+        general acid/base, rather than a catalytic nucleophile.
+      notes: M-CSA entry 56, mechanism 3; M-CSA cites PMID:11779468, PMID:15581587, PMID:16300397, PMID:24371284,
+        PMID:25616362, PMID:27292228, PMID:9425056; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/56/
+      snippet: This entry represents the so-called "glycal mechanism." This mechanism begins with deprotonation
+        of C2′ to eliminate the pyrimidine ring and form the glycal intermediate followed by reattachment
+        of the repositioned pyrimidine ring to form the C-glycoside. In this proposal, Asp39 acts as a
+        general acid/base, rather than a catalytic nucleophile.
+      notes: M-CSA entry 56, mechanism 3; M-CSA cites PMID:11779468, PMID:15581587, PMID:16300397, PMID:24371284,
+        PMID:25616362, PMID:27292228, PMID:9425056; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 56;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

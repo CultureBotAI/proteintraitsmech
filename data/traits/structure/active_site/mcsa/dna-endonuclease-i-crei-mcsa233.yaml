@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.21.-
 - CHEBI:15377
@@ -130,4 +130,188 @@ definitions:
       This is an endonuclease that is involved in group I intron homing. It recognises and cleavers a 19-24 bp palindromic DNA site. It is known to bind three Mg(II) ions per homodimer, it is also active with Mn(II), gives lower cleavage activity with Ni(II) and Zn(II) and no activity with Ca(II). I-CreI exists as a homodimer and the active sites of the enzyme overlap. Mg1 binds to one subunit, Mg3 binds to the other and Mg2 is bound to both. Mg2 is involved in the hydrolysis of both strands of DNA while Mg1 is involved in the hydrolysis of one strand and Mg3 the other. Homing endonucleases do not have stringently-defined recognition sequences in the way that other restriction enzymes do. That is, single base changes do not abolish cleavage but reduce its efficiency to variable extents. The precise boundary of required bases is generally not known. The recognition sequence of one site known to be recognised and cleaved is CTGGGTTCAAAACGTCGTGAGACAGTTTGG (-10/-14).
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of DNA endonuclease I-CreI
+  description: Stepwise mechanism transcribed from M-CSA entry 233 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: gly19
+    label: catalytic Gly19 (M-CSA/PDB numbering; UniProt residue 19)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05725
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp20
+    label: catalytic Asp20 (M-CSA/PDB numbering; UniProt residue 20)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05725
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: poly(deoxyadenylic acid)
+    node_type: CHEMICAL
+    grounding: CHEBI:73276
+  - node_id: product0
+    label: dAMP 5'-end residue
+    node_type: CHEMICAL
+    grounding: CHEBI:53099
+  - node_id: product1
+    label: dAMP 3'-end residue
+    node_type: CHEMICAL
+    grounding: CHEBI:53113
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Activated water, coordinated to Mg901, is the nucleophile for in-line attack on the scissile
+      DNA phosphate. The transition state is trigonal bipyramidal. The 3'-hydroxyl leaving group coordinates
+      to Mg902 and this favours its protonation by water.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Activated water, coordinated to Mg903, is the nucleophile for in-line attack on the scissile
+      phosphate of the other DNA strand. The transition state is trigonal bipyramidal. The 3'-hydroxyl
+      leaving group coordinates to Mg902 and this favours its protonation by water.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: DNA endonuclease I-CreI catalytic site
+    node_type: MOTIF
+    grounding: MCSA:233
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.10.28.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.10.28.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: DNA endonuclease I-CreI activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.21.-
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/233/
+      snippet: Activated water, coordinated to Mg903, is the nucleophile for in-line attack on the scissile
+        phosphate of the other DNA strand. The transition state is trigonal bipyramidal. The 3'-hydroxyl
+        leaving group coordinates to Mg902 and this favours its protonation by water.
+      notes: M-CSA entry 233, mechanism 1; M-CSA cites PMID:11276249, PMID:15518550; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/233/
+      snippet: Products
+      notes: M-CSA entry 233, mechanism 1; M-CSA cites PMID:11276249, PMID:15518550; step 3
+  - subject: gly19
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly19 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/233/
+      snippet: metal ligand
+      notes: M-CSA entry 233, mechanism 1; M-CSA cites PMID:11276249, PMID:15518550; M-CSA catalytic-residue
+        roles for Gly19
+  - subject: asp20
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp20 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/233/
+      snippet: metal ligand
+      notes: M-CSA entry 233, mechanism 1; M-CSA cites PMID:11276249, PMID:15518550; M-CSA catalytic-residue
+        roles for Asp20
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/233/
+      snippet: Activated water, coordinated to Mg1, is the nucleophile for in-line attack on the scissile
+        DNA phosphate. The transition state is trigonal bipyramidal. The 3'-hydroxyl leaving group coordinates
+        to Mg2 and this favours its protonation by water. In the second step, Mg3 is active, instead of
+        Mg1. The mechanism of this step is the same and in the cleavage of the other DNA strand.
+      notes: M-CSA entry 233, mechanism 1; M-CSA cites PMID:11276249, PMID:15518550; CATH domain 3.10.28.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/233/
+      snippet: Activated water, coordinated to Mg1, is the nucleophile for in-line attack on the scissile
+        DNA phosphate. The transition state is trigonal bipyramidal. The 3'-hydroxyl leaving group coordinates
+        to Mg2 and this favours its protonation by water. In the second step, Mg3 is active, instead of
+        Mg1. The mechanism of this step is the same and in the cleavage of the other DNA strand.
+      notes: M-CSA entry 233, mechanism 1; M-CSA cites PMID:11276249, PMID:15518550; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/233/
+      snippet: Activated water, coordinated to Mg1, is the nucleophile for in-line attack on the scissile
+        DNA phosphate. The transition state is trigonal bipyramidal. The 3'-hydroxyl leaving group coordinates
+        to Mg2 and this favours its protonation by water. In the second step, Mg3 is active, instead of
+        Mg1. The mechanism of this step is the same and in the cleavage of the other DNA strand.
+      notes: M-CSA entry 233, mechanism 1; M-CSA cites PMID:11276249, PMID:15518550; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/233/
+      snippet: Activated water, coordinated to Mg1, is the nucleophile for in-line attack on the scissile
+        DNA phosphate. The transition state is trigonal bipyramidal. The 3'-hydroxyl leaving group coordinates
+        to Mg2 and this favours its protonation by water. In the second step, Mg3 is active, instead of
+        Mg1. The mechanism of this step is the same and in the cleavage of the other DNA strand.
+      notes: M-CSA entry 233, mechanism 1; M-CSA cites PMID:11276249, PMID:15518550; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/233/
+      snippet: Activated water, coordinated to Mg1, is the nucleophile for in-line attack on the scissile
+        DNA phosphate. The transition state is trigonal bipyramidal. The 3'-hydroxyl leaving group coordinates
+        to Mg2 and this favours its protonation by water. In the second step, Mg3 is active, instead of
+        Mg1. The mechanism of this step is the same and in the cleavage of the other DNA strand.
+      notes: M-CSA entry 233, mechanism 1; M-CSA cites PMID:11276249, PMID:15518550; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/233/
+      snippet: Activated water, coordinated to Mg1, is the nucleophile for in-line attack on the scissile
+        DNA phosphate. The transition state is trigonal bipyramidal. The 3'-hydroxyl leaving group coordinates
+        to Mg2 and this favours its protonation by water. In the second step, Mg3 is active, instead of
+        Mg1. The mechanism of this step is the same and in the cleavage of the other DNA strand.
+      notes: M-CSA entry 233, mechanism 1; M-CSA cites PMID:11276249, PMID:15518550; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (10 evidence-backed edges) transcribed from M-CSA entry 233;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

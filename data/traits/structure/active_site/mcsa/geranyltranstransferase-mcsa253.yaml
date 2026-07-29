@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.5.1.10
 - CHEBI:128769
@@ -277,4 +277,359 @@ definitions:
       Geranyltranstransferase is a member of the Isoprenoid Synthase Type I superfamily. It catalyses the metal-dependent formation of (2E,6E)-farnesyl diphosphate from geranyl diphosphate + isopentenyl diphosphate. It is known that the residue at the fifth position before the first DDxxD motif [PMID:12135472], in this case a phenylalanine, is responsible for determining product chain length.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of geranyltranstransferase
+  description: Stepwise mechanism transcribed from M-CSA entry 253 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: lys71
+    label: catalytic Lys71 (M-CSA/PDB numbering; UniProt residue 71)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08836
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: phe112
+    label: catalytic Phe112 (M-CSA/PDB numbering; UniProt residue 112)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08836
+    description: 'M-CSA roles: steric role.'
+  - node_id: asp117
+    label: catalytic Asp117 (M-CSA/PDB numbering; UniProt residue 117)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08836
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp121
+    label: catalytic Asp121 (M-CSA/PDB numbering; UniProt residue 121)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08836
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: arg126
+    label: catalytic Arg126 (M-CSA/PDB numbering; UniProt residue 126)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08836
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp188
+    label: catalytic Asp188 (M-CSA/PDB numbering; UniProt residue 188)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08836
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: lys214
+    label: catalytic Lys214 (M-CSA/PDB numbering; UniProt residue 214)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08836
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: phe253
+    label: catalytic Phe253 (M-CSA/PDB numbering; UniProt residue 253)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08836
+    description: 'M-CSA roles: steric role.'
+  - node_id: asp257
+    label: catalytic Asp257 (M-CSA/PDB numbering; UniProt residue 257)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08836
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp258
+    label: catalytic Asp258 (M-CSA/PDB numbering; UniProt residue 258)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08836
+    description: 'M-CSA roles: activator.'
+  - node_id: reactant0
+    label: isopentenyl diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:128769
+  - node_id: reactant1
+    label: geranyl diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58057
+  - node_id: product0
+    label: diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+  - node_id: product1
+    label: 2-trans,6-trans-farnesyl diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The substrate undergoes heterolysis. The diphosphate product remains associated with
+      the active site, and the cabocation is delocalised over the three terminal carbon atoms of the intermediate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The double bond of isopentenyl diphosphate adds to the terminal carbocation in an electrophilic
+      addition. The positive charge in the geranyl carbocation intermediate is delocalised over the three
+      terminal carbons.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The diphosphate formed in the initial heterolysis deprotonates the carbon adjacent to
+      the newly formed carbocation, forming a new double bond in the trans,trans-farnesyl diphosphate
+      product. The product of the reaction moves from the top Mg site to the bottom Mg site upon dissociation
+      of the diphosphate product, ready for another round of elongation. The chain elongation reaction
+      will continue unt
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: geranyltranstransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:253
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.10.600.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.10.600.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: geranyltranstransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.5.1.10
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/253/
+      snippet: The double bond of isopentenyl diphosphate adds to the terminal carbocation in an electrophilic
+        addition. The positive charge in the geranyl carbocation intermediate is delocalised over the
+        three terminal carbons.
+      notes: M-CSA entry 253, mechanism 1; M-CSA cites PMID:10631008, PMID:12135472, PMID:14672944, PMID:16892359,
+        PMID:19537817, PMID:21562622, PMID:8986756; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/253/
+      snippet: The diphosphate formed in the initial heterolysis deprotonates the carbon adjacent to the
+        newly formed carbocation, forming a new double bond in the trans,trans-farnesyl diphosphate product.
+        The product of the reaction moves from the top Mg site to the bottom Mg site upon dissociation
+        of the diphosphate product, ready for another round of elongation. The chain elongation reaction
+        will continue until product chain has reached the residue located at the fifth position before
+        the first DDxxD motif (Phe112 in this case)
+      notes: M-CSA entry 253, mechanism 1; M-CSA cites PMID:10631008, PMID:12135472, PMID:14672944, PMID:16892359,
+        PMID:19537817, PMID:21562622, PMID:8986756; step 3
+  - subject: phe112
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Phe112 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/253/
+      snippet: The diphosphate formed in the initial heterolysis deprotonates the carbon adjacent to the
+        newly formed carbocation, forming a new double bond in the trans,trans-farnesyl diphosphate product.
+        The product of the reaction moves from the top Mg site to the bottom Mg site upon dissociation
+        of the diphosphate product, ready for another round of elongation. The chain elongation reaction
+        will continue until product chain has reached the residue located at the fifth position before
+        the first DDxxD motif (Phe112 in this case)
+      notes: M-CSA entry 253, mechanism 1; M-CSA cites PMID:10631008, PMID:12135472, PMID:14672944, PMID:16892359,
+        PMID:19537817, PMID:21562622, PMID:8986756; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/253/
+      snippet: Products
+      notes: M-CSA entry 253, mechanism 1; M-CSA cites PMID:10631008, PMID:12135472, PMID:14672944, PMID:16892359,
+        PMID:19537817, PMID:21562622, PMID:8986756; step 4
+  - subject: lys71
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys71 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/253/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 253, mechanism 1; M-CSA cites PMID:10631008, PMID:12135472, PMID:14672944, PMID:16892359,
+        PMID:19537817, PMID:21562622, PMID:8986756; M-CSA catalytic-residue roles for Lys71
+  - subject: phe112
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Phe112 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/253/
+      snippet: steric role
+      notes: M-CSA entry 253, mechanism 1; M-CSA cites PMID:10631008, PMID:12135472, PMID:14672944, PMID:16892359,
+        PMID:19537817, PMID:21562622, PMID:8986756; M-CSA catalytic-residue roles for Phe112
+  - subject: asp117
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp117 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/253/
+      snippet: metal ligand
+      notes: M-CSA entry 253, mechanism 1; M-CSA cites PMID:10631008, PMID:12135472, PMID:14672944, PMID:16892359,
+        PMID:19537817, PMID:21562622, PMID:8986756; M-CSA catalytic-residue roles for Asp117
+  - subject: asp121
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp121 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/253/
+      snippet: metal ligand
+      notes: M-CSA entry 253, mechanism 1; M-CSA cites PMID:10631008, PMID:12135472, PMID:14672944, PMID:16892359,
+        PMID:19537817, PMID:21562622, PMID:8986756; M-CSA catalytic-residue roles for Asp121
+  - subject: arg126
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg126 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/253/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 253, mechanism 1; M-CSA cites PMID:10631008, PMID:12135472, PMID:14672944, PMID:16892359,
+        PMID:19537817, PMID:21562622, PMID:8986756; M-CSA catalytic-residue roles for Arg126
+  - subject: asp188
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp188 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/253/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 253, mechanism 1; M-CSA cites PMID:10631008, PMID:12135472, PMID:14672944, PMID:16892359,
+        PMID:19537817, PMID:21562622, PMID:8986756; M-CSA catalytic-residue roles for Asp188
+  - subject: lys214
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys214 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/253/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 253, mechanism 1; M-CSA cites PMID:10631008, PMID:12135472, PMID:14672944, PMID:16892359,
+        PMID:19537817, PMID:21562622, PMID:8986756; M-CSA catalytic-residue roles for Lys214
+  - subject: phe253
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Phe253 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/253/
+      snippet: steric role
+      notes: M-CSA entry 253, mechanism 1; M-CSA cites PMID:10631008, PMID:12135472, PMID:14672944, PMID:16892359,
+        PMID:19537817, PMID:21562622, PMID:8986756; M-CSA catalytic-residue roles for Phe253
+  - subject: asp257
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp257 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/253/
+      snippet: metal ligand
+      notes: M-CSA entry 253, mechanism 1; M-CSA cites PMID:10631008, PMID:12135472, PMID:14672944, PMID:16892359,
+        PMID:19537817, PMID:21562622, PMID:8986756; M-CSA catalytic-residue roles for Asp257
+  - subject: asp258
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp258 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/253/
+      snippet: activator
+      notes: M-CSA entry 253, mechanism 1; M-CSA cites PMID:10631008, PMID:12135472, PMID:14672944, PMID:16892359,
+        PMID:19537817, PMID:21562622, PMID:8986756; M-CSA catalytic-residue roles for Asp258
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/253/
+      snippet: The substrate undergoes heterolysis. The diphosphate product remains associated with the
+        active site, and the cabocation is delocalised over the three terminal carbon atoms of the intermediate.
+        The double bond of isopentenyl diphosphate adds to the terminal carbocation in an electrophilic
+        addition. The diphosphate formed in the initial heterolysis deprotonates the carbon adjacent to
+        the newly form
+      notes: M-CSA entry 253, mechanism 1; M-CSA cites PMID:10631008, PMID:12135472, PMID:14672944, PMID:16892359,
+        PMID:19537817, PMID:21562622, PMID:8986756; CATH domain 1.10.600.10 assigned to the catalytic
+        chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/253/
+      snippet: The substrate undergoes heterolysis. The diphosphate product remains associated with the
+        active site, and the cabocation is delocalised over the three terminal carbon atoms of the intermediate.
+        The double bond of isopentenyl diphosphate adds to the terminal carbocation in an electrophilic
+        addition. The diphosphate formed in the initial heterolysis deprotonates the carbon adjacent to
+        the newly form
+      notes: M-CSA entry 253, mechanism 1; M-CSA cites PMID:10631008, PMID:12135472, PMID:14672944, PMID:16892359,
+        PMID:19537817, PMID:21562622, PMID:8986756; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/253/
+      snippet: The substrate undergoes heterolysis. The diphosphate product remains associated with the
+        active site, and the cabocation is delocalised over the three terminal carbon atoms of the intermediate.
+        The double bond of isopentenyl diphosphate adds to the terminal carbocation in an electrophilic
+        addition. The diphosphate formed in the initial heterolysis deprotonates the carbon adjacent to
+        the newly form
+      notes: M-CSA entry 253, mechanism 1; M-CSA cites PMID:10631008, PMID:12135472, PMID:14672944, PMID:16892359,
+        PMID:19537817, PMID:21562622, PMID:8986756; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/253/
+      snippet: The substrate undergoes heterolysis. The diphosphate product remains associated with the
+        active site, and the cabocation is delocalised over the three terminal carbon atoms of the intermediate.
+        The double bond of isopentenyl diphosphate adds to the terminal carbocation in an electrophilic
+        addition. The diphosphate formed in the initial heterolysis deprotonates the carbon adjacent to
+        the newly form
+      notes: M-CSA entry 253, mechanism 1; M-CSA cites PMID:10631008, PMID:12135472, PMID:14672944, PMID:16892359,
+        PMID:19537817, PMID:21562622, PMID:8986756; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/253/
+      snippet: The substrate undergoes heterolysis. The diphosphate product remains associated with the
+        active site, and the cabocation is delocalised over the three terminal carbon atoms of the intermediate.
+        The double bond of isopentenyl diphosphate adds to the terminal carbocation in an electrophilic
+        addition. The diphosphate formed in the initial heterolysis deprotonates the carbon adjacent to
+        the newly form
+      notes: M-CSA entry 253, mechanism 1; M-CSA cites PMID:10631008, PMID:12135472, PMID:14672944, PMID:16892359,
+        PMID:19537817, PMID:21562622, PMID:8986756; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/253/
+      snippet: The substrate undergoes heterolysis. The diphosphate product remains associated with the
+        active site, and the cabocation is delocalised over the three terminal carbon atoms of the intermediate.
+        The double bond of isopentenyl diphosphate adds to the terminal carbocation in an electrophilic
+        addition. The diphosphate formed in the initial heterolysis deprotonates the carbon adjacent to
+        the newly form
+      notes: M-CSA entry 253, mechanism 1; M-CSA cites PMID:10631008, PMID:12135472, PMID:14672944, PMID:16892359,
+        PMID:19537817, PMID:21562622, PMID:8986756; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (20 evidence-backed edges) transcribed from M-CSA entry 253;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

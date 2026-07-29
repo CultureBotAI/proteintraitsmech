@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.24.69
 - CHEBI:15377
@@ -827,4 +827,254 @@ definitions:
       Botulinum neurotoxin acts by inhibiting neurotransmitter release. It binds to peripheral neuronal synapses, is internalised and moves by retrograde transport up the axon into the spinal cord where it can move between postsynaptic and presynaptic neurons. It disrupts neurotransmitter release by acting as a zinc endopeptidase that cleaves the 76-Gln-|-Phe-77 bond of synaptobrevin-2(Sb2), one of three SNARE proteins involved in neuronal synaptic vesicle fusion. There are in total 7 serotypes of botulinum neurotoxin. All seven serotypes possess an identical Zn2+-binding motif, HEXXH, but are unique either in substrate selection or in their cleavage site. Their catalytic domains share high degree of sequence homology and holotoxin structures of serotype A and serotype B have been reported to be structurally similar. Botulinum belongs to the same class of neurotoxin with tetanus neurotoxin and they share significant sequence homology. They possess similar structural and functional domains and have a similar mechanism of toxicity. However, Botulinum neurotoxins acts at the neuromuscular junction causing flaccid paralysis by inhibiting the release of acetylcholine into the synapse, while tetanus toxin acts at the central nervous system causing spastic paralysis. In addition botulinum neurotoxin is the protein also known as Botox which is widely used in the cosmetics industry for the reduction of facial wrinkles through relaxation of the muscles.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of bontoxilysin
+  description: Stepwise mechanism transcribed from M-CSA entry 626 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +1).
+  nodes:
+  - node_id: his229
+    label: catalytic His229 (M-CSA/PDB numbering; UniProt residue 230)
+    node_type: RESIDUE
+    grounding: UniProtKB:P10844
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu230
+    label: catalytic Glu230 (M-CSA/PDB numbering; UniProt residue 231)
+    node_type: RESIDUE
+    grounding: UniProtKB:P10844
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: his233
+    label: catalytic His233 (M-CSA/PDB numbering; UniProt residue 234)
+    node_type: RESIDUE
+    grounding: UniProtKB:P10844
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu267
+    label: catalytic Glu267 (M-CSA/PDB numbering; UniProt residue 268)
+    node_type: RESIDUE
+    grounding: UniProtKB:P10844
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: arg369
+    label: catalytic Arg369 (M-CSA/PDB numbering; UniProt residue 370)
+    node_type: RESIDUE
+    grounding: UniProtKB:P10844
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: dipeptide zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:90799
+  - node_id: product0
+    label: L-alpha-amino acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:59869
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu231 deprotonates water which then attacks the peptide bond in a nucleophilic addition.
+      This results in the oxyanion coordinating to the Zinc. Arg369 stabilises the transition state by
+      interacting with the negatively charged carbonyl of the tetrahedral intermediate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The oxyanion initiates an elimination that results in the cleavage of the peptide bond.
+      The N-terminal product accepts a proton from Glu231.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The N-terminal product deprotonates the C-terminal product to produce kinetically favourable
+      products.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Product
+  - node_id: active_site
+    label: bontoxilysin catalytic site
+    node_type: MOTIF
+    grounding: MCSA:626
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.1240.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.1240.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: bontoxilysin activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.24.69
+  edges:
+  - subject: arg369
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg369 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/626/
+      snippet: Glu231 deprotonates water which then attacks the peptide bond in a nucleophilic addition.
+        This results in the oxyanion coordinating to the Zinc. Arg369 stabilises the transition state
+        by interacting with the negatively charged carbonyl of the tetrahedral intermediate.
+      notes: M-CSA entry 626, mechanism 1; M-CSA cites PMID:10932255, PMID:11700044, PMID:1429690, PMID:15027050,
+        PMID:15592454, PMID:18213512; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/626/
+      snippet: The oxyanion initiates an elimination that results in the cleavage of the peptide bond.
+        The N-terminal product accepts a proton from Glu231.
+      notes: M-CSA entry 626, mechanism 1; M-CSA cites PMID:10932255, PMID:11700044, PMID:1429690, PMID:15027050,
+        PMID:15592454, PMID:18213512; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/626/
+      snippet: The N-terminal product deprotonates the C-terminal product to produce kinetically favourable
+        products.
+      notes: M-CSA entry 626, mechanism 1; M-CSA cites PMID:10932255, PMID:11700044, PMID:1429690, PMID:15027050,
+        PMID:15592454, PMID:18213512; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/626/
+      snippet: Product
+      notes: M-CSA entry 626, mechanism 1; M-CSA cites PMID:10932255, PMID:11700044, PMID:1429690, PMID:15027050,
+        PMID:15592454, PMID:18213512; step 4
+  - subject: his229
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His229 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/626/
+      snippet: metal ligand
+      notes: M-CSA entry 626, mechanism 1; M-CSA cites PMID:10932255, PMID:11700044, PMID:1429690, PMID:15027050,
+        PMID:15592454, PMID:18213512; M-CSA catalytic-residue roles for His229
+  - subject: glu230
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu230 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/626/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 626, mechanism 1; M-CSA cites PMID:10932255, PMID:11700044, PMID:1429690, PMID:15027050,
+        PMID:15592454, PMID:18213512; M-CSA catalytic-residue roles for Glu230
+  - subject: his233
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His233 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/626/
+      snippet: metal ligand
+      notes: M-CSA entry 626, mechanism 1; M-CSA cites PMID:10932255, PMID:11700044, PMID:1429690, PMID:15027050,
+        PMID:15592454, PMID:18213512; M-CSA catalytic-residue roles for His233
+  - subject: glu267
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu267 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/626/
+      snippet: metal ligand
+      notes: M-CSA entry 626, mechanism 1; M-CSA cites PMID:10932255, PMID:11700044, PMID:1429690, PMID:15027050,
+        PMID:15592454, PMID:18213512; M-CSA catalytic-residue roles for Glu267
+  - subject: arg369
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg369 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/626/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 626, mechanism 1; M-CSA cites PMID:10932255, PMID:11700044, PMID:1429690, PMID:15027050,
+        PMID:15592454, PMID:18213512; M-CSA catalytic-residue roles for Arg369
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/626/
+      snippet: Glu231 is abase which deprotonates water and in conjugation with polarization by Zn2+ activates
+        water so that it can act as a nucleophile and attack the carbonyl of the peptide bond. Arg369
+        and Zn2+ stabilise the transition state by interacting with the negatively charged carbonyl oxygen
+        atom of the tetrahedral intermediate. The collapse of the oxyanion results in the cleavage of
+        the peptide bond
+      notes: M-CSA entry 626, mechanism 1; M-CSA cites PMID:10932255, PMID:11700044, PMID:1429690, PMID:15027050,
+        PMID:15592454, PMID:18213512; CATH domain 3.90.1240.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/626/
+      snippet: Glu231 is abase which deprotonates water and in conjugation with polarization by Zn2+ activates
+        water so that it can act as a nucleophile and attack the carbonyl of the peptide bond. Arg369
+        and Zn2+ stabilise the transition state by interacting with the negatively charged carbonyl oxygen
+        atom of the tetrahedral intermediate. The collapse of the oxyanion results in the cleavage of
+        the peptide bond
+      notes: M-CSA entry 626, mechanism 1; M-CSA cites PMID:10932255, PMID:11700044, PMID:1429690, PMID:15027050,
+        PMID:15592454, PMID:18213512; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/626/
+      snippet: Glu231 is abase which deprotonates water and in conjugation with polarization by Zn2+ activates
+        water so that it can act as a nucleophile and attack the carbonyl of the peptide bond. Arg369
+        and Zn2+ stabilise the transition state by interacting with the negatively charged carbonyl oxygen
+        atom of the tetrahedral intermediate. The collapse of the oxyanion results in the cleavage of
+        the peptide bond
+      notes: M-CSA entry 626, mechanism 1; M-CSA cites PMID:10932255, PMID:11700044, PMID:1429690, PMID:15027050,
+        PMID:15592454, PMID:18213512; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/626/
+      snippet: Glu231 is abase which deprotonates water and in conjugation with polarization by Zn2+ activates
+        water so that it can act as a nucleophile and attack the carbonyl of the peptide bond. Arg369
+        and Zn2+ stabilise the transition state by interacting with the negatively charged carbonyl oxygen
+        atom of the tetrahedral intermediate. The collapse of the oxyanion results in the cleavage of
+        the peptide bond
+      notes: M-CSA entry 626, mechanism 1; M-CSA cites PMID:10932255, PMID:11700044, PMID:1429690, PMID:15027050,
+        PMID:15592454, PMID:18213512; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/626/
+      snippet: Glu231 is abase which deprotonates water and in conjugation with polarization by Zn2+ activates
+        water so that it can act as a nucleophile and attack the carbonyl of the peptide bond. Arg369
+        and Zn2+ stabilise the transition state by interacting with the negatively charged carbonyl oxygen
+        atom of the tetrahedral intermediate. The collapse of the oxyanion results in the cleavage of
+        the peptide bond
+      notes: M-CSA entry 626, mechanism 1; M-CSA cites PMID:10932255, PMID:11700044, PMID:1429690, PMID:15027050,
+        PMID:15592454, PMID:18213512; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (14 evidence-backed edges) transcribed from M-CSA entry 626;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

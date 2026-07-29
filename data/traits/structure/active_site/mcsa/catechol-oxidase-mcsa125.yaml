@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.10.3.1
 - CHEBI:15379
@@ -250,4 +250,324 @@ definitions:
       Catechol oxidase is a type 3 copper protein that exclusively catalyses the oxidation of catechols (e.g. o-diphenols) to the corresponding o-quinones. The enzyme can also act on a variety of substituted catechols. Although a member of the same superfamily as tyrosinase, it is a different enzyme.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of catechol oxidase
+  description: Stepwise mechanism transcribed from M-CSA entry 125 (6 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: his88
+    label: catalytic His88 (M-CSA/PDB numbering; UniProt residue 88)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9ZP19
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his109
+    label: catalytic His109 (M-CSA/PDB numbering; UniProt residue 109)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9ZP19
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his118
+    label: catalytic His118 (M-CSA/PDB numbering; UniProt residue 118)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9ZP19
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his240
+    label: catalytic His240 (M-CSA/PDB numbering; UniProt residue 240)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9ZP19
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his244
+    label: catalytic His244 (M-CSA/PDB numbering; UniProt residue 244)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9ZP19
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: phe261
+    label: catalytic Phe261 (M-CSA/PDB numbering; UniProt residue 261)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9ZP19
+    description: 'M-CSA roles: polar/non-polar interaction, steric role.'
+  - node_id: his274
+    label: catalytic His274 (M-CSA/PDB numbering; UniProt residue 274)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9ZP19
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: dioxygen
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+  - node_id: reactant1
+    label: catechol
+    node_type: CHEMICAL
+    grounding: CHEBI:18135
+  - node_id: product0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product1
+    label: 1,2-benzoquinone
+    node_type: CHEMICAL
+    grounding: CHEBI:17253
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The bridging hydroxide deprotonates the benzene-1,2-diol, which initiates a nucleophilic
+      attack on the Cu(I) centre, initiating a single electron transfer to dioxygen. The dioxygen radical
+      then replaces the water as the bridging ligand between the two copper centres.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The dioxygen radical abstracts a hydrogen from the other hydroxyl group on the Cu-bound
+      intermediate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The oxyanion collapses, initiating double bond rearrangement that forms 1,2-benzoquinone
+      and causes a single electron to be transferred to the Cu(II) centre.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The anionic oxygen of the peroxide group deprotonates the second molecule of  benzene-1,2-diol,
+      which causes a hydride to be eliminated from the second phenol group, and cleaved of the peroxo
+      bond. The second Cu(I) centre donates a single electron to the second phenol group.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: The phenolate undergoes double bond rearrangement that causes a single electron to be
+      donated back to the Cu(II) centre, and formation of 1,2-benzoquinone.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: catechol oxidase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:125
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.10.1280.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.10.1280.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: catechol oxidase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.10.3.1
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/125/
+      snippet: The dioxygen radical abstracts a hydrogen from the other hydroxyl group on the Cu-bound
+        intermediate.
+      notes: M-CSA entry 125, mechanism 1; M-CSA cites PMID:15185133, PMID:15643881, PMID:17891425, PMID:9846879;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/125/
+      snippet: The oxyanion collapses, initiating double bond rearrangement that forms 1,2-benzoquinone
+        and causes a single electron to be transferred to the Cu(II) centre.
+      notes: M-CSA entry 125, mechanism 1; M-CSA cites PMID:15185133, PMID:15643881, PMID:17891425, PMID:9846879;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/125/
+      snippet: The anionic oxygen of the peroxide group deprotonates the second molecule of  benzene-1,2-diol,
+        which causes a hydride to be eliminated from the second phenol group, and cleaved of the peroxo
+        bond. The second Cu(I) centre donates a single electron to the second phenol group.
+      notes: M-CSA entry 125, mechanism 1; M-CSA cites PMID:15185133, PMID:15643881, PMID:17891425, PMID:9846879;
+        step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/125/
+      snippet: The phenolate undergoes double bond rearrangement that causes a single electron to be donated
+        back to the Cu(II) centre, and formation of 1,2-benzoquinone.
+      notes: M-CSA entry 125, mechanism 1; M-CSA cites PMID:15185133, PMID:15643881, PMID:17891425, PMID:9846879;
+        step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/125/
+      snippet: Products.
+      notes: M-CSA entry 125, mechanism 1; M-CSA cites PMID:15185133, PMID:15643881, PMID:17891425, PMID:9846879;
+        step 6
+  - subject: his88
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His88 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/125/
+      snippet: metal ligand
+      notes: M-CSA entry 125, mechanism 1; M-CSA cites PMID:15185133, PMID:15643881, PMID:17891425, PMID:9846879;
+        M-CSA catalytic-residue roles for His88
+  - subject: his109
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His109 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/125/
+      snippet: metal ligand
+      notes: M-CSA entry 125, mechanism 1; M-CSA cites PMID:15185133, PMID:15643881, PMID:17891425, PMID:9846879;
+        M-CSA catalytic-residue roles for His109
+  - subject: his118
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His118 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/125/
+      snippet: metal ligand
+      notes: M-CSA entry 125, mechanism 1; M-CSA cites PMID:15185133, PMID:15643881, PMID:17891425, PMID:9846879;
+        M-CSA catalytic-residue roles for His118
+  - subject: his240
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His240 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/125/
+      snippet: metal ligand
+      notes: M-CSA entry 125, mechanism 1; M-CSA cites PMID:15185133, PMID:15643881, PMID:17891425, PMID:9846879;
+        M-CSA catalytic-residue roles for His240
+  - subject: his244
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His244 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/125/
+      snippet: metal ligand
+      notes: M-CSA entry 125, mechanism 1; M-CSA cites PMID:15185133, PMID:15643881, PMID:17891425, PMID:9846879;
+        M-CSA catalytic-residue roles for His244
+  - subject: phe261
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Phe261 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/125/
+      snippet: polar/non-polar interaction, steric role
+      notes: M-CSA entry 125, mechanism 1; M-CSA cites PMID:15185133, PMID:15643881, PMID:17891425, PMID:9846879;
+        M-CSA catalytic-residue roles for Phe261
+  - subject: his274
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His274 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/125/
+      snippet: metal ligand
+      notes: M-CSA entry 125, mechanism 1; M-CSA cites PMID:15185133, PMID:15643881, PMID:17891425, PMID:9846879;
+        M-CSA catalytic-residue roles for His274
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/125/
+      snippet: There is little or no direct involvement of amino acid residues in the proposed mechanism.
+        A hydroxide ion (activated water) bridges the two copper centres. This activates the diphenol,
+        resulting in an electron transfer from one  of the copper centres to the dioxygen molecule. The
+        dioxygen radical abstracts a hydrogen from the other hydroxyl group on the Cu-bound intermediate.
+        The phenolic racidal
+      notes: M-CSA entry 125, mechanism 1; M-CSA cites PMID:15185133, PMID:15643881, PMID:17891425, PMID:9846879;
+        CATH domain 1.10.1280.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/125/
+      snippet: There is little or no direct involvement of amino acid residues in the proposed mechanism.
+        A hydroxide ion (activated water) bridges the two copper centres. This activates the diphenol,
+        resulting in an electron transfer from one  of the copper centres to the dioxygen molecule. The
+        dioxygen radical abstracts a hydrogen from the other hydroxyl group on the Cu-bound intermediate.
+        The phenolic racidal
+      notes: M-CSA entry 125, mechanism 1; M-CSA cites PMID:15185133, PMID:15643881, PMID:17891425, PMID:9846879;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/125/
+      snippet: There is little or no direct involvement of amino acid residues in the proposed mechanism.
+        A hydroxide ion (activated water) bridges the two copper centres. This activates the diphenol,
+        resulting in an electron transfer from one  of the copper centres to the dioxygen molecule. The
+        dioxygen radical abstracts a hydrogen from the other hydroxyl group on the Cu-bound intermediate.
+        The phenolic racidal
+      notes: M-CSA entry 125, mechanism 1; M-CSA cites PMID:15185133, PMID:15643881, PMID:17891425, PMID:9846879;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/125/
+      snippet: There is little or no direct involvement of amino acid residues in the proposed mechanism.
+        A hydroxide ion (activated water) bridges the two copper centres. This activates the diphenol,
+        resulting in an electron transfer from one  of the copper centres to the dioxygen molecule. The
+        dioxygen radical abstracts a hydrogen from the other hydroxyl group on the Cu-bound intermediate.
+        The phenolic racidal
+      notes: M-CSA entry 125, mechanism 1; M-CSA cites PMID:15185133, PMID:15643881, PMID:17891425, PMID:9846879;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/125/
+      snippet: There is little or no direct involvement of amino acid residues in the proposed mechanism.
+        A hydroxide ion (activated water) bridges the two copper centres. This activates the diphenol,
+        resulting in an electron transfer from one  of the copper centres to the dioxygen molecule. The
+        dioxygen radical abstracts a hydrogen from the other hydroxyl group on the Cu-bound intermediate.
+        The phenolic racidal
+      notes: M-CSA entry 125, mechanism 1; M-CSA cites PMID:15185133, PMID:15643881, PMID:17891425, PMID:9846879;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/125/
+      snippet: There is little or no direct involvement of amino acid residues in the proposed mechanism.
+        A hydroxide ion (activated water) bridges the two copper centres. This activates the diphenol,
+        resulting in an electron transfer from one  of the copper centres to the dioxygen molecule. The
+        dioxygen radical abstracts a hydrogen from the other hydroxyl group on the Cu-bound intermediate.
+        The phenolic racidal
+      notes: M-CSA entry 125, mechanism 1; M-CSA cites PMID:15185133, PMID:15643881, PMID:17891425, PMID:9846879;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (18 evidence-backed edges) transcribed from M-CSA entry 125;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

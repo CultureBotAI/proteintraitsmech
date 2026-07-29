@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.5.1.38
 - CHEBI:29991
@@ -251,4 +251,330 @@ definitions:
       Glutaminase-asparaginase catalyses the hydrolysis of D and L isomers of glutamine and asparagine. Glutaminase-asparaginase belongs to a family of related amidohydrolases, in a less specific class that catalyses the hydrolysis of glutamine to glutamic acid and asparagine to aspartic acid with similar efficiency. They are mechanistically similar to trypsin.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of glutamin-(asparagin-)ase
+  description: Stepwise mechanism transcribed from M-CSA entry 29 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: thr1020
+    label: catalytic Thr1020 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P10182
+    description: 'M-CSA roles: covalently attached, hydrogen bond acceptor, hydrogen bond donor, nucleofuge,
+      nucleophile, proton acceptor, proton donor.'
+  - node_id: tyr1034
+    label: catalytic Tyr1034 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P10182
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor,
+      proton relay.'
+  - node_id: thr1100
+    label: catalytic Thr1100 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P10182
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor.'
+  - node_id: asp1101
+    label: catalytic Asp1101 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P10182
+    description: 'M-CSA roles: hydrogen bond acceptor.'
+  - node_id: lys1173
+    label: catalytic Lys1173 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P10182
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor.'
+  - node_id: glu3294
+    label: catalytic Glu3294 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P10182
+    description: 'M-CSA roles: hydrogen bond acceptor, proton acceptor, proton donor, proton relay.'
+  - node_id: reactant0
+    label: L-asparagine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:58048
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: L-aspartate(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:29991
+  - node_id: product1
+    label: ammonium
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu3294B deprotonates Tyr1034, which in turn deprotonates Thr1020. Thr1020 then initiates
+      a nucleophilic attack upon the amide carbon of L-asparagine in an addition reaction. The oxyanion
+      formed deprotonates Glu3294B.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Glu1294B deprotonates the hydroxyl formed from the oxyanion, initiating the elimination
+      of ammonia, which gains a proton from Glu1294B.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The Asp-Lys-Thr triad activates water, which initiates a nucleophilic attack on the carbonyl
+      carbon of the covalently attached intermediate. The formed oxyanion deprotonates the water which
+      attacked.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Glu1294B deprotonates the hydroxyl formed from the oxyanion, initiating the elimination
+      of Thr1020, which in turn deprotonates Tyr1034, which then deprotonates Glu1294B.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: glutamin-(asparagin-)ase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:29
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1170 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1170
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: glutamin-(asparagin-)ase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.5.1.38
+  edges:
+  - subject: thr1020
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Thr1020 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/29/
+      snippet: Glu3294B deprotonates Tyr1034, which in turn deprotonates Thr1020. Thr1020 then initiates
+        a nucleophilic attack upon the amide carbon of L-asparagine in an addition reaction. The oxyanion
+        formed deprotonates Glu3294B.
+      notes: M-CSA entry 29, mechanism 1; M-CSA cites PMID:10684596; step 1
+  - subject: tyr1034
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr1034 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/29/
+      snippet: Glu3294B deprotonates Tyr1034, which in turn deprotonates Thr1020. Thr1020 then initiates
+        a nucleophilic attack upon the amide carbon of L-asparagine in an addition reaction. The oxyanion
+        formed deprotonates Glu3294B.
+      notes: M-CSA entry 29, mechanism 1; M-CSA cites PMID:10684596; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/29/
+      snippet: Glu1294B deprotonates the hydroxyl formed from the oxyanion, initiating the elimination
+        of ammonia, which gains a proton from Glu1294B.
+      notes: M-CSA entry 29, mechanism 1; M-CSA cites PMID:10684596; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/29/
+      snippet: The Asp-Lys-Thr triad activates water, which initiates a nucleophilic attack on the carbonyl
+        carbon of the covalently attached intermediate. The formed oxyanion deprotonates the water which
+        attacked.
+      notes: M-CSA entry 29, mechanism 1; M-CSA cites PMID:10684596; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/29/
+      snippet: Glu1294B deprotonates the hydroxyl formed from the oxyanion, initiating the elimination
+        of Thr1020, which in turn deprotonates Tyr1034, which then deprotonates Glu1294B.
+      notes: M-CSA entry 29, mechanism 1; M-CSA cites PMID:10684596; step 4
+  - subject: thr1020
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Thr1020 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/29/
+      snippet: Glu1294B deprotonates the hydroxyl formed from the oxyanion, initiating the elimination
+        of Thr1020, which in turn deprotonates Tyr1034, which then deprotonates Glu1294B.
+      notes: M-CSA entry 29, mechanism 1; M-CSA cites PMID:10684596; step 4
+  - subject: tyr1034
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Tyr1034 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/29/
+      snippet: Glu1294B deprotonates the hydroxyl formed from the oxyanion, initiating the elimination
+        of Thr1020, which in turn deprotonates Tyr1034, which then deprotonates Glu1294B.
+      notes: M-CSA entry 29, mechanism 1; M-CSA cites PMID:10684596; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/29/
+      snippet: Products
+      notes: M-CSA entry 29, mechanism 1; M-CSA cites PMID:10684596; step 5
+  - subject: thr1020
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr1020 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/29/
+      snippet: covalently attached, hydrogen bond acceptor, hydrogen bond donor, nucleofuge, nucleophile,
+        proton acceptor, proton donor
+      notes: M-CSA entry 29, mechanism 1; M-CSA cites PMID:10684596; M-CSA catalytic-residue roles for
+        Thr1020
+  - subject: tyr1034
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr1034 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/29/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 29, mechanism 1; M-CSA cites PMID:10684596; M-CSA catalytic-residue roles for
+        Tyr1034
+  - subject: thr1100
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr1100 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/29/
+      snippet: hydrogen bond acceptor, hydrogen bond donor
+      notes: M-CSA entry 29, mechanism 1; M-CSA cites PMID:10684596; M-CSA catalytic-residue roles for
+        Thr1100
+  - subject: asp1101
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp1101 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/29/
+      snippet: hydrogen bond acceptor
+      notes: M-CSA entry 29, mechanism 1; M-CSA cites PMID:10684596; M-CSA catalytic-residue roles for
+        Asp1101
+  - subject: lys1173
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys1173 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/29/
+      snippet: hydrogen bond acceptor, hydrogen bond donor
+      notes: M-CSA entry 29, mechanism 1; M-CSA cites PMID:10684596; M-CSA catalytic-residue roles for
+        Lys1173
+  - subject: glu3294
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu3294 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/29/
+      snippet: hydrogen bond acceptor, proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 29, mechanism 1; M-CSA cites PMID:10684596; M-CSA catalytic-residue roles for
+        Glu3294
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/29/
+      snippet: Tyr 1034 is polarised by Glu 3294 B and facilitates proton abstraction from Thr 1020 and
+        its transfer to the substrate. Nucleophilic attack by Thr 1020 proceeds on the carbonyl carbon
+        and this forms a tetrahedral intermediate, which collapses using Tyr 1034 as a general acid/base
+        catalyst, and activation by Glu 3294 B with release of ammonia as a by-product. Hydrolysis occurs
+        using Thr 1100 to act
+      notes: M-CSA entry 29, mechanism 1; M-CSA cites PMID:10684596; CATH domain 3.40.50.1170 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/29/
+      snippet: Tyr 1034 is polarised by Glu 3294 B and facilitates proton abstraction from Thr 1020 and
+        its transfer to the substrate. Nucleophilic attack by Thr 1020 proceeds on the carbonyl carbon
+        and this forms a tetrahedral intermediate, which collapses using Tyr 1034 as a general acid/base
+        catalyst, and activation by Glu 3294 B with release of ammonia as a by-product. Hydrolysis occurs
+        using Thr 1100 to act
+      notes: M-CSA entry 29, mechanism 1; M-CSA cites PMID:10684596; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/29/
+      snippet: Tyr 1034 is polarised by Glu 3294 B and facilitates proton abstraction from Thr 1020 and
+        its transfer to the substrate. Nucleophilic attack by Thr 1020 proceeds on the carbonyl carbon
+        and this forms a tetrahedral intermediate, which collapses using Tyr 1034 as a general acid/base
+        catalyst, and activation by Glu 3294 B with release of ammonia as a by-product. Hydrolysis occurs
+        using Thr 1100 to act
+      notes: M-CSA entry 29, mechanism 1; M-CSA cites PMID:10684596; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/29/
+      snippet: Tyr 1034 is polarised by Glu 3294 B and facilitates proton abstraction from Thr 1020 and
+        its transfer to the substrate. Nucleophilic attack by Thr 1020 proceeds on the carbonyl carbon
+        and this forms a tetrahedral intermediate, which collapses using Tyr 1034 as a general acid/base
+        catalyst, and activation by Glu 3294 B with release of ammonia as a by-product. Hydrolysis occurs
+        using Thr 1100 to act
+      notes: M-CSA entry 29, mechanism 1; M-CSA cites PMID:10684596; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/29/
+      snippet: Tyr 1034 is polarised by Glu 3294 B and facilitates proton abstraction from Thr 1020 and
+        its transfer to the substrate. Nucleophilic attack by Thr 1020 proceeds on the carbonyl carbon
+        and this forms a tetrahedral intermediate, which collapses using Tyr 1034 as a general acid/base
+        catalyst, and activation by Glu 3294 B with release of ammonia as a by-product. Hydrolysis occurs
+        using Thr 1100 to act
+      notes: M-CSA entry 29, mechanism 1; M-CSA cites PMID:10684596; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/29/
+      snippet: Tyr 1034 is polarised by Glu 3294 B and facilitates proton abstraction from Thr 1020 and
+        its transfer to the substrate. Nucleophilic attack by Thr 1020 proceeds on the carbonyl carbon
+        and this forms a tetrahedral intermediate, which collapses using Tyr 1034 as a general acid/base
+        catalyst, and activation by Glu 3294 B with release of ammonia as a by-product. Hydrolysis occurs
+        using Thr 1100 to act
+      notes: M-CSA entry 29, mechanism 1; M-CSA cites PMID:10684596; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (20 evidence-backed edges) transcribed from M-CSA entry 29;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

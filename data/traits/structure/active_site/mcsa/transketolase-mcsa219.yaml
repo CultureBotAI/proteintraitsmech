@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.2.1.1
 - CHEBI:59776
@@ -628,4 +628,354 @@ definitions:
       Transketolase (EC:2.2.1.1) (TK) catalyses the reversible transfer of a two-carbon ketol unit from xylulose 5-phosphate to an aldose receptor, such as ribose 5-phosphate, to form sedoheptulose 7-phosphate and glyceraldehyde 3- phosphate. This enzyme, together with transaldolase, provides a link between the glycolytic and pentose-phosphate pathways. TK requires thiamine pyrophosphate and a divalent metal cation as a cofactor. Catalytic activity has been noted with a wide variety of divalent metal ions coordinating the diphosphate group of the cofactor [PMID:9924800] and whilst there is still some debate as to the exact nature of the native metal cation (most of the work on the determination of the mechanism has utilised the magnesium cation), Esakova et al. have determined that the enzyme is more stable in the presence of Ca(II), making this the more likely native metal cation [PMID:16125202] .
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of transketolase
+  description: Stepwise mechanism transcribed from M-CSA entry 219 (6 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: his30
+    label: catalytic His30 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P29401
+    description: 'M-CSA roles: activator, hydrogen bond donor, steric role.'
+  - node_id: lys244
+    label: catalytic Lys244 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P29401
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: his258
+    label: catalytic His258 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P29401
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: his263
+    label: catalytic His263 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P29401
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: glu418
+    label: catalytic Glu418 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P29401
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: his481
+    label: catalytic His481 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P29401
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: reactant0
+    label: D-glyceraldehyde 3-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:59776
+  - node_id: reactant1
+    label: sedoheptulose 7-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57483
+  - node_id: product0
+    label: D-xylulose 5-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57737
+  - node_id: product1
+    label: aldehydo-D-ribose 5-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58273
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The carbanion of thiamine diphosphate (ThDP) attacks the carbonyl carbon of D-xylulose-5-phosphate
+      in a nucleophilic addition that results in the cofactor undergoing double bond rearrangement. Simultaneously,
+      the carbonyl oxygen of D-xylulose-5-phosphate deprotonates the amine group of the ThDP cofactor.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Lys244 deprotonates His258, thereby activating it. Activated His258 deprotonates the
+      2-OH group of the covalently attached intermediate, initiating the elimination of D-glyceraldehyde
+      3-phosphate via cleavage of the C-C scissile bond. Thiamine diphosphate acts as an electron sink.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Formation of D-glyceraldehyde-3-phosphate product.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: "Thiamine diphosphate initiates a double bond rearrangement, which results in the intermediate\
+      \ attacking the aldose D-erythrose-4-phosphate substrate in a nucleophilic addition. This resulted\
+      \ in a more
+negative carbonyl oxygen which is subsequently implicated in a series of proton transfers\
+      \ for restoration of the initial protonation state of His258 and Lys244 catalytic residues."
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: ThDP cofactor initiates a double bond rearrangement, that deprotonates the hydroxide
+      of the intermediate, and results in a reformation of the carbanionic activated cofactor and the
+      D-fructose-6-phosphate product.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Final products.
+  - node_id: active_site
+    label: transketolase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:219
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.970 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.970
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: transketolase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.2.1.1
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/219/
+      snippet: Lys244 deprotonates His258, thereby activating it. Activated His258 deprotonates the 2-OH
+        group of the covalently attached intermediate, initiating the elimination of D-glyceraldehyde
+        3-phosphate via cleavage of the C-C scissile bond. Thiamine diphosphate acts as an electron sink.
+      notes: M-CSA entry 219, mechanism 2; M-CSA cites PMID:33828899; step 2
+  - subject: lys244
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Lys244 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/219/
+      snippet: Lys244 deprotonates His258, thereby activating it. Activated His258 deprotonates the 2-OH
+        group of the covalently attached intermediate, initiating the elimination of D-glyceraldehyde
+        3-phosphate via cleavage of the C-C scissile bond. Thiamine diphosphate acts as an electron sink.
+      notes: M-CSA entry 219, mechanism 2; M-CSA cites PMID:33828899; step 2
+  - subject: his258
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His258 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/219/
+      snippet: Lys244 deprotonates His258, thereby activating it. Activated His258 deprotonates the 2-OH
+        group of the covalently attached intermediate, initiating the elimination of D-glyceraldehyde
+        3-phosphate via cleavage of the C-C scissile bond. Thiamine diphosphate acts as an electron sink.
+      notes: M-CSA entry 219, mechanism 2; M-CSA cites PMID:33828899; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/219/
+      snippet: Formation of D-glyceraldehyde-3-phosphate product.
+      notes: M-CSA entry 219, mechanism 2; M-CSA cites PMID:33828899; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/219/
+      snippet: "Thiamine diphosphate initiates a double bond rearrangement, which results in the intermediate\
+        \ attacking the aldose D-erythrose-4-phosphate substrate in a nucleophilic addition. This resulted\
+        \ in a more
+negative carbonyl oxygen which is subsequently implicated in a series of proton\
+        \ transfers for restoration of the initial protonation state of His258 and Lys244 catalytic residues."
+      notes: M-CSA entry 219, mechanism 2; M-CSA cites PMID:33828899; step 4
+  - subject: lys244
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Lys244 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/219/
+      snippet: "Thiamine diphosphate initiates a double bond rearrangement, which results in the intermediate\
+        \ attacking the aldose D-erythrose-4-phosphate substrate in a nucleophilic addition. This resulted\
+        \ in a more
+negative carbonyl oxygen which is subsequently implicated in a series of proton\
+        \ transfers for restoration of the initial protonation state of His258 and Lys244 catalytic residues."
+      notes: M-CSA entry 219, mechanism 2; M-CSA cites PMID:33828899; step 4
+  - subject: his258
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: His258 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/219/
+      snippet: "Thiamine diphosphate initiates a double bond rearrangement, which results in the intermediate\
+        \ attacking the aldose D-erythrose-4-phosphate substrate in a nucleophilic addition. This resulted\
+        \ in a more
+negative carbonyl oxygen which is subsequently implicated in a series of proton\
+        \ transfers for restoration of the initial protonation state of His258 and Lys244 catalytic residues."
+      notes: M-CSA entry 219, mechanism 2; M-CSA cites PMID:33828899; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/219/
+      snippet: ThDP cofactor initiates a double bond rearrangement, that deprotonates the hydroxide of
+        the intermediate, and results in a reformation of the carbanionic activated cofactor and the D-fructose-6-phosphate
+        product.
+      notes: M-CSA entry 219, mechanism 2; M-CSA cites PMID:33828899; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/219/
+      snippet: Final products.
+      notes: M-CSA entry 219, mechanism 2; M-CSA cites PMID:33828899; step 6
+  - subject: his30
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His30 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/219/
+      snippet: activator, hydrogen bond donor, steric role
+      notes: M-CSA entry 219, mechanism 2; M-CSA cites PMID:33828899; M-CSA catalytic-residue roles for
+        His30
+  - subject: lys244
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys244 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/219/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 219, mechanism 2; M-CSA cites PMID:33828899; M-CSA catalytic-residue roles for
+        Lys244
+  - subject: his258
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His258 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/219/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 219, mechanism 2; M-CSA cites PMID:33828899; M-CSA catalytic-residue roles for
+        His258
+  - subject: his263
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His263 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/219/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 219, mechanism 2; M-CSA cites PMID:33828899; M-CSA catalytic-residue roles for
+        His263
+  - subject: glu418
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu418 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/219/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 219, mechanism 2; M-CSA cites PMID:33828899; M-CSA catalytic-residue roles for
+        Glu418
+  - subject: his481
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His481 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/219/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 219, mechanism 2; M-CSA cites PMID:33828899; M-CSA catalytic-residue roles for
+        His481
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/219/
+      snippet: Activated carbanion of thiamine diphosphate (ThDP) cofactor performs a nucleophilic attack
+        towards the D-xylulose-5-phosphate, resulting in double bond rearrangement concerted with deprotonation
+        of the ThDP's amine group by the substrate. Lys244 deprotonates His258 which then deprotonates
+        the 2-OH group of the covalently attached intermediate, initiating the elimination of D-glyceraldehyde
+        3-phosp
+      notes: M-CSA entry 219, mechanism 2; M-CSA cites PMID:33828899; CATH domain 3.40.50.970 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/219/
+      snippet: Activated carbanion of thiamine diphosphate (ThDP) cofactor performs a nucleophilic attack
+        towards the D-xylulose-5-phosphate, resulting in double bond rearrangement concerted with deprotonation
+        of the ThDP's amine group by the substrate. Lys244 deprotonates His258 which then deprotonates
+        the 2-OH group of the covalently attached intermediate, initiating the elimination of D-glyceraldehyde
+        3-phosp
+      notes: M-CSA entry 219, mechanism 2; M-CSA cites PMID:33828899; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/219/
+      snippet: Activated carbanion of thiamine diphosphate (ThDP) cofactor performs a nucleophilic attack
+        towards the D-xylulose-5-phosphate, resulting in double bond rearrangement concerted with deprotonation
+        of the ThDP's amine group by the substrate. Lys244 deprotonates His258 which then deprotonates
+        the 2-OH group of the covalently attached intermediate, initiating the elimination of D-glyceraldehyde
+        3-phosp
+      notes: M-CSA entry 219, mechanism 2; M-CSA cites PMID:33828899; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/219/
+      snippet: Activated carbanion of thiamine diphosphate (ThDP) cofactor performs a nucleophilic attack
+        towards the D-xylulose-5-phosphate, resulting in double bond rearrangement concerted with deprotonation
+        of the ThDP's amine group by the substrate. Lys244 deprotonates His258 which then deprotonates
+        the 2-OH group of the covalently attached intermediate, initiating the elimination of D-glyceraldehyde
+        3-phosp
+      notes: M-CSA entry 219, mechanism 2; M-CSA cites PMID:33828899; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/219/
+      snippet: Activated carbanion of thiamine diphosphate (ThDP) cofactor performs a nucleophilic attack
+        towards the D-xylulose-5-phosphate, resulting in double bond rearrangement concerted with deprotonation
+        of the ThDP's amine group by the substrate. Lys244 deprotonates His258 which then deprotonates
+        the 2-OH group of the covalently attached intermediate, initiating the elimination of D-glyceraldehyde
+        3-phosp
+      notes: M-CSA entry 219, mechanism 2; M-CSA cites PMID:33828899; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/219/
+      snippet: Activated carbanion of thiamine diphosphate (ThDP) cofactor performs a nucleophilic attack
+        towards the D-xylulose-5-phosphate, resulting in double bond rearrangement concerted with deprotonation
+        of the ThDP's amine group by the substrate. Lys244 deprotonates His258 which then deprotonates
+        the 2-OH group of the covalently attached intermediate, initiating the elimination of D-glyceraldehyde
+        3-phosp
+      notes: M-CSA entry 219, mechanism 2; M-CSA cites PMID:33828899; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (21 evidence-backed edges) transcribed from M-CSA entry 219;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

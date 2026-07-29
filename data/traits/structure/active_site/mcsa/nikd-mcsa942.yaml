@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.-.-.-
 - CHEBI:77631
@@ -118,4 +118,348 @@ definitions:
       NikD is an unusual amino acid oxidising enzyme that contains covalently bound FAD and catalyses a 4-electron oxidation of piperideine-2-carboxylic acid to picolinate and plays a critical role in the biosynthesis of nikkomycin antibiotics. Nikkomycins are potent antifungal agents that block cell wall formation by inhibiting the biosynthesis of chitin, the second most abundant polysaccharide in nature. NikD exhibits two unique structural features as compared with other members of the MSOX family of amino acid oxidases: nikD contains a mobile cation-binding loop of unknown function that has been shown to bind sodium or potassium ions. nikD exhibits two distinct modes for substrate binding, as judged by the open and closed forms of the enzyme·picolinate complex. In the closed form, picolinate is bound parallel with the flavin ring, the indole ring of Trp355 is perpendicular to the flavin ring, and the active site is inaccessible to solvent. This ligand binding mode is compatible with redox catalysis and similar to that observed with MSOX. In the open form, picolinate is bound perpendicular to the flavin ring, Trp355 is stacked atop the flavin ring, and the active site is accessible to solvent. This binding mode is not compatible with redox catalysis or observed with MSOX. However, the coplanar orientation of the flavin and indole rings is required for charge-transfer interaction between FAD and Trp355, a feature observed with solutions of the ligand-free enzyme at weakly alkaline pH
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of NikD
+  description: Stepwise mechanism transcribed from M-CSA entry 942 (7 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: arg53
+    label: catalytic Arg53 (M-CSA/PDB numbering; UniProt residue 53)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9X9P9
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu101
+    label: catalytic Glu101 (M-CSA/PDB numbering; UniProt residue 101)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9X9P9
+    description: 'M-CSA roles: steric role.'
+  - node_id: tyr258
+    label: catalytic Tyr258 (M-CSA/PDB numbering; UniProt residue 258)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9X9P9
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp276
+    label: catalytic Asp276 (M-CSA/PDB numbering; UniProt residue 276)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9X9P9
+    description: 'M-CSA roles: steric role.'
+  - node_id: cys321
+    label: catalytic Cys321 (M-CSA/PDB numbering; UniProt residue 321)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9X9P9
+    description: 'M-CSA roles: alter redox potential, covalently attached.'
+  - node_id: trp355
+    label: catalytic Trp355 (M-CSA/PDB numbering; UniProt residue 355)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9X9P9
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: lys358
+    label: catalytic Lys358 (M-CSA/PDB numbering; UniProt residue 358)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9X9P9
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: 1-piperideine-2-carboxylic acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:77631
+  - node_id: reactant1
+    label: dioxygen
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+  - node_id: product0
+    label: picolinate
+    node_type: CHEMICAL
+    grounding: CHEBI:38184
+  - node_id: product1
+    label: hydrogen peroxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The enamine tautomer eliminates a hydride ion to the covalently attached FAD cofactor.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The FAD cofactor abstracts a proton from the intermediate to generate the second enamine
+      tautomer.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The FAD cofactor initiates a second proton transfer to generate the final enamine tautomer
+      required.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: FAD undergoes oxidation to regenerate it for the final hydride transfer.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: The enamine eliminates the second hydride to FAD.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Dioxygen regenerates the cofactor along with the final protonation state of the product.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: NikD catalytic site
+    node_type: MOTIF
+    grounding: MCSA:942
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.50.50.60 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.50.50.60
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: NikD activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.-.-.-
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/942/
+      snippet: The FAD cofactor abstracts a proton from the intermediate to generate the second enamine
+        tautomer.
+      notes: M-CSA entry 942, mechanism 1; M-CSA cites PMID:17223703, PMID:17697998, PMID:19354202, PMID:19530706,
+        PMID:19702312; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/942/
+      snippet: The FAD cofactor initiates a second proton transfer to generate the final enamine tautomer
+        required.
+      notes: M-CSA entry 942, mechanism 1; M-CSA cites PMID:17223703, PMID:17697998, PMID:19354202, PMID:19530706,
+        PMID:19702312; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/942/
+      snippet: FAD undergoes oxidation to regenerate it for the final hydride transfer.
+      notes: M-CSA entry 942, mechanism 1; M-CSA cites PMID:17223703, PMID:17697998, PMID:19354202, PMID:19530706,
+        PMID:19702312; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/942/
+      snippet: The enamine eliminates the second hydride to FAD.
+      notes: M-CSA entry 942, mechanism 1; M-CSA cites PMID:17223703, PMID:17697998, PMID:19354202, PMID:19530706,
+        PMID:19702312; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/942/
+      snippet: Dioxygen regenerates the cofactor along with the final protonation state of the product.
+      notes: M-CSA entry 942, mechanism 1; M-CSA cites PMID:17223703, PMID:17697998, PMID:19354202, PMID:19530706,
+        PMID:19702312; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/942/
+      snippet: Products.
+      notes: M-CSA entry 942, mechanism 1; M-CSA cites PMID:17223703, PMID:17697998, PMID:19354202, PMID:19530706,
+        PMID:19702312; step 7
+  - subject: arg53
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg53 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/942/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 942, mechanism 1; M-CSA cites PMID:17223703, PMID:17697998, PMID:19354202, PMID:19530706,
+        PMID:19702312; M-CSA catalytic-residue roles for Arg53
+  - subject: glu101
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu101 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/942/
+      snippet: steric role
+      notes: M-CSA entry 942, mechanism 1; M-CSA cites PMID:17223703, PMID:17697998, PMID:19354202, PMID:19530706,
+        PMID:19702312; M-CSA catalytic-residue roles for Glu101
+  - subject: tyr258
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr258 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/942/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 942, mechanism 1; M-CSA cites PMID:17223703, PMID:17697998, PMID:19354202, PMID:19530706,
+        PMID:19702312; M-CSA catalytic-residue roles for Tyr258
+  - subject: asp276
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp276 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/942/
+      snippet: steric role
+      notes: M-CSA entry 942, mechanism 1; M-CSA cites PMID:17223703, PMID:17697998, PMID:19354202, PMID:19530706,
+        PMID:19702312; M-CSA catalytic-residue roles for Asp276
+  - subject: cys321
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys321 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/942/
+      snippet: alter redox potential, covalently attached
+      notes: M-CSA entry 942, mechanism 1; M-CSA cites PMID:17223703, PMID:17697998, PMID:19354202, PMID:19530706,
+        PMID:19702312; M-CSA catalytic-residue roles for Cys321
+  - subject: trp355
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp355 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/942/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 942, mechanism 1; M-CSA cites PMID:17223703, PMID:17697998, PMID:19354202, PMID:19530706,
+        PMID:19702312; M-CSA catalytic-residue roles for Trp355
+  - subject: lys358
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys358 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/942/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 942, mechanism 1; M-CSA cites PMID:17223703, PMID:17697998, PMID:19354202, PMID:19530706,
+        PMID:19702312; M-CSA catalytic-residue roles for Lys358
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/942/
+      snippet: The mechanism is proposed to occur by an initial enamine tautomerisation to eliminate the
+        first hydride to FAD. The substrate then undergoes a second tautomerisation and concomitant loss
+        of a proton, regenerating the enamine tautomer. The intermediate then undergoes a second tautomerisation
+        to generate the isomer that is ready for the second hydride elimination to FAD to generate the
+        final product
+      notes: M-CSA entry 942, mechanism 1; M-CSA cites PMID:17223703, PMID:17697998, PMID:19354202, PMID:19530706,
+        PMID:19702312; CATH domain 3.50.50.60 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/942/
+      snippet: The mechanism is proposed to occur by an initial enamine tautomerisation to eliminate the
+        first hydride to FAD. The substrate then undergoes a second tautomerisation and concomitant loss
+        of a proton, regenerating the enamine tautomer. The intermediate then undergoes a second tautomerisation
+        to generate the isomer that is ready for the second hydride elimination to FAD to generate the
+        final product
+      notes: M-CSA entry 942, mechanism 1; M-CSA cites PMID:17223703, PMID:17697998, PMID:19354202, PMID:19530706,
+        PMID:19702312; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/942/
+      snippet: The mechanism is proposed to occur by an initial enamine tautomerisation to eliminate the
+        first hydride to FAD. The substrate then undergoes a second tautomerisation and concomitant loss
+        of a proton, regenerating the enamine tautomer. The intermediate then undergoes a second tautomerisation
+        to generate the isomer that is ready for the second hydride elimination to FAD to generate the
+        final product
+      notes: M-CSA entry 942, mechanism 1; M-CSA cites PMID:17223703, PMID:17697998, PMID:19354202, PMID:19530706,
+        PMID:19702312; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/942/
+      snippet: The mechanism is proposed to occur by an initial enamine tautomerisation to eliminate the
+        first hydride to FAD. The substrate then undergoes a second tautomerisation and concomitant loss
+        of a proton, regenerating the enamine tautomer. The intermediate then undergoes a second tautomerisation
+        to generate the isomer that is ready for the second hydride elimination to FAD to generate the
+        final product
+      notes: M-CSA entry 942, mechanism 1; M-CSA cites PMID:17223703, PMID:17697998, PMID:19354202, PMID:19530706,
+        PMID:19702312; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/942/
+      snippet: The mechanism is proposed to occur by an initial enamine tautomerisation to eliminate the
+        first hydride to FAD. The substrate then undergoes a second tautomerisation and concomitant loss
+        of a proton, regenerating the enamine tautomer. The intermediate then undergoes a second tautomerisation
+        to generate the isomer that is ready for the second hydride elimination to FAD to generate the
+        final product
+      notes: M-CSA entry 942, mechanism 1; M-CSA cites PMID:17223703, PMID:17697998, PMID:19354202, PMID:19530706,
+        PMID:19702312; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/942/
+      snippet: The mechanism is proposed to occur by an initial enamine tautomerisation to eliminate the
+        first hydride to FAD. The substrate then undergoes a second tautomerisation and concomitant loss
+        of a proton, regenerating the enamine tautomer. The intermediate then undergoes a second tautomerisation
+        to generate the isomer that is ready for the second hydride elimination to FAD to generate the
+        final product
+      notes: M-CSA entry 942, mechanism 1; M-CSA cites PMID:17223703, PMID:17697998, PMID:19354202, PMID:19530706,
+        PMID:19702312; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/942/
+      snippet: The mechanism is proposed to occur by an initial enamine tautomerisation to eliminate the
+        first hydride to FAD. The substrate then undergoes a second tautomerisation and concomitant loss
+        of a proton, regenerating the enamine tautomer. The intermediate then undergoes a second tautomerisation
+        to generate the isomer that is ready for the second hydride elimination to FAD to generate the
+        final product
+      notes: M-CSA entry 942, mechanism 1; M-CSA cites PMID:17223703, PMID:17697998, PMID:19354202, PMID:19530706,
+        PMID:19702312; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (20 evidence-backed edges) transcribed from M-CSA entry 942;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

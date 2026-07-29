@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.1.17
 - CHEBI:40729
@@ -236,4 +236,251 @@ definitions:
       Cpl-1 lysin from Bacteriophage cp-1 catalyses the hydrolysis of the 1,4-beta-linkages between N-acetyl-D-glucosamine and N-acetylmuramic acid in peptidoglycan heteropolymers of prokaryote cell walls. On binding to choline, the enzymes geometry changes, its specificity increases, and catalytic activity is increased. Cpl-1 is used against bacteria such as Streptococcus pneumoniae (which causes pneumonia), as it kills the bacteria by breaking down its cell wall.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of lysozyme (glycosyl hydrolase 25 family)
+  description: Stepwise mechanism transcribed from M-CSA entry 774 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: asp10
+    label: catalytic Asp10 (M-CSA/PDB numbering; UniProt residue 10)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15057
+    description: 'M-CSA roles: activator, electrostatic stabiliser, increase nucleophilicity, proton acceptor,
+      proton donor.'
+  - node_id: asp92
+    label: catalytic Asp92 (M-CSA/PDB numbering; UniProt residue 92)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15057
+    description: 'M-CSA roles: proton donor.'
+  - node_id: glu94
+    label: catalytic Glu94 (M-CSA/PDB numbering; UniProt residue 94)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15057
+    description: 'M-CSA roles: activator, increase nucleophilicity, promote heterolysis, proton acceptor,
+      proton donor.'
+  - node_id: asp182
+    label: catalytic Asp182 (M-CSA/PDB numbering; UniProt residue 182)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15057
+    description: 'M-CSA roles: proton acceptor.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: beta-MurNAc-(1->4)-beta-D-GlcpNAc
+    node_type: CHEMICAL
+    grounding: CHEBI:87004
+  - node_id: product0
+    label: N-acetyl-beta-D-muramic acid
+    node_type: CHEMICAL
+    grounding: CHEBI:40729
+  - node_id: product1
+    label: N-acetyl-beta-D-glucosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:28009
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu94 donates a proton to the glycosidic oxygen. The glycosidic bond is cleaved when
+      the oxygen of the N-acetyl group attacks C1. The subsequent oxazoline ion formed is stabilized by
+      Asp10.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Glu94 activates a water molecule which attacks C1 and the oxazoline ion collapses into
+      the product.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: lysozyme (glycosyl hydrolase 25 family) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:774
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.80 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.80
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: lysozyme (glycosyl hydrolase 25 family) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.1.17
+  edges:
+  - subject: asp10
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp10 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/774/
+      snippet: Glu94 donates a proton to the glycosidic oxygen. The glycosidic bond is cleaved when the
+        oxygen of the N-acetyl group attacks C1. The subsequent oxazoline ion formed is stabilized by
+        Asp10.
+      notes: M-CSA entry 774, mechanism 2; M-CSA cites PMID:19595298; step 1
+  - subject: glu94
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu94 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/774/
+      snippet: Glu94 donates a proton to the glycosidic oxygen. The glycosidic bond is cleaved when the
+        oxygen of the N-acetyl group attacks C1. The subsequent oxazoline ion formed is stabilized by
+        Asp10.
+      notes: M-CSA entry 774, mechanism 2; M-CSA cites PMID:19595298; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/774/
+      snippet: Glu94 activates a water molecule which attacks C1 and the oxazoline ion collapses into
+        the product.
+      notes: M-CSA entry 774, mechanism 2; M-CSA cites PMID:19595298; step 2
+  - subject: glu94
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu94 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/774/
+      snippet: Glu94 activates a water molecule which attacks C1 and the oxazoline ion collapses into
+        the product.
+      notes: M-CSA entry 774, mechanism 2; M-CSA cites PMID:19595298; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/774/
+      snippet: Products.
+      notes: M-CSA entry 774, mechanism 2; M-CSA cites PMID:19595298; step 3
+  - subject: asp10
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp10 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/774/
+      snippet: activator, electrostatic stabiliser, increase nucleophilicity, proton acceptor, proton
+        donor
+      notes: M-CSA entry 774, mechanism 2; M-CSA cites PMID:19595298; M-CSA catalytic-residue roles for
+        Asp10
+  - subject: asp92
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp92 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/774/
+      snippet: proton donor
+      notes: M-CSA entry 774, mechanism 2; M-CSA cites PMID:19595298; M-CSA catalytic-residue roles for
+        Asp92
+  - subject: glu94
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu94 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/774/
+      snippet: activator, increase nucleophilicity, promote heterolysis, proton acceptor, proton donor
+      notes: M-CSA entry 774, mechanism 2; M-CSA cites PMID:19595298; M-CSA catalytic-residue roles for
+        Glu94
+  - subject: asp182
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp182 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/774/
+      snippet: proton acceptor
+      notes: M-CSA entry 774, mechanism 2; M-CSA cites PMID:19595298; M-CSA catalytic-residue roles for
+        Asp182
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/774/
+      snippet: More recent evidence suggests a mechanism which proceeds via an oxazoline ion. Glu94 donates
+        a proton to the glycosidic oxygen causing the cleavage of the glycosidic bond and the formation
+        of the oxazoline ion. A water molecule is then activated by Glu94 which hydrolyzes the oxazoline
+        ion.
+      notes: M-CSA entry 774, mechanism 2; M-CSA cites PMID:19595298; CATH domain 3.20.20.80 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/774/
+      snippet: More recent evidence suggests a mechanism which proceeds via an oxazoline ion. Glu94 donates
+        a proton to the glycosidic oxygen causing the cleavage of the glycosidic bond and the formation
+        of the oxazoline ion. A water molecule is then activated by Glu94 which hydrolyzes the oxazoline
+        ion.
+      notes: M-CSA entry 774, mechanism 2; M-CSA cites PMID:19595298; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/774/
+      snippet: More recent evidence suggests a mechanism which proceeds via an oxazoline ion. Glu94 donates
+        a proton to the glycosidic oxygen causing the cleavage of the glycosidic bond and the formation
+        of the oxazoline ion. A water molecule is then activated by Glu94 which hydrolyzes the oxazoline
+        ion.
+      notes: M-CSA entry 774, mechanism 2; M-CSA cites PMID:19595298; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/774/
+      snippet: More recent evidence suggests a mechanism which proceeds via an oxazoline ion. Glu94 donates
+        a proton to the glycosidic oxygen causing the cleavage of the glycosidic bond and the formation
+        of the oxazoline ion. A water molecule is then activated by Glu94 which hydrolyzes the oxazoline
+        ion.
+      notes: M-CSA entry 774, mechanism 2; M-CSA cites PMID:19595298; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/774/
+      snippet: More recent evidence suggests a mechanism which proceeds via an oxazoline ion. Glu94 donates
+        a proton to the glycosidic oxygen causing the cleavage of the glycosidic bond and the formation
+        of the oxazoline ion. A water molecule is then activated by Glu94 which hydrolyzes the oxazoline
+        ion.
+      notes: M-CSA entry 774, mechanism 2; M-CSA cites PMID:19595298; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/774/
+      snippet: More recent evidence suggests a mechanism which proceeds via an oxazoline ion. Glu94 donates
+        a proton to the glycosidic oxygen causing the cleavage of the glycosidic bond and the formation
+        of the oxazoline ion. A water molecule is then activated by Glu94 which hydrolyzes the oxazoline
+        ion.
+      notes: M-CSA entry 774, mechanism 2; M-CSA cites PMID:19595298; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 774;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

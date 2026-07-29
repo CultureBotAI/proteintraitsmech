@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.3.3.8
 - CHEBI:58543
@@ -225,4 +225,193 @@ definitions:
       Delta3-delta2-enoyl CoA isomerase (enoyl-CoA isomerase) is a mitochondrial enzyme, in this case from human, catalyses the conversion of 3-cis-enoyl-CoA or 3-trans-enoyl-CoA into 2-trans-enoyl-CoA. This is involved in an auxiliary pathway of fatty acid degradation, and the product is subsequently metabolised further by other enzymes of the pathway. Enoyl-CoA isomerases use fatty acyl substrates with side-chains ranging from C6 to C16. The reaction used as example uses a C12 compund as substrate
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 3,2-trans-enoyl-CoA isomerase (mitochondrial)
+  description: Stepwise mechanism transcribed from M-CSA entry 341 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +42).
+  nodes:
+  - node_id: leu66
+    label: catalytic Leu66 (M-CSA/PDB numbering; UniProt residue 108)
+    node_type: RESIDUE
+    grounding: UniProtKB:P42126
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: gly111
+    label: catalytic Gly111 (M-CSA/PDB numbering; UniProt residue 153)
+    node_type: RESIDUE
+    grounding: UniProtKB:P42126
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: asn135
+    label: catalytic Asn135 (M-CSA/PDB numbering; UniProt residue 177)
+    node_type: RESIDUE
+    grounding: UniProtKB:P42126
+    description: 'M-CSA roles: electrostatic stabiliser, modifies pKa.'
+  - node_id: glu136
+    label: catalytic Glu136 (M-CSA/PDB numbering; UniProt residue 178)
+    node_type: RESIDUE
+    grounding: UniProtKB:P42126
+    description: 'M-CSA roles: polar/non-polar interaction, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: cis-dodec-3-enoyl-CoA(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58543
+  - node_id: product0
+    label: trans-dodec-2-enoyl-CoA(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57330
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu136A deprotonates the substrate with concomitant tautomerisation to the enolate form,
+      which is stabilised by an oxyanion hole composed of the main chain amides of Leu66A and Gly111A
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The oxyanion intermediate tautomerises to give product with the help of a proton donated
+      by Glu136
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: 3,2-trans-enoyl-CoA isomerase (mitochondrial) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:341
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.226.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.226.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: 3,2-trans-enoyl-CoA isomerase (mitochondrial) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.3.3.8
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/341/
+      snippet: The oxyanion intermediate tautomerises to give product with the help of a proton donated
+        by Glu136
+      notes: M-CSA entry 341, mechanism 1; M-CSA cites PMID:15351645; step 2
+  - subject: glu136
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu136 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/341/
+      snippet: The oxyanion intermediate tautomerises to give product with the help of a proton donated
+        by Glu136
+      notes: M-CSA entry 341, mechanism 1; M-CSA cites PMID:15351645; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/341/
+      snippet: Products
+      notes: M-CSA entry 341, mechanism 1; M-CSA cites PMID:15351645; step 3
+  - subject: leu66
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Leu66 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/341/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 341, mechanism 1; M-CSA cites PMID:15351645; M-CSA catalytic-residue roles for
+        Leu66
+  - subject: gly111
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly111 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/341/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 341, mechanism 1; M-CSA cites PMID:15351645; M-CSA catalytic-residue roles for
+        Gly111
+  - subject: asn135
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn135 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/341/
+      snippet: electrostatic stabiliser, modifies pKa
+      notes: M-CSA entry 341, mechanism 1; M-CSA cites PMID:15351645; M-CSA catalytic-residue roles for
+        Asn135
+  - subject: glu136
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu136 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/341/
+      snippet: polar/non-polar interaction, proton acceptor, proton donor
+      notes: M-CSA entry 341, mechanism 1; M-CSA cites PMID:15351645; M-CSA catalytic-residue roles for
+        Glu136
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/341/
+      snippet: This reaction proceeds via an E1cb mechanism in which Glu136 deprotonates the C2 atom of
+        the substrate, forming the conjugate base. The thioester oxygen atom holds the negative charge,
+        and is stabilised by the presence of an oxyanion hole formed by the amide groups of Leu77 and
+        Gly111. As the carbonyl is reformed, the C4 atom of the product is protonated by Glu136.
+      notes: M-CSA entry 341, mechanism 1; M-CSA cites PMID:15351645; CATH domain 3.90.226.10 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/341/
+      snippet: This reaction proceeds via an E1cb mechanism in which Glu136 deprotonates the C2 atom of
+        the substrate, forming the conjugate base. The thioester oxygen atom holds the negative charge,
+        and is stabilised by the presence of an oxyanion hole formed by the amide groups of Leu77 and
+        Gly111. As the carbonyl is reformed, the C4 atom of the product is protonated by Glu136.
+      notes: M-CSA entry 341, mechanism 1; M-CSA cites PMID:15351645; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/341/
+      snippet: This reaction proceeds via an E1cb mechanism in which Glu136 deprotonates the C2 atom of
+        the substrate, forming the conjugate base. The thioester oxygen atom holds the negative charge,
+        and is stabilised by the presence of an oxyanion hole formed by the amide groups of Leu77 and
+        Gly111. As the carbonyl is reformed, the C4 atom of the product is protonated by Glu136.
+      notes: M-CSA entry 341, mechanism 1; M-CSA cites PMID:15351645; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/341/
+      snippet: This reaction proceeds via an E1cb mechanism in which Glu136 deprotonates the C2 atom of
+        the substrate, forming the conjugate base. The thioester oxygen atom holds the negative charge,
+        and is stabilised by the presence of an oxyanion hole formed by the amide groups of Leu77 and
+        Gly111. As the carbonyl is reformed, the C4 atom of the product is protonated by Glu136.
+      notes: M-CSA entry 341, mechanism 1; M-CSA cites PMID:15351645; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (11 evidence-backed edges) transcribed from M-CSA entry 341;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

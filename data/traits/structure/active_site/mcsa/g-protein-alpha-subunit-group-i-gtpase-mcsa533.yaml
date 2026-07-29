@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.6.5.-
 - CHEBI:43474
@@ -277,4 +277,280 @@ definitions:
       The alpha subunits of heterotrimeric G proteins are members of the Ras superfamily of GTP hydrolases and function in signal transduction. They are activated by replacement of bound GDP by GTP, a process promoted by activated 7-transmembrane receptors, and by subsequent dissociation of the alpha subunit from the beta and gamma subunits. The G-alpha subunit remains active until its GTPase activity converts the bound GTP back to GDP. The alpha subunit of the G protein Gi1 is expressed in many different tissues and is activated by the alpha-2 adrenergic and M-2 muscarinic cholinergic receptors, amongst others. Its downstream effectors include particular isoforms of adenylate cyclase; types V and VI are particularly sensitive to inhibition by G-alpha-i1. The mechanism of enzymatic GTP hydrolysis (and similar phosphoryl transfer reactions) has been subject to significant debate and still remains to be firmly established. More recent models have proposed a dissociative-like process, in which the transition state shows significant cleavage of the gamma-beta phosphoanhydride bond and relatively little bond formation between the gamma phosphate and the nucleophilic water molecule. (See, for example, the reference pubmed ID 15236956 for a recent discussion).
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of G-protein alpha subunit, group I (GTPase)
+  description: Stepwise mechanism transcribed from M-CSA entry 533 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: glu43
+    label: catalytic Glu43 (M-CSA/PDB numbering; UniProt residue 43)
+    node_type: RESIDUE
+    grounding: UniProtKB:P10824
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: thr48
+    label: catalytic Thr48 (M-CSA/PDB numbering; UniProt residue 48)
+    node_type: RESIDUE
+    grounding: UniProtKB:P10824
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: arg178
+    label: catalytic Arg178 (M-CSA/PDB numbering; UniProt residue 178)
+    node_type: RESIDUE
+    grounding: UniProtKB:P10824
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp200
+    label: catalytic Asp200 (M-CSA/PDB numbering; UniProt residue 200)
+    node_type: RESIDUE
+    grounding: UniProtKB:P10824
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: gln204
+    label: catalytic Gln204 (M-CSA/PDB numbering; UniProt residue 204)
+    node_type: RESIDUE
+    grounding: UniProtKB:P10824
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: GTP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:37565
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: product1
+    label: GDP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58189
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The substrate accepts a proton and and the bidentate coordination of Arg178 shifts the
+      charge away from the gamma phosphate resulting in the breaking of the phosphodiester bond.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The hydroxide formed nucleophilically attacks the gamma phosphate. The beta phosphate
+      most likely loses a proton to the surrounding solution to produce the favourable protonation state
+      of the product.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: G-protein alpha subunit, group I (GTPase) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:533
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.300 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.300
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: G-protein alpha subunit, group I (GTPase) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.6.5.-
+  edges:
+  - subject: arg178
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg178 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/533/
+      snippet: The substrate accepts a proton and and the bidentate coordination of Arg178 shifts the
+        charge away from the gamma phosphate resulting in the breaking of the phosphodiester bond.
+      notes: M-CSA entry 533, mechanism 1; M-CSA cites PMID:10507001, PMID:15128951, PMID:15236956, PMID:26515069,
+        PMID:27911799, PMID:28245182, PMID:8073283, PMID:8710841, PMID:9383480; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/533/
+      snippet: The hydroxide formed nucleophilically attacks the gamma phosphate. The beta phosphate most
+        likely loses a proton to the surrounding solution to produce the favourable protonation state
+        of the product.
+      notes: M-CSA entry 533, mechanism 1; M-CSA cites PMID:10507001, PMID:15128951, PMID:15236956, PMID:26515069,
+        PMID:27911799, PMID:28245182, PMID:8073283, PMID:8710841, PMID:9383480; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/533/
+      snippet: Products
+      notes: M-CSA entry 533, mechanism 1; M-CSA cites PMID:10507001, PMID:15128951, PMID:15236956, PMID:26515069,
+        PMID:27911799, PMID:28245182, PMID:8073283, PMID:8710841, PMID:9383480; step 3
+  - subject: glu43
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu43 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/533/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 533, mechanism 1; M-CSA cites PMID:10507001, PMID:15128951, PMID:15236956, PMID:26515069,
+        PMID:27911799, PMID:28245182, PMID:8073283, PMID:8710841, PMID:9383480; M-CSA catalytic-residue
+        roles for Glu43
+  - subject: thr48
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr48 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/533/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 533, mechanism 1; M-CSA cites PMID:10507001, PMID:15128951, PMID:15236956, PMID:26515069,
+        PMID:27911799, PMID:28245182, PMID:8073283, PMID:8710841, PMID:9383480; M-CSA catalytic-residue
+        roles for Thr48
+  - subject: arg178
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg178 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/533/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 533, mechanism 1; M-CSA cites PMID:10507001, PMID:15128951, PMID:15236956, PMID:26515069,
+        PMID:27911799, PMID:28245182, PMID:8073283, PMID:8710841, PMID:9383480; M-CSA catalytic-residue
+        roles for Arg178
+  - subject: asp200
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp200 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/533/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 533, mechanism 1; M-CSA cites PMID:10507001, PMID:15128951, PMID:15236956, PMID:26515069,
+        PMID:27911799, PMID:28245182, PMID:8073283, PMID:8710841, PMID:9383480; M-CSA catalytic-residue
+        roles for Asp200
+  - subject: gln204
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln204 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/533/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 533, mechanism 1; M-CSA cites PMID:10507001, PMID:15128951, PMID:15236956, PMID:26515069,
+        PMID:27911799, PMID:28245182, PMID:8073283, PMID:8710841, PMID:9383480; M-CSA catalytic-residue
+        roles for Gln204
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/533/
+      snippet: Assuming a dissociative mechanism for G-alpha-i1, the key catalytic residue is Arg 278
+        (side chain) which stabilise accumulation of negative charge on the beta-gamma bridging oxygen
+        as it departs from the gamma phosphate in the transition state. In addition the binding of RGS
+        causes Arg 278 to shift from a monodenate coordination to a bidentate coordination with both the
+        gamma and alpha phosphate.
+      notes: M-CSA entry 533, mechanism 1; M-CSA cites PMID:10507001, PMID:15128951, PMID:15236956, PMID:26515069,
+        PMID:27911799, PMID:28245182, PMID:8073283, PMID:8710841, PMID:9383480; CATH domain 3.40.50.300
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/533/
+      snippet: Assuming a dissociative mechanism for G-alpha-i1, the key catalytic residue is Arg 278
+        (side chain) which stabilise accumulation of negative charge on the beta-gamma bridging oxygen
+        as it departs from the gamma phosphate in the transition state. In addition the binding of RGS
+        causes Arg 278 to shift from a monodenate coordination to a bidentate coordination with both the
+        gamma and alpha phosphate.
+      notes: M-CSA entry 533, mechanism 1; M-CSA cites PMID:10507001, PMID:15128951, PMID:15236956, PMID:26515069,
+        PMID:27911799, PMID:28245182, PMID:8073283, PMID:8710841, PMID:9383480; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/533/
+      snippet: Assuming a dissociative mechanism for G-alpha-i1, the key catalytic residue is Arg 278
+        (side chain) which stabilise accumulation of negative charge on the beta-gamma bridging oxygen
+        as it departs from the gamma phosphate in the transition state. In addition the binding of RGS
+        causes Arg 278 to shift from a monodenate coordination to a bidentate coordination with both the
+        gamma and alpha phosphate.
+      notes: M-CSA entry 533, mechanism 1; M-CSA cites PMID:10507001, PMID:15128951, PMID:15236956, PMID:26515069,
+        PMID:27911799, PMID:28245182, PMID:8073283, PMID:8710841, PMID:9383480; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/533/
+      snippet: Assuming a dissociative mechanism for G-alpha-i1, the key catalytic residue is Arg 278
+        (side chain) which stabilise accumulation of negative charge on the beta-gamma bridging oxygen
+        as it departs from the gamma phosphate in the transition state. In addition the binding of RGS
+        causes Arg 278 to shift from a monodenate coordination to a bidentate coordination with both the
+        gamma and alpha phosphate.
+      notes: M-CSA entry 533, mechanism 1; M-CSA cites PMID:10507001, PMID:15128951, PMID:15236956, PMID:26515069,
+        PMID:27911799, PMID:28245182, PMID:8073283, PMID:8710841, PMID:9383480; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/533/
+      snippet: Assuming a dissociative mechanism for G-alpha-i1, the key catalytic residue is Arg 278
+        (side chain) which stabilise accumulation of negative charge on the beta-gamma bridging oxygen
+        as it departs from the gamma phosphate in the transition state. In addition the binding of RGS
+        causes Arg 278 to shift from a monodenate coordination to a bidentate coordination with both the
+        gamma and alpha phosphate.
+      notes: M-CSA entry 533, mechanism 1; M-CSA cites PMID:10507001, PMID:15128951, PMID:15236956, PMID:26515069,
+        PMID:27911799, PMID:28245182, PMID:8073283, PMID:8710841, PMID:9383480; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/533/
+      snippet: Assuming a dissociative mechanism for G-alpha-i1, the key catalytic residue is Arg 278
+        (side chain) which stabilise accumulation of negative charge on the beta-gamma bridging oxygen
+        as it departs from the gamma phosphate in the transition state. In addition the binding of RGS
+        causes Arg 278 to shift from a monodenate coordination to a bidentate coordination with both the
+        gamma and alpha phosphate.
+      notes: M-CSA entry 533, mechanism 1; M-CSA cites PMID:10507001, PMID:15128951, PMID:15236956, PMID:26515069,
+        PMID:27911799, PMID:28245182, PMID:8073283, PMID:8710841, PMID:9383480; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/533/
+      snippet: Assuming a dissociative mechanism for G-alpha-i1, the key catalytic residue is Arg 278
+        (side chain) which stabilise accumulation of negative charge on the beta-gamma bridging oxygen
+        as it departs from the gamma phosphate in the transition state. In addition the binding of RGS
+        causes Arg 278 to shift from a monodenate coordination to a bidentate coordination with both the
+        gamma and alpha phosphate.
+      notes: M-CSA entry 533, mechanism 1; M-CSA cites PMID:10507001, PMID:15128951, PMID:15236956, PMID:26515069,
+        PMID:27911799, PMID:28245182, PMID:8073283, PMID:8710841, PMID:9383480; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 533;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

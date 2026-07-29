@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.3.1.98
 - CHEBI:57783
@@ -258,4 +258,357 @@ definitions:
       UDP-N-acetylenolpyruvylglucosamine reductase (MurB) reduces both E and Z isomers of enolbutyryl-UDP-GlcBAc analogs of the C3 enolpyruvate substate to UDP-methyl-N-acetylmuramic acid in the presence of NADPH. The overall product of this metabolic pathway, petidoglycan, is a biopolymer unique to Gram-positive and Gram-negative bacteria for which is essential for maintaining osmotic cell wall integrity. The absence of a homologue in eukaryotic cells makes MurB an attractive target for small molecule inhibitors with the potential to have broad antibacterial activity. The ability of MurB to catalyse the stereo-selective reduction of both E and Z isomers of the substrate is thought to result from the active site architecture restricting free rotation around the C2-C3 bond, and slowing the rate relative to reprotonation. Structural data show the functional groups thought to be involved in the hydride transfer to C3 and protonation at C2 of the enol-ether substrate are arranged anti relative to the enol-double bond. From this information, the stereochemical outcome was predicted to yield a 2R,3R-dideuterio product. This product was later identified using chemical synthetic analysis and comparative NMR.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of UDP-N-acetylenolpyruvylglucosamine reductase (MurB)
+  description: Stepwise mechanism transcribed from M-CSA entry 353 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: arg159
+    label: catalytic Arg159 (M-CSA/PDB numbering; UniProt residue 159)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08373
+    description: 'M-CSA roles: attractive charge-charge interaction, electrostatic stabiliser, increase
+      electrophilicity.'
+  - node_id: ser229
+    label: catalytic Ser229 (M-CSA/PDB numbering; UniProt residue 229)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08373
+    description: 'M-CSA roles: activator, proton acceptor, proton donor.'
+  - node_id: glu325
+    label: catalytic Glu325 (M-CSA/PDB numbering; UniProt residue 325)
+    node_type: RESIDUE
+    grounding: UniProtKB:P08373
+    description: 'M-CSA roles: activator, attractive charge-charge interaction, electrostatic stabiliser,
+      increase basicity, increase electrophilicity, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: NADPH(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+  - node_id: reactant1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: reactant2
+    label: UDP-N-acetyl-3-O-(1-carboxylatovinyl)-alpha-D-glucosamine(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:68483
+  - node_id: product0
+    label: NADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+  - node_id: product1
+    label: UDP-N-acetyl-alpha-D-muramate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:70757
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: NADPH binds in close proximity to Ser229 and transfers a hydrogen to the N5 of the enzyme
+      bound flavin cofactor.  It is uncertain which residues are specifically involved in promoting the
+      hydride transfer from the NADPH cofactor to the enzyme bound flavin. NMR analysis indicates NADPH
+      to bind in the vicinity of Ser229, as well as several aromatic residues [PMID:9020777]. A monovalent
+      cation is req
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: 'The flavin cofactor transfers a hydride atom from N5 to the re-face of the C2-C3 enolpyruvyl
+      group. Either Glu325 or Arg159 could act as the proton donor: both are correctly positioned and
+      orientated within the active site, and both are required for catalysis [PMID:8634262].'
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Glu325 acts as a general base, taking back the enol proton. This initiates the conjugate,
+      stereo-selective proton abstraction by the enolate from Ser229. For MerB to catalyse the stereoselective
+      reduction of both E and Z substrate isomers, the rate of rotation of the C2-C3 bond must be slow
+      relative to reprotonation. The active site architecture ensures stereoselective discrimination in
+      the format
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Reprotonation of Ser229 regenerates the active site. Proton labelling studies indicate
+      that Ser229 is exposed to solvent, and so it is inferred that the residue is regenerated by reprotonation
+      from a solvent molecule [PMID:8634262].
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: UDP-N-acetylenolpyruvylglucosamine reductase (MurB) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:353
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.465.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.465.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: UDP-N-acetylenolpyruvylglucosamine reductase (MurB) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.3.1.98
+  edges:
+  - subject: ser229
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser229 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/353/
+      snippet: NADPH binds in close proximity to Ser229 and transfers a hydrogen to the N5 of the enzyme
+        bound flavin cofactor.  It is uncertain which residues are specifically involved in promoting
+        the hydride transfer from the NADPH cofactor to the enzyme bound flavin. NMR analysis indicates
+        NADPH to bind in the vicinity of Ser229, as well as several aromatic residues [PMID:9020777].
+        A monovalent cation is required for catalysis, although no metal is present in the crystal structure.
+      notes: M-CSA entry 353, mechanism 1; M-CSA cites PMID:16236703, PMID:8634262, PMID:9020777, PMID:9150408;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/353/
+      snippet: 'The flavin cofactor transfers a hydride atom from N5 to the re-face of the C2-C3 enolpyruvyl
+        group. Either Glu325 or Arg159 could act as the proton donor: both are correctly positioned and
+        orientated within the active site, and both are required for catalysis [PMID:8634262].'
+      notes: M-CSA entry 353, mechanism 1; M-CSA cites PMID:16236703, PMID:8634262, PMID:9020777, PMID:9150408;
+        step 2
+  - subject: arg159
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Arg159 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/353/
+      snippet: 'The flavin cofactor transfers a hydride atom from N5 to the re-face of the C2-C3 enolpyruvyl
+        group. Either Glu325 or Arg159 could act as the proton donor: both are correctly positioned and
+        orientated within the active site, and both are required for catalysis [PMID:8634262].'
+      notes: M-CSA entry 353, mechanism 1; M-CSA cites PMID:16236703, PMID:8634262, PMID:9020777, PMID:9150408;
+        step 2
+  - subject: glu325
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu325 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/353/
+      snippet: 'The flavin cofactor transfers a hydride atom from N5 to the re-face of the C2-C3 enolpyruvyl
+        group. Either Glu325 or Arg159 could act as the proton donor: both are correctly positioned and
+        orientated within the active site, and both are required for catalysis [PMID:8634262].'
+      notes: M-CSA entry 353, mechanism 1; M-CSA cites PMID:16236703, PMID:8634262, PMID:9020777, PMID:9150408;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/353/
+      snippet: Glu325 acts as a general base, taking back the enol proton. This initiates the conjugate,
+        stereo-selective proton abstraction by the enolate from Ser229. For MerB to catalyse the stereoselective
+        reduction of both E and Z substrate isomers, the rate of rotation of the C2-C3 bond must be slow
+        relative to reprotonation. The active site architecture ensures stereoselective discrimination
+        in the formation of the enantio-selective product [PMID:8634262].
+      notes: M-CSA entry 353, mechanism 1; M-CSA cites PMID:16236703, PMID:8634262, PMID:9020777, PMID:9150408;
+        step 3
+  - subject: ser229
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Ser229 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/353/
+      snippet: Glu325 acts as a general base, taking back the enol proton. This initiates the conjugate,
+        stereo-selective proton abstraction by the enolate from Ser229. For MerB to catalyse the stereoselective
+        reduction of both E and Z substrate isomers, the rate of rotation of the C2-C3 bond must be slow
+        relative to reprotonation. The active site architecture ensures stereoselective discrimination
+        in the formation of the enantio-selective product [PMID:8634262].
+      notes: M-CSA entry 353, mechanism 1; M-CSA cites PMID:16236703, PMID:8634262, PMID:9020777, PMID:9150408;
+        step 3
+  - subject: glu325
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Glu325 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/353/
+      snippet: Glu325 acts as a general base, taking back the enol proton. This initiates the conjugate,
+        stereo-selective proton abstraction by the enolate from Ser229. For MerB to catalyse the stereoselective
+        reduction of both E and Z substrate isomers, the rate of rotation of the C2-C3 bond must be slow
+        relative to reprotonation. The active site architecture ensures stereoselective discrimination
+        in the formation of the enantio-selective product [PMID:8634262].
+      notes: M-CSA entry 353, mechanism 1; M-CSA cites PMID:16236703, PMID:8634262, PMID:9020777, PMID:9150408;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/353/
+      snippet: Reprotonation of Ser229 regenerates the active site. Proton labelling studies indicate
+        that Ser229 is exposed to solvent, and so it is inferred that the residue is regenerated by reprotonation
+        from a solvent molecule [PMID:8634262].
+      notes: M-CSA entry 353, mechanism 1; M-CSA cites PMID:16236703, PMID:8634262, PMID:9020777, PMID:9150408;
+        step 4
+  - subject: ser229
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Ser229 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/353/
+      snippet: Reprotonation of Ser229 regenerates the active site. Proton labelling studies indicate
+        that Ser229 is exposed to solvent, and so it is inferred that the residue is regenerated by reprotonation
+        from a solvent molecule [PMID:8634262].
+      notes: M-CSA entry 353, mechanism 1; M-CSA cites PMID:16236703, PMID:8634262, PMID:9020777, PMID:9150408;
+        step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/353/
+      snippet: Products.
+      notes: M-CSA entry 353, mechanism 1; M-CSA cites PMID:16236703, PMID:8634262, PMID:9020777, PMID:9150408;
+        step 5
+  - subject: arg159
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg159 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/353/
+      snippet: attractive charge-charge interaction, electrostatic stabiliser, increase electrophilicity
+      notes: M-CSA entry 353, mechanism 1; M-CSA cites PMID:16236703, PMID:8634262, PMID:9020777, PMID:9150408;
+        M-CSA catalytic-residue roles for Arg159
+  - subject: ser229
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser229 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/353/
+      snippet: activator, proton acceptor, proton donor
+      notes: M-CSA entry 353, mechanism 1; M-CSA cites PMID:16236703, PMID:8634262, PMID:9020777, PMID:9150408;
+        M-CSA catalytic-residue roles for Ser229
+  - subject: glu325
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu325 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/353/
+      snippet: activator, attractive charge-charge interaction, electrostatic stabiliser, increase basicity,
+        increase electrophilicity, proton acceptor, proton donor
+      notes: M-CSA entry 353, mechanism 1; M-CSA cites PMID:16236703, PMID:8634262, PMID:9020777, PMID:9150408;
+        M-CSA catalytic-residue roles for Glu325
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/353/
+      snippet: 'The mechanism proceeds as follows: NADPH binds to the enzyme and hydride transfer of the
+        4-pro -S hydrogen of NADPH to N5 of an enzyme-bound flavin (FAD cofactor). Release of NADP+  is
+        followed by the binding of UDP-GlcNAc  to the enzyme active site. Hydride transfer from the reduced
+        flavin to C3 of the enolpyruvyl moiety of the UDP-sugar substrate generates a carbanion equivalent
+        at C2, which can'
+      notes: M-CSA entry 353, mechanism 1; M-CSA cites PMID:16236703, PMID:8634262, PMID:9020777, PMID:9150408;
+        CATH domain 3.30.465.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/353/
+      snippet: 'The mechanism proceeds as follows: NADPH binds to the enzyme and hydride transfer of the
+        4-pro -S hydrogen of NADPH to N5 of an enzyme-bound flavin (FAD cofactor). Release of NADP+  is
+        followed by the binding of UDP-GlcNAc  to the enzyme active site. Hydride transfer from the reduced
+        flavin to C3 of the enolpyruvyl moiety of the UDP-sugar substrate generates a carbanion equivalent
+        at C2, which can'
+      notes: M-CSA entry 353, mechanism 1; M-CSA cites PMID:16236703, PMID:8634262, PMID:9020777, PMID:9150408;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/353/
+      snippet: 'The mechanism proceeds as follows: NADPH binds to the enzyme and hydride transfer of the
+        4-pro -S hydrogen of NADPH to N5 of an enzyme-bound flavin (FAD cofactor). Release of NADP+  is
+        followed by the binding of UDP-GlcNAc  to the enzyme active site. Hydride transfer from the reduced
+        flavin to C3 of the enolpyruvyl moiety of the UDP-sugar substrate generates a carbanion equivalent
+        at C2, which can'
+      notes: M-CSA entry 353, mechanism 1; M-CSA cites PMID:16236703, PMID:8634262, PMID:9020777, PMID:9150408;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/353/
+      snippet: 'The mechanism proceeds as follows: NADPH binds to the enzyme and hydride transfer of the
+        4-pro -S hydrogen of NADPH to N5 of an enzyme-bound flavin (FAD cofactor). Release of NADP+  is
+        followed by the binding of UDP-GlcNAc  to the enzyme active site. Hydride transfer from the reduced
+        flavin to C3 of the enolpyruvyl moiety of the UDP-sugar substrate generates a carbanion equivalent
+        at C2, which can'
+      notes: M-CSA entry 353, mechanism 1; M-CSA cites PMID:16236703, PMID:8634262, PMID:9020777, PMID:9150408;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/353/
+      snippet: 'The mechanism proceeds as follows: NADPH binds to the enzyme and hydride transfer of the
+        4-pro -S hydrogen of NADPH to N5 of an enzyme-bound flavin (FAD cofactor). Release of NADP+  is
+        followed by the binding of UDP-GlcNAc  to the enzyme active site. Hydride transfer from the reduced
+        flavin to C3 of the enolpyruvyl moiety of the UDP-sugar substrate generates a carbanion equivalent
+        at C2, which can'
+      notes: M-CSA entry 353, mechanism 1; M-CSA cites PMID:16236703, PMID:8634262, PMID:9020777, PMID:9150408;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/353/
+      snippet: 'The mechanism proceeds as follows: NADPH binds to the enzyme and hydride transfer of the
+        4-pro -S hydrogen of NADPH to N5 of an enzyme-bound flavin (FAD cofactor). Release of NADP+  is
+        followed by the binding of UDP-GlcNAc  to the enzyme active site. Hydride transfer from the reduced
+        flavin to C3 of the enolpyruvyl moiety of the UDP-sugar substrate generates a carbanion equivalent
+        at C2, which can'
+      notes: M-CSA entry 353, mechanism 1; M-CSA cites PMID:16236703, PMID:8634262, PMID:9020777, PMID:9150408;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/353/
+      snippet: 'The mechanism proceeds as follows: NADPH binds to the enzyme and hydride transfer of the
+        4-pro -S hydrogen of NADPH to N5 of an enzyme-bound flavin (FAD cofactor). Release of NADP+  is
+        followed by the binding of UDP-GlcNAc  to the enzyme active site. Hydride transfer from the reduced
+        flavin to C3 of the enolpyruvyl moiety of the UDP-sugar substrate generates a carbanion equivalent
+        at C2, which can'
+      notes: M-CSA entry 353, mechanism 1; M-CSA cites PMID:16236703, PMID:8634262, PMID:9020777, PMID:9150408;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (20 evidence-backed edges) transcribed from M-CSA entry 353;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

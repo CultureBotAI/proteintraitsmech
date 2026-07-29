@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.2.3.1
 - CHEBI:36597
@@ -882,4 +882,288 @@ definitions:
       Aldehyde oxidase is a member of the xanthine oxidase family. It is a complex molybdoenzyme containing a Mo cofactor (Moco), flavin adenine nucleotide (FAD) and two Fe2S2 clusters. The enzyme has broad substrate specificity and catalyses a wide range of reactions. This includes the oxidation of aldehydes and several N-heterocycles, as well as the reduction of some substrates. In the human liver, the enzyme plays an essential role in the detoxification of xenobiotics and contributes to the hepatic clearance of many other drugs.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of aldehyde oxidase
+  description: Stepwise mechanism transcribed from M-CSA entry 968 (6 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: lys893
+    label: catalytic Lys893 (M-CSA/PDB numbering; UniProt residue 893)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q06278
+    description: 'M-CSA roles: electrostatic interaction, electrostatic stabiliser, proton donor.'
+  - node_id: glu1270
+    label: catalytic Glu1270 (M-CSA/PDB numbering; UniProt residue 1270)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q06278
+    description: 'M-CSA roles: electrostatic interaction, electrostatic stabiliser, proton acceptor.'
+  - node_id: reactant0
+    label: phthalazine
+    node_type: CHEMICAL
+    grounding: CHEBI:36597
+  - node_id: reactant1
+    label: sulfurated eukaryotic molybdenum cofactor(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:60102
+  - node_id: reactant2
+    label: FAD
+    node_type: CHEMICAL
+    grounding: CHEBI:16238
+  - node_id: reactant3
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product0
+    label: phthalazin-1(2H)-one
+    node_type: CHEMICAL
+    grounding: CHEBI:34023
+  - node_id: product1
+    label: product
+    node_type: CHEMICAL
+    grounding: CHEBI:X00679
+  - node_id: product2
+    label: FADH2
+    node_type: CHEMICAL
+    grounding: CHEBI:17877
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Proton transfer from Lys893 to PHT. The transfer is barrierless and activates PHT for
+      subsequent nucleophilic attack by the hydroxyl oxygen of the Moco (VI).
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Deprotonation of the hydroxyl group of the Moco (VI) by Glu1270 and nucleophilic attack
+      on substrate, forming a tetrahedral intermediate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Hydride transfer from substrate to the Moco (VI). This is the rate-limiting step of the
+      reaction and reduces the Mo to (IV) .
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Single electron reduction and protonation of FAD by Moco (IV) forming Moco (V). Mechanism
+      inferred by curator.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Second single electron transfer and proton transfer from water forming FADH<i>2</i> and
+      oxidising Moco (V) to Moco (VI). Mechanism inferred by curator.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: '-'
+  - node_id: active_site
+    label: aldehyde oxidase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:968
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: activity
+    label: aldehyde oxidase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.2.3.1
+  edges:
+  - subject: lys893
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys893 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/968/
+      snippet: Proton transfer from Lys893 to PHT. The transfer is barrierless and activates PHT for subsequent
+        nucleophilic attack by the hydroxyl oxygen of the Moco (VI).
+      notes: M-CSA entry 968, mechanism 1; M-CSA cites PMID:17301077, PMID:25287365; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/968/
+      snippet: Deprotonation of the hydroxyl group of the Moco (VI) by Glu1270 and nucleophilic attack
+        on substrate, forming a tetrahedral intermediate.
+      notes: M-CSA entry 968, mechanism 1; M-CSA cites PMID:17301077, PMID:25287365; step 2
+  - subject: glu1270
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu1270 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/968/
+      snippet: Deprotonation of the hydroxyl group of the Moco (VI) by Glu1270 and nucleophilic attack
+        on substrate, forming a tetrahedral intermediate.
+      notes: M-CSA entry 968, mechanism 1; M-CSA cites PMID:17301077, PMID:25287365; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/968/
+      snippet: Hydride transfer from substrate to the Moco (VI). This is the rate-limiting step of the
+        reaction and reduces the Mo to (IV) .
+      notes: M-CSA entry 968, mechanism 1; M-CSA cites PMID:17301077, PMID:25287365; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/968/
+      snippet: Single electron reduction and protonation of FAD by Moco (IV) forming Moco (V). Mechanism
+        inferred by curator.
+      notes: M-CSA entry 968, mechanism 1; M-CSA cites PMID:17301077, PMID:25287365; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/968/
+      snippet: Second single electron transfer and proton transfer from water forming FADH<i>2</i> and
+        oxidising Moco (V) to Moco (VI). Mechanism inferred by curator.
+      notes: M-CSA entry 968, mechanism 1; M-CSA cites PMID:17301077, PMID:25287365; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/968/
+      snippet: '-'
+      notes: M-CSA entry 968, mechanism 1; M-CSA cites PMID:17301077, PMID:25287365; step 6
+  - subject: lys893
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys893 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/968/
+      snippet: electrostatic interaction, electrostatic stabiliser, proton donor
+      notes: M-CSA entry 968, mechanism 1; M-CSA cites PMID:17301077, PMID:25287365; M-CSA catalytic-residue
+        roles for Lys893
+  - subject: glu1270
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu1270 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/968/
+      snippet: electrostatic interaction, electrostatic stabiliser, proton acceptor
+      notes: M-CSA entry 968, mechanism 1; M-CSA cites PMID:17301077, PMID:25287365; M-CSA catalytic-residue
+        roles for Glu1270
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/968/
+      snippet: The step-wise mechanism of oxidation of phthalazine (PHT) to phthalazin-1(2H)-one by hAOX1
+        begins with protonation of the substrate's N2 atom by Lys893. The hydroxyl group of molybdenum
+        cofactor (Moco) subsequently attacks the substrate, and then a hydride transfer from the substrate
+        to the sulphur atom of the Moco occurs. The rate-limiting step is the hydride transfer, determined
+        by calculated fr
+      notes: M-CSA entry 968, mechanism 1; M-CSA cites PMID:17301077, PMID:25287365; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/968/
+      snippet: The step-wise mechanism of oxidation of phthalazine (PHT) to phthalazin-1(2H)-one by hAOX1
+        begins with protonation of the substrate's N2 atom by Lys893. The hydroxyl group of molybdenum
+        cofactor (Moco) subsequently attacks the substrate, and then a hydride transfer from the substrate
+        to the sulphur atom of the Moco occurs. The rate-limiting step is the hydride transfer, determined
+        by calculated fr
+      notes: M-CSA entry 968, mechanism 1; M-CSA cites PMID:17301077, PMID:25287365; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/968/
+      snippet: The step-wise mechanism of oxidation of phthalazine (PHT) to phthalazin-1(2H)-one by hAOX1
+        begins with protonation of the substrate's N2 atom by Lys893. The hydroxyl group of molybdenum
+        cofactor (Moco) subsequently attacks the substrate, and then a hydride transfer from the substrate
+        to the sulphur atom of the Moco occurs. The rate-limiting step is the hydride transfer, determined
+        by calculated fr
+      notes: M-CSA entry 968, mechanism 1; M-CSA cites PMID:17301077, PMID:25287365; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/968/
+      snippet: The step-wise mechanism of oxidation of phthalazine (PHT) to phthalazin-1(2H)-one by hAOX1
+        begins with protonation of the substrate's N2 atom by Lys893. The hydroxyl group of molybdenum
+        cofactor (Moco) subsequently attacks the substrate, and then a hydride transfer from the substrate
+        to the sulphur atom of the Moco occurs. The rate-limiting step is the hydride transfer, determined
+        by calculated fr
+      notes: M-CSA entry 968, mechanism 1; M-CSA cites PMID:17301077, PMID:25287365; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant3
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/968/
+      snippet: The step-wise mechanism of oxidation of phthalazine (PHT) to phthalazin-1(2H)-one by hAOX1
+        begins with protonation of the substrate's N2 atom by Lys893. The hydroxyl group of molybdenum
+        cofactor (Moco) subsequently attacks the substrate, and then a hydride transfer from the substrate
+        to the sulphur atom of the Moco occurs. The rate-limiting step is the hydride transfer, determined
+        by calculated fr
+      notes: M-CSA entry 968, mechanism 1; M-CSA cites PMID:17301077, PMID:25287365; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/968/
+      snippet: The step-wise mechanism of oxidation of phthalazine (PHT) to phthalazin-1(2H)-one by hAOX1
+        begins with protonation of the substrate's N2 atom by Lys893. The hydroxyl group of molybdenum
+        cofactor (Moco) subsequently attacks the substrate, and then a hydride transfer from the substrate
+        to the sulphur atom of the Moco occurs. The rate-limiting step is the hydride transfer, determined
+        by calculated fr
+      notes: M-CSA entry 968, mechanism 1; M-CSA cites PMID:17301077, PMID:25287365; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/968/
+      snippet: The step-wise mechanism of oxidation of phthalazine (PHT) to phthalazin-1(2H)-one by hAOX1
+        begins with protonation of the substrate's N2 atom by Lys893. The hydroxyl group of molybdenum
+        cofactor (Moco) subsequently attacks the substrate, and then a hydride transfer from the substrate
+        to the sulphur atom of the Moco occurs. The rate-limiting step is the hydride transfer, determined
+        by calculated fr
+      notes: M-CSA entry 968, mechanism 1; M-CSA cites PMID:17301077, PMID:25287365; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/968/
+      snippet: The step-wise mechanism of oxidation of phthalazine (PHT) to phthalazin-1(2H)-one by hAOX1
+        begins with protonation of the substrate's N2 atom by Lys893. The hydroxyl group of molybdenum
+        cofactor (Moco) subsequently attacks the substrate, and then a hydride transfer from the substrate
+        to the sulphur atom of the Moco occurs. The rate-limiting step is the hydride transfer, determined
+        by calculated fr
+      notes: M-CSA entry 968, mechanism 1; M-CSA cites PMID:17301077, PMID:25287365; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (17 evidence-backed edges) transcribed from M-CSA entry 968;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.6.2.1
 - CHEBI:4705
@@ -224,4 +224,320 @@ definitions:
       DNA topoisomerase IB (TopIB) is an enzyme that acts to relax both negative and positive supercoils generated during transcription and DNA replication. Due to of the size of the eukaryotic chromosome, removal of these supercoils can only be accomplished locally by introducing breaks into the DNA helix. TopIB mediates DNA relaxation by creating a transient single-strand break in the DNA duplex. This transient nick allows the broken strand to rotate around its intact complement, effectively removing local supercoils. Strand nicking results from the transesterification of an active-site tyrosine (Tyr-723 in human, Tyr-274 in the viral protein) at a DNA phosphodiester bond forming a 3-phosphotyrosine covalent enzyme-DNA complex. After DNA relaxation, the covalent intermediate is reversed when the released 5-OH of the broken strand reattacks the phosphotyrosine intermediate in a second transesterification reaction. The rate of religation is normally much faster than the rate of cleavage, and this ensures that the steady-state concentration of the covalent 3-phosphotyrosyl TopIB DNA complex remains low. A variety of DNA lesions and drugs have been shown to stabilize the covalent 3-phosphotyrosyl intermediate. Unlike most TopIBs, the enzyme isolated from the vaccinia virus exhibits specificity for cleavage at a consensus sequence: 5'-(T/C)CCTT-3' in the scissile strand with cleavage occuring after the last base. The viral TopIB is also the smallest topoisomerase known and is unusual in that it is resistant to the potent chemotherapeutic agent camptothecin (CPT). CPT is a natural product that was originally discovered because of its antitumor activity and was later demonstrated to cause the accumulation of TopIB DNA adducts in vitro and in vivo. CPTs bind the covalent 3-phosphotyrosyl intermediate and specifically block DNA religation, thus converting TopIB into a DNA-damaging agent. TopIB is the sole intramolecular target of CPT, and the cytotoxic effects of CPT poisoning are S-phase specific. During DNA replication, the replication fork is thought to collide with the trapped TopIB DNA complexes, resulting in double-strand breaks and ultimately cell death.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of DNA topoisomerase (type IB)
+  description: Stepwise mechanism transcribed from M-CSA entry 232 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: arg130
+    label: catalytic Arg130 (M-CSA/PDB numbering; UniProt residue 130)
+    node_type: RESIDUE
+    grounding: UniProtKB:P68698
+    description: 'M-CSA roles: attractive charge-charge interaction, electrostatic stabiliser, hydrogen
+      bond donor, proton acceptor, proton donor, proton relay.'
+  - node_id: lys167
+    label: catalytic Lys167 (M-CSA/PDB numbering; UniProt residue 167)
+    node_type: RESIDUE
+    grounding: UniProtKB:P68698
+    description: 'M-CSA roles: attractive charge-charge interaction, electrostatic stabiliser, hydrogen
+      bond donor, proton acceptor, proton donor, proton relay.'
+  - node_id: arg223
+    label: catalytic Arg223 (M-CSA/PDB numbering; UniProt residue 223)
+    node_type: RESIDUE
+    grounding: UniProtKB:P68698
+    description: 'M-CSA roles: attractive charge-charge interaction, electrostatic stabiliser, hydrogen
+      bond donor.'
+  - node_id: his265
+    label: catalytic His265 (M-CSA/PDB numbering; UniProt residue 265)
+    node_type: RESIDUE
+    grounding: UniProtKB:P68698
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: tyr274
+    label: catalytic Tyr274 (M-CSA/PDB numbering; UniProt residue 274)
+    node_type: RESIDUE
+    grounding: UniProtKB:P68698
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, nucleofuge, nucleophile, proton
+      acceptor, proton donor.'
+  - node_id: reactant0
+    label: double-stranded DNA
+    node_type: CHEMICAL
+    grounding: CHEBI:4705
+  - node_id: product0
+    label: double-stranded DNA
+    node_type: CHEMICAL
+    grounding: CHEBI:4705
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Water deprotonates Tyr274, initiating a nucleophilic in-line substitution at the DNA
+      phosphate with a trigonal bipyramidal transition state. The leaving 5'-hydroxyl is initially protonated
+      by Lys167, which in turn deprotonates Arg130, which deprotonates the initial acidic water in a concerted
+      fashion.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: 'Before this catalytic step occurs the DNA-enzyme intermediate rotates around the uncleaved
+      DNA strand, relaxing the supercoiled DNA. Water deprotonates Arg130, which in turn deprotonates
+      Lys167, which deprotonates the rotated 5''-OH initiating a nucleophilic in-line substitution at
+      the DNA phosphate with a trigonal bipyramidal transition state/ The eliminated Tyr274 deprotonates
+      the initial acidic '
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: DNA topoisomerase (type IB) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:232
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.15.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.15.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: DNA topoisomerase (type IB) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.6.2.1
+  edges:
+  - subject: arg130
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg130 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/232/
+      snippet: Water deprotonates Tyr274, initiating a nucleophilic in-line substitution at the DNA phosphate
+        with a trigonal bipyramidal transition state. The leaving 5'-hydroxyl is initially protonated
+        by Lys167, which in turn deprotonates Arg130, which deprotonates the initial acidic water in a
+        concerted fashion.
+      notes: M-CSA entry 232, mechanism 1; M-CSA cites PMID:10820030, PMID:11756402, PMID:14594810, PMID:16487540,
+        PMID:16885024, PMID:18367446, PMID:2557629, PMID:9079646, PMID:9224599, PMID:9488652, PMID:9529259;
+        step 1
+  - subject: lys167
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys167 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/232/
+      snippet: Water deprotonates Tyr274, initiating a nucleophilic in-line substitution at the DNA phosphate
+        with a trigonal bipyramidal transition state. The leaving 5'-hydroxyl is initially protonated
+        by Lys167, which in turn deprotonates Arg130, which deprotonates the initial acidic water in a
+        concerted fashion.
+      notes: M-CSA entry 232, mechanism 1; M-CSA cites PMID:10820030, PMID:11756402, PMID:14594810, PMID:16487540,
+        PMID:16885024, PMID:18367446, PMID:2557629, PMID:9079646, PMID:9224599, PMID:9488652, PMID:9529259;
+        step 1
+  - subject: tyr274
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr274 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/232/
+      snippet: Water deprotonates Tyr274, initiating a nucleophilic in-line substitution at the DNA phosphate
+        with a trigonal bipyramidal transition state. The leaving 5'-hydroxyl is initially protonated
+        by Lys167, which in turn deprotonates Arg130, which deprotonates the initial acidic water in a
+        concerted fashion.
+      notes: M-CSA entry 232, mechanism 1; M-CSA cites PMID:10820030, PMID:11756402, PMID:14594810, PMID:16487540,
+        PMID:16885024, PMID:18367446, PMID:2557629, PMID:9079646, PMID:9224599, PMID:9488652, PMID:9529259;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/232/
+      snippet: Before this catalytic step occurs the DNA-enzyme intermediate rotates around the uncleaved
+        DNA strand, relaxing the supercoiled DNA. Water deprotonates Arg130, which in turn deprotonates
+        Lys167, which deprotonates the rotated 5'-OH initiating a nucleophilic in-line substitution at
+        the DNA phosphate with a trigonal bipyramidal transition state/ The eliminated Tyr274 deprotonates
+        the initial acidic water molecule.
+      notes: M-CSA entry 232, mechanism 1; M-CSA cites PMID:10820030, PMID:11756402, PMID:14594810, PMID:16487540,
+        PMID:16885024, PMID:18367446, PMID:2557629, PMID:9079646, PMID:9224599, PMID:9488652, PMID:9529259;
+        step 2
+  - subject: arg130
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Arg130 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/232/
+      snippet: Before this catalytic step occurs the DNA-enzyme intermediate rotates around the uncleaved
+        DNA strand, relaxing the supercoiled DNA. Water deprotonates Arg130, which in turn deprotonates
+        Lys167, which deprotonates the rotated 5'-OH initiating a nucleophilic in-line substitution at
+        the DNA phosphate with a trigonal bipyramidal transition state/ The eliminated Tyr274 deprotonates
+        the initial acidic water molecule.
+      notes: M-CSA entry 232, mechanism 1; M-CSA cites PMID:10820030, PMID:11756402, PMID:14594810, PMID:16487540,
+        PMID:16885024, PMID:18367446, PMID:2557629, PMID:9079646, PMID:9224599, PMID:9488652, PMID:9529259;
+        step 2
+  - subject: lys167
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Lys167 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/232/
+      snippet: Before this catalytic step occurs the DNA-enzyme intermediate rotates around the uncleaved
+        DNA strand, relaxing the supercoiled DNA. Water deprotonates Arg130, which in turn deprotonates
+        Lys167, which deprotonates the rotated 5'-OH initiating a nucleophilic in-line substitution at
+        the DNA phosphate with a trigonal bipyramidal transition state/ The eliminated Tyr274 deprotonates
+        the initial acidic water molecule.
+      notes: M-CSA entry 232, mechanism 1; M-CSA cites PMID:10820030, PMID:11756402, PMID:14594810, PMID:16487540,
+        PMID:16885024, PMID:18367446, PMID:2557629, PMID:9079646, PMID:9224599, PMID:9488652, PMID:9529259;
+        step 2
+  - subject: tyr274
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Tyr274 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/232/
+      snippet: Before this catalytic step occurs the DNA-enzyme intermediate rotates around the uncleaved
+        DNA strand, relaxing the supercoiled DNA. Water deprotonates Arg130, which in turn deprotonates
+        Lys167, which deprotonates the rotated 5'-OH initiating a nucleophilic in-line substitution at
+        the DNA phosphate with a trigonal bipyramidal transition state/ The eliminated Tyr274 deprotonates
+        the initial acidic water molecule.
+      notes: M-CSA entry 232, mechanism 1; M-CSA cites PMID:10820030, PMID:11756402, PMID:14594810, PMID:16487540,
+        PMID:16885024, PMID:18367446, PMID:2557629, PMID:9079646, PMID:9224599, PMID:9488652, PMID:9529259;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/232/
+      snippet: Products
+      notes: M-CSA entry 232, mechanism 1; M-CSA cites PMID:10820030, PMID:11756402, PMID:14594810, PMID:16487540,
+        PMID:16885024, PMID:18367446, PMID:2557629, PMID:9079646, PMID:9224599, PMID:9488652, PMID:9529259;
+        step 3
+  - subject: arg130
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg130 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/232/
+      snippet: attractive charge-charge interaction, electrostatic stabiliser, hydrogen bond donor, proton
+        acceptor, proton donor, proton relay
+      notes: M-CSA entry 232, mechanism 1; M-CSA cites PMID:10820030, PMID:11756402, PMID:14594810, PMID:16487540,
+        PMID:16885024, PMID:18367446, PMID:2557629, PMID:9079646, PMID:9224599, PMID:9488652, PMID:9529259;
+        M-CSA catalytic-residue roles for Arg130
+  - subject: lys167
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys167 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/232/
+      snippet: attractive charge-charge interaction, electrostatic stabiliser, hydrogen bond donor, proton
+        acceptor, proton donor, proton relay
+      notes: M-CSA entry 232, mechanism 1; M-CSA cites PMID:10820030, PMID:11756402, PMID:14594810, PMID:16487540,
+        PMID:16885024, PMID:18367446, PMID:2557629, PMID:9079646, PMID:9224599, PMID:9488652, PMID:9529259;
+        M-CSA catalytic-residue roles for Lys167
+  - subject: arg223
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg223 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/232/
+      snippet: attractive charge-charge interaction, electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 232, mechanism 1; M-CSA cites PMID:10820030, PMID:11756402, PMID:14594810, PMID:16487540,
+        PMID:16885024, PMID:18367446, PMID:2557629, PMID:9079646, PMID:9224599, PMID:9488652, PMID:9529259;
+        M-CSA catalytic-residue roles for Arg223
+  - subject: his265
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His265 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/232/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 232, mechanism 1; M-CSA cites PMID:10820030, PMID:11756402, PMID:14594810, PMID:16487540,
+        PMID:16885024, PMID:18367446, PMID:2557629, PMID:9079646, PMID:9224599, PMID:9488652, PMID:9529259;
+        M-CSA catalytic-residue roles for His265
+  - subject: tyr274
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr274 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/232/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, nucleofuge, nucleophile, proton acceptor,
+        proton donor
+      notes: M-CSA entry 232, mechanism 1; M-CSA cites PMID:10820030, PMID:11756402, PMID:14594810, PMID:16487540,
+        PMID:16885024, PMID:18367446, PMID:2557629, PMID:9079646, PMID:9224599, PMID:9488652, PMID:9529259;
+        M-CSA catalytic-residue roles for Tyr274
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/232/
+      snippet: Tyr274 is the nucleophile for in-line displacement at the DNA phosphate group with the
+        5'-hydroxyl as the leaving group. The transition state is stabilised by Arg130 binding to one
+        non-bridging oxygen, Arg223 and His265 binding to the other non-bridging oxygen, and Arg223 and
+        Lys167 binding to the 5'-hydroxyl leaving group. Either Arg223 or a water molecule is involved
+        in general base catalysis wi
+      notes: M-CSA entry 232, mechanism 1; M-CSA cites PMID:10820030, PMID:11756402, PMID:14594810, PMID:16487540,
+        PMID:16885024, PMID:18367446, PMID:2557629, PMID:9079646, PMID:9224599, PMID:9488652, PMID:9529259;
+        CATH domain 3.90.15.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/232/
+      snippet: Tyr274 is the nucleophile for in-line displacement at the DNA phosphate group with the
+        5'-hydroxyl as the leaving group. The transition state is stabilised by Arg130 binding to one
+        non-bridging oxygen, Arg223 and His265 binding to the other non-bridging oxygen, and Arg223 and
+        Lys167 binding to the 5'-hydroxyl leaving group. Either Arg223 or a water molecule is involved
+        in general base catalysis wi
+      notes: M-CSA entry 232, mechanism 1; M-CSA cites PMID:10820030, PMID:11756402, PMID:14594810, PMID:16487540,
+        PMID:16885024, PMID:18367446, PMID:2557629, PMID:9079646, PMID:9224599, PMID:9488652, PMID:9529259;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/232/
+      snippet: Tyr274 is the nucleophile for in-line displacement at the DNA phosphate group with the
+        5'-hydroxyl as the leaving group. The transition state is stabilised by Arg130 binding to one
+        non-bridging oxygen, Arg223 and His265 binding to the other non-bridging oxygen, and Arg223 and
+        Lys167 binding to the 5'-hydroxyl leaving group. Either Arg223 or a water molecule is involved
+        in general base catalysis wi
+      notes: M-CSA entry 232, mechanism 1; M-CSA cites PMID:10820030, PMID:11756402, PMID:14594810, PMID:16487540,
+        PMID:16885024, PMID:18367446, PMID:2557629, PMID:9079646, PMID:9224599, PMID:9488652, PMID:9529259;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/232/
+      snippet: Tyr274 is the nucleophile for in-line displacement at the DNA phosphate group with the
+        5'-hydroxyl as the leaving group. The transition state is stabilised by Arg130 binding to one
+        non-bridging oxygen, Arg223 and His265 binding to the other non-bridging oxygen, and Arg223 and
+        Lys167 binding to the 5'-hydroxyl leaving group. Either Arg223 or a water molecule is involved
+        in general base catalysis wi
+      notes: M-CSA entry 232, mechanism 1; M-CSA cites PMID:10820030, PMID:11756402, PMID:14594810, PMID:16487540,
+        PMID:16885024, PMID:18367446, PMID:2557629, PMID:9079646, PMID:9224599, PMID:9488652, PMID:9529259;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (17 evidence-backed edges) transcribed from M-CSA entry 232;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

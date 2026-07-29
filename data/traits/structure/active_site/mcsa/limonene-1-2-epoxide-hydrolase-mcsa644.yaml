@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.3.2.8
 - CHEBI:35672
@@ -139,4 +139,261 @@ definitions:
       Rhodococcus erythropolis is a species of bacteria able to grow on limonene. Its enzyme limonene epoxide hydrolase (LEH) is able to catalyse a key step in this process, namely the hydrolysis of limonene-1-2-epoxide to limonene-1-2-diol. However, the enzyme has a different fold and mechanism to the homologous family of epoxide hydrolases already known to exist, thus represents an example of convergent evolution. In fact, the enzyme bears little structural homology to any known enzyme except for kesosteriod isomerase, which catalyses a completely different reaction. The hydrolysis catalysed by LEH is enantioconvergent, therefore attracting wide interest in industrial applications.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of limonene-1,2-epoxide hydrolase
+  description: Stepwise mechanism transcribed from M-CSA entry 644 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: tyr53
+    label: catalytic Tyr53 (M-CSA/PDB numbering; UniProt residue 53)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9ZAG3
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asn55
+    label: catalytic Asn55 (M-CSA/PDB numbering; UniProt residue 55)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9ZAG3
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: arg99
+    label: catalytic Arg99 (M-CSA/PDB numbering; UniProt residue 99)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9ZAG3
+    description: 'M-CSA roles: electrostatic stabiliser, proton acceptor, proton donor, proton relay.'
+  - node_id: asp101
+    label: catalytic Asp101 (M-CSA/PDB numbering; UniProt residue 101)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9ZAG3
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: asp132
+    label: catalytic Asp132 (M-CSA/PDB numbering; UniProt residue 132)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9ZAG3
+    description: 'M-CSA roles: activator, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: (4R)-limonene 1,2-epoxide
+    node_type: CHEMICAL
+    grounding: CHEBI:35672
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: (1S,2S,4R)-limonene-1,2-diol
+    node_type: CHEMICAL
+    grounding: CHEBI:18515
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp132 activates the water molecule by abstracting a proton. This results in the nucleophilic
+      attack of the epoxide on the substrate. Simultaneously, Asp101 also protonates the epoxide group
+      of the substrate. Other residues shown are involved in the positioning of the reactants, water and
+      limonene-1,2- diol. This results in the formation of limonene-1,2- diol.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Proton transfer via Arg99 to regenerate the active site.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: limonene-1,2-epoxide hydrolase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:644
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.10.450.50 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.10.450.50
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: limonene-1,2-epoxide hydrolase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.3.2.8
+  edges:
+  - subject: asp101
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp101 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/644/
+      snippet: Asp132 activates the water molecule by abstracting a proton. This results in the nucleophilic
+        attack of the epoxide on the substrate. Simultaneously, Asp101 also protonates the epoxide group
+        of the substrate. Other residues shown are involved in the positioning of the reactants, water
+        and limonene-1,2- diol. This results in the formation of limonene-1,2- diol.
+      notes: M-CSA entry 644, mechanism 1; M-CSA cites PMID:12773375, PMID:21925621, PMID:23512539; step
+        1
+  - subject: asp132
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp132 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/644/
+      snippet: Asp132 activates the water molecule by abstracting a proton. This results in the nucleophilic
+        attack of the epoxide on the substrate. Simultaneously, Asp101 also protonates the epoxide group
+        of the substrate. Other residues shown are involved in the positioning of the reactants, water
+        and limonene-1,2- diol. This results in the formation of limonene-1,2- diol.
+      notes: M-CSA entry 644, mechanism 1; M-CSA cites PMID:12773375, PMID:21925621, PMID:23512539; step
+        1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/644/
+      snippet: Proton transfer via Arg99 to regenerate the active site.
+      notes: M-CSA entry 644, mechanism 1; M-CSA cites PMID:12773375, PMID:21925621, PMID:23512539; step
+        2
+  - subject: arg99
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Arg99 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/644/
+      snippet: Proton transfer via Arg99 to regenerate the active site.
+      notes: M-CSA entry 644, mechanism 1; M-CSA cites PMID:12773375, PMID:21925621, PMID:23512539; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/644/
+      snippet: Products.
+      notes: M-CSA entry 644, mechanism 1; M-CSA cites PMID:12773375, PMID:21925621, PMID:23512539; step
+        3
+  - subject: tyr53
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr53 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/644/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 644, mechanism 1; M-CSA cites PMID:12773375, PMID:21925621, PMID:23512539; M-CSA
+        catalytic-residue roles for Tyr53
+  - subject: asn55
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn55 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/644/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 644, mechanism 1; M-CSA cites PMID:12773375, PMID:21925621, PMID:23512539; M-CSA
+        catalytic-residue roles for Asn55
+  - subject: arg99
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg99 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/644/
+      snippet: electrostatic stabiliser, proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 644, mechanism 1; M-CSA cites PMID:12773375, PMID:21925621, PMID:23512539; M-CSA
+        catalytic-residue roles for Arg99
+  - subject: asp101
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp101 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/644/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 644, mechanism 1; M-CSA cites PMID:12773375, PMID:21925621, PMID:23512539; M-CSA
+        catalytic-residue roles for Asp101
+  - subject: asp132
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp132 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/644/
+      snippet: activator, proton acceptor, proton donor
+      notes: M-CSA entry 644, mechanism 1; M-CSA cites PMID:12773375, PMID:21925621, PMID:23512539; M-CSA
+        catalytic-residue roles for Asp132
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/644/
+      snippet: The mechanism for the reaction proceeds in a single concerted step with concomitant nucleophilic
+        attack by a water molecule and protonation of the epoxide to release the diol product.  Asp132
+        acts as a base to deprotonate a water molecule. The hydroxide ion then performs a nucleophilic
+        attack at one of the ring carbons, forcing epoxide ring opening. At the same time, Asp101 donates
+        a proton to the
+      notes: M-CSA entry 644, mechanism 1; M-CSA cites PMID:12773375, PMID:21925621, PMID:23512539; CATH
+        domain 3.10.450.50 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/644/
+      snippet: The mechanism for the reaction proceeds in a single concerted step with concomitant nucleophilic
+        attack by a water molecule and protonation of the epoxide to release the diol product.  Asp132
+        acts as a base to deprotonate a water molecule. The hydroxide ion then performs a nucleophilic
+        attack at one of the ring carbons, forcing epoxide ring opening. At the same time, Asp101 donates
+        a proton to the
+      notes: M-CSA entry 644, mechanism 1; M-CSA cites PMID:12773375, PMID:21925621, PMID:23512539; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/644/
+      snippet: The mechanism for the reaction proceeds in a single concerted step with concomitant nucleophilic
+        attack by a water molecule and protonation of the epoxide to release the diol product.  Asp132
+        acts as a base to deprotonate a water molecule. The hydroxide ion then performs a nucleophilic
+        attack at one of the ring carbons, forcing epoxide ring opening. At the same time, Asp101 donates
+        a proton to the
+      notes: M-CSA entry 644, mechanism 1; M-CSA cites PMID:12773375, PMID:21925621, PMID:23512539; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/644/
+      snippet: The mechanism for the reaction proceeds in a single concerted step with concomitant nucleophilic
+        attack by a water molecule and protonation of the epoxide to release the diol product.  Asp132
+        acts as a base to deprotonate a water molecule. The hydroxide ion then performs a nucleophilic
+        attack at one of the ring carbons, forcing epoxide ring opening. At the same time, Asp101 donates
+        a proton to the
+      notes: M-CSA entry 644, mechanism 1; M-CSA cites PMID:12773375, PMID:21925621, PMID:23512539; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/644/
+      snippet: The mechanism for the reaction proceeds in a single concerted step with concomitant nucleophilic
+        attack by a water molecule and protonation of the epoxide to release the diol product.  Asp132
+        acts as a base to deprotonate a water molecule. The hydroxide ion then performs a nucleophilic
+        attack at one of the ring carbons, forcing epoxide ring opening. At the same time, Asp101 donates
+        a proton to the
+      notes: M-CSA entry 644, mechanism 1; M-CSA cites PMID:12773375, PMID:21925621, PMID:23512539; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 644;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

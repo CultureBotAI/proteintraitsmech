@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.1.61
 - CHEBI:15377
@@ -269,4 +269,322 @@ definitions:
       Protein-glutamate methyl-esterase, also known as chemotaxis-specific methylesterase, is involved in regulating the signalling activity of bacterial chemotaxis transmembrane receptors through chemical modification of specific glutamate residues. The protein consists of two main domains, an N-terminal regulatory domain and a C-terminal effector domain. Phosphorylation of the N-terminal domain influences the reactivity of the catalytic C-terminus, although the truncated, C-terminus only protein retains full catalytic activity and substrate specificity [PMID:7608974]. The bacterial chemotaxis receptors are dimeric transmembrane proteins with periplasmic ligand-binding domains that detect specific chemoeffector molecules, and cytoplasmic domains that control the activities of intracellular signalling proteins. Like many of the response regulator proteins, it is a multi-domain protein consisting of an N-terminal regulatory domain and a C-terminal effector domain. Regulation of CheB involves both inter- and intramolecular interactions. The bacterial chemotaxis receptors control the activity of the first cytoplasmic component of the signal transduction pathway, the histidine protein kinase, CheA. The autophosphorylation activity of the CheA kinase is influenced by both the ligand occupancy of the receptors and the level of receptor methylation. Bacterial chemotaxis serves as a useful tool/model for the study of molecular strategies of signal transduction. Methylester hydrolysis depends both on the conformation of the receptor and on phosphorylation of the Protein-glutamate methylesterase regulatory domain. Phosphorylation of the regulatory domain activates the effector function. The methylesterase active site is identified as a cleft at the C-terminal edge of the beta-sheet containing residues SER 164, HIS 190 and ASP 286. The three-dimensional fold, and the arrangement of residues within the catalytic triad distinguishes the CheB methyltransferase from any previously described serine protease or serine hydrolase. The three-dimensional arrangement of the catalytic triad in the CheB methyl transferase is different from that of previously characterised serine hydrolases and serine proteases due to the opposite orientation of the histidine residue - similar orientations are observed in thiol proteases papain and actinidin.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of protein-glutamate methylesterase (CheB)
+  description: Stepwise mechanism transcribed from M-CSA entry 337 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: ser164
+    label: catalytic Ser164 (M-CSA/PDB numbering; UniProt residue 164)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04042
+    description: 'M-CSA roles: activator, covalently attached, hydrogen bond donor, nucleofuge, nucleophile,
+      proton acceptor, proton donor.'
+  - node_id: thr165
+    label: catalytic Thr165 (M-CSA/PDB numbering; UniProt residue 165)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04042
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: his190
+    label: catalytic His190 (M-CSA/PDB numbering; UniProt residue 190)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04042
+    description: 'M-CSA roles: activator, electrostatic stabiliser, hydrogen bond donor, proton acceptor,
+      proton donor.'
+  - node_id: met283
+    label: catalytic Met283 (M-CSA/PDB numbering; UniProt residue 283)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04042
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: asp286
+    label: catalytic Asp286 (M-CSA/PDB numbering; UniProt residue 286)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04042
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: gamma-methyl L-glutamate residue
+    node_type: CHEMICAL
+    grounding: CHEBI:82795
+  - node_id: product0
+    label: methanol
+    node_type: CHEMICAL
+    grounding: CHEBI:17790
+  - node_id: product1
+    label: L-glutamate residue
+    node_type: CHEMICAL
+    grounding: CHEBI:29973
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Ser164 acts as a nucleophile towards the glutamine methyl-ester, activated by His190
+      and Asp283, the two other residues involved in forming the hydrolase triad. It has been inferred
+      that the proton originally from Ser164 is relayed to His190, since no alternative proton acceptors
+      have been identified.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The tetrahedral oxyanion intermediate collapses, releasing methanol with concomitant
+      protonation of the leaving group, methanol.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Water, activated by His190, attacks the enzyme-glutamine carbonyl bond, forming a second
+      tetrahedral intermediate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The tetrahedral intermediate collapses, eliminating the protein glutamine residue and
+      regenerating the active site protonation state.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Product.
+  - node_id: active_site
+    label: protein-glutamate methylesterase (CheB) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:337
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.180 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.180
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: protein-glutamate methylesterase (CheB) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.1.61
+  edges:
+  - subject: ser164
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser164 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/337/
+      snippet: Ser164 acts as a nucleophile towards the glutamine methyl-ester, activated by His190 and
+        Asp283, the two other residues involved in forming the hydrolase triad. It has been inferred that
+        the proton originally from Ser164 is relayed to His190, since no alternative proton acceptors
+        have been identified.
+      notes: M-CSA entry 337, mechanism 1; M-CSA cites PMID:7608974; step 1
+  - subject: his190
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His190 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/337/
+      snippet: Ser164 acts as a nucleophile towards the glutamine methyl-ester, activated by His190 and
+        Asp283, the two other residues involved in forming the hydrolase triad. It has been inferred that
+        the proton originally from Ser164 is relayed to His190, since no alternative proton acceptors
+        have been identified.
+      notes: M-CSA entry 337, mechanism 1; M-CSA cites PMID:7608974; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/337/
+      snippet: The tetrahedral oxyanion intermediate collapses, releasing methanol with concomitant protonation
+        of the leaving group, methanol.
+      notes: M-CSA entry 337, mechanism 1; M-CSA cites PMID:7608974; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/337/
+      snippet: Water, activated by His190, attacks the enzyme-glutamine carbonyl bond, forming a second
+        tetrahedral intermediate.
+      notes: M-CSA entry 337, mechanism 1; M-CSA cites PMID:7608974; step 3
+  - subject: his190
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His190 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/337/
+      snippet: Water, activated by His190, attacks the enzyme-glutamine carbonyl bond, forming a second
+        tetrahedral intermediate.
+      notes: M-CSA entry 337, mechanism 1; M-CSA cites PMID:7608974; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/337/
+      snippet: The tetrahedral intermediate collapses, eliminating the protein glutamine residue and regenerating
+        the active site protonation state.
+      notes: M-CSA entry 337, mechanism 1; M-CSA cites PMID:7608974; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/337/
+      snippet: Product.
+      notes: M-CSA entry 337, mechanism 1; M-CSA cites PMID:7608974; step 5
+  - subject: ser164
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser164 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/337/
+      snippet: activator, covalently attached, hydrogen bond donor, nucleofuge, nucleophile, proton acceptor,
+        proton donor
+      notes: M-CSA entry 337, mechanism 1; M-CSA cites PMID:7608974; M-CSA catalytic-residue roles for
+        Ser164
+  - subject: thr165
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr165 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/337/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 337, mechanism 1; M-CSA cites PMID:7608974; M-CSA catalytic-residue roles for
+        Thr165
+  - subject: his190
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His190 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/337/
+      snippet: activator, electrostatic stabiliser, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 337, mechanism 1; M-CSA cites PMID:7608974; M-CSA catalytic-residue roles for
+        His190
+  - subject: met283
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Met283 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/337/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 337, mechanism 1; M-CSA cites PMID:7608974; M-CSA catalytic-residue roles for
+        Met283
+  - subject: asp286
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp286 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/337/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 337, mechanism 1; M-CSA cites PMID:7608974; M-CSA catalytic-residue roles for
+        Asp286
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/337/
+      snippet: The hydrolysis of carboxyl methyl groups and amide groups catalysed by the CheB methylesterase
+        is expected to involve a catalytic mechanism similar to that of the serine proteases and other
+        hydrolases. The active site proposed is consistent with a proton relay mechanism proposed for
+        hydrolysis by a serine nucleophile within a catalytic triad. For the hydrolysis catalysed by CheB,
+        the proposed reac
+      notes: M-CSA entry 337, mechanism 1; M-CSA cites PMID:7608974; CATH domain 3.40.50.180 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/337/
+      snippet: The hydrolysis of carboxyl methyl groups and amide groups catalysed by the CheB methylesterase
+        is expected to involve a catalytic mechanism similar to that of the serine proteases and other
+        hydrolases. The active site proposed is consistent with a proton relay mechanism proposed for
+        hydrolysis by a serine nucleophile within a catalytic triad. For the hydrolysis catalysed by CheB,
+        the proposed reac
+      notes: M-CSA entry 337, mechanism 1; M-CSA cites PMID:7608974; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/337/
+      snippet: The hydrolysis of carboxyl methyl groups and amide groups catalysed by the CheB methylesterase
+        is expected to involve a catalytic mechanism similar to that of the serine proteases and other
+        hydrolases. The active site proposed is consistent with a proton relay mechanism proposed for
+        hydrolysis by a serine nucleophile within a catalytic triad. For the hydrolysis catalysed by CheB,
+        the proposed reac
+      notes: M-CSA entry 337, mechanism 1; M-CSA cites PMID:7608974; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/337/
+      snippet: The hydrolysis of carboxyl methyl groups and amide groups catalysed by the CheB methylesterase
+        is expected to involve a catalytic mechanism similar to that of the serine proteases and other
+        hydrolases. The active site proposed is consistent with a proton relay mechanism proposed for
+        hydrolysis by a serine nucleophile within a catalytic triad. For the hydrolysis catalysed by CheB,
+        the proposed reac
+      notes: M-CSA entry 337, mechanism 1; M-CSA cites PMID:7608974; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/337/
+      snippet: The hydrolysis of carboxyl methyl groups and amide groups catalysed by the CheB methylesterase
+        is expected to involve a catalytic mechanism similar to that of the serine proteases and other
+        hydrolases. The active site proposed is consistent with a proton relay mechanism proposed for
+        hydrolysis by a serine nucleophile within a catalytic triad. For the hydrolysis catalysed by CheB,
+        the proposed reac
+      notes: M-CSA entry 337, mechanism 1; M-CSA cites PMID:7608974; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/337/
+      snippet: The hydrolysis of carboxyl methyl groups and amide groups catalysed by the CheB methylesterase
+        is expected to involve a catalytic mechanism similar to that of the serine proteases and other
+        hydrolases. The active site proposed is consistent with a proton relay mechanism proposed for
+        hydrolysis by a serine nucleophile within a catalytic triad. For the hydrolysis catalysed by CheB,
+        the proposed reac
+      notes: M-CSA entry 337, mechanism 1; M-CSA cites PMID:7608974; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/337/
+      snippet: The hydrolysis of carboxyl methyl groups and amide groups catalysed by the CheB methylesterase
+        is expected to involve a catalytic mechanism similar to that of the serine proteases and other
+        hydrolases. The active site proposed is consistent with a proton relay mechanism proposed for
+        hydrolysis by a serine nucleophile within a catalytic triad. For the hydrolysis catalysed by CheB,
+        the proposed reac
+      notes: M-CSA entry 337, mechanism 1; M-CSA cites PMID:7608974; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (19 evidence-backed edges) transcribed from M-CSA entry 337;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

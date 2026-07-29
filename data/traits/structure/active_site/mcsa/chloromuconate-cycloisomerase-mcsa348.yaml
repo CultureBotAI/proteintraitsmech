@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.5.1.7
 - CHEBI:17883
@@ -242,4 +242,302 @@ definitions:
       Bacterial muconate lactonizing enzymes (MLEs) catalyze the conversion of cis,cis-muconate as a part of the beta-ketoadipate pathway. Some MLEs, including the enzyme annotated here, are also able to dehalogenate chlorinated muconate to form five-member furan rings. This enzyme catalyses several cyclisation and dehalogenation reactions.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of chloromuconate cycloisomerase
+  description: Stepwise mechanism transcribed from M-CSA entry 348 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: lys163
+    label: catalytic Lys163 (M-CSA/PDB numbering; UniProt residue 163)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05404
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: lys165
+    label: catalytic Lys165 (M-CSA/PDB numbering; UniProt residue 165)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05404
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: asp194
+    label: catalytic Asp194 (M-CSA/PDB numbering; UniProt residue 194)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05404
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu220
+    label: catalytic Glu220 (M-CSA/PDB numbering; UniProt residue 220)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05404
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp245
+    label: catalytic Asp245 (M-CSA/PDB numbering; UniProt residue 245)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05404
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: lys269
+    label: catalytic Lys269 (M-CSA/PDB numbering; UniProt residue 269)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05404
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: glu323
+    label: catalytic Glu323 (M-CSA/PDB numbering; UniProt residue 323)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05404
+    description: 'M-CSA roles: activator, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: 3-chloro-cis,cis-muconate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:17589
+  - node_id: reactant1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product0
+    label: hydrogen chloride
+    node_type: CHEMICAL
+    grounding: CHEBI:17883
+  - node_id: product1
+    label: 4-carboxylatomethylenebut-2-en-4-olide
+    node_type: CHEMICAL
+    grounding: CHEBI:57263
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: O'6 undergoes an intramolecular addition at the C4 double bond with concomitant deprotonation
+      of Glu323.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Glu323 abstracts a proton from the substrate, resulting in the elimination of the chloride
+      ion.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: chloromuconate cycloisomerase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:348
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.120 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.120
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: chloromuconate cycloisomerase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.5.1.7
+  edges:
+  - subject: glu323
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu323 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/348/
+      snippet: O'6 undergoes an intramolecular addition at the C4 double bond with concomitant deprotonation
+        of Glu323.
+      notes: M-CSA entry 348, mechanism 1; M-CSA cites PMID:10336378, PMID:11443090, PMID:12930985, PMID:15299651,
+        PMID:7305906, PMID:7751292, PMID:9724714; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/348/
+      snippet: Glu323 abstracts a proton from the substrate, resulting in the elimination of the chloride
+        ion.
+      notes: M-CSA entry 348, mechanism 1; M-CSA cites PMID:10336378, PMID:11443090, PMID:12930985, PMID:15299651,
+        PMID:7305906, PMID:7751292, PMID:9724714; step 2
+  - subject: glu323
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu323 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/348/
+      snippet: Glu323 abstracts a proton from the substrate, resulting in the elimination of the chloride
+        ion.
+      notes: M-CSA entry 348, mechanism 1; M-CSA cites PMID:10336378, PMID:11443090, PMID:12930985, PMID:15299651,
+        PMID:7305906, PMID:7751292, PMID:9724714; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/348/
+      snippet: Products
+      notes: M-CSA entry 348, mechanism 1; M-CSA cites PMID:10336378, PMID:11443090, PMID:12930985, PMID:15299651,
+        PMID:7305906, PMID:7751292, PMID:9724714; step 3
+  - subject: lys163
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys163 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/348/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 348, mechanism 1; M-CSA cites PMID:10336378, PMID:11443090, PMID:12930985, PMID:15299651,
+        PMID:7305906, PMID:7751292, PMID:9724714; M-CSA catalytic-residue roles for Lys163
+  - subject: lys165
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys165 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/348/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 348, mechanism 1; M-CSA cites PMID:10336378, PMID:11443090, PMID:12930985, PMID:15299651,
+        PMID:7305906, PMID:7751292, PMID:9724714; M-CSA catalytic-residue roles for Lys165
+  - subject: asp194
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp194 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/348/
+      snippet: metal ligand
+      notes: M-CSA entry 348, mechanism 1; M-CSA cites PMID:10336378, PMID:11443090, PMID:12930985, PMID:15299651,
+        PMID:7305906, PMID:7751292, PMID:9724714; M-CSA catalytic-residue roles for Asp194
+  - subject: glu220
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu220 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/348/
+      snippet: metal ligand
+      notes: M-CSA entry 348, mechanism 1; M-CSA cites PMID:10336378, PMID:11443090, PMID:12930985, PMID:15299651,
+        PMID:7305906, PMID:7751292, PMID:9724714; M-CSA catalytic-residue roles for Glu220
+  - subject: asp245
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp245 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/348/
+      snippet: metal ligand
+      notes: M-CSA entry 348, mechanism 1; M-CSA cites PMID:10336378, PMID:11443090, PMID:12930985, PMID:15299651,
+        PMID:7305906, PMID:7751292, PMID:9724714; M-CSA catalytic-residue roles for Asp245
+  - subject: lys269
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys269 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/348/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 348, mechanism 1; M-CSA cites PMID:10336378, PMID:11443090, PMID:12930985, PMID:15299651,
+        PMID:7305906, PMID:7751292, PMID:9724714; M-CSA catalytic-residue roles for Lys269
+  - subject: glu323
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu323 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/348/
+      snippet: activator, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 348, mechanism 1; M-CSA cites PMID:10336378, PMID:11443090, PMID:12930985, PMID:15299651,
+        PMID:7305906, PMID:7751292, PMID:9724714; M-CSA catalytic-residue roles for Glu323
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/348/
+      snippet: "O'6 undergoes an intramolecular addition at the C4 double bond with concomitant deprotonation\
+        \ of Glu323.
+<br/><br/>
+Calculations of the active site polarity suggest a degree of positive\
+        \ charge. This is thought to be neutralised on the elimination of chloride ion, and therefore\
+        \ drive the reaction towards the furan product."
+      notes: M-CSA entry 348, mechanism 1; M-CSA cites PMID:10336378, PMID:11443090, PMID:12930985, PMID:15299651,
+        PMID:7305906, PMID:7751292, PMID:9724714; CATH domain 3.20.20.120 assigned to the catalytic chain
+        by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/348/
+      snippet: "O'6 undergoes an intramolecular addition at the C4 double bond with concomitant deprotonation\
+        \ of Glu323.
+<br/><br/>
+Calculations of the active site polarity suggest a degree of positive\
+        \ charge. This is thought to be neutralised on the elimination of chloride ion, and therefore\
+        \ drive the reaction towards the furan product."
+      notes: M-CSA entry 348, mechanism 1; M-CSA cites PMID:10336378, PMID:11443090, PMID:12930985, PMID:15299651,
+        PMID:7305906, PMID:7751292, PMID:9724714; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/348/
+      snippet: "O'6 undergoes an intramolecular addition at the C4 double bond with concomitant deprotonation\
+        \ of Glu323.
+<br/><br/>
+Calculations of the active site polarity suggest a degree of positive\
+        \ charge. This is thought to be neutralised on the elimination of chloride ion, and therefore\
+        \ drive the reaction towards the furan product."
+      notes: M-CSA entry 348, mechanism 1; M-CSA cites PMID:10336378, PMID:11443090, PMID:12930985, PMID:15299651,
+        PMID:7305906, PMID:7751292, PMID:9724714; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/348/
+      snippet: "O'6 undergoes an intramolecular addition at the C4 double bond with concomitant deprotonation\
+        \ of Glu323.
+<br/><br/>
+Calculations of the active site polarity suggest a degree of positive\
+        \ charge. This is thought to be neutralised on the elimination of chloride ion, and therefore\
+        \ drive the reaction towards the furan product."
+      notes: M-CSA entry 348, mechanism 1; M-CSA cites PMID:10336378, PMID:11443090, PMID:12930985, PMID:15299651,
+        PMID:7305906, PMID:7751292, PMID:9724714; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/348/
+      snippet: "O'6 undergoes an intramolecular addition at the C4 double bond with concomitant deprotonation\
+        \ of Glu323.
+<br/><br/>
+Calculations of the active site polarity suggest a degree of positive\
+        \ charge. This is thought to be neutralised on the elimination of chloride ion, and therefore\
+        \ drive the reaction towards the furan product."
+      notes: M-CSA entry 348, mechanism 1; M-CSA cites PMID:10336378, PMID:11443090, PMID:12930985, PMID:15299651,
+        PMID:7305906, PMID:7751292, PMID:9724714; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/348/
+      snippet: "O'6 undergoes an intramolecular addition at the C4 double bond with concomitant deprotonation\
+        \ of Glu323.
+<br/><br/>
+Calculations of the active site polarity suggest a degree of positive\
+        \ charge. This is thought to be neutralised on the elimination of chloride ion, and therefore\
+        \ drive the reaction towards the furan product."
+      notes: M-CSA entry 348, mechanism 1; M-CSA cites PMID:10336378, PMID:11443090, PMID:12930985, PMID:15299651,
+        PMID:7305906, PMID:7751292, PMID:9724714; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (17 evidence-backed edges) transcribed from M-CSA entry 348;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

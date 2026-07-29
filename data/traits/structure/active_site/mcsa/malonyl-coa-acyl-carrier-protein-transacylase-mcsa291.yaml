@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.3.1.39
 - CHEBI:57287
@@ -198,4 +198,357 @@ definitions:
       In Escherichia coli Fatty acid synthesis, FAS II includes a specific malonyl-CoA:ACP transacylase (MCAT), which catalyses specifically the elongation step. The initiation of each elongation step in the fatty acid synthesis cycle requires the transfer of a malonyl moiety from the respective CoA thioester to the -SH group of the phosphopantetheine arm of the acyl carrier protein (ACP), the central component of any FAS. MCAT, along with Acyl-carrier-protein S-acetyltransferase (EC 2.3.1.38), is essential for the initiation of fatty-acid biosynthesis in bacteria. This enzyme also provides the malonyl groups for polyketide biosynthesis.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of malonyl-CoA-acyl carrier protein transacylase
+  description: Stepwise mechanism transcribed from M-CSA entry 291 (6 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: gln11
+    label: catalytic Gln11 (M-CSA/PDB numbering; UniProt residue 11)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AAI9
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: ser92
+    label: catalytic Ser92 (M-CSA/PDB numbering; UniProt residue 92)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AAI9
+    description: 'M-CSA roles: activator, covalently attached, hydrogen bond acceptor, hydrogen bond donor,
+      nucleofuge, nucleophile, proton acceptor, proton donor.'
+  - node_id: leu93
+    label: catalytic Leu93 (M-CSA/PDB numbering; UniProt residue 93)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AAI9
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: arg117
+    label: catalytic Arg117 (M-CSA/PDB numbering; UniProt residue 117)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AAI9
+    description: 'M-CSA roles: attractive charge-charge interaction, electrostatic stabiliser, hydrogen
+      bond donor.'
+  - node_id: his201
+    label: catalytic His201 (M-CSA/PDB numbering; UniProt residue 201)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AAI9
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, increase nucleophilicity,
+      proton acceptor, proton donor.'
+  - node_id: gln250
+    label: catalytic Gln250 (M-CSA/PDB numbering; UniProt residue 250)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AAI9
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, increase basicity.'
+  - node_id: reactant0
+    label: O-(pantetheine-4'-phosphoryl)serine(1-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:64479
+  - node_id: reactant1
+    label: malonyl-CoA(5-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57384
+  - node_id: product0
+    label: coenzyme A(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+  - node_id: product1
+    label: O-(S-malonylpantetheine-4'-phosphoryl)serine(2-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:78449
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Ser92 is activated towards nucleophilic attack at the thio-carbonyl of malonyl-CoA by
+      the general base His201. A catalytic dyad is present between Ser92A and His201A, with the protonated
+      form of His201A being stabilised through a hydrogen bond with the main chain carbonyl of Gln250A
+      [PMID:7768883].
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The tetrahedral enzyme-substrate intermediate collapses, eliminating the coenzyme A component.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The terminal thiolate of the previously eliminated CoA acts as a general base towards
+      His201.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The enzyme-malonyl carbonyl linkage acts as an electrophile towards the terminal thiol
+      of the acyl carrier protein which is deprotonated by the general acid His201.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: The tetrahedral intermediate collapses eliminating the malonyl acyl-carrier protein adduct
+      and free serine side chain, which is reprotonated by the general acid His201A.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: malonyl-CoA-acyl carrier protein transacylase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:291
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.366.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.366.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: malonyl-CoA-acyl carrier protein transacylase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.3.1.39
+  edges:
+  - subject: ser92
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser92 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/291/
+      snippet: Ser92 is activated towards nucleophilic attack at the thio-carbonyl of malonyl-CoA by the
+        general base His201. A catalytic dyad is present between Ser92A and His201A, with the protonated
+        form of His201A being stabilised through a hydrogen bond with the main chain carbonyl of Gln250A
+        [PMID:7768883].
+      notes: M-CSA entry 291, mechanism 1; M-CSA cites PMID:4563767, PMID:7768883, PMID:8078074; step
+        1
+  - subject: his201
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His201 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/291/
+      snippet: Ser92 is activated towards nucleophilic attack at the thio-carbonyl of malonyl-CoA by the
+        general base His201. A catalytic dyad is present between Ser92A and His201A, with the protonated
+        form of His201A being stabilised through a hydrogen bond with the main chain carbonyl of Gln250A
+        [PMID:7768883].
+      notes: M-CSA entry 291, mechanism 1; M-CSA cites PMID:4563767, PMID:7768883, PMID:8078074; step
+        1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/291/
+      snippet: The tetrahedral enzyme-substrate intermediate collapses, eliminating the coenzyme A component.
+      notes: M-CSA entry 291, mechanism 1; M-CSA cites PMID:4563767, PMID:7768883, PMID:8078074; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/291/
+      snippet: The terminal thiolate of the previously eliminated CoA acts as a general base towards His201.
+      notes: M-CSA entry 291, mechanism 1; M-CSA cites PMID:4563767, PMID:7768883, PMID:8078074; step
+        3
+  - subject: his201
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His201 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/291/
+      snippet: The terminal thiolate of the previously eliminated CoA acts as a general base towards His201.
+      notes: M-CSA entry 291, mechanism 1; M-CSA cites PMID:4563767, PMID:7768883, PMID:8078074; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/291/
+      snippet: The enzyme-malonyl carbonyl linkage acts as an electrophile towards the terminal thiol
+        of the acyl carrier protein which is deprotonated by the general acid His201.
+      notes: M-CSA entry 291, mechanism 1; M-CSA cites PMID:4563767, PMID:7768883, PMID:8078074; step
+        4
+  - subject: his201
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: His201 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/291/
+      snippet: The enzyme-malonyl carbonyl linkage acts as an electrophile towards the terminal thiol
+        of the acyl carrier protein which is deprotonated by the general acid His201.
+      notes: M-CSA entry 291, mechanism 1; M-CSA cites PMID:4563767, PMID:7768883, PMID:8078074; step
+        4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/291/
+      snippet: The tetrahedral intermediate collapses eliminating the malonyl acyl-carrier protein adduct
+        and free serine side chain, which is reprotonated by the general acid His201A.
+      notes: M-CSA entry 291, mechanism 1; M-CSA cites PMID:4563767, PMID:7768883, PMID:8078074; step
+        5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/291/
+      snippet: Products
+      notes: M-CSA entry 291, mechanism 1; M-CSA cites PMID:4563767, PMID:7768883, PMID:8078074; step
+        6
+  - subject: gln11
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln11 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/291/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 291, mechanism 1; M-CSA cites PMID:4563767, PMID:7768883, PMID:8078074; M-CSA
+        catalytic-residue roles for Gln11
+  - subject: ser92
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser92 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/291/
+      snippet: activator, covalently attached, hydrogen bond acceptor, hydrogen bond donor, nucleofuge,
+        nucleophile, proton acceptor, proton donor
+      notes: M-CSA entry 291, mechanism 1; M-CSA cites PMID:4563767, PMID:7768883, PMID:8078074; M-CSA
+        catalytic-residue roles for Ser92
+  - subject: leu93
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Leu93 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/291/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 291, mechanism 1; M-CSA cites PMID:4563767, PMID:7768883, PMID:8078074; M-CSA
+        catalytic-residue roles for Leu93
+  - subject: arg117
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg117 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/291/
+      snippet: attractive charge-charge interaction, electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 291, mechanism 1; M-CSA cites PMID:4563767, PMID:7768883, PMID:8078074; M-CSA
+        catalytic-residue roles for Arg117
+  - subject: his201
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His201 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/291/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, increase nucleophilicity, proton acceptor,
+        proton donor
+      notes: M-CSA entry 291, mechanism 1; M-CSA cites PMID:4563767, PMID:7768883, PMID:8078074; M-CSA
+        catalytic-residue roles for His201
+  - subject: gln250
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln250 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/291/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, increase basicity
+      notes: M-CSA entry 291, mechanism 1; M-CSA cites PMID:4563767, PMID:7768883, PMID:8078074; M-CSA
+        catalytic-residue roles for Gln250
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/291/
+      snippet: The catalytic residues consist of a conventional Ser-His dyad, which is unusually hydrogen
+        to the main chain carbonyl of a glutamine residue. The reactions consists of an acylation step
+        and the subsequent transfer of the acyl moiety proceed via tetrahedral intermediates, analogously
+        to serine proteases. His201 deprotonates Ser92 to form a nucleophile. This subsequently attacks
+        the carbonyl group-s
+      notes: M-CSA entry 291, mechanism 1; M-CSA cites PMID:4563767, PMID:7768883, PMID:8078074; CATH
+        domain 3.40.366.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/291/
+      snippet: The catalytic residues consist of a conventional Ser-His dyad, which is unusually hydrogen
+        to the main chain carbonyl of a glutamine residue. The reactions consists of an acylation step
+        and the subsequent transfer of the acyl moiety proceed via tetrahedral intermediates, analogously
+        to serine proteases. His201 deprotonates Ser92 to form a nucleophile. This subsequently attacks
+        the carbonyl group-s
+      notes: M-CSA entry 291, mechanism 1; M-CSA cites PMID:4563767, PMID:7768883, PMID:8078074; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/291/
+      snippet: The catalytic residues consist of a conventional Ser-His dyad, which is unusually hydrogen
+        to the main chain carbonyl of a glutamine residue. The reactions consists of an acylation step
+        and the subsequent transfer of the acyl moiety proceed via tetrahedral intermediates, analogously
+        to serine proteases. His201 deprotonates Ser92 to form a nucleophile. This subsequently attacks
+        the carbonyl group-s
+      notes: M-CSA entry 291, mechanism 1; M-CSA cites PMID:4563767, PMID:7768883, PMID:8078074; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/291/
+      snippet: The catalytic residues consist of a conventional Ser-His dyad, which is unusually hydrogen
+        to the main chain carbonyl of a glutamine residue. The reactions consists of an acylation step
+        and the subsequent transfer of the acyl moiety proceed via tetrahedral intermediates, analogously
+        to serine proteases. His201 deprotonates Ser92 to form a nucleophile. This subsequently attacks
+        the carbonyl group-s
+      notes: M-CSA entry 291, mechanism 1; M-CSA cites PMID:4563767, PMID:7768883, PMID:8078074; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/291/
+      snippet: The catalytic residues consist of a conventional Ser-His dyad, which is unusually hydrogen
+        to the main chain carbonyl of a glutamine residue. The reactions consists of an acylation step
+        and the subsequent transfer of the acyl moiety proceed via tetrahedral intermediates, analogously
+        to serine proteases. His201 deprotonates Ser92 to form a nucleophile. This subsequently attacks
+        the carbonyl group-s
+      notes: M-CSA entry 291, mechanism 1; M-CSA cites PMID:4563767, PMID:7768883, PMID:8078074; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/291/
+      snippet: The catalytic residues consist of a conventional Ser-His dyad, which is unusually hydrogen
+        to the main chain carbonyl of a glutamine residue. The reactions consists of an acylation step
+        and the subsequent transfer of the acyl moiety proceed via tetrahedral intermediates, analogously
+        to serine proteases. His201 deprotonates Ser92 to form a nucleophile. This subsequently attacks
+        the carbonyl group-s
+      notes: M-CSA entry 291, mechanism 1; M-CSA cites PMID:4563767, PMID:7768883, PMID:8078074; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (21 evidence-backed edges) transcribed from M-CSA entry 291;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

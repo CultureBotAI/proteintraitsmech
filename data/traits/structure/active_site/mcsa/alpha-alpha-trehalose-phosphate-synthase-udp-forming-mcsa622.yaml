@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.4.1.15
 - CHEBI:61548
@@ -343,4 +343,216 @@ definitions:
       Escherichia coli trehalose-6-phosphate synthase is part of the glycosyl transferase family 20, the retaining glycosyl transferases. It is able to catalyse the condensation between Glucose-6-phosphate and UDP-glucose to form trehalose-6-phosphate, an important metabolite for many bacteria and plants. Interest in the enzyme stems both from the study of the unusual reaction mechanism and the fact that it plays a key role in bacterial cell wall synthesis in M. tuberculosis, so is a possible target for antibiotics. It displays sequence and structural identity with the glycogen phosphorylases in particular, suggesting a common mechanism and evolutionary origin. Also found to be similar is the pseudo-glycosyltransferase VldE involved in validoxylamine A 7'-phosphate synthesis.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of alpha,alpha-trehalose-phosphate synthase (UDP-forming)
+  description: Stepwise mechanism transcribed from M-CSA entry 622 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +1).
+  nodes:
+  - node_id: his154
+    label: catalytic His154 (M-CSA/PDB numbering; UniProt residue 155)
+    node_type: RESIDUE
+    grounding: UniProtKB:P31677
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp361
+    label: catalytic Asp361 (M-CSA/PDB numbering; UniProt residue 362)
+    node_type: RESIDUE
+    grounding: UniProtKB:P31677
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: D-glucopyranose 6-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:61548
+  - node_id: reactant1
+    label: UDP-alpha-D-glucose(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58885
+  - node_id: product0
+    label: alpha,alpha-trehalose 6-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58429
+  - node_id: product1
+    label: UDP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58223
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Cleavage of glycosidic bond between C1 and O while hydrogen bonds form between the OH
+      on acceptor and O of phosphate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Oxocarbenium ion intermediate generated is very short-lived. Concomitant Proton transfer
+      and nucleophilic attack of O1 on glucose-6-phosphate on anomeric carbon  on glucose intermediate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: alpha,alpha-trehalose-phosphate synthase (UDP-forming) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:622
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.2000 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.2000
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: alpha,alpha-trehalose-phosphate synthase (UDP-forming) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.4.1.15
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/622/
+      snippet: Oxocarbenium ion intermediate generated is very short-lived. Concomitant Proton transfer
+        and nucleophilic attack of O1 on glucose-6-phosphate on anomeric carbon  on glucose intermediate.
+      notes: M-CSA entry 622, mechanism 1; M-CSA cites PMID:12498887, PMID:14570926, PMID:23028689, PMID:26862188;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/622/
+      snippet: Products.
+      notes: M-CSA entry 622, mechanism 1; M-CSA cites PMID:12498887, PMID:14570926, PMID:23028689, PMID:26862188;
+        step 3
+  - subject: his154
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His154 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/622/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 622, mechanism 1; M-CSA cites PMID:12498887, PMID:14570926, PMID:23028689, PMID:26862188;
+        M-CSA catalytic-residue roles for His154
+  - subject: asp361
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp361 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/622/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 622, mechanism 1; M-CSA cites PMID:12498887, PMID:14570926, PMID:23028689, PMID:26862188;
+        M-CSA catalytic-residue roles for Asp361
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/622/
+      snippet: The reaction mechanism proceeds via an SNi type, meaning internal return whereby nucleophilic
+        attack occurs on the same side as the leaving group departs. The ring oxygen of the UDP glucose
+        donates electron density to C1 to allow the UDP to leave the molecule. This forms a shortly lived
+        oxocarbenium ion stabilised by His 154 and Asp 361. Nucleophilic attack from the glucose-6-phosphate
+        OH group on
+      notes: M-CSA entry 622, mechanism 1; M-CSA cites PMID:12498887, PMID:14570926, PMID:23028689, PMID:26862188;
+        CATH domain 3.40.50.2000 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/622/
+      snippet: The reaction mechanism proceeds via an SNi type, meaning internal return whereby nucleophilic
+        attack occurs on the same side as the leaving group departs. The ring oxygen of the UDP glucose
+        donates electron density to C1 to allow the UDP to leave the molecule. This forms a shortly lived
+        oxocarbenium ion stabilised by His 154 and Asp 361. Nucleophilic attack from the glucose-6-phosphate
+        OH group on
+      notes: M-CSA entry 622, mechanism 1; M-CSA cites PMID:12498887, PMID:14570926, PMID:23028689, PMID:26862188;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/622/
+      snippet: The reaction mechanism proceeds via an SNi type, meaning internal return whereby nucleophilic
+        attack occurs on the same side as the leaving group departs. The ring oxygen of the UDP glucose
+        donates electron density to C1 to allow the UDP to leave the molecule. This forms a shortly lived
+        oxocarbenium ion stabilised by His 154 and Asp 361. Nucleophilic attack from the glucose-6-phosphate
+        OH group on
+      notes: M-CSA entry 622, mechanism 1; M-CSA cites PMID:12498887, PMID:14570926, PMID:23028689, PMID:26862188;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/622/
+      snippet: The reaction mechanism proceeds via an SNi type, meaning internal return whereby nucleophilic
+        attack occurs on the same side as the leaving group departs. The ring oxygen of the UDP glucose
+        donates electron density to C1 to allow the UDP to leave the molecule. This forms a shortly lived
+        oxocarbenium ion stabilised by His 154 and Asp 361. Nucleophilic attack from the glucose-6-phosphate
+        OH group on
+      notes: M-CSA entry 622, mechanism 1; M-CSA cites PMID:12498887, PMID:14570926, PMID:23028689, PMID:26862188;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/622/
+      snippet: The reaction mechanism proceeds via an SNi type, meaning internal return whereby nucleophilic
+        attack occurs on the same side as the leaving group departs. The ring oxygen of the UDP glucose
+        donates electron density to C1 to allow the UDP to leave the molecule. This forms a shortly lived
+        oxocarbenium ion stabilised by His 154 and Asp 361. Nucleophilic attack from the glucose-6-phosphate
+        OH group on
+      notes: M-CSA entry 622, mechanism 1; M-CSA cites PMID:12498887, PMID:14570926, PMID:23028689, PMID:26862188;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/622/
+      snippet: The reaction mechanism proceeds via an SNi type, meaning internal return whereby nucleophilic
+        attack occurs on the same side as the leaving group departs. The ring oxygen of the UDP glucose
+        donates electron density to C1 to allow the UDP to leave the molecule. This forms a shortly lived
+        oxocarbenium ion stabilised by His 154 and Asp 361. Nucleophilic attack from the glucose-6-phosphate
+        OH group on
+      notes: M-CSA entry 622, mechanism 1; M-CSA cites PMID:12498887, PMID:14570926, PMID:23028689, PMID:26862188;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/622/
+      snippet: The reaction mechanism proceeds via an SNi type, meaning internal return whereby nucleophilic
+        attack occurs on the same side as the leaving group departs. The ring oxygen of the UDP glucose
+        donates electron density to C1 to allow the UDP to leave the molecule. This forms a shortly lived
+        oxocarbenium ion stabilised by His 154 and Asp 361. Nucleophilic attack from the glucose-6-phosphate
+        OH group on
+      notes: M-CSA entry 622, mechanism 1; M-CSA cites PMID:12498887, PMID:14570926, PMID:23028689, PMID:26862188;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (11 evidence-backed edges) transcribed from M-CSA entry 622;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

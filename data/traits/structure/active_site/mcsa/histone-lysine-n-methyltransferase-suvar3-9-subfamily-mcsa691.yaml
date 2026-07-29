@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.1.1.43
 - CHEBI:29969
@@ -637,4 +637,241 @@ definitions:
       Histone lysine methylation is part of the histone code that regulates chromatin function. Histone lysine methyltransferases (HKMT) differ both in their substrate specificity for the various acceptor lysines as well as in their product specificity for the number of methyl groups (one, two, or three) they transfer. Known targets for HKMT include Lys4, 9, 27, 36, and 79 in histone H3 and Lys20 in histone H4. DIM-5 of N. crassa generates primarily trimethyl Lys9, which marks chromatin regions for DNA methylation.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of histone-lysine N-methyltransferase (Suvar3-9 subfamily)
+  description: Stepwise mechanism transcribed from M-CSA entry 691 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +13).
+  nodes:
+  - node_id: tyr178
+    label: catalytic Tyr178 (M-CSA/PDB numbering; UniProt residue 191)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8X225
+    description: 'M-CSA roles: activator, electrostatic stabiliser, proton acceptor, proton donor.'
+  - node_id: tyr283
+    label: catalytic Tyr283 (M-CSA/PDB numbering; UniProt residue 296)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8X225
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: L-lysinium residue
+    node_type: CHEMICAL
+    grounding: CHEBI:29969
+  - node_id: reactant1
+    label: S-adenosyl-L-methionine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+  - node_id: product0
+    label: S-adenosyl-L-homocysteine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+  - node_id: product1
+    label: N(6)-methyl-L-lysinium residue
+    node_type: CHEMICAL
+    grounding: CHEBI:61929
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Tyr178 deprotonates the amine group of the lysine side chain.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: In an SN2 reaction the amine group of the lysine residue attacks the methyl of SAM, forming
+      the secondary amine product and SAH.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: In an inferred reaction step Tyr178 is deprotonated to regenerate the native state of
+      the enzyme.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: histone-lysine N-methyltransferase (Suvar3-9 subfamily) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:691
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.170.270.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.170.270.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: histone-lysine N-methyltransferase (Suvar3-9 subfamily) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.1.1.43
+  edges:
+  - subject: tyr178
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr178 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/691/
+      snippet: Tyr178 deprotonates the amine group of the lysine side chain.
+      notes: M-CSA entry 691, mechanism 1; M-CSA cites PMID:12887903; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/691/
+      snippet: In an SN2 reaction the amine group of the lysine residue attacks the methyl of SAM, forming
+        the secondary amine product and SAH.
+      notes: M-CSA entry 691, mechanism 1; M-CSA cites PMID:12887903; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/691/
+      snippet: In an inferred reaction step Tyr178 is deprotonated to regenerate the native state of the
+        enzyme.
+      notes: M-CSA entry 691, mechanism 1; M-CSA cites PMID:12887903; step 3
+  - subject: tyr178
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Tyr178 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/691/
+      snippet: In an inferred reaction step Tyr178 is deprotonated to regenerate the native state of the
+        enzyme.
+      notes: M-CSA entry 691, mechanism 1; M-CSA cites PMID:12887903; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/691/
+      snippet: Products.
+      notes: M-CSA entry 691, mechanism 1; M-CSA cites PMID:12887903; step 4
+  - subject: tyr178
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr178 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/691/
+      snippet: activator, electrostatic stabiliser, proton acceptor, proton donor
+      notes: M-CSA entry 691, mechanism 1; M-CSA cites PMID:12887903; M-CSA catalytic-residue roles for
+        Tyr178
+  - subject: tyr283
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr283 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/691/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 691, mechanism 1; M-CSA cites PMID:12887903; M-CSA catalytic-residue roles for
+        Tyr283
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/691/
+      snippet: At the optimum pH the catalytic Tyr178 is deprotonated and so able to act as a general
+        base, abstracting a proton from the target lysine in the first round of methylation (or target
+        methyl/dimethyl lysine in subsequent rounds). The lysine may then perform a direct nucleophilic
+        attack on the S=adenosyl-L-methionine (SAM) methyl group. Methyl lysine is formed which, in the
+        case of N. crassa DIM-5, g
+      notes: M-CSA entry 691, mechanism 1; M-CSA cites PMID:12887903; CATH domain 2.170.270.10 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/691/
+      snippet: At the optimum pH the catalytic Tyr178 is deprotonated and so able to act as a general
+        base, abstracting a proton from the target lysine in the first round of methylation (or target
+        methyl/dimethyl lysine in subsequent rounds). The lysine may then perform a direct nucleophilic
+        attack on the S=adenosyl-L-methionine (SAM) methyl group. Methyl lysine is formed which, in the
+        case of N. crassa DIM-5, g
+      notes: M-CSA entry 691, mechanism 1; M-CSA cites PMID:12887903; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/691/
+      snippet: At the optimum pH the catalytic Tyr178 is deprotonated and so able to act as a general
+        base, abstracting a proton from the target lysine in the first round of methylation (or target
+        methyl/dimethyl lysine in subsequent rounds). The lysine may then perform a direct nucleophilic
+        attack on the S=adenosyl-L-methionine (SAM) methyl group. Methyl lysine is formed which, in the
+        case of N. crassa DIM-5, g
+      notes: M-CSA entry 691, mechanism 1; M-CSA cites PMID:12887903; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/691/
+      snippet: At the optimum pH the catalytic Tyr178 is deprotonated and so able to act as a general
+        base, abstracting a proton from the target lysine in the first round of methylation (or target
+        methyl/dimethyl lysine in subsequent rounds). The lysine may then perform a direct nucleophilic
+        attack on the S=adenosyl-L-methionine (SAM) methyl group. Methyl lysine is formed which, in the
+        case of N. crassa DIM-5, g
+      notes: M-CSA entry 691, mechanism 1; M-CSA cites PMID:12887903; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/691/
+      snippet: At the optimum pH the catalytic Tyr178 is deprotonated and so able to act as a general
+        base, abstracting a proton from the target lysine in the first round of methylation (or target
+        methyl/dimethyl lysine in subsequent rounds). The lysine may then perform a direct nucleophilic
+        attack on the S=adenosyl-L-methionine (SAM) methyl group. Methyl lysine is formed which, in the
+        case of N. crassa DIM-5, g
+      notes: M-CSA entry 691, mechanism 1; M-CSA cites PMID:12887903; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/691/
+      snippet: At the optimum pH the catalytic Tyr178 is deprotonated and so able to act as a general
+        base, abstracting a proton from the target lysine in the first round of methylation (or target
+        methyl/dimethyl lysine in subsequent rounds). The lysine may then perform a direct nucleophilic
+        attack on the S=adenosyl-L-methionine (SAM) methyl group. Methyl lysine is formed which, in the
+        case of N. crassa DIM-5, g
+      notes: M-CSA entry 691, mechanism 1; M-CSA cites PMID:12887903; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/691/
+      snippet: At the optimum pH the catalytic Tyr178 is deprotonated and so able to act as a general
+        base, abstracting a proton from the target lysine in the first round of methylation (or target
+        methyl/dimethyl lysine in subsequent rounds). The lysine may then perform a direct nucleophilic
+        attack on the S=adenosyl-L-methionine (SAM) methyl group. Methyl lysine is formed which, in the
+        case of N. crassa DIM-5, g
+      notes: M-CSA entry 691, mechanism 1; M-CSA cites PMID:12887903; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (14 evidence-backed edges) transcribed from M-CSA entry 691;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

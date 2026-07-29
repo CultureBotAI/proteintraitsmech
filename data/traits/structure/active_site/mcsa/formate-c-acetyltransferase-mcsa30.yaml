@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.3.1.54
 - CHEBI:15361
@@ -526,4 +526,395 @@ definitions:
       Pyruvate formate-lyase catlayses the CoA-dependent, reversible cleavage of pyruvate into acetyal-CoA and formation. This enzyme is required for anaerobic glucose fermentation, utilised by various species of microorganism. The resting state of this enzyme has a glycyl radical, this radical is created by the action of a radical SAM superfamily activating protein (PFL-AE) and is quenched in an oxygenated atmosphere leading to enzyme inactivation.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of formate C-acetyltransferase
+  description: Stepwise mechanism transcribed from M-CSA entry 30 (8 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +1).
+  nodes:
+  - node_id: trp333
+    label: catalytic Trp333 (M-CSA/PDB numbering; UniProt residue 334)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09373
+    description: 'M-CSA roles: hydrogen bond donor, radical stabiliser.'
+  - node_id: cys418
+    label: catalytic Cys418 (M-CSA/PDB numbering; UniProt residue 419)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09373
+    description: 'M-CSA roles: covalently attached, hydrogen bond acceptor, hydrogen bond donor, hydrogen
+      radical acceptor, hydrogen radical donor, leaving group (radical), radical combinant.'
+  - node_id: cys419
+    label: catalytic Cys419 (M-CSA/PDB numbering; UniProt residue 420)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09373
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, hydrogen radical acceptor,
+      hydrogen radical donor, hydrogen radical relay.'
+  - node_id: gly734
+    label: catalytic Gly734 (M-CSA/PDB numbering; UniProt residue 735)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09373
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, hydrogen radical acceptor,
+      hydrogen radical donor.'
+  - node_id: reactant0
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+  - node_id: reactant1
+    label: coenzyme A(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+  - node_id: product0
+    label: acetyl-CoA(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+  - node_id: product1
+    label: formate
+    node_type: CHEMICAL
+    grounding: CHEBI:15740
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The glycyl radical abstracts a hydrogen from Cys419, which in turn abstracts a hydrogen
+      from Cys418.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Cys418 initiates a homolytic attack on the carbonyl carbon of the pyruvate substrate
+      in an addition reaction.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The newly formed radical collapses, eliminating a carbon dioxyl radical.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The carbon dioxyl radical abstracts a hydrogen from Cys419 forming the formate product.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Cys419 abstracts a hydrogen from CoA.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: CoA initiates a homolytic attack upon the carbonyl carbon of the acyl-Cys418 in a substitution
+      reaction, eliminating Cys418, which abstracts a hydrogen from Cys419.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: Cys419 abstracts a hydrogen from Gly734, regenerating the glycyl radical ground state.
+  - node_id: step8
+    label: mechanism step 8
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: formate C-acetyltransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:30
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.70.20 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.70.20
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: formate C-acetyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.3.1.54
+  edges:
+  - subject: cys418
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys418 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/30/
+      snippet: The glycyl radical abstracts a hydrogen from Cys419, which in turn abstracts a hydrogen
+        from Cys418.
+      notes: M-CSA entry 30, mechanism 1; M-CSA cites PMID:10425676, PMID:10504733, PMID:10574800, PMID:10648809,
+        PMID:15869314; step 1
+  - subject: cys419
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys419 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/30/
+      snippet: The glycyl radical abstracts a hydrogen from Cys419, which in turn abstracts a hydrogen
+        from Cys418.
+      notes: M-CSA entry 30, mechanism 1; M-CSA cites PMID:10425676, PMID:10504733, PMID:10574800, PMID:10648809,
+        PMID:15869314; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/30/
+      snippet: Cys418 initiates a homolytic attack on the carbonyl carbon of the pyruvate substrate in
+        an addition reaction.
+      notes: M-CSA entry 30, mechanism 1; M-CSA cites PMID:10425676, PMID:10504733, PMID:10574800, PMID:10648809,
+        PMID:15869314; step 2
+  - subject: cys418
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Cys418 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/30/
+      snippet: Cys418 initiates a homolytic attack on the carbonyl carbon of the pyruvate substrate in
+        an addition reaction.
+      notes: M-CSA entry 30, mechanism 1; M-CSA cites PMID:10425676, PMID:10504733, PMID:10574800, PMID:10648809,
+        PMID:15869314; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/30/
+      snippet: The newly formed radical collapses, eliminating a carbon dioxyl radical.
+      notes: M-CSA entry 30, mechanism 1; M-CSA cites PMID:10425676, PMID:10504733, PMID:10574800, PMID:10648809,
+        PMID:15869314; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/30/
+      snippet: The carbon dioxyl radical abstracts a hydrogen from Cys419 forming the formate product.
+      notes: M-CSA entry 30, mechanism 1; M-CSA cites PMID:10425676, PMID:10504733, PMID:10574800, PMID:10648809,
+        PMID:15869314; step 4
+  - subject: cys419
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Cys419 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/30/
+      snippet: The carbon dioxyl radical abstracts a hydrogen from Cys419 forming the formate product.
+      notes: M-CSA entry 30, mechanism 1; M-CSA cites PMID:10425676, PMID:10504733, PMID:10574800, PMID:10648809,
+        PMID:15869314; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/30/
+      snippet: Cys419 abstracts a hydrogen from CoA.
+      notes: M-CSA entry 30, mechanism 1; M-CSA cites PMID:10425676, PMID:10504733, PMID:10574800, PMID:10648809,
+        PMID:15869314; step 5
+  - subject: cys419
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Cys419 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/30/
+      snippet: Cys419 abstracts a hydrogen from CoA.
+      notes: M-CSA entry 30, mechanism 1; M-CSA cites PMID:10425676, PMID:10504733, PMID:10574800, PMID:10648809,
+        PMID:15869314; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/30/
+      snippet: CoA initiates a homolytic attack upon the carbonyl carbon of the acyl-Cys418 in a substitution
+        reaction, eliminating Cys418, which abstracts a hydrogen from Cys419.
+      notes: M-CSA entry 30, mechanism 1; M-CSA cites PMID:10425676, PMID:10504733, PMID:10574800, PMID:10648809,
+        PMID:15869314; step 6
+  - subject: cys418
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: Cys418 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/30/
+      snippet: CoA initiates a homolytic attack upon the carbonyl carbon of the acyl-Cys418 in a substitution
+        reaction, eliminating Cys418, which abstracts a hydrogen from Cys419.
+      notes: M-CSA entry 30, mechanism 1; M-CSA cites PMID:10425676, PMID:10504733, PMID:10574800, PMID:10648809,
+        PMID:15869314; step 6
+  - subject: cys419
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: Cys419 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/30/
+      snippet: CoA initiates a homolytic attack upon the carbonyl carbon of the acyl-Cys418 in a substitution
+        reaction, eliminating Cys418, which abstracts a hydrogen from Cys419.
+      notes: M-CSA entry 30, mechanism 1; M-CSA cites PMID:10425676, PMID:10504733, PMID:10574800, PMID:10648809,
+        PMID:15869314; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/30/
+      snippet: Cys419 abstracts a hydrogen from Gly734, regenerating the glycyl radical ground state.
+      notes: M-CSA entry 30, mechanism 1; M-CSA cites PMID:10425676, PMID:10504733, PMID:10574800, PMID:10648809,
+        PMID:15869314; step 7
+  - subject: cys419
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step7
+    description: Cys419 acts in step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/30/
+      snippet: Cys419 abstracts a hydrogen from Gly734, regenerating the glycyl radical ground state.
+      notes: M-CSA entry 30, mechanism 1; M-CSA cites PMID:10425676, PMID:10504733, PMID:10574800, PMID:10648809,
+        PMID:15869314; step 7
+  - subject: gly734
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step7
+    description: Gly734 acts in step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/30/
+      snippet: Cys419 abstracts a hydrogen from Gly734, regenerating the glycyl radical ground state.
+      notes: M-CSA entry 30, mechanism 1; M-CSA cites PMID:10425676, PMID:10504733, PMID:10574800, PMID:10648809,
+        PMID:15869314; step 7
+  - subject: step7
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step8
+    description: Step 7 leads to step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/30/
+      snippet: Products
+      notes: M-CSA entry 30, mechanism 1; M-CSA cites PMID:10425676, PMID:10504733, PMID:10574800, PMID:10648809,
+        PMID:15869314; step 8
+  - subject: trp333
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp333 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/30/
+      snippet: hydrogen bond donor, radical stabiliser
+      notes: M-CSA entry 30, mechanism 1; M-CSA cites PMID:10425676, PMID:10504733, PMID:10574800, PMID:10648809,
+        PMID:15869314; M-CSA catalytic-residue roles for Trp333
+  - subject: cys418
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys418 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/30/
+      snippet: covalently attached, hydrogen bond acceptor, hydrogen bond donor, hydrogen radical acceptor,
+        hydrogen radical donor, leaving group (radical), radical combinant
+      notes: M-CSA entry 30, mechanism 1; M-CSA cites PMID:10425676, PMID:10504733, PMID:10574800, PMID:10648809,
+        PMID:15869314; M-CSA catalytic-residue roles for Cys418
+  - subject: cys419
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys419 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/30/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, hydrogen radical acceptor, hydrogen radical
+        donor, hydrogen radical relay
+      notes: M-CSA entry 30, mechanism 1; M-CSA cites PMID:10425676, PMID:10504733, PMID:10574800, PMID:10648809,
+        PMID:15869314; M-CSA catalytic-residue roles for Cys419
+  - subject: gly734
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly734 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/30/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, hydrogen radical acceptor, hydrogen radical
+        donor
+      notes: M-CSA entry 30, mechanism 1; M-CSA cites PMID:10425676, PMID:10504733, PMID:10574800, PMID:10648809,
+        PMID:15869314; M-CSA catalytic-residue roles for Gly734
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/30/
+      snippet: The resting state of the enzyme involves the glycyl radical, as determined by spectroscopic
+        studies. The backbone radical is kinetically stable, but extremely susceptible to reactions with
+        molecular oxygen. This is thought to be involved in regulating the enzymes function within the
+        anaerobic metabolism, and the regulation of the pathway more generally.
+      notes: M-CSA entry 30, mechanism 1; M-CSA cites PMID:10425676, PMID:10504733, PMID:10574800, PMID:10648809,
+        PMID:15869314; CATH domain 3.20.70.20 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/30/
+      snippet: The resting state of the enzyme involves the glycyl radical, as determined by spectroscopic
+        studies. The backbone radical is kinetically stable, but extremely susceptible to reactions with
+        molecular oxygen. This is thought to be involved in regulating the enzymes function within the
+        anaerobic metabolism, and the regulation of the pathway more generally.
+      notes: M-CSA entry 30, mechanism 1; M-CSA cites PMID:10425676, PMID:10504733, PMID:10574800, PMID:10648809,
+        PMID:15869314; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/30/
+      snippet: The resting state of the enzyme involves the glycyl radical, as determined by spectroscopic
+        studies. The backbone radical is kinetically stable, but extremely susceptible to reactions with
+        molecular oxygen. This is thought to be involved in regulating the enzymes function within the
+        anaerobic metabolism, and the regulation of the pathway more generally.
+      notes: M-CSA entry 30, mechanism 1; M-CSA cites PMID:10425676, PMID:10504733, PMID:10574800, PMID:10648809,
+        PMID:15869314; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/30/
+      snippet: The resting state of the enzyme involves the glycyl radical, as determined by spectroscopic
+        studies. The backbone radical is kinetically stable, but extremely susceptible to reactions with
+        molecular oxygen. This is thought to be involved in regulating the enzymes function within the
+        anaerobic metabolism, and the regulation of the pathway more generally.
+      notes: M-CSA entry 30, mechanism 1; M-CSA cites PMID:10425676, PMID:10504733, PMID:10574800, PMID:10648809,
+        PMID:15869314; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/30/
+      snippet: The resting state of the enzyme involves the glycyl radical, as determined by spectroscopic
+        studies. The backbone radical is kinetically stable, but extremely susceptible to reactions with
+        molecular oxygen. This is thought to be involved in regulating the enzymes function within the
+        anaerobic metabolism, and the regulation of the pathway more generally.
+      notes: M-CSA entry 30, mechanism 1; M-CSA cites PMID:10425676, PMID:10504733, PMID:10574800, PMID:10648809,
+        PMID:15869314; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/30/
+      snippet: The resting state of the enzyme involves the glycyl radical, as determined by spectroscopic
+        studies. The backbone radical is kinetically stable, but extremely susceptible to reactions with
+        molecular oxygen. This is thought to be involved in regulating the enzymes function within the
+        anaerobic metabolism, and the regulation of the pathway more generally.
+      notes: M-CSA entry 30, mechanism 1; M-CSA cites PMID:10425676, PMID:10504733, PMID:10574800, PMID:10648809,
+        PMID:15869314; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (26 evidence-backed edges) transcribed from M-CSA entry 30;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

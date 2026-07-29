@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.1.8
 - CHEBI:15377
@@ -325,4 +325,289 @@ definitions:
       The Glycosyl hydrolases form a ubiquitous group of enzymes involved in carbohydrate metabolism. This enzyme, from Cellulomonas fimi, belongs to the glucoside hydrolases family (cellulase F) 10. The class can be sub divided according to the stereoselective reaction outcomes, with hydrolysis occurring with net retention or inversion of the anomeric configuration. This enzyme hydrolyses the beta-glycosidic bond with retention of the anomeric configuration, i.e. it is a retaining glycosidase. The enzyme has been reported to preferentially cleave a cellobiose unit rather than glucose from the non-reducing end of cellulose, and has been identified as biotechnologically important because of its reaction specificity between xylan and cellulose. It also hydrolyses xylan and, to a lesser extent, carboxymethylcellulose and also a range of soluble aryl xylosides, xylobiosides, glucosides and cellobiosides.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of endo-1,4-beta-xylanase (glycosyl hydrolase 10)
+  description: Stepwise mechanism transcribed from M-CSA entry 548 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +41).
+  nodes:
+  - node_id: glu127
+    label: catalytic Glu127 (M-CSA/PDB numbering; UniProt residue 168)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07986
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: asn169
+    label: catalytic Asn169 (M-CSA/PDB numbering; UniProt residue 210)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07986
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his205
+    label: catalytic His205 (M-CSA/PDB numbering; UniProt residue 246)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07986
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu233
+    label: catalytic Glu233 (M-CSA/PDB numbering; UniProt residue 274)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07986
+    description: 'M-CSA roles: electrostatic stabiliser, nucleofuge, nucleophile.'
+  - node_id: asp235
+    label: catalytic Asp235 (M-CSA/PDB numbering; UniProt residue 276)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07986
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: xylobiose
+    node_type: CHEMICAL
+    grounding: CHEBI:28309
+  - node_id: product0
+    label: beta-D-xylose
+    node_type: CHEMICAL
+    grounding: CHEBI:28161
+  - node_id: product1
+    label: beta-D-xylose
+    node_type: CHEMICAL
+    grounding: CHEBI:28161
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu233 initiates a nucleophilic attack on the substrate, forming a enzyme-substrate covalent
+      adduct and one of the sugar products.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Glu127 abstracts a proton from a water molecule, which attacks the intermediate, eliminating
+      Glu233 and forming the final product.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Producs
+  - node_id: active_site
+    label: endo-1,4-beta-xylanase (glycosyl hydrolase 10) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:548
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.80 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.80
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: endo-1,4-beta-xylanase (glycosyl hydrolase 10) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.1.8
+  edges:
+  - subject: glu233
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu233 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/548/
+      snippet: Glu233 initiates a nucleophilic attack on the substrate, forming a enzyme-substrate covalent
+        adduct and one of the sugar products.
+      notes: M-CSA entry 548, mechanism 1; M-CSA cites PMID:1678739, PMID:19279191, PMID:7664125, PMID:7901761,
+        PMID:7910761, PMID:8564541, PMID:9731776; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/548/
+      snippet: Glu127 abstracts a proton from a water molecule, which attacks the intermediate, eliminating
+        Glu233 and forming the final product.
+      notes: M-CSA entry 548, mechanism 1; M-CSA cites PMID:1678739, PMID:19279191, PMID:7664125, PMID:7901761,
+        PMID:7910761, PMID:8564541, PMID:9731776; step 2
+  - subject: glu127
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu127 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/548/
+      snippet: Glu127 abstracts a proton from a water molecule, which attacks the intermediate, eliminating
+        Glu233 and forming the final product.
+      notes: M-CSA entry 548, mechanism 1; M-CSA cites PMID:1678739, PMID:19279191, PMID:7664125, PMID:7901761,
+        PMID:7910761, PMID:8564541, PMID:9731776; step 2
+  - subject: glu233
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu233 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/548/
+      snippet: Glu127 abstracts a proton from a water molecule, which attacks the intermediate, eliminating
+        Glu233 and forming the final product.
+      notes: M-CSA entry 548, mechanism 1; M-CSA cites PMID:1678739, PMID:19279191, PMID:7664125, PMID:7901761,
+        PMID:7910761, PMID:8564541, PMID:9731776; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/548/
+      snippet: Producs
+      notes: M-CSA entry 548, mechanism 1; M-CSA cites PMID:1678739, PMID:19279191, PMID:7664125, PMID:7901761,
+        PMID:7910761, PMID:8564541, PMID:9731776; step 3
+  - subject: glu127
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu127 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/548/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 548, mechanism 1; M-CSA cites PMID:1678739, PMID:19279191, PMID:7664125, PMID:7901761,
+        PMID:7910761, PMID:8564541, PMID:9731776; M-CSA catalytic-residue roles for Glu127
+  - subject: asn169
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn169 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/548/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 548, mechanism 1; M-CSA cites PMID:1678739, PMID:19279191, PMID:7664125, PMID:7901761,
+        PMID:7910761, PMID:8564541, PMID:9731776; M-CSA catalytic-residue roles for Asn169
+  - subject: his205
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His205 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/548/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 548, mechanism 1; M-CSA cites PMID:1678739, PMID:19279191, PMID:7664125, PMID:7901761,
+        PMID:7910761, PMID:8564541, PMID:9731776; M-CSA catalytic-residue roles for His205
+  - subject: glu233
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu233 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/548/
+      snippet: electrostatic stabiliser, nucleofuge, nucleophile
+      notes: M-CSA entry 548, mechanism 1; M-CSA cites PMID:1678739, PMID:19279191, PMID:7664125, PMID:7901761,
+        PMID:7910761, PMID:8564541, PMID:9731776; M-CSA catalytic-residue roles for Glu233
+  - subject: asp235
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp235 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/548/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 548, mechanism 1; M-CSA cites PMID:1678739, PMID:19279191, PMID:7664125, PMID:7901761,
+        PMID:7910761, PMID:8564541, PMID:9731776; M-CSA catalytic-residue roles for Asp235
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/548/
+      snippet: "<p>Retaining glycosidases uses a double-displacement mechanism in which a covalent glycosyl-enzyme\
+        \ intermediate is formed and hydrolysed in a general acid/base catalysed process through oxocarbenium\
+        \ ion-like transition states, or possibly through oxocarbenium ion intermediates.   </p>
+\
+        
+<p>Cex uses Glu233 as a nucleophile to attack the anomeric carbon in forming the covalent enzyme-substrate\
+        \ inte"
+      notes: M-CSA entry 548, mechanism 1; M-CSA cites PMID:1678739, PMID:19279191, PMID:7664125, PMID:7901761,
+        PMID:7910761, PMID:8564541, PMID:9731776; CATH domain 3.20.20.80 assigned to the catalytic chain
+        by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/548/
+      snippet: "<p>Retaining glycosidases uses a double-displacement mechanism in which a covalent glycosyl-enzyme\
+        \ intermediate is formed and hydrolysed in a general acid/base catalysed process through oxocarbenium\
+        \ ion-like transition states, or possibly through oxocarbenium ion intermediates.   </p>
+\
+        
+<p>Cex uses Glu233 as a nucleophile to attack the anomeric carbon in forming the covalent enzyme-substrate\
+        \ inte"
+      notes: M-CSA entry 548, mechanism 1; M-CSA cites PMID:1678739, PMID:19279191, PMID:7664125, PMID:7901761,
+        PMID:7910761, PMID:8564541, PMID:9731776; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/548/
+      snippet: "<p>Retaining glycosidases uses a double-displacement mechanism in which a covalent glycosyl-enzyme\
+        \ intermediate is formed and hydrolysed in a general acid/base catalysed process through oxocarbenium\
+        \ ion-like transition states, or possibly through oxocarbenium ion intermediates.   </p>
+\
+        
+<p>Cex uses Glu233 as a nucleophile to attack the anomeric carbon in forming the covalent enzyme-substrate\
+        \ inte"
+      notes: M-CSA entry 548, mechanism 1; M-CSA cites PMID:1678739, PMID:19279191, PMID:7664125, PMID:7901761,
+        PMID:7910761, PMID:8564541, PMID:9731776; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/548/
+      snippet: "<p>Retaining glycosidases uses a double-displacement mechanism in which a covalent glycosyl-enzyme\
+        \ intermediate is formed and hydrolysed in a general acid/base catalysed process through oxocarbenium\
+        \ ion-like transition states, or possibly through oxocarbenium ion intermediates.   </p>
+\
+        
+<p>Cex uses Glu233 as a nucleophile to attack the anomeric carbon in forming the covalent enzyme-substrate\
+        \ inte"
+      notes: M-CSA entry 548, mechanism 1; M-CSA cites PMID:1678739, PMID:19279191, PMID:7664125, PMID:7901761,
+        PMID:7910761, PMID:8564541, PMID:9731776; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/548/
+      snippet: "<p>Retaining glycosidases uses a double-displacement mechanism in which a covalent glycosyl-enzyme\
+        \ intermediate is formed and hydrolysed in a general acid/base catalysed process through oxocarbenium\
+        \ ion-like transition states, or possibly through oxocarbenium ion intermediates.   </p>
+\
+        
+<p>Cex uses Glu233 as a nucleophile to attack the anomeric carbon in forming the covalent enzyme-substrate\
+        \ inte"
+      notes: M-CSA entry 548, mechanism 1; M-CSA cites PMID:1678739, PMID:19279191, PMID:7664125, PMID:7901761,
+        PMID:7910761, PMID:8564541, PMID:9731776; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/548/
+      snippet: "<p>Retaining glycosidases uses a double-displacement mechanism in which a covalent glycosyl-enzyme\
+        \ intermediate is formed and hydrolysed in a general acid/base catalysed process through oxocarbenium\
+        \ ion-like transition states, or possibly through oxocarbenium ion intermediates.   </p>
+\
+        
+<p>Cex uses Glu233 as a nucleophile to attack the anomeric carbon in forming the covalent enzyme-substrate\
+        \ inte"
+      notes: M-CSA entry 548, mechanism 1; M-CSA cites PMID:1678739, PMID:19279191, PMID:7664125, PMID:7901761,
+        PMID:7910761, PMID:8564541, PMID:9731776; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (16 evidence-backed edges) transcribed from M-CSA entry 548;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

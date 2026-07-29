@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.1.3.9
 - CHEBI:15379
@@ -511,4 +511,382 @@ definitions:
       Galactose oxidase is a copper containing enzyme which oxidises primary alcohols to aldehydes by the reduction of molecular oxygen to hydrogen peroxide. The enzyme catalyses the oxidation of many substrates, including dihydroxyacetone, small molecules and olysaccharides by use of a protein radical cofactor, a novel metalloradical complex, formed by a unique structural feature at the copper site with a novel thioether bond linking Cys 228 and Tyr 272 formed from a post-translational modification, which is in a stacking interaction with Trp 290. Galactose oxidase is remarkable in the extent to which free radicals are involved in all aspects of the enzyme function: serving as a key feature of the active site structure, defining the characteristic reactivity of the complex, and directing the biogenesis of the Tyr-Cys cofactor during protein maturation.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of galactose oxidiase
+  description: Stepwise mechanism transcribed from M-CSA entry 322 (7 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +41).
+  nodes:
+  - node_id: cys228
+    label: catalytic Cys228 (M-CSA/PDB numbering; UniProt residue 269)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0CS93
+    description: 'M-CSA roles: activator, covalently attached, metal ligand.'
+  - node_id: tyr272
+    label: catalytic Tyr272 (M-CSA/PDB numbering; UniProt residue 313)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0CS93
+    description: 'M-CSA roles: activator, hydrogen radical acceptor, hydrogen radical donor, metal ligand.'
+  - node_id: trp290
+    label: catalytic Trp290 (M-CSA/PDB numbering; UniProt residue 331)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0CS93
+    description: 'M-CSA roles: activator, radical stabiliser.'
+  - node_id: tyr495
+    label: catalytic Tyr495 (M-CSA/PDB numbering; UniProt residue 536)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0CS93
+    description: 'M-CSA roles: activator, metal ligand, proton acceptor, proton donor.'
+  - node_id: his496
+    label: catalytic His496 (M-CSA/PDB numbering; UniProt residue 537)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0CS93
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his581
+    label: catalytic His581 (M-CSA/PDB numbering; UniProt residue 622)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0CS93
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: dioxygen
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+  - node_id: reactant1
+    label: D-galactopyranose
+    node_type: CHEMICAL
+    grounding: CHEBI:4139
+  - node_id: product0
+    label: hydrogen peroxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+  - node_id: product1
+    label: D-galacto-hexodialdose
+    node_type: CHEMICAL
+    grounding: CHEBI:16222
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The coordinated, anionic Tyr residue abstracts a proton from the coordinated primary
+      alcohol substrate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: A radical is formed at the primary alcohol carbon.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: One electron is transferred from the radical-anion alcohol to the Cu centre, reducing
+      the metal from +2 to +1
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Dioxygen forms a superoxide-radial anion on withdrawing an electron from the Cu centre,
+      oxidising the metal to the +2 state.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: The oxide radical initiates homolytic hydrogen atom abstraction at Tyr272, regenerating
+      the radical tyrosine ligand.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: The anionic peroxide abstracts a proton from Tyr495. After this step has occurred, hydrogen
+      peroxide is substituted from the Cu(II) coordination sphere by water.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: galactose oxidiase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:322
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.130.10.80 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.130.10.80
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: galactose oxidiase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.1.3.9
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/322/
+      snippet: A radical is formed at the primary alcohol carbon.
+      notes: M-CSA entry 322, mechanism 1; M-CSA cites PMID:11698678, PMID:12203454, PMID:12797833, PMID:15047910,
+        PMID:15239055, PMID:17385891, PMID:18512952, PMID:18771294, PMID:19290629, PMID:2002850, PMID:21526835,
+        PMID:22372371, PMID:27626829, PMID:7929198, PMID:8182749, PMID:8386015, PMID:8916929, PMID:9622494;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/322/
+      snippet: One electron is transferred from the radical-anion alcohol to the Cu centre, reducing the
+        metal from +2 to +1
+      notes: M-CSA entry 322, mechanism 1; M-CSA cites PMID:11698678, PMID:12203454, PMID:12797833, PMID:15047910,
+        PMID:15239055, PMID:17385891, PMID:18512952, PMID:18771294, PMID:19290629, PMID:2002850, PMID:21526835,
+        PMID:22372371, PMID:27626829, PMID:7929198, PMID:8182749, PMID:8386015, PMID:8916929, PMID:9622494;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/322/
+      snippet: Dioxygen forms a superoxide-radial anion on withdrawing an electron from the Cu centre,
+        oxidising the metal to the +2 state.
+      notes: M-CSA entry 322, mechanism 1; M-CSA cites PMID:11698678, PMID:12203454, PMID:12797833, PMID:15047910,
+        PMID:15239055, PMID:17385891, PMID:18512952, PMID:18771294, PMID:19290629, PMID:2002850, PMID:21526835,
+        PMID:22372371, PMID:27626829, PMID:7929198, PMID:8182749, PMID:8386015, PMID:8916929, PMID:9622494;
+        step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/322/
+      snippet: The oxide radical initiates homolytic hydrogen atom abstraction at Tyr272, regenerating
+        the radical tyrosine ligand.
+      notes: M-CSA entry 322, mechanism 1; M-CSA cites PMID:11698678, PMID:12203454, PMID:12797833, PMID:15047910,
+        PMID:15239055, PMID:17385891, PMID:18512952, PMID:18771294, PMID:19290629, PMID:2002850, PMID:21526835,
+        PMID:22372371, PMID:27626829, PMID:7929198, PMID:8182749, PMID:8386015, PMID:8916929, PMID:9622494;
+        step 5
+  - subject: tyr272
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Tyr272 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/322/
+      snippet: The oxide radical initiates homolytic hydrogen atom abstraction at Tyr272, regenerating
+        the radical tyrosine ligand.
+      notes: M-CSA entry 322, mechanism 1; M-CSA cites PMID:11698678, PMID:12203454, PMID:12797833, PMID:15047910,
+        PMID:15239055, PMID:17385891, PMID:18512952, PMID:18771294, PMID:19290629, PMID:2002850, PMID:21526835,
+        PMID:22372371, PMID:27626829, PMID:7929198, PMID:8182749, PMID:8386015, PMID:8916929, PMID:9622494;
+        step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/322/
+      snippet: The anionic peroxide abstracts a proton from Tyr495. After this step has occurred, hydrogen
+        peroxide is substituted from the Cu(II) coordination sphere by water.
+      notes: M-CSA entry 322, mechanism 1; M-CSA cites PMID:11698678, PMID:12203454, PMID:12797833, PMID:15047910,
+        PMID:15239055, PMID:17385891, PMID:18512952, PMID:18771294, PMID:19290629, PMID:2002850, PMID:21526835,
+        PMID:22372371, PMID:27626829, PMID:7929198, PMID:8182749, PMID:8386015, PMID:8916929, PMID:9622494;
+        step 6
+  - subject: tyr495
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: Tyr495 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/322/
+      snippet: The anionic peroxide abstracts a proton from Tyr495. After this step has occurred, hydrogen
+        peroxide is substituted from the Cu(II) coordination sphere by water.
+      notes: M-CSA entry 322, mechanism 1; M-CSA cites PMID:11698678, PMID:12203454, PMID:12797833, PMID:15047910,
+        PMID:15239055, PMID:17385891, PMID:18512952, PMID:18771294, PMID:19290629, PMID:2002850, PMID:21526835,
+        PMID:22372371, PMID:27626829, PMID:7929198, PMID:8182749, PMID:8386015, PMID:8916929, PMID:9622494;
+        step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/322/
+      snippet: Products.
+      notes: M-CSA entry 322, mechanism 1; M-CSA cites PMID:11698678, PMID:12203454, PMID:12797833, PMID:15047910,
+        PMID:15239055, PMID:17385891, PMID:18512952, PMID:18771294, PMID:19290629, PMID:2002850, PMID:21526835,
+        PMID:22372371, PMID:27626829, PMID:7929198, PMID:8182749, PMID:8386015, PMID:8916929, PMID:9622494;
+        step 7
+  - subject: cys228
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys228 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/322/
+      snippet: activator, covalently attached, metal ligand
+      notes: M-CSA entry 322, mechanism 1; M-CSA cites PMID:11698678, PMID:12203454, PMID:12797833, PMID:15047910,
+        PMID:15239055, PMID:17385891, PMID:18512952, PMID:18771294, PMID:19290629, PMID:2002850, PMID:21526835,
+        PMID:22372371, PMID:27626829, PMID:7929198, PMID:8182749, PMID:8386015, PMID:8916929, PMID:9622494;
+        M-CSA catalytic-residue roles for Cys228
+  - subject: tyr272
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr272 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/322/
+      snippet: activator, hydrogen radical acceptor, hydrogen radical donor, metal ligand
+      notes: M-CSA entry 322, mechanism 1; M-CSA cites PMID:11698678, PMID:12203454, PMID:12797833, PMID:15047910,
+        PMID:15239055, PMID:17385891, PMID:18512952, PMID:18771294, PMID:19290629, PMID:2002850, PMID:21526835,
+        PMID:22372371, PMID:27626829, PMID:7929198, PMID:8182749, PMID:8386015, PMID:8916929, PMID:9622494;
+        M-CSA catalytic-residue roles for Tyr272
+  - subject: trp290
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp290 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/322/
+      snippet: activator, radical stabiliser
+      notes: M-CSA entry 322, mechanism 1; M-CSA cites PMID:11698678, PMID:12203454, PMID:12797833, PMID:15047910,
+        PMID:15239055, PMID:17385891, PMID:18512952, PMID:18771294, PMID:19290629, PMID:2002850, PMID:21526835,
+        PMID:22372371, PMID:27626829, PMID:7929198, PMID:8182749, PMID:8386015, PMID:8916929, PMID:9622494;
+        M-CSA catalytic-residue roles for Trp290
+  - subject: tyr495
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr495 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/322/
+      snippet: activator, metal ligand, proton acceptor, proton donor
+      notes: M-CSA entry 322, mechanism 1; M-CSA cites PMID:11698678, PMID:12203454, PMID:12797833, PMID:15047910,
+        PMID:15239055, PMID:17385891, PMID:18512952, PMID:18771294, PMID:19290629, PMID:2002850, PMID:21526835,
+        PMID:22372371, PMID:27626829, PMID:7929198, PMID:8182749, PMID:8386015, PMID:8916929, PMID:9622494;
+        M-CSA catalytic-residue roles for Tyr495
+  - subject: his496
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His496 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/322/
+      snippet: metal ligand
+      notes: M-CSA entry 322, mechanism 1; M-CSA cites PMID:11698678, PMID:12203454, PMID:12797833, PMID:15047910,
+        PMID:15239055, PMID:17385891, PMID:18512952, PMID:18771294, PMID:19290629, PMID:2002850, PMID:21526835,
+        PMID:22372371, PMID:27626829, PMID:7929198, PMID:8182749, PMID:8386015, PMID:8916929, PMID:9622494;
+        M-CSA catalytic-residue roles for His496
+  - subject: his581
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His581 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/322/
+      snippet: metal ligand
+      notes: M-CSA entry 322, mechanism 1; M-CSA cites PMID:11698678, PMID:12203454, PMID:12797833, PMID:15047910,
+        PMID:15239055, PMID:17385891, PMID:18512952, PMID:18771294, PMID:19290629, PMID:2002850, PMID:21526835,
+        PMID:22372371, PMID:27626829, PMID:7929198, PMID:8182749, PMID:8386015, PMID:8916929, PMID:9622494;
+        M-CSA catalytic-residue roles for His581
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/322/
+      snippet: In the first (reductive) half-reaction, the oxidized free radicals Cu2+ complex reacts
+        with the primary alcohol. The initial proton abstraction from a coordinated substrate activates
+        the alcohol toward inner sphere electron transfer to the Cu(II) metal centre in an unfavourable
+        redox equilibrium, forming an alkoxy radical which undergoes hydrogen atom abstraction by the
+        tyrosine-cysteine phenoxyl
+      notes: M-CSA entry 322, mechanism 1; M-CSA cites PMID:11698678, PMID:12203454, PMID:12797833, PMID:15047910,
+        PMID:15239055, PMID:17385891, PMID:18512952, PMID:18771294, PMID:19290629, PMID:2002850, PMID:21526835,
+        PMID:22372371, PMID:27626829, PMID:7929198, PMID:8182749, PMID:8386015, PMID:8916929, PMID:9622494;
+        CATH domain 2.130.10.80 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/322/
+      snippet: In the first (reductive) half-reaction, the oxidized free radicals Cu2+ complex reacts
+        with the primary alcohol. The initial proton abstraction from a coordinated substrate activates
+        the alcohol toward inner sphere electron transfer to the Cu(II) metal centre in an unfavourable
+        redox equilibrium, forming an alkoxy radical which undergoes hydrogen atom abstraction by the
+        tyrosine-cysteine phenoxyl
+      notes: M-CSA entry 322, mechanism 1; M-CSA cites PMID:11698678, PMID:12203454, PMID:12797833, PMID:15047910,
+        PMID:15239055, PMID:17385891, PMID:18512952, PMID:18771294, PMID:19290629, PMID:2002850, PMID:21526835,
+        PMID:22372371, PMID:27626829, PMID:7929198, PMID:8182749, PMID:8386015, PMID:8916929, PMID:9622494;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/322/
+      snippet: In the first (reductive) half-reaction, the oxidized free radicals Cu2+ complex reacts
+        with the primary alcohol. The initial proton abstraction from a coordinated substrate activates
+        the alcohol toward inner sphere electron transfer to the Cu(II) metal centre in an unfavourable
+        redox equilibrium, forming an alkoxy radical which undergoes hydrogen atom abstraction by the
+        tyrosine-cysteine phenoxyl
+      notes: M-CSA entry 322, mechanism 1; M-CSA cites PMID:11698678, PMID:12203454, PMID:12797833, PMID:15047910,
+        PMID:15239055, PMID:17385891, PMID:18512952, PMID:18771294, PMID:19290629, PMID:2002850, PMID:21526835,
+        PMID:22372371, PMID:27626829, PMID:7929198, PMID:8182749, PMID:8386015, PMID:8916929, PMID:9622494;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/322/
+      snippet: In the first (reductive) half-reaction, the oxidized free radicals Cu2+ complex reacts
+        with the primary alcohol. The initial proton abstraction from a coordinated substrate activates
+        the alcohol toward inner sphere electron transfer to the Cu(II) metal centre in an unfavourable
+        redox equilibrium, forming an alkoxy radical which undergoes hydrogen atom abstraction by the
+        tyrosine-cysteine phenoxyl
+      notes: M-CSA entry 322, mechanism 1; M-CSA cites PMID:11698678, PMID:12203454, PMID:12797833, PMID:15047910,
+        PMID:15239055, PMID:17385891, PMID:18512952, PMID:18771294, PMID:19290629, PMID:2002850, PMID:21526835,
+        PMID:22372371, PMID:27626829, PMID:7929198, PMID:8182749, PMID:8386015, PMID:8916929, PMID:9622494;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/322/
+      snippet: In the first (reductive) half-reaction, the oxidized free radicals Cu2+ complex reacts
+        with the primary alcohol. The initial proton abstraction from a coordinated substrate activates
+        the alcohol toward inner sphere electron transfer to the Cu(II) metal centre in an unfavourable
+        redox equilibrium, forming an alkoxy radical which undergoes hydrogen atom abstraction by the
+        tyrosine-cysteine phenoxyl
+      notes: M-CSA entry 322, mechanism 1; M-CSA cites PMID:11698678, PMID:12203454, PMID:12797833, PMID:15047910,
+        PMID:15239055, PMID:17385891, PMID:18512952, PMID:18771294, PMID:19290629, PMID:2002850, PMID:21526835,
+        PMID:22372371, PMID:27626829, PMID:7929198, PMID:8182749, PMID:8386015, PMID:8916929, PMID:9622494;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/322/
+      snippet: In the first (reductive) half-reaction, the oxidized free radicals Cu2+ complex reacts
+        with the primary alcohol. The initial proton abstraction from a coordinated substrate activates
+        the alcohol toward inner sphere electron transfer to the Cu(II) metal centre in an unfavourable
+        redox equilibrium, forming an alkoxy radical which undergoes hydrogen atom abstraction by the
+        tyrosine-cysteine phenoxyl
+      notes: M-CSA entry 322, mechanism 1; M-CSA cites PMID:11698678, PMID:12203454, PMID:12797833, PMID:15047910,
+        PMID:15239055, PMID:17385891, PMID:18512952, PMID:18771294, PMID:19290629, PMID:2002850, PMID:21526835,
+        PMID:22372371, PMID:27626829, PMID:7929198, PMID:8182749, PMID:8386015, PMID:8916929, PMID:9622494;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (20 evidence-backed edges) transcribed from M-CSA entry 322;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

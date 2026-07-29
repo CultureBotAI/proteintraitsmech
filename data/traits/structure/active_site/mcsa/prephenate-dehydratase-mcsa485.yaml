@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.2.1.51
 - CHEBI:15378
@@ -63,4 +63,225 @@ definitions:
       Prephenate dehydratase (EC:4.2.1.51, PDT) catalyses the decarboxylation of prephenate to phenylpyruvate. In microorganisms it is part of the terminal pathway of phenylalanine biosynthesis. In some bacteria, e.g. E. coli PDT is part of the multi-functional P-protein that also catalyses the transformation of chorismate into prephenate (chorismate mutase), while in other bacteria it is a monofunctional enzyme.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of prephenate dehydratase
+  description: Stepwise mechanism transcribed from M-CSA entry 485 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: thr171
+    label: catalytic Thr171 (M-CSA/PDB numbering; UniProt residue 171)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8KBW6
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: phe173
+    label: catalytic Phe173 (M-CSA/PDB numbering; UniProt residue 173)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8KBW6
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: reactant1
+    label: (1s,4s)-prephenate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:29934
+  - node_id: product0
+    label: keto-phenylpyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:18005
+  - node_id: product1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product2
+    label: carbon dioxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The carboxylate group initiates the reaction, resulting in the re-aromatisation of the
+      substrate and elimination of the water molecule, with concomitant deprotonation of Thr171.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Inferred return step to regenerate the active site threonine residue.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: prephenate dehydratase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:485
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.190.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.190.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: prephenate dehydratase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.2.1.51
+  edges:
+  - subject: thr171
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Thr171 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/485/
+      snippet: The carboxylate group initiates the reaction, resulting in the re-aromatisation of the
+        substrate and elimination of the water molecule, with concomitant deprotonation of Thr171.
+      notes: M-CSA entry 485, mechanism 2; M-CSA cites PMID:14749915, PMID:18171624, PMID:19948253, PMID:24610334;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/485/
+      snippet: Inferred return step to regenerate the active site threonine residue.
+      notes: M-CSA entry 485, mechanism 2; M-CSA cites PMID:14749915, PMID:18171624, PMID:19948253, PMID:24610334;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/485/
+      snippet: Products
+      notes: M-CSA entry 485, mechanism 2; M-CSA cites PMID:14749915, PMID:18171624, PMID:19948253, PMID:24610334;
+        step 3
+  - subject: thr171
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr171 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/485/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 485, mechanism 2; M-CSA cites PMID:14749915, PMID:18171624, PMID:19948253, PMID:24610334;
+        M-CSA catalytic-residue roles for Thr171
+  - subject: phe173
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Phe173 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/485/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 485, mechanism 2; M-CSA cites PMID:14749915, PMID:18171624, PMID:19948253, PMID:24610334;
+        M-CSA catalytic-residue roles for Phe173
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/485/
+      snippet: The decarboxylation and dehydration reactions occur in a concerted manner. The carboxylate
+        group initiates the reaction, causing aromatisation of the ring and elimination of the hydroxide
+        group, which abstracts a proton from Thr171. It is thought that the driving force for this reaction
+        is the aromatisation of the substrate, but it is not clear if the pKa of the active site threonine
+        is sufficient
+      notes: M-CSA entry 485, mechanism 2; M-CSA cites PMID:14749915, PMID:18171624, PMID:19948253, PMID:24610334;
+        CATH domain 3.40.190.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/485/
+      snippet: The decarboxylation and dehydration reactions occur in a concerted manner. The carboxylate
+        group initiates the reaction, causing aromatisation of the ring and elimination of the hydroxide
+        group, which abstracts a proton from Thr171. It is thought that the driving force for this reaction
+        is the aromatisation of the substrate, but it is not clear if the pKa of the active site threonine
+        is sufficient
+      notes: M-CSA entry 485, mechanism 2; M-CSA cites PMID:14749915, PMID:18171624, PMID:19948253, PMID:24610334;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/485/
+      snippet: The decarboxylation and dehydration reactions occur in a concerted manner. The carboxylate
+        group initiates the reaction, causing aromatisation of the ring and elimination of the hydroxide
+        group, which abstracts a proton from Thr171. It is thought that the driving force for this reaction
+        is the aromatisation of the substrate, but it is not clear if the pKa of the active site threonine
+        is sufficient
+      notes: M-CSA entry 485, mechanism 2; M-CSA cites PMID:14749915, PMID:18171624, PMID:19948253, PMID:24610334;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/485/
+      snippet: The decarboxylation and dehydration reactions occur in a concerted manner. The carboxylate
+        group initiates the reaction, causing aromatisation of the ring and elimination of the hydroxide
+        group, which abstracts a proton from Thr171. It is thought that the driving force for this reaction
+        is the aromatisation of the substrate, but it is not clear if the pKa of the active site threonine
+        is sufficient
+      notes: M-CSA entry 485, mechanism 2; M-CSA cites PMID:14749915, PMID:18171624, PMID:19948253, PMID:24610334;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/485/
+      snippet: The decarboxylation and dehydration reactions occur in a concerted manner. The carboxylate
+        group initiates the reaction, causing aromatisation of the ring and elimination of the hydroxide
+        group, which abstracts a proton from Thr171. It is thought that the driving force for this reaction
+        is the aromatisation of the substrate, but it is not clear if the pKa of the active site threonine
+        is sufficient
+      notes: M-CSA entry 485, mechanism 2; M-CSA cites PMID:14749915, PMID:18171624, PMID:19948253, PMID:24610334;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/485/
+      snippet: The decarboxylation and dehydration reactions occur in a concerted manner. The carboxylate
+        group initiates the reaction, causing aromatisation of the ring and elimination of the hydroxide
+        group, which abstracts a proton from Thr171. It is thought that the driving force for this reaction
+        is the aromatisation of the substrate, but it is not clear if the pKa of the active site threonine
+        is sufficient
+      notes: M-CSA entry 485, mechanism 2; M-CSA cites PMID:14749915, PMID:18171624, PMID:19948253, PMID:24610334;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/485/
+      snippet: The decarboxylation and dehydration reactions occur in a concerted manner. The carboxylate
+        group initiates the reaction, causing aromatisation of the ring and elimination of the hydroxide
+        group, which abstracts a proton from Thr171. It is thought that the driving force for this reaction
+        is the aromatisation of the substrate, but it is not clear if the pKa of the active site threonine
+        is sufficient
+      notes: M-CSA entry 485, mechanism 2; M-CSA cites PMID:14749915, PMID:18171624, PMID:19948253, PMID:24610334;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (12 evidence-backed edges) transcribed from M-CSA entry 485;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

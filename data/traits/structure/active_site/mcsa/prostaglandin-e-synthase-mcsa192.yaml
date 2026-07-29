@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.3.99.3
 - CHEBI:57405
@@ -216,4 +216,202 @@ definitions:
       Microsomal Prostaglandin E Synthase Type 2 (mPGES-2), sourced from Macaca fascicularis catalyses the isomerization reaction of PGH2 (Prostaglandin H2) to PGE2 (Prostaglandin E2). PGH2 is formed from arachidonic acid. It is an unstable intermediate and so is converted into PGE2. PGE2 exerts control over various biological activities such as relaxation/ contraction of smooth muscle, excretion of Na+, body temperature and the physiological sleep/ wake cycle. The enzyme is active in the absence of an R-SH reagent, but the catalytic activity is increased by the presence of an R-SH reagent, suggesting that a water molecule and the SH group of an R-SH bind the same site and participate in the same catalytic role. An R-SH or water molecule bound between O-eta of Tyr107 and C9 of PGH2 is polarised by forming a H-bond with Tyr107, and consequently, the SH group of R-SH or water is deprotonated at neutral pH.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of prostaglandin-E synthase
+  description: Stepwise mechanism transcribed from M-CSA entry 192 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: tyr107
+    label: catalytic Tyr107 (M-CSA/PDB numbering; UniProt residue 107)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9N0A4
+    description: 'M-CSA roles: activator, electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: cys110
+    label: catalytic Cys110 (M-CSA/PDB numbering; UniProt residue 110)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9N0A4
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, nucleofuge, nucleophile, proton
+      acceptor, proton donor.'
+  - node_id: phe112
+    label: catalytic Phe112 (M-CSA/PDB numbering; UniProt residue 112)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9N0A4
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: cys113
+    label: catalytic Cys113 (M-CSA/PDB numbering; UniProt residue 113)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9N0A4
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      increase acidity.'
+  - node_id: reactant0
+    label: prostaglandin H2(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57405
+  - node_id: product0
+    label: prostaglandin E2(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:606564
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The thiolate of Cys110 abstracts the proton from the substrate, cleaving the peroxo bond
+      with concomitant deprotonation of a water (or thiol).
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: A water (or thiol) abstracts a proton from Cys110 in an inferred return step to regenerate
+      the enzyme active site.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: prostaglandin-E synthase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:192
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.30.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.30.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: prostaglandin-E synthase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.3.99.3
+  edges:
+  - subject: cys110
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys110 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/192/
+      snippet: The thiolate of Cys110 abstracts the proton from the substrate, cleaving the peroxo bond
+        with concomitant deprotonation of a water (or thiol).
+      notes: M-CSA entry 192, mechanism 2; M-CSA cites PMID:15854652; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/192/
+      snippet: A water (or thiol) abstracts a proton from Cys110 in an inferred return step to regenerate
+        the enzyme active site.
+      notes: M-CSA entry 192, mechanism 2; M-CSA cites PMID:15854652; step 2
+  - subject: cys110
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Cys110 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/192/
+      snippet: A water (or thiol) abstracts a proton from Cys110 in an inferred return step to regenerate
+        the enzyme active site.
+      notes: M-CSA entry 192, mechanism 2; M-CSA cites PMID:15854652; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/192/
+      snippet: Products
+      notes: M-CSA entry 192, mechanism 2; M-CSA cites PMID:15854652; step 3
+  - subject: tyr107
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr107 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/192/
+      snippet: activator, electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 192, mechanism 2; M-CSA cites PMID:15854652; M-CSA catalytic-residue roles for
+        Tyr107
+  - subject: cys110
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys110 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/192/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, nucleofuge, nucleophile, proton acceptor,
+        proton donor
+      notes: M-CSA entry 192, mechanism 2; M-CSA cites PMID:15854652; M-CSA catalytic-residue roles for
+        Cys110
+  - subject: phe112
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Phe112 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/192/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 192, mechanism 2; M-CSA cites PMID:15854652; M-CSA catalytic-residue roles for
+        Phe112
+  - subject: cys113
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys113 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/192/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, increase acidity
+      notes: M-CSA entry 192, mechanism 2; M-CSA cites PMID:15854652; M-CSA catalytic-residue roles for
+        Cys113
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/192/
+      snippet: In this mechanism Cys110 abstracts the hydrogen atom attached to C9 of the substrate and
+        the O9-O11 bond is cleaved by acid catalysis with a water or R-SH molecule. No evidence supports
+        either mechanism strongly.
+      notes: M-CSA entry 192, mechanism 2; M-CSA cites PMID:15854652; CATH domain 3.40.30.10 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/192/
+      snippet: In this mechanism Cys110 abstracts the hydrogen atom attached to C9 of the substrate and
+        the O9-O11 bond is cleaved by acid catalysis with a water or R-SH molecule. No evidence supports
+        either mechanism strongly.
+      notes: M-CSA entry 192, mechanism 2; M-CSA cites PMID:15854652; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/192/
+      snippet: In this mechanism Cys110 abstracts the hydrogen atom attached to C9 of the substrate and
+        the O9-O11 bond is cleaved by acid catalysis with a water or R-SH molecule. No evidence supports
+        either mechanism strongly.
+      notes: M-CSA entry 192, mechanism 2; M-CSA cites PMID:15854652; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/192/
+      snippet: In this mechanism Cys110 abstracts the hydrogen atom attached to C9 of the substrate and
+        the O9-O11 bond is cleaved by acid catalysis with a water or R-SH molecule. No evidence supports
+        either mechanism strongly.
+      notes: M-CSA entry 192, mechanism 2; M-CSA cites PMID:15854652; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (12 evidence-backed edges) transcribed from M-CSA entry 192;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.1.55
 - CHEBI:15377
@@ -367,4 +367,210 @@ definitions:
       Involved in the degradation of arabinan and is a key enzyme in the complete degradation of the plant cell wall. Catalyses the cleavage of terminal alpha-(1->5)-arabinofuranosyl bonds in different hemicellulosic homopolysaccharides (branched and debranched arabinans). It acts preferentially on aryl-alpha-L-arabinofuranosides, and is much less effective on aryl-beta-D-xylopyranosides. It is a member of the glycosyl hydrolase 51 family.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of alpha-N-arabinofuranosidase
+  description: Stepwise mechanism transcribed from M-CSA entry 667 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: glu175
+    label: catalytic Glu175 (M-CSA/PDB numbering; UniProt residue 175)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9XBQ3
+    description: 'M-CSA roles: activator, increase nucleophilicity, promote heterolysis, proton acceptor,
+      proton donor.'
+  - node_id: glu294
+    label: catalytic Glu294 (M-CSA/PDB numbering; UniProt residue 294)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9XBQ3
+    description: 'M-CSA roles: covalently attached, nucleofuge, nucleophile.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: beta-L-arabinofuranosyl-(1->2)-beta-L-arabinofuranose
+    node_type: CHEMICAL
+    grounding: CHEBI:73180
+  - node_id: product0
+    label: beta-L-arabinofuranose
+    node_type: CHEMICAL
+    grounding: CHEBI:28272
+  - node_id: product1
+    label: beta-L-arabinofuranose
+    node_type: CHEMICAL
+    grounding: CHEBI:28272
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu294 performs a nucleophilic attack on C1. This leads to the cleavage of the glycosidic
+      bond with the concomitant protonation of the leaving group by Glu175.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Glu175 activates a water for nucleophilic attack on the intermediate, which leads to
+      its hydrolysis.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: alpha-N-arabinofuranosidase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:667
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.80 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.80
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: alpha-N-arabinofuranosidase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.1.55
+  edges:
+  - subject: glu175
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu175 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/667/
+      snippet: Glu294 performs a nucleophilic attack on C1. This leads to the cleavage of the glycosidic
+        bond with the concomitant protonation of the leaving group by Glu175.
+      notes: M-CSA entry 667, mechanism 1; M-CSA cites PMID:14517232, PMID:19269961; step 1
+  - subject: glu294
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu294 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/667/
+      snippet: Glu294 performs a nucleophilic attack on C1. This leads to the cleavage of the glycosidic
+        bond with the concomitant protonation of the leaving group by Glu175.
+      notes: M-CSA entry 667, mechanism 1; M-CSA cites PMID:14517232, PMID:19269961; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/667/
+      snippet: Glu175 activates a water for nucleophilic attack on the intermediate, which leads to its
+        hydrolysis.
+      notes: M-CSA entry 667, mechanism 1; M-CSA cites PMID:14517232, PMID:19269961; step 2
+  - subject: glu175
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu175 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/667/
+      snippet: Glu175 activates a water for nucleophilic attack on the intermediate, which leads to its
+        hydrolysis.
+      notes: M-CSA entry 667, mechanism 1; M-CSA cites PMID:14517232, PMID:19269961; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/667/
+      snippet: Products.
+      notes: M-CSA entry 667, mechanism 1; M-CSA cites PMID:14517232, PMID:19269961; step 3
+  - subject: glu175
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu175 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/667/
+      snippet: activator, increase nucleophilicity, promote heterolysis, proton acceptor, proton donor
+      notes: M-CSA entry 667, mechanism 1; M-CSA cites PMID:14517232, PMID:19269961; M-CSA catalytic-residue
+        roles for Glu175
+  - subject: glu294
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu294 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/667/
+      snippet: covalently attached, nucleofuge, nucleophile
+      notes: M-CSA entry 667, mechanism 1; M-CSA cites PMID:14517232, PMID:19269961; M-CSA catalytic-residue
+        roles for Glu294
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/667/
+      snippet: Glu294 forms a covalent bond with the sugar substrate, eliminating the furanose substrate
+        with concomitant deprotonation of Glu175. Glu175 then activates a catalytic water, which adds
+        back to the bound sugar and cleaves it from the enzyme.
+      notes: M-CSA entry 667, mechanism 1; M-CSA cites PMID:14517232, PMID:19269961; CATH domain 3.20.20.80
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/667/
+      snippet: Glu294 forms a covalent bond with the sugar substrate, eliminating the furanose substrate
+        with concomitant deprotonation of Glu175. Glu175 then activates a catalytic water, which adds
+        back to the bound sugar and cleaves it from the enzyme.
+      notes: M-CSA entry 667, mechanism 1; M-CSA cites PMID:14517232, PMID:19269961; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/667/
+      snippet: Glu294 forms a covalent bond with the sugar substrate, eliminating the furanose substrate
+        with concomitant deprotonation of Glu175. Glu175 then activates a catalytic water, which adds
+        back to the bound sugar and cleaves it from the enzyme.
+      notes: M-CSA entry 667, mechanism 1; M-CSA cites PMID:14517232, PMID:19269961; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/667/
+      snippet: Glu294 forms a covalent bond with the sugar substrate, eliminating the furanose substrate
+        with concomitant deprotonation of Glu175. Glu175 then activates a catalytic water, which adds
+        back to the bound sugar and cleaves it from the enzyme.
+      notes: M-CSA entry 667, mechanism 1; M-CSA cites PMID:14517232, PMID:19269961; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/667/
+      snippet: Glu294 forms a covalent bond with the sugar substrate, eliminating the furanose substrate
+        with concomitant deprotonation of Glu175. Glu175 then activates a catalytic water, which adds
+        back to the bound sugar and cleaves it from the enzyme.
+      notes: M-CSA entry 667, mechanism 1; M-CSA cites PMID:14517232, PMID:19269961; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/667/
+      snippet: Glu294 forms a covalent bond with the sugar substrate, eliminating the furanose substrate
+        with concomitant deprotonation of Glu175. Glu175 then activates a catalytic water, which adds
+        back to the bound sugar and cleaves it from the enzyme.
+      notes: M-CSA entry 667, mechanism 1; M-CSA cites PMID:14517232, PMID:19269961; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 667;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0
