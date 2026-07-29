@@ -691,7 +691,10 @@ cluster-families *args:
 # colours by trait axis; this measures neighbour purity for axis vs SOURCE
 # DATABASE, in the embedding and in the 2-D map, plus a full-corpus retrieval
 # counter-test on known cross-source equivalent pairs. Read-only.
+# Also reports 2-D layout degeneracy, which purity cannot see — use --layout-only
+# for maps with no text embedding (protein_map.json), which needs no --emb-dir.
 #   just measure-map --map corpus_map_definitions.json --emb-dir data/embeddings/definition
+#   just measure-map --map protein_map.json --layout-only
 measure-map *args:
     python3 scripts/measure_map_structure.py {{args}}
 
