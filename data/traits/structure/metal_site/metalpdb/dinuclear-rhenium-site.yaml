@@ -6,7 +6,7 @@ definition_source: "MetalPDB (CERM, University of Florence)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_METAL_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - proteintraitsmech:METAL_BINDING_SITE
 chemical_participants:
@@ -18,4 +18,87 @@ canonical_examples:
     protein_label: "Lysozyme C"
     taxon_label: "Gallus gallus"
     note: "MetalPDB dinuclear rhenium site occurrence in PDB 5nbj"
+causal_graphs:
+- graph_id: metal_coordination
+  title: Coordination of rhenium at the dinuclear rhenium site
+  description: Protein residues coordinating the metal, transcribed from MetalPDB across 1 exemplar site(s).
+    Residue numbering is the PDB author frame MetalPDB reports; no UniProt position is asserted.
+  nodes:
+  - node_id: metal
+    label: rhenium
+    node_type: CHEMICAL
+    grounding: CHEBI:49882
+  - node_id: site
+    label: dinuclear rhenium site
+    node_type: MOTIF
+    grounding: proteintraitsmech:METALPDB_RE_DINUCLEAR
+    description: KB trait record (STRUCT_METAL_SITE) — the coordination class this site belongs to.
+  - node_id: res5nbjGLU35A
+    label: coordinating GLU35 (PDB 5nbj chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00698
+  - node_id: res5nbjASP52A
+    label: coordinating ASP52 (PDB 5nbj chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00698
+  edges:
+  - subject: res5nbjGLU35A
+    predicate: molecularly interacts with (coordinates)
+    predicate_id: RO:0002436
+    object: metal
+    description: GLU35 donates a donor atom to the coordinated rhenium.
+    evidence:
+    - reference: PDB:5nbj
+      snippet: residue_name GLU; residue_pdb_number 35; chain_letter A
+      notes: MetalPDB site 5nbj_2 (PDB 5nbj, dinuclear Rhenium, coordination number 1; geometry n/a).
+        Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating ligands
+        (water, nucleotides) that are not written as nodes here.
+  - subject: res5nbjGLU35A
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A coordinating residue of this metal site.
+    evidence:
+    - reference: PDB:5nbj
+      snippet: residue_name GLU; residue_pdb_number 35; chain_letter A
+      notes: MetalPDB site 5nbj_2 (PDB 5nbj, dinuclear Rhenium, coordination number 1; geometry n/a).
+        Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating ligands
+        (water, nucleotides) that are not written as nodes here.
+  - subject: res5nbjASP52A
+    predicate: molecularly interacts with (coordinates)
+    predicate_id: RO:0002436
+    object: metal
+    description: ASP52 donates a donor atom to the coordinated rhenium.
+    evidence:
+    - reference: PDB:5nbj
+      snippet: residue_name ASP; residue_pdb_number 52; chain_letter A
+      notes: MetalPDB site 5nbj_2 (PDB 5nbj, dinuclear Rhenium, coordination number 1; geometry n/a).
+        Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating ligands
+        (water, nucleotides) that are not written as nodes here.
+  - subject: res5nbjASP52A
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A coordinating residue of this metal site.
+    evidence:
+    - reference: PDB:5nbj
+      snippet: residue_name ASP; residue_pdb_number 52; chain_letter A
+      notes: MetalPDB site 5nbj_2 (PDB 5nbj, dinuclear Rhenium, coordination number 1; geometry n/a).
+        Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating ligands
+        (water, nucleotides) that are not written as nodes here.
+  - subject: metal
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: The coordinated metal ion of this site.
+    evidence:
+    - reference: PDB:5nbj
+      snippet: periodic_symbol Re; coordination_number 1
+      notes: MetalPDB site 5nbj_2 metal record.
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'metal_coordination' (5 evidence-backed edges) from MetalPDB; SEEDED ->
+    REVIEWED
+  llm_assisted: true
 license: "MetalPDB (CERM, Univ. Florence) — no explicit license published; reuse terms unconfirmed (confirm with CERM before redistribution)"

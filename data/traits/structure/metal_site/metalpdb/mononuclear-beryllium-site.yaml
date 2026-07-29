@@ -6,7 +6,7 @@ definition_source: "MetalPDB (CERM, University of Florence)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_METAL_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - proteintraitsmech:METAL_BINDING_SITE
 chemical_participants:
@@ -34,4 +34,115 @@ canonical_examples:
     protein_label: "T-complex protein 1 subunit alpha"
     taxon_label: "Saccharomyces cerevisiae"
     note: "MetalPDB mononuclear beryllium site occurrence in PDB 3p9d"
+causal_graphs:
+- graph_id: metal_coordination
+  title: Coordination of beryllium at the mononuclear beryllium site
+  description: Protein residues coordinating the metal, transcribed from MetalPDB across 3 exemplar site(s).
+    Residue numbering is the PDB author frame MetalPDB reports; no UniProt position is asserted.
+  nodes:
+  - node_id: metal
+    label: beryllium
+    node_type: CHEMICAL
+    grounding: CHEBI:30501
+  - node_id: site
+    label: mononuclear beryllium site
+    node_type: MOTIF
+    grounding: proteintraitsmech:METALPDB_BE_MONONUCLEAR
+    description: KB trait record (STRUCT_METAL_SITE) — the coordination class this site belongs to.
+  - node_id: res4lzzGLU239M
+    label: coordinating GLU239 (PDB 4lzz chain M author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:O67198
+  - node_id: res6yufSER39C
+    label: coordinating SER39 (PDB 6yuf chain C author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:O94383
+  - node_id: res3p9dASP90J
+    label: coordinating ASP90 (PDB 3p9d chain J author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P12612
+  edges:
+  - subject: res4lzzGLU239M
+    predicate: molecularly interacts with (coordinates)
+    predicate_id: RO:0002436
+    object: metal
+    description: GLU239 donates a donor atom to the coordinated beryllium.
+    evidence:
+    - reference: PDB:4lzz
+      snippet: residue_name GLU; residue_pdb_number 239; chain_letter M
+      notes: MetalPDB site 4lzz_23 (PDB 4lzz, mononuclear Beryllium, coordination number 5; geometry irregular
+        (n/a)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating
+        ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res4lzzGLU239M
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A coordinating residue of this metal site.
+    evidence:
+    - reference: PDB:4lzz
+      snippet: residue_name GLU; residue_pdb_number 239; chain_letter M
+      notes: MetalPDB site 4lzz_23 (PDB 4lzz, mononuclear Beryllium, coordination number 5; geometry irregular
+        (n/a)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating
+        ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res6yufSER39C
+    predicate: molecularly interacts with (coordinates)
+    predicate_id: RO:0002436
+    object: metal
+    description: SER39 donates a donor atom to the coordinated beryllium.
+    evidence:
+    - reference: PDB:6yuf
+      snippet: residue_name SER; residue_pdb_number 39; chain_letter C
+      notes: MetalPDB site 6yuf_1 (PDB 6yuf, mononuclear Beryllium, coordination number 6; geometry octahedron,
+        face monocapped with a vacancy (non-capped face) (distorted)). Field values quoted from flat_db_file.xml.gz;
+        MetalPDB also lists non-protein coordinating ligands (water, nucleotides) that are not written
+        as nodes here.
+  - subject: res6yufSER39C
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A coordinating residue of this metal site.
+    evidence:
+    - reference: PDB:6yuf
+      snippet: residue_name SER; residue_pdb_number 39; chain_letter C
+      notes: MetalPDB site 6yuf_1 (PDB 6yuf, mononuclear Beryllium, coordination number 6; geometry octahedron,
+        face monocapped with a vacancy (non-capped face) (distorted)). Field values quoted from flat_db_file.xml.gz;
+        MetalPDB also lists non-protein coordinating ligands (water, nucleotides) that are not written
+        as nodes here.
+  - subject: res3p9dASP90J
+    predicate: molecularly interacts with (coordinates)
+    predicate_id: RO:0002436
+    object: metal
+    description: ASP90 donates a donor atom to the coordinated beryllium.
+    evidence:
+    - reference: PDB:3p9d
+      snippet: residue_name ASP; residue_pdb_number 90; chain_letter J
+      notes: MetalPDB site 3p9d_8 (PDB 3p9d, mononuclear Beryllium, coordination number 5; geometry irregular
+        (n/a)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating
+        ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res3p9dASP90J
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A coordinating residue of this metal site.
+    evidence:
+    - reference: PDB:3p9d
+      snippet: residue_name ASP; residue_pdb_number 90; chain_letter J
+      notes: MetalPDB site 3p9d_8 (PDB 3p9d, mononuclear Beryllium, coordination number 5; geometry irregular
+        (n/a)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating
+        ligands (water, nucleotides) that are not written as nodes here.
+  - subject: metal
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: The coordinated metal ion of this site.
+    evidence:
+    - reference: PDB:4lzz
+      snippet: periodic_symbol Be; coordination_number 5
+      notes: MetalPDB site 4lzz_23 metal record.
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'metal_coordination' (7 evidence-backed edges) from MetalPDB; SEEDED ->
+    REVIEWED
+  llm_assisted: true
 license: "MetalPDB (CERM, Univ. Florence) — no explicit license published; reuse terms unconfirmed (confirm with CERM before redistribution)"
