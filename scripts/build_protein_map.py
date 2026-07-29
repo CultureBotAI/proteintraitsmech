@@ -18,6 +18,11 @@ Pipeline: binary protein × *signature* trait incidence (traits with
 → TruncatedSVD to --svd dims (the matrix is large and very sparse) → PaCMAP to
 2-D, matching the corpus map's primary projection.
 
+The vocabulary is built over the whole corpus before any --sample, and proteins
+whose traits are all rarer than --min-support are dropped rather than embedded:
+an all-zero row carries no position, so projecting it fabricates a dense blob at
+the origin that reads as a cluster.
+
 Points are coloured by organism and filterable by CATH structural class, so the
 "organism vs. structure" reading can be checked both ways in the browser.
 
@@ -143,6 +148,30 @@ def main() -> int:
                     if t.split(":")[0] in SIG_PREFIXES and t in idx}
     rows = [r for r in rows if r["_ts"]]
 
+    # The vocabulary is built over the whole corpus, before sampling, for two
+    # reasons: --sample must not change the feature space, and a protein is
+    # placeable or not on the corpus's terms rather than the sample's.
+    supp = collections.Counter()
+    for r in rows:
+        supp.update(r["_ts"])
+    vocab = sorted(t for t, c in supp.items() if c >= args.min_support)
+    pos = {t: i for i, t in enumerate(vocab)}
+    if not vocab:
+        print("no trait clears --min-support", file=sys.stderr)
+        return 1
+
+    # Drop proteins retaining no feature. Their row is all-zero, so SVD sends
+    # them to the origin and PaCMAP renders them as one dense ball that is an
+    # artefact of the vocabulary cut, not a cluster of similar proteins. They
+    # are unplaceable, not central. (cluster_trait_families.py already filters
+    # this way; the map was the inconsistent one.)
+    placeable = [r for r in rows if any(t in pos for t in r["_ts"])]
+    if len(placeable) < len(rows):
+        print(f"unplaceable (no trait clears --min-support): "
+              f"{len(rows) - len(placeable):,} of {len(rows):,} proteins dropped",
+              file=sys.stderr)
+    rows = placeable
+
     n_corpus = len(rows)          # before sampling — the page compares against it
     if 0 < args.sample < len(rows):
         # Stratified by organism: a uniform sample of a matrix whose proteomes
@@ -161,15 +190,6 @@ def main() -> int:
             keep.extend(group[:max(1, round(len(group) * share))])
         rng.shuffle(keep)
         rows = keep[:args.sample]
-
-    supp = collections.Counter()
-    for r in rows:
-        supp.update(r["_ts"])
-    vocab = sorted(t for t, c in supp.items() if c >= args.min_support)
-    pos = {t: i for i, t in enumerate(vocab)}
-    if not vocab:
-        print("no trait clears --min-support", file=sys.stderr)
-        return 1
 
     indptr, indices = [0], []
     for r in rows:

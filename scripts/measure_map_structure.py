@@ -65,6 +65,34 @@ def purity(ind, labels):
     return same, chance
 
 
+def layout_report(points, np) -> list:
+    """2-D degeneracy of the rendered coordinates.
+
+    Neighbour purity is computed in the pre-projection space, so it cannot see a
+    projection artefact: when all-zero rows collapsed 9.3% of the protein map
+    onto the origin, purity *rose* (0.816 → 0.823) while the picture broke
+    (PR #72). These statistics look at what is actually drawn.
+    """
+    P = np.asarray([[p[0], p[1]] for p in points], dtype=np.float64)
+    n = len(P)
+    H, _, _ = np.histogram2d(P[:, 0], P[:, 1], bins=40)
+    dens = float(H.max()) / n
+    occupied = int((H > 0).sum())
+    distinct = len({(round(float(x), 3), round(float(y), 3)) for x, y in P})
+    verdict = ("**suspect** — a cell this dense is usually degenerate rows, not a "
+               "cluster" if dens > 0.08 else "plausible")
+    return ["## 2-D layout degeneracy", "",
+            "What is rendered, independent of any embedding. A single 40×40 cell "
+            "holding a large share of points is the signature of rows that carry "
+            "no position (all-zero features) rather than of a real cluster; "
+            "compare 10.0% when the protein map was broken against 5.8% after.",
+            "", "| | |", "|---|--:|",
+            f"| points | {n:,} |",
+            f"| densest 40×40 cell | **{100*dens:.1f}%** ({verdict}) |",
+            f"| distinct 3-dp coordinates | {distinct:,} ({100*distinct/n:.1f}%) |",
+            f"| occupied cells | {occupied:,} / 1,600 |", ""]
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -84,6 +112,10 @@ def main() -> int:
                     help="cross-source pairs to query in the retrieval counter-test")
     ap.add_argument("--skip-retrieval", action="store_true",
                     help="skip the full-corpus retrieval test (the slow part)")
+    ap.add_argument("--layout-only", action="store_true",
+                    help="report only 2-D layout degeneracy, which needs no "
+                         "embedding — the one check that applies to maps built "
+                         "from traits rather than text (e.g. protein_map.json)")
     ap.add_argument("--out")
     args = ap.parse_args()
 
@@ -95,12 +127,24 @@ def main() -> int:
 
     mp = DOCS / args.map
     emb = REPO_ROOT / args.emb_dir
-    for p in (mp, emb / "ids.json", emb / "vectors.f16.npy"):
+    needed = [mp] if args.layout_only else [mp, emb / "ids.json",
+                                            emb / "vectors.f16.npy"]
+    for p in needed:
         if not p.exists():
             print(f"missing {p} — build the map first (`just embed-map`).", file=sys.stderr)
             return 2
 
     d = json.loads(mp.read_text(encoding="utf-8"))
+
+    if args.layout_only:
+        report = "\n".join([f"# Layout degeneracy of `{args.map}`", ""]
+                           + layout_report(d["points"], np))
+        print(report)
+        if args.out:
+            Path(args.out).write_text(report + "\n", encoding="utf-8")
+            print(f"\nwrote {args.out}", file=sys.stderr)
+        return 0
+
     ids = json.loads((emb / "ids.json").read_text(encoding="utf-8"))
     vecs = np.load(emb / "vectors.f16.npy")
 
@@ -258,6 +302,8 @@ def main() -> int:
                   "neighbour of all. Most records simply have no counterpart in "
                   "another database, and their neighbourhoods fill with "
                   "same-source records by default."]
+
+    L += [""] + layout_report(d["points"], np)
 
     report = "\n".join(L)
     print(report)
