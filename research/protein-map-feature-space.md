@@ -58,3 +58,28 @@ dominates again. So the honest position is narrower than either previous one:
 
 Three measurements, each correct about its own inputs. The claim only stabilised
 once the inputs stopped carrying a confound nobody had checked for.
+
+## Correction (2026-07-28, PR #72): right conclusion, blind measurement
+
+The recommendation above holds — signatures-only is still the feature space the
+map should use, and every purity figure here re-measures the same. But this note
+measured **only in the 50-d SVD space**, and shipped without rendering the map.
+
+Cutting the vocabulary 35,507 → 19,894 left **7,057 proteins (9.3%)** whose every
+trait falls below `--min-support`. An all-zero row projects to the origin, so
+PaCMAP drew them as a single dense ball surrounded by void. In 50-d that collapse
+is invisible; it only exists in the 2-D output nobody looked at.
+
+The artefact was not created here — it predates this change at 1,245 points
+(1.6%), matching the GO+sig densest cell exactly. Dropping GO grew it 5.7×, which
+made a long-standing blemish impossible to miss.
+
+The line above — "a protein with no signature trait has no architecture to place
+on an architecture map" — was correct and under-applied. It was enforced against
+the *corpus* index but not against the *`--min-support` vocabulary*, which is the
+cut that actually decides placeability. `build_protein_map.py` now drops
+unplaceable rows: densest cell 10.0% → 5.8%, CATH-class purity 0.816 → 0.823.
+
+**The transferable lesson: a purity metric computed in the reduced space cannot
+see a 2-D projection artefact.** Render the map and look at it — the dataviz
+skill's step 7 — before trusting a number that went the right way.
