@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.17.4.1
 - CHEBI:50058
@@ -821,4 +821,439 @@ definitions:
       Ribonucleoside-diphosphate reductase (RNR) catalyses the biosynthesis of deoxyribonucleotides from the corresponding ribonucleotides using thioredoxin as a co-substrate. This entry represents the class I RNRs. Class I enzymes consist of two homodimeric proteins, R1 (alpha2), coded by the nrdA gene, and R2 (beta2), coded by nrdB. The large alpha chain harbours the catalytic site and binding sites for allosteric effectors. The small beta chain contains an oxygen-linked diferric centre and, in its active form, a stable tyrosyl free radical.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of ribonucleoside-diphosphate reductase (class I)
+  description: Stepwise mechanism transcribed from M-CSA entry 918 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: glu115
+    label: catalytic Glu115 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00452
+  - node_id: tyr122
+    label: catalytic Tyr122 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00452
+    description: 'M-CSA roles: pi-pi interaction, single electron relay.'
+  - node_id: cys225
+    label: catalytic Cys225 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00452
+    description: 'M-CSA roles: proton donor.'
+  - node_id: asp237
+    label: catalytic Asp237 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00452
+  - node_id: asn437
+    label: catalytic Asn437 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00452
+  - node_id: cys439
+    label: catalytic Cys439 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00452
+    description: 'M-CSA roles: hydrogen radical acceptor, hydrogen radical donor, single electron acceptor.'
+  - node_id: glu441
+    label: catalytic Glu441 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00452
+    description: 'M-CSA roles: proton acceptor.'
+  - node_id: cys462
+    label: catalytic Cys462 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00452
+  - node_id: tyr730
+    label: catalytic Tyr730 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00452
+    description: 'M-CSA roles: pi-pi interaction, single electron relay.'
+  - node_id: tyr731
+    label: catalytic Tyr731 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00452
+    description: 'M-CSA roles: pi-pi interaction, single electron relay.'
+  - node_id: reactant0
+    label: L-cystine residue
+    node_type: CHEMICAL
+    grounding: CHEBI:50058
+  - node_id: reactant1
+    label: 2'-deoxyribonucleoside 5'-diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:73316
+  - node_id: reactant2
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: L-cysteine residue
+    node_type: CHEMICAL
+    grounding: CHEBI:29950
+  - node_id: product1
+    label: nucleoside 5'-diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57930
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: First step is a radical transfer from subunit R2 to subunit R1 via pi-bonded tyrosines.
+      The radical ends up on Cys439.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The Cys439 performs a hydrogen radical transfer giving the radical to the C3 atom. This
+      action causes Glu441 to remove a proton from the C3-OH oxygen.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The CH2dCDP molecule rearranges to form a double bond on the C3-O bond and transfers
+      the radical to C2. This transfer of radical forces the double bond between C2 and C6 to break and
+      Cys225 to donate a proton to the substrate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The radical is then returned to Cys439 via another hydrogen radical transfer to C2 of
+      the substrate.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Final product.
+  - node_id: active_site
+    label: ribonucleoside-diphosphate reductase (class I) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:918
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.10.620.20 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.10.620.20
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: ribonucleoside-diphosphate reductase (class I) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.17.4.1
+  edges:
+  - subject: cys439
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys439 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/918/
+      snippet: First step is a radical transfer from subunit R2 to subunit R1 via pi-bonded tyrosines.
+        The radical ends up on Cys439.
+      notes: M-CSA entry 918, mechanism 3; M-CSA cites PMID:23676140, PMID:25516424, PMID:26616078; step
+        1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/918/
+      snippet: The Cys439 performs a hydrogen radical transfer giving the radical to the C3 atom. This
+        action causes Glu441 to remove a proton from the C3-OH oxygen.
+      notes: M-CSA entry 918, mechanism 3; M-CSA cites PMID:23676140, PMID:25516424, PMID:26616078; step
+        2
+  - subject: cys439
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Cys439 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/918/
+      snippet: The Cys439 performs a hydrogen radical transfer giving the radical to the C3 atom. This
+        action causes Glu441 to remove a proton from the C3-OH oxygen.
+      notes: M-CSA entry 918, mechanism 3; M-CSA cites PMID:23676140, PMID:25516424, PMID:26616078; step
+        2
+  - subject: glu441
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu441 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/918/
+      snippet: The Cys439 performs a hydrogen radical transfer giving the radical to the C3 atom. This
+        action causes Glu441 to remove a proton from the C3-OH oxygen.
+      notes: M-CSA entry 918, mechanism 3; M-CSA cites PMID:23676140, PMID:25516424, PMID:26616078; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/918/
+      snippet: The CH2dCDP molecule rearranges to form a double bond on the C3-O bond and transfers the
+        radical to C2. This transfer of radical forces the double bond between C2 and C6 to break and
+        Cys225 to donate a proton to the substrate.
+      notes: M-CSA entry 918, mechanism 3; M-CSA cites PMID:23676140, PMID:25516424, PMID:26616078; step
+        3
+  - subject: cys225
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Cys225 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/918/
+      snippet: The CH2dCDP molecule rearranges to form a double bond on the C3-O bond and transfers the
+        radical to C2. This transfer of radical forces the double bond between C2 and C6 to break and
+        Cys225 to donate a proton to the substrate.
+      notes: M-CSA entry 918, mechanism 3; M-CSA cites PMID:23676140, PMID:25516424, PMID:26616078; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/918/
+      snippet: The radical is then returned to Cys439 via another hydrogen radical transfer to C2 of the
+        substrate.
+      notes: M-CSA entry 918, mechanism 3; M-CSA cites PMID:23676140, PMID:25516424, PMID:26616078; step
+        4
+  - subject: cys439
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Cys439 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/918/
+      snippet: The radical is then returned to Cys439 via another hydrogen radical transfer to C2 of the
+        substrate.
+      notes: M-CSA entry 918, mechanism 3; M-CSA cites PMID:23676140, PMID:25516424, PMID:26616078; step
+        4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/918/
+      snippet: Final product.
+      notes: M-CSA entry 918, mechanism 3; M-CSA cites PMID:23676140, PMID:25516424, PMID:26616078; step
+        5
+  - subject: glu115
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu115 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/918/
+      snippet: Non native reaction. This is the catalysis reaction of 2′-deoxy-2′-methylidenecytidine-5′-diphosphate
+        ((CH2dCDP) into a 2′-methyl-3′-ketodeoxyribonucleotide, an inhibitor. This happens via a radical
+        transport chain from R2 subunit to R1 subunit. The R1 subunit receives the radical on Cys439 which
+        proceeds to donate it via hydrogen radical transfer to the substrate. The substrate is in concert
+        depr
+      notes: M-CSA entry 918, mechanism 3; M-CSA cites PMID:23676140, PMID:25516424, PMID:26616078; M-CSA
+        catalytic-residue roles for Glu115
+  - subject: tyr122
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr122 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/918/
+      snippet: pi-pi interaction, single electron relay
+      notes: M-CSA entry 918, mechanism 3; M-CSA cites PMID:23676140, PMID:25516424, PMID:26616078; M-CSA
+        catalytic-residue roles for Tyr122
+  - subject: cys225
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys225 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/918/
+      snippet: proton donor
+      notes: M-CSA entry 918, mechanism 3; M-CSA cites PMID:23676140, PMID:25516424, PMID:26616078; M-CSA
+        catalytic-residue roles for Cys225
+  - subject: asp237
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp237 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/918/
+      snippet: Non native reaction. This is the catalysis reaction of 2′-deoxy-2′-methylidenecytidine-5′-diphosphate
+        ((CH2dCDP) into a 2′-methyl-3′-ketodeoxyribonucleotide, an inhibitor. This happens via a radical
+        transport chain from R2 subunit to R1 subunit. The R1 subunit receives the radical on Cys439 which
+        proceeds to donate it via hydrogen radical transfer to the substrate. The substrate is in concert
+        depr
+      notes: M-CSA entry 918, mechanism 3; M-CSA cites PMID:23676140, PMID:25516424, PMID:26616078; M-CSA
+        catalytic-residue roles for Asp237
+  - subject: asn437
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn437 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/918/
+      snippet: Non native reaction. This is the catalysis reaction of 2′-deoxy-2′-methylidenecytidine-5′-diphosphate
+        ((CH2dCDP) into a 2′-methyl-3′-ketodeoxyribonucleotide, an inhibitor. This happens via a radical
+        transport chain from R2 subunit to R1 subunit. The R1 subunit receives the radical on Cys439 which
+        proceeds to donate it via hydrogen radical transfer to the substrate. The substrate is in concert
+        depr
+      notes: M-CSA entry 918, mechanism 3; M-CSA cites PMID:23676140, PMID:25516424, PMID:26616078; M-CSA
+        catalytic-residue roles for Asn437
+  - subject: cys439
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys439 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/918/
+      snippet: hydrogen radical acceptor, hydrogen radical donor, single electron acceptor
+      notes: M-CSA entry 918, mechanism 3; M-CSA cites PMID:23676140, PMID:25516424, PMID:26616078; M-CSA
+        catalytic-residue roles for Cys439
+  - subject: glu441
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu441 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/918/
+      snippet: proton acceptor
+      notes: M-CSA entry 918, mechanism 3; M-CSA cites PMID:23676140, PMID:25516424, PMID:26616078; M-CSA
+        catalytic-residue roles for Glu441
+  - subject: cys462
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys462 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/918/
+      snippet: Non native reaction. This is the catalysis reaction of 2′-deoxy-2′-methylidenecytidine-5′-diphosphate
+        ((CH2dCDP) into a 2′-methyl-3′-ketodeoxyribonucleotide, an inhibitor. This happens via a radical
+        transport chain from R2 subunit to R1 subunit. The R1 subunit receives the radical on Cys439 which
+        proceeds to donate it via hydrogen radical transfer to the substrate. The substrate is in concert
+        depr
+      notes: M-CSA entry 918, mechanism 3; M-CSA cites PMID:23676140, PMID:25516424, PMID:26616078; M-CSA
+        catalytic-residue roles for Cys462
+  - subject: tyr730
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr730 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/918/
+      snippet: pi-pi interaction, single electron relay
+      notes: M-CSA entry 918, mechanism 3; M-CSA cites PMID:23676140, PMID:25516424, PMID:26616078; M-CSA
+        catalytic-residue roles for Tyr730
+  - subject: tyr731
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr731 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/918/
+      snippet: pi-pi interaction, single electron relay
+      notes: M-CSA entry 918, mechanism 3; M-CSA cites PMID:23676140, PMID:25516424, PMID:26616078; M-CSA
+        catalytic-residue roles for Tyr731
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/918/
+      snippet: Non native reaction. This is the catalysis reaction of 2′-deoxy-2′-methylidenecytidine-5′-diphosphate
+        ((CH2dCDP) into a 2′-methyl-3′-ketodeoxyribonucleotide, an inhibitor. This happens via a radical
+        transport chain from R2 subunit to R1 subunit. The R1 subunit receives the radical on Cys439 which
+        proceeds to donate it via hydrogen radical transfer to the substrate. The substrate is in concert
+        depr
+      notes: M-CSA entry 918, mechanism 3; M-CSA cites PMID:23676140, PMID:25516424, PMID:26616078; CATH
+        domain 1.10.620.20 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/918/
+      snippet: Non native reaction. This is the catalysis reaction of 2′-deoxy-2′-methylidenecytidine-5′-diphosphate
+        ((CH2dCDP) into a 2′-methyl-3′-ketodeoxyribonucleotide, an inhibitor. This happens via a radical
+        transport chain from R2 subunit to R1 subunit. The R1 subunit receives the radical on Cys439 which
+        proceeds to donate it via hydrogen radical transfer to the substrate. The substrate is in concert
+        depr
+      notes: M-CSA entry 918, mechanism 3; M-CSA cites PMID:23676140, PMID:25516424, PMID:26616078; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/918/
+      snippet: Non native reaction. This is the catalysis reaction of 2′-deoxy-2′-methylidenecytidine-5′-diphosphate
+        ((CH2dCDP) into a 2′-methyl-3′-ketodeoxyribonucleotide, an inhibitor. This happens via a radical
+        transport chain from R2 subunit to R1 subunit. The R1 subunit receives the radical on Cys439 which
+        proceeds to donate it via hydrogen radical transfer to the substrate. The substrate is in concert
+        depr
+      notes: M-CSA entry 918, mechanism 3; M-CSA cites PMID:23676140, PMID:25516424, PMID:26616078; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/918/
+      snippet: Non native reaction. This is the catalysis reaction of 2′-deoxy-2′-methylidenecytidine-5′-diphosphate
+        ((CH2dCDP) into a 2′-methyl-3′-ketodeoxyribonucleotide, an inhibitor. This happens via a radical
+        transport chain from R2 subunit to R1 subunit. The R1 subunit receives the radical on Cys439 which
+        proceeds to donate it via hydrogen radical transfer to the substrate. The substrate is in concert
+        depr
+      notes: M-CSA entry 918, mechanism 3; M-CSA cites PMID:23676140, PMID:25516424, PMID:26616078; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/918/
+      snippet: Non native reaction. This is the catalysis reaction of 2′-deoxy-2′-methylidenecytidine-5′-diphosphate
+        ((CH2dCDP) into a 2′-methyl-3′-ketodeoxyribonucleotide, an inhibitor. This happens via a radical
+        transport chain from R2 subunit to R1 subunit. The R1 subunit receives the radical on Cys439 which
+        proceeds to donate it via hydrogen radical transfer to the substrate. The substrate is in concert
+        depr
+      notes: M-CSA entry 918, mechanism 3; M-CSA cites PMID:23676140, PMID:25516424, PMID:26616078; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/918/
+      snippet: Non native reaction. This is the catalysis reaction of 2′-deoxy-2′-methylidenecytidine-5′-diphosphate
+        ((CH2dCDP) into a 2′-methyl-3′-ketodeoxyribonucleotide, an inhibitor. This happens via a radical
+        transport chain from R2 subunit to R1 subunit. The R1 subunit receives the radical on Cys439 which
+        proceeds to donate it via hydrogen radical transfer to the substrate. The substrate is in concert
+        depr
+      notes: M-CSA entry 918, mechanism 3; M-CSA cites PMID:23676140, PMID:25516424, PMID:26616078; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/918/
+      snippet: Non native reaction. This is the catalysis reaction of 2′-deoxy-2′-methylidenecytidine-5′-diphosphate
+        ((CH2dCDP) into a 2′-methyl-3′-ketodeoxyribonucleotide, an inhibitor. This happens via a radical
+        transport chain from R2 subunit to R1 subunit. The R1 subunit receives the radical on Cys439 which
+        proceeds to donate it via hydrogen radical transfer to the substrate. The substrate is in concert
+        depr
+      notes: M-CSA entry 918, mechanism 3; M-CSA cites PMID:23676140, PMID:25516424, PMID:26616078; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (26 evidence-backed edges) transcribed from M-CSA entry 918;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

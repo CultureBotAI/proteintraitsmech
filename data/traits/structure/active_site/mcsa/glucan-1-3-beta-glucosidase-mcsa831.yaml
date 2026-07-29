@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.1.58
 - CHEBI:52997
@@ -275,4 +275,223 @@ definitions:
       Fungal exo-beta-(1,3)-glucanases, such as that from the human pathogen Candida albicans, belong to the glycosyl hydrolase family 5 that also includes many bacterial cellulases. The Candida albicans enzyme is involved in the metabolism of cell wall glucan. It catalyses the hydrolytic removal of glucose residues from the non-reducing end of beta-1,3-glucan and (to a lesser extent) beta-1,6-glucan, the two main structural components of the Candida albicans cell wall. The enzyme also has glucosyl transferase activity in which a molecule other than water can accept the removed glucose residue. This may be important in shaping the cell wall during morphogenesis.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of glucan 1,3-beta-glucosidase
+  description: Stepwise mechanism transcribed from M-CSA entry 831 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +38).
+  nodes:
+  - node_id: glu192
+    label: catalytic Glu192 (M-CSA/PDB numbering; UniProt residue 230)
+    node_type: RESIDUE
+    grounding: UniProtKB:P29717
+    description: 'M-CSA roles: activator, increase nucleophilicity, promote heterolysis, proton acceptor,
+      proton donor.'
+  - node_id: glu292
+    label: catalytic Glu292 (M-CSA/PDB numbering; UniProt residue 330)
+    node_type: RESIDUE
+    grounding: UniProtKB:P29717
+    description: 'M-CSA roles: covalently attached, nucleofuge, nucleophile.'
+  - node_id: reactant0
+    label: D-glucopyranosyl-(1->3)-D-mannopyranose
+    node_type: CHEMICAL
+    grounding: CHEBI:52997
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: D-mannopyranose
+    node_type: CHEMICAL
+    grounding: CHEBI:4208
+  - node_id: product1
+    label: D-glucopyranose
+    node_type: CHEMICAL
+    grounding: CHEBI:4167
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu292 performs a nucleophilic attack on C1, this leads to the displacement of the leaving
+      group which is protonated by Glu192.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Glu192 activates a water molecule which hydrolyses the intermediate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: glucan 1,3-beta-glucosidase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:831
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.80 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.80
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: glucan 1,3-beta-glucosidase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.1.58
+  edges:
+  - subject: glu192
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu192 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/831/
+      snippet: Glu292 performs a nucleophilic attack on C1, this leads to the displacement of the leaving
+        group which is protonated by Glu192.
+      notes: M-CSA entry 831, mechanism 1; M-CSA cites PMID:10610795, PMID:8348966, PMID:9013549; step
+        1
+  - subject: glu292
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu292 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/831/
+      snippet: Glu292 performs a nucleophilic attack on C1, this leads to the displacement of the leaving
+        group which is protonated by Glu192.
+      notes: M-CSA entry 831, mechanism 1; M-CSA cites PMID:10610795, PMID:8348966, PMID:9013549; step
+        1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/831/
+      snippet: Glu192 activates a water molecule which hydrolyses the intermediate.
+      notes: M-CSA entry 831, mechanism 1; M-CSA cites PMID:10610795, PMID:8348966, PMID:9013549; step
+        2
+  - subject: glu192
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu192 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/831/
+      snippet: Glu192 activates a water molecule which hydrolyses the intermediate.
+      notes: M-CSA entry 831, mechanism 1; M-CSA cites PMID:10610795, PMID:8348966, PMID:9013549; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/831/
+      snippet: Products.
+      notes: M-CSA entry 831, mechanism 1; M-CSA cites PMID:10610795, PMID:8348966, PMID:9013549; step
+        3
+  - subject: glu192
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu192 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/831/
+      snippet: activator, increase nucleophilicity, promote heterolysis, proton acceptor, proton donor
+      notes: M-CSA entry 831, mechanism 1; M-CSA cites PMID:10610795, PMID:8348966, PMID:9013549; M-CSA
+        catalytic-residue roles for Glu192
+  - subject: glu292
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu292 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/831/
+      snippet: covalently attached, nucleofuge, nucleophile
+      notes: M-CSA entry 831, mechanism 1; M-CSA cites PMID:10610795, PMID:8348966, PMID:9013549; M-CSA
+        catalytic-residue roles for Glu292
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/831/
+      snippet: The reaction proceeds by a double displacement mechanism with net retention of configuration
+        at the anomeric C1 position. Nucleophilic attack by Glu 292 leads to displacement of the leaving
+        group and formation of a covalent glucosyl-enzyme intermediate via a presumed oxo-carbenium ion-like
+        transition state. Glu 192 acts as a general acid to protonate the departing leaving group.
+      notes: M-CSA entry 831, mechanism 1; M-CSA cites PMID:10610795, PMID:8348966, PMID:9013549; CATH
+        domain 3.20.20.80 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/831/
+      snippet: The reaction proceeds by a double displacement mechanism with net retention of configuration
+        at the anomeric C1 position. Nucleophilic attack by Glu 292 leads to displacement of the leaving
+        group and formation of a covalent glucosyl-enzyme intermediate via a presumed oxo-carbenium ion-like
+        transition state. Glu 192 acts as a general acid to protonate the departing leaving group.
+      notes: M-CSA entry 831, mechanism 1; M-CSA cites PMID:10610795, PMID:8348966, PMID:9013549; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/831/
+      snippet: The reaction proceeds by a double displacement mechanism with net retention of configuration
+        at the anomeric C1 position. Nucleophilic attack by Glu 292 leads to displacement of the leaving
+        group and formation of a covalent glucosyl-enzyme intermediate via a presumed oxo-carbenium ion-like
+        transition state. Glu 192 acts as a general acid to protonate the departing leaving group.
+      notes: M-CSA entry 831, mechanism 1; M-CSA cites PMID:10610795, PMID:8348966, PMID:9013549; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/831/
+      snippet: The reaction proceeds by a double displacement mechanism with net retention of configuration
+        at the anomeric C1 position. Nucleophilic attack by Glu 292 leads to displacement of the leaving
+        group and formation of a covalent glucosyl-enzyme intermediate via a presumed oxo-carbenium ion-like
+        transition state. Glu 192 acts as a general acid to protonate the departing leaving group.
+      notes: M-CSA entry 831, mechanism 1; M-CSA cites PMID:10610795, PMID:8348966, PMID:9013549; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/831/
+      snippet: The reaction proceeds by a double displacement mechanism with net retention of configuration
+        at the anomeric C1 position. Nucleophilic attack by Glu 292 leads to displacement of the leaving
+        group and formation of a covalent glucosyl-enzyme intermediate via a presumed oxo-carbenium ion-like
+        transition state. Glu 192 acts as a general acid to protonate the departing leaving group.
+      notes: M-CSA entry 831, mechanism 1; M-CSA cites PMID:10610795, PMID:8348966, PMID:9013549; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/831/
+      snippet: The reaction proceeds by a double displacement mechanism with net retention of configuration
+        at the anomeric C1 position. Nucleophilic attack by Glu 292 leads to displacement of the leaving
+        group and formation of a covalent glucosyl-enzyme intermediate via a presumed oxo-carbenium ion-like
+        transition state. Glu 192 acts as a general acid to protonate the departing leaving group.
+      notes: M-CSA entry 831, mechanism 1; M-CSA cites PMID:10610795, PMID:8348966, PMID:9013549; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 831;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

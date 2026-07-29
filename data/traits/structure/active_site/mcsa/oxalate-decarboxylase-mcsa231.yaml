@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.1.1.2
 - CHEBI:30623
@@ -326,4 +326,378 @@ definitions:
       Oxalate decarboxylase (OxdC), isolated from Bacillus subtilus, catalyses the conversion of oxalate into formate and carbon dioxide. OxdC is part of the bicupin (contain two copies of the cupin domain) subset of the cupin superfamily. The enzymes requires Mn(II) and dioxygen as cofactors. The enzyme contains two manganese binding sites but it is currently thought that only the N-terminal site I possesses catalytic activity and that the C-terminal site II is structural. However, the matter is the subject of ongoing debate. Further, this enzyme contains an unusual cofactor in the form of molecular oxygen, which is thought to act as an activator to the Mn(II) centre by increasing its redox potential.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of oxalate decarboxylase
+  description: Stepwise mechanism transcribed from M-CSA entry 231 (8 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: arg92
+    label: catalytic Arg92 (M-CSA/PDB numbering; UniProt residue 92)
+    node_type: RESIDUE
+    grounding: UniProtKB:O34714
+    description: 'M-CSA roles: attractive charge-charge interaction, electrostatic stabiliser, hydrogen
+      bond donor.'
+  - node_id: his95
+    label: catalytic His95 (M-CSA/PDB numbering; UniProt residue 95)
+    node_type: RESIDUE
+    grounding: UniProtKB:O34714
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his97
+    label: catalytic His97 (M-CSA/PDB numbering; UniProt residue 97)
+    node_type: RESIDUE
+    grounding: UniProtKB:O34714
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu101
+    label: catalytic Glu101 (M-CSA/PDB numbering; UniProt residue 101)
+    node_type: RESIDUE
+    grounding: UniProtKB:O34714
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his140
+    label: catalytic His140 (M-CSA/PDB numbering; UniProt residue 140)
+    node_type: RESIDUE
+    grounding: UniProtKB:O34714
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu162
+    label: catalytic Glu162 (M-CSA/PDB numbering; UniProt residue 162)
+    node_type: RESIDUE
+    grounding: UniProtKB:O34714
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: oxalate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30623
+  - node_id: reactant1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product0
+    label: formate
+    node_type: CHEMICAL
+    grounding: CHEBI:15740
+  - node_id: product1
+    label: carbon dioxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Oxalate coordinates to the Mn(II) centre.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Dioxygen forms a bond to the Mn(II) centre through coligation.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: 'Glu162 activates the Mn(III)-bound oxalate through deprotonation. This causes the oxalate
+      bridging oxygen to transfer an electron to the Mn(III) centre. Deprotonation of oxalate is accompanied
+      by electron transfer from the bridging oxygen to the manganese centre. It should be noted that the
+      oxalate radical exists as a hybrid of two resonance forms: with the charges of the carbonyl separated
+      and wi'
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The oxalate radical anion decarboxylates.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: The Mn(II) centre transfers an electron to the formyl intermediate carbon. The newly
+      formed carbanion then deprotonates Glu162.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Oxygen dissociates from the Mn(III) centre, regenerating the Mn(II) centre. It is unclear
+      whether the oxygen cofactor or the formate product dissociates first. However, the dissociation
+      of the oxygen cofactor results in the regeneration of the Mn(II) centre. For simplicity, both dissociation
+      events are shown in a single step.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: An acid, assumed to be water, protonates formate.
+  - node_id: step8
+    label: mechanism step 8
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: oxalate decarboxylase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:231
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.60.120.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.60.120.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: oxalate decarboxylase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.1.1.2
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/231/
+      snippet: Dioxygen forms a bond to the Mn(II) centre through coligation.
+      notes: M-CSA entry 231, mechanism 1; M-CSA cites PMID:11862550, PMID:14871895, PMID:16939218, PMID:17444678,
+        PMID:17459326, PMID:17680775, PMID:22404040, PMID:24444454; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/231/
+      snippet: 'Glu162 activates the Mn(III)-bound oxalate through deprotonation. This causes the oxalate
+        bridging oxygen to transfer an electron to the Mn(III) centre. Deprotonation of oxalate is accompanied
+        by electron transfer from the bridging oxygen to the manganese centre. It should be noted that
+        the oxalate radical exists as a hybrid of two resonance forms: with the charges of the carbonyl
+        separated and with the carbonyl as normal. The former is more favoured (70:30) and has been shown
+        as such.'
+      notes: M-CSA entry 231, mechanism 1; M-CSA cites PMID:11862550, PMID:14871895, PMID:16939218, PMID:17444678,
+        PMID:17459326, PMID:17680775, PMID:22404040, PMID:24444454; step 3
+  - subject: glu162
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Glu162 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/231/
+      snippet: 'Glu162 activates the Mn(III)-bound oxalate through deprotonation. This causes the oxalate
+        bridging oxygen to transfer an electron to the Mn(III) centre. Deprotonation of oxalate is accompanied
+        by electron transfer from the bridging oxygen to the manganese centre. It should be noted that
+        the oxalate radical exists as a hybrid of two resonance forms: with the charges of the carbonyl
+        separated and with the carbonyl as normal. The former is more favoured (70:30) and has been shown
+        as such.'
+      notes: M-CSA entry 231, mechanism 1; M-CSA cites PMID:11862550, PMID:14871895, PMID:16939218, PMID:17444678,
+        PMID:17459326, PMID:17680775, PMID:22404040, PMID:24444454; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/231/
+      snippet: The oxalate radical anion decarboxylates.
+      notes: M-CSA entry 231, mechanism 1; M-CSA cites PMID:11862550, PMID:14871895, PMID:16939218, PMID:17444678,
+        PMID:17459326, PMID:17680775, PMID:22404040, PMID:24444454; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/231/
+      snippet: The Mn(II) centre transfers an electron to the formyl intermediate carbon. The newly formed
+        carbanion then deprotonates Glu162.
+      notes: M-CSA entry 231, mechanism 1; M-CSA cites PMID:11862550, PMID:14871895, PMID:16939218, PMID:17444678,
+        PMID:17459326, PMID:17680775, PMID:22404040, PMID:24444454; step 5
+  - subject: glu162
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Glu162 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/231/
+      snippet: The Mn(II) centre transfers an electron to the formyl intermediate carbon. The newly formed
+        carbanion then deprotonates Glu162.
+      notes: M-CSA entry 231, mechanism 1; M-CSA cites PMID:11862550, PMID:14871895, PMID:16939218, PMID:17444678,
+        PMID:17459326, PMID:17680775, PMID:22404040, PMID:24444454; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/231/
+      snippet: Oxygen dissociates from the Mn(III) centre, regenerating the Mn(II) centre. It is unclear
+        whether the oxygen cofactor or the formate product dissociates first. However, the dissociation
+        of the oxygen cofactor results in the regeneration of the Mn(II) centre. For simplicity, both
+        dissociation events are shown in a single step.
+      notes: M-CSA entry 231, mechanism 1; M-CSA cites PMID:11862550, PMID:14871895, PMID:16939218, PMID:17444678,
+        PMID:17459326, PMID:17680775, PMID:22404040, PMID:24444454; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/231/
+      snippet: An acid, assumed to be water, protonates formate.
+      notes: M-CSA entry 231, mechanism 1; M-CSA cites PMID:11862550, PMID:14871895, PMID:16939218, PMID:17444678,
+        PMID:17459326, PMID:17680775, PMID:22404040, PMID:24444454; step 7
+  - subject: step7
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step8
+    description: Step 7 leads to step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/231/
+      snippet: Products
+      notes: M-CSA entry 231, mechanism 1; M-CSA cites PMID:11862550, PMID:14871895, PMID:16939218, PMID:17444678,
+        PMID:17459326, PMID:17680775, PMID:22404040, PMID:24444454; step 8
+  - subject: arg92
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg92 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/231/
+      snippet: attractive charge-charge interaction, electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 231, mechanism 1; M-CSA cites PMID:11862550, PMID:14871895, PMID:16939218, PMID:17444678,
+        PMID:17459326, PMID:17680775, PMID:22404040, PMID:24444454; M-CSA catalytic-residue roles for
+        Arg92
+  - subject: his95
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His95 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/231/
+      snippet: metal ligand
+      notes: M-CSA entry 231, mechanism 1; M-CSA cites PMID:11862550, PMID:14871895, PMID:16939218, PMID:17444678,
+        PMID:17459326, PMID:17680775, PMID:22404040, PMID:24444454; M-CSA catalytic-residue roles for
+        His95
+  - subject: his97
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His97 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/231/
+      snippet: metal ligand
+      notes: M-CSA entry 231, mechanism 1; M-CSA cites PMID:11862550, PMID:14871895, PMID:16939218, PMID:17444678,
+        PMID:17459326, PMID:17680775, PMID:22404040, PMID:24444454; M-CSA catalytic-residue roles for
+        His97
+  - subject: glu101
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu101 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/231/
+      snippet: metal ligand
+      notes: M-CSA entry 231, mechanism 1; M-CSA cites PMID:11862550, PMID:14871895, PMID:16939218, PMID:17444678,
+        PMID:17459326, PMID:17680775, PMID:22404040, PMID:24444454; M-CSA catalytic-residue roles for
+        Glu101
+  - subject: his140
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His140 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/231/
+      snippet: metal ligand
+      notes: M-CSA entry 231, mechanism 1; M-CSA cites PMID:11862550, PMID:14871895, PMID:16939218, PMID:17444678,
+        PMID:17459326, PMID:17680775, PMID:22404040, PMID:24444454; M-CSA catalytic-residue roles for
+        His140
+  - subject: glu162
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu162 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/231/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+        proton donor
+      notes: M-CSA entry 231, mechanism 1; M-CSA cites PMID:11862550, PMID:14871895, PMID:16939218, PMID:17444678,
+        PMID:17459326, PMID:17680775, PMID:22404040, PMID:24444454; M-CSA catalytic-residue roles for
+        Glu162
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/231/
+      snippet: Mono-protonated oxalate binds to the Mn(II) ion in site I. Dioxygen coordinates to the
+        metal to form a Mn(III)-superoxo species. The carboxylic acid of oxalate is deprotonated by Glu162
+        with concomitant electron transfer to Mn(III) to form the Mn(II)-bound oxalate radical anion.
+        This intermediate decarboxylates to form the Mn(II)-bound formyl carbon-centred radical intermediate.
+        This intermediate
+      notes: M-CSA entry 231, mechanism 1; M-CSA cites PMID:11862550, PMID:14871895, PMID:16939218, PMID:17444678,
+        PMID:17459326, PMID:17680775, PMID:22404040, PMID:24444454; CATH domain 2.60.120.10 assigned to
+        the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/231/
+      snippet: Mono-protonated oxalate binds to the Mn(II) ion in site I. Dioxygen coordinates to the
+        metal to form a Mn(III)-superoxo species. The carboxylic acid of oxalate is deprotonated by Glu162
+        with concomitant electron transfer to Mn(III) to form the Mn(II)-bound oxalate radical anion.
+        This intermediate decarboxylates to form the Mn(II)-bound formyl carbon-centred radical intermediate.
+        This intermediate
+      notes: M-CSA entry 231, mechanism 1; M-CSA cites PMID:11862550, PMID:14871895, PMID:16939218, PMID:17444678,
+        PMID:17459326, PMID:17680775, PMID:22404040, PMID:24444454; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/231/
+      snippet: Mono-protonated oxalate binds to the Mn(II) ion in site I. Dioxygen coordinates to the
+        metal to form a Mn(III)-superoxo species. The carboxylic acid of oxalate is deprotonated by Glu162
+        with concomitant electron transfer to Mn(III) to form the Mn(II)-bound oxalate radical anion.
+        This intermediate decarboxylates to form the Mn(II)-bound formyl carbon-centred radical intermediate.
+        This intermediate
+      notes: M-CSA entry 231, mechanism 1; M-CSA cites PMID:11862550, PMID:14871895, PMID:16939218, PMID:17444678,
+        PMID:17459326, PMID:17680775, PMID:22404040, PMID:24444454; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/231/
+      snippet: Mono-protonated oxalate binds to the Mn(II) ion in site I. Dioxygen coordinates to the
+        metal to form a Mn(III)-superoxo species. The carboxylic acid of oxalate is deprotonated by Glu162
+        with concomitant electron transfer to Mn(III) to form the Mn(II)-bound oxalate radical anion.
+        This intermediate decarboxylates to form the Mn(II)-bound formyl carbon-centred radical intermediate.
+        This intermediate
+      notes: M-CSA entry 231, mechanism 1; M-CSA cites PMID:11862550, PMID:14871895, PMID:16939218, PMID:17444678,
+        PMID:17459326, PMID:17680775, PMID:22404040, PMID:24444454; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/231/
+      snippet: Mono-protonated oxalate binds to the Mn(II) ion in site I. Dioxygen coordinates to the
+        metal to form a Mn(III)-superoxo species. The carboxylic acid of oxalate is deprotonated by Glu162
+        with concomitant electron transfer to Mn(III) to form the Mn(II)-bound oxalate radical anion.
+        This intermediate decarboxylates to form the Mn(II)-bound formyl carbon-centred radical intermediate.
+        This intermediate
+      notes: M-CSA entry 231, mechanism 1; M-CSA cites PMID:11862550, PMID:14871895, PMID:16939218, PMID:17444678,
+        PMID:17459326, PMID:17680775, PMID:22404040, PMID:24444454; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/231/
+      snippet: Mono-protonated oxalate binds to the Mn(II) ion in site I. Dioxygen coordinates to the
+        metal to form a Mn(III)-superoxo species. The carboxylic acid of oxalate is deprotonated by Glu162
+        with concomitant electron transfer to Mn(III) to form the Mn(II)-bound oxalate radical anion.
+        This intermediate decarboxylates to form the Mn(II)-bound formyl carbon-centred radical intermediate.
+        This intermediate
+      notes: M-CSA entry 231, mechanism 1; M-CSA cites PMID:11862550, PMID:14871895, PMID:16939218, PMID:17444678,
+        PMID:17459326, PMID:17680775, PMID:22404040, PMID:24444454; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (21 evidence-backed edges) transcribed from M-CSA entry 231;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

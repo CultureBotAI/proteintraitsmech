@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.7.7.19
 - CHEBI:30616
@@ -443,4 +443,242 @@ definitions:
       Poly(A) polymerase (PAP) catalyses the addition of a poly-adenosine tail to almost all eukaryotic mRNAs. This poly(A) tail has numerous functions in eukaryotes: it facilitates transport of the mRNA from the nucleus, regulates mRNA stability, and increases the efficiency of translation. Poly(A) tails are added to mRNA by a multiprotein complex that recognises the polyadenylation signal, cleaves the precursor mRNA, and adds the additional nucleotides. The poly(A) polymerase component retains its polymerase activity when isolated from the holoenzyme assembly and will progressively add long stretches of adenosine nucleotides to an RNA primer in vitro. Across eukaryotes, it appears the catalytic part of the enzyme resides in the NTD while regulation occurs in the CTD.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of polynucleotide adenylyltransferase
+  description: Stepwise mechanism transcribed from M-CSA entry 796 (2 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: ser89
+    label: catalytic Ser89 (M-CSA/PDB numbering; UniProt residue 89)
+    node_type: RESIDUE
+    grounding: UniProtKB:P29468
+    description: 'M-CSA roles: electrostatic stabiliser, polar interaction.'
+  - node_id: asp100
+    label: catalytic Asp100 (M-CSA/PDB numbering; UniProt residue 100)
+    node_type: RESIDUE
+    grounding: UniProtKB:P29468
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp102
+    label: catalytic Asp102 (M-CSA/PDB numbering; UniProt residue 102)
+    node_type: RESIDUE
+    grounding: UniProtKB:P29468
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp154
+    label: catalytic Asp154 (M-CSA/PDB numbering; UniProt residue 154)
+    node_type: RESIDUE
+    grounding: UniProtKB:P29468
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: lys215
+    label: catalytic Lys215 (M-CSA/PDB numbering; UniProt residue 215)
+    node_type: RESIDUE
+    grounding: UniProtKB:P29468
+    description: 'M-CSA roles: electrostatic stabiliser, polar interaction.'
+  - node_id: tyr224
+    label: catalytic Tyr224 (M-CSA/PDB numbering; UniProt residue 224)
+    node_type: RESIDUE
+    grounding: UniProtKB:P29468
+    description: 'M-CSA roles: electrostatic stabiliser, polar interaction.'
+  - node_id: reactant0
+    label: ATP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+  - node_id: reactant1
+    label: RNA (poly(A))
+    node_type: CHEMICAL
+    grounding: CHEBI:8756
+  - node_id: product0
+    label: diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+  - node_id: product1
+    label: RNA (poly(A))
+    node_type: CHEMICAL
+    grounding: CHEBI:8756
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Mg2+ coordinating to the 3' OH on the ribose sugar lowers the pka of the surrounding
+      area, increasing it's nucleophilicity to attack the alpha phosphate on ATP.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: polynucleotide adenylyltransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:796
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.460.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.460.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: polynucleotide adenylyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.7.7.19
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/796/
+      snippet: Products.
+      notes: M-CSA entry 796, mechanism 1; M-CSA cites PMID:10958780, PMID:17850751, PMID:24076191, PMID:9519297,
+        PMID:9914251; step 2
+  - subject: ser89
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser89 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/796/
+      snippet: electrostatic stabiliser, polar interaction
+      notes: M-CSA entry 796, mechanism 1; M-CSA cites PMID:10958780, PMID:17850751, PMID:24076191, PMID:9519297,
+        PMID:9914251; M-CSA catalytic-residue roles for Ser89
+  - subject: asp100
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp100 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/796/
+      snippet: metal ligand
+      notes: M-CSA entry 796, mechanism 1; M-CSA cites PMID:10958780, PMID:17850751, PMID:24076191, PMID:9519297,
+        PMID:9914251; M-CSA catalytic-residue roles for Asp100
+  - subject: asp102
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp102 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/796/
+      snippet: metal ligand
+      notes: M-CSA entry 796, mechanism 1; M-CSA cites PMID:10958780, PMID:17850751, PMID:24076191, PMID:9519297,
+        PMID:9914251; M-CSA catalytic-residue roles for Asp102
+  - subject: asp154
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp154 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/796/
+      snippet: metal ligand
+      notes: M-CSA entry 796, mechanism 1; M-CSA cites PMID:10958780, PMID:17850751, PMID:24076191, PMID:9519297,
+        PMID:9914251; M-CSA catalytic-residue roles for Asp154
+  - subject: lys215
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys215 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/796/
+      snippet: electrostatic stabiliser, polar interaction
+      notes: M-CSA entry 796, mechanism 1; M-CSA cites PMID:10958780, PMID:17850751, PMID:24076191, PMID:9519297,
+        PMID:9914251; M-CSA catalytic-residue roles for Lys215
+  - subject: tyr224
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr224 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/796/
+      snippet: electrostatic stabiliser, polar interaction
+      notes: M-CSA entry 796, mechanism 1; M-CSA cites PMID:10958780, PMID:17850751, PMID:24076191, PMID:9519297,
+        PMID:9914251; M-CSA catalytic-residue roles for Tyr224
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/796/
+      snippet: From it's crystal structures, Poly(A) polymerase is thought to use the two-metal-ion mechanism
+        proposed for all nucleic acid polymerases. One magnesium ion contacts the 3' OH of the primer
+        and lowers its pKa, activating it for in-line nucleophilic attack on the alpha phosphate of the
+        incoming ATP. Accumulation of negative charge on the alpha phosphate in the pentacoordinate transition
+        state is sta
+      notes: M-CSA entry 796, mechanism 1; M-CSA cites PMID:10958780, PMID:17850751, PMID:24076191, PMID:9519297,
+        PMID:9914251; CATH domain 3.30.460.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/796/
+      snippet: From it's crystal structures, Poly(A) polymerase is thought to use the two-metal-ion mechanism
+        proposed for all nucleic acid polymerases. One magnesium ion contacts the 3' OH of the primer
+        and lowers its pKa, activating it for in-line nucleophilic attack on the alpha phosphate of the
+        incoming ATP. Accumulation of negative charge on the alpha phosphate in the pentacoordinate transition
+        state is sta
+      notes: M-CSA entry 796, mechanism 1; M-CSA cites PMID:10958780, PMID:17850751, PMID:24076191, PMID:9519297,
+        PMID:9914251; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/796/
+      snippet: From it's crystal structures, Poly(A) polymerase is thought to use the two-metal-ion mechanism
+        proposed for all nucleic acid polymerases. One magnesium ion contacts the 3' OH of the primer
+        and lowers its pKa, activating it for in-line nucleophilic attack on the alpha phosphate of the
+        incoming ATP. Accumulation of negative charge on the alpha phosphate in the pentacoordinate transition
+        state is sta
+      notes: M-CSA entry 796, mechanism 1; M-CSA cites PMID:10958780, PMID:17850751, PMID:24076191, PMID:9519297,
+        PMID:9914251; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/796/
+      snippet: From it's crystal structures, Poly(A) polymerase is thought to use the two-metal-ion mechanism
+        proposed for all nucleic acid polymerases. One magnesium ion contacts the 3' OH of the primer
+        and lowers its pKa, activating it for in-line nucleophilic attack on the alpha phosphate of the
+        incoming ATP. Accumulation of negative charge on the alpha phosphate in the pentacoordinate transition
+        state is sta
+      notes: M-CSA entry 796, mechanism 1; M-CSA cites PMID:10958780, PMID:17850751, PMID:24076191, PMID:9519297,
+        PMID:9914251; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/796/
+      snippet: From it's crystal structures, Poly(A) polymerase is thought to use the two-metal-ion mechanism
+        proposed for all nucleic acid polymerases. One magnesium ion contacts the 3' OH of the primer
+        and lowers its pKa, activating it for in-line nucleophilic attack on the alpha phosphate of the
+        incoming ATP. Accumulation of negative charge on the alpha phosphate in the pentacoordinate transition
+        state is sta
+      notes: M-CSA entry 796, mechanism 1; M-CSA cites PMID:10958780, PMID:17850751, PMID:24076191, PMID:9519297,
+        PMID:9914251; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/796/
+      snippet: From it's crystal structures, Poly(A) polymerase is thought to use the two-metal-ion mechanism
+        proposed for all nucleic acid polymerases. One magnesium ion contacts the 3' OH of the primer
+        and lowers its pKa, activating it for in-line nucleophilic attack on the alpha phosphate of the
+        incoming ATP. Accumulation of negative charge on the alpha phosphate in the pentacoordinate transition
+        state is sta
+      notes: M-CSA entry 796, mechanism 1; M-CSA cites PMID:10958780, PMID:17850751, PMID:24076191, PMID:9519297,
+        PMID:9914251; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 796;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

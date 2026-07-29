@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:6.1.2.1
 - CHEBI:61166
@@ -283,4 +283,334 @@ definitions:
       D-alanine--D-alanine ligase (EC:6.3.2.4) is a bacterial enzyme involved in cell-wall biosynthesis. The product of this enzyme, the depsipeptide D-alanyl-(R)-lactate, can be incorporated into the peptidoglycan pentapeptide instead of the usual D-alanyl-D-alanine dipeptide. The resulting peptidoglycan does not bind the glycopeptide antibiotics vancomycin and teicoplanin, conferring resistance on the bacteria.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of D-alanine-(R)-lactate ligase
+  description: Stepwise mechanism transcribed from M-CSA entry 310 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: val19
+    label: catalytic Val19 (M-CSA/PDB numbering; UniProt residue 19)
+    node_type: RESIDUE
+    grounding: UniProtKB:P25051
+    description: 'M-CSA roles: electrostatic stabiliser, steric role.'
+  - node_id: lys22
+    label: catalytic Lys22 (M-CSA/PDB numbering; UniProt residue 22)
+    node_type: RESIDUE
+    grounding: UniProtKB:P25051
+    description: 'M-CSA roles: hydrogen bond donor, increase basicity.'
+  - node_id: his99
+    label: catalytic His99 (M-CSA/PDB numbering; UniProt residue 99)
+    node_type: RESIDUE
+    grounding: UniProtKB:P25051
+    description: 'M-CSA roles: attractive charge-charge interaction, electrostatic stabiliser, hydrogen
+      bond donor.'
+  - node_id: his244
+    label: catalytic His244 (M-CSA/PDB numbering; UniProt residue 244)
+    node_type: RESIDUE
+    grounding: UniProtKB:P25051
+    description: 'M-CSA roles: attractive charge-charge interaction, electrostatic stabiliser, hydrogen
+      bond donor.'
+  - node_id: glu250
+    label: catalytic Glu250 (M-CSA/PDB numbering; UniProt residue 250)
+    node_type: RESIDUE
+    grounding: UniProtKB:P25051
+    description: 'M-CSA roles: hydrogen bond acceptor, increase basicity.'
+  - node_id: arg290
+    label: catalytic Arg290 (M-CSA/PDB numbering; UniProt residue 290)
+    node_type: RESIDUE
+    grounding: UniProtKB:P25051
+    description: 'M-CSA roles: attractive charge-charge interaction, electrostatic stabiliser.'
+  - node_id: gly311
+    label: catalytic Gly311 (M-CSA/PDB numbering; UniProt residue 311)
+    node_type: RESIDUE
+    grounding: UniProtKB:P25051
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: tyr315
+    label: catalytic Tyr315 (M-CSA/PDB numbering; UniProt residue 315)
+    node_type: RESIDUE
+    grounding: UniProtKB:P25051
+    description: 'M-CSA roles: hydrogen bond donor, increase basicity.'
+  - node_id: reactant0
+    label: D-alanine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57416
+  - node_id: reactant1
+    label: ATP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+  - node_id: reactant2
+    label: (R)-lactate
+    node_type: CHEMICAL
+    grounding: CHEBI:16004
+  - node_id: product0
+    label: D-alanyl-(R)-lactic acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:61166
+  - node_id: product1
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: product2
+    label: ADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The D-lactate substrate attacks the terminal phosphate of ATP in a concerted mechanism
+      to form ADP and phosphorylated D-lactate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: D-alanine attacks the alpha phosphate of the D-lactate phosphate adduct, forming a tetrahedral
+      intermediate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The tetrahedral intermediate collapses, eliminating inorganic phosphate and forming the
+      D-alanyl-D-lactate adduct.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: D-alanine-(R)-lactate ligase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:310
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.20 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.20
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: D-alanine-(R)-lactate ligase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:6.1.2.1
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/310/
+      snippet: D-alanine attacks the alpha phosphate of the D-lactate phosphate adduct, forming a tetrahedral
+        intermediate.
+      notes: M-CSA entry 310, mechanism 1; M-CSA cites PMID:10908650, PMID:18320587, PMID:9791137; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/310/
+      snippet: The tetrahedral intermediate collapses, eliminating inorganic phosphate and forming the
+        D-alanyl-D-lactate adduct.
+      notes: M-CSA entry 310, mechanism 1; M-CSA cites PMID:10908650, PMID:18320587, PMID:9791137; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/310/
+      snippet: Products
+      notes: M-CSA entry 310, mechanism 1; M-CSA cites PMID:10908650, PMID:18320587, PMID:9791137; step
+        4
+  - subject: val19
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Val19 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/310/
+      snippet: electrostatic stabiliser, steric role
+      notes: M-CSA entry 310, mechanism 1; M-CSA cites PMID:10908650, PMID:18320587, PMID:9791137; M-CSA
+        catalytic-residue roles for Val19
+  - subject: lys22
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys22 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/310/
+      snippet: hydrogen bond donor, increase basicity
+      notes: M-CSA entry 310, mechanism 1; M-CSA cites PMID:10908650, PMID:18320587, PMID:9791137; M-CSA
+        catalytic-residue roles for Lys22
+  - subject: his99
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His99 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/310/
+      snippet: attractive charge-charge interaction, electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 310, mechanism 1; M-CSA cites PMID:10908650, PMID:18320587, PMID:9791137; M-CSA
+        catalytic-residue roles for His99
+  - subject: his244
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His244 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/310/
+      snippet: attractive charge-charge interaction, electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 310, mechanism 1; M-CSA cites PMID:10908650, PMID:18320587, PMID:9791137; M-CSA
+        catalytic-residue roles for His244
+  - subject: glu250
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu250 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/310/
+      snippet: hydrogen bond acceptor, increase basicity
+      notes: M-CSA entry 310, mechanism 1; M-CSA cites PMID:10908650, PMID:18320587, PMID:9791137; M-CSA
+        catalytic-residue roles for Glu250
+  - subject: arg290
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg290 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/310/
+      snippet: attractive charge-charge interaction, electrostatic stabiliser
+      notes: M-CSA entry 310, mechanism 1; M-CSA cites PMID:10908650, PMID:18320587, PMID:9791137; M-CSA
+        catalytic-residue roles for Arg290
+  - subject: gly311
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly311 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/310/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 310, mechanism 1; M-CSA cites PMID:10908650, PMID:18320587, PMID:9791137; M-CSA
+        catalytic-residue roles for Gly311
+  - subject: tyr315
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr315 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/310/
+      snippet: hydrogen bond donor, increase basicity
+      notes: M-CSA entry 310, mechanism 1; M-CSA cites PMID:10908650, PMID:18320587, PMID:9791137; M-CSA
+        catalytic-residue roles for Tyr315
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/310/
+      snippet: The D-lactate substrate attacks the terminal phosphate of ATP in a concerted mechanism
+        to form ADP and phosphorylated D-lactate. D-alanine attacks the alpha phosphate of the D-lactate
+        phosphate adduct, forming a tetrahedral intermediate. The tetrahedral intermediate collapses,
+        eliminating inorganic phosphate and forming the D-alanyl-D-lactate adduct.
+      notes: M-CSA entry 310, mechanism 1; M-CSA cites PMID:10908650, PMID:18320587, PMID:9791137; CATH
+        domain 3.40.50.20 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/310/
+      snippet: The D-lactate substrate attacks the terminal phosphate of ATP in a concerted mechanism
+        to form ADP and phosphorylated D-lactate. D-alanine attacks the alpha phosphate of the D-lactate
+        phosphate adduct, forming a tetrahedral intermediate. The tetrahedral intermediate collapses,
+        eliminating inorganic phosphate and forming the D-alanyl-D-lactate adduct.
+      notes: M-CSA entry 310, mechanism 1; M-CSA cites PMID:10908650, PMID:18320587, PMID:9791137; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/310/
+      snippet: The D-lactate substrate attacks the terminal phosphate of ATP in a concerted mechanism
+        to form ADP and phosphorylated D-lactate. D-alanine attacks the alpha phosphate of the D-lactate
+        phosphate adduct, forming a tetrahedral intermediate. The tetrahedral intermediate collapses,
+        eliminating inorganic phosphate and forming the D-alanyl-D-lactate adduct.
+      notes: M-CSA entry 310, mechanism 1; M-CSA cites PMID:10908650, PMID:18320587, PMID:9791137; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/310/
+      snippet: The D-lactate substrate attacks the terminal phosphate of ATP in a concerted mechanism
+        to form ADP and phosphorylated D-lactate. D-alanine attacks the alpha phosphate of the D-lactate
+        phosphate adduct, forming a tetrahedral intermediate. The tetrahedral intermediate collapses,
+        eliminating inorganic phosphate and forming the D-alanyl-D-lactate adduct.
+      notes: M-CSA entry 310, mechanism 1; M-CSA cites PMID:10908650, PMID:18320587, PMID:9791137; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/310/
+      snippet: The D-lactate substrate attacks the terminal phosphate of ATP in a concerted mechanism
+        to form ADP and phosphorylated D-lactate. D-alanine attacks the alpha phosphate of the D-lactate
+        phosphate adduct, forming a tetrahedral intermediate. The tetrahedral intermediate collapses,
+        eliminating inorganic phosphate and forming the D-alanyl-D-lactate adduct.
+      notes: M-CSA entry 310, mechanism 1; M-CSA cites PMID:10908650, PMID:18320587, PMID:9791137; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/310/
+      snippet: The D-lactate substrate attacks the terminal phosphate of ATP in a concerted mechanism
+        to form ADP and phosphorylated D-lactate. D-alanine attacks the alpha phosphate of the D-lactate
+        phosphate adduct, forming a tetrahedral intermediate. The tetrahedral intermediate collapses,
+        eliminating inorganic phosphate and forming the D-alanyl-D-lactate adduct.
+      notes: M-CSA entry 310, mechanism 1; M-CSA cites PMID:10908650, PMID:18320587, PMID:9791137; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/310/
+      snippet: The D-lactate substrate attacks the terminal phosphate of ATP in a concerted mechanism
+        to form ADP and phosphorylated D-lactate. D-alanine attacks the alpha phosphate of the D-lactate
+        phosphate adduct, forming a tetrahedral intermediate. The tetrahedral intermediate collapses,
+        eliminating inorganic phosphate and forming the D-alanyl-D-lactate adduct.
+      notes: M-CSA entry 310, mechanism 1; M-CSA cites PMID:10908650, PMID:18320587, PMID:9791137; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/310/
+      snippet: The D-lactate substrate attacks the terminal phosphate of ATP in a concerted mechanism
+        to form ADP and phosphorylated D-lactate. D-alanine attacks the alpha phosphate of the D-lactate
+        phosphate adduct, forming a tetrahedral intermediate. The tetrahedral intermediate collapses,
+        eliminating inorganic phosphate and forming the D-alanyl-D-lactate adduct.
+      notes: M-CSA entry 310, mechanism 1; M-CSA cites PMID:10908650, PMID:18320587, PMID:9791137; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (19 evidence-backed edges) transcribed from M-CSA entry 310;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

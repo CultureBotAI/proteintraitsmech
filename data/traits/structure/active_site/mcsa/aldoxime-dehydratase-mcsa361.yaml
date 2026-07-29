@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.99.1.5
 - CHEBI:18379
@@ -242,4 +242,267 @@ definitions:
       Aldoxime dehydratase (Oxd) is a heme-containing enzyme that catalyses the dehydration of aldoximes (R–CHN–OH) to the corresponding nitrile (R–C'N). Some species of microbes utilise an aldoxime-nitrile pathway, metabolising aldoximes to the corresponding carboxylic acids through nitriles formed by dehydration of aldoximes with aldoxime dehydratase. There are two pathways for the conversion of nitriles to carboxylic acids, i) the hydrolysis of nitriles by nitrilase, and ii) the sequential actions of nitrile hydratase and amidase. Nitriles are important for biological self-defence mechanisms, and are also of interest as intermediates in some industrial processes. The dehydration reaction proceeds only via N-coordinated substrate in the ferrous heme. The organic substrate is shown by crystallographic and spectroscopic data to be directly coordinated to the heme iron in dehydration of aldoxime, which is a unique example among heme enzymes
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of aldoxime dehydratase
+  description: Stepwise mechanism transcribed from M-CSA entry 361 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: glu143
+    label: catalytic Glu143 (M-CSA/PDB numbering; UniProt residue 143)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q76K71
+    description: 'M-CSA roles: hydrogen bond acceptor, steric role.'
+  - node_id: arg178
+    label: catalytic Arg178 (M-CSA/PDB numbering; UniProt residue 178)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q76K71
+    description: 'M-CSA roles: hydrogen bond donor, steric role.'
+  - node_id: ser219
+    label: catalytic Ser219 (M-CSA/PDB numbering; UniProt residue 219)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q76K71
+    description: 'M-CSA roles: hydrogen bond acceptor, steric role.'
+  - node_id: his299
+    label: catalytic His299 (M-CSA/PDB numbering; UniProt residue 299)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q76K71
+    description: 'M-CSA roles: metal ligand, steric role.'
+  - node_id: phe306
+    label: catalytic Phe306 (M-CSA/PDB numbering; UniProt residue 306)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q76K71
+    description: 'M-CSA roles: steric role.'
+  - node_id: his320
+    label: catalytic His320 (M-CSA/PDB numbering; UniProt residue 320)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q76K71
+    description: 'M-CSA roles: activator, hydrogen bond acceptor, hydrogen bond donor, promote heterolysis,
+      proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: aliphatic aldoxime
+    node_type: CHEMICAL
+    grounding: CHEBI:82744
+  - node_id: product0
+    label: nitrile
+    node_type: CHEMICAL
+    grounding: CHEBI:18379
+  - node_id: product1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The Fe(II) centre donates a single electron to the N of the aldoxime, initiating the
+      elimination of water, with concomitant proton abstraction from His320. OxdA reaction is an unusual
+      example of a heme directly activating an organic substrate, unlike the utilization of peroxide or
+      oxygen as a mediator of the catalysis, used by other heme-containing enzymes like P450.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: 'The Fe(III) centre donates a second single electron to the N of the aldoxime. Spectroscopic
+      studies suggest the Fe metal to adopt an oxidation state like that observed in horse radish peroxidase:
+      a highly oxidised (+4) feryl-oxo heme species [PMID20826798:].'
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: His320  abstracts the imine alpha proton, forming a carbon, nitrogen triple bond. The
+      Fe(iV) centre receives two electrons, regenerating the metal centre.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: aldoxime dehydratase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:361
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: activity
+    label: aldoxime dehydratase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.99.1.5
+  edges:
+  - subject: his320
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His320 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/361/
+      snippet: The Fe(II) centre donates a single electron to the N of the aldoxime, initiating the elimination
+        of water, with concomitant proton abstraction from His320. OxdA reaction is an unusual example
+        of a heme directly activating an organic substrate, unlike the utilization of peroxide or oxygen
+        as a mediator of the catalysis, used by other heme-containing enzymes like P450.
+      notes: M-CSA entry 361, mechanism 2; M-CSA cites PMID:16407114, PMID:19740758, PMID:20826798, PMID:22554192,
+        PMID:23382199, PMID:29333684; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/361/
+      snippet: 'The Fe(III) centre donates a second single electron to the N of the aldoxime. Spectroscopic
+        studies suggest the Fe metal to adopt an oxidation state like that observed in horse radish peroxidase:
+        a highly oxidised (+4) feryl-oxo heme species [PMID20826798:].'
+      notes: M-CSA entry 361, mechanism 2; M-CSA cites PMID:16407114, PMID:19740758, PMID:20826798, PMID:22554192,
+        PMID:23382199, PMID:29333684; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/361/
+      snippet: His320  abstracts the imine alpha proton, forming a carbon, nitrogen triple bond. The Fe(iV)
+        centre receives two electrons, regenerating the metal centre.
+      notes: M-CSA entry 361, mechanism 2; M-CSA cites PMID:16407114, PMID:19740758, PMID:20826798, PMID:22554192,
+        PMID:23382199, PMID:29333684; step 3
+  - subject: his320
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His320 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/361/
+      snippet: His320  abstracts the imine alpha proton, forming a carbon, nitrogen triple bond. The Fe(iV)
+        centre receives two electrons, regenerating the metal centre.
+      notes: M-CSA entry 361, mechanism 2; M-CSA cites PMID:16407114, PMID:19740758, PMID:20826798, PMID:22554192,
+        PMID:23382199, PMID:29333684; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/361/
+      snippet: Products.
+      notes: M-CSA entry 361, mechanism 2; M-CSA cites PMID:16407114, PMID:19740758, PMID:20826798, PMID:22554192,
+        PMID:23382199, PMID:29333684; step 4
+  - subject: glu143
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu143 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/361/
+      snippet: hydrogen bond acceptor, steric role
+      notes: M-CSA entry 361, mechanism 2; M-CSA cites PMID:16407114, PMID:19740758, PMID:20826798, PMID:22554192,
+        PMID:23382199, PMID:29333684; M-CSA catalytic-residue roles for Glu143
+  - subject: arg178
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg178 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/361/
+      snippet: hydrogen bond donor, steric role
+      notes: M-CSA entry 361, mechanism 2; M-CSA cites PMID:16407114, PMID:19740758, PMID:20826798, PMID:22554192,
+        PMID:23382199, PMID:29333684; M-CSA catalytic-residue roles for Arg178
+  - subject: ser219
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser219 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/361/
+      snippet: hydrogen bond acceptor, steric role
+      notes: M-CSA entry 361, mechanism 2; M-CSA cites PMID:16407114, PMID:19740758, PMID:20826798, PMID:22554192,
+        PMID:23382199, PMID:29333684; M-CSA catalytic-residue roles for Ser219
+  - subject: his299
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His299 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/361/
+      snippet: metal ligand, steric role
+      notes: M-CSA entry 361, mechanism 2; M-CSA cites PMID:16407114, PMID:19740758, PMID:20826798, PMID:22554192,
+        PMID:23382199, PMID:29333684; M-CSA catalytic-residue roles for His299
+  - subject: phe306
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Phe306 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/361/
+      snippet: steric role
+      notes: M-CSA entry 361, mechanism 2; M-CSA cites PMID:16407114, PMID:19740758, PMID:20826798, PMID:22554192,
+        PMID:23382199, PMID:29333684; M-CSA catalytic-residue roles for Phe306
+  - subject: his320
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His320 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/361/
+      snippet: activator, hydrogen bond acceptor, hydrogen bond donor, promote heterolysis, proton acceptor,
+        proton donor
+      notes: M-CSA entry 361, mechanism 2; M-CSA cites PMID:16407114, PMID:19740758, PMID:20826798, PMID:22554192,
+        PMID:23382199, PMID:29333684; M-CSA catalytic-residue roles for His320
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/361/
+      snippet: It is proposed that the dehydration reaction of the heme-bound aldoxime proceeds in a general
+        acid-base catalysis with His320 working as a catalytic residue in the distal heme pocket. The
+        residue His299 is coordinated as a distal ligand to the Fe(II) centre of the heme prosthetic group,
+        directing the reaction site towards a non-polar region of the active site pocket, while several
+        other residues a
+      notes: M-CSA entry 361, mechanism 2; M-CSA cites PMID:16407114, PMID:19740758, PMID:20826798, PMID:22554192,
+        PMID:23382199, PMID:29333684; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/361/
+      snippet: It is proposed that the dehydration reaction of the heme-bound aldoxime proceeds in a general
+        acid-base catalysis with His320 working as a catalytic residue in the distal heme pocket. The
+        residue His299 is coordinated as a distal ligand to the Fe(II) centre of the heme prosthetic group,
+        directing the reaction site towards a non-polar region of the active site pocket, while several
+        other residues a
+      notes: M-CSA entry 361, mechanism 2; M-CSA cites PMID:16407114, PMID:19740758, PMID:20826798, PMID:22554192,
+        PMID:23382199, PMID:29333684; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/361/
+      snippet: It is proposed that the dehydration reaction of the heme-bound aldoxime proceeds in a general
+        acid-base catalysis with His320 working as a catalytic residue in the distal heme pocket. The
+        residue His299 is coordinated as a distal ligand to the Fe(II) centre of the heme prosthetic group,
+        directing the reaction site towards a non-polar region of the active site pocket, while several
+        other residues a
+      notes: M-CSA entry 361, mechanism 2; M-CSA cites PMID:16407114, PMID:19740758, PMID:20826798, PMID:22554192,
+        PMID:23382199, PMID:29333684; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/361/
+      snippet: It is proposed that the dehydration reaction of the heme-bound aldoxime proceeds in a general
+        acid-base catalysis with His320 working as a catalytic residue in the distal heme pocket. The
+        residue His299 is coordinated as a distal ligand to the Fe(II) centre of the heme prosthetic group,
+        directing the reaction site towards a non-polar region of the active site pocket, while several
+        other residues a
+      notes: M-CSA entry 361, mechanism 2; M-CSA cites PMID:16407114, PMID:19740758, PMID:20826798, PMID:22554192,
+        PMID:23382199, PMID:29333684; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 361;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

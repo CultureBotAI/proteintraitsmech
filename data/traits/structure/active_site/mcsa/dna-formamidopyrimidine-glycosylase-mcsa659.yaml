@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.2.23
 - CHEBI:28643
@@ -225,4 +225,251 @@ definitions:
       Formamidopyrimidine-DNA glycosylase, otherwise known as Fpg or MutM, is a bifunctional base excision repair enzyme - it has both DNA glycosylase and AP lyase activities and is involved in removal of oxidised bases including 2,6-diamino-4-hydroxy- 5-formamidopyrimidine (FapydG) and 8-oxoguanine from oxidatively-damaged DNA in initiation of the base excision repair pathway.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of DNA-formamidopyrimidine glycosylase
+  description: Stepwise mechanism transcribed from M-CSA entry 659 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: pro1
+    label: catalytic Pro1 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05523
+    description: 'M-CSA roles: covalently attached, electron pair donor, nucleophile, proton donor.'
+  - node_id: glu2
+    label: catalytic Glu2 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05523
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: a ring-opened 7-methylguanine in DNA
+    node_type: CHEMICAL
+    grounding: CHEBI:137936
+  - node_id: product0
+    label: 2,6-diamino-4-hydroxy-5-(N-methylformamido)pyrimidine
+    node_type: CHEMICAL
+    grounding: CHEBI:28643
+  - node_id: product1
+    label: DNA without the base
+    node_type: CHEMICAL
+    grounding: CHEBI:137219
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu2 protonates the deoxyribose ring, facilitating nucleophilic attack by Pro1 and the
+      opening of the deoxyribose ring.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Glu2 reorientates itself and deprotonates Pro1.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The nitrogen of the oxidised base is protonated by the hydroxyl group on the open ring
+      deoxyribose which itself then abstracts a proton from Glu2. This facilitates N-glycosydic bond cleavage
+      resulting in the formation of an excised base and Schiff base- like covalent intermediate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: DNA-formamidopyrimidine glycosylase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:659
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.190.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.190.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: DNA-formamidopyrimidine glycosylase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.2.23
+  edges:
+  - subject: pro1
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Pro1 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/659/
+      snippet: Glu2 protonates the deoxyribose ring, facilitating nucleophilic attack by Pro1 and the
+        opening of the deoxyribose ring.
+      notes: M-CSA entry 659, mechanism 2; M-CSA cites PMID:11912217, PMID:12065399, PMID:25065673, PMID:26013033;
+        step 1
+  - subject: glu2
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu2 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/659/
+      snippet: Glu2 protonates the deoxyribose ring, facilitating nucleophilic attack by Pro1 and the
+        opening of the deoxyribose ring.
+      notes: M-CSA entry 659, mechanism 2; M-CSA cites PMID:11912217, PMID:12065399, PMID:25065673, PMID:26013033;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/659/
+      snippet: Glu2 reorientates itself and deprotonates Pro1.
+      notes: M-CSA entry 659, mechanism 2; M-CSA cites PMID:11912217, PMID:12065399, PMID:25065673, PMID:26013033;
+        step 2
+  - subject: pro1
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Pro1 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/659/
+      snippet: Glu2 reorientates itself and deprotonates Pro1.
+      notes: M-CSA entry 659, mechanism 2; M-CSA cites PMID:11912217, PMID:12065399, PMID:25065673, PMID:26013033;
+        step 2
+  - subject: glu2
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu2 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/659/
+      snippet: Glu2 reorientates itself and deprotonates Pro1.
+      notes: M-CSA entry 659, mechanism 2; M-CSA cites PMID:11912217, PMID:12065399, PMID:25065673, PMID:26013033;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/659/
+      snippet: The nitrogen of the oxidised base is protonated by the hydroxyl group on the open ring
+        deoxyribose which itself then abstracts a proton from Glu2. This facilitates N-glycosydic bond
+        cleavage resulting in the formation of an excised base and Schiff base- like covalent intermediate.
+      notes: M-CSA entry 659, mechanism 2; M-CSA cites PMID:11912217, PMID:12065399, PMID:25065673, PMID:26013033;
+        step 3
+  - subject: glu2
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Glu2 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/659/
+      snippet: The nitrogen of the oxidised base is protonated by the hydroxyl group on the open ring
+        deoxyribose which itself then abstracts a proton from Glu2. This facilitates N-glycosydic bond
+        cleavage resulting in the formation of an excised base and Schiff base- like covalent intermediate.
+      notes: M-CSA entry 659, mechanism 2; M-CSA cites PMID:11912217, PMID:12065399, PMID:25065673, PMID:26013033;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/659/
+      snippet: Products.
+      notes: M-CSA entry 659, mechanism 2; M-CSA cites PMID:11912217, PMID:12065399, PMID:25065673, PMID:26013033;
+        step 4
+  - subject: pro1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Pro1 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/659/
+      snippet: covalently attached, electron pair donor, nucleophile, proton donor
+      notes: M-CSA entry 659, mechanism 2; M-CSA cites PMID:11912217, PMID:12065399, PMID:25065673, PMID:26013033;
+        M-CSA catalytic-residue roles for Pro1
+  - subject: glu2
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu2 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/659/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 659, mechanism 2; M-CSA cites PMID:11912217, PMID:12065399, PMID:25065673, PMID:26013033;
+        M-CSA catalytic-residue roles for Glu2
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/659/
+      snippet: Bifunctional DNA glycosylases differ from monofunctional glycosylases in that they form
+        a characteristic covalent Schiff base-like intermediate. Deoxyribose sugar protonation by Glu2
+        enables Pro1 to nucleophilically attack the oxidised base, opening up the ribose ring. The resulting
+        intermediate undergoes deprotonation twice and subsequent reprotonation which facilitates the
+        cleavage of the N-glyc
+      notes: M-CSA entry 659, mechanism 2; M-CSA cites PMID:11912217, PMID:12065399, PMID:25065673, PMID:26013033;
+        CATH domain 3.20.190.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/659/
+      snippet: Bifunctional DNA glycosylases differ from monofunctional glycosylases in that they form
+        a characteristic covalent Schiff base-like intermediate. Deoxyribose sugar protonation by Glu2
+        enables Pro1 to nucleophilically attack the oxidised base, opening up the ribose ring. The resulting
+        intermediate undergoes deprotonation twice and subsequent reprotonation which facilitates the
+        cleavage of the N-glyc
+      notes: M-CSA entry 659, mechanism 2; M-CSA cites PMID:11912217, PMID:12065399, PMID:25065673, PMID:26013033;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/659/
+      snippet: Bifunctional DNA glycosylases differ from monofunctional glycosylases in that they form
+        a characteristic covalent Schiff base-like intermediate. Deoxyribose sugar protonation by Glu2
+        enables Pro1 to nucleophilically attack the oxidised base, opening up the ribose ring. The resulting
+        intermediate undergoes deprotonation twice and subsequent reprotonation which facilitates the
+        cleavage of the N-glyc
+      notes: M-CSA entry 659, mechanism 2; M-CSA cites PMID:11912217, PMID:12065399, PMID:25065673, PMID:26013033;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/659/
+      snippet: Bifunctional DNA glycosylases differ from monofunctional glycosylases in that they form
+        a characteristic covalent Schiff base-like intermediate. Deoxyribose sugar protonation by Glu2
+        enables Pro1 to nucleophilically attack the oxidised base, opening up the ribose ring. The resulting
+        intermediate undergoes deprotonation twice and subsequent reprotonation which facilitates the
+        cleavage of the N-glyc
+      notes: M-CSA entry 659, mechanism 2; M-CSA cites PMID:11912217, PMID:12065399, PMID:25065673, PMID:26013033;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/659/
+      snippet: Bifunctional DNA glycosylases differ from monofunctional glycosylases in that they form
+        a characteristic covalent Schiff base-like intermediate. Deoxyribose sugar protonation by Glu2
+        enables Pro1 to nucleophilically attack the oxidised base, opening up the ribose ring. The resulting
+        intermediate undergoes deprotonation twice and subsequent reprotonation which facilitates the
+        cleavage of the N-glyc
+      notes: M-CSA entry 659, mechanism 2; M-CSA cites PMID:11912217, PMID:12065399, PMID:25065673, PMID:26013033;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 659;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

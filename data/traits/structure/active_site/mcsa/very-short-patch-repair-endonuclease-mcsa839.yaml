@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.-.-
 - CHEBI:15377
@@ -134,4 +134,276 @@ definitions:
       Very short patch repair protein (VSR) is an endonuclease from Escherichia coli and is a sequence specific mismatch endonuclease. It is responsible for the repair of T:G mismatches arising from the deamination of 5-methylcytosine. E. coli has three discovered systems for mismatched base pair recognition, all with different mechanisms. VSR initiates repair by hydrolysing the phosphate 5' of the mismatched T.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of very short patch repair endonuclease
+  description: Stepwise mechanism transcribed from M-CSA entry 839 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: asp51
+    label: catalytic Asp51 (M-CSA/PDB numbering; UniProt residue 51)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09184
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: thr63
+    label: catalytic Thr63 (M-CSA/PDB numbering; UniProt residue 63)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09184
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his69
+    label: catalytic His69 (M-CSA/PDB numbering; UniProt residue 69)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09184
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: asp97
+    label: catalytic Asp97 (M-CSA/PDB numbering; UniProt residue 97)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09184
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: single-stranded DNA
+    node_type: CHEMICAL
+    grounding: CHEBI:9160
+  - node_id: product0
+    label: 2'-deoxynucleoside 3'-monophosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:131705
+  - node_id: product1
+    label: 5'-end 2'-deoxyribonucleotide(2-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:136412
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His69 abstracts a proton from a water which activates it to attack the scissile phosphate
+      via an SN2 mechanism.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: His 69 protonates the 2' oxygen.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: very short patch repair endonuclease catalytic site
+    node_type: MOTIF
+    grounding: MCSA:839
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.960.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.960.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: very short patch repair endonuclease activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.-.-
+  edges:
+  - subject: his69
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His69 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/839/
+      snippet: His69 abstracts a proton from a water which activates it to attack the scissile phosphate
+        via an SN2 mechanism.
+      notes: M-CSA entry 839, mechanism 1; M-CSA cites PMID:16188275; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/839/
+      snippet: His 69 protonates the 2' oxygen.
+      notes: M-CSA entry 839, mechanism 1; M-CSA cites PMID:16188275; step 2
+  - subject: his69
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His69 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/839/
+      snippet: His 69 protonates the 2' oxygen.
+      notes: M-CSA entry 839, mechanism 1; M-CSA cites PMID:16188275; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/839/
+      snippet: Products
+      notes: M-CSA entry 839, mechanism 1; M-CSA cites PMID:16188275; step 3
+  - subject: asp51
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp51 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/839/
+      snippet: metal ligand
+      notes: M-CSA entry 839, mechanism 1; M-CSA cites PMID:16188275; M-CSA catalytic-residue roles for
+        Asp51
+  - subject: thr63
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr63 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/839/
+      snippet: metal ligand
+      notes: M-CSA entry 839, mechanism 1; M-CSA cites PMID:16188275; M-CSA catalytic-residue roles for
+        Thr63
+  - subject: his69
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His69 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/839/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 839, mechanism 1; M-CSA cites PMID:16188275; M-CSA catalytic-residue roles for
+        His69
+  - subject: asp97
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp97 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/839/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 839, mechanism 1; M-CSA cites PMID:16188275; M-CSA catalytic-residue roles for
+        Asp97
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/839/
+      snippet: "The pKa of His 69 is raised by hydrogen bonding to Asp 97.
+ Its raised pKa enables\
+        \ His 69 to act as a general base and deprotonate a water molecule.
+ The activated water molecule\
+        \ then nucleophilically attacks the scissile phosphate via an SN2 mechanism, going through a trigonal-bipyramidal\
+        \ transition state.
+ This negatively charged transition state is stabilised by two magnesium\
+        \ ions, and possi"
+      notes: M-CSA entry 839, mechanism 1; M-CSA cites PMID:16188275; CATH domain 3.40.960.10 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/839/
+      snippet: "The pKa of His 69 is raised by hydrogen bonding to Asp 97.
+ Its raised pKa enables\
+        \ His 69 to act as a general base and deprotonate a water molecule.
+ The activated water molecule\
+        \ then nucleophilically attacks the scissile phosphate via an SN2 mechanism, going through a trigonal-bipyramidal\
+        \ transition state.
+ This negatively charged transition state is stabilised by two magnesium\
+        \ ions, and possi"
+      notes: M-CSA entry 839, mechanism 1; M-CSA cites PMID:16188275; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/839/
+      snippet: "The pKa of His 69 is raised by hydrogen bonding to Asp 97.
+ Its raised pKa enables\
+        \ His 69 to act as a general base and deprotonate a water molecule.
+ The activated water molecule\
+        \ then nucleophilically attacks the scissile phosphate via an SN2 mechanism, going through a trigonal-bipyramidal\
+        \ transition state.
+ This negatively charged transition state is stabilised by two magnesium\
+        \ ions, and possi"
+      notes: M-CSA entry 839, mechanism 1; M-CSA cites PMID:16188275; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/839/
+      snippet: "The pKa of His 69 is raised by hydrogen bonding to Asp 97.
+ Its raised pKa enables\
+        \ His 69 to act as a general base and deprotonate a water molecule.
+ The activated water molecule\
+        \ then nucleophilically attacks the scissile phosphate via an SN2 mechanism, going through a trigonal-bipyramidal\
+        \ transition state.
+ This negatively charged transition state is stabilised by two magnesium\
+        \ ions, and possi"
+      notes: M-CSA entry 839, mechanism 1; M-CSA cites PMID:16188275; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/839/
+      snippet: "The pKa of His 69 is raised by hydrogen bonding to Asp 97.
+ Its raised pKa enables\
+        \ His 69 to act as a general base and deprotonate a water molecule.
+ The activated water molecule\
+        \ then nucleophilically attacks the scissile phosphate via an SN2 mechanism, going through a trigonal-bipyramidal\
+        \ transition state.
+ This negatively charged transition state is stabilised by two magnesium\
+        \ ions, and possi"
+      notes: M-CSA entry 839, mechanism 1; M-CSA cites PMID:16188275; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/839/
+      snippet: "The pKa of His 69 is raised by hydrogen bonding to Asp 97.
+ Its raised pKa enables\
+        \ His 69 to act as a general base and deprotonate a water molecule.
+ The activated water molecule\
+        \ then nucleophilically attacks the scissile phosphate via an SN2 mechanism, going through a trigonal-bipyramidal\
+        \ transition state.
+ This negatively charged transition state is stabilised by two magnesium\
+        \ ions, and possi"
+      notes: M-CSA entry 839, mechanism 1; M-CSA cites PMID:16188275; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/839/
+      snippet: "The pKa of His 69 is raised by hydrogen bonding to Asp 97.
+ Its raised pKa enables\
+        \ His 69 to act as a general base and deprotonate a water molecule.
+ The activated water molecule\
+        \ then nucleophilically attacks the scissile phosphate via an SN2 mechanism, going through a trigonal-bipyramidal\
+        \ transition state.
+ This negatively charged transition state is stabilised by two magnesium\
+        \ ions, and possi"
+      notes: M-CSA entry 839, mechanism 1; M-CSA cites PMID:16188275; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 839;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

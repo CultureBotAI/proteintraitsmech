@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.1.39
 - CHEBI:15377
@@ -227,4 +227,309 @@ definitions:
       Two plant beta-glucan endohydrolases with distinct substrate specificities, thought to have evolved from the same higher enzyme, which both hydrolyse 1,3-beta-D-glucosidic linkages in 1,3-beta-D-glucans. Chain A is the isoenzyme GII, (1->3)-beta-glucanase with EC:3.2.1.39 and chain B is the isoenzyme EII (1->3, 1->4)- beta glucanase with EC:3.2.1.73. Isoenzyme GII can hydrolyse beta-glucans of fungal cell walls and may therefore contribute to plant defence strategies, whereas isoenzyme GII function in plant cell wall hydrolysis during mobilisation of the endosperm or in germinating grain during the growth of vegetative tissue. Both glucanases have essentially identical alpha/beta barrel folds, with a recognisable cleft where the active site is located in the same position with identical catalytic residues, however beyond the conserved patch that surrounds the catalytic amino acid residues, there are different amino acid substitutions along the substrate-binding cleft leading to different substrate specificities. This protein is a member of glycoside hydrolase family 17.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of glucan endo-1,3-beta-D-glucosidase
+  description: Stepwise mechanism transcribed from M-CSA entry 580 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +28).
+  nodes:
+  - node_id: glu231
+    label: catalytic Glu231 (M-CSA/PDB numbering; UniProt residue 259)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15737
+    description: 'M-CSA roles: covalently attached, electrostatic stabiliser, nucleofuge, nucleophile.'
+  - node_id: glu279
+    label: catalytic Glu279 (M-CSA/PDB numbering; UniProt residue 307)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15737
+    description: 'M-CSA roles: activator, modifies pKa.'
+  - node_id: lys282
+    label: catalytic Lys282 (M-CSA/PDB numbering; UniProt residue 310)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15737
+    description: 'M-CSA roles: activator, modifies pKa.'
+  - node_id: glu288
+    label: catalytic Glu288 (M-CSA/PDB numbering; UniProt residue 316)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15737
+    description: 'M-CSA roles: activator, increase nucleophilicity, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: D-glucopyranosyl-(1->3)-D-mannopyranose
+    node_type: CHEMICAL
+    grounding: CHEBI:52997
+  - node_id: product0
+    label: D-glucopyranose
+    node_type: CHEMICAL
+    grounding: CHEBI:4167
+  - node_id: product1
+    label: D-mannopyranose
+    node_type: CHEMICAL
+    grounding: CHEBI:4208
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu288 protonates the glycosidic oxygen. Glu279 and Lys282 activate Glu288. The oxy-carbonium
+      ion is stabilized by Glu231.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The glycosidic bond is cleaved.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Glu231 performs a nucleophilic attack on the oxy-carbonium ion forming an enzyme-substrate
+      intermediate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Glu288 now acts as a base activating a water molecule which hydrolyses the intermediate
+      and regenerates the active site.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: glucan endo-1,3-beta-D-glucosidase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:580
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.80 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.80
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: glucan endo-1,3-beta-D-glucosidase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.1.39
+  edges:
+  - subject: glu231
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu231 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/580/
+      snippet: Glu288 protonates the glycosidic oxygen. Glu279 and Lys282 activate Glu288. The oxy-carbonium
+        ion is stabilized by Glu231.
+      notes: M-CSA entry 580, mechanism 1; M-CSA cites PMID:7757111, PMID:8146192; step 1
+  - subject: glu279
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu279 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/580/
+      snippet: Glu288 protonates the glycosidic oxygen. Glu279 and Lys282 activate Glu288. The oxy-carbonium
+        ion is stabilized by Glu231.
+      notes: M-CSA entry 580, mechanism 1; M-CSA cites PMID:7757111, PMID:8146192; step 1
+  - subject: lys282
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys282 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/580/
+      snippet: Glu288 protonates the glycosidic oxygen. Glu279 and Lys282 activate Glu288. The oxy-carbonium
+        ion is stabilized by Glu231.
+      notes: M-CSA entry 580, mechanism 1; M-CSA cites PMID:7757111, PMID:8146192; step 1
+  - subject: glu288
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu288 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/580/
+      snippet: Glu288 protonates the glycosidic oxygen. Glu279 and Lys282 activate Glu288. The oxy-carbonium
+        ion is stabilized by Glu231.
+      notes: M-CSA entry 580, mechanism 1; M-CSA cites PMID:7757111, PMID:8146192; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/580/
+      snippet: The glycosidic bond is cleaved.
+      notes: M-CSA entry 580, mechanism 1; M-CSA cites PMID:7757111, PMID:8146192; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/580/
+      snippet: Glu231 performs a nucleophilic attack on the oxy-carbonium ion forming an enzyme-substrate
+        intermediate.
+      notes: M-CSA entry 580, mechanism 1; M-CSA cites PMID:7757111, PMID:8146192; step 3
+  - subject: glu231
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Glu231 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/580/
+      snippet: Glu231 performs a nucleophilic attack on the oxy-carbonium ion forming an enzyme-substrate
+        intermediate.
+      notes: M-CSA entry 580, mechanism 1; M-CSA cites PMID:7757111, PMID:8146192; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/580/
+      snippet: Glu288 now acts as a base activating a water molecule which hydrolyses the intermediate
+        and regenerates the active site.
+      notes: M-CSA entry 580, mechanism 1; M-CSA cites PMID:7757111, PMID:8146192; step 4
+  - subject: glu288
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Glu288 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/580/
+      snippet: Glu288 now acts as a base activating a water molecule which hydrolyses the intermediate
+        and regenerates the active site.
+      notes: M-CSA entry 580, mechanism 1; M-CSA cites PMID:7757111, PMID:8146192; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/580/
+      snippet: Products.
+      notes: M-CSA entry 580, mechanism 1; M-CSA cites PMID:7757111, PMID:8146192; step 5
+  - subject: glu231
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu231 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/580/
+      snippet: covalently attached, electrostatic stabiliser, nucleofuge, nucleophile
+      notes: M-CSA entry 580, mechanism 1; M-CSA cites PMID:7757111, PMID:8146192; M-CSA catalytic-residue
+        roles for Glu231
+  - subject: glu279
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu279 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/580/
+      snippet: activator, modifies pKa
+      notes: M-CSA entry 580, mechanism 1; M-CSA cites PMID:7757111, PMID:8146192; M-CSA catalytic-residue
+        roles for Glu279
+  - subject: lys282
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys282 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/580/
+      snippet: activator, modifies pKa
+      notes: M-CSA entry 580, mechanism 1; M-CSA cites PMID:7757111, PMID:8146192; M-CSA catalytic-residue
+        roles for Lys282
+  - subject: glu288
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu288 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/580/
+      snippet: activator, increase nucleophilicity, proton acceptor, proton donor
+      notes: M-CSA entry 580, mechanism 1; M-CSA cites PMID:7757111, PMID:8146192; M-CSA catalytic-residue
+        roles for Glu288
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/580/
+      snippet: Hydrolysis of the glycosidic bond takes place via general acid catalysis leading to retention
+        of configuration. The general acid protonated Glu288 protonates the glycosidic oxygen aided by
+        Lys282 and Glu279, followed by nucleophilic attack by Glu231, on the oxy-carbonium ion intermediate.
+        This is then broken down via deprotonation of a water by Glu288, a second nucleophilic attack
+        of the deprotona
+      notes: M-CSA entry 580, mechanism 1; M-CSA cites PMID:7757111, PMID:8146192; CATH domain 3.20.20.80
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/580/
+      snippet: Hydrolysis of the glycosidic bond takes place via general acid catalysis leading to retention
+        of configuration. The general acid protonated Glu288 protonates the glycosidic oxygen aided by
+        Lys282 and Glu279, followed by nucleophilic attack by Glu231, on the oxy-carbonium ion intermediate.
+        This is then broken down via deprotonation of a water by Glu288, a second nucleophilic attack
+        of the deprotona
+      notes: M-CSA entry 580, mechanism 1; M-CSA cites PMID:7757111, PMID:8146192; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/580/
+      snippet: Hydrolysis of the glycosidic bond takes place via general acid catalysis leading to retention
+        of configuration. The general acid protonated Glu288 protonates the glycosidic oxygen aided by
+        Lys282 and Glu279, followed by nucleophilic attack by Glu231, on the oxy-carbonium ion intermediate.
+        This is then broken down via deprotonation of a water by Glu288, a second nucleophilic attack
+        of the deprotona
+      notes: M-CSA entry 580, mechanism 1; M-CSA cites PMID:7757111, PMID:8146192; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/580/
+      snippet: Hydrolysis of the glycosidic bond takes place via general acid catalysis leading to retention
+        of configuration. The general acid protonated Glu288 protonates the glycosidic oxygen aided by
+        Lys282 and Glu279, followed by nucleophilic attack by Glu231, on the oxy-carbonium ion intermediate.
+        This is then broken down via deprotonation of a water by Glu288, a second nucleophilic attack
+        of the deprotona
+      notes: M-CSA entry 580, mechanism 1; M-CSA cites PMID:7757111, PMID:8146192; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/580/
+      snippet: Hydrolysis of the glycosidic bond takes place via general acid catalysis leading to retention
+        of configuration. The general acid protonated Glu288 protonates the glycosidic oxygen aided by
+        Lys282 and Glu279, followed by nucleophilic attack by Glu231, on the oxy-carbonium ion intermediate.
+        This is then broken down via deprotonation of a water by Glu288, a second nucleophilic attack
+        of the deprotona
+      notes: M-CSA entry 580, mechanism 1; M-CSA cites PMID:7757111, PMID:8146192; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/580/
+      snippet: Hydrolysis of the glycosidic bond takes place via general acid catalysis leading to retention
+        of configuration. The general acid protonated Glu288 protonates the glycosidic oxygen aided by
+        Lys282 and Glu279, followed by nucleophilic attack by Glu231, on the oxy-carbonium ion intermediate.
+        This is then broken down via deprotonation of a water by Glu288, a second nucleophilic attack
+        of the deprotona
+      notes: M-CSA entry 580, mechanism 1; M-CSA cites PMID:7757111, PMID:8146192; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (20 evidence-backed edges) transcribed from M-CSA entry 580;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

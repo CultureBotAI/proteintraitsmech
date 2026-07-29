@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.3.1.14
 - CHEBI:62346
@@ -295,4 +295,316 @@ definitions:
       This enzyme interconverts L-rhamnose and L-rhamnulose. In some species, including Escherichia coli, this is the first step in rhamnose catabolism. The enzyme contains two divalent metal ions located at different metal-binding sites within the active site. The enzyme binds the closed ring form of the substrate and catalyses ring opening to generate a form of open-chain conformation that is coordinated to one of the metal sites.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of L-rhamnose isomerase
+  description: Stepwise mechanism transcribed from M-CSA entry 488 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset -8).
+  nodes:
+  - node_id: trp193
+    label: catalytic Trp193 (M-CSA/PDB numbering; UniProt residue 185)
+    node_type: RESIDUE
+    grounding: UniProtKB:P32170
+    description: 'M-CSA roles: activator.'
+  - node_id: glu234
+    label: catalytic Glu234 (M-CSA/PDB numbering; UniProt residue 226)
+    node_type: RESIDUE
+    grounding: UniProtKB:P32170
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: lys236
+    label: catalytic Lys236 (M-CSA/PDB numbering; UniProt residue 228)
+    node_type: RESIDUE
+    grounding: UniProtKB:P32170
+    description: 'M-CSA roles: activator.'
+  - node_id: asp267
+    label: catalytic Asp267 (M-CSA/PDB numbering; UniProt residue 259)
+    node_type: RESIDUE
+    grounding: UniProtKB:P32170
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his270
+    label: catalytic His270 (M-CSA/PDB numbering; UniProt residue 262)
+    node_type: RESIDUE
+    grounding: UniProtKB:P32170
+    description: 'M-CSA roles: activator, metal ligand.'
+  - node_id: his294
+    label: catalytic His294 (M-CSA/PDB numbering; UniProt residue 286)
+    node_type: RESIDUE
+    grounding: UniProtKB:P32170
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp302
+    label: catalytic Asp302 (M-CSA/PDB numbering; UniProt residue 294)
+    node_type: RESIDUE
+    grounding: UniProtKB:P32170
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp304
+    label: catalytic Asp304 (M-CSA/PDB numbering; UniProt residue 296)
+    node_type: RESIDUE
+    grounding: UniProtKB:P32170
+    description: 'M-CSA roles: metal ligand, proton acceptor, proton donor.'
+  - node_id: asp334
+    label: catalytic Asp334 (M-CSA/PDB numbering; UniProt residue 326)
+    node_type: RESIDUE
+    grounding: UniProtKB:P32170
+    description: 'M-CSA roles: metal ligand, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: L-rhamnopyranose
+    node_type: CHEMICAL
+    grounding: CHEBI:62346
+  - node_id: product0
+    label: L-rhamnulose
+    node_type: CHEMICAL
+    grounding: CHEBI:17897
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp334 acts as a base via a water molecule to deprotonate  O2 this causes the ring to
+      open.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The proton is transferred to O5.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Asp304 deprotonates O2 via another water molecule. This causes a hydride shift from C2
+      to C1.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The proton is transferred to O1.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: products.
+  - node_id: active_site
+    label: L-rhamnose isomerase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:488
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.150 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.150
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: L-rhamnose isomerase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.3.1.14
+  edges:
+  - subject: asp334
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp334 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/488/
+      snippet: Asp334 acts as a base via a water molecule to deprotonate  O2 this causes the ring to open.
+      notes: M-CSA entry 488, mechanism 1; M-CSA cites PMID:10891278, PMID:17141803, PMID:20088877, PMID:23772372,
+        PMID:24925069; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/488/
+      snippet: The proton is transferred to O5.
+      notes: M-CSA entry 488, mechanism 1; M-CSA cites PMID:10891278, PMID:17141803, PMID:20088877, PMID:23772372,
+        PMID:24925069; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/488/
+      snippet: Asp304 deprotonates O2 via another water molecule. This causes a hydride shift from C2
+        to C1.
+      notes: M-CSA entry 488, mechanism 1; M-CSA cites PMID:10891278, PMID:17141803, PMID:20088877, PMID:23772372,
+        PMID:24925069; step 3
+  - subject: asp304
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Asp304 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/488/
+      snippet: Asp304 deprotonates O2 via another water molecule. This causes a hydride shift from C2
+        to C1.
+      notes: M-CSA entry 488, mechanism 1; M-CSA cites PMID:10891278, PMID:17141803, PMID:20088877, PMID:23772372,
+        PMID:24925069; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/488/
+      snippet: The proton is transferred to O1.
+      notes: M-CSA entry 488, mechanism 1; M-CSA cites PMID:10891278, PMID:17141803, PMID:20088877, PMID:23772372,
+        PMID:24925069; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/488/
+      snippet: products.
+      notes: M-CSA entry 488, mechanism 1; M-CSA cites PMID:10891278, PMID:17141803, PMID:20088877, PMID:23772372,
+        PMID:24925069; step 5
+  - subject: trp193
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp193 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/488/
+      snippet: activator
+      notes: M-CSA entry 488, mechanism 1; M-CSA cites PMID:10891278, PMID:17141803, PMID:20088877, PMID:23772372,
+        PMID:24925069; M-CSA catalytic-residue roles for Trp193
+  - subject: glu234
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu234 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/488/
+      snippet: metal ligand
+      notes: M-CSA entry 488, mechanism 1; M-CSA cites PMID:10891278, PMID:17141803, PMID:20088877, PMID:23772372,
+        PMID:24925069; M-CSA catalytic-residue roles for Glu234
+  - subject: lys236
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys236 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/488/
+      snippet: activator
+      notes: M-CSA entry 488, mechanism 1; M-CSA cites PMID:10891278, PMID:17141803, PMID:20088877, PMID:23772372,
+        PMID:24925069; M-CSA catalytic-residue roles for Lys236
+  - subject: asp267
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp267 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/488/
+      snippet: metal ligand
+      notes: M-CSA entry 488, mechanism 1; M-CSA cites PMID:10891278, PMID:17141803, PMID:20088877, PMID:23772372,
+        PMID:24925069; M-CSA catalytic-residue roles for Asp267
+  - subject: his270
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His270 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/488/
+      snippet: activator, metal ligand
+      notes: M-CSA entry 488, mechanism 1; M-CSA cites PMID:10891278, PMID:17141803, PMID:20088877, PMID:23772372,
+        PMID:24925069; M-CSA catalytic-residue roles for His270
+  - subject: his294
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His294 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/488/
+      snippet: metal ligand
+      notes: M-CSA entry 488, mechanism 1; M-CSA cites PMID:10891278, PMID:17141803, PMID:20088877, PMID:23772372,
+        PMID:24925069; M-CSA catalytic-residue roles for His294
+  - subject: asp302
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp302 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/488/
+      snippet: metal ligand
+      notes: M-CSA entry 488, mechanism 1; M-CSA cites PMID:10891278, PMID:17141803, PMID:20088877, PMID:23772372,
+        PMID:24925069; M-CSA catalytic-residue roles for Asp302
+  - subject: asp304
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp304 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/488/
+      snippet: metal ligand, proton acceptor, proton donor
+      notes: M-CSA entry 488, mechanism 1; M-CSA cites PMID:10891278, PMID:17141803, PMID:20088877, PMID:23772372,
+        PMID:24925069; M-CSA catalytic-residue roles for Asp304
+  - subject: asp334
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp334 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/488/
+      snippet: metal ligand, proton acceptor, proton donor
+      notes: M-CSA entry 488, mechanism 1; M-CSA cites PMID:10891278, PMID:17141803, PMID:20088877, PMID:23772372,
+        PMID:24925069; M-CSA catalytic-residue roles for Asp334
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/488/
+      snippet: Isomerization proceeds via a hydride-shift mechanism. In this mechanism, Asp334 acts as
+        an acid-base catalyst in ring opening, helping to transfer a proton from O2 to O5. After the ring
+        has been opened, the catalytic water molecule (W4) mediates the transfer of a proton from O1 to
+        O2, and a hydride (H1A), shielded by Trp193 from solvent access, attacks C2, producing an aldose
+        with a hydroxyl group
+      notes: M-CSA entry 488, mechanism 1; M-CSA cites PMID:10891278, PMID:17141803, PMID:20088877, PMID:23772372,
+        PMID:24925069; CATH domain 3.20.20.150 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/488/
+      snippet: Isomerization proceeds via a hydride-shift mechanism. In this mechanism, Asp334 acts as
+        an acid-base catalyst in ring opening, helping to transfer a proton from O2 to O5. After the ring
+        has been opened, the catalytic water molecule (W4) mediates the transfer of a proton from O1 to
+        O2, and a hydride (H1A), shielded by Trp193 from solvent access, attacks C2, producing an aldose
+        with a hydroxyl group
+      notes: M-CSA entry 488, mechanism 1; M-CSA cites PMID:10891278, PMID:17141803, PMID:20088877, PMID:23772372,
+        PMID:24925069; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/488/
+      snippet: Isomerization proceeds via a hydride-shift mechanism. In this mechanism, Asp334 acts as
+        an acid-base catalyst in ring opening, helping to transfer a proton from O2 to O5. After the ring
+        has been opened, the catalytic water molecule (W4) mediates the transfer of a proton from O1 to
+        O2, and a hydride (H1A), shielded by Trp193 from solvent access, attacks C2, producing an aldose
+        with a hydroxyl group
+      notes: M-CSA entry 488, mechanism 1; M-CSA cites PMID:10891278, PMID:17141803, PMID:20088877, PMID:23772372,
+        PMID:24925069; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/488/
+      snippet: Isomerization proceeds via a hydride-shift mechanism. In this mechanism, Asp334 acts as
+        an acid-base catalyst in ring opening, helping to transfer a proton from O2 to O5. After the ring
+        has been opened, the catalytic water molecule (W4) mediates the transfer of a proton from O1 to
+        O2, and a hydride (H1A), shielded by Trp193 from solvent access, attacks C2, producing an aldose
+        with a hydroxyl group
+      notes: M-CSA entry 488, mechanism 1; M-CSA cites PMID:10891278, PMID:17141803, PMID:20088877, PMID:23772372,
+        PMID:24925069; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (19 evidence-backed edges) transcribed from M-CSA entry 488;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

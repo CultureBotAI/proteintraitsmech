@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.-.-.-
 - CHEBI:15377
@@ -230,4 +230,365 @@ definitions:
       Catalyses the hydration of the acyl-CoA thioester of ferulic acid and the subsequent retro-aldol cleavage of the hydrated intermediate to yield vanillin (4-hydroxy-3-methoxy-benzaldehyde) and acetyl-CoA. This is a member of the crotonase superfamily.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of feruloyl CoA hydratase/lyase
+  description: Stepwise mechanism transcribed from M-CSA entry 347 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: met70
+    label: catalytic Met70 (M-CSA/PDB numbering; UniProt residue 70)
+    node_type: RESIDUE
+    grounding: UniProtKB:O69762
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: tyr75
+    label: catalytic Tyr75 (M-CSA/PDB numbering; UniProt residue 75)
+    node_type: RESIDUE
+    grounding: UniProtKB:O69762
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor, steric role.'
+  - node_id: gly120
+    label: catalytic Gly120 (M-CSA/PDB numbering; UniProt residue 120)
+    node_type: RESIDUE
+    grounding: UniProtKB:O69762
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: glu143
+    label: catalytic Glu143 (M-CSA/PDB numbering; UniProt residue 143)
+    node_type: RESIDUE
+    grounding: UniProtKB:O69762
+    description: 'M-CSA roles: activator, proton acceptor, proton donor.'
+  - node_id: tyr239
+    label: catalytic Tyr239 (M-CSA/PDB numbering; UniProt residue 239)
+    node_type: RESIDUE
+    grounding: UniProtKB:O69762
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor, steric role.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: feruloyl-CoA(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57276
+  - node_id: product0
+    label: acetyl-CoA(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+  - node_id: product1
+    label: vanillin
+    node_type: CHEMICAL
+    grounding: CHEBI:18346
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Ionisation of the phenol group of feruloyl-CoA is induced by hydrogen bonding with the
+      side chains of Tyr75 and Tyr239'. A tautomerisation leads to the formation of a quinone-methide-enolate
+      which is stabilised in the oxyanion hole formed by the backbone amides of Met70 and Gly120
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The quinone-methide-enolate is the substrate for hydration by a water molecule activated
+      by Glu143.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Glu-143 acts as acid to protonate the double bond leading to the intermediate 4-hydroxy-3-methoxyphenyl-Beta-hydroxypropiony-SCoA
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: A retro-aldol reaction generates acetyl-CoA and vanillin. Glu143 may act as a catalytic
+      base. The reaction might also be favoured by strain effects exerted by the binding of the phenolic
+      hydroxyl by Tyr75 and Tyr239'.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: feruloyl CoA hydratase/lyase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:347
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.226.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.226.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: feruloyl CoA hydratase/lyase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.-.-.-
+  edges:
+  - subject: met70
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Met70 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/347/
+      snippet: Ionisation of the phenol group of feruloyl-CoA is induced by hydrogen bonding with the
+        side chains of Tyr75 and Tyr239'. A tautomerisation leads to the formation of a quinone-methide-enolate
+        which is stabilised in the oxyanion hole formed by the backbone amides of Met70 and Gly120
+      notes: M-CSA entry 347, mechanism 1; M-CSA cites PMID:17139085, PMID:18479250, PMID:19563771, PMID:9461612;
+        step 1
+  - subject: tyr75
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr75 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/347/
+      snippet: Ionisation of the phenol group of feruloyl-CoA is induced by hydrogen bonding with the
+        side chains of Tyr75 and Tyr239'. A tautomerisation leads to the formation of a quinone-methide-enolate
+        which is stabilised in the oxyanion hole formed by the backbone amides of Met70 and Gly120
+      notes: M-CSA entry 347, mechanism 1; M-CSA cites PMID:17139085, PMID:18479250, PMID:19563771, PMID:9461612;
+        step 1
+  - subject: gly120
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Gly120 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/347/
+      snippet: Ionisation of the phenol group of feruloyl-CoA is induced by hydrogen bonding with the
+        side chains of Tyr75 and Tyr239'. A tautomerisation leads to the formation of a quinone-methide-enolate
+        which is stabilised in the oxyanion hole formed by the backbone amides of Met70 and Gly120
+      notes: M-CSA entry 347, mechanism 1; M-CSA cites PMID:17139085, PMID:18479250, PMID:19563771, PMID:9461612;
+        step 1
+  - subject: tyr239
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr239 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/347/
+      snippet: Ionisation of the phenol group of feruloyl-CoA is induced by hydrogen bonding with the
+        side chains of Tyr75 and Tyr239'. A tautomerisation leads to the formation of a quinone-methide-enolate
+        which is stabilised in the oxyanion hole formed by the backbone amides of Met70 and Gly120
+      notes: M-CSA entry 347, mechanism 1; M-CSA cites PMID:17139085, PMID:18479250, PMID:19563771, PMID:9461612;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/347/
+      snippet: The quinone-methide-enolate is the substrate for hydration by a water molecule activated
+        by Glu143.
+      notes: M-CSA entry 347, mechanism 1; M-CSA cites PMID:17139085, PMID:18479250, PMID:19563771, PMID:9461612;
+        step 2
+  - subject: glu143
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu143 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/347/
+      snippet: The quinone-methide-enolate is the substrate for hydration by a water molecule activated
+        by Glu143.
+      notes: M-CSA entry 347, mechanism 1; M-CSA cites PMID:17139085, PMID:18479250, PMID:19563771, PMID:9461612;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/347/
+      snippet: Glu-143 acts as acid to protonate the double bond leading to the intermediate 4-hydroxy-3-methoxyphenyl-Beta-hydroxypropiony-SCoA
+      notes: M-CSA entry 347, mechanism 1; M-CSA cites PMID:17139085, PMID:18479250, PMID:19563771, PMID:9461612;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/347/
+      snippet: A retro-aldol reaction generates acetyl-CoA and vanillin. Glu143 may act as a catalytic
+        base. The reaction might also be favoured by strain effects exerted by the binding of the phenolic
+        hydroxyl by Tyr75 and Tyr239'.
+      notes: M-CSA entry 347, mechanism 1; M-CSA cites PMID:17139085, PMID:18479250, PMID:19563771, PMID:9461612;
+        step 4
+  - subject: tyr75
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Tyr75 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/347/
+      snippet: A retro-aldol reaction generates acetyl-CoA and vanillin. Glu143 may act as a catalytic
+        base. The reaction might also be favoured by strain effects exerted by the binding of the phenolic
+        hydroxyl by Tyr75 and Tyr239'.
+      notes: M-CSA entry 347, mechanism 1; M-CSA cites PMID:17139085, PMID:18479250, PMID:19563771, PMID:9461612;
+        step 4
+  - subject: glu143
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Glu143 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/347/
+      snippet: A retro-aldol reaction generates acetyl-CoA and vanillin. Glu143 may act as a catalytic
+        base. The reaction might also be favoured by strain effects exerted by the binding of the phenolic
+        hydroxyl by Tyr75 and Tyr239'.
+      notes: M-CSA entry 347, mechanism 1; M-CSA cites PMID:17139085, PMID:18479250, PMID:19563771, PMID:9461612;
+        step 4
+  - subject: tyr239
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Tyr239 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/347/
+      snippet: A retro-aldol reaction generates acetyl-CoA and vanillin. Glu143 may act as a catalytic
+        base. The reaction might also be favoured by strain effects exerted by the binding of the phenolic
+        hydroxyl by Tyr75 and Tyr239'.
+      notes: M-CSA entry 347, mechanism 1; M-CSA cites PMID:17139085, PMID:18479250, PMID:19563771, PMID:9461612;
+        step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/347/
+      snippet: Products.
+      notes: M-CSA entry 347, mechanism 1; M-CSA cites PMID:17139085, PMID:18479250, PMID:19563771, PMID:9461612;
+        step 5
+  - subject: met70
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Met70 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/347/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 347, mechanism 1; M-CSA cites PMID:17139085, PMID:18479250, PMID:19563771, PMID:9461612;
+        M-CSA catalytic-residue roles for Met70
+  - subject: tyr75
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr75 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/347/
+      snippet: electrostatic stabiliser, hydrogen bond donor, steric role
+      notes: M-CSA entry 347, mechanism 1; M-CSA cites PMID:17139085, PMID:18479250, PMID:19563771, PMID:9461612;
+        M-CSA catalytic-residue roles for Tyr75
+  - subject: gly120
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly120 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/347/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 347, mechanism 1; M-CSA cites PMID:17139085, PMID:18479250, PMID:19563771, PMID:9461612;
+        M-CSA catalytic-residue roles for Gly120
+  - subject: glu143
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu143 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/347/
+      snippet: activator, proton acceptor, proton donor
+      notes: M-CSA entry 347, mechanism 1; M-CSA cites PMID:17139085, PMID:18479250, PMID:19563771, PMID:9461612;
+        M-CSA catalytic-residue roles for Glu143
+  - subject: tyr239
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr239 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/347/
+      snippet: electrostatic stabiliser, hydrogen bond donor, steric role
+      notes: M-CSA entry 347, mechanism 1; M-CSA cites PMID:17139085, PMID:18479250, PMID:19563771, PMID:9461612;
+        M-CSA catalytic-residue roles for Tyr239
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/347/
+      snippet: 'In the first half-reaction (the hydrolysis of acyl-CoA thioester of ferulic acid) tautomerisation
+        leads to the formation of a quinone-methide-enolate. This is followed by addition of a water molecule
+        leading to the formation of the product of this half-reaction: 4-hydroxy-3-methoxyphenyl-Beta-hydroxypropiony-SCoA.
+        The second half-reaction is the retro-aldol cleavage of the hydrated intermediate to'
+      notes: M-CSA entry 347, mechanism 1; M-CSA cites PMID:17139085, PMID:18479250, PMID:19563771, PMID:9461612;
+        CATH domain 3.90.226.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/347/
+      snippet: 'In the first half-reaction (the hydrolysis of acyl-CoA thioester of ferulic acid) tautomerisation
+        leads to the formation of a quinone-methide-enolate. This is followed by addition of a water molecule
+        leading to the formation of the product of this half-reaction: 4-hydroxy-3-methoxyphenyl-Beta-hydroxypropiony-SCoA.
+        The second half-reaction is the retro-aldol cleavage of the hydrated intermediate to'
+      notes: M-CSA entry 347, mechanism 1; M-CSA cites PMID:17139085, PMID:18479250, PMID:19563771, PMID:9461612;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/347/
+      snippet: 'In the first half-reaction (the hydrolysis of acyl-CoA thioester of ferulic acid) tautomerisation
+        leads to the formation of a quinone-methide-enolate. This is followed by addition of a water molecule
+        leading to the formation of the product of this half-reaction: 4-hydroxy-3-methoxyphenyl-Beta-hydroxypropiony-SCoA.
+        The second half-reaction is the retro-aldol cleavage of the hydrated intermediate to'
+      notes: M-CSA entry 347, mechanism 1; M-CSA cites PMID:17139085, PMID:18479250, PMID:19563771, PMID:9461612;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/347/
+      snippet: 'In the first half-reaction (the hydrolysis of acyl-CoA thioester of ferulic acid) tautomerisation
+        leads to the formation of a quinone-methide-enolate. This is followed by addition of a water molecule
+        leading to the formation of the product of this half-reaction: 4-hydroxy-3-methoxyphenyl-Beta-hydroxypropiony-SCoA.
+        The second half-reaction is the retro-aldol cleavage of the hydrated intermediate to'
+      notes: M-CSA entry 347, mechanism 1; M-CSA cites PMID:17139085, PMID:18479250, PMID:19563771, PMID:9461612;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/347/
+      snippet: 'In the first half-reaction (the hydrolysis of acyl-CoA thioester of ferulic acid) tautomerisation
+        leads to the formation of a quinone-methide-enolate. This is followed by addition of a water molecule
+        leading to the formation of the product of this half-reaction: 4-hydroxy-3-methoxyphenyl-Beta-hydroxypropiony-SCoA.
+        The second half-reaction is the retro-aldol cleavage of the hydrated intermediate to'
+      notes: M-CSA entry 347, mechanism 1; M-CSA cites PMID:17139085, PMID:18479250, PMID:19563771, PMID:9461612;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/347/
+      snippet: 'In the first half-reaction (the hydrolysis of acyl-CoA thioester of ferulic acid) tautomerisation
+        leads to the formation of a quinone-methide-enolate. This is followed by addition of a water molecule
+        leading to the formation of the product of this half-reaction: 4-hydroxy-3-methoxyphenyl-Beta-hydroxypropiony-SCoA.
+        The second half-reaction is the retro-aldol cleavage of the hydrated intermediate to'
+      notes: M-CSA entry 347, mechanism 1; M-CSA cites PMID:17139085, PMID:18479250, PMID:19563771, PMID:9461612;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (23 evidence-backed edges) transcribed from M-CSA entry 347;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:6.3.4.4
 - CHEBI:58053
@@ -411,4 +411,458 @@ definitions:
       Adenylosuccinate synthetase is an essential enzyme in Escherichia coli and many other forms of life, catalysing the first committed step in de novo biosyntheses of AMP: The catalytic mechanism proceeds with the initial formation of 6-phosphoryl-IMP by nucleophilic attack of the 6-oxo group of IMP on the gamma-phosphorus atom of GTP, followed by the nucleophilic displacement of the 6-phosphoryl group by L -aspartate to form adenylosuccinate.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of adenylosuccinate synthase
+  description: Stepwise mechanism transcribed from M-CSA entry 65 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +1).
+  nodes:
+  - node_id: asp13
+    label: catalytic Asp13 (M-CSA/PDB numbering; UniProt residue 14)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A7D4
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      metal ligand, proton acceptor, proton donor.'
+  - node_id: lys16
+    label: catalytic Lys16 (M-CSA/PDB numbering; UniProt residue 17)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A7D4
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: gly40
+    label: catalytic Gly40 (M-CSA/PDB numbering; UniProt residue 41)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A7D4
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his41
+    label: catalytic His41 (M-CSA/PDB numbering; UniProt residue 42)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A7D4
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      proton acceptor, proton donor.'
+  - node_id: gln224
+    label: catalytic Gln224 (M-CSA/PDB numbering; UniProt residue 225)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A7D4
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: reactant0
+    label: IMP(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58053
+  - node_id: reactant1
+    label: GTP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:37565
+  - node_id: reactant2
+    label: L-aspartate(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:29991
+  - node_id: product0
+    label: N(6)-(1,2-dicarboxylatoethyl)-AMP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57567
+  - node_id: product1
+    label: GDP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58189
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product3
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp13 deprotonates IMP with concomitant tautomerisation to give the oxyanion, which is
+      stabilised by a hydrogen bond from Gln224. Activated IMP is produced. His41 and Mg stabilise the
+      GTP.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Activated IMP acts as a nucleophile and attacks the gamma-phosphate of GTP in a substitution
+      reaction. GDP and phosphorylated IMP are produced. His41 and Mg stabilise the GTP, Asp13 and Gln223
+      stabilise the activated IMP.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The amine nitrogen of L-aspartate acts as a nucleophile upon the C6 of the phosphorylated
+      IMP in a substitution reaction at an aromatic species. The IMP intermediate is dephosphorylated.
+      The liberated phosphate group accepts a proton from the stabilising His41. Asp13 and Gln223 continue
+      to stabilise the IMP intermediate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Inferred return step in which His41 deprotonates the bound phosphate, which in turn deprotonates
+      Asp13. It is assumed that the positive nitrogen of the product loses its extra proton to either
+      one of the carboxylate groups (shown) or bulk solvent.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: adenylosuccinate synthase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:65
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.440.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.440.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: adenylosuccinate synthase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:6.3.4.4
+  edges:
+  - subject: asp13
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp13 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/65/
+      snippet: Asp13 deprotonates IMP with concomitant tautomerisation to give the oxyanion, which is
+        stabilised by a hydrogen bond from Gln224. Activated IMP is produced. His41 and Mg stabilise the
+        GTP.
+      notes: M-CSA entry 65, mechanism 1; M-CSA cites PMID:10346917, PMID:10496970, PMID:11741996, PMID:11781326,
+        PMID:16981730, PMID:1733940, PMID:9115248, PMID:9182542, PMID:9202000; step 1
+  - subject: his41
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His41 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/65/
+      snippet: Asp13 deprotonates IMP with concomitant tautomerisation to give the oxyanion, which is
+        stabilised by a hydrogen bond from Gln224. Activated IMP is produced. His41 and Mg stabilise the
+        GTP.
+      notes: M-CSA entry 65, mechanism 1; M-CSA cites PMID:10346917, PMID:10496970, PMID:11741996, PMID:11781326,
+        PMID:16981730, PMID:1733940, PMID:9115248, PMID:9182542, PMID:9202000; step 1
+  - subject: gln224
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Gln224 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/65/
+      snippet: Asp13 deprotonates IMP with concomitant tautomerisation to give the oxyanion, which is
+        stabilised by a hydrogen bond from Gln224. Activated IMP is produced. His41 and Mg stabilise the
+        GTP.
+      notes: M-CSA entry 65, mechanism 1; M-CSA cites PMID:10346917, PMID:10496970, PMID:11741996, PMID:11781326,
+        PMID:16981730, PMID:1733940, PMID:9115248, PMID:9182542, PMID:9202000; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/65/
+      snippet: Activated IMP acts as a nucleophile and attacks the gamma-phosphate of GTP in a substitution
+        reaction. GDP and phosphorylated IMP are produced. His41 and Mg stabilise the GTP, Asp13 and Gln223
+        stabilise the activated IMP.
+      notes: M-CSA entry 65, mechanism 1; M-CSA cites PMID:10346917, PMID:10496970, PMID:11741996, PMID:11781326,
+        PMID:16981730, PMID:1733940, PMID:9115248, PMID:9182542, PMID:9202000; step 2
+  - subject: asp13
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Asp13 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/65/
+      snippet: Activated IMP acts as a nucleophile and attacks the gamma-phosphate of GTP in a substitution
+        reaction. GDP and phosphorylated IMP are produced. His41 and Mg stabilise the GTP, Asp13 and Gln223
+        stabilise the activated IMP.
+      notes: M-CSA entry 65, mechanism 1; M-CSA cites PMID:10346917, PMID:10496970, PMID:11741996, PMID:11781326,
+        PMID:16981730, PMID:1733940, PMID:9115248, PMID:9182542, PMID:9202000; step 2
+  - subject: his41
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His41 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/65/
+      snippet: Activated IMP acts as a nucleophile and attacks the gamma-phosphate of GTP in a substitution
+        reaction. GDP and phosphorylated IMP are produced. His41 and Mg stabilise the GTP, Asp13 and Gln223
+        stabilise the activated IMP.
+      notes: M-CSA entry 65, mechanism 1; M-CSA cites PMID:10346917, PMID:10496970, PMID:11741996, PMID:11781326,
+        PMID:16981730, PMID:1733940, PMID:9115248, PMID:9182542, PMID:9202000; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/65/
+      snippet: The amine nitrogen of L-aspartate acts as a nucleophile upon the C6 of the phosphorylated
+        IMP in a substitution reaction at an aromatic species. The IMP intermediate is dephosphorylated.
+        The liberated phosphate group accepts a proton from the stabilising His41. Asp13 and Gln223 continue
+        to stabilise the IMP intermediate.
+      notes: M-CSA entry 65, mechanism 1; M-CSA cites PMID:10346917, PMID:10496970, PMID:11741996, PMID:11781326,
+        PMID:16981730, PMID:1733940, PMID:9115248, PMID:9182542, PMID:9202000; step 3
+  - subject: asp13
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Asp13 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/65/
+      snippet: The amine nitrogen of L-aspartate acts as a nucleophile upon the C6 of the phosphorylated
+        IMP in a substitution reaction at an aromatic species. The IMP intermediate is dephosphorylated.
+        The liberated phosphate group accepts a proton from the stabilising His41. Asp13 and Gln223 continue
+        to stabilise the IMP intermediate.
+      notes: M-CSA entry 65, mechanism 1; M-CSA cites PMID:10346917, PMID:10496970, PMID:11741996, PMID:11781326,
+        PMID:16981730, PMID:1733940, PMID:9115248, PMID:9182542, PMID:9202000; step 3
+  - subject: his41
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His41 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/65/
+      snippet: The amine nitrogen of L-aspartate acts as a nucleophile upon the C6 of the phosphorylated
+        IMP in a substitution reaction at an aromatic species. The IMP intermediate is dephosphorylated.
+        The liberated phosphate group accepts a proton from the stabilising His41. Asp13 and Gln223 continue
+        to stabilise the IMP intermediate.
+      notes: M-CSA entry 65, mechanism 1; M-CSA cites PMID:10346917, PMID:10496970, PMID:11741996, PMID:11781326,
+        PMID:16981730, PMID:1733940, PMID:9115248, PMID:9182542, PMID:9202000; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/65/
+      snippet: Inferred return step in which His41 deprotonates the bound phosphate, which in turn deprotonates
+        Asp13. It is assumed that the positive nitrogen of the product loses its extra proton to either
+        one of the carboxylate groups (shown) or bulk solvent.
+      notes: M-CSA entry 65, mechanism 1; M-CSA cites PMID:10346917, PMID:10496970, PMID:11741996, PMID:11781326,
+        PMID:16981730, PMID:1733940, PMID:9115248, PMID:9182542, PMID:9202000; step 4
+  - subject: asp13
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Asp13 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/65/
+      snippet: Inferred return step in which His41 deprotonates the bound phosphate, which in turn deprotonates
+        Asp13. It is assumed that the positive nitrogen of the product loses its extra proton to either
+        one of the carboxylate groups (shown) or bulk solvent.
+      notes: M-CSA entry 65, mechanism 1; M-CSA cites PMID:10346917, PMID:10496970, PMID:11741996, PMID:11781326,
+        PMID:16981730, PMID:1733940, PMID:9115248, PMID:9182542, PMID:9202000; step 4
+  - subject: his41
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: His41 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/65/
+      snippet: Inferred return step in which His41 deprotonates the bound phosphate, which in turn deprotonates
+        Asp13. It is assumed that the positive nitrogen of the product loses its extra proton to either
+        one of the carboxylate groups (shown) or bulk solvent.
+      notes: M-CSA entry 65, mechanism 1; M-CSA cites PMID:10346917, PMID:10496970, PMID:11741996, PMID:11781326,
+        PMID:16981730, PMID:1733940, PMID:9115248, PMID:9182542, PMID:9202000; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/65/
+      snippet: Products
+      notes: M-CSA entry 65, mechanism 1; M-CSA cites PMID:10346917, PMID:10496970, PMID:11741996, PMID:11781326,
+        PMID:16981730, PMID:1733940, PMID:9115248, PMID:9182542, PMID:9202000; step 5
+  - subject: asp13
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp13 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/65/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, metal ligand, proton
+        acceptor, proton donor
+      notes: M-CSA entry 65, mechanism 1; M-CSA cites PMID:10346917, PMID:10496970, PMID:11741996, PMID:11781326,
+        PMID:16981730, PMID:1733940, PMID:9115248, PMID:9182542, PMID:9202000; M-CSA catalytic-residue
+        roles for Asp13
+  - subject: lys16
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys16 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/65/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 65, mechanism 1; M-CSA cites PMID:10346917, PMID:10496970, PMID:11741996, PMID:11781326,
+        PMID:16981730, PMID:1733940, PMID:9115248, PMID:9182542, PMID:9202000; M-CSA catalytic-residue
+        roles for Lys16
+  - subject: gly40
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly40 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/65/
+      snippet: metal ligand
+      notes: M-CSA entry 65, mechanism 1; M-CSA cites PMID:10346917, PMID:10496970, PMID:11741996, PMID:11781326,
+        PMID:16981730, PMID:1733940, PMID:9115248, PMID:9182542, PMID:9202000; M-CSA catalytic-residue
+        roles for Gly40
+  - subject: his41
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His41 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/65/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+        proton donor
+      notes: M-CSA entry 65, mechanism 1; M-CSA cites PMID:10346917, PMID:10496970, PMID:11741996, PMID:11781326,
+        PMID:16981730, PMID:1733940, PMID:9115248, PMID:9182542, PMID:9202000; M-CSA catalytic-residue
+        roles for His41
+  - subject: gln224
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln224 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/65/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 65, mechanism 1; M-CSA cites PMID:10346917, PMID:10496970, PMID:11741996, PMID:11781326,
+        PMID:16981730, PMID:1733940, PMID:9115248, PMID:9182542, PMID:9202000; M-CSA catalytic-residue
+        roles for Gln224
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/65/
+      snippet: 'There is a two-step nature of the reaction. Four residues are essential for the reaction:
+        Asp13, His41 and Gln224 and  Lys16 . Asp13 acts first as a catalytic base, removing a proton from
+        the N1 atom of IMP, while His41 acts as an acid, protonating the beta-phosphoryl group of GTP
+        which then becomes the leaving group. It is suggested that once the IMP-6-phosphoryl intermediate
+        is formed, as a resp'
+      notes: M-CSA entry 65, mechanism 1; M-CSA cites PMID:10346917, PMID:10496970, PMID:11741996, PMID:11781326,
+        PMID:16981730, PMID:1733940, PMID:9115248, PMID:9182542, PMID:9202000; CATH domain 3.40.440.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/65/
+      snippet: 'There is a two-step nature of the reaction. Four residues are essential for the reaction:
+        Asp13, His41 and Gln224 and  Lys16 . Asp13 acts first as a catalytic base, removing a proton from
+        the N1 atom of IMP, while His41 acts as an acid, protonating the beta-phosphoryl group of GTP
+        which then becomes the leaving group. It is suggested that once the IMP-6-phosphoryl intermediate
+        is formed, as a resp'
+      notes: M-CSA entry 65, mechanism 1; M-CSA cites PMID:10346917, PMID:10496970, PMID:11741996, PMID:11781326,
+        PMID:16981730, PMID:1733940, PMID:9115248, PMID:9182542, PMID:9202000; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/65/
+      snippet: 'There is a two-step nature of the reaction. Four residues are essential for the reaction:
+        Asp13, His41 and Gln224 and  Lys16 . Asp13 acts first as a catalytic base, removing a proton from
+        the N1 atom of IMP, while His41 acts as an acid, protonating the beta-phosphoryl group of GTP
+        which then becomes the leaving group. It is suggested that once the IMP-6-phosphoryl intermediate
+        is formed, as a resp'
+      notes: M-CSA entry 65, mechanism 1; M-CSA cites PMID:10346917, PMID:10496970, PMID:11741996, PMID:11781326,
+        PMID:16981730, PMID:1733940, PMID:9115248, PMID:9182542, PMID:9202000; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/65/
+      snippet: 'There is a two-step nature of the reaction. Four residues are essential for the reaction:
+        Asp13, His41 and Gln224 and  Lys16 . Asp13 acts first as a catalytic base, removing a proton from
+        the N1 atom of IMP, while His41 acts as an acid, protonating the beta-phosphoryl group of GTP
+        which then becomes the leaving group. It is suggested that once the IMP-6-phosphoryl intermediate
+        is formed, as a resp'
+      notes: M-CSA entry 65, mechanism 1; M-CSA cites PMID:10346917, PMID:10496970, PMID:11741996, PMID:11781326,
+        PMID:16981730, PMID:1733940, PMID:9115248, PMID:9182542, PMID:9202000; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/65/
+      snippet: 'There is a two-step nature of the reaction. Four residues are essential for the reaction:
+        Asp13, His41 and Gln224 and  Lys16 . Asp13 acts first as a catalytic base, removing a proton from
+        the N1 atom of IMP, while His41 acts as an acid, protonating the beta-phosphoryl group of GTP
+        which then becomes the leaving group. It is suggested that once the IMP-6-phosphoryl intermediate
+        is formed, as a resp'
+      notes: M-CSA entry 65, mechanism 1; M-CSA cites PMID:10346917, PMID:10496970, PMID:11741996, PMID:11781326,
+        PMID:16981730, PMID:1733940, PMID:9115248, PMID:9182542, PMID:9202000; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/65/
+      snippet: 'There is a two-step nature of the reaction. Four residues are essential for the reaction:
+        Asp13, His41 and Gln224 and  Lys16 . Asp13 acts first as a catalytic base, removing a proton from
+        the N1 atom of IMP, while His41 acts as an acid, protonating the beta-phosphoryl group of GTP
+        which then becomes the leaving group. It is suggested that once the IMP-6-phosphoryl intermediate
+        is formed, as a resp'
+      notes: M-CSA entry 65, mechanism 1; M-CSA cites PMID:10346917, PMID:10496970, PMID:11741996, PMID:11781326,
+        PMID:16981730, PMID:1733940, PMID:9115248, PMID:9182542, PMID:9202000; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/65/
+      snippet: 'There is a two-step nature of the reaction. Four residues are essential for the reaction:
+        Asp13, His41 and Gln224 and  Lys16 . Asp13 acts first as a catalytic base, removing a proton from
+        the N1 atom of IMP, while His41 acts as an acid, protonating the beta-phosphoryl group of GTP
+        which then becomes the leaving group. It is suggested that once the IMP-6-phosphoryl intermediate
+        is formed, as a resp'
+      notes: M-CSA entry 65, mechanism 1; M-CSA cites PMID:10346917, PMID:10496970, PMID:11741996, PMID:11781326,
+        PMID:16981730, PMID:1733940, PMID:9115248, PMID:9182542, PMID:9202000; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/65/
+      snippet: 'There is a two-step nature of the reaction. Four residues are essential for the reaction:
+        Asp13, His41 and Gln224 and  Lys16 . Asp13 acts first as a catalytic base, removing a proton from
+        the N1 atom of IMP, while His41 acts as an acid, protonating the beta-phosphoryl group of GTP
+        which then becomes the leaving group. It is suggested that once the IMP-6-phosphoryl intermediate
+        is formed, as a resp'
+      notes: M-CSA entry 65, mechanism 1; M-CSA cites PMID:10346917, PMID:10496970, PMID:11741996, PMID:11781326,
+        PMID:16981730, PMID:1733940, PMID:9115248, PMID:9182542, PMID:9202000; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product3
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/65/
+      snippet: 'There is a two-step nature of the reaction. Four residues are essential for the reaction:
+        Asp13, His41 and Gln224 and  Lys16 . Asp13 acts first as a catalytic base, removing a proton from
+        the N1 atom of IMP, while His41 acts as an acid, protonating the beta-phosphoryl group of GTP
+        which then becomes the leaving group. It is suggested that once the IMP-6-phosphoryl intermediate
+        is formed, as a resp'
+      notes: M-CSA entry 65, mechanism 1; M-CSA cites PMID:10346917, PMID:10496970, PMID:11741996, PMID:11781326,
+        PMID:16981730, PMID:1733940, PMID:9115248, PMID:9182542, PMID:9202000; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (27 evidence-backed edges) transcribed from M-CSA entry 65;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

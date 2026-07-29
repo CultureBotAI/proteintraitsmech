@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.22.62
 - CHEBI:15377
@@ -622,4 +622,308 @@ definitions:
       Caspase-9 from Homo sapiens is a cysteine dependent aspartate specific protease. When activated, it will cleave the Caspase-3 peptide bond between Asp 175 and Ser 176. On existence as a monomer, Caspase-9 is inactive, but on dimerizing which is a result of the release of cytochrome c from the mitochondria cleaving procaspase-9 it becomes active, or it can be activated by making a complex with APAF1. It is involved in the process of apoptosis (programmed cell death) which is a central role in the development and homeostasis of an organism and Caspase-9 is linked to the normal development of the central nervous system.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of caspase-9
+  description: Stepwise mechanism transcribed from M-CSA entry 816 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: arg178
+    label: catalytic Arg178 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P98170
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his237
+    label: catalytic His237 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P98170
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: gly238
+    label: catalytic Gly238 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P98170
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: cys287
+    label: catalytic Cys287 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P98170
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: dipeptide
+    node_type: CHEMICAL
+    grounding: CHEBI:46761
+  - node_id: product0
+    label: L-alpha-amino acid
+    node_type: CHEMICAL
+    grounding: CHEBI:15705
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His237 deprotonates Cys287, activating it to so it can nucleophilically attack the carbon
+      of the carbonyl which produces the oxyanion intermediate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The oxyanion initiates an elimination which results in the cleavage of the peptide bond.
+      His237 then donates a proton to the amino group of the N-terminal product preventing reformation
+      of the peptide bond.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: His237 deprotonates a water, activating it so that it can attack the carbon of the thioester
+      bond in a nucleophilic addition.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The oxyanion initiates an elimination which results in the cleavage of the thioester
+      bond. Cys287 now accepts a proton from His237 which returns the enzyme to its native state.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Product
+  - node_id: active_site
+    label: caspase-9 catalytic site
+    node_type: MOTIF
+    grounding: MCSA:816
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1460 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1460
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: caspase-9 activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.22.62
+  edges:
+  - subject: his237
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His237 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/816/
+      snippet: His237 deprotonates Cys287, activating it to so it can nucleophilically attack the carbon
+        of the carbonyl which produces the oxyanion intermediate.
+      notes: M-CSA entry 816, mechanism 1; M-CSA cites PMID:10578173, PMID:10745077; step 1
+  - subject: cys287
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys287 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/816/
+      snippet: His237 deprotonates Cys287, activating it to so it can nucleophilically attack the carbon
+        of the carbonyl which produces the oxyanion intermediate.
+      notes: M-CSA entry 816, mechanism 1; M-CSA cites PMID:10578173, PMID:10745077; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/816/
+      snippet: The oxyanion initiates an elimination which results in the cleavage of the peptide bond.
+        His237 then donates a proton to the amino group of the N-terminal product preventing reformation
+        of the peptide bond.
+      notes: M-CSA entry 816, mechanism 1; M-CSA cites PMID:10578173, PMID:10745077; step 2
+  - subject: his237
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His237 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/816/
+      snippet: The oxyanion initiates an elimination which results in the cleavage of the peptide bond.
+        His237 then donates a proton to the amino group of the N-terminal product preventing reformation
+        of the peptide bond.
+      notes: M-CSA entry 816, mechanism 1; M-CSA cites PMID:10578173, PMID:10745077; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/816/
+      snippet: His237 deprotonates a water, activating it so that it can attack the carbon of the thioester
+        bond in a nucleophilic addition.
+      notes: M-CSA entry 816, mechanism 1; M-CSA cites PMID:10578173, PMID:10745077; step 3
+  - subject: his237
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His237 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/816/
+      snippet: His237 deprotonates a water, activating it so that it can attack the carbon of the thioester
+        bond in a nucleophilic addition.
+      notes: M-CSA entry 816, mechanism 1; M-CSA cites PMID:10578173, PMID:10745077; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/816/
+      snippet: The oxyanion initiates an elimination which results in the cleavage of the thioester bond.
+        Cys287 now accepts a proton from His237 which returns the enzyme to its native state.
+      notes: M-CSA entry 816, mechanism 1; M-CSA cites PMID:10578173, PMID:10745077; step 4
+  - subject: his237
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: His237 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/816/
+      snippet: The oxyanion initiates an elimination which results in the cleavage of the thioester bond.
+        Cys287 now accepts a proton from His237 which returns the enzyme to its native state.
+      notes: M-CSA entry 816, mechanism 1; M-CSA cites PMID:10578173, PMID:10745077; step 4
+  - subject: cys287
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Cys287 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/816/
+      snippet: The oxyanion initiates an elimination which results in the cleavage of the thioester bond.
+        Cys287 now accepts a proton from His237 which returns the enzyme to its native state.
+      notes: M-CSA entry 816, mechanism 1; M-CSA cites PMID:10578173, PMID:10745077; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/816/
+      snippet: Product
+      notes: M-CSA entry 816, mechanism 1; M-CSA cites PMID:10578173, PMID:10745077; step 5
+  - subject: arg178
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg178 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/816/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 816, mechanism 1; M-CSA cites PMID:10578173, PMID:10745077; M-CSA catalytic-residue
+        roles for Arg178
+  - subject: his237
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His237 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/816/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 816, mechanism 1; M-CSA cites PMID:10578173, PMID:10745077; M-CSA catalytic-residue
+        roles for His237
+  - subject: gly238
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly238 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/816/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 816, mechanism 1; M-CSA cites PMID:10578173, PMID:10745077; M-CSA catalytic-residue
+        roles for Gly238
+  - subject: cys287
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys287 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/816/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 816, mechanism 1; M-CSA cites PMID:10578173, PMID:10745077; M-CSA catalytic-residue
+        roles for Cys287
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/816/
+      snippet: "The backbone NH's of Cys 287 and Gly 238 form the oxyanion hole, and activate the scissile\
+        \ carbonyl bond for nucleophilic attack.
+ His 237 is made more basic through hydrogen bonding\
+        \ with the oxygen atom from the backbone of Arg 178.
+ His 237 deprotonates Cys 285 side chain,\
+        \ activating it so the S atom nucleophilically attacks the carbonyl, forming a negatively charged,\
+        \ tetrahedral intermediate."
+      notes: M-CSA entry 816, mechanism 1; M-CSA cites PMID:10578173, PMID:10745077; CATH domain 3.40.50.1460
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/816/
+      snippet: "The backbone NH's of Cys 287 and Gly 238 form the oxyanion hole, and activate the scissile\
+        \ carbonyl bond for nucleophilic attack.
+ His 237 is made more basic through hydrogen bonding\
+        \ with the oxygen atom from the backbone of Arg 178.
+ His 237 deprotonates Cys 285 side chain,\
+        \ activating it so the S atom nucleophilically attacks the carbonyl, forming a negatively charged,\
+        \ tetrahedral intermediate."
+      notes: M-CSA entry 816, mechanism 1; M-CSA cites PMID:10578173, PMID:10745077; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/816/
+      snippet: "The backbone NH's of Cys 287 and Gly 238 form the oxyanion hole, and activate the scissile\
+        \ carbonyl bond for nucleophilic attack.
+ His 237 is made more basic through hydrogen bonding\
+        \ with the oxygen atom from the backbone of Arg 178.
+ His 237 deprotonates Cys 285 side chain,\
+        \ activating it so the S atom nucleophilically attacks the carbonyl, forming a negatively charged,\
+        \ tetrahedral intermediate."
+      notes: M-CSA entry 816, mechanism 1; M-CSA cites PMID:10578173, PMID:10745077; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/816/
+      snippet: "The backbone NH's of Cys 287 and Gly 238 form the oxyanion hole, and activate the scissile\
+        \ carbonyl bond for nucleophilic attack.
+ His 237 is made more basic through hydrogen bonding\
+        \ with the oxygen atom from the backbone of Arg 178.
+ His 237 deprotonates Cys 285 side chain,\
+        \ activating it so the S atom nucleophilically attacks the carbonyl, forming a negatively charged,\
+        \ tetrahedral intermediate."
+      notes: M-CSA entry 816, mechanism 1; M-CSA cites PMID:10578173, PMID:10745077; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/816/
+      snippet: "The backbone NH's of Cys 287 and Gly 238 form the oxyanion hole, and activate the scissile\
+        \ carbonyl bond for nucleophilic attack.
+ His 237 is made more basic through hydrogen bonding\
+        \ with the oxygen atom from the backbone of Arg 178.
+ His 237 deprotonates Cys 285 side chain,\
+        \ activating it so the S atom nucleophilically attacks the carbonyl, forming a negatively charged,\
+        \ tetrahedral intermediate."
+      notes: M-CSA entry 816, mechanism 1; M-CSA cites PMID:10578173, PMID:10745077; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (19 evidence-backed edges) transcribed from M-CSA entry 816;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

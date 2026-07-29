@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.2.1.90
 - CHEBI:58118
@@ -290,4 +290,272 @@ definitions:
       L-rhamnonate dehydratase is a member of the enolase superfamily that catalyses the syn dehydration of L-rhamnonate. It belongs to the mandelate racemase/muconate lactonising enzyme family, specifically the RhamD subfamily.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of L-rhamnonate dehydratase
+  description: Stepwise mechanism transcribed from M-CSA entry 962 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: asp226
+    label: catalytic Asp226 (M-CSA/PDB numbering; UniProt residue 226)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8ZNF9
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu252
+    label: catalytic Glu252 (M-CSA/PDB numbering; UniProt residue 252)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8ZNF9
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu280
+    label: catalytic Glu280 (M-CSA/PDB numbering; UniProt residue 280)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8ZNF9
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp302
+    label: catalytic Asp302 (M-CSA/PDB numbering; UniProt residue 302)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8ZNF9
+    description: 'M-CSA roles: increase acidity, increase basicity, modifies pKa.'
+  - node_id: his329
+    label: catalytic His329 (M-CSA/PDB numbering; UniProt residue 329)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8ZNF9
+    description: 'M-CSA roles: proton acceptor, proton donor, proton relay.'
+  - node_id: glu349
+    label: catalytic Glu349 (M-CSA/PDB numbering; UniProt residue 349)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8ZNF9
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: L-rhamnonate
+    node_type: CHEMICAL
+    grounding: CHEBI:58118
+  - node_id: product0
+    label: 2-dehydro-3-deoxy-L-rhamnonate
+    node_type: CHEMICAL
+    grounding: CHEBI:58371
+  - node_id: product1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His329 abstracts the proton alpha to the carboxylate group.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Water is eliminated in a <i>syn</i> beta elimination with concomitant deprotonation of
+      His329.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: His329 abstracts the proton from the hydroxyl group alpha to the carboxylate group, initiating
+      the keto-enol tautomerisation with concomitant deprotonation of the same histidine.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: L-rhamnonate dehydratase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:962
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.120 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.120
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: L-rhamnonate dehydratase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.2.1.90
+  edges:
+  - subject: his329
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His329 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/962/
+      snippet: His329 abstracts the proton alpha to the carboxylate group.
+      notes: M-CSA entry 962, mechanism 1; M-CSA cites PMID:18754693; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/962/
+      snippet: Water is eliminated in a <i>syn</i> beta elimination with concomitant deprotonation of
+        His329.
+      notes: M-CSA entry 962, mechanism 1; M-CSA cites PMID:18754693; step 2
+  - subject: his329
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His329 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/962/
+      snippet: Water is eliminated in a <i>syn</i> beta elimination with concomitant deprotonation of
+        His329.
+      notes: M-CSA entry 962, mechanism 1; M-CSA cites PMID:18754693; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/962/
+      snippet: His329 abstracts the proton from the hydroxyl group alpha to the carboxylate group, initiating
+        the keto-enol tautomerisation with concomitant deprotonation of the same histidine.
+      notes: M-CSA entry 962, mechanism 1; M-CSA cites PMID:18754693; step 3
+  - subject: his329
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His329 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/962/
+      snippet: His329 abstracts the proton from the hydroxyl group alpha to the carboxylate group, initiating
+        the keto-enol tautomerisation with concomitant deprotonation of the same histidine.
+      notes: M-CSA entry 962, mechanism 1; M-CSA cites PMID:18754693; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/962/
+      snippet: Products
+      notes: M-CSA entry 962, mechanism 1; M-CSA cites PMID:18754693; step 4
+  - subject: asp226
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp226 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/962/
+      snippet: metal ligand
+      notes: M-CSA entry 962, mechanism 1; M-CSA cites PMID:18754693; M-CSA catalytic-residue roles for
+        Asp226
+  - subject: glu252
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu252 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/962/
+      snippet: metal ligand
+      notes: M-CSA entry 962, mechanism 1; M-CSA cites PMID:18754693; M-CSA catalytic-residue roles for
+        Glu252
+  - subject: glu280
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu280 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/962/
+      snippet: metal ligand
+      notes: M-CSA entry 962, mechanism 1; M-CSA cites PMID:18754693; M-CSA catalytic-residue roles for
+        Glu280
+  - subject: asp302
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp302 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/962/
+      snippet: increase acidity, increase basicity, modifies pKa
+      notes: M-CSA entry 962, mechanism 1; M-CSA cites PMID:18754693; M-CSA catalytic-residue roles for
+        Asp302
+  - subject: his329
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His329 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/962/
+      snippet: proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 962, mechanism 1; M-CSA cites PMID:18754693; M-CSA catalytic-residue roles for
+        His329
+  - subject: glu349
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu349 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/962/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 962, mechanism 1; M-CSA cites PMID:18754693; M-CSA catalytic-residue roles for
+        Glu349
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/962/
+      snippet: His 329, hydrogen-bonded to Asp 302, is positioned to function first as the base that abstracts
+        the 2-proton to generate the stabilised enediolate intermediate. Both the subsequent syn-elimination
+        of the 3-OH to generate an enol intermediate and its ketonisation with overall retention of configuration
+        to generate the product also are catalysed by His 329.
+      notes: M-CSA entry 962, mechanism 1; M-CSA cites PMID:18754693; CATH domain 3.20.20.120 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/962/
+      snippet: His 329, hydrogen-bonded to Asp 302, is positioned to function first as the base that abstracts
+        the 2-proton to generate the stabilised enediolate intermediate. Both the subsequent syn-elimination
+        of the 3-OH to generate an enol intermediate and its ketonisation with overall retention of configuration
+        to generate the product also are catalysed by His 329.
+      notes: M-CSA entry 962, mechanism 1; M-CSA cites PMID:18754693; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/962/
+      snippet: His 329, hydrogen-bonded to Asp 302, is positioned to function first as the base that abstracts
+        the 2-proton to generate the stabilised enediolate intermediate. Both the subsequent syn-elimination
+        of the 3-OH to generate an enol intermediate and its ketonisation with overall retention of configuration
+        to generate the product also are catalysed by His 329.
+      notes: M-CSA entry 962, mechanism 1; M-CSA cites PMID:18754693; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/962/
+      snippet: His 329, hydrogen-bonded to Asp 302, is positioned to function first as the base that abstracts
+        the 2-proton to generate the stabilised enediolate intermediate. Both the subsequent syn-elimination
+        of the 3-OH to generate an enol intermediate and its ketonisation with overall retention of configuration
+        to generate the product also are catalysed by His 329.
+      notes: M-CSA entry 962, mechanism 1; M-CSA cites PMID:18754693; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/962/
+      snippet: His 329, hydrogen-bonded to Asp 302, is positioned to function first as the base that abstracts
+        the 2-proton to generate the stabilised enediolate intermediate. Both the subsequent syn-elimination
+        of the 3-OH to generate an enol intermediate and its ketonisation with overall retention of configuration
+        to generate the product also are catalysed by His 329.
+      notes: M-CSA entry 962, mechanism 1; M-CSA cites PMID:18754693; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (17 evidence-backed edges) transcribed from M-CSA entry 962;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

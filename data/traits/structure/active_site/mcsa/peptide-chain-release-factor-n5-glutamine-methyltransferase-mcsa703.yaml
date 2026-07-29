@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.1.1.297
 - CHEBI:30011
@@ -223,4 +223,228 @@ definitions:
       Post translational methylation of release factors on the glutamine residue of a conserved GGQ motif is required for efficient termination of protein synthesis. This methylation is performed by an N5-glutamine methyltransferase called HemK. Release factor 1 and 2 contain a conserved GGQ motif that is thought to play a role in activating or positioning the water molecule involved in hydrolysis at the peptidyl transferase active site.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of peptide chain release factor N5-glutamine methyltransferase
+  description: Stepwise mechanism transcribed from M-CSA entry 703 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: phe100
+    label: catalytic Phe100 (M-CSA/PDB numbering; UniProt residue 100)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9WYV8
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asn197
+    label: catalytic Asn197 (M-CSA/PDB numbering; UniProt residue 197)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9WYV8
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: pro198
+    label: catalytic Pro198 (M-CSA/PDB numbering; UniProt residue 198)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9WYV8
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: L-glutamine residue
+    node_type: CHEMICAL
+    grounding: CHEBI:30011
+  - node_id: reactant1
+    label: S-adenosyl-L-methionine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+  - node_id: product0
+    label: N(5)-methyl-L-glutamine residue
+    node_type: CHEMICAL
+    grounding: CHEBI:61891
+  - node_id: product1
+    label: S-adenosyl-L-homocysteine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: In an SN2 reaction the N5 of glutamine attacks the methyl group of SAM.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The charged nitrogen on the product loses a proton to solvent to form neutral MGLN.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: peptide chain release factor N5-glutamine methyltransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:703
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.150 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.150
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: peptide chain release factor N5-glutamine methyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.1.1.297
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/703/
+      snippet: The charged nitrogen on the product loses a proton to solvent to form neutral MGLN.
+      notes: M-CSA entry 703, mechanism 1; M-CSA cites PMID:12741815, PMID:15223314, PMID:17591721; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/703/
+      snippet: Products.
+      notes: M-CSA entry 703, mechanism 1; M-CSA cites PMID:12741815, PMID:15223314, PMID:17591721; step
+        3
+  - subject: phe100
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Phe100 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/703/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 703, mechanism 1; M-CSA cites PMID:12741815, PMID:15223314, PMID:17591721; M-CSA
+        catalytic-residue roles for Phe100
+  - subject: asn197
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn197 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/703/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 703, mechanism 1; M-CSA cites PMID:12741815, PMID:15223314, PMID:17591721; M-CSA
+        catalytic-residue roles for Asn197
+  - subject: pro198
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Pro198 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/703/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 703, mechanism 1; M-CSA cites PMID:12741815, PMID:15223314, PMID:17591721; M-CSA
+        catalytic-residue roles for Pro198
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/703/
+      snippet: HemK catalyzes the methyl-transfer reaction by converting S-adenosylmethionine (SAM) and
+        N5-glutamine (NGLN) into corresponding S-adensoyl-L-homocysteine (SAH) and methyl-glutamine (MGLN),
+        which is the key step for the enzymatic reaction. Asn197 and Pro198 play a pivotal role in stabilising
+        the transition state and regulating the positioning of reactive groups. The N5 lone pair of glutamine
+        is hel
+      notes: M-CSA entry 703, mechanism 1; M-CSA cites PMID:12741815, PMID:15223314, PMID:17591721; CATH
+        domain 3.40.50.150 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/703/
+      snippet: HemK catalyzes the methyl-transfer reaction by converting S-adenosylmethionine (SAM) and
+        N5-glutamine (NGLN) into corresponding S-adensoyl-L-homocysteine (SAH) and methyl-glutamine (MGLN),
+        which is the key step for the enzymatic reaction. Asn197 and Pro198 play a pivotal role in stabilising
+        the transition state and regulating the positioning of reactive groups. The N5 lone pair of glutamine
+        is hel
+      notes: M-CSA entry 703, mechanism 1; M-CSA cites PMID:12741815, PMID:15223314, PMID:17591721; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/703/
+      snippet: HemK catalyzes the methyl-transfer reaction by converting S-adenosylmethionine (SAM) and
+        N5-glutamine (NGLN) into corresponding S-adensoyl-L-homocysteine (SAH) and methyl-glutamine (MGLN),
+        which is the key step for the enzymatic reaction. Asn197 and Pro198 play a pivotal role in stabilising
+        the transition state and regulating the positioning of reactive groups. The N5 lone pair of glutamine
+        is hel
+      notes: M-CSA entry 703, mechanism 1; M-CSA cites PMID:12741815, PMID:15223314, PMID:17591721; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/703/
+      snippet: HemK catalyzes the methyl-transfer reaction by converting S-adenosylmethionine (SAM) and
+        N5-glutamine (NGLN) into corresponding S-adensoyl-L-homocysteine (SAH) and methyl-glutamine (MGLN),
+        which is the key step for the enzymatic reaction. Asn197 and Pro198 play a pivotal role in stabilising
+        the transition state and regulating the positioning of reactive groups. The N5 lone pair of glutamine
+        is hel
+      notes: M-CSA entry 703, mechanism 1; M-CSA cites PMID:12741815, PMID:15223314, PMID:17591721; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/703/
+      snippet: HemK catalyzes the methyl-transfer reaction by converting S-adenosylmethionine (SAM) and
+        N5-glutamine (NGLN) into corresponding S-adensoyl-L-homocysteine (SAH) and methyl-glutamine (MGLN),
+        which is the key step for the enzymatic reaction. Asn197 and Pro198 play a pivotal role in stabilising
+        the transition state and regulating the positioning of reactive groups. The N5 lone pair of glutamine
+        is hel
+      notes: M-CSA entry 703, mechanism 1; M-CSA cites PMID:12741815, PMID:15223314, PMID:17591721; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/703/
+      snippet: HemK catalyzes the methyl-transfer reaction by converting S-adenosylmethionine (SAM) and
+        N5-glutamine (NGLN) into corresponding S-adensoyl-L-homocysteine (SAH) and methyl-glutamine (MGLN),
+        which is the key step for the enzymatic reaction. Asn197 and Pro198 play a pivotal role in stabilising
+        the transition state and regulating the positioning of reactive groups. The N5 lone pair of glutamine
+        is hel
+      notes: M-CSA entry 703, mechanism 1; M-CSA cites PMID:12741815, PMID:15223314, PMID:17591721; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/703/
+      snippet: HemK catalyzes the methyl-transfer reaction by converting S-adenosylmethionine (SAM) and
+        N5-glutamine (NGLN) into corresponding S-adensoyl-L-homocysteine (SAH) and methyl-glutamine (MGLN),
+        which is the key step for the enzymatic reaction. Asn197 and Pro198 play a pivotal role in stabilising
+        the transition state and regulating the positioning of reactive groups. The N5 lone pair of glutamine
+        is hel
+      notes: M-CSA entry 703, mechanism 1; M-CSA cites PMID:12741815, PMID:15223314, PMID:17591721; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (12 evidence-backed edges) transcribed from M-CSA entry 703;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

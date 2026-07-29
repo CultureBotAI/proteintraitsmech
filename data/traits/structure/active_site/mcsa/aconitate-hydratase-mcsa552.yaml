@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.2.1.3
 - CHEBI:16947
@@ -731,4 +731,280 @@ definitions:
       Aconitase (aconitate hydratase) contains an Fe-S cluster within the active site. This can be in the form 4Fe-4S in which case the enzyme functions as an aconitate hydratase, performing the dehydration-rehydration of citrate to isocitrate via cis-aconitate in the second and third steps of the Krebs cycle. When the Fe-S cluster is in the form 3Fe-4S (cytosolic aconitase) the enzyme functions as an Iron Regulatory Protein (IRP) which binds to a conserved sequence (Iron Responsive Element; IRE) in mRNAs encoding proteins that function in the maintenance of iron homeostasis thus regulating the translation of that mRNA. Aconitase occurs in bacteria, plants, animals and fungi in mitochondrial and cytosolic forms.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of aconitate hydratase
+  description: Stepwise mechanism transcribed from M-CSA entry 552 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +27).
+  nodes:
+  - node_id: asp100
+    label: catalytic Asp100 (M-CSA/PDB numbering; UniProt residue 127)
+    node_type: RESIDUE
+    grounding: UniProtKB:P20004
+    description: 'M-CSA roles: electrostatic stabiliser, increase acidity.'
+  - node_id: his101
+    label: catalytic His101 (M-CSA/PDB numbering; UniProt residue 128)
+    node_type: RESIDUE
+    grounding: UniProtKB:P20004
+    description: 'M-CSA roles: electrostatic stabiliser, proton acceptor, proton donor.'
+  - node_id: asp165
+    label: catalytic Asp165 (M-CSA/PDB numbering; UniProt residue 192)
+    node_type: RESIDUE
+    grounding: UniProtKB:P20004
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: arg447
+    label: catalytic Arg447 (M-CSA/PDB numbering; UniProt residue 474)
+    node_type: RESIDUE
+    grounding: UniProtKB:P20004
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ser642
+    label: catalytic Ser642 (M-CSA/PDB numbering; UniProt residue 669)
+    node_type: RESIDUE
+    grounding: UniProtKB:P20004
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: arg644
+    label: catalytic Arg644 (M-CSA/PDB numbering; UniProt residue 671)
+    node_type: RESIDUE
+    grounding: UniProtKB:P20004
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: isocitrate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:16087
+  - node_id: product0
+    label: citrate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:16947
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: "Ser642 acts as a general base and deprotonates the beta-carbon of isocitrate. 
+This\
+      \ causes the elimination of the alpha carbon hydroxyl upon protonation by His101 and a cis-aconitate\
+      \ intermediate is formed."
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: "His 101 activates the Fe coordinated water which performs a nucleophilic on the beta-carbon.\
+      
+Simultaneously Ser642 acts as a general acid donating a proton to the alpha-carbon, forming the\
+      \ citrate product."
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: aconitate hydratase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:552
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.499.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.499.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: aconitate hydratase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.2.1.3
+  edges:
+  - subject: his101
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His101 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/552/
+      snippet: "Ser642 acts as a general base and deprotonates the beta-carbon of isocitrate. 
+This\
+        \ causes the elimination of the alpha carbon hydroxyl upon protonation by His101 and a cis-aconitate\
+        \ intermediate is formed."
+      notes: M-CSA entry 552, mechanism 1; M-CSA cites PMID:10631981, PMID:1313811, PMID:1547214, PMID:8151704,
+        PMID:9541534, PMID:9860952; step 1
+  - subject: ser642
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser642 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/552/
+      snippet: "Ser642 acts as a general base and deprotonates the beta-carbon of isocitrate. 
+This\
+        \ causes the elimination of the alpha carbon hydroxyl upon protonation by His101 and a cis-aconitate\
+        \ intermediate is formed."
+      notes: M-CSA entry 552, mechanism 1; M-CSA cites PMID:10631981, PMID:1313811, PMID:1547214, PMID:8151704,
+        PMID:9541534, PMID:9860952; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/552/
+      snippet: "His 101 activates the Fe coordinated water which performs a nucleophilic on the beta-carbon.\
+        
+Simultaneously Ser642 acts as a general acid donating a proton to the alpha-carbon, forming\
+        \ the citrate product."
+      notes: M-CSA entry 552, mechanism 1; M-CSA cites PMID:10631981, PMID:1313811, PMID:1547214, PMID:8151704,
+        PMID:9541534, PMID:9860952; step 2
+  - subject: his101
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His101 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/552/
+      snippet: "His 101 activates the Fe coordinated water which performs a nucleophilic on the beta-carbon.\
+        
+Simultaneously Ser642 acts as a general acid donating a proton to the alpha-carbon, forming\
+        \ the citrate product."
+      notes: M-CSA entry 552, mechanism 1; M-CSA cites PMID:10631981, PMID:1313811, PMID:1547214, PMID:8151704,
+        PMID:9541534, PMID:9860952; step 2
+  - subject: ser642
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Ser642 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/552/
+      snippet: "His 101 activates the Fe coordinated water which performs a nucleophilic on the beta-carbon.\
+        
+Simultaneously Ser642 acts as a general acid donating a proton to the alpha-carbon, forming\
+        \ the citrate product."
+      notes: M-CSA entry 552, mechanism 1; M-CSA cites PMID:10631981, PMID:1313811, PMID:1547214, PMID:8151704,
+        PMID:9541534, PMID:9860952; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/552/
+      snippet: Products.
+      notes: M-CSA entry 552, mechanism 1; M-CSA cites PMID:10631981, PMID:1313811, PMID:1547214, PMID:8151704,
+        PMID:9541534, PMID:9860952; step 3
+  - subject: asp100
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp100 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/552/
+      snippet: electrostatic stabiliser, increase acidity
+      notes: M-CSA entry 552, mechanism 1; M-CSA cites PMID:10631981, PMID:1313811, PMID:1547214, PMID:8151704,
+        PMID:9541534, PMID:9860952; M-CSA catalytic-residue roles for Asp100
+  - subject: his101
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His101 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/552/
+      snippet: electrostatic stabiliser, proton acceptor, proton donor
+      notes: M-CSA entry 552, mechanism 1; M-CSA cites PMID:10631981, PMID:1313811, PMID:1547214, PMID:8151704,
+        PMID:9541534, PMID:9860952; M-CSA catalytic-residue roles for His101
+  - subject: asp165
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp165 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/552/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 552, mechanism 1; M-CSA cites PMID:10631981, PMID:1313811, PMID:1547214, PMID:8151704,
+        PMID:9541534, PMID:9860952; M-CSA catalytic-residue roles for Asp165
+  - subject: arg447
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg447 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/552/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 552, mechanism 1; M-CSA cites PMID:10631981, PMID:1313811, PMID:1547214, PMID:8151704,
+        PMID:9541534, PMID:9860952; M-CSA catalytic-residue roles for Arg447
+  - subject: ser642
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser642 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/552/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 552, mechanism 1; M-CSA cites PMID:10631981, PMID:1313811, PMID:1547214, PMID:8151704,
+        PMID:9541534, PMID:9860952; M-CSA catalytic-residue roles for Ser642
+  - subject: arg644
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg644 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/552/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 552, mechanism 1; M-CSA cites PMID:10631981, PMID:1313811, PMID:1547214, PMID:8151704,
+        PMID:9541534, PMID:9860952; M-CSA catalytic-residue roles for Arg644
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/552/
+      snippet: Ser642, the general base is thought to be deprotonated when the isocitrate substrate binds
+        to the Fe centre and Fe-OH2 is formed in the coordination sphere. Serine 642 abstracts the proton
+        from the beta-carbon of isocitrate to form cis-aconitate. Conjugate elimination of the hydroxyl
+        group and cleavage of the alpha C-OH bond results in the deprotonation of His101. The His101-Asp100
+        pair activate t
+      notes: M-CSA entry 552, mechanism 1; M-CSA cites PMID:10631981, PMID:1313811, PMID:1547214, PMID:8151704,
+        PMID:9541534, PMID:9860952; CATH domain 3.30.499.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/552/
+      snippet: Ser642, the general base is thought to be deprotonated when the isocitrate substrate binds
+        to the Fe centre and Fe-OH2 is formed in the coordination sphere. Serine 642 abstracts the proton
+        from the beta-carbon of isocitrate to form cis-aconitate. Conjugate elimination of the hydroxyl
+        group and cleavage of the alpha C-OH bond results in the deprotonation of His101. The His101-Asp100
+        pair activate t
+      notes: M-CSA entry 552, mechanism 1; M-CSA cites PMID:10631981, PMID:1313811, PMID:1547214, PMID:8151704,
+        PMID:9541534, PMID:9860952; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/552/
+      snippet: Ser642, the general base is thought to be deprotonated when the isocitrate substrate binds
+        to the Fe centre and Fe-OH2 is formed in the coordination sphere. Serine 642 abstracts the proton
+        from the beta-carbon of isocitrate to form cis-aconitate. Conjugate elimination of the hydroxyl
+        group and cleavage of the alpha C-OH bond results in the deprotonation of His101. The His101-Asp100
+        pair activate t
+      notes: M-CSA entry 552, mechanism 1; M-CSA cites PMID:10631981, PMID:1313811, PMID:1547214, PMID:8151704,
+        PMID:9541534, PMID:9860952; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/552/
+      snippet: Ser642, the general base is thought to be deprotonated when the isocitrate substrate binds
+        to the Fe centre and Fe-OH2 is formed in the coordination sphere. Serine 642 abstracts the proton
+        from the beta-carbon of isocitrate to form cis-aconitate. Conjugate elimination of the hydroxyl
+        group and cleavage of the alpha C-OH bond results in the deprotonation of His101. The His101-Asp100
+        pair activate t
+      notes: M-CSA entry 552, mechanism 1; M-CSA cites PMID:10631981, PMID:1313811, PMID:1547214, PMID:8151704,
+        PMID:9541534, PMID:9860952; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (16 evidence-backed edges) transcribed from M-CSA entry 552;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

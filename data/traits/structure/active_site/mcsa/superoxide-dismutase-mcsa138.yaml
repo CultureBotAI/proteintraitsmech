@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.15.1.1
 - CHEBI:18421
@@ -260,4 +260,343 @@ definitions:
       Copper-zinc superoxide dimutase (CuZnSOD) catalyses the disproportionation of superoxide into dioxygen and hydrogen peroxide. In higher organisms, superoxide anions are produced as an occasional byproduct during the one-electron reduction of dioxygen in respiration and photosynthesis. Superoxides are also produced by macrophages as a part of the immune response. Excess amounts of superoxides can inactivate enzymes with iron-sulphur clusters and can lead to the formation of highly oxidising species that can damage cellular constituents. Therefore, organisms must have ways to regulate the concentration of superoxide concentrations. Many Gram-negative bacterial pathogens also possess CuZnSOD to counteract the phagocyte superoxide burst from their hosts.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of superoxide dismutase
+  description: Stepwise mechanism transcribed from M-CSA entry 138 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +1).
+  nodes:
+  - node_id: his46
+    label: catalytic His46 (M-CSA/PDB numbering; UniProt residue 47)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00445
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his48
+    label: catalytic His48 (M-CSA/PDB numbering; UniProt residue 49)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00445
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his63
+    label: catalytic His63 (M-CSA/PDB numbering; UniProt residue 64)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00445
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, metal ligand, proton acceptor,
+      proton donor.'
+  - node_id: his71
+    label: catalytic His71 (M-CSA/PDB numbering; UniProt residue 72)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00445
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his80
+    label: catalytic His80 (M-CSA/PDB numbering; UniProt residue 81)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00445
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp83
+    label: catalytic Asp83 (M-CSA/PDB numbering; UniProt residue 84)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00445
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his120
+    label: catalytic His120 (M-CSA/PDB numbering; UniProt residue 121)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00445
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: arg143
+    label: catalytic Arg143 (M-CSA/PDB numbering; UniProt residue 144)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00445
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: reactant0
+    label: superoxide
+    node_type: CHEMICAL
+    grounding: CHEBI:18421
+  - node_id: reactant1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product0
+    label: hydrogen peroxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+  - node_id: product1
+    label: dioxygen
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: 'In the resting state of the enzyme, there is a water coordinated to the copper, analogous
+      to the final state of this step, save that the histidine in the resting state is negatively charged
+      and bound to the copper II ion. The superoxide gives up its electron to the Copper II ion. Dioxygen,
+      no longer charged and electrostatically attracted to Arg143, diffuses out of the active site channel,
+      and it '
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: 'The second superoxide molecule enters the active site cavity, displaces a water molecule
+      and hydrogen bonds with the protonated NE2 atom of His63 and a water molecule. A chain of water
+      molecules can relay protons to the active site, replenishing those delivered to form peroxide. The
+      neutral hydrogen peroxide is displaced from the active site by a water molecule to return the enzyme
+      to its initial '
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: superoxide dismutase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:138
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.60.40.200 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.60.40.200
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: superoxide dismutase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.15.1.1
+  edges:
+  - subject: his63
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His63 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/138/
+      snippet: In the resting state of the enzyme, there is a water coordinated to the copper, analogous
+        to the final state of this step, save that the histidine in the resting state is negatively charged
+        and bound to the copper II ion. The superoxide gives up its electron to the Copper II ion. Dioxygen,
+        no longer charged and electrostatically attracted to Arg143, diffuses out of the active site channel,
+        and it is replaced by a water molecule, which starts of as a oxonium and concurrently gives up
+        its proton to the His63, which breaks the histidine bridge [PMID:10026301
+      notes: M-CSA entry 138, mechanism 1; M-CSA cites PMID:10026301, PMID:10329151, PMID:19063897, PMID:25433341,
+        PMID:25685664, PMID:27383660, PMID:6316150; step 1
+  - subject: arg143
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg143 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/138/
+      snippet: In the resting state of the enzyme, there is a water coordinated to the copper, analogous
+        to the final state of this step, save that the histidine in the resting state is negatively charged
+        and bound to the copper II ion. The superoxide gives up its electron to the Copper II ion. Dioxygen,
+        no longer charged and electrostatically attracted to Arg143, diffuses out of the active site channel,
+        and it is replaced by a water molecule, which starts of as a oxonium and concurrently gives up
+        its proton to the His63, which breaks the histidine bridge [PMID:10026301
+      notes: M-CSA entry 138, mechanism 1; M-CSA cites PMID:10026301, PMID:10329151, PMID:19063897, PMID:25433341,
+        PMID:25685664, PMID:27383660, PMID:6316150; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/138/
+      snippet: The second superoxide molecule enters the active site cavity, displaces a water molecule
+        and hydrogen bonds with the protonated NE2 atom of His63 and a water molecule. A chain of water
+        molecules can relay protons to the active site, replenishing those delivered to form peroxide.
+        The neutral hydrogen peroxide is displaced from the active site by a water molecule to return
+        the enzyme to its initial resting state
+      notes: M-CSA entry 138, mechanism 1; M-CSA cites PMID:10026301, PMID:10329151, PMID:19063897, PMID:25433341,
+        PMID:25685664, PMID:27383660, PMID:6316150; step 2
+  - subject: his63
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His63 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/138/
+      snippet: The second superoxide molecule enters the active site cavity, displaces a water molecule
+        and hydrogen bonds with the protonated NE2 atom of His63 and a water molecule. A chain of water
+        molecules can relay protons to the active site, replenishing those delivered to form peroxide.
+        The neutral hydrogen peroxide is displaced from the active site by a water molecule to return
+        the enzyme to its initial resting state
+      notes: M-CSA entry 138, mechanism 1; M-CSA cites PMID:10026301, PMID:10329151, PMID:19063897, PMID:25433341,
+        PMID:25685664, PMID:27383660, PMID:6316150; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/138/
+      snippet: Products.
+      notes: M-CSA entry 138, mechanism 1; M-CSA cites PMID:10026301, PMID:10329151, PMID:19063897, PMID:25433341,
+        PMID:25685664, PMID:27383660, PMID:6316150; step 3
+  - subject: his46
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His46 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/138/
+      snippet: metal ligand
+      notes: M-CSA entry 138, mechanism 1; M-CSA cites PMID:10026301, PMID:10329151, PMID:19063897, PMID:25433341,
+        PMID:25685664, PMID:27383660, PMID:6316150; M-CSA catalytic-residue roles for His46
+  - subject: his48
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His48 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/138/
+      snippet: metal ligand
+      notes: M-CSA entry 138, mechanism 1; M-CSA cites PMID:10026301, PMID:10329151, PMID:19063897, PMID:25433341,
+        PMID:25685664, PMID:27383660, PMID:6316150; M-CSA catalytic-residue roles for His48
+  - subject: his63
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His63 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/138/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, metal ligand, proton acceptor, proton donor
+      notes: M-CSA entry 138, mechanism 1; M-CSA cites PMID:10026301, PMID:10329151, PMID:19063897, PMID:25433341,
+        PMID:25685664, PMID:27383660, PMID:6316150; M-CSA catalytic-residue roles for His63
+  - subject: his71
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His71 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/138/
+      snippet: metal ligand
+      notes: M-CSA entry 138, mechanism 1; M-CSA cites PMID:10026301, PMID:10329151, PMID:19063897, PMID:25433341,
+        PMID:25685664, PMID:27383660, PMID:6316150; M-CSA catalytic-residue roles for His71
+  - subject: his80
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His80 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/138/
+      snippet: metal ligand
+      notes: M-CSA entry 138, mechanism 1; M-CSA cites PMID:10026301, PMID:10329151, PMID:19063897, PMID:25433341,
+        PMID:25685664, PMID:27383660, PMID:6316150; M-CSA catalytic-residue roles for His80
+  - subject: asp83
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp83 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/138/
+      snippet: metal ligand
+      notes: M-CSA entry 138, mechanism 1; M-CSA cites PMID:10026301, PMID:10329151, PMID:19063897, PMID:25433341,
+        PMID:25685664, PMID:27383660, PMID:6316150; M-CSA catalytic-residue roles for Asp83
+  - subject: his120
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His120 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/138/
+      snippet: metal ligand
+      notes: M-CSA entry 138, mechanism 1; M-CSA cites PMID:10026301, PMID:10329151, PMID:19063897, PMID:25433341,
+        PMID:25685664, PMID:27383660, PMID:6316150; M-CSA catalytic-residue roles for His120
+  - subject: arg143
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg143 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/138/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 138, mechanism 1; M-CSA cites PMID:10026301, PMID:10329151, PMID:19063897, PMID:25433341,
+        PMID:25685664, PMID:27383660, PMID:6316150; M-CSA catalytic-residue roles for Arg143
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/138/
+      snippet: Based on crystal structures, a mechanism is proposed. Guided by the electrostatic channel,
+        superoxide enters the active site, displaces a water molecule, forms a hydrogen bond with Arg143
+        and binds to the copper(II) ion. Bound superoxide reduces Cu(II) to Cu(I) with simultaneous breaking
+        of the bond between His63 and the Cu(I) ion. Dioxygen is released and His63 is protonated by the
+        solvent. Anoth
+      notes: M-CSA entry 138, mechanism 1; M-CSA cites PMID:10026301, PMID:10329151, PMID:19063897, PMID:25433341,
+        PMID:25685664, PMID:27383660, PMID:6316150; CATH domain 2.60.40.200 assigned to the catalytic
+        chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/138/
+      snippet: Based on crystal structures, a mechanism is proposed. Guided by the electrostatic channel,
+        superoxide enters the active site, displaces a water molecule, forms a hydrogen bond with Arg143
+        and binds to the copper(II) ion. Bound superoxide reduces Cu(II) to Cu(I) with simultaneous breaking
+        of the bond between His63 and the Cu(I) ion. Dioxygen is released and His63 is protonated by the
+        solvent. Anoth
+      notes: M-CSA entry 138, mechanism 1; M-CSA cites PMID:10026301, PMID:10329151, PMID:19063897, PMID:25433341,
+        PMID:25685664, PMID:27383660, PMID:6316150; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/138/
+      snippet: Based on crystal structures, a mechanism is proposed. Guided by the electrostatic channel,
+        superoxide enters the active site, displaces a water molecule, forms a hydrogen bond with Arg143
+        and binds to the copper(II) ion. Bound superoxide reduces Cu(II) to Cu(I) with simultaneous breaking
+        of the bond between His63 and the Cu(I) ion. Dioxygen is released and His63 is protonated by the
+        solvent. Anoth
+      notes: M-CSA entry 138, mechanism 1; M-CSA cites PMID:10026301, PMID:10329151, PMID:19063897, PMID:25433341,
+        PMID:25685664, PMID:27383660, PMID:6316150; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/138/
+      snippet: Based on crystal structures, a mechanism is proposed. Guided by the electrostatic channel,
+        superoxide enters the active site, displaces a water molecule, forms a hydrogen bond with Arg143
+        and binds to the copper(II) ion. Bound superoxide reduces Cu(II) to Cu(I) with simultaneous breaking
+        of the bond between His63 and the Cu(I) ion. Dioxygen is released and His63 is protonated by the
+        solvent. Anoth
+      notes: M-CSA entry 138, mechanism 1; M-CSA cites PMID:10026301, PMID:10329151, PMID:19063897, PMID:25433341,
+        PMID:25685664, PMID:27383660, PMID:6316150; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/138/
+      snippet: Based on crystal structures, a mechanism is proposed. Guided by the electrostatic channel,
+        superoxide enters the active site, displaces a water molecule, forms a hydrogen bond with Arg143
+        and binds to the copper(II) ion. Bound superoxide reduces Cu(II) to Cu(I) with simultaneous breaking
+        of the bond between His63 and the Cu(I) ion. Dioxygen is released and His63 is protonated by the
+        solvent. Anoth
+      notes: M-CSA entry 138, mechanism 1; M-CSA cites PMID:10026301, PMID:10329151, PMID:19063897, PMID:25433341,
+        PMID:25685664, PMID:27383660, PMID:6316150; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/138/
+      snippet: Based on crystal structures, a mechanism is proposed. Guided by the electrostatic channel,
+        superoxide enters the active site, displaces a water molecule, forms a hydrogen bond with Arg143
+        and binds to the copper(II) ion. Bound superoxide reduces Cu(II) to Cu(I) with simultaneous breaking
+        of the bond between His63 and the Cu(I) ion. Dioxygen is released and His63 is protonated by the
+        solvent. Anoth
+      notes: M-CSA entry 138, mechanism 1; M-CSA cites PMID:10026301, PMID:10329151, PMID:19063897, PMID:25433341,
+        PMID:25685664, PMID:27383660, PMID:6316150; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (19 evidence-backed edges) transcribed from M-CSA entry 138;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

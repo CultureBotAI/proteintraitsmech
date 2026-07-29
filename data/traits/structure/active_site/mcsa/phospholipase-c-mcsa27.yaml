@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.4.3
 - CHEBI:15377
@@ -211,4 +211,320 @@ definitions:
       Phospholipase C (PLC) from Bacillus cereus is a monomeric protein with a degree of similarly to mammalian PLCs and can mimic the action of mammalian PLCs for example by stimulating prostaglandin synthesis. The active site contains three Zn(II) ions which activate the cleavage of membrane phospholipids, liberating the polar head group and diacylglycerol. Although phosphatidylcholine is the preferred substrate, phosphatidylserine and phosphatidylethanolamine are also accepted.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of phospholipase C
+  description: Stepwise mechanism transcribed from M-CSA entry 27 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +38).
+  nodes:
+  - node_id: his14
+    label: catalytic His14 (M-CSA/PDB numbering; UniProt residue 52)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09598
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp55
+    label: catalytic Asp55 (M-CSA/PDB numbering; UniProt residue 93)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09598
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, metal ligand, proton acceptor,
+      proton donor.'
+  - node_id: his69
+    label: catalytic His69 (M-CSA/PDB numbering; UniProt residue 107)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09598
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his118
+    label: catalytic His118 (M-CSA/PDB numbering; UniProt residue 156)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09598
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp122
+    label: catalytic Asp122 (M-CSA/PDB numbering; UniProt residue 160)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09598
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his128
+    label: catalytic His128 (M-CSA/PDB numbering; UniProt residue 166)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09598
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his142
+    label: catalytic His142 (M-CSA/PDB numbering; UniProt residue 180)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09598
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu146
+    label: catalytic Glu146 (M-CSA/PDB numbering; UniProt residue 184)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09598
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: phosphatidylcholine(1+)
+    node_type: CHEMICAL
+    grounding: CHEBI:49183
+  - node_id: product0
+    label: 1,2-diacyl-sn-glycerol
+    node_type: CHEMICAL
+    grounding: CHEBI:17815
+  - node_id: product1
+    label: phosphocholine
+    node_type: CHEMICAL
+    grounding: CHEBI:18132
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp55 deprotonates water, which initiates nucleophilic attack on the phosphate in a substitution
+      reaction, eliminating 1,2-diacylglycerol.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Diacylglycerol deprotonates Asp55 in an inferred return step.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: phospholipase C catalytic site
+    node_type: MOTIF
+    grounding: MCSA:27
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.10.575.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.10.575.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: phospholipase C activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.4.3
+  edges:
+  - subject: asp55
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp55 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/27/
+      snippet: Asp55 deprotonates water, which initiates nucleophilic attack on the phosphate in a substitution
+        reaction, eliminating 1,2-diacylglycerol.
+      notes: M-CSA entry 27, mechanism 1; M-CSA cites PMID:10194360, PMID:2493587, PMID:26976751, PMID:8230197,
+        PMID:8841144, PMID:9548962; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/27/
+      snippet: Diacylglycerol deprotonates Asp55 in an inferred return step.
+      notes: M-CSA entry 27, mechanism 1; M-CSA cites PMID:10194360, PMID:2493587, PMID:26976751, PMID:8230197,
+        PMID:8841144, PMID:9548962; step 2
+  - subject: asp55
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Asp55 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/27/
+      snippet: Diacylglycerol deprotonates Asp55 in an inferred return step.
+      notes: M-CSA entry 27, mechanism 1; M-CSA cites PMID:10194360, PMID:2493587, PMID:26976751, PMID:8230197,
+        PMID:8841144, PMID:9548962; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/27/
+      snippet: Products
+      notes: M-CSA entry 27, mechanism 1; M-CSA cites PMID:10194360, PMID:2493587, PMID:26976751, PMID:8230197,
+        PMID:8841144, PMID:9548962; step 3
+  - subject: his14
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His14 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/27/
+      snippet: metal ligand
+      notes: M-CSA entry 27, mechanism 1; M-CSA cites PMID:10194360, PMID:2493587, PMID:26976751, PMID:8230197,
+        PMID:8841144, PMID:9548962; M-CSA catalytic-residue roles for His14
+  - subject: asp55
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp55 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/27/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, metal ligand, proton acceptor, proton donor
+      notes: M-CSA entry 27, mechanism 1; M-CSA cites PMID:10194360, PMID:2493587, PMID:26976751, PMID:8230197,
+        PMID:8841144, PMID:9548962; M-CSA catalytic-residue roles for Asp55
+  - subject: his69
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His69 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/27/
+      snippet: metal ligand
+      notes: M-CSA entry 27, mechanism 1; M-CSA cites PMID:10194360, PMID:2493587, PMID:26976751, PMID:8230197,
+        PMID:8841144, PMID:9548962; M-CSA catalytic-residue roles for His69
+  - subject: his118
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His118 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/27/
+      snippet: metal ligand
+      notes: M-CSA entry 27, mechanism 1; M-CSA cites PMID:10194360, PMID:2493587, PMID:26976751, PMID:8230197,
+        PMID:8841144, PMID:9548962; M-CSA catalytic-residue roles for His118
+  - subject: asp122
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp122 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/27/
+      snippet: metal ligand
+      notes: M-CSA entry 27, mechanism 1; M-CSA cites PMID:10194360, PMID:2493587, PMID:26976751, PMID:8230197,
+        PMID:8841144, PMID:9548962; M-CSA catalytic-residue roles for Asp122
+  - subject: his128
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His128 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/27/
+      snippet: metal ligand
+      notes: M-CSA entry 27, mechanism 1; M-CSA cites PMID:10194360, PMID:2493587, PMID:26976751, PMID:8230197,
+        PMID:8841144, PMID:9548962; M-CSA catalytic-residue roles for His128
+  - subject: his142
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His142 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/27/
+      snippet: metal ligand
+      notes: M-CSA entry 27, mechanism 1; M-CSA cites PMID:10194360, PMID:2493587, PMID:26976751, PMID:8230197,
+        PMID:8841144, PMID:9548962; M-CSA catalytic-residue roles for His142
+  - subject: glu146
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu146 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/27/
+      snippet: metal ligand
+      notes: M-CSA entry 27, mechanism 1; M-CSA cites PMID:10194360, PMID:2493587, PMID:26976751, PMID:8230197,
+        PMID:8841144, PMID:9548962; M-CSA catalytic-residue roles for Glu146
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/27/
+      snippet: "Crystallographic data has shown the substrate phosphate to coordinate directly to the\
+        \ tri-metallic active site, as well as proximate amino acids. 
+<br/><br/>
+The general base\
+        \ (Asp55) deprotonates water, which initiates a nucleophilic attack on the phosphorus atom of\
+        \ the phosphodiester linkage. This results in two products, phosphorylcholine and diacylglycerol.\
+        \ Diacylglycerol should be activated"
+      notes: M-CSA entry 27, mechanism 1; M-CSA cites PMID:10194360, PMID:2493587, PMID:26976751, PMID:8230197,
+        PMID:8841144, PMID:9548962; CATH domain 1.10.575.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/27/
+      snippet: "Crystallographic data has shown the substrate phosphate to coordinate directly to the\
+        \ tri-metallic active site, as well as proximate amino acids. 
+<br/><br/>
+The general base\
+        \ (Asp55) deprotonates water, which initiates a nucleophilic attack on the phosphorus atom of\
+        \ the phosphodiester linkage. This results in two products, phosphorylcholine and diacylglycerol.\
+        \ Diacylglycerol should be activated"
+      notes: M-CSA entry 27, mechanism 1; M-CSA cites PMID:10194360, PMID:2493587, PMID:26976751, PMID:8230197,
+        PMID:8841144, PMID:9548962; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/27/
+      snippet: "Crystallographic data has shown the substrate phosphate to coordinate directly to the\
+        \ tri-metallic active site, as well as proximate amino acids. 
+<br/><br/>
+The general base\
+        \ (Asp55) deprotonates water, which initiates a nucleophilic attack on the phosphorus atom of\
+        \ the phosphodiester linkage. This results in two products, phosphorylcholine and diacylglycerol.\
+        \ Diacylglycerol should be activated"
+      notes: M-CSA entry 27, mechanism 1; M-CSA cites PMID:10194360, PMID:2493587, PMID:26976751, PMID:8230197,
+        PMID:8841144, PMID:9548962; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/27/
+      snippet: "Crystallographic data has shown the substrate phosphate to coordinate directly to the\
+        \ tri-metallic active site, as well as proximate amino acids. 
+<br/><br/>
+The general base\
+        \ (Asp55) deprotonates water, which initiates a nucleophilic attack on the phosphorus atom of\
+        \ the phosphodiester linkage. This results in two products, phosphorylcholine and diacylglycerol.\
+        \ Diacylglycerol should be activated"
+      notes: M-CSA entry 27, mechanism 1; M-CSA cites PMID:10194360, PMID:2493587, PMID:26976751, PMID:8230197,
+        PMID:8841144, PMID:9548962; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/27/
+      snippet: "Crystallographic data has shown the substrate phosphate to coordinate directly to the\
+        \ tri-metallic active site, as well as proximate amino acids. 
+<br/><br/>
+The general base\
+        \ (Asp55) deprotonates water, which initiates a nucleophilic attack on the phosphorus atom of\
+        \ the phosphodiester linkage. This results in two products, phosphorylcholine and diacylglycerol.\
+        \ Diacylglycerol should be activated"
+      notes: M-CSA entry 27, mechanism 1; M-CSA cites PMID:10194360, PMID:2493587, PMID:26976751, PMID:8230197,
+        PMID:8841144, PMID:9548962; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/27/
+      snippet: "Crystallographic data has shown the substrate phosphate to coordinate directly to the\
+        \ tri-metallic active site, as well as proximate amino acids. 
+<br/><br/>
+The general base\
+        \ (Asp55) deprotonates water, which initiates a nucleophilic attack on the phosphorus atom of\
+        \ the phosphodiester linkage. This results in two products, phosphorylcholine and diacylglycerol.\
+        \ Diacylglycerol should be activated"
+      notes: M-CSA entry 27, mechanism 1; M-CSA cites PMID:10194360, PMID:2493587, PMID:26976751, PMID:8230197,
+        PMID:8841144, PMID:9548962; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (18 evidence-backed edges) transcribed from M-CSA entry 27;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

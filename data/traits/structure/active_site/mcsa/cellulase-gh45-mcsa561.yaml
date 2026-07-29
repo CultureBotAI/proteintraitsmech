@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.1.4
 - CHEBI:15377
@@ -166,4 +166,188 @@ definitions:
       Endoglucanase V (EGV) from Humicola insolens is a cellulase, catalysing the hydrolysis of the beta-(1,4) glycosidic bond of cellulose. Although the active site resembles lysozyme, with six hexose binding sites and similarly placed acidic residues, the enzymes are structurally different and produce products with different stereochemistries. It is a member of the glycoside hydrolase family 45.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of cellulase (GH45)
+  description: Stepwise mechanism transcribed from M-CSA entry 561 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: asp10
+    label: catalytic Asp10 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P43316
+    description: 'M-CSA roles: activator, increase nucleophilicity, proton acceptor, proton donor.'
+  - node_id: asp121
+    label: catalytic Asp121 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P43316
+    description: 'M-CSA roles: promote heterolysis, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: cellotetraose
+    node_type: CHEMICAL
+    grounding: CHEBI:62974
+  - node_id: product0
+    label: cellobiose
+    node_type: CHEMICAL
+    grounding: CHEBI:17057
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp10 activates a water molecule which attacks the anomeric carbon causing the cleavage
+      of the glycosidic bond upon protonation by Asp121.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Inferred step- active site regenerated.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: cellulase (GH45) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:561
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.40.40.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.40.40.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: cellulase (GH45) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.1.4
+  edges:
+  - subject: asp10
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp10 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/561/
+      snippet: Asp10 activates a water molecule which attacks the anomeric carbon causing the cleavage
+        of the glycosidic bond upon protonation by Asp121.
+      notes: M-CSA entry 561, mechanism 1; M-CSA cites PMID:15299721, PMID:8377830; step 1
+  - subject: asp121
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp121 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/561/
+      snippet: Asp10 activates a water molecule which attacks the anomeric carbon causing the cleavage
+        of the glycosidic bond upon protonation by Asp121.
+      notes: M-CSA entry 561, mechanism 1; M-CSA cites PMID:15299721, PMID:8377830; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/561/
+      snippet: Inferred step- active site regenerated.
+      notes: M-CSA entry 561, mechanism 1; M-CSA cites PMID:15299721, PMID:8377830; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/561/
+      snippet: Products.
+      notes: M-CSA entry 561, mechanism 1; M-CSA cites PMID:15299721, PMID:8377830; step 3
+  - subject: asp10
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp10 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/561/
+      snippet: activator, increase nucleophilicity, proton acceptor, proton donor
+      notes: M-CSA entry 561, mechanism 1; M-CSA cites PMID:15299721, PMID:8377830; M-CSA catalytic-residue
+        roles for Asp10
+  - subject: asp121
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp121 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/561/
+      snippet: promote heterolysis, proton acceptor, proton donor
+      notes: M-CSA entry 561, mechanism 1; M-CSA cites PMID:15299721, PMID:8377830; M-CSA catalytic-residue
+        roles for Asp121
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/561/
+      snippet: Asp 10 activates a water molecule via general base catalysis. The activated water can attack
+        the electrophilic acetal carbon as hydroxide. SN2-type displacement of the linking oxygen occurs,
+        with a protonated Asp 121 acting as a general acid donor to the oxygen. The products are a hemiacetal
+        and secondary alcohol.
+      notes: M-CSA entry 561, mechanism 1; M-CSA cites PMID:15299721, PMID:8377830; CATH domain 2.40.40.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/561/
+      snippet: Asp 10 activates a water molecule via general base catalysis. The activated water can attack
+        the electrophilic acetal carbon as hydroxide. SN2-type displacement of the linking oxygen occurs,
+        with a protonated Asp 121 acting as a general acid donor to the oxygen. The products are a hemiacetal
+        and secondary alcohol.
+      notes: M-CSA entry 561, mechanism 1; M-CSA cites PMID:15299721, PMID:8377830; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/561/
+      snippet: Asp 10 activates a water molecule via general base catalysis. The activated water can attack
+        the electrophilic acetal carbon as hydroxide. SN2-type displacement of the linking oxygen occurs,
+        with a protonated Asp 121 acting as a general acid donor to the oxygen. The products are a hemiacetal
+        and secondary alcohol.
+      notes: M-CSA entry 561, mechanism 1; M-CSA cites PMID:15299721, PMID:8377830; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/561/
+      snippet: Asp 10 activates a water molecule via general base catalysis. The activated water can attack
+        the electrophilic acetal carbon as hydroxide. SN2-type displacement of the linking oxygen occurs,
+        with a protonated Asp 121 acting as a general acid donor to the oxygen. The products are a hemiacetal
+        and secondary alcohol.
+      notes: M-CSA entry 561, mechanism 1; M-CSA cites PMID:15299721, PMID:8377830; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/561/
+      snippet: Asp 10 activates a water molecule via general base catalysis. The activated water can attack
+        the electrophilic acetal carbon as hydroxide. SN2-type displacement of the linking oxygen occurs,
+        with a protonated Asp 121 acting as a general acid donor to the oxygen. The products are a hemiacetal
+        and secondary alcohol.
+      notes: M-CSA entry 561, mechanism 1; M-CSA cites PMID:15299721, PMID:8377830; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (11 evidence-backed edges) transcribed from M-CSA entry 561;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

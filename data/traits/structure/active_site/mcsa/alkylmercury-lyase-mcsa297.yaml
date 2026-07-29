@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.99.1.2
 - CHEBI:18310
@@ -161,4 +161,291 @@ definitions:
       Mercury is a highly toxic metal. Toxicity can result from three different mercurial forms: elemental, inorganic ion and organomercurial compounds. The ability of bacteria to detoxify mercurial compounds by reduction and volatilisation is conferred by the Mer genes. Organomercurial lyase (MerB), also known as alkylmercury lyase, mediates the first of the two steps in the microbial detoxification of organomercurial salts (the other catalysed by mercuric reductase). It catalyses the protonolysis of the carbon-mercury bond in a wide range of organomercurial salts (primary, secondary, tertiary, alkyl, vinyl, allyl and aryl) to Hg(II) and the respective organic compound [PMID: 10548738]. Hg(II) is subsequently detoxified by mercuric reductase MerA.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of alkylmercury lyase
+  description: Stepwise mechanism transcribed from M-CSA entry 297 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: cys96
+    label: catalytic Cys96 (M-CSA/PDB numbering; UniProt residue 96)
+    node_type: RESIDUE
+    grounding: UniProtKB:P77072
+    description: 'M-CSA roles: activator, covalently attached, hydrogen bond donor, nucleophile, proton
+      donor.'
+  - node_id: asp99
+    label: catalytic Asp99 (M-CSA/PDB numbering; UniProt residue 99)
+    node_type: RESIDUE
+    grounding: UniProtKB:P77072
+    description: 'M-CSA roles: activator, hydrogen bond acceptor, hydrogen bond donor, increase nucleophilicity,
+      promote heterolysis, proton acceptor, proton donor.'
+  - node_id: cys159
+    label: catalytic Cys159 (M-CSA/PDB numbering; UniProt residue 159)
+    node_type: RESIDUE
+    grounding: UniProtKB:P77072
+    description: 'M-CSA roles: activator, covalently attached, nucleophile, proton donor.'
+  - node_id: reactant0
+    label: primary alkymercury(1+)
+    node_type: CHEMICAL
+    grounding: CHEBI:83725
+  - node_id: reactant1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product0
+    label: alkane
+    node_type: CHEMICAL
+    grounding: CHEBI:18310
+  - node_id: product1
+    label: mercury(2+)
+    node_type: CHEMICAL
+    grounding: CHEBI:16793
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp99 acts as a general base towards Cys96, activating the thiol for nucleophilic attack
+      at the mercury centre of the organomercury substrate. The increases the coordination number around
+      the metal, has been corroborated by spectroscopic studies [PMID:15222746, PMID:19004822].
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Almost immediately after Cys96 attacks the organomercury compound, coordination to the
+      metal coordinated thiol group by Cys159 occurs with concomitant deprotonation of the attacking thiol
+      by Asp99.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The polarised carbon-mercury bond is cleaved and then protonated by the close proximity
+      Asp99, generating an alkane. The close proximity Asp99 is thought to polarise the C-Hg bond, enhancing
+      its ionic character. Asp99 then acts as the proton donor to a highly anionic character carbon [PMID:19004822].
+      The mercury remains coordinated by the two cystiene residues, ready to be relayed to MerA to be
+      re
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: alkylmercury lyase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:297
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: activity
+    label: alkylmercury lyase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.99.1.2
+  edges:
+  - subject: cys96
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys96 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/297/
+      snippet: Asp99 acts as a general base towards Cys96, activating the thiol for nucleophilic attack
+        at the mercury centre of the organomercury substrate. The increases the coordination number around
+        the metal, has been corroborated by spectroscopic studies [PMID:15222746, PMID:19004822].
+      notes: M-CSA entry 297, mechanism 1; M-CSA cites PMID:15222745, PMID:15222746, PMID:19004822, PMID:19719173,
+        PMID:27989130; step 1
+  - subject: asp99
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp99 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/297/
+      snippet: Asp99 acts as a general base towards Cys96, activating the thiol for nucleophilic attack
+        at the mercury centre of the organomercury substrate. The increases the coordination number around
+        the metal, has been corroborated by spectroscopic studies [PMID:15222746, PMID:19004822].
+      notes: M-CSA entry 297, mechanism 1; M-CSA cites PMID:15222745, PMID:15222746, PMID:19004822, PMID:19719173,
+        PMID:27989130; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/297/
+      snippet: Almost immediately after Cys96 attacks the organomercury compound, coordination to the
+        metal coordinated thiol group by Cys159 occurs with concomitant deprotonation of the attacking
+        thiol by Asp99.
+      notes: M-CSA entry 297, mechanism 1; M-CSA cites PMID:15222745, PMID:15222746, PMID:19004822, PMID:19719173,
+        PMID:27989130; step 2
+  - subject: cys96
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Cys96 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/297/
+      snippet: Almost immediately after Cys96 attacks the organomercury compound, coordination to the
+        metal coordinated thiol group by Cys159 occurs with concomitant deprotonation of the attacking
+        thiol by Asp99.
+      notes: M-CSA entry 297, mechanism 1; M-CSA cites PMID:15222745, PMID:15222746, PMID:19004822, PMID:19719173,
+        PMID:27989130; step 2
+  - subject: asp99
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Asp99 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/297/
+      snippet: Almost immediately after Cys96 attacks the organomercury compound, coordination to the
+        metal coordinated thiol group by Cys159 occurs with concomitant deprotonation of the attacking
+        thiol by Asp99.
+      notes: M-CSA entry 297, mechanism 1; M-CSA cites PMID:15222745, PMID:15222746, PMID:19004822, PMID:19719173,
+        PMID:27989130; step 2
+  - subject: cys159
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Cys159 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/297/
+      snippet: Almost immediately after Cys96 attacks the organomercury compound, coordination to the
+        metal coordinated thiol group by Cys159 occurs with concomitant deprotonation of the attacking
+        thiol by Asp99.
+      notes: M-CSA entry 297, mechanism 1; M-CSA cites PMID:15222745, PMID:15222746, PMID:19004822, PMID:19719173,
+        PMID:27989130; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/297/
+      snippet: The polarised carbon-mercury bond is cleaved and then protonated by the close proximity
+        Asp99, generating an alkane. The close proximity Asp99 is thought to polarise the C-Hg bond, enhancing
+        its ionic character. Asp99 then acts as the proton donor to a highly anionic character carbon
+        [PMID:19004822]. The mercury remains coordinated by the two cystiene residues, ready to be relayed
+        to MerA to be reduced to the metallic form.
+      notes: M-CSA entry 297, mechanism 1; M-CSA cites PMID:15222745, PMID:15222746, PMID:19004822, PMID:19719173,
+        PMID:27989130; step 3
+  - subject: asp99
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Asp99 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/297/
+      snippet: The polarised carbon-mercury bond is cleaved and then protonated by the close proximity
+        Asp99, generating an alkane. The close proximity Asp99 is thought to polarise the C-Hg bond, enhancing
+        its ionic character. Asp99 then acts as the proton donor to a highly anionic character carbon
+        [PMID:19004822]. The mercury remains coordinated by the two cystiene residues, ready to be relayed
+        to MerA to be reduced to the metallic form.
+      notes: M-CSA entry 297, mechanism 1; M-CSA cites PMID:15222745, PMID:15222746, PMID:19004822, PMID:19719173,
+        PMID:27989130; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/297/
+      snippet: Products.
+      notes: M-CSA entry 297, mechanism 1; M-CSA cites PMID:15222745, PMID:15222746, PMID:19004822, PMID:19719173,
+        PMID:27989130; step 4
+  - subject: cys96
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys96 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/297/
+      snippet: activator, covalently attached, hydrogen bond donor, nucleophile, proton donor
+      notes: M-CSA entry 297, mechanism 1; M-CSA cites PMID:15222745, PMID:15222746, PMID:19004822, PMID:19719173,
+        PMID:27989130; M-CSA catalytic-residue roles for Cys96
+  - subject: asp99
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp99 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/297/
+      snippet: activator, hydrogen bond acceptor, hydrogen bond donor, increase nucleophilicity, promote
+        heterolysis, proton acceptor, proton donor
+      notes: M-CSA entry 297, mechanism 1; M-CSA cites PMID:15222745, PMID:15222746, PMID:19004822, PMID:19719173,
+        PMID:27989130; M-CSA catalytic-residue roles for Asp99
+  - subject: cys159
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys159 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/297/
+      snippet: activator, covalently attached, nucleophile, proton donor
+      notes: M-CSA entry 297, mechanism 1; M-CSA cites PMID:15222745, PMID:15222746, PMID:19004822, PMID:19719173,
+        PMID:27989130; M-CSA catalytic-residue roles for Cys159
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/297/
+      snippet: Asp99 activates the first cysteine nucleophile (Cys96). Almost immediately after Cys96
+        attacks the organomercury compound, coordination of Cys159 occurs with concomitant deprotonation
+        of the attacking thiol by Asp99. The polarised carbon-mercury bond is cleaved and then protonated
+        by the close proximity Asp99, generating an alkane.
+      notes: M-CSA entry 297, mechanism 1; M-CSA cites PMID:15222745, PMID:15222746, PMID:19004822, PMID:19719173,
+        PMID:27989130; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/297/
+      snippet: Asp99 activates the first cysteine nucleophile (Cys96). Almost immediately after Cys96
+        attacks the organomercury compound, coordination of Cys159 occurs with concomitant deprotonation
+        of the attacking thiol by Asp99. The polarised carbon-mercury bond is cleaved and then protonated
+        by the close proximity Asp99, generating an alkane.
+      notes: M-CSA entry 297, mechanism 1; M-CSA cites PMID:15222745, PMID:15222746, PMID:19004822, PMID:19719173,
+        PMID:27989130; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/297/
+      snippet: Asp99 activates the first cysteine nucleophile (Cys96). Almost immediately after Cys96
+        attacks the organomercury compound, coordination of Cys159 occurs with concomitant deprotonation
+        of the attacking thiol by Asp99. The polarised carbon-mercury bond is cleaved and then protonated
+        by the close proximity Asp99, generating an alkane.
+      notes: M-CSA entry 297, mechanism 1; M-CSA cites PMID:15222745, PMID:15222746, PMID:19004822, PMID:19719173,
+        PMID:27989130; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/297/
+      snippet: Asp99 activates the first cysteine nucleophile (Cys96). Almost immediately after Cys96
+        attacks the organomercury compound, coordination of Cys159 occurs with concomitant deprotonation
+        of the attacking thiol by Asp99. The polarised carbon-mercury bond is cleaved and then protonated
+        by the close proximity Asp99, generating an alkane.
+      notes: M-CSA entry 297, mechanism 1; M-CSA cites PMID:15222745, PMID:15222746, PMID:19004822, PMID:19719173,
+        PMID:27989130; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/297/
+      snippet: Asp99 activates the first cysteine nucleophile (Cys96). Almost immediately after Cys96
+        attacks the organomercury compound, coordination of Cys159 occurs with concomitant deprotonation
+        of the attacking thiol by Asp99. The polarised carbon-mercury bond is cleaved and then protonated
+        by the close proximity Asp99, generating an alkane.
+      notes: M-CSA entry 297, mechanism 1; M-CSA cites PMID:15222745, PMID:15222746, PMID:19004822, PMID:19719173,
+        PMID:27989130; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (17 evidence-backed edges) transcribed from M-CSA entry 297;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

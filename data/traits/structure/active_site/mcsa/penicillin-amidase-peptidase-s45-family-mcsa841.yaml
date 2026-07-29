@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.5.1.11
 - CHEBI:51356
@@ -493,4 +493,248 @@ definitions:
       Penicillin acylase is a widely distributed enzyme among bacteria, yeast and fungi. It is used industrially in the production of 6-aminopenicillanic acid, the starting point for the synthesis of penicillins. In vivo it is thought to have a role in the use of aromatic compounds as carbon sources.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of penicillin amidase (peptidase S45 family)
+  description: Stepwise mechanism transcribed from M-CSA entry 841 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: ser1
+    label: catalytic Ser1 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06875
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: ala69
+    label: catalytic Ala69 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06875
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asn241
+    label: catalytic Asn241 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06875
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: penicillinate anion
+    node_type: CHEMICAL
+    grounding: CHEBI:51356
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: 6-aminopenicillanic acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57869
+  - node_id: product1
+    label: carboxylic acid anion
+    node_type: CHEMICAL
+    grounding: CHEBI:29067
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Ser 290 N-terminus deprotonates its own hydroxyl group which activates it to nucleophilically
+      attack the carbonyl group of the amide bond of penicillin.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The oxyanion initiates an elimination which results in the cleavage of the amide bond
+      and the N-terminal product accepts a proton from the N-terminus of Ser290.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The N-terminus of Ser290 abstracts a proton from a water molecule which activates it
+      to nucleophilically attack the carbon of the carbonyl group.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The oxyanion initiates an elimination which results in the cleavage acyl-enzyme bond
+      which releases Ser290 which then accepts a proton from  its N-terminus and thus returns the active
+      site to its native state.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Product
+  - node_id: active_site
+    label: penicillin amidase (peptidase S45 family) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:841
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.60.20.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.60.20.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: penicillin amidase (peptidase S45 family) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.5.1.11
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/841/
+      snippet: The oxyanion initiates an elimination which results in the cleavage of the amide bond and
+        the N-terminal product accepts a proton from the N-terminus of Ser290.
+      notes: M-CSA entry 841, mechanism 1; M-CSA cites PMID:10331865, PMID:11601852, PMID:7816145, PMID:9813130;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/841/
+      snippet: The N-terminus of Ser290 abstracts a proton from a water molecule which activates it to
+        nucleophilically attack the carbon of the carbonyl group.
+      notes: M-CSA entry 841, mechanism 1; M-CSA cites PMID:10331865, PMID:11601852, PMID:7816145, PMID:9813130;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/841/
+      snippet: The oxyanion initiates an elimination which results in the cleavage acyl-enzyme bond which
+        releases Ser290 which then accepts a proton from  its N-terminus and thus returns the active site
+        to its native state.
+      notes: M-CSA entry 841, mechanism 1; M-CSA cites PMID:10331865, PMID:11601852, PMID:7816145, PMID:9813130;
+        step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/841/
+      snippet: Product
+      notes: M-CSA entry 841, mechanism 1; M-CSA cites PMID:10331865, PMID:11601852, PMID:7816145, PMID:9813130;
+        step 5
+  - subject: ser1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser1 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/841/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 841, mechanism 1; M-CSA cites PMID:10331865, PMID:11601852, PMID:7816145, PMID:9813130;
+        M-CSA catalytic-residue roles for Ser1
+  - subject: ala69
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ala69 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/841/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 841, mechanism 1; M-CSA cites PMID:10331865, PMID:11601852, PMID:7816145, PMID:9813130;
+        M-CSA catalytic-residue roles for Ala69
+  - subject: asn241
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn241 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/841/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 841, mechanism 1; M-CSA cites PMID:10331865, PMID:11601852, PMID:7816145, PMID:9813130;
+        M-CSA catalytic-residue roles for Asn241
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/841/
+      snippet: The penicillin binds in the active site near to the reactive N-terminal serine. The amino
+        group enhances the serines nucleophilic character (via a bridging water) allowing it to attack
+        the carbonyl carbon at the amide bond to be cleaved. The tetrahedral intermediate is stabilised
+        by the side chain of asparagine 241 and the main chain nitrogen of alanine 69. The bond is then
+        cleaved and the two rea
+      notes: M-CSA entry 841, mechanism 1; M-CSA cites PMID:10331865, PMID:11601852, PMID:7816145, PMID:9813130;
+        CATH domain 3.60.20.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/841/
+      snippet: The penicillin binds in the active site near to the reactive N-terminal serine. The amino
+        group enhances the serines nucleophilic character (via a bridging water) allowing it to attack
+        the carbonyl carbon at the amide bond to be cleaved. The tetrahedral intermediate is stabilised
+        by the side chain of asparagine 241 and the main chain nitrogen of alanine 69. The bond is then
+        cleaved and the two rea
+      notes: M-CSA entry 841, mechanism 1; M-CSA cites PMID:10331865, PMID:11601852, PMID:7816145, PMID:9813130;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/841/
+      snippet: The penicillin binds in the active site near to the reactive N-terminal serine. The amino
+        group enhances the serines nucleophilic character (via a bridging water) allowing it to attack
+        the carbonyl carbon at the amide bond to be cleaved. The tetrahedral intermediate is stabilised
+        by the side chain of asparagine 241 and the main chain nitrogen of alanine 69. The bond is then
+        cleaved and the two rea
+      notes: M-CSA entry 841, mechanism 1; M-CSA cites PMID:10331865, PMID:11601852, PMID:7816145, PMID:9813130;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/841/
+      snippet: The penicillin binds in the active site near to the reactive N-terminal serine. The amino
+        group enhances the serines nucleophilic character (via a bridging water) allowing it to attack
+        the carbonyl carbon at the amide bond to be cleaved. The tetrahedral intermediate is stabilised
+        by the side chain of asparagine 241 and the main chain nitrogen of alanine 69. The bond is then
+        cleaved and the two rea
+      notes: M-CSA entry 841, mechanism 1; M-CSA cites PMID:10331865, PMID:11601852, PMID:7816145, PMID:9813130;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/841/
+      snippet: The penicillin binds in the active site near to the reactive N-terminal serine. The amino
+        group enhances the serines nucleophilic character (via a bridging water) allowing it to attack
+        the carbonyl carbon at the amide bond to be cleaved. The tetrahedral intermediate is stabilised
+        by the side chain of asparagine 241 and the main chain nitrogen of alanine 69. The bond is then
+        cleaved and the two rea
+      notes: M-CSA entry 841, mechanism 1; M-CSA cites PMID:10331865, PMID:11601852, PMID:7816145, PMID:9813130;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/841/
+      snippet: The penicillin binds in the active site near to the reactive N-terminal serine. The amino
+        group enhances the serines nucleophilic character (via a bridging water) allowing it to attack
+        the carbonyl carbon at the amide bond to be cleaved. The tetrahedral intermediate is stabilised
+        by the side chain of asparagine 241 and the main chain nitrogen of alanine 69. The bond is then
+        cleaved and the two rea
+      notes: M-CSA entry 841, mechanism 1; M-CSA cites PMID:10331865, PMID:11601852, PMID:7816145, PMID:9813130;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 841;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

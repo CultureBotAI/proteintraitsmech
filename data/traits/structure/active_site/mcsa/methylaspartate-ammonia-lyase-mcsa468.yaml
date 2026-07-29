@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.3.1.2
 - CHEBI:58724
@@ -267,4 +267,271 @@ definitions:
       Methylasparate ammonium lyase (MAL) is involved in the methylaspartate cycle and catalyses the formation of the alpha,beta-unsaturated bond by the reversible anti elimination of ammonia from L-threo-beta-methylaspartate (L-threo-(2S,3S)-3-methylaspartate) to give mesaconate. It can also use L-erythro-beta-methylaspartate (L-erythro-(2S,3R)-3-methylaspartate), L-aspartate, fumarate and ethylfumarate as substrates. It will also catalyse the stereo- and regioselective addition of ammonia to several derivatives of mesaconic acid to give a limited number of homochiral substituted aspartic acids. The structure of MAL is similar to that of members of the enolase superfamily, which all catalyse removal of a proton alpha to a carboxylic acid as the first step in their mechanism.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of methylaspartate ammonia-lyase
+  description: Stepwise mechanism transcribed from M-CSA entry 468 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: gln172
+    label: catalytic Gln172 (M-CSA/PDB numbering; UniProt residue 172)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q05514
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his194
+    label: catalytic His194 (M-CSA/PDB numbering; UniProt residue 194)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q05514
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp238
+    label: catalytic Asp238 (M-CSA/PDB numbering; UniProt residue 238)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q05514
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu273
+    label: catalytic Glu273 (M-CSA/PDB numbering; UniProt residue 273)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q05514
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp307
+    label: catalytic Asp307 (M-CSA/PDB numbering; UniProt residue 307)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q05514
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: gln329
+    label: catalytic Gln329 (M-CSA/PDB numbering; UniProt residue 329)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q05514
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: lys331
+    label: catalytic Lys331 (M-CSA/PDB numbering; UniProt residue 331)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q05514
+    description: 'M-CSA roles: electrostatic stabiliser, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: threo-3-methyl-L-aspartate(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58724
+  - node_id: product0
+    label: mesaconate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:36986
+  - node_id: product1
+    label: ammonium
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Lys331 abstracts the alpha proton from the substrate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The negatively charged intermediate collapses, eliminating ammonia.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Inferred return step, using the product ammonia as the base.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: methylaspartate ammonia-lyase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:468
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.120 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.120
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: methylaspartate ammonia-lyase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.3.1.2
+  edges:
+  - subject: lys331
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys331 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/468/
+      snippet: Lys331 abstracts the alpha proton from the substrate.
+      notes: M-CSA entry 468, mechanism 2; M-CSA cites PMID:11748244, PMID:11796115, PMID:1420191, PMID:19670200,
+        PMID:23905011; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/468/
+      snippet: The negatively charged intermediate collapses, eliminating ammonia.
+      notes: M-CSA entry 468, mechanism 2; M-CSA cites PMID:11748244, PMID:11796115, PMID:1420191, PMID:19670200,
+        PMID:23905011; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/468/
+      snippet: Inferred return step, using the product ammonia as the base.
+      notes: M-CSA entry 468, mechanism 2; M-CSA cites PMID:11748244, PMID:11796115, PMID:1420191, PMID:19670200,
+        PMID:23905011; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/468/
+      snippet: Products
+      notes: M-CSA entry 468, mechanism 2; M-CSA cites PMID:11748244, PMID:11796115, PMID:1420191, PMID:19670200,
+        PMID:23905011; step 4
+  - subject: gln172
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln172 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/468/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 468, mechanism 2; M-CSA cites PMID:11748244, PMID:11796115, PMID:1420191, PMID:19670200,
+        PMID:23905011; M-CSA catalytic-residue roles for Gln172
+  - subject: his194
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His194 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/468/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 468, mechanism 2; M-CSA cites PMID:11748244, PMID:11796115, PMID:1420191, PMID:19670200,
+        PMID:23905011; M-CSA catalytic-residue roles for His194
+  - subject: asp238
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp238 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/468/
+      snippet: metal ligand
+      notes: M-CSA entry 468, mechanism 2; M-CSA cites PMID:11748244, PMID:11796115, PMID:1420191, PMID:19670200,
+        PMID:23905011; M-CSA catalytic-residue roles for Asp238
+  - subject: glu273
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu273 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/468/
+      snippet: metal ligand
+      notes: M-CSA entry 468, mechanism 2; M-CSA cites PMID:11748244, PMID:11796115, PMID:1420191, PMID:19670200,
+        PMID:23905011; M-CSA catalytic-residue roles for Glu273
+  - subject: asp307
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp307 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/468/
+      snippet: metal ligand
+      notes: M-CSA entry 468, mechanism 2; M-CSA cites PMID:11748244, PMID:11796115, PMID:1420191, PMID:19670200,
+        PMID:23905011; M-CSA catalytic-residue roles for Asp307
+  - subject: gln329
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln329 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/468/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 468, mechanism 2; M-CSA cites PMID:11748244, PMID:11796115, PMID:1420191, PMID:19670200,
+        PMID:23905011; M-CSA catalytic-residue roles for Gln329
+  - subject: lys331
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys331 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/468/
+      snippet: electrostatic stabiliser, proton acceptor, proton donor
+      notes: M-CSA entry 468, mechanism 2; M-CSA cites PMID:11748244, PMID:11796115, PMID:1420191, PMID:19670200,
+        PMID:23905011; M-CSA catalytic-residue roles for Lys331
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/468/
+      snippet: Lys 331 acts as a general base to remove the 3-proton from 3-methyl aspartate to generate
+        an enolic intermediate. An Mg(II) cation and His 194 provide positive charges to stabilise the
+        accumulation of negative charge on the substrate carboxyl group during the formation of this intermediate.
+        Collapse of the enolate leads to elimination of ammonia in an E1cB mechanism.
+      notes: M-CSA entry 468, mechanism 2; M-CSA cites PMID:11748244, PMID:11796115, PMID:1420191, PMID:19670200,
+        PMID:23905011; CATH domain 3.20.20.120 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/468/
+      snippet: Lys 331 acts as a general base to remove the 3-proton from 3-methyl aspartate to generate
+        an enolic intermediate. An Mg(II) cation and His 194 provide positive charges to stabilise the
+        accumulation of negative charge on the substrate carboxyl group during the formation of this intermediate.
+        Collapse of the enolate leads to elimination of ammonia in an E1cB mechanism.
+      notes: M-CSA entry 468, mechanism 2; M-CSA cites PMID:11748244, PMID:11796115, PMID:1420191, PMID:19670200,
+        PMID:23905011; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/468/
+      snippet: Lys 331 acts as a general base to remove the 3-proton from 3-methyl aspartate to generate
+        an enolic intermediate. An Mg(II) cation and His 194 provide positive charges to stabilise the
+        accumulation of negative charge on the substrate carboxyl group during the formation of this intermediate.
+        Collapse of the enolate leads to elimination of ammonia in an E1cB mechanism.
+      notes: M-CSA entry 468, mechanism 2; M-CSA cites PMID:11748244, PMID:11796115, PMID:1420191, PMID:19670200,
+        PMID:23905011; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/468/
+      snippet: Lys 331 acts as a general base to remove the 3-proton from 3-methyl aspartate to generate
+        an enolic intermediate. An Mg(II) cation and His 194 provide positive charges to stabilise the
+        accumulation of negative charge on the substrate carboxyl group during the formation of this intermediate.
+        Collapse of the enolate leads to elimination of ammonia in an E1cB mechanism.
+      notes: M-CSA entry 468, mechanism 2; M-CSA cites PMID:11748244, PMID:11796115, PMID:1420191, PMID:19670200,
+        PMID:23905011; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/468/
+      snippet: Lys 331 acts as a general base to remove the 3-proton from 3-methyl aspartate to generate
+        an enolic intermediate. An Mg(II) cation and His 194 provide positive charges to stabilise the
+        accumulation of negative charge on the substrate carboxyl group during the formation of this intermediate.
+        Collapse of the enolate leads to elimination of ammonia in an E1cB mechanism.
+      notes: M-CSA entry 468, mechanism 2; M-CSA cites PMID:11748244, PMID:11796115, PMID:1420191, PMID:19670200,
+        PMID:23905011; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (16 evidence-backed edges) transcribed from M-CSA entry 468;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

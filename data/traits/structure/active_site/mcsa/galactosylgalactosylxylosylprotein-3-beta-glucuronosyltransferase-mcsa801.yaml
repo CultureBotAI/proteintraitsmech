@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.4.1.135
 - CHEBI:132090
@@ -253,4 +253,229 @@ definitions:
       Beta-1,3-glucuronyltransferase (GlcAT-I) is involved in the biosynthesis of heparin sulphate and chondroitin sulphate. It catalyses the transfer of glucuronic acid (GlcUA) from UDP-GlcUA onto the terminal galactose of the linker Gal-Gal-Xyl- that is attached to a serine side chain of a core protein. GlcAT-I is an inverting glycosyltransferse, converting the alpha linkage in the UDP-GlcUA molecule to a beta linkage in the product.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of galactosylgalactosylxylosylprotein 3-beta-glucuronosyltransferase
+  description: Stepwise mechanism transcribed from M-CSA entry 801 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: asp196
+    label: catalytic Asp196 (M-CSA/PDB numbering; UniProt residue 196)
+    node_type: RESIDUE
+    grounding: UniProtKB:O94766
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu281
+    label: catalytic Glu281 (M-CSA/PDB numbering; UniProt residue 281)
+    node_type: RESIDUE
+    grounding: UniProtKB:O94766
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: O(3)-(beta-D-galactosyl-(1->3)-beta-D-galactosyl-(1->4)-beta-D-xylosyl)-L-serine residue
+    node_type: CHEMICAL
+    grounding: CHEBI:132090
+  - node_id: reactant1
+    label: UDP-alpha-D-glucuronate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58052
+  - node_id: product0
+    label: O(3)-(beta-D-glucuronosyl-(1->3)-beta-D-galactosyl-(1->3)-beta-D-galactosyl-(1->4)-beta-D-xylosyl)-L-serine(1-)
+      residue
+    node_type: CHEMICAL
+    grounding: CHEBI:132093
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: UDP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58223
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu281 deprotonates 3'OH of galactose group, increasing its nucleophilicity to then attack
+      the C1 of GlcUA apart of UDP-GlcUA group.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Deprotonation of Glu281 by a water molecule.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: galactosylgalactosylxylosylprotein 3-beta-glucuronosyltransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:801
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.550.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.550.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: galactosylgalactosylxylosylprotein 3-beta-glucuronosyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.4.1.135
+  edges:
+  - subject: glu281
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu281 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/801/
+      snippet: Glu281 deprotonates 3'OH of galactose group, increasing its nucleophilicity to then attack
+        the C1 of GlcUA apart of UDP-GlcUA group.
+      notes: M-CSA entry 801, mechanism 1; M-CSA cites PMID:10946001, PMID:11950836, PMID:17177443, PMID:18518825;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/801/
+      snippet: Deprotonation of Glu281 by a water molecule.
+      notes: M-CSA entry 801, mechanism 1; M-CSA cites PMID:10946001, PMID:11950836, PMID:17177443, PMID:18518825;
+        step 2
+  - subject: glu281
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu281 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/801/
+      snippet: Deprotonation of Glu281 by a water molecule.
+      notes: M-CSA entry 801, mechanism 1; M-CSA cites PMID:10946001, PMID:11950836, PMID:17177443, PMID:18518825;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/801/
+      snippet: Products.
+      notes: M-CSA entry 801, mechanism 1; M-CSA cites PMID:10946001, PMID:11950836, PMID:17177443, PMID:18518825;
+        step 3
+  - subject: asp196
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp196 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/801/
+      snippet: metal ligand
+      notes: M-CSA entry 801, mechanism 1; M-CSA cites PMID:10946001, PMID:11950836, PMID:17177443, PMID:18518825;
+        M-CSA catalytic-residue roles for Asp196
+  - subject: glu281
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu281 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/801/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 801, mechanism 1; M-CSA cites PMID:10946001, PMID:11950836, PMID:17177443, PMID:18518825;
+        M-CSA catalytic-residue roles for Glu281
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/801/
+      snippet: The reaction is thought to proceed in an SN2 mechanism via an oxo-carbenium ion-like transition
+        state. Accumulation of negative charge on the departing pyrophosphate moiety of the UDP leaving
+        group is stabilised by a divalent metal ion, while the attacking C3 OH of the terminal galactose
+        is deprotonated by Glu 281. The resulting products formed are UDP and GlcUA now attached to Gal-Gal-Xyl-Ser.
+      notes: M-CSA entry 801, mechanism 1; M-CSA cites PMID:10946001, PMID:11950836, PMID:17177443, PMID:18518825;
+        CATH domain 3.90.550.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/801/
+      snippet: The reaction is thought to proceed in an SN2 mechanism via an oxo-carbenium ion-like transition
+        state. Accumulation of negative charge on the departing pyrophosphate moiety of the UDP leaving
+        group is stabilised by a divalent metal ion, while the attacking C3 OH of the terminal galactose
+        is deprotonated by Glu 281. The resulting products formed are UDP and GlcUA now attached to Gal-Gal-Xyl-Ser.
+      notes: M-CSA entry 801, mechanism 1; M-CSA cites PMID:10946001, PMID:11950836, PMID:17177443, PMID:18518825;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/801/
+      snippet: The reaction is thought to proceed in an SN2 mechanism via an oxo-carbenium ion-like transition
+        state. Accumulation of negative charge on the departing pyrophosphate moiety of the UDP leaving
+        group is stabilised by a divalent metal ion, while the attacking C3 OH of the terminal galactose
+        is deprotonated by Glu 281. The resulting products formed are UDP and GlcUA now attached to Gal-Gal-Xyl-Ser.
+      notes: M-CSA entry 801, mechanism 1; M-CSA cites PMID:10946001, PMID:11950836, PMID:17177443, PMID:18518825;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/801/
+      snippet: The reaction is thought to proceed in an SN2 mechanism via an oxo-carbenium ion-like transition
+        state. Accumulation of negative charge on the departing pyrophosphate moiety of the UDP leaving
+        group is stabilised by a divalent metal ion, while the attacking C3 OH of the terminal galactose
+        is deprotonated by Glu 281. The resulting products formed are UDP and GlcUA now attached to Gal-Gal-Xyl-Ser.
+      notes: M-CSA entry 801, mechanism 1; M-CSA cites PMID:10946001, PMID:11950836, PMID:17177443, PMID:18518825;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/801/
+      snippet: The reaction is thought to proceed in an SN2 mechanism via an oxo-carbenium ion-like transition
+        state. Accumulation of negative charge on the departing pyrophosphate moiety of the UDP leaving
+        group is stabilised by a divalent metal ion, while the attacking C3 OH of the terminal galactose
+        is deprotonated by Glu 281. The resulting products formed are UDP and GlcUA now attached to Gal-Gal-Xyl-Ser.
+      notes: M-CSA entry 801, mechanism 1; M-CSA cites PMID:10946001, PMID:11950836, PMID:17177443, PMID:18518825;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/801/
+      snippet: The reaction is thought to proceed in an SN2 mechanism via an oxo-carbenium ion-like transition
+        state. Accumulation of negative charge on the departing pyrophosphate moiety of the UDP leaving
+        group is stabilised by a divalent metal ion, while the attacking C3 OH of the terminal galactose
+        is deprotonated by Glu 281. The resulting products formed are UDP and GlcUA now attached to Gal-Gal-Xyl-Ser.
+      notes: M-CSA entry 801, mechanism 1; M-CSA cites PMID:10946001, PMID:11950836, PMID:17177443, PMID:18518825;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/801/
+      snippet: The reaction is thought to proceed in an SN2 mechanism via an oxo-carbenium ion-like transition
+        state. Accumulation of negative charge on the departing pyrophosphate moiety of the UDP leaving
+        group is stabilised by a divalent metal ion, while the attacking C3 OH of the terminal galactose
+        is deprotonated by Glu 281. The resulting products formed are UDP and GlcUA now attached to Gal-Gal-Xyl-Ser.
+      notes: M-CSA entry 801, mechanism 1; M-CSA cites PMID:10946001, PMID:11950836, PMID:17177443, PMID:18518825;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 801;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

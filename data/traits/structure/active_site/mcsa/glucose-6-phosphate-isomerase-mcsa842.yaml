@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.3.1.9
 - CHEBI:58225
@@ -464,4 +464,313 @@ definitions:
       Phosphoglucose isomerase (EC:5.3.1.9) (PGI) [PMID:1593646] is a dimeric enzyme that catalyses the reversible isomerisation of glucose-6-phosphate and fructose-6-phosphate. PGI is involved in different pathways: in most higher organisms it is involved in glycolysis; in mammals it is involved in gluconeogenesis; in plants in carbohydrate biosynthesis; in some bacteria it provides a gateway for fructose into the Entner-Doudouroff pathway. The multifunctional protein, PGI, is also known as neuroleukin (a neurotrophic factor that mediates the differentiation of neurons), autocrine motility factor (a tumour-secreted cytokine that regulates cell motility), differentiation and maturation mediator and myofibril-bound serine proteinase inhibitor, and has different roles inside and outside the cell. In the cytoplasm, it catalyses the second step in glycolysis, while outside the cell it serves as a nerve growth factor and cytokine [PMID:10653639].
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of glucose-6-phosphate isomerase
+  description: Stepwise mechanism transcribed from M-CSA entry 842 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +1).
+  nodes:
+  - node_id: lys210
+    label: catalytic Lys210 (M-CSA/PDB numbering; UniProt residue 211)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9N1E2
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu216
+    label: catalytic Glu216 (M-CSA/PDB numbering; UniProt residue 217)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9N1E2
+    description: 'M-CSA roles: modifies pKa.'
+  - node_id: gly271
+    label: catalytic Gly271 (M-CSA/PDB numbering; UniProt residue 272)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9N1E2
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: arg272
+    label: catalytic Arg272 (M-CSA/PDB numbering; UniProt residue 273)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9N1E2
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu357
+    label: catalytic Glu357 (M-CSA/PDB numbering; UniProt residue 358)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9N1E2
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: his388
+    label: catalytic His388 (M-CSA/PDB numbering; UniProt residue 389)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9N1E2
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: lys518
+    label: catalytic Lys518 (M-CSA/PDB numbering; UniProt residue 519)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9N1E2
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: alpha-D-glucose 6-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58225
+  - node_id: product0
+    label: D-fructofuranose 6-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:61527
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Ring opening step. His388 abstracts a proton from substrate, breaking the C-O bond and
+      forming the open sugar ring.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Glu357 abstracts a proton from the C2 position of the open chain form of the substrate,
+      resulting in the cis-enediol(ate) intermediate. His398 is inferred to act as the general acid in
+      this step due to its proximity.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The protonated Glu357 side chain then transfers the same proton to the C-1 position of
+      the intermediate, yielding the open chain form of d-fructose-6-phosphate
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Lys518 initiates the catalytic ring closure reaction to form the final product,
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: glucose-6-phosphate isomerase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:842
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.10490 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.10490
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: glucose-6-phosphate isomerase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.3.1.9
+  edges:
+  - subject: his388
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His388 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/842/
+      snippet: Ring opening step. His388 abstracts a proton from substrate, breaking the C-O bond and
+        forming the open sugar ring.
+      notes: M-CSA entry 842, mechanism 1; M-CSA cites PMID:10653639, PMID:11983887, PMID:15342241, PMID:15689508,
+        PMID:6115414; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/842/
+      snippet: Glu357 abstracts a proton from the C2 position of the open chain form of the substrate,
+        resulting in the cis-enediol(ate) intermediate. His398 is inferred to act as the general acid
+        in this step due to its proximity.
+      notes: M-CSA entry 842, mechanism 1; M-CSA cites PMID:10653639, PMID:11983887, PMID:15342241, PMID:15689508,
+        PMID:6115414; step 2
+  - subject: glu357
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu357 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/842/
+      snippet: Glu357 abstracts a proton from the C2 position of the open chain form of the substrate,
+        resulting in the cis-enediol(ate) intermediate. His398 is inferred to act as the general acid
+        in this step due to its proximity.
+      notes: M-CSA entry 842, mechanism 1; M-CSA cites PMID:10653639, PMID:11983887, PMID:15342241, PMID:15689508,
+        PMID:6115414; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/842/
+      snippet: The protonated Glu357 side chain then transfers the same proton to the C-1 position of
+        the intermediate, yielding the open chain form of d-fructose-6-phosphate
+      notes: M-CSA entry 842, mechanism 1; M-CSA cites PMID:10653639, PMID:11983887, PMID:15342241, PMID:15689508,
+        PMID:6115414; step 3
+  - subject: glu357
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Glu357 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/842/
+      snippet: The protonated Glu357 side chain then transfers the same proton to the C-1 position of
+        the intermediate, yielding the open chain form of d-fructose-6-phosphate
+      notes: M-CSA entry 842, mechanism 1; M-CSA cites PMID:10653639, PMID:11983887, PMID:15342241, PMID:15689508,
+        PMID:6115414; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/842/
+      snippet: Lys518 initiates the catalytic ring closure reaction to form the final product,
+      notes: M-CSA entry 842, mechanism 1; M-CSA cites PMID:10653639, PMID:11983887, PMID:15342241, PMID:15689508,
+        PMID:6115414; step 4
+  - subject: lys518
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Lys518 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/842/
+      snippet: Lys518 initiates the catalytic ring closure reaction to form the final product,
+      notes: M-CSA entry 842, mechanism 1; M-CSA cites PMID:10653639, PMID:11983887, PMID:15342241, PMID:15689508,
+        PMID:6115414; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/842/
+      snippet: Products
+      notes: M-CSA entry 842, mechanism 1; M-CSA cites PMID:10653639, PMID:11983887, PMID:15342241, PMID:15689508,
+        PMID:6115414; step 5
+  - subject: lys210
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys210 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/842/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 842, mechanism 1; M-CSA cites PMID:10653639, PMID:11983887, PMID:15342241, PMID:15689508,
+        PMID:6115414; M-CSA catalytic-residue roles for Lys210
+  - subject: glu216
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu216 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/842/
+      snippet: modifies pKa
+      notes: M-CSA entry 842, mechanism 1; M-CSA cites PMID:10653639, PMID:11983887, PMID:15342241, PMID:15689508,
+        PMID:6115414; M-CSA catalytic-residue roles for Glu216
+  - subject: gly271
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly271 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/842/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 842, mechanism 1; M-CSA cites PMID:10653639, PMID:11983887, PMID:15342241, PMID:15689508,
+        PMID:6115414; M-CSA catalytic-residue roles for Gly271
+  - subject: arg272
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg272 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/842/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 842, mechanism 1; M-CSA cites PMID:10653639, PMID:11983887, PMID:15342241, PMID:15689508,
+        PMID:6115414; M-CSA catalytic-residue roles for Arg272
+  - subject: glu357
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu357 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/842/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 842, mechanism 1; M-CSA cites PMID:10653639, PMID:11983887, PMID:15342241, PMID:15689508,
+        PMID:6115414; M-CSA catalytic-residue roles for Glu357
+  - subject: his388
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His388 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/842/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 842, mechanism 1; M-CSA cites PMID:10653639, PMID:11983887, PMID:15342241, PMID:15689508,
+        PMID:6115414; M-CSA catalytic-residue roles for His388
+  - subject: lys518
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys518 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/842/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 842, mechanism 1; M-CSA cites PMID:10653639, PMID:11983887, PMID:15342241, PMID:15689508,
+        PMID:6115414; M-CSA catalytic-residue roles for Lys518
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/842/
+      snippet: The proposed mechanism for sugar isomerisation involves several steps and is thought to
+        occur via general acid/base catalysis. Since glucose 6-phosphate and fructose 6-phosphate exist
+        predominantly in their cyclic forms, PGI is believed to catalyse first the opening of the hexose
+        ring to yield the straight chain form of the substrates. Glucose 6-phosphate and fructose 6-phosphate
+        then undergo isom
+      notes: M-CSA entry 842, mechanism 1; M-CSA cites PMID:10653639, PMID:11983887, PMID:15342241, PMID:15689508,
+        PMID:6115414; CATH domain 3.40.50.10490 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/842/
+      snippet: The proposed mechanism for sugar isomerisation involves several steps and is thought to
+        occur via general acid/base catalysis. Since glucose 6-phosphate and fructose 6-phosphate exist
+        predominantly in their cyclic forms, PGI is believed to catalyse first the opening of the hexose
+        ring to yield the straight chain form of the substrates. Glucose 6-phosphate and fructose 6-phosphate
+        then undergo isom
+      notes: M-CSA entry 842, mechanism 1; M-CSA cites PMID:10653639, PMID:11983887, PMID:15342241, PMID:15689508,
+        PMID:6115414; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/842/
+      snippet: The proposed mechanism for sugar isomerisation involves several steps and is thought to
+        occur via general acid/base catalysis. Since glucose 6-phosphate and fructose 6-phosphate exist
+        predominantly in their cyclic forms, PGI is believed to catalyse first the opening of the hexose
+        ring to yield the straight chain form of the substrates. Glucose 6-phosphate and fructose 6-phosphate
+        then undergo isom
+      notes: M-CSA entry 842, mechanism 1; M-CSA cites PMID:10653639, PMID:11983887, PMID:15342241, PMID:15689508,
+        PMID:6115414; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/842/
+      snippet: The proposed mechanism for sugar isomerisation involves several steps and is thought to
+        occur via general acid/base catalysis. Since glucose 6-phosphate and fructose 6-phosphate exist
+        predominantly in their cyclic forms, PGI is believed to catalyse first the opening of the hexose
+        ring to yield the straight chain form of the substrates. Glucose 6-phosphate and fructose 6-phosphate
+        then undergo isom
+      notes: M-CSA entry 842, mechanism 1; M-CSA cites PMID:10653639, PMID:11983887, PMID:15342241, PMID:15689508,
+        PMID:6115414; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (19 evidence-backed edges) transcribed from M-CSA entry 842;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

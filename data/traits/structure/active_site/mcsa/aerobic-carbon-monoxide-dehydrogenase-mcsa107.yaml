@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.2.5.3
 - CHEBI:17245
@@ -774,4 +774,402 @@ definitions:
       Carbon monoxide dehydrogenase (CODH), a member of the xanthine oxidase family based on its overall amino acid sequence and three-dimensional structure, catalyses the reversible oxidation of carbon monoxide to carbon dioxide with the loss of two electrons to a variety of electron acceptors can be used by these enzymes including ferredoxin, methyl viologen and benzyl viologen. The CO2 that is produced is assimilated by the Calvin-Benson-Basham cycle, while the electrons are transferred to a quinone via the FAD site, and continue through the electron transfer chain to a dioxygen terminal acceptor. Under aerobic conditions carbon monoxide can be used as sole carbon and energy source by the carboxidotrophic bacteria, a taxonomically diverse group of obligate or facultative chemolithoautotrophic species. The aerobic enzymes (this entry) categorised so far are molybdenum-containing iron-sulphur proteins whilst the anerobic dehydrogenases are mostly nickel-containing iron-sulphur enzymes. CODH is a dimer of heterotrimers, where each heterotrimer consists of a small iron-sulphur subunit, a medium FAD-containing flavoprotein subunit and a large molybdopterin-containign subunit which contains the active site [PMID:10430865, PMID:12475995]. The large subunit is divided into two domains. The N-terminal domain is composed of mainly of a five-and four-stranded mixed beta-sheet and interacts with the small and medium subunits. The C-terminal domain contains a region which interacts with its counterpart in the overall dimer, providing the main dimer contact, and a beta-sheet surrounded by alpha helices. The active site located in the large subunit and contains a novel dinuclear heterometal [CuSMo(=O)OH] cluster.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of aerobic carbon monoxide dehydrogenase
+  description: Stepwise mechanism transcribed from M-CSA entry 107 (8 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: gln240
+    label: catalytic Gln240 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P19921
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: arg387
+    label: catalytic Arg387 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P19921
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: cys388
+    label: catalytic Cys388 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P19921
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu763
+    label: catalytic Glu763 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P19921
+    description: 'M-CSA roles: proton acceptor, proton donor, proton relay.'
+  - node_id: reactant0
+    label: carbon monoxide
+    node_type: CHEMICAL
+    grounding: CHEBI:17245
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant2
+    label: 1,4-benzoquinones
+    node_type: CHEMICAL
+    grounding: CHEBI:132124
+  - node_id: product0
+    label: carbon dioxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+  - node_id: product1
+    label: hydroquinones
+    node_type: CHEMICAL
+    grounding: CHEBI:24646
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The Carbanion of carbon monoxide initiates a nucleophilic attack on the oxo group coordinated
+      to the Mo(VI) centre, which results in the reduction of the molybdenum to Mo(IV). The C#O triple
+      bond reduces in order to C=O.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The sulfur dianion bridging the Mo(IV) and Cu(I) centres initiates a nucleophilic attack
+      on the carbocation in a substitution reaction that displaces the carbon from the Cu(I) centre.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The carbonyl oxygen initiates a nucleophilic attack on the Cu(I) centre in a substitution
+      reaction that displaces the bridging sulfur ligand from the Cu(I) centre.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Glu763 deprotonates water,  initiates a nucleophilic attack on the Mo(IV) centre, displacing
+      the negatively charged oxygen of the carboxylate group in a substitution reaction, which initiates
+      an elimination of the sulfur group, to reform the bridging sulfur dianion and the formation of carbon
+      dioxide, which decoordinates from the metal centre.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Water deprotonates Glu763, which then deprotonates the Mo(V) bound hydroxide, initiating
+      the second single electron transfer, through two iron-sulfur clusters to FAD, and thence to an external
+      electron acceptor. This regenerates the cofactor.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: The second single electron transfer from the Mo(V) through two iron-sulfur clusters to
+      FAD, and thence to an external electron acceptor. This regenerates the cofactor.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: Water deprotonates Glu763 in an inferred return step.
+  - node_id: step8
+    label: mechanism step 8
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: aerobic carbon monoxide dehydrogenase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:107
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.365.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.365.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: aerobic carbon monoxide dehydrogenase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.2.5.3
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/107/
+      snippet: The sulfur dianion bridging the Mo(IV) and Cu(I) centres initiates a nucleophilic attack
+        on the carbocation in a substitution reaction that displaces the carbon from the Cu(I) centre.
+      notes: M-CSA entry 107, mechanism 2; M-CSA cites PMID:10430865, PMID:10636886, PMID:11076018, PMID:12475995,
+        PMID:15834924, PMID:15971074, PMID:20178978, PMID:21275368, PMID:21774528, PMID:24147852, PMID:24322538,
+        PMID:25377894; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/107/
+      snippet: The carbonyl oxygen initiates a nucleophilic attack on the Cu(I) centre in a substitution
+        reaction that displaces the bridging sulfur ligand from the Cu(I) centre.
+      notes: M-CSA entry 107, mechanism 2; M-CSA cites PMID:10430865, PMID:10636886, PMID:11076018, PMID:12475995,
+        PMID:15834924, PMID:15971074, PMID:20178978, PMID:21275368, PMID:21774528, PMID:24147852, PMID:24322538,
+        PMID:25377894; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/107/
+      snippet: Glu763 deprotonates water,  initiates a nucleophilic attack on the Mo(IV) centre, displacing
+        the negatively charged oxygen of the carboxylate group in a substitution reaction, which initiates
+        an elimination of the sulfur group, to reform the bridging sulfur dianion and the formation of
+        carbon dioxide, which decoordinates from the metal centre.
+      notes: M-CSA entry 107, mechanism 2; M-CSA cites PMID:10430865, PMID:10636886, PMID:11076018, PMID:12475995,
+        PMID:15834924, PMID:15971074, PMID:20178978, PMID:21275368, PMID:21774528, PMID:24147852, PMID:24322538,
+        PMID:25377894; step 4
+  - subject: glu763
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Glu763 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/107/
+      snippet: Glu763 deprotonates water,  initiates a nucleophilic attack on the Mo(IV) centre, displacing
+        the negatively charged oxygen of the carboxylate group in a substitution reaction, which initiates
+        an elimination of the sulfur group, to reform the bridging sulfur dianion and the formation of
+        carbon dioxide, which decoordinates from the metal centre.
+      notes: M-CSA entry 107, mechanism 2; M-CSA cites PMID:10430865, PMID:10636886, PMID:11076018, PMID:12475995,
+        PMID:15834924, PMID:15971074, PMID:20178978, PMID:21275368, PMID:21774528, PMID:24147852, PMID:24322538,
+        PMID:25377894; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/107/
+      snippet: Water deprotonates Glu763, which then deprotonates the Mo(V) bound hydroxide, initiating
+        the second single electron transfer, through two iron-sulfur clusters to FAD, and thence to an
+        external electron acceptor. This regenerates the cofactor.
+      notes: M-CSA entry 107, mechanism 2; M-CSA cites PMID:10430865, PMID:10636886, PMID:11076018, PMID:12475995,
+        PMID:15834924, PMID:15971074, PMID:20178978, PMID:21275368, PMID:21774528, PMID:24147852, PMID:24322538,
+        PMID:25377894; step 5
+  - subject: glu763
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Glu763 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/107/
+      snippet: Water deprotonates Glu763, which then deprotonates the Mo(V) bound hydroxide, initiating
+        the second single electron transfer, through two iron-sulfur clusters to FAD, and thence to an
+        external electron acceptor. This regenerates the cofactor.
+      notes: M-CSA entry 107, mechanism 2; M-CSA cites PMID:10430865, PMID:10636886, PMID:11076018, PMID:12475995,
+        PMID:15834924, PMID:15971074, PMID:20178978, PMID:21275368, PMID:21774528, PMID:24147852, PMID:24322538,
+        PMID:25377894; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/107/
+      snippet: The second single electron transfer from the Mo(V) through two iron-sulfur clusters to
+        FAD, and thence to an external electron acceptor. This regenerates the cofactor.
+      notes: M-CSA entry 107, mechanism 2; M-CSA cites PMID:10430865, PMID:10636886, PMID:11076018, PMID:12475995,
+        PMID:15834924, PMID:15971074, PMID:20178978, PMID:21275368, PMID:21774528, PMID:24147852, PMID:24322538,
+        PMID:25377894; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/107/
+      snippet: Water deprotonates Glu763 in an inferred return step.
+      notes: M-CSA entry 107, mechanism 2; M-CSA cites PMID:10430865, PMID:10636886, PMID:11076018, PMID:12475995,
+        PMID:15834924, PMID:15971074, PMID:20178978, PMID:21275368, PMID:21774528, PMID:24147852, PMID:24322538,
+        PMID:25377894; step 7
+  - subject: glu763
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step7
+    description: Glu763 acts in step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/107/
+      snippet: Water deprotonates Glu763 in an inferred return step.
+      notes: M-CSA entry 107, mechanism 2; M-CSA cites PMID:10430865, PMID:10636886, PMID:11076018, PMID:12475995,
+        PMID:15834924, PMID:15971074, PMID:20178978, PMID:21275368, PMID:21774528, PMID:24147852, PMID:24322538,
+        PMID:25377894; step 7
+  - subject: step7
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step8
+    description: Step 7 leads to step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/107/
+      snippet: Products.
+      notes: M-CSA entry 107, mechanism 2; M-CSA cites PMID:10430865, PMID:10636886, PMID:11076018, PMID:12475995,
+        PMID:15834924, PMID:15971074, PMID:20178978, PMID:21275368, PMID:21774528, PMID:24147852, PMID:24322538,
+        PMID:25377894; step 8
+  - subject: gln240
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln240 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/107/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 107, mechanism 2; M-CSA cites PMID:10430865, PMID:10636886, PMID:11076018, PMID:12475995,
+        PMID:15834924, PMID:15971074, PMID:20178978, PMID:21275368, PMID:21774528, PMID:24147852, PMID:24322538,
+        PMID:25377894; M-CSA catalytic-residue roles for Gln240
+  - subject: arg387
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg387 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/107/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 107, mechanism 2; M-CSA cites PMID:10430865, PMID:10636886, PMID:11076018, PMID:12475995,
+        PMID:15834924, PMID:15971074, PMID:20178978, PMID:21275368, PMID:21774528, PMID:24147852, PMID:24322538,
+        PMID:25377894; M-CSA catalytic-residue roles for Arg387
+  - subject: cys388
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys388 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/107/
+      snippet: metal ligand
+      notes: M-CSA entry 107, mechanism 2; M-CSA cites PMID:10430865, PMID:10636886, PMID:11076018, PMID:12475995,
+        PMID:15834924, PMID:15971074, PMID:20178978, PMID:21275368, PMID:21774528, PMID:24147852, PMID:24322538,
+        PMID:25377894; M-CSA catalytic-residue roles for Cys388
+  - subject: glu763
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu763 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/107/
+      snippet: proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 107, mechanism 2; M-CSA cites PMID:10430865, PMID:10636886, PMID:11076018, PMID:12475995,
+        PMID:15834924, PMID:15971074, PMID:20178978, PMID:21275368, PMID:21774528, PMID:24147852, PMID:24322538,
+        PMID:25377894; M-CSA catalytic-residue roles for Glu763
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/107/
+      snippet: "In this proposal, the reaction proceeds via a stable C-S intermediate.
+<br/><br/>\
+        
+This mechanism starts in the oxidized Mo(VI)-Cu(I) state. The substrate carbon monoxide (CO)\
+        \ reaches the cluster through the substrate channel. CO coordinates to the copper (I) centre.\
+        \ This activates the CO and allows for the formation of the C-O bond between CO and the oxygen\
+        \ derived ligand on Mo(VI). This results"
+      notes: M-CSA entry 107, mechanism 2; M-CSA cites PMID:10430865, PMID:10636886, PMID:11076018, PMID:12475995,
+        PMID:15834924, PMID:15971074, PMID:20178978, PMID:21275368, PMID:21774528, PMID:24147852, PMID:24322538,
+        PMID:25377894; CATH domain 3.30.365.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/107/
+      snippet: "In this proposal, the reaction proceeds via a stable C-S intermediate.
+<br/><br/>\
+        
+This mechanism starts in the oxidized Mo(VI)-Cu(I) state. The substrate carbon monoxide (CO)\
+        \ reaches the cluster through the substrate channel. CO coordinates to the copper (I) centre.\
+        \ This activates the CO and allows for the formation of the C-O bond between CO and the oxygen\
+        \ derived ligand on Mo(VI). This results"
+      notes: M-CSA entry 107, mechanism 2; M-CSA cites PMID:10430865, PMID:10636886, PMID:11076018, PMID:12475995,
+        PMID:15834924, PMID:15971074, PMID:20178978, PMID:21275368, PMID:21774528, PMID:24147852, PMID:24322538,
+        PMID:25377894; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/107/
+      snippet: "In this proposal, the reaction proceeds via a stable C-S intermediate.
+<br/><br/>\
+        
+This mechanism starts in the oxidized Mo(VI)-Cu(I) state. The substrate carbon monoxide (CO)\
+        \ reaches the cluster through the substrate channel. CO coordinates to the copper (I) centre.\
+        \ This activates the CO and allows for the formation of the C-O bond between CO and the oxygen\
+        \ derived ligand on Mo(VI). This results"
+      notes: M-CSA entry 107, mechanism 2; M-CSA cites PMID:10430865, PMID:10636886, PMID:11076018, PMID:12475995,
+        PMID:15834924, PMID:15971074, PMID:20178978, PMID:21275368, PMID:21774528, PMID:24147852, PMID:24322538,
+        PMID:25377894; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/107/
+      snippet: "In this proposal, the reaction proceeds via a stable C-S intermediate.
+<br/><br/>\
+        
+This mechanism starts in the oxidized Mo(VI)-Cu(I) state. The substrate carbon monoxide (CO)\
+        \ reaches the cluster through the substrate channel. CO coordinates to the copper (I) centre.\
+        \ This activates the CO and allows for the formation of the C-O bond between CO and the oxygen\
+        \ derived ligand on Mo(VI). This results"
+      notes: M-CSA entry 107, mechanism 2; M-CSA cites PMID:10430865, PMID:10636886, PMID:11076018, PMID:12475995,
+        PMID:15834924, PMID:15971074, PMID:20178978, PMID:21275368, PMID:21774528, PMID:24147852, PMID:24322538,
+        PMID:25377894; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/107/
+      snippet: "In this proposal, the reaction proceeds via a stable C-S intermediate.
+<br/><br/>\
+        
+This mechanism starts in the oxidized Mo(VI)-Cu(I) state. The substrate carbon monoxide (CO)\
+        \ reaches the cluster through the substrate channel. CO coordinates to the copper (I) centre.\
+        \ This activates the CO and allows for the formation of the C-O bond between CO and the oxygen\
+        \ derived ligand on Mo(VI). This results"
+      notes: M-CSA entry 107, mechanism 2; M-CSA cites PMID:10430865, PMID:10636886, PMID:11076018, PMID:12475995,
+        PMID:15834924, PMID:15971074, PMID:20178978, PMID:21275368, PMID:21774528, PMID:24147852, PMID:24322538,
+        PMID:25377894; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/107/
+      snippet: "In this proposal, the reaction proceeds via a stable C-S intermediate.
+<br/><br/>\
+        
+This mechanism starts in the oxidized Mo(VI)-Cu(I) state. The substrate carbon monoxide (CO)\
+        \ reaches the cluster through the substrate channel. CO coordinates to the copper (I) centre.\
+        \ This activates the CO and allows for the formation of the C-O bond between CO and the oxygen\
+        \ derived ligand on Mo(VI). This results"
+      notes: M-CSA entry 107, mechanism 2; M-CSA cites PMID:10430865, PMID:10636886, PMID:11076018, PMID:12475995,
+        PMID:15834924, PMID:15971074, PMID:20178978, PMID:21275368, PMID:21774528, PMID:24147852, PMID:24322538,
+        PMID:25377894; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/107/
+      snippet: "In this proposal, the reaction proceeds via a stable C-S intermediate.
+<br/><br/>\
+        
+This mechanism starts in the oxidized Mo(VI)-Cu(I) state. The substrate carbon monoxide (CO)\
+        \ reaches the cluster through the substrate channel. CO coordinates to the copper (I) centre.\
+        \ This activates the CO and allows for the formation of the C-O bond between CO and the oxygen\
+        \ derived ligand on Mo(VI). This results"
+      notes: M-CSA entry 107, mechanism 2; M-CSA cites PMID:10430865, PMID:10636886, PMID:11076018, PMID:12475995,
+        PMID:15834924, PMID:15971074, PMID:20178978, PMID:21275368, PMID:21774528, PMID:24147852, PMID:24322538,
+        PMID:25377894; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (21 evidence-backed edges) transcribed from M-CSA entry 107;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

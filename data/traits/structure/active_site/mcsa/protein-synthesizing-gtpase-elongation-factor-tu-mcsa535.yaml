@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.6.5.3
 - CHEBI:37565
@@ -501,4 +501,261 @@ definitions:
       Elongation factor Tu hydrolyses GTP to give GDP and Pi, thus providing the free energy that the ribosome needs to incorporate amino acids into the growing polypeptide. As such, it shows homology to other GTP binding proteins such as the oncogene ras, but may show a different mechanism of GTP hydrolysis. Many antibiotics are able to inhibit EFTu, making study of its mechanism particularly useful in view of the possibility of synthesising new antibiotics.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of protein-synthesizing GTPase (elongation factor Tu)
+  description: Stepwise mechanism transcribed from M-CSA entry 535 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +1).
+  nodes:
+  - node_id: asp21
+    label: catalytic Asp21 (M-CSA/PDB numbering; UniProt residue 22)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0CE47
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: lys24
+    label: catalytic Lys24 (M-CSA/PDB numbering; UniProt residue 25)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0CE47
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: thr25
+    label: catalytic Thr25 (M-CSA/PDB numbering; UniProt residue 26)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0CE47
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: gly83
+    label: catalytic Gly83 (M-CSA/PDB numbering; UniProt residue 84)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0CE47
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his84
+    label: catalytic His84 (M-CSA/PDB numbering; UniProt residue 85)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0CE47
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: GTP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:37565
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: GDP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58189
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The water protonates the gamma phosphate and the hydroxide formed then nucleophilically
+      attacks the phosphate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The pentacoordinate transition state collapse resulting in the cleavage of the phosphodiester
+      bond.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: protein-synthesizing GTPase (elongation factor Tu) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:535
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.300 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.300
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: protein-synthesizing GTPase (elongation factor Tu) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.6.5.3
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/535/
+      snippet: The pentacoordinate transition state collapse resulting in the cleavage of the phosphodiester
+        bond.
+      notes: M-CSA entry 535, mechanism 1; M-CSA cites PMID:20434456, PMID:23591900, PMID:23864225, PMID:24282301,
+        PMID:25515218; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/535/
+      snippet: Products
+      notes: M-CSA entry 535, mechanism 1; M-CSA cites PMID:20434456, PMID:23591900, PMID:23864225, PMID:24282301,
+        PMID:25515218; step 3
+  - subject: asp21
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp21 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/535/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 535, mechanism 1; M-CSA cites PMID:20434456, PMID:23591900, PMID:23864225, PMID:24282301,
+        PMID:25515218; M-CSA catalytic-residue roles for Asp21
+  - subject: lys24
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys24 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/535/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 535, mechanism 1; M-CSA cites PMID:20434456, PMID:23591900, PMID:23864225, PMID:24282301,
+        PMID:25515218; M-CSA catalytic-residue roles for Lys24
+  - subject: thr25
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr25 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/535/
+      snippet: metal ligand
+      notes: M-CSA entry 535, mechanism 1; M-CSA cites PMID:20434456, PMID:23591900, PMID:23864225, PMID:24282301,
+        PMID:25515218; M-CSA catalytic-residue roles for Thr25
+  - subject: gly83
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly83 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/535/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 535, mechanism 1; M-CSA cites PMID:20434456, PMID:23591900, PMID:23864225, PMID:24282301,
+        PMID:25515218; M-CSA catalytic-residue roles for Gly83
+  - subject: his84
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His84 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/535/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 535, mechanism 1; M-CSA cites PMID:20434456, PMID:23591900, PMID:23864225, PMID:24282301,
+        PMID:25515218; M-CSA catalytic-residue roles for His84
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/535/
+      snippet: The reaction of the GTPase of EF-Tu follows a concerted early proton transfer to the γ-phosphate,
+        resulting in subsequent nucleophilic attack on the γ-phosphate monoanion by hydroxide. His 85
+        is shown to be doubly protonated and is involved in the stabilization of the negative charge development
+        along with the back bone NH of Gly 84 which together form an oxyanion hole. This effect also requires
+        t
+      notes: M-CSA entry 535, mechanism 1; M-CSA cites PMID:20434456, PMID:23591900, PMID:23864225, PMID:24282301,
+        PMID:25515218; CATH domain 3.40.50.300 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/535/
+      snippet: The reaction of the GTPase of EF-Tu follows a concerted early proton transfer to the γ-phosphate,
+        resulting in subsequent nucleophilic attack on the γ-phosphate monoanion by hydroxide. His 85
+        is shown to be doubly protonated and is involved in the stabilization of the negative charge development
+        along with the back bone NH of Gly 84 which together form an oxyanion hole. This effect also requires
+        t
+      notes: M-CSA entry 535, mechanism 1; M-CSA cites PMID:20434456, PMID:23591900, PMID:23864225, PMID:24282301,
+        PMID:25515218; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/535/
+      snippet: The reaction of the GTPase of EF-Tu follows a concerted early proton transfer to the γ-phosphate,
+        resulting in subsequent nucleophilic attack on the γ-phosphate monoanion by hydroxide. His 85
+        is shown to be doubly protonated and is involved in the stabilization of the negative charge development
+        along with the back bone NH of Gly 84 which together form an oxyanion hole. This effect also requires
+        t
+      notes: M-CSA entry 535, mechanism 1; M-CSA cites PMID:20434456, PMID:23591900, PMID:23864225, PMID:24282301,
+        PMID:25515218; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/535/
+      snippet: The reaction of the GTPase of EF-Tu follows a concerted early proton transfer to the γ-phosphate,
+        resulting in subsequent nucleophilic attack on the γ-phosphate monoanion by hydroxide. His 85
+        is shown to be doubly protonated and is involved in the stabilization of the negative charge development
+        along with the back bone NH of Gly 84 which together form an oxyanion hole. This effect also requires
+        t
+      notes: M-CSA entry 535, mechanism 1; M-CSA cites PMID:20434456, PMID:23591900, PMID:23864225, PMID:24282301,
+        PMID:25515218; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/535/
+      snippet: The reaction of the GTPase of EF-Tu follows a concerted early proton transfer to the γ-phosphate,
+        resulting in subsequent nucleophilic attack on the γ-phosphate monoanion by hydroxide. His 85
+        is shown to be doubly protonated and is involved in the stabilization of the negative charge development
+        along with the back bone NH of Gly 84 which together form an oxyanion hole. This effect also requires
+        t
+      notes: M-CSA entry 535, mechanism 1; M-CSA cites PMID:20434456, PMID:23591900, PMID:23864225, PMID:24282301,
+        PMID:25515218; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/535/
+      snippet: The reaction of the GTPase of EF-Tu follows a concerted early proton transfer to the γ-phosphate,
+        resulting in subsequent nucleophilic attack on the γ-phosphate monoanion by hydroxide. His 85
+        is shown to be doubly protonated and is involved in the stabilization of the negative charge development
+        along with the back bone NH of Gly 84 which together form an oxyanion hole. This effect also requires
+        t
+      notes: M-CSA entry 535, mechanism 1; M-CSA cites PMID:20434456, PMID:23591900, PMID:23864225, PMID:24282301,
+        PMID:25515218; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/535/
+      snippet: The reaction of the GTPase of EF-Tu follows a concerted early proton transfer to the γ-phosphate,
+        resulting in subsequent nucleophilic attack on the γ-phosphate monoanion by hydroxide. His 85
+        is shown to be doubly protonated and is involved in the stabilization of the negative charge development
+        along with the back bone NH of Gly 84 which together form an oxyanion hole. This effect also requires
+        t
+      notes: M-CSA entry 535, mechanism 1; M-CSA cites PMID:20434456, PMID:23591900, PMID:23864225, PMID:24282301,
+        PMID:25515218; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (14 evidence-backed edges) transcribed from M-CSA entry 535;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.3.2
 - CHEBI:15377
@@ -361,4 +361,362 @@ definitions:
       Purple acid phosphatases (PAPs) are metalloenzymes found in animals, plants and fungi. They possess a binuclear metal centre to catalyse the hydrolysis of phosphate esters (e.g. of sugars or proteins) and anhydrides (e.g. ATP) under acidic conditions. The distinctive purple colour of these enzymes is due to a metal to ligand charge transfer from a tyrosine phenolate to a chromophoric Fe(III). The cornerstone of the active site of PAP is the presence of two metal ions; Fe(III) is always present in the chromophoric site, while the second site can be occupied by a redox active Fe(II/III) in mammals or a Zn(II) or Mn(II) in plants. Crystal structures of human, pig, rat, and plant PAPs have been determined and show that the amino acid ligands of the metal ions are completely conserved across plant and animal PAPs, but there are some differences in the identities of the residues that line the active site.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of purple acid phosphatase
+  description: Stepwise mechanism transcribed from M-CSA entry 43 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +27).
+  nodes:
+  - node_id: asp135
+    label: catalytic Asp135 (M-CSA/PDB numbering; UniProt residue 162)
+    node_type: RESIDUE
+    grounding: UniProtKB:P80366
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp164
+    label: catalytic Asp164 (M-CSA/PDB numbering; UniProt residue 191)
+    node_type: RESIDUE
+    grounding: UniProtKB:P80366
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: tyr167
+    label: catalytic Tyr167 (M-CSA/PDB numbering; UniProt residue 194)
+    node_type: RESIDUE
+    grounding: UniProtKB:P80366
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asn201
+    label: catalytic Asn201 (M-CSA/PDB numbering; UniProt residue 228)
+    node_type: RESIDUE
+    grounding: UniProtKB:P80366
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his202
+    label: catalytic His202 (M-CSA/PDB numbering; UniProt residue 229)
+    node_type: RESIDUE
+    grounding: UniProtKB:P80366
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: his286
+    label: catalytic His286 (M-CSA/PDB numbering; UniProt residue 313)
+    node_type: RESIDUE
+    grounding: UniProtKB:P80366
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his295
+    label: catalytic His295 (M-CSA/PDB numbering; UniProt residue 322)
+    node_type: RESIDUE
+    grounding: UniProtKB:P80366
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: his296
+    label: catalytic His296 (M-CSA/PDB numbering; UniProt residue 323)
+    node_type: RESIDUE
+    grounding: UniProtKB:P80366
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      proton donor.'
+  - node_id: his323
+    label: catalytic His323 (M-CSA/PDB numbering; UniProt residue 350)
+    node_type: RESIDUE
+    grounding: UniProtKB:P80366
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his325
+    label: catalytic His325 (M-CSA/PDB numbering; UniProt residue 352)
+    node_type: RESIDUE
+    grounding: UniProtKB:P80366
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: phosphate monoester dianion
+    node_type: CHEMICAL
+    grounding: CHEBI:67140
+  - node_id: product0
+    label: alcohol
+    node_type: CHEMICAL
+    grounding: CHEBI:30879
+  - node_id: product1
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Metal activated water attacks the phosphate in a nucleophilic addition, resulting in
+      a pentavalent transition state, which collapses to release the alcohol group, which gains a proton
+      from His296.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The phosphate undergoes a rotation in the active site.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Water displaces one of the phosphate coordination bonds.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The metal coordinated water is now deprotonated by the leaving phosphate group, regenerating
+      the active site. In the product release step, another water enters the active site, displacing the
+      phosphate product.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: purple acid phosphatase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:43
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.60.21.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.60.21.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: purple acid phosphatase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.3.2
+  edges:
+  - subject: his296
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His296 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/43/
+      snippet: Metal activated water attacks the phosphate in a nucleophilic addition, resulting in a
+        pentavalent transition state, which collapses to release the alcohol group, which gains a proton
+        from His296.
+      notes: M-CSA entry 43, mechanism 1; M-CSA cites PMID:15625111, PMID:22684363, PMID:22698580, PMID:22943065,
+        PMID:7770774, PMID:8683579; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/43/
+      snippet: The phosphate undergoes a rotation in the active site.
+      notes: M-CSA entry 43, mechanism 1; M-CSA cites PMID:15625111, PMID:22684363, PMID:22698580, PMID:22943065,
+        PMID:7770774, PMID:8683579; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/43/
+      snippet: Water displaces one of the phosphate coordination bonds.
+      notes: M-CSA entry 43, mechanism 1; M-CSA cites PMID:15625111, PMID:22684363, PMID:22698580, PMID:22943065,
+        PMID:7770774, PMID:8683579; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/43/
+      snippet: The metal coordinated water is now deprotonated by the leaving phosphate group, regenerating
+        the active site. In the product release step, another water enters the active site, displacing
+        the phosphate product.
+      notes: M-CSA entry 43, mechanism 1; M-CSA cites PMID:15625111, PMID:22684363, PMID:22698580, PMID:22943065,
+        PMID:7770774, PMID:8683579; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/43/
+      snippet: Products
+      notes: M-CSA entry 43, mechanism 1; M-CSA cites PMID:15625111, PMID:22684363, PMID:22698580, PMID:22943065,
+        PMID:7770774, PMID:8683579; step 5
+  - subject: asp135
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp135 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/43/
+      snippet: metal ligand
+      notes: M-CSA entry 43, mechanism 1; M-CSA cites PMID:15625111, PMID:22684363, PMID:22698580, PMID:22943065,
+        PMID:7770774, PMID:8683579; M-CSA catalytic-residue roles for Asp135
+  - subject: asp164
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp164 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/43/
+      snippet: metal ligand
+      notes: M-CSA entry 43, mechanism 1; M-CSA cites PMID:15625111, PMID:22684363, PMID:22698580, PMID:22943065,
+        PMID:7770774, PMID:8683579; M-CSA catalytic-residue roles for Asp164
+  - subject: tyr167
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr167 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/43/
+      snippet: metal ligand
+      notes: M-CSA entry 43, mechanism 1; M-CSA cites PMID:15625111, PMID:22684363, PMID:22698580, PMID:22943065,
+        PMID:7770774, PMID:8683579; M-CSA catalytic-residue roles for Tyr167
+  - subject: asn201
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn201 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/43/
+      snippet: metal ligand
+      notes: M-CSA entry 43, mechanism 1; M-CSA cites PMID:15625111, PMID:22684363, PMID:22698580, PMID:22943065,
+        PMID:7770774, PMID:8683579; M-CSA catalytic-residue roles for Asn201
+  - subject: his202
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His202 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/43/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 43, mechanism 1; M-CSA cites PMID:15625111, PMID:22684363, PMID:22698580, PMID:22943065,
+        PMID:7770774, PMID:8683579; M-CSA catalytic-residue roles for His202
+  - subject: his286
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His286 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/43/
+      snippet: metal ligand
+      notes: M-CSA entry 43, mechanism 1; M-CSA cites PMID:15625111, PMID:22684363, PMID:22698580, PMID:22943065,
+        PMID:7770774, PMID:8683579; M-CSA catalytic-residue roles for His286
+  - subject: his295
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His295 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/43/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 43, mechanism 1; M-CSA cites PMID:15625111, PMID:22684363, PMID:22698580, PMID:22943065,
+        PMID:7770774, PMID:8683579; M-CSA catalytic-residue roles for His295
+  - subject: his296
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His296 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/43/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, proton donor
+      notes: M-CSA entry 43, mechanism 1; M-CSA cites PMID:15625111, PMID:22684363, PMID:22698580, PMID:22943065,
+        PMID:7770774, PMID:8683579; M-CSA catalytic-residue roles for His296
+  - subject: his323
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His323 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/43/
+      snippet: metal ligand
+      notes: M-CSA entry 43, mechanism 1; M-CSA cites PMID:15625111, PMID:22684363, PMID:22698580, PMID:22943065,
+        PMID:7770774, PMID:8683579; M-CSA catalytic-residue roles for His323
+  - subject: his325
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His325 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/43/
+      snippet: metal ligand
+      notes: M-CSA entry 43, mechanism 1; M-CSA cites PMID:15625111, PMID:22684363, PMID:22698580, PMID:22943065,
+        PMID:7770774, PMID:8683579; M-CSA catalytic-residue roles for His325
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/43/
+      snippet: On the basis of structural studies with bound phosphate and tungstate (inhibitor), and
+        the observed inversion of the phosphorous configuration during catalysis, an SN2-type mechanism
+        is proposed for PAP. The substrate phosphate is bound to the Me(II) ion via one of the non-esterified
+        oxygen atoms and oriented by His202 and His296 (numbering for kidney bean enzyme) for in-line
+        attack of an Fe(III)-
+      notes: M-CSA entry 43, mechanism 1; M-CSA cites PMID:15625111, PMID:22684363, PMID:22698580, PMID:22943065,
+        PMID:7770774, PMID:8683579; CATH domain 3.60.21.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/43/
+      snippet: On the basis of structural studies with bound phosphate and tungstate (inhibitor), and
+        the observed inversion of the phosphorous configuration during catalysis, an SN2-type mechanism
+        is proposed for PAP. The substrate phosphate is bound to the Me(II) ion via one of the non-esterified
+        oxygen atoms and oriented by His202 and His296 (numbering for kidney bean enzyme) for in-line
+        attack of an Fe(III)-
+      notes: M-CSA entry 43, mechanism 1; M-CSA cites PMID:15625111, PMID:22684363, PMID:22698580, PMID:22943065,
+        PMID:7770774, PMID:8683579; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/43/
+      snippet: On the basis of structural studies with bound phosphate and tungstate (inhibitor), and
+        the observed inversion of the phosphorous configuration during catalysis, an SN2-type mechanism
+        is proposed for PAP. The substrate phosphate is bound to the Me(II) ion via one of the non-esterified
+        oxygen atoms and oriented by His202 and His296 (numbering for kidney bean enzyme) for in-line
+        attack of an Fe(III)-
+      notes: M-CSA entry 43, mechanism 1; M-CSA cites PMID:15625111, PMID:22684363, PMID:22698580, PMID:22943065,
+        PMID:7770774, PMID:8683579; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/43/
+      snippet: On the basis of structural studies with bound phosphate and tungstate (inhibitor), and
+        the observed inversion of the phosphorous configuration during catalysis, an SN2-type mechanism
+        is proposed for PAP. The substrate phosphate is bound to the Me(II) ion via one of the non-esterified
+        oxygen atoms and oriented by His202 and His296 (numbering for kidney bean enzyme) for in-line
+        attack of an Fe(III)-
+      notes: M-CSA entry 43, mechanism 1; M-CSA cites PMID:15625111, PMID:22684363, PMID:22698580, PMID:22943065,
+        PMID:7770774, PMID:8683579; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/43/
+      snippet: On the basis of structural studies with bound phosphate and tungstate (inhibitor), and
+        the observed inversion of the phosphorous configuration during catalysis, an SN2-type mechanism
+        is proposed for PAP. The substrate phosphate is bound to the Me(II) ion via one of the non-esterified
+        oxygen atoms and oriented by His202 and His296 (numbering for kidney bean enzyme) for in-line
+        attack of an Fe(III)-
+      notes: M-CSA entry 43, mechanism 1; M-CSA cites PMID:15625111, PMID:22684363, PMID:22698580, PMID:22943065,
+        PMID:7770774, PMID:8683579; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/43/
+      snippet: On the basis of structural studies with bound phosphate and tungstate (inhibitor), and
+        the observed inversion of the phosphorous configuration during catalysis, an SN2-type mechanism
+        is proposed for PAP. The substrate phosphate is bound to the Me(II) ion via one of the non-esterified
+        oxygen atoms and oriented by His202 and His296 (numbering for kidney bean enzyme) for in-line
+        attack of an Fe(III)-
+      notes: M-CSA entry 43, mechanism 1; M-CSA cites PMID:15625111, PMID:22684363, PMID:22698580, PMID:22943065,
+        PMID:7770774, PMID:8683579; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (21 evidence-backed edges) transcribed from M-CSA entry 43;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.5.1.5
 - CHEBI:57976
@@ -239,4 +239,217 @@ definitions:
       Eukaryote 3-carboxy-cis,cis-muconate lactonizing enzyme is an eukaryote muconate lactonizing enzyme(MLE), converting cis,cis-muconates to muconlactones. It is in the class of CyclicMLE among the three classes of muconate lactonizing enzymes. The other 2 classes are bacterial CyclicMLE and bacterial MLE. The three classes of MLE are structurally very different but catalyse an analogous reaction, i.e. convergent functional evolution occurred.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of carboxy-cis,cis-muconate cyclase
+  description: Stepwise mechanism transcribed from M-CSA entry 542 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +1).
+  nodes:
+  - node_id: his148
+    label: catalytic His148 (M-CSA/PDB numbering; UniProt residue 149)
+    node_type: RESIDUE
+    grounding: UniProtKB:P38677
+    description: 'M-CSA roles: proton acceptor.'
+  - node_id: arg196
+    label: catalytic Arg196 (M-CSA/PDB numbering; UniProt residue 197)
+    node_type: RESIDUE
+    grounding: UniProtKB:P38677
+    description: 'M-CSA roles: electrostatic stabiliser, increase nucleophilicity.'
+  - node_id: glu212
+    label: catalytic Glu212 (M-CSA/PDB numbering; UniProt residue 213)
+    node_type: RESIDUE
+    grounding: UniProtKB:P38677
+    description: 'M-CSA roles: proton donor.'
+  - node_id: arg274
+    label: catalytic Arg274 (M-CSA/PDB numbering; UniProt residue 275)
+    node_type: RESIDUE
+    grounding: UniProtKB:P38677
+    description: 'M-CSA roles: electrostatic stabiliser, increase nucleophilicity.'
+  - node_id: reactant0
+    label: 2-(carboxylatomethyl)-5-oxo-2,5-dihydrofuran-2-ide-3-carboxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:57976
+  - node_id: product0
+    label: 3-carboxy-cis,cis-muconate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57496
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: "His 148 deprotonates C5, simultaneously Glu 212 donates a proton to the C6 carboxylate.\
+      \ 
+This causes a tautomerization to take place forming an eneolate which is stabilized by the\
+      \ Arg residues via hydrogen bonding."
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Intramolecular nucleophilic attack from the C6 enolate to C4 via the C=C bond causes
+      the enolate to tautomerize back into a carboxylate and for the 5 member ring to be opened, forming
+      another carboxylate group on C1. The Arg residues act to increase nucleophilicity of the enolate
+      via hydrogen bonding.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: carboxy-cis,cis-muconate cyclase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:542
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.130.10.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.130.10.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: carboxy-cis,cis-muconate cyclase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.5.1.5
+  edges:
+  - subject: his148
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His148 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/542/
+      snippet: "His 148 deprotonates C5, simultaneously Glu 212 donates a proton to the C6 carboxylate.\
+        \ 
+This causes a tautomerization to take place forming an eneolate which is stabilized by the\
+        \ Arg residues via hydrogen bonding."
+      notes: M-CSA entry 542, mechanism 1; M-CSA cites PMID:11937053, PMID:15301541; step 1
+  - subject: glu212
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu212 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/542/
+      snippet: "His 148 deprotonates C5, simultaneously Glu 212 donates a proton to the C6 carboxylate.\
+        \ 
+This causes a tautomerization to take place forming an eneolate which is stabilized by the\
+        \ Arg residues via hydrogen bonding."
+      notes: M-CSA entry 542, mechanism 1; M-CSA cites PMID:11937053, PMID:15301541; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/542/
+      snippet: Intramolecular nucleophilic attack from the C6 enolate to C4 via the C=C bond causes the
+        enolate to tautomerize back into a carboxylate and for the 5 member ring to be opened, forming
+        another carboxylate group on C1. The Arg residues act to increase nucleophilicity of the enolate
+        via hydrogen bonding.
+      notes: M-CSA entry 542, mechanism 1; M-CSA cites PMID:11937053, PMID:15301541; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/542/
+      snippet: Products.
+      notes: M-CSA entry 542, mechanism 1; M-CSA cites PMID:11937053, PMID:15301541; step 3
+  - subject: his148
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His148 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/542/
+      snippet: proton acceptor
+      notes: M-CSA entry 542, mechanism 1; M-CSA cites PMID:11937053, PMID:15301541; M-CSA catalytic-residue
+        roles for His148
+  - subject: arg196
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg196 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/542/
+      snippet: electrostatic stabiliser, increase nucleophilicity
+      notes: M-CSA entry 542, mechanism 1; M-CSA cites PMID:11937053, PMID:15301541; M-CSA catalytic-residue
+        roles for Arg196
+  - subject: glu212
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu212 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/542/
+      snippet: proton donor
+      notes: M-CSA entry 542, mechanism 1; M-CSA cites PMID:11937053, PMID:15301541; M-CSA catalytic-residue
+        roles for Glu212
+  - subject: arg274
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg274 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/542/
+      snippet: electrostatic stabiliser, increase nucleophilicity
+      notes: M-CSA entry 542, mechanism 1; M-CSA cites PMID:11937053, PMID:15301541; M-CSA catalytic-residue
+        roles for Arg274
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/542/
+      snippet: The mechanism is a general acid/base catalysis, where His 148 deprotonates C5 and Glu 212
+        donates a proton to the C6 carboxylate. This causes a tautomerization to take place forming an
+        eneolate intermediate, stabilized by Arg 274 and 196 via hydrogen bonding. Intramolecular nucleophilic
+        attack from the C6 enolate to C4 via the C=C bond causes the enolate to tautomerize back into
+        a carboxylate and
+      notes: M-CSA entry 542, mechanism 1; M-CSA cites PMID:11937053, PMID:15301541; CATH domain 2.130.10.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/542/
+      snippet: The mechanism is a general acid/base catalysis, where His 148 deprotonates C5 and Glu 212
+        donates a proton to the C6 carboxylate. This causes a tautomerization to take place forming an
+        eneolate intermediate, stabilized by Arg 274 and 196 via hydrogen bonding. Intramolecular nucleophilic
+        attack from the C6 enolate to C4 via the C=C bond causes the enolate to tautomerize back into
+        a carboxylate and
+      notes: M-CSA entry 542, mechanism 1; M-CSA cites PMID:11937053, PMID:15301541; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/542/
+      snippet: The mechanism is a general acid/base catalysis, where His 148 deprotonates C5 and Glu 212
+        donates a proton to the C6 carboxylate. This causes a tautomerization to take place forming an
+        eneolate intermediate, stabilized by Arg 274 and 196 via hydrogen bonding. Intramolecular nucleophilic
+        attack from the C6 enolate to C4 via the C=C bond causes the enolate to tautomerize back into
+        a carboxylate and
+      notes: M-CSA entry 542, mechanism 1; M-CSA cites PMID:11937053, PMID:15301541; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/542/
+      snippet: The mechanism is a general acid/base catalysis, where His 148 deprotonates C5 and Glu 212
+        donates a proton to the C6 carboxylate. This causes a tautomerization to take place forming an
+        eneolate intermediate, stabilized by Arg 274 and 196 via hydrogen bonding. Intramolecular nucleophilic
+        attack from the C6 enolate to C4 via the C=C bond causes the enolate to tautomerize back into
+        a carboxylate and
+      notes: M-CSA entry 542, mechanism 1; M-CSA cites PMID:11937053, PMID:15301541; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (12 evidence-backed edges) transcribed from M-CSA entry 542;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.3.1.8
 - CHEBI:58735
@@ -292,4 +292,291 @@ definitions:
       Several aerobic crenarcheaons, including Pyrobaculum aerophilum, contain an isomerase that converts both glucose-6-phosphate and mannose-6-phosphate (G6P and M6P, which are C2 epimers) into fructose-6-phosphate. Most organisms contain only highly specific phosphoglucose and phosphomannose isomerases (PGIs and PMIs), which only accept either glucose or mannose as a substrate. These dual specificity isomerases share very low sequence identity with 'conventional' PGIs or PMIs, but structure is conserved, especially at the active site, supporting a common mechanism. They belong to the larger PGI superfamily.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of mannose-6-phosphate isomerase
+  description: Stepwise mechanism transcribed from M-CSA entry 736 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: arg135
+    label: catalytic Arg135 (M-CSA/PDB numbering; UniProt residue 135)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8ZWV0
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu203
+    label: catalytic Glu203 (M-CSA/PDB numbering; UniProt residue 203)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8ZWV0
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: his219
+    label: catalytic His219 (M-CSA/PDB numbering; UniProt residue 219)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8ZWV0
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: lys298
+    label: catalytic Lys298 (M-CSA/PDB numbering; UniProt residue 298)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8ZWV0
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: D-mannopyranose 6-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58735
+  - node_id: product0
+    label: D-fructofuranose 6-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:61527
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: "Lys 298 accepts a proton from the C1 hydroxyl. The ring oxygen accepts a proton from\
+      \ His 219. This leads to the ring opening.
+Following this step there is a 180 degree rotation\
+      \ about the C3-C4 bond followed by rotation about the C2-C3 bond."
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: "Glu 203 accepts a proton from C2. This leads to the formation of a cis-enediolate intermediate\
+      \ stabilized by Arg 135.
+Following this step there is rotation about the C2-C3 bond."
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: "The C=C bond of the enediolate intermediate accepts a proton from Glu 203. Simultaneously,\
+      \ there is an intramolecular proton transfer where C1 oxygen accepts a proton from the C2 hydroxyl.\
+      \ 
+These proton transfers lead to a second tautomerization, forming a keto group on C2 and a\
+      \ hydroxyl group on C1.
+Following this step there is a 180 degree rotation about the C3-C4 bond."
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: 'The ring closes in the reverse process of step 1. This creates the final product: D-fructose
+      6-phosphate.'
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: mannose-6-phosphate isomerase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:736
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.10490 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.10490
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: mannose-6-phosphate isomerase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.3.1.8
+  edges:
+  - subject: his219
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His219 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/736/
+      snippet: "Lys 298 accepts a proton from the C1 hydroxyl. The ring oxygen accepts a proton from His\
+        \ 219. This leads to the ring opening.
+Following this step there is a 180 degree rotation about\
+        \ the C3-C4 bond followed by rotation about the C2-C3 bond."
+      notes: M-CSA entry 736, mechanism 1; M-CSA cites PMID:15518558; step 1
+  - subject: lys298
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys298 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/736/
+      snippet: "Lys 298 accepts a proton from the C1 hydroxyl. The ring oxygen accepts a proton from His\
+        \ 219. This leads to the ring opening.
+Following this step there is a 180 degree rotation about\
+        \ the C3-C4 bond followed by rotation about the C2-C3 bond."
+      notes: M-CSA entry 736, mechanism 1; M-CSA cites PMID:15518558; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/736/
+      snippet: "Glu 203 accepts a proton from C2. This leads to the formation of a cis-enediolate intermediate\
+        \ stabilized by Arg 135.
+Following this step there is rotation about the C2-C3 bond."
+      notes: M-CSA entry 736, mechanism 1; M-CSA cites PMID:15518558; step 2
+  - subject: arg135
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Arg135 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/736/
+      snippet: "Glu 203 accepts a proton from C2. This leads to the formation of a cis-enediolate intermediate\
+        \ stabilized by Arg 135.
+Following this step there is rotation about the C2-C3 bond."
+      notes: M-CSA entry 736, mechanism 1; M-CSA cites PMID:15518558; step 2
+  - subject: glu203
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu203 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/736/
+      snippet: "Glu 203 accepts a proton from C2. This leads to the formation of a cis-enediolate intermediate\
+        \ stabilized by Arg 135.
+Following this step there is rotation about the C2-C3 bond."
+      notes: M-CSA entry 736, mechanism 1; M-CSA cites PMID:15518558; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/736/
+      snippet: "The C=C bond of the enediolate intermediate accepts a proton from Glu 203. Simultaneously,\
+        \ there is an intramolecular proton transfer where C1 oxygen accepts a proton from the C2 hydroxyl.\
+        \ 
+These proton transfers lead to a second tautomerization, forming a keto group on C2 and\
+        \ a hydroxyl group on C1.
+Following this step there is a 180 degree rotation about the C3-C4\
+        \ bond."
+      notes: M-CSA entry 736, mechanism 1; M-CSA cites PMID:15518558; step 3
+  - subject: glu203
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Glu203 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/736/
+      snippet: "The C=C bond of the enediolate intermediate accepts a proton from Glu 203. Simultaneously,\
+        \ there is an intramolecular proton transfer where C1 oxygen accepts a proton from the C2 hydroxyl.\
+        \ 
+These proton transfers lead to a second tautomerization, forming a keto group on C2 and\
+        \ a hydroxyl group on C1.
+Following this step there is a 180 degree rotation about the C3-C4\
+        \ bond."
+      notes: M-CSA entry 736, mechanism 1; M-CSA cites PMID:15518558; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/736/
+      snippet: 'The ring closes in the reverse process of step 1. This creates the final product: D-fructose
+        6-phosphate.'
+      notes: M-CSA entry 736, mechanism 1; M-CSA cites PMID:15518558; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/736/
+      snippet: Products
+      notes: M-CSA entry 736, mechanism 1; M-CSA cites PMID:15518558; step 5
+  - subject: arg135
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg135 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/736/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 736, mechanism 1; M-CSA cites PMID:15518558; M-CSA catalytic-residue roles for
+        Arg135
+  - subject: glu203
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu203 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/736/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 736, mechanism 1; M-CSA cites PMID:15518558; M-CSA catalytic-residue roles for
+        Glu203
+  - subject: his219
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His219 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/736/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 736, mechanism 1; M-CSA cites PMID:15518558; M-CSA catalytic-residue roles for
+        His219
+  - subject: lys298
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys298 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/736/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 736, mechanism 1; M-CSA cites PMID:15518558; M-CSA catalytic-residue roles for
+        Lys298
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/736/
+      snippet: Lys 248 is deprotonates the C1 hydroxyl group. This leads to concomitant ring opening and
+        protonation of the ring oxygen by His 219. Rotation takes place around the C3-C4 bond, and also
+        C2-C3 for the M6P mechanism (this is forbidden in conventional PGIs by a glutamate residue). Glu
+        203 abstracts the C2 proton, leading to cis-enediolate formation. In the PGI mechanism, this cis-enediolate
+        is stabil
+      notes: M-CSA entry 736, mechanism 1; M-CSA cites PMID:15518558; CATH domain 3.40.50.10490 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/736/
+      snippet: Lys 248 is deprotonates the C1 hydroxyl group. This leads to concomitant ring opening and
+        protonation of the ring oxygen by His 219. Rotation takes place around the C3-C4 bond, and also
+        C2-C3 for the M6P mechanism (this is forbidden in conventional PGIs by a glutamate residue). Glu
+        203 abstracts the C2 proton, leading to cis-enediolate formation. In the PGI mechanism, this cis-enediolate
+        is stabil
+      notes: M-CSA entry 736, mechanism 1; M-CSA cites PMID:15518558; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/736/
+      snippet: Lys 248 is deprotonates the C1 hydroxyl group. This leads to concomitant ring opening and
+        protonation of the ring oxygen by His 219. Rotation takes place around the C3-C4 bond, and also
+        C2-C3 for the M6P mechanism (this is forbidden in conventional PGIs by a glutamate residue). Glu
+        203 abstracts the C2 proton, leading to cis-enediolate formation. In the PGI mechanism, this cis-enediolate
+        is stabil
+      notes: M-CSA entry 736, mechanism 1; M-CSA cites PMID:15518558; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/736/
+      snippet: Lys 248 is deprotonates the C1 hydroxyl group. This leads to concomitant ring opening and
+        protonation of the ring oxygen by His 219. Rotation takes place around the C3-C4 bond, and also
+        C2-C3 for the M6P mechanism (this is forbidden in conventional PGIs by a glutamate residue). Glu
+        203 abstracts the C2 proton, leading to cis-enediolate formation. In the PGI mechanism, this cis-enediolate
+        is stabil
+      notes: M-CSA entry 736, mechanism 1; M-CSA cites PMID:15518558; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (17 evidence-backed edges) transcribed from M-CSA entry 736;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

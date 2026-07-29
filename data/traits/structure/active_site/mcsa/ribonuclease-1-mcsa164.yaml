@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.6.1.18
 - CHEBI:33699
@@ -226,4 +226,302 @@ definitions:
       Ribonuclease-A (RNase-A) from Bos taurus catalyses the depolymerisation of RNA. It does this by breaking down the 3'-5' phosphodiester linkages of single stranded RNA. It is specific for pyrimidine bases at the 3' position of the phosphodiester bond that is cleaved, and a purine at the 5' end. RNase-A also shows a preference for polynucleotide substrates over oligonucleotides.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of ribonuclease 1
+  description: Stepwise mechanism transcribed from M-CSA entry 164 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +26).
+  nodes:
+  - node_id: his12
+    label: catalytic His12 (M-CSA/PDB numbering; UniProt residue 38)
+    node_type: RESIDUE
+    grounding: UniProtKB:P61823
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: lys41
+    label: catalytic Lys41 (M-CSA/PDB numbering; UniProt residue 67)
+    node_type: RESIDUE
+    grounding: UniProtKB:P61823
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: his119
+    label: catalytic His119 (M-CSA/PDB numbering; UniProt residue 145)
+    node_type: RESIDUE
+    grounding: UniProtKB:P61823
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: phe120
+    label: catalytic Phe120 (M-CSA/PDB numbering; UniProt residue 146)
+    node_type: RESIDUE
+    grounding: UniProtKB:P61823
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: asp121
+    label: catalytic Asp121 (M-CSA/PDB numbering; UniProt residue 147)
+    node_type: RESIDUE
+    grounding: UniProtKB:P61823
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: reactant0
+    label: messenger RNA
+    node_type: CHEMICAL
+    grounding: CHEBI:33699
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: 3'-end ribonucleotide(1-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:74896
+  - node_id: product1
+    label: 5'-end ribonucleotide(1-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:137923
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His12 deprotonates the alcohol of the 5' RNA ribose, which initiates an intramolecular
+      nucleophilic substitution on the phosphate bond of the RNA molecule. The leaving alcohol group is
+      reprotonated from His119.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: His119 deprotonates water which attacks the cyclic phosphate intermediate in a nucleophilic
+      substitution. The leaving alcohol group is reprotonated from His12.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: ribonuclease 1 catalytic site
+    node_type: MOTIF
+    grounding: MCSA:164
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.10.130.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.10.130.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: ribonuclease 1 activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.6.1.18
+  edges:
+  - subject: his12
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His12 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/164/
+      snippet: His12 deprotonates the alcohol of the 5' RNA ribose, which initiates an intramolecular
+        nucleophilic substitution on the phosphate bond of the RNA molecule. The leaving alcohol group
+        is reprotonated from His119.
+      notes: M-CSA entry 164, mechanism 1; M-CSA cites PMID:23878223, PMID:25936517, PMID:28603294, PMID:7492594;
+        step 1
+  - subject: his119
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His119 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/164/
+      snippet: His12 deprotonates the alcohol of the 5' RNA ribose, which initiates an intramolecular
+        nucleophilic substitution on the phosphate bond of the RNA molecule. The leaving alcohol group
+        is reprotonated from His119.
+      notes: M-CSA entry 164, mechanism 1; M-CSA cites PMID:23878223, PMID:25936517, PMID:28603294, PMID:7492594;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/164/
+      snippet: His119 deprotonates water which attacks the cyclic phosphate intermediate in a nucleophilic
+        substitution. The leaving alcohol group is reprotonated from His12.
+      notes: M-CSA entry 164, mechanism 1; M-CSA cites PMID:23878223, PMID:25936517, PMID:28603294, PMID:7492594;
+        step 2
+  - subject: his12
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His12 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/164/
+      snippet: His119 deprotonates water which attacks the cyclic phosphate intermediate in a nucleophilic
+        substitution. The leaving alcohol group is reprotonated from His12.
+      notes: M-CSA entry 164, mechanism 1; M-CSA cites PMID:23878223, PMID:25936517, PMID:28603294, PMID:7492594;
+        step 2
+  - subject: his119
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His119 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/164/
+      snippet: His119 deprotonates water which attacks the cyclic phosphate intermediate in a nucleophilic
+        substitution. The leaving alcohol group is reprotonated from His12.
+      notes: M-CSA entry 164, mechanism 1; M-CSA cites PMID:23878223, PMID:25936517, PMID:28603294, PMID:7492594;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/164/
+      snippet: Products
+      notes: M-CSA entry 164, mechanism 1; M-CSA cites PMID:23878223, PMID:25936517, PMID:28603294, PMID:7492594;
+        step 3
+  - subject: his12
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His12 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/164/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 164, mechanism 1; M-CSA cites PMID:23878223, PMID:25936517, PMID:28603294, PMID:7492594;
+        M-CSA catalytic-residue roles for His12
+  - subject: lys41
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys41 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/164/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 164, mechanism 1; M-CSA cites PMID:23878223, PMID:25936517, PMID:28603294, PMID:7492594;
+        M-CSA catalytic-residue roles for Lys41
+  - subject: his119
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His119 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/164/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 164, mechanism 1; M-CSA cites PMID:23878223, PMID:25936517, PMID:28603294, PMID:7492594;
+        M-CSA catalytic-residue roles for His119
+  - subject: phe120
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Phe120 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/164/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 164, mechanism 1; M-CSA cites PMID:23878223, PMID:25936517, PMID:28603294, PMID:7492594;
+        M-CSA catalytic-residue roles for Phe120
+  - subject: asp121
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp121 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/164/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 164, mechanism 1; M-CSA cites PMID:23878223, PMID:25936517, PMID:28603294, PMID:7492594;
+        M-CSA catalytic-residue roles for Asp121
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/164/
+      snippet: "The reaction occurs in two distinct phases:
+<ol>
+<li>Transphosphorylation. His 12\
+        \ acts as a general base by abstracting a proton from the 2' O atom, activating it for nucleophilic\
+        \ attack. The activated 2' O nucleophilically attacks the phosphorus atom, causing the P-5'O atom\
+        \ to break, forming a 2',3'-cyclic phosphodiester. The transition state is stabilised by the positively\
+        \ charged Lys 41. The"
+      notes: M-CSA entry 164, mechanism 1; M-CSA cites PMID:23878223, PMID:25936517, PMID:28603294, PMID:7492594;
+        CATH domain 3.10.130.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/164/
+      snippet: "The reaction occurs in two distinct phases:
+<ol>
+<li>Transphosphorylation. His 12\
+        \ acts as a general base by abstracting a proton from the 2' O atom, activating it for nucleophilic\
+        \ attack. The activated 2' O nucleophilically attacks the phosphorus atom, causing the P-5'O atom\
+        \ to break, forming a 2',3'-cyclic phosphodiester. The transition state is stabilised by the positively\
+        \ charged Lys 41. The"
+      notes: M-CSA entry 164, mechanism 1; M-CSA cites PMID:23878223, PMID:25936517, PMID:28603294, PMID:7492594;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/164/
+      snippet: "The reaction occurs in two distinct phases:
+<ol>
+<li>Transphosphorylation. His 12\
+        \ acts as a general base by abstracting a proton from the 2' O atom, activating it for nucleophilic\
+        \ attack. The activated 2' O nucleophilically attacks the phosphorus atom, causing the P-5'O atom\
+        \ to break, forming a 2',3'-cyclic phosphodiester. The transition state is stabilised by the positively\
+        \ charged Lys 41. The"
+      notes: M-CSA entry 164, mechanism 1; M-CSA cites PMID:23878223, PMID:25936517, PMID:28603294, PMID:7492594;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/164/
+      snippet: "The reaction occurs in two distinct phases:
+<ol>
+<li>Transphosphorylation. His 12\
+        \ acts as a general base by abstracting a proton from the 2' O atom, activating it for nucleophilic\
+        \ attack. The activated 2' O nucleophilically attacks the phosphorus atom, causing the P-5'O atom\
+        \ to break, forming a 2',3'-cyclic phosphodiester. The transition state is stabilised by the positively\
+        \ charged Lys 41. The"
+      notes: M-CSA entry 164, mechanism 1; M-CSA cites PMID:23878223, PMID:25936517, PMID:28603294, PMID:7492594;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/164/
+      snippet: "The reaction occurs in two distinct phases:
+<ol>
+<li>Transphosphorylation. His 12\
+        \ acts as a general base by abstracting a proton from the 2' O atom, activating it for nucleophilic\
+        \ attack. The activated 2' O nucleophilically attacks the phosphorus atom, causing the P-5'O atom\
+        \ to break, forming a 2',3'-cyclic phosphodiester. The transition state is stabilised by the positively\
+        \ charged Lys 41. The"
+      notes: M-CSA entry 164, mechanism 1; M-CSA cites PMID:23878223, PMID:25936517, PMID:28603294, PMID:7492594;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/164/
+      snippet: "The reaction occurs in two distinct phases:
+<ol>
+<li>Transphosphorylation. His 12\
+        \ acts as a general base by abstracting a proton from the 2' O atom, activating it for nucleophilic\
+        \ attack. The activated 2' O nucleophilically attacks the phosphorus atom, causing the P-5'O atom\
+        \ to break, forming a 2',3'-cyclic phosphodiester. The transition state is stabilised by the positively\
+        \ charged Lys 41. The"
+      notes: M-CSA entry 164, mechanism 1; M-CSA cites PMID:23878223, PMID:25936517, PMID:28603294, PMID:7492594;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (17 evidence-backed edges) transcribed from M-CSA entry 164;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.3.1.16
 - CHEBI:90726
@@ -277,4 +277,376 @@ definitions:
       Thiolases form a ubiquitous family of enzymes found in both prokaryotes and eukaryotes. Thiolases catalyse the reversible two step cleavage of acyl-CoA into CoA and acetyl-CoA. There are two classes of thiolases, I and II. This entry represents the Class II thiolases. Class II only acts upon acetoacetyl-CoA and its main function is to synthesise this compound in a Claisen condensation reaction important in several biosynthetic pathways.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of acetyl-CoA C-acyltransferase
+  description: Stepwise mechanism transcribed from M-CSA entry 77 (7 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: cys125
+    label: catalytic Cys125 (M-CSA/PDB numbering; UniProt residue 125)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27796
+    description: 'M-CSA roles: covalently attached, hydrogen bond acceptor, hydrogen bond donor, nucleofuge,
+      nucleophile, proton acceptor, proton donor.'
+  - node_id: his375
+    label: catalytic His375 (M-CSA/PDB numbering; UniProt residue 375)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27796
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      proton acceptor, proton donor.'
+  - node_id: cys403
+    label: catalytic Cys403 (M-CSA/PDB numbering; UniProt residue 403)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27796
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      proton acceptor, proton donor.'
+  - node_id: gly405
+    label: catalytic Gly405 (M-CSA/PDB numbering; UniProt residue 405)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27796
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: reactant0
+    label: acetyl-CoA(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+  - node_id: reactant1
+    label: acyl-CoA(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58342
+  - node_id: product0
+    label: 3-oxoacyl-CoA(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:90726
+  - node_id: product1
+    label: coenzyme A(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His375 deprotonates Cys125.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Cys125 initiates a nucleophilic attack on the carbonyl carbon of the acyl-CoA in an addition
+      reaction.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The oxyanion collapses, eliminating CoA with concomitant deprotonation of Cys403.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Cys403 deprotonates the CH<sub>3</sub> of the acetyl-CoA, with concomitant double bond
+      rearrangement.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: The acetyl-CoA oxyanion collapses, initiating a nucleophilic attack on the acylated Cys125
+      in an addition reaction.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: The oxyanion collapses eliminating Cys125 with concomitant deprotonation of His375.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: acetyl-CoA C-acyltransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:77
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.47.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.47.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: acetyl-CoA C-acyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.3.1.16
+  edges:
+  - subject: cys125
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys125 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/77/
+      snippet: His375 deprotonates Cys125.
+      notes: M-CSA entry 77, mechanism 1; M-CSA cites PMID:10545327, PMID:10764581, PMID:19822655, PMID:25482540,
+        PMID:9402066, PMID:942066; step 1
+  - subject: his375
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His375 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/77/
+      snippet: His375 deprotonates Cys125.
+      notes: M-CSA entry 77, mechanism 1; M-CSA cites PMID:10545327, PMID:10764581, PMID:19822655, PMID:25482540,
+        PMID:9402066, PMID:942066; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/77/
+      snippet: Cys125 initiates a nucleophilic attack on the carbonyl carbon of the acyl-CoA in an addition
+        reaction.
+      notes: M-CSA entry 77, mechanism 1; M-CSA cites PMID:10545327, PMID:10764581, PMID:19822655, PMID:25482540,
+        PMID:9402066, PMID:942066; step 2
+  - subject: cys125
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Cys125 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/77/
+      snippet: Cys125 initiates a nucleophilic attack on the carbonyl carbon of the acyl-CoA in an addition
+        reaction.
+      notes: M-CSA entry 77, mechanism 1; M-CSA cites PMID:10545327, PMID:10764581, PMID:19822655, PMID:25482540,
+        PMID:9402066, PMID:942066; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/77/
+      snippet: The oxyanion collapses, eliminating CoA with concomitant deprotonation of Cys403.
+      notes: M-CSA entry 77, mechanism 1; M-CSA cites PMID:10545327, PMID:10764581, PMID:19822655, PMID:25482540,
+        PMID:9402066, PMID:942066; step 3
+  - subject: cys403
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Cys403 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/77/
+      snippet: The oxyanion collapses, eliminating CoA with concomitant deprotonation of Cys403.
+      notes: M-CSA entry 77, mechanism 1; M-CSA cites PMID:10545327, PMID:10764581, PMID:19822655, PMID:25482540,
+        PMID:9402066, PMID:942066; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/77/
+      snippet: Cys403 deprotonates the CH<sub>3</sub> of the acetyl-CoA, with concomitant double bond
+        rearrangement.
+      notes: M-CSA entry 77, mechanism 1; M-CSA cites PMID:10545327, PMID:10764581, PMID:19822655, PMID:25482540,
+        PMID:9402066, PMID:942066; step 4
+  - subject: cys403
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Cys403 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/77/
+      snippet: Cys403 deprotonates the CH<sub>3</sub> of the acetyl-CoA, with concomitant double bond
+        rearrangement.
+      notes: M-CSA entry 77, mechanism 1; M-CSA cites PMID:10545327, PMID:10764581, PMID:19822655, PMID:25482540,
+        PMID:9402066, PMID:942066; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/77/
+      snippet: The acetyl-CoA oxyanion collapses, initiating a nucleophilic attack on the acylated Cys125
+        in an addition reaction.
+      notes: M-CSA entry 77, mechanism 1; M-CSA cites PMID:10545327, PMID:10764581, PMID:19822655, PMID:25482540,
+        PMID:9402066, PMID:942066; step 5
+  - subject: cys125
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Cys125 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/77/
+      snippet: The acetyl-CoA oxyanion collapses, initiating a nucleophilic attack on the acylated Cys125
+        in an addition reaction.
+      notes: M-CSA entry 77, mechanism 1; M-CSA cites PMID:10545327, PMID:10764581, PMID:19822655, PMID:25482540,
+        PMID:9402066, PMID:942066; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/77/
+      snippet: The oxyanion collapses eliminating Cys125 with concomitant deprotonation of His375.
+      notes: M-CSA entry 77, mechanism 1; M-CSA cites PMID:10545327, PMID:10764581, PMID:19822655, PMID:25482540,
+        PMID:9402066, PMID:942066; step 6
+  - subject: cys125
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: Cys125 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/77/
+      snippet: The oxyanion collapses eliminating Cys125 with concomitant deprotonation of His375.
+      notes: M-CSA entry 77, mechanism 1; M-CSA cites PMID:10545327, PMID:10764581, PMID:19822655, PMID:25482540,
+        PMID:9402066, PMID:942066; step 6
+  - subject: his375
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: His375 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/77/
+      snippet: The oxyanion collapses eliminating Cys125 with concomitant deprotonation of His375.
+      notes: M-CSA entry 77, mechanism 1; M-CSA cites PMID:10545327, PMID:10764581, PMID:19822655, PMID:25482540,
+        PMID:9402066, PMID:942066; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/77/
+      snippet: Products
+      notes: M-CSA entry 77, mechanism 1; M-CSA cites PMID:10545327, PMID:10764581, PMID:19822655, PMID:25482540,
+        PMID:9402066, PMID:942066; step 7
+  - subject: cys125
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys125 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/77/
+      snippet: covalently attached, hydrogen bond acceptor, hydrogen bond donor, nucleofuge, nucleophile,
+        proton acceptor, proton donor
+      notes: M-CSA entry 77, mechanism 1; M-CSA cites PMID:10545327, PMID:10764581, PMID:19822655, PMID:25482540,
+        PMID:9402066, PMID:942066; M-CSA catalytic-residue roles for Cys125
+  - subject: his375
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His375 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/77/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+        proton donor
+      notes: M-CSA entry 77, mechanism 1; M-CSA cites PMID:10545327, PMID:10764581, PMID:19822655, PMID:25482540,
+        PMID:9402066, PMID:942066; M-CSA catalytic-residue roles for His375
+  - subject: cys403
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys403 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/77/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+        proton donor
+      notes: M-CSA entry 77, mechanism 1; M-CSA cites PMID:10545327, PMID:10764581, PMID:19822655, PMID:25482540,
+        PMID:9402066, PMID:942066; M-CSA catalytic-residue roles for Cys403
+  - subject: gly405
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly405 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/77/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 77, mechanism 1; M-CSA cites PMID:10545327, PMID:10764581, PMID:19822655, PMID:25482540,
+        PMID:9402066, PMID:942066; M-CSA catalytic-residue roles for Gly405
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/77/
+      snippet: His375 deprotonates Cys125 to activate it as a nucleophile. Cys125 attacks the carbonyl
+        of the acyl-CoA in an addition reaction, forming an oxyanion transition state. This is stabilised
+        by the main-chain amide of Gly405. The oxyanion collapses, eliminating CoA with concomitant deprotonation
+        of Cys403. Cys403 then deprotonates the methyl group of the acetyl CoA with concomitant double
+        bond rearrang
+      notes: M-CSA entry 77, mechanism 1; M-CSA cites PMID:10545327, PMID:10764581, PMID:19822655, PMID:25482540,
+        PMID:9402066, PMID:942066; CATH domain 3.40.47.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/77/
+      snippet: His375 deprotonates Cys125 to activate it as a nucleophile. Cys125 attacks the carbonyl
+        of the acyl-CoA in an addition reaction, forming an oxyanion transition state. This is stabilised
+        by the main-chain amide of Gly405. The oxyanion collapses, eliminating CoA with concomitant deprotonation
+        of Cys403. Cys403 then deprotonates the methyl group of the acetyl CoA with concomitant double
+        bond rearrang
+      notes: M-CSA entry 77, mechanism 1; M-CSA cites PMID:10545327, PMID:10764581, PMID:19822655, PMID:25482540,
+        PMID:9402066, PMID:942066; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/77/
+      snippet: His375 deprotonates Cys125 to activate it as a nucleophile. Cys125 attacks the carbonyl
+        of the acyl-CoA in an addition reaction, forming an oxyanion transition state. This is stabilised
+        by the main-chain amide of Gly405. The oxyanion collapses, eliminating CoA with concomitant deprotonation
+        of Cys403. Cys403 then deprotonates the methyl group of the acetyl CoA with concomitant double
+        bond rearrang
+      notes: M-CSA entry 77, mechanism 1; M-CSA cites PMID:10545327, PMID:10764581, PMID:19822655, PMID:25482540,
+        PMID:9402066, PMID:942066; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/77/
+      snippet: His375 deprotonates Cys125 to activate it as a nucleophile. Cys125 attacks the carbonyl
+        of the acyl-CoA in an addition reaction, forming an oxyanion transition state. This is stabilised
+        by the main-chain amide of Gly405. The oxyanion collapses, eliminating CoA with concomitant deprotonation
+        of Cys403. Cys403 then deprotonates the methyl group of the acetyl CoA with concomitant double
+        bond rearrang
+      notes: M-CSA entry 77, mechanism 1; M-CSA cites PMID:10545327, PMID:10764581, PMID:19822655, PMID:25482540,
+        PMID:9402066, PMID:942066; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/77/
+      snippet: His375 deprotonates Cys125 to activate it as a nucleophile. Cys125 attacks the carbonyl
+        of the acyl-CoA in an addition reaction, forming an oxyanion transition state. This is stabilised
+        by the main-chain amide of Gly405. The oxyanion collapses, eliminating CoA with concomitant deprotonation
+        of Cys403. Cys403 then deprotonates the methyl group of the acetyl CoA with concomitant double
+        bond rearrang
+      notes: M-CSA entry 77, mechanism 1; M-CSA cites PMID:10545327, PMID:10764581, PMID:19822655, PMID:25482540,
+        PMID:9402066, PMID:942066; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/77/
+      snippet: His375 deprotonates Cys125 to activate it as a nucleophile. Cys125 attacks the carbonyl
+        of the acyl-CoA in an addition reaction, forming an oxyanion transition state. This is stabilised
+        by the main-chain amide of Gly405. The oxyanion collapses, eliminating CoA with concomitant deprotonation
+        of Cys403. Cys403 then deprotonates the methyl group of the acetyl CoA with concomitant double
+        bond rearrang
+      notes: M-CSA entry 77, mechanism 1; M-CSA cites PMID:10545327, PMID:10764581, PMID:19822655, PMID:25482540,
+        PMID:9402066, PMID:942066; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (24 evidence-backed edges) transcribed from M-CSA entry 77;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

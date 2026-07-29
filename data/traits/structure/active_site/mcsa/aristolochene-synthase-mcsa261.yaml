@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.2.3.9
 - CHEBI:175763
@@ -191,4 +191,320 @@ definitions:
       Aristolochene synthase is a fungal cyclase that catalyses the divalent metal dependent cyclisation of farnesyl diphosphate to the eremophilane sesquiterpene hydrocarbon aristolochene. Based on structural comparison, aristolochene is considered the likely parent hydrocarbon of several eremophilene toxins and bioregulators produced by a variety of filamentous fungi. It is also part of the gene cluster that mediates the biosynthesis of PR-toxin, a bicyclic sesquiterpene belonging to the eremophilane class and acting as a mycotoxin.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of aristolochene synthase
+  description: Stepwise mechanism transcribed from M-CSA entry 261 (6 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: tyr92
+    label: catalytic Tyr92 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q03471
+    description: 'M-CSA roles: electrostatic stabiliser, steric role, van der waals interaction.'
+  - node_id: phe112
+    label: catalytic Phe112 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q03471
+    description: 'M-CSA roles: electrostatic stabiliser, steric role, van der waals interaction.'
+  - node_id: phe178
+    label: catalytic Phe178 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q03471
+    description: 'M-CSA roles: electrostatic stabiliser, steric role, van der waals interaction.'
+  - node_id: lys206
+    label: catalytic Lys206 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q03471
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: trp333
+    label: catalytic Trp333 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q03471
+    description: 'M-CSA roles: electrostatic stabiliser, steric role, van der waals interaction.'
+  - node_id: reactant0
+    label: 2-trans,6-trans-farnesyl diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+  - node_id: product0
+    label: (+)-aristolochene
+    node_type: CHEMICAL
+    grounding: CHEBI:43445
+  - node_id: product1
+    label: diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Initial carbocation formation is triggered by coordination of the diphospahte leaving
+      group to the divalent metal cation cofactors. The C10-C11 double bond initiates an electrophilic
+      substitution at the C1, eliminating the diphosphate product.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Lys206 deprotonates the C12, producing the neutral Germacrene A intermediate.  A hydrogen
+      bond network linking Lys206 to the bulk solvent through Asp203 and Arg200 may provide a proton shuttle
+      from the bulk solvent.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The C2-C3 double bond initiates an electrophilic attack on the C7, which causes the protonation
+      of C6 from Lys206 to form the Eudesmane cation intermediate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Lys206 deprotonates the C8 carbon, which forms a double bond between C8 and C7. This
+      initiates the migration of the C14 methyl from C7 to C8 and a migration of a hydride from C2 to
+      C3 to form the Aristolochene product.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Inferred return step. The Lys206 is likely deprotonated <i>via</i> a hydrogen bond network
+      linking Lys206 to the bulk solvent through Asp203 and Arg200.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: aristolochene synthase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:261
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.10.600.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.10.600.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: aristolochene synthase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.2.3.9
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/261/
+      snippet: Lys206 deprotonates the C12, producing the neutral Germacrene A intermediate.  A hydrogen
+        bond network linking Lys206 to the bulk solvent through Asp203 and Arg200 may provide a proton
+        shuttle from the bulk solvent.
+      notes: M-CSA entry 261, mechanism 1; M-CSA cites PMID:10825154, PMID:12296728, PMID:12820883, PMID:15186158,
+        PMID:18563268, PMID:19225680; step 2
+  - subject: lys206
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Lys206 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/261/
+      snippet: Lys206 deprotonates the C12, producing the neutral Germacrene A intermediate.  A hydrogen
+        bond network linking Lys206 to the bulk solvent through Asp203 and Arg200 may provide a proton
+        shuttle from the bulk solvent.
+      notes: M-CSA entry 261, mechanism 1; M-CSA cites PMID:10825154, PMID:12296728, PMID:12820883, PMID:15186158,
+        PMID:18563268, PMID:19225680; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/261/
+      snippet: The C2-C3 double bond initiates an electrophilic attack on the C7, which causes the protonation
+        of C6 from Lys206 to form the Eudesmane cation intermediate.
+      notes: M-CSA entry 261, mechanism 1; M-CSA cites PMID:10825154, PMID:12296728, PMID:12820883, PMID:15186158,
+        PMID:18563268, PMID:19225680; step 3
+  - subject: lys206
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Lys206 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/261/
+      snippet: The C2-C3 double bond initiates an electrophilic attack on the C7, which causes the protonation
+        of C6 from Lys206 to form the Eudesmane cation intermediate.
+      notes: M-CSA entry 261, mechanism 1; M-CSA cites PMID:10825154, PMID:12296728, PMID:12820883, PMID:15186158,
+        PMID:18563268, PMID:19225680; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/261/
+      snippet: Lys206 deprotonates the C8 carbon, which forms a double bond between C8 and C7. This initiates
+        the migration of the C14 methyl from C7 to C8 and a migration of a hydride from C2 to C3 to form
+        the Aristolochene product.
+      notes: M-CSA entry 261, mechanism 1; M-CSA cites PMID:10825154, PMID:12296728, PMID:12820883, PMID:15186158,
+        PMID:18563268, PMID:19225680; step 4
+  - subject: lys206
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Lys206 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/261/
+      snippet: Lys206 deprotonates the C8 carbon, which forms a double bond between C8 and C7. This initiates
+        the migration of the C14 methyl from C7 to C8 and a migration of a hydride from C2 to C3 to form
+        the Aristolochene product.
+      notes: M-CSA entry 261, mechanism 1; M-CSA cites PMID:10825154, PMID:12296728, PMID:12820883, PMID:15186158,
+        PMID:18563268, PMID:19225680; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/261/
+      snippet: Inferred return step. The Lys206 is likely deprotonated <i>via</i> a hydrogen bond network
+        linking Lys206 to the bulk solvent through Asp203 and Arg200.
+      notes: M-CSA entry 261, mechanism 1; M-CSA cites PMID:10825154, PMID:12296728, PMID:12820883, PMID:15186158,
+        PMID:18563268, PMID:19225680; step 5
+  - subject: lys206
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Lys206 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/261/
+      snippet: Inferred return step. The Lys206 is likely deprotonated <i>via</i> a hydrogen bond network
+        linking Lys206 to the bulk solvent through Asp203 and Arg200.
+      notes: M-CSA entry 261, mechanism 1; M-CSA cites PMID:10825154, PMID:12296728, PMID:12820883, PMID:15186158,
+        PMID:18563268, PMID:19225680; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/261/
+      snippet: Products.
+      notes: M-CSA entry 261, mechanism 1; M-CSA cites PMID:10825154, PMID:12296728, PMID:12820883, PMID:15186158,
+        PMID:18563268, PMID:19225680; step 6
+  - subject: tyr92
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr92 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/261/
+      snippet: electrostatic stabiliser, steric role, van der waals interaction
+      notes: M-CSA entry 261, mechanism 1; M-CSA cites PMID:10825154, PMID:12296728, PMID:12820883, PMID:15186158,
+        PMID:18563268, PMID:19225680; M-CSA catalytic-residue roles for Tyr92
+  - subject: phe112
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Phe112 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/261/
+      snippet: electrostatic stabiliser, steric role, van der waals interaction
+      notes: M-CSA entry 261, mechanism 1; M-CSA cites PMID:10825154, PMID:12296728, PMID:12820883, PMID:15186158,
+        PMID:18563268, PMID:19225680; M-CSA catalytic-residue roles for Phe112
+  - subject: phe178
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Phe178 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/261/
+      snippet: electrostatic stabiliser, steric role, van der waals interaction
+      notes: M-CSA entry 261, mechanism 1; M-CSA cites PMID:10825154, PMID:12296728, PMID:12820883, PMID:15186158,
+        PMID:18563268, PMID:19225680; M-CSA catalytic-residue roles for Phe178
+  - subject: lys206
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys206 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/261/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 261, mechanism 1; M-CSA cites PMID:10825154, PMID:12296728, PMID:12820883, PMID:15186158,
+        PMID:18563268, PMID:19225680; M-CSA catalytic-residue roles for Lys206
+  - subject: trp333
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp333 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/261/
+      snippet: electrostatic stabiliser, steric role, van der waals interaction
+      notes: M-CSA entry 261, mechanism 1; M-CSA cites PMID:10825154, PMID:12296728, PMID:12820883, PMID:15186158,
+        PMID:18563268, PMID:19225680; M-CSA catalytic-residue roles for Trp333
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/261/
+      snippet: The cyclisation mechanism is thought to be initiated by the ionisation of the allylic diphosphate
+        ester to the corresponding allylic cation-pyrophosphate ion pair, followed by electrophilic attack
+        at the C10 of the distal double bond and removal of a proton form the cis-C-12 methyl group, resulting
+        in the formation of the intermediate (S)-geracrene A. This intermediate undergoes further cyclisatio
+      notes: M-CSA entry 261, mechanism 1; M-CSA cites PMID:10825154, PMID:12296728, PMID:12820883, PMID:15186158,
+        PMID:18563268, PMID:19225680; CATH domain 1.10.600.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/261/
+      snippet: The cyclisation mechanism is thought to be initiated by the ionisation of the allylic diphosphate
+        ester to the corresponding allylic cation-pyrophosphate ion pair, followed by electrophilic attack
+        at the C10 of the distal double bond and removal of a proton form the cis-C-12 methyl group, resulting
+        in the formation of the intermediate (S)-geracrene A. This intermediate undergoes further cyclisatio
+      notes: M-CSA entry 261, mechanism 1; M-CSA cites PMID:10825154, PMID:12296728, PMID:12820883, PMID:15186158,
+        PMID:18563268, PMID:19225680; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/261/
+      snippet: The cyclisation mechanism is thought to be initiated by the ionisation of the allylic diphosphate
+        ester to the corresponding allylic cation-pyrophosphate ion pair, followed by electrophilic attack
+        at the C10 of the distal double bond and removal of a proton form the cis-C-12 methyl group, resulting
+        in the formation of the intermediate (S)-geracrene A. This intermediate undergoes further cyclisatio
+      notes: M-CSA entry 261, mechanism 1; M-CSA cites PMID:10825154, PMID:12296728, PMID:12820883, PMID:15186158,
+        PMID:18563268, PMID:19225680; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/261/
+      snippet: The cyclisation mechanism is thought to be initiated by the ionisation of the allylic diphosphate
+        ester to the corresponding allylic cation-pyrophosphate ion pair, followed by electrophilic attack
+        at the C10 of the distal double bond and removal of a proton form the cis-C-12 methyl group, resulting
+        in the formation of the intermediate (S)-geracrene A. This intermediate undergoes further cyclisatio
+      notes: M-CSA entry 261, mechanism 1; M-CSA cites PMID:10825154, PMID:12296728, PMID:12820883, PMID:15186158,
+        PMID:18563268, PMID:19225680; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/261/
+      snippet: The cyclisation mechanism is thought to be initiated by the ionisation of the allylic diphosphate
+        ester to the corresponding allylic cation-pyrophosphate ion pair, followed by electrophilic attack
+        at the C10 of the distal double bond and removal of a proton form the cis-C-12 methyl group, resulting
+        in the formation of the intermediate (S)-geracrene A. This intermediate undergoes further cyclisatio
+      notes: M-CSA entry 261, mechanism 1; M-CSA cites PMID:10825154, PMID:12296728, PMID:12820883, PMID:15186158,
+        PMID:18563268, PMID:19225680; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (19 evidence-backed edges) transcribed from M-CSA entry 261;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

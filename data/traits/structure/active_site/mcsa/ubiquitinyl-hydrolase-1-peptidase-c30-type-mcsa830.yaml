@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.19.12
 - CHEBI:73604
@@ -3030,4 +3030,248 @@ definitions:
       The SARS coronavirus main protease dimer (Mpro) is the key enzyme in the processing of the viral polyproteins and thus an attractive target for the discovery of drugs against SARS. The SARS CoV main protease is a cysteine proteinase with a chymostrypsin-like fold. The enzyme cleaves the two overlapping translation products of the SARS coronavirus replicase gene. Hence, inhibition of Mpro leads to prevention of the proteolytic processing of coronavirus replicase polyproteins, stopping the production of of infectious virus particles. The dimer is the enzymatically active species and the conformational state of Mpro is highly pH-sensitive due to the pH-dependence of the protonation state of two histidine residues in the substrate binding site.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of ubiquitinyl hydrolase 1 (peptidase C30 type)
+  description: Stepwise mechanism transcribed from M-CSA entry 830 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: his41
+    label: catalytic His41 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0C6X7
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: gly143
+    label: catalytic Gly143 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0C6X7
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: cys145
+    label: catalytic Cys145 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0C6X7
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: Lys-Gly
+    node_type: CHEMICAL
+    grounding: CHEBI:73604
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: L-lysine
+    node_type: CHEMICAL
+    grounding: CHEBI:18019
+  - node_id: product1
+    label: glycine
+    node_type: CHEMICAL
+    grounding: CHEBI:15428
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His3281 deprotonates Cys3385 which actiavtes it so it can attack the carbon of the carbonyl
+      in a nucleophilic addition.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The oxyanion initiates an elimination which results in the cleavage of the peptide bond.
+      The N-terminal product accepts a proton from His3281.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: His3281 abstracts a proton from a water which activates it to attack the carbon of the
+      thioester bond in a nuclophilic addition.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The oxyanion initiates another elimination which results in the cleavage of the thioester
+      bond. The released Cys3385 now accepts a proton from His3281 which returns the enzyme to its native
+      state.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Product
+  - node_id: active_site
+    label: ubiquitinyl hydrolase 1 (peptidase C30 type) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:830
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.40.10.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.40.10.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: ubiquitinyl hydrolase 1 (peptidase C30 type) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.19.12
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/830/
+      snippet: The oxyanion initiates an elimination which results in the cleavage of the peptide bond.
+        The N-terminal product accepts a proton from His3281.
+      notes: M-CSA entry 830, mechanism 1; M-CSA cites PMID:15501516, PMID:16242152, PMID:17599357, PMID:18237196,
+        PMID:25196915; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/830/
+      snippet: His3281 abstracts a proton from a water which activates it to attack the carbon of the
+        thioester bond in a nuclophilic addition.
+      notes: M-CSA entry 830, mechanism 1; M-CSA cites PMID:15501516, PMID:16242152, PMID:17599357, PMID:18237196,
+        PMID:25196915; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/830/
+      snippet: The oxyanion initiates another elimination which results in the cleavage of the thioester
+        bond. The released Cys3385 now accepts a proton from His3281 which returns the enzyme to its native
+        state.
+      notes: M-CSA entry 830, mechanism 1; M-CSA cites PMID:15501516, PMID:16242152, PMID:17599357, PMID:18237196,
+        PMID:25196915; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/830/
+      snippet: Product
+      notes: M-CSA entry 830, mechanism 1; M-CSA cites PMID:15501516, PMID:16242152, PMID:17599357, PMID:18237196,
+        PMID:25196915; step 5
+  - subject: his41
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His41 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/830/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 830, mechanism 1; M-CSA cites PMID:15501516, PMID:16242152, PMID:17599357, PMID:18237196,
+        PMID:25196915; M-CSA catalytic-residue roles for His41
+  - subject: gly143
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly143 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/830/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 830, mechanism 1; M-CSA cites PMID:15501516, PMID:16242152, PMID:17599357, PMID:18237196,
+        PMID:25196915; M-CSA catalytic-residue roles for Gly143
+  - subject: cys145
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys145 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/830/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 830, mechanism 1; M-CSA cites PMID:15501516, PMID:16242152, PMID:17599357, PMID:18237196,
+        PMID:25196915; M-CSA catalytic-residue roles for Cys145
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/830/
+      snippet: The Mpro active site is situated in a cleft between domains I (residues 8-101) and II (residues
+        102-184) and comprises a catalytic dyad consiting of conserved residues Cys 3385 and His 3281.
+        A buried water molecule is hydrogen bonded to His 3281 and is considered the third component of
+        a catalytic triad. The fold of the Mpro enzyme at the catalytic site resembles that of the serine
+        proteinase, chy
+      notes: M-CSA entry 830, mechanism 1; M-CSA cites PMID:15501516, PMID:16242152, PMID:17599357, PMID:18237196,
+        PMID:25196915; CATH domain 2.40.10.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/830/
+      snippet: The Mpro active site is situated in a cleft between domains I (residues 8-101) and II (residues
+        102-184) and comprises a catalytic dyad consiting of conserved residues Cys 3385 and His 3281.
+        A buried water molecule is hydrogen bonded to His 3281 and is considered the third component of
+        a catalytic triad. The fold of the Mpro enzyme at the catalytic site resembles that of the serine
+        proteinase, chy
+      notes: M-CSA entry 830, mechanism 1; M-CSA cites PMID:15501516, PMID:16242152, PMID:17599357, PMID:18237196,
+        PMID:25196915; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/830/
+      snippet: The Mpro active site is situated in a cleft between domains I (residues 8-101) and II (residues
+        102-184) and comprises a catalytic dyad consiting of conserved residues Cys 3385 and His 3281.
+        A buried water molecule is hydrogen bonded to His 3281 and is considered the third component of
+        a catalytic triad. The fold of the Mpro enzyme at the catalytic site resembles that of the serine
+        proteinase, chy
+      notes: M-CSA entry 830, mechanism 1; M-CSA cites PMID:15501516, PMID:16242152, PMID:17599357, PMID:18237196,
+        PMID:25196915; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/830/
+      snippet: The Mpro active site is situated in a cleft between domains I (residues 8-101) and II (residues
+        102-184) and comprises a catalytic dyad consiting of conserved residues Cys 3385 and His 3281.
+        A buried water molecule is hydrogen bonded to His 3281 and is considered the third component of
+        a catalytic triad. The fold of the Mpro enzyme at the catalytic site resembles that of the serine
+        proteinase, chy
+      notes: M-CSA entry 830, mechanism 1; M-CSA cites PMID:15501516, PMID:16242152, PMID:17599357, PMID:18237196,
+        PMID:25196915; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/830/
+      snippet: The Mpro active site is situated in a cleft between domains I (residues 8-101) and II (residues
+        102-184) and comprises a catalytic dyad consiting of conserved residues Cys 3385 and His 3281.
+        A buried water molecule is hydrogen bonded to His 3281 and is considered the third component of
+        a catalytic triad. The fold of the Mpro enzyme at the catalytic site resembles that of the serine
+        proteinase, chy
+      notes: M-CSA entry 830, mechanism 1; M-CSA cites PMID:15501516, PMID:16242152, PMID:17599357, PMID:18237196,
+        PMID:25196915; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/830/
+      snippet: The Mpro active site is situated in a cleft between domains I (residues 8-101) and II (residues
+        102-184) and comprises a catalytic dyad consiting of conserved residues Cys 3385 and His 3281.
+        A buried water molecule is hydrogen bonded to His 3281 and is considered the third component of
+        a catalytic triad. The fold of the Mpro enzyme at the catalytic site resembles that of the serine
+        proteinase, chy
+      notes: M-CSA entry 830, mechanism 1; M-CSA cites PMID:15501516, PMID:16242152, PMID:17599357, PMID:18237196,
+        PMID:25196915; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 830;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

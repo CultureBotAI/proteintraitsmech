@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.7.11.19
 - CHEBI:456216
@@ -193,4 +193,266 @@ definitions:
       Eukaryotic protein kinases catalyse the transfer of ATP-gamma phosphate to serine, threonine and tyrosine residues on specific target proteins. The family of protein kinases represents one of the largest protein superfamilies, and structures of active kinases show similar conformations in key regions involved in ATP and protein substrate recognition domains. Phosphorylase kinase, the first protein kinase to be discovered, catalyses the phosphorylation of a single serine residue, Ser14 of inactive phosphorylase B (GPb). Phosphorylation converts the protein to active glycogen phosphorylase A (GPa), which catalyses glycogen degredation.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of phosphorylase kinase
+  description: Stepwise mechanism transcribed from M-CSA entry 35 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +1).
+  nodes:
+  - node_id: asp149
+    label: catalytic Asp149 (M-CSA/PDB numbering; UniProt residue 150)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00518
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: lys151
+    label: catalytic Lys151 (M-CSA/PDB numbering; UniProt residue 152)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00518
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: asn154
+    label: catalytic Asn154 (M-CSA/PDB numbering; UniProt residue 155)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00518
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp167
+    label: catalytic Asp167 (M-CSA/PDB numbering; UniProt residue 168)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00518
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: thr186
+    label: catalytic Thr186 (M-CSA/PDB numbering; UniProt residue 187)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00518
+    description: 'M-CSA roles: activator, hydrogen bond donor.'
+  - node_id: reactant0
+    label: L-serine residue
+    node_type: CHEMICAL
+    grounding: CHEBI:29999
+  - node_id: reactant1
+    label: ATP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+  - node_id: product0
+    label: ADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+  - node_id: product1
+    label: O-phospho-L-serine(2-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:83421
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp149 deprotonates the protein substrate hydroxyl group, which initiates a nucleophilic
+      attack upon the gamma-phosphate of ATP in a substitution reaction that eliminates ADP.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The phosphorylated protein deprotonates Asp149.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: phosphorylase kinase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:35
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.10.510.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.10.510.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: phosphorylase kinase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.7.11.19
+  edges:
+  - subject: asp149
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp149 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/35/
+      snippet: Asp149 deprotonates the protein substrate hydroxyl group, which initiates a nucleophilic
+        attack upon the gamma-phosphate of ATP in a substitution reaction that eliminates ADP.
+      notes: M-CSA entry 35, mechanism 1; M-CSA cites PMID:10545198, PMID:7663944, PMID:9362479; step
+        1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/35/
+      snippet: The phosphorylated protein deprotonates Asp149.
+      notes: M-CSA entry 35, mechanism 1; M-CSA cites PMID:10545198, PMID:7663944, PMID:9362479; step
+        2
+  - subject: asp149
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Asp149 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/35/
+      snippet: The phosphorylated protein deprotonates Asp149.
+      notes: M-CSA entry 35, mechanism 1; M-CSA cites PMID:10545198, PMID:7663944, PMID:9362479; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/35/
+      snippet: Products
+      notes: M-CSA entry 35, mechanism 1; M-CSA cites PMID:10545198, PMID:7663944, PMID:9362479; step
+        3
+  - subject: asp149
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp149 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/35/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 35, mechanism 1; M-CSA cites PMID:10545198, PMID:7663944, PMID:9362479; M-CSA
+        catalytic-residue roles for Asp149
+  - subject: lys151
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys151 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/35/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 35, mechanism 1; M-CSA cites PMID:10545198, PMID:7663944, PMID:9362479; M-CSA
+        catalytic-residue roles for Lys151
+  - subject: asn154
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn154 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/35/
+      snippet: metal ligand
+      notes: M-CSA entry 35, mechanism 1; M-CSA cites PMID:10545198, PMID:7663944, PMID:9362479; M-CSA
+        catalytic-residue roles for Asn154
+  - subject: asp167
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp167 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/35/
+      snippet: metal ligand
+      notes: M-CSA entry 35, mechanism 1; M-CSA cites PMID:10545198, PMID:7663944, PMID:9362479; M-CSA
+        catalytic-residue roles for Asp167
+  - subject: thr186
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr186 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/35/
+      snippet: activator, hydrogen bond donor
+      notes: M-CSA entry 35, mechanism 1; M-CSA cites PMID:10545198, PMID:7663944, PMID:9362479; M-CSA
+        catalytic-residue roles for Thr186
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/35/
+      snippet: Asp149 deprotonates the protein substrate hydroxyl group, initiating nucleophilic attack
+        upon the gamma-phosphate of ATP in a substitution reaction that eliminates ADP. The phosphorylated
+        protein deprotonates Asp149 [PMID:10545198].
+      notes: M-CSA entry 35, mechanism 1; M-CSA cites PMID:10545198, PMID:7663944, PMID:9362479; CATH
+        domain 1.10.510.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/35/
+      snippet: Asp149 deprotonates the protein substrate hydroxyl group, initiating nucleophilic attack
+        upon the gamma-phosphate of ATP in a substitution reaction that eliminates ADP. The phosphorylated
+        protein deprotonates Asp149 [PMID:10545198].
+      notes: M-CSA entry 35, mechanism 1; M-CSA cites PMID:10545198, PMID:7663944, PMID:9362479; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/35/
+      snippet: Asp149 deprotonates the protein substrate hydroxyl group, initiating nucleophilic attack
+        upon the gamma-phosphate of ATP in a substitution reaction that eliminates ADP. The phosphorylated
+        protein deprotonates Asp149 [PMID:10545198].
+      notes: M-CSA entry 35, mechanism 1; M-CSA cites PMID:10545198, PMID:7663944, PMID:9362479; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/35/
+      snippet: Asp149 deprotonates the protein substrate hydroxyl group, initiating nucleophilic attack
+        upon the gamma-phosphate of ATP in a substitution reaction that eliminates ADP. The phosphorylated
+        protein deprotonates Asp149 [PMID:10545198].
+      notes: M-CSA entry 35, mechanism 1; M-CSA cites PMID:10545198, PMID:7663944, PMID:9362479; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/35/
+      snippet: Asp149 deprotonates the protein substrate hydroxyl group, initiating nucleophilic attack
+        upon the gamma-phosphate of ATP in a substitution reaction that eliminates ADP. The phosphorylated
+        protein deprotonates Asp149 [PMID:10545198].
+      notes: M-CSA entry 35, mechanism 1; M-CSA cites PMID:10545198, PMID:7663944, PMID:9362479; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/35/
+      snippet: Asp149 deprotonates the protein substrate hydroxyl group, initiating nucleophilic attack
+        upon the gamma-phosphate of ATP in a substitution reaction that eliminates ADP. The phosphorylated
+        protein deprotonates Asp149 [PMID:10545198].
+      notes: M-CSA entry 35, mechanism 1; M-CSA cites PMID:10545198, PMID:7663944, PMID:9362479; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/35/
+      snippet: Asp149 deprotonates the protein substrate hydroxyl group, initiating nucleophilic attack
+        upon the gamma-phosphate of ATP in a substitution reaction that eliminates ADP. The phosphorylated
+        protein deprotonates Asp149 [PMID:10545198].
+      notes: M-CSA entry 35, mechanism 1; M-CSA cites PMID:10545198, PMID:7663944, PMID:9362479; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (16 evidence-backed edges) transcribed from M-CSA entry 35;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

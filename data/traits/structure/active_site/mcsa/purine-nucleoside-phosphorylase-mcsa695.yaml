@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.4.2.1
 - CHEBI:17596
@@ -195,4 +195,274 @@ definitions:
       Purine metabolism in the parasite Plasmodium has been identified as a promising target for antimalarial therapies due to slight alterations around the active site when compared to mammalian purine nucleoside phosphorylase (PNP). PNP is part of a salvage pathway for the biosynthesis of purines, which are essential to parasite survival due to location of the organism, erthrocytes and Plasmodium itself not being able to produce purines de novo .
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of purine-nucleoside phosphorylase
+  description: Stepwise mechanism transcribed from M-CSA entry 695 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: arg27
+    label: catalytic Arg27 (M-CSA/PDB numbering; UniProt residue 27)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8I3X4
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: arg45
+    label: catalytic Arg45 (M-CSA/PDB numbering; UniProt residue 45)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8I3X4
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: arg88
+    label: catalytic Arg88 (M-CSA/PDB numbering; UniProt residue 88)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8I3X4
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp206
+    label: catalytic Asp206 (M-CSA/PDB numbering; UniProt residue 206)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8I3X4
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: inosine
+    node_type: CHEMICAL
+    grounding: CHEBI:17596
+  - node_id: reactant1
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: product0
+    label: alpha-D-ribose 1-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57720
+  - node_id: product1
+    label: hypoxanthine
+    node_type: CHEMICAL
+    grounding: CHEBI:17368
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp206 protonates the inosine base, promoting electron withdrawal to cleave the glycosidic
+      bond.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Arg27 helps activate the phosphate group for nucleophilic attack on a carbon on the ribose
+      ring by stabilising the negatively charged group.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The ribose-phosphate is deprotonated by Asp206.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: purine-nucleoside phosphorylase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:695
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1580 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1580
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: purine-nucleoside phosphorylase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.4.2.1
+  edges:
+  - subject: asp206
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp206 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/695/
+      snippet: Asp206 protonates the inosine base, promoting electron withdrawal to cleave the glycosidic
+        bond.
+      notes: M-CSA entry 695, mechanism 1; M-CSA cites PMID:12937174, PMID:15046984, PMID:16131758, PMID:18957439,
+        PMID:19575810; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/695/
+      snippet: Arg27 helps activate the phosphate group for nucleophilic attack on a carbon on the ribose
+        ring by stabilising the negatively charged group.
+      notes: M-CSA entry 695, mechanism 1; M-CSA cites PMID:12937174, PMID:15046984, PMID:16131758, PMID:18957439,
+        PMID:19575810; step 2
+  - subject: arg27
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Arg27 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/695/
+      snippet: Arg27 helps activate the phosphate group for nucleophilic attack on a carbon on the ribose
+        ring by stabilising the negatively charged group.
+      notes: M-CSA entry 695, mechanism 1; M-CSA cites PMID:12937174, PMID:15046984, PMID:16131758, PMID:18957439,
+        PMID:19575810; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/695/
+      snippet: The ribose-phosphate is deprotonated by Asp206.
+      notes: M-CSA entry 695, mechanism 1; M-CSA cites PMID:12937174, PMID:15046984, PMID:16131758, PMID:18957439,
+        PMID:19575810; step 3
+  - subject: asp206
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Asp206 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/695/
+      snippet: The ribose-phosphate is deprotonated by Asp206.
+      notes: M-CSA entry 695, mechanism 1; M-CSA cites PMID:12937174, PMID:15046984, PMID:16131758, PMID:18957439,
+        PMID:19575810; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/695/
+      snippet: Products.
+      notes: M-CSA entry 695, mechanism 1; M-CSA cites PMID:12937174, PMID:15046984, PMID:16131758, PMID:18957439,
+        PMID:19575810; step 4
+  - subject: arg27
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg27 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/695/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 695, mechanism 1; M-CSA cites PMID:12937174, PMID:15046984, PMID:16131758, PMID:18957439,
+        PMID:19575810; M-CSA catalytic-residue roles for Arg27
+  - subject: arg45
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg45 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/695/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 695, mechanism 1; M-CSA cites PMID:12937174, PMID:15046984, PMID:16131758, PMID:18957439,
+        PMID:19575810; M-CSA catalytic-residue roles for Arg45
+  - subject: arg88
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg88 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/695/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 695, mechanism 1; M-CSA cites PMID:12937174, PMID:15046984, PMID:16131758, PMID:18957439,
+        PMID:19575810; M-CSA catalytic-residue roles for Arg88
+  - subject: asp206
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp206 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/695/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 695, mechanism 1; M-CSA cites PMID:12937174, PMID:15046984, PMID:16131758, PMID:18957439,
+        PMID:19575810; M-CSA catalytic-residue roles for Asp206
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/695/
+      snippet: PNP is proposed to partake in a Sn1 nucleophilic substitution upon activation from conformational
+        changes in the active site loop. It's substrate is inosine that has formed from prior deamination
+        of adenosine by adenosine deaminase. Asp206 protonates N7 on the inosine group which facilitates
+        glycosidic bond cleavage while Arg27 (alongside Arg45 and Arg88) stabilise the incoming oxygen
+        nucleophile
+      notes: M-CSA entry 695, mechanism 1; M-CSA cites PMID:12937174, PMID:15046984, PMID:16131758, PMID:18957439,
+        PMID:19575810; CATH domain 3.40.50.1580 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/695/
+      snippet: PNP is proposed to partake in a Sn1 nucleophilic substitution upon activation from conformational
+        changes in the active site loop. It's substrate is inosine that has formed from prior deamination
+        of adenosine by adenosine deaminase. Asp206 protonates N7 on the inosine group which facilitates
+        glycosidic bond cleavage while Arg27 (alongside Arg45 and Arg88) stabilise the incoming oxygen
+        nucleophile
+      notes: M-CSA entry 695, mechanism 1; M-CSA cites PMID:12937174, PMID:15046984, PMID:16131758, PMID:18957439,
+        PMID:19575810; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/695/
+      snippet: PNP is proposed to partake in a Sn1 nucleophilic substitution upon activation from conformational
+        changes in the active site loop. It's substrate is inosine that has formed from prior deamination
+        of adenosine by adenosine deaminase. Asp206 protonates N7 on the inosine group which facilitates
+        glycosidic bond cleavage while Arg27 (alongside Arg45 and Arg88) stabilise the incoming oxygen
+        nucleophile
+      notes: M-CSA entry 695, mechanism 1; M-CSA cites PMID:12937174, PMID:15046984, PMID:16131758, PMID:18957439,
+        PMID:19575810; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/695/
+      snippet: PNP is proposed to partake in a Sn1 nucleophilic substitution upon activation from conformational
+        changes in the active site loop. It's substrate is inosine that has formed from prior deamination
+        of adenosine by adenosine deaminase. Asp206 protonates N7 on the inosine group which facilitates
+        glycosidic bond cleavage while Arg27 (alongside Arg45 and Arg88) stabilise the incoming oxygen
+        nucleophile
+      notes: M-CSA entry 695, mechanism 1; M-CSA cites PMID:12937174, PMID:15046984, PMID:16131758, PMID:18957439,
+        PMID:19575810; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/695/
+      snippet: PNP is proposed to partake in a Sn1 nucleophilic substitution upon activation from conformational
+        changes in the active site loop. It's substrate is inosine that has formed from prior deamination
+        of adenosine by adenosine deaminase. Asp206 protonates N7 on the inosine group which facilitates
+        glycosidic bond cleavage while Arg27 (alongside Arg45 and Arg88) stabilise the incoming oxygen
+        nucleophile
+      notes: M-CSA entry 695, mechanism 1; M-CSA cites PMID:12937174, PMID:15046984, PMID:16131758, PMID:18957439,
+        PMID:19575810; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/695/
+      snippet: PNP is proposed to partake in a Sn1 nucleophilic substitution upon activation from conformational
+        changes in the active site loop. It's substrate is inosine that has formed from prior deamination
+        of adenosine by adenosine deaminase. Asp206 protonates N7 on the inosine group which facilitates
+        glycosidic bond cleavage while Arg27 (alongside Arg45 and Arg88) stabilise the incoming oxygen
+        nucleophile
+      notes: M-CSA entry 695, mechanism 1; M-CSA cites PMID:12937174, PMID:15046984, PMID:16131758, PMID:18957439,
+        PMID:19575810; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (16 evidence-backed edges) transcribed from M-CSA entry 695;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

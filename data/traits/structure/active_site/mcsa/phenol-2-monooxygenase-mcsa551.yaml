@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.14.13.7
 - CHEBI:15379
@@ -392,4 +392,333 @@ definitions:
       Phenol 2-monooxygenase, also known as phenol hydroxylase (PHHY) belongs to a class of flavin enzymes commonly referred to as the aromatic hydroxylases. It catalyses the conversion of simple phenols to their o-diol derivatives. The enzyme is a homodimer where each monomer of 76kDa contains noncovalently bound flavin adenine dinucleotide (FAD) The enzyme can hydroxylate simple, amino, methyl, hydroxy and halogen phenols, although it does not show any activity towards phenols carrying carboxyl groups on the benzene nucleus or its side chain.Next to carbohydrates, phenolic compounds are the second most abundant group of natural products, many are also being produced by industry, with many of these being resistant to degradation. The reaction catalysed by phenol hydroxylase are of particular interest for industrial waste detoxification.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of phenol 2-monooxygenase
+  description: Stepwise mechanism transcribed from M-CSA entry 551 (6 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +1).
+  nodes:
+  - node_id: asp54
+    label: catalytic Asp54 (M-CSA/PDB numbering; UniProt residue 55)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15245
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: arg281
+    label: catalytic Arg281 (M-CSA/PDB numbering; UniProt residue 282)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15245
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: tyr289
+    label: catalytic Tyr289 (M-CSA/PDB numbering; UniProt residue 290)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15245
+    description: 'M-CSA roles: steric role.'
+  - node_id: pro364
+    label: catalytic Pro364 (M-CSA/PDB numbering; UniProt residue 365)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15245
+    description: 'M-CSA roles: activator, electrostatic stabiliser.'
+  - node_id: reactant0
+    label: dioxygen
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+  - node_id: reactant1
+    label: phenol
+    node_type: CHEMICAL
+    grounding: CHEBI:15882
+  - node_id: reactant2
+    label: NADPH(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+  - node_id: reactant3
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product0
+    label: catechol
+    node_type: CHEMICAL
+    grounding: CHEBI:18135
+  - node_id: product1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product2
+    label: NADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: "In the reductive half reaction 
+a hydride is transferred from NADPH to the flavin\
+      \ cofactor."
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: In the first step of the oxidative half reaction NADP dissociates and the reduced FADH-
+      cofactor immediately reacts with oxygen.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Phenol is deprotonated by an unknown base, here represented as water, and initiates nucleophilic
+      attack on the C4a-hydroperoxyflavin intermediate. The resulting C4a-hydroxyflavin is subsequently
+      protonated.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Isomerisation of the product to form the catechol product. It is not clear if the proton
+      transfer is aided by other species.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: The enzyme finishes the reaction cycle by releasing a molecule of water to return the
+      flavin to the oxidized state.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: phenol 2-monooxygenase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:551
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.50.50.60 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.50.50.60
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: phenol 2-monooxygenase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.14.13.7
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/551/
+      snippet: In the first step of the oxidative half reaction NADP dissociates and the reduced FADH-
+        cofactor immediately reacts with oxygen.
+      notes: M-CSA entry 551, mechanism 1; M-CSA cites PMID:11591156, PMID:12427024, PMID:9634698; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/551/
+      snippet: Phenol is deprotonated by an unknown base, here represented as water, and initiates nucleophilic
+        attack on the C4a-hydroperoxyflavin intermediate. The resulting C4a-hydroxyflavin is subsequently
+        protonated.
+      notes: M-CSA entry 551, mechanism 1; M-CSA cites PMID:11591156, PMID:12427024, PMID:9634698; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/551/
+      snippet: Isomerisation of the product to form the catechol product. It is not clear if the proton
+        transfer is aided by other species.
+      notes: M-CSA entry 551, mechanism 1; M-CSA cites PMID:11591156, PMID:12427024, PMID:9634698; step
+        4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/551/
+      snippet: The enzyme finishes the reaction cycle by releasing a molecule of water to return the flavin
+        to the oxidized state.
+      notes: M-CSA entry 551, mechanism 1; M-CSA cites PMID:11591156, PMID:12427024, PMID:9634698; step
+        5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/551/
+      snippet: Products.
+      notes: M-CSA entry 551, mechanism 1; M-CSA cites PMID:11591156, PMID:12427024, PMID:9634698; step
+        6
+  - subject: asp54
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp54 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/551/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 551, mechanism 1; M-CSA cites PMID:11591156, PMID:12427024, PMID:9634698; M-CSA
+        catalytic-residue roles for Asp54
+  - subject: arg281
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg281 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/551/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 551, mechanism 1; M-CSA cites PMID:11591156, PMID:12427024, PMID:9634698; M-CSA
+        catalytic-residue roles for Arg281
+  - subject: tyr289
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr289 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/551/
+      snippet: steric role
+      notes: M-CSA entry 551, mechanism 1; M-CSA cites PMID:11591156, PMID:12427024, PMID:9634698; M-CSA
+        catalytic-residue roles for Tyr289
+  - subject: pro364
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Pro364 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/551/
+      snippet: activator, electrostatic stabiliser
+      notes: M-CSA entry 551, mechanism 1; M-CSA cites PMID:11591156, PMID:12427024, PMID:9634698; M-CSA
+        catalytic-residue roles for Pro364
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/551/
+      snippet: '<p>It has been propose that a movement of FAD takes place in concert with a large conformational
+        change of residues 170-210 during catalysis. The catalytic mechanism of PHHY is complex, involving
+        FAD and three substrates: molecular oxygen, phenol and NADPH. The overall mechanism is of the
+        type bi-uni-uni-bi ping pong. While in the past the mechanism has been compared to p-hydroxy-benzoate
+        hydroxyl'
+      notes: M-CSA entry 551, mechanism 1; M-CSA cites PMID:11591156, PMID:12427024, PMID:9634698; CATH
+        domain 3.50.50.60 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/551/
+      snippet: '<p>It has been propose that a movement of FAD takes place in concert with a large conformational
+        change of residues 170-210 during catalysis. The catalytic mechanism of PHHY is complex, involving
+        FAD and three substrates: molecular oxygen, phenol and NADPH. The overall mechanism is of the
+        type bi-uni-uni-bi ping pong. While in the past the mechanism has been compared to p-hydroxy-benzoate
+        hydroxyl'
+      notes: M-CSA entry 551, mechanism 1; M-CSA cites PMID:11591156, PMID:12427024, PMID:9634698; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/551/
+      snippet: '<p>It has been propose that a movement of FAD takes place in concert with a large conformational
+        change of residues 170-210 during catalysis. The catalytic mechanism of PHHY is complex, involving
+        FAD and three substrates: molecular oxygen, phenol and NADPH. The overall mechanism is of the
+        type bi-uni-uni-bi ping pong. While in the past the mechanism has been compared to p-hydroxy-benzoate
+        hydroxyl'
+      notes: M-CSA entry 551, mechanism 1; M-CSA cites PMID:11591156, PMID:12427024, PMID:9634698; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/551/
+      snippet: '<p>It has been propose that a movement of FAD takes place in concert with a large conformational
+        change of residues 170-210 during catalysis. The catalytic mechanism of PHHY is complex, involving
+        FAD and three substrates: molecular oxygen, phenol and NADPH. The overall mechanism is of the
+        type bi-uni-uni-bi ping pong. While in the past the mechanism has been compared to p-hydroxy-benzoate
+        hydroxyl'
+      notes: M-CSA entry 551, mechanism 1; M-CSA cites PMID:11591156, PMID:12427024, PMID:9634698; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/551/
+      snippet: '<p>It has been propose that a movement of FAD takes place in concert with a large conformational
+        change of residues 170-210 during catalysis. The catalytic mechanism of PHHY is complex, involving
+        FAD and three substrates: molecular oxygen, phenol and NADPH. The overall mechanism is of the
+        type bi-uni-uni-bi ping pong. While in the past the mechanism has been compared to p-hydroxy-benzoate
+        hydroxyl'
+      notes: M-CSA entry 551, mechanism 1; M-CSA cites PMID:11591156, PMID:12427024, PMID:9634698; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant3
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/551/
+      snippet: '<p>It has been propose that a movement of FAD takes place in concert with a large conformational
+        change of residues 170-210 during catalysis. The catalytic mechanism of PHHY is complex, involving
+        FAD and three substrates: molecular oxygen, phenol and NADPH. The overall mechanism is of the
+        type bi-uni-uni-bi ping pong. While in the past the mechanism has been compared to p-hydroxy-benzoate
+        hydroxyl'
+      notes: M-CSA entry 551, mechanism 1; M-CSA cites PMID:11591156, PMID:12427024, PMID:9634698; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/551/
+      snippet: '<p>It has been propose that a movement of FAD takes place in concert with a large conformational
+        change of residues 170-210 during catalysis. The catalytic mechanism of PHHY is complex, involving
+        FAD and three substrates: molecular oxygen, phenol and NADPH. The overall mechanism is of the
+        type bi-uni-uni-bi ping pong. While in the past the mechanism has been compared to p-hydroxy-benzoate
+        hydroxyl'
+      notes: M-CSA entry 551, mechanism 1; M-CSA cites PMID:11591156, PMID:12427024, PMID:9634698; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/551/
+      snippet: '<p>It has been propose that a movement of FAD takes place in concert with a large conformational
+        change of residues 170-210 during catalysis. The catalytic mechanism of PHHY is complex, involving
+        FAD and three substrates: molecular oxygen, phenol and NADPH. The overall mechanism is of the
+        type bi-uni-uni-bi ping pong. While in the past the mechanism has been compared to p-hydroxy-benzoate
+        hydroxyl'
+      notes: M-CSA entry 551, mechanism 1; M-CSA cites PMID:11591156, PMID:12427024, PMID:9634698; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/551/
+      snippet: '<p>It has been propose that a movement of FAD takes place in concert with a large conformational
+        change of residues 170-210 during catalysis. The catalytic mechanism of PHHY is complex, involving
+        FAD and three substrates: molecular oxygen, phenol and NADPH. The overall mechanism is of the
+        type bi-uni-uni-bi ping pong. While in the past the mechanism has been compared to p-hydroxy-benzoate
+        hydroxyl'
+      notes: M-CSA entry 551, mechanism 1; M-CSA cites PMID:11591156, PMID:12427024, PMID:9634698; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (18 evidence-backed edges) transcribed from M-CSA entry 551;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

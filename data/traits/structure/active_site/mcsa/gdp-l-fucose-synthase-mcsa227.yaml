@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.1.1.271
 - CHEBI:57273
@@ -263,4 +263,374 @@ definitions:
       GDP-4-keto-6-deoxy-D-mannose epimerase/reductase (GMER) is a bifunctional enzyme, catalysing the last two steps, epimerisation and reduction, in the biosynthesis of GDP-L-fucose, the substrate of fucosyl transferases. In bacteria, fucose is a component of the capsular polysaccharides and lipopolysaccharides which function as antigenic determinants. In humans, fucose is a Lewis system antigen. It is a ligand to selectin and is involved in leukocytes and tumour cell adhesion to the endothelium. Human deficient in the biosynthesis of GDP fucose suffer from immune disorder adhesion deficiency type II, which can lead to serious symptoms, for instance, immunodeficiency and psychomotor retardation
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of GDP-L-fucose synthase
+  description: Stepwise mechanism transcribed from M-CSA entry 227 (6 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: ser107
+    label: catalytic Ser107 (M-CSA/PDB numbering; UniProt residue 107)
+    node_type: RESIDUE
+    grounding: UniProtKB:P32055
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      increase acidity, increase basicity, proton acceptor, proton donor.'
+  - node_id: ser108
+    label: catalytic Ser108 (M-CSA/PDB numbering; UniProt residue 108)
+    node_type: RESIDUE
+    grounding: UniProtKB:P32055
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: cys109
+    label: catalytic Cys109 (M-CSA/PDB numbering; UniProt residue 109)
+    node_type: RESIDUE
+    grounding: UniProtKB:P32055
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor, proton acceptor.'
+  - node_id: tyr136
+    label: catalytic Tyr136 (M-CSA/PDB numbering; UniProt residue 136)
+    node_type: RESIDUE
+    grounding: UniProtKB:P32055
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      proton acceptor, proton donor, proton relay.'
+  - node_id: lys140
+    label: catalytic Lys140 (M-CSA/PDB numbering; UniProt residue 140)
+    node_type: RESIDUE
+    grounding: UniProtKB:P32055
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor, increase acidity, increase
+      basicity.'
+  - node_id: his179
+    label: catalytic His179 (M-CSA/PDB numbering; UniProt residue 179)
+    node_type: RESIDUE
+    grounding: UniProtKB:P32055
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: GDP-4-dehydro-6-deoxy-alpha-D-mannose(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57964
+  - node_id: reactant1
+    label: NADPH(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+  - node_id: reactant2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product0
+    label: GDP-beta-L-fucose(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57273
+  - node_id: product1
+    label: NADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Cys109 acts as a base to deprotonate C3 of the substrate, forming an enolate intermediate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: His179 acts as an acid, protonating the opposite face and completing the first epimerisation.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: In the second epimerisation Cys109 deprotonates C5 of the intermediate to form an enolate
+      intermediate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: His179 reprotonates the enolate intermediate on the opposite face.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: In the final step the carbonyl at C4 is reduced by NADPH and while the resulting alkoxide
+      is protonated by Tyr136. Tyr136 is protonated by Ser107 which is then reprotonated by water following
+      this step.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: GDP-L-fucose synthase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:227
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.720 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.720
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: GDP-L-fucose synthase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.1.1.271
+  edges:
+  - subject: cys109
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys109 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/227/
+      snippet: Cys109 acts as a base to deprotonate C3 of the substrate, forming an enolate intermediate.
+      notes: M-CSA entry 227, mechanism 2; M-CSA cites PMID:11021971, PMID:19053199; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/227/
+      snippet: His179 acts as an acid, protonating the opposite face and completing the first epimerisation.
+      notes: M-CSA entry 227, mechanism 2; M-CSA cites PMID:11021971, PMID:19053199; step 2
+  - subject: his179
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His179 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/227/
+      snippet: His179 acts as an acid, protonating the opposite face and completing the first epimerisation.
+      notes: M-CSA entry 227, mechanism 2; M-CSA cites PMID:11021971, PMID:19053199; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/227/
+      snippet: In the second epimerisation Cys109 deprotonates C5 of the intermediate to form an enolate
+        intermediate.
+      notes: M-CSA entry 227, mechanism 2; M-CSA cites PMID:11021971, PMID:19053199; step 3
+  - subject: cys109
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Cys109 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/227/
+      snippet: In the second epimerisation Cys109 deprotonates C5 of the intermediate to form an enolate
+        intermediate.
+      notes: M-CSA entry 227, mechanism 2; M-CSA cites PMID:11021971, PMID:19053199; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/227/
+      snippet: His179 reprotonates the enolate intermediate on the opposite face.
+      notes: M-CSA entry 227, mechanism 2; M-CSA cites PMID:11021971, PMID:19053199; step 4
+  - subject: his179
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: His179 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/227/
+      snippet: His179 reprotonates the enolate intermediate on the opposite face.
+      notes: M-CSA entry 227, mechanism 2; M-CSA cites PMID:11021971, PMID:19053199; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/227/
+      snippet: In the final step the carbonyl at C4 is reduced by NADPH and while the resulting alkoxide
+        is protonated by Tyr136. Tyr136 is protonated by Ser107 which is then reprotonated by water following
+        this step.
+      notes: M-CSA entry 227, mechanism 2; M-CSA cites PMID:11021971, PMID:19053199; step 5
+  - subject: ser107
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Ser107 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/227/
+      snippet: In the final step the carbonyl at C4 is reduced by NADPH and while the resulting alkoxide
+        is protonated by Tyr136. Tyr136 is protonated by Ser107 which is then reprotonated by water following
+        this step.
+      notes: M-CSA entry 227, mechanism 2; M-CSA cites PMID:11021971, PMID:19053199; step 5
+  - subject: tyr136
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Tyr136 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/227/
+      snippet: In the final step the carbonyl at C4 is reduced by NADPH and while the resulting alkoxide
+        is protonated by Tyr136. Tyr136 is protonated by Ser107 which is then reprotonated by water following
+        this step.
+      notes: M-CSA entry 227, mechanism 2; M-CSA cites PMID:11021971, PMID:19053199; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/227/
+      snippet: Products.
+      notes: M-CSA entry 227, mechanism 2; M-CSA cites PMID:11021971, PMID:19053199; step 6
+  - subject: ser107
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser107 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/227/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, increase acidity,
+        increase basicity, proton acceptor, proton donor
+      notes: M-CSA entry 227, mechanism 2; M-CSA cites PMID:11021971, PMID:19053199; M-CSA catalytic-residue
+        roles for Ser107
+  - subject: ser108
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser108 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/227/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 227, mechanism 2; M-CSA cites PMID:11021971, PMID:19053199; M-CSA catalytic-residue
+        roles for Ser108
+  - subject: cys109
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys109 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/227/
+      snippet: electrostatic stabiliser, hydrogen bond donor, proton acceptor
+      notes: M-CSA entry 227, mechanism 2; M-CSA cites PMID:11021971, PMID:19053199; M-CSA catalytic-residue
+        roles for Cys109
+  - subject: tyr136
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr136 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/227/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+        proton donor, proton relay
+      notes: M-CSA entry 227, mechanism 2; M-CSA cites PMID:11021971, PMID:19053199; M-CSA catalytic-residue
+        roles for Tyr136
+  - subject: lys140
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys140 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/227/
+      snippet: electrostatic stabiliser, hydrogen bond donor, increase acidity, increase basicity
+      notes: M-CSA entry 227, mechanism 2; M-CSA cites PMID:11021971, PMID:19053199; M-CSA catalytic-residue
+        roles for Lys140
+  - subject: his179
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His179 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/227/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 227, mechanism 2; M-CSA cites PMID:11021971, PMID:19053199; M-CSA catalytic-residue
+        roles for His179
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/227/
+      snippet: This mechanism proposal involves and ordered sequence of epimerisations, both catalysed
+        by the same residues. In the first epimerisation Cys109 deprotonates C3 of the substrate to form
+        an enolate which is then reprotonated on the opposite face by His179. In the second epimerisation
+        Cys109 deprotonates C5 of the substrate. The resulting enolate is reprotonated by His179 on the
+        opposite face. The fi
+      notes: M-CSA entry 227, mechanism 2; M-CSA cites PMID:11021971, PMID:19053199; CATH domain 3.40.50.720
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/227/
+      snippet: This mechanism proposal involves and ordered sequence of epimerisations, both catalysed
+        by the same residues. In the first epimerisation Cys109 deprotonates C3 of the substrate to form
+        an enolate which is then reprotonated on the opposite face by His179. In the second epimerisation
+        Cys109 deprotonates C5 of the substrate. The resulting enolate is reprotonated by His179 on the
+        opposite face. The fi
+      notes: M-CSA entry 227, mechanism 2; M-CSA cites PMID:11021971, PMID:19053199; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/227/
+      snippet: This mechanism proposal involves and ordered sequence of epimerisations, both catalysed
+        by the same residues. In the first epimerisation Cys109 deprotonates C3 of the substrate to form
+        an enolate which is then reprotonated on the opposite face by His179. In the second epimerisation
+        Cys109 deprotonates C5 of the substrate. The resulting enolate is reprotonated by His179 on the
+        opposite face. The fi
+      notes: M-CSA entry 227, mechanism 2; M-CSA cites PMID:11021971, PMID:19053199; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/227/
+      snippet: This mechanism proposal involves and ordered sequence of epimerisations, both catalysed
+        by the same residues. In the first epimerisation Cys109 deprotonates C3 of the substrate to form
+        an enolate which is then reprotonated on the opposite face by His179. In the second epimerisation
+        Cys109 deprotonates C5 of the substrate. The resulting enolate is reprotonated by His179 on the
+        opposite face. The fi
+      notes: M-CSA entry 227, mechanism 2; M-CSA cites PMID:11021971, PMID:19053199; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/227/
+      snippet: This mechanism proposal involves and ordered sequence of epimerisations, both catalysed
+        by the same residues. In the first epimerisation Cys109 deprotonates C3 of the substrate to form
+        an enolate which is then reprotonated on the opposite face by His179. In the second epimerisation
+        Cys109 deprotonates C5 of the substrate. The resulting enolate is reprotonated by His179 on the
+        opposite face. The fi
+      notes: M-CSA entry 227, mechanism 2; M-CSA cites PMID:11021971, PMID:19053199; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/227/
+      snippet: This mechanism proposal involves and ordered sequence of epimerisations, both catalysed
+        by the same residues. In the first epimerisation Cys109 deprotonates C3 of the substrate to form
+        an enolate which is then reprotonated on the opposite face by His179. In the second epimerisation
+        Cys109 deprotonates C5 of the substrate. The resulting enolate is reprotonated by His179 on the
+        opposite face. The fi
+      notes: M-CSA entry 227, mechanism 2; M-CSA cites PMID:11021971, PMID:19053199; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/227/
+      snippet: This mechanism proposal involves and ordered sequence of epimerisations, both catalysed
+        by the same residues. In the first epimerisation Cys109 deprotonates C3 of the substrate to form
+        an enolate which is then reprotonated on the opposite face by His179. In the second epimerisation
+        Cys109 deprotonates C5 of the substrate. The resulting enolate is reprotonated by His179 on the
+        opposite face. The fi
+      notes: M-CSA entry 227, mechanism 2; M-CSA cites PMID:11021971, PMID:19053199; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (24 evidence-backed edges) transcribed from M-CSA entry 227;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

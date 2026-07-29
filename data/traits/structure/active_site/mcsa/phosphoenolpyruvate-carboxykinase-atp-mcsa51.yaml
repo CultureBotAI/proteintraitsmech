@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.1.1.49
 - CHEBI:456216
@@ -525,4 +525,322 @@ definitions:
       Phosphoenolpyruvate carboxykinase (PEPCK) catalyses first committed (rate-limiting) step in hepatic gluconeogenesis, namely the reversible decarboxylation of oxaloacetate to phosphoenolpyruvate (PEP) and carbon dioxide. This reaction can occur using either ATP or GTP as a source of the phosphate. The ATP-utilising (EC:4.1.1.49, represented here) and GTP-utilising (EC:4.1.1.32) enzymes form two divergent subfamilies, which have little sequence similarity but which retain conserved active site residues. The reaction requires two divalent cations for activity, usually magnesium and manganese. One cation interacts with the enzyme at metal binding site 1 to elicit activation, while the second cation interacts at metal binding site 2 to serve as a metal-nucleotide substrate. In bacteria, fungi and plants, PEPCK is involved in the glyoxylate bypass, an alternative to the tricarboxylic acid cycle. PEPCK consists of an N-terminal and a catalytic C-terminal domain, with the active site and metal ions located in a cleft between them. Both domains have an alpha/beta topology that is partly similar to one another [PMID:15023367, PMID:8609605]. Substrate binding causes PEPCK to undergo a conformational change, which accelerates catalysis by forcing bulk solvent molecules out of the active site [PMID:15890557]. PCK uses an alpha/beta/alpha motif for nucleotide binding, this motif differing from other kinase domains.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of phosphoenolpyruvate carboxykinase (ATP)
+  description: Stepwise mechanism transcribed from M-CSA entry 51 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: arg65
+    label: catalytic Arg65 (M-CSA/PDB numbering; UniProt residue 65)
+    node_type: RESIDUE
+    grounding: UniProtKB:P22259
+    description: 'M-CSA roles: electrostatic stabiliser, increase electrophilicity.'
+  - node_id: lys213
+    label: catalytic Lys213 (M-CSA/PDB numbering; UniProt residue 213)
+    node_type: RESIDUE
+    grounding: UniProtKB:P22259
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his232
+    label: catalytic His232 (M-CSA/PDB numbering; UniProt residue 232)
+    node_type: RESIDUE
+    grounding: UniProtKB:P22259
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor, metal ligand.'
+  - node_id: ser250
+    label: catalytic Ser250 (M-CSA/PDB numbering; UniProt residue 250)
+    node_type: RESIDUE
+    grounding: UniProtKB:P22259
+    description: 'M-CSA roles: steric role.'
+  - node_id: lys254
+    label: catalytic Lys254 (M-CSA/PDB numbering; UniProt residue 254)
+    node_type: RESIDUE
+    grounding: UniProtKB:P22259
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: thr255
+    label: catalytic Thr255 (M-CSA/PDB numbering; UniProt residue 255)
+    node_type: RESIDUE
+    grounding: UniProtKB:P22259
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp269
+    label: catalytic Asp269 (M-CSA/PDB numbering; UniProt residue 269)
+    node_type: RESIDUE
+    grounding: UniProtKB:P22259
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: arg333
+    label: catalytic Arg333 (M-CSA/PDB numbering; UniProt residue 333)
+    node_type: RESIDUE
+    grounding: UniProtKB:P22259
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: reactant0
+    label: oxaloacetate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:16452
+  - node_id: reactant1
+    label: ATP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+  - node_id: product0
+    label: ADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+  - node_id: product1
+    label: carbon dioxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+  - node_id: product2
+    label: phosphonatoenolpyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:58702
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The substrate undergoes decarboxylation, resulting in the formation of a enol-intermediate
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The oxyanion formed attacks the gamma phosphate of ATP in a nucleophilic substitution
+      reaction resulting in ADP and phosphoenolpyruvate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: phosphoenolpyruvate carboxykinase (ATP) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:51
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.449.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.449.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: phosphoenolpyruvate carboxykinase (ATP) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.1.1.49
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/51/
+      snippet: The oxyanion formed attacks the gamma phosphate of ATP in a nucleophilic substitution reaction
+        resulting in ADP and phosphoenolpyruvate.
+      notes: M-CSA entry 51, mechanism 1; M-CSA cites PMID:11724534, PMID:14987800, PMID:15358051, PMID:16330239,
+        PMID:16469427, PMID:17195942, PMID:17475535, PMID:18996167, PMID:20211682, PMID:20524049, PMID:23127136,
+        PMID:6986370, PMID:8599762, PMID:8609605, PMID:9048893, PMID:9139042, PMID:9406547; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/51/
+      snippet: Products
+      notes: M-CSA entry 51, mechanism 1; M-CSA cites PMID:11724534, PMID:14987800, PMID:15358051, PMID:16330239,
+        PMID:16469427, PMID:17195942, PMID:17475535, PMID:18996167, PMID:20211682, PMID:20524049, PMID:23127136,
+        PMID:6986370, PMID:8599762, PMID:8609605, PMID:9048893, PMID:9139042, PMID:9406547; step 3
+  - subject: arg65
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg65 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/51/
+      snippet: electrostatic stabiliser, increase electrophilicity
+      notes: M-CSA entry 51, mechanism 1; M-CSA cites PMID:11724534, PMID:14987800, PMID:15358051, PMID:16330239,
+        PMID:16469427, PMID:17195942, PMID:17475535, PMID:18996167, PMID:20211682, PMID:20524049, PMID:23127136,
+        PMID:6986370, PMID:8599762, PMID:8609605, PMID:9048893, PMID:9139042, PMID:9406547; M-CSA catalytic-residue
+        roles for Arg65
+  - subject: lys213
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys213 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/51/
+      snippet: metal ligand
+      notes: M-CSA entry 51, mechanism 1; M-CSA cites PMID:11724534, PMID:14987800, PMID:15358051, PMID:16330239,
+        PMID:16469427, PMID:17195942, PMID:17475535, PMID:18996167, PMID:20211682, PMID:20524049, PMID:23127136,
+        PMID:6986370, PMID:8599762, PMID:8609605, PMID:9048893, PMID:9139042, PMID:9406547; M-CSA catalytic-residue
+        roles for Lys213
+  - subject: his232
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His232 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/51/
+      snippet: electrostatic stabiliser, hydrogen bond donor, metal ligand
+      notes: M-CSA entry 51, mechanism 1; M-CSA cites PMID:11724534, PMID:14987800, PMID:15358051, PMID:16330239,
+        PMID:16469427, PMID:17195942, PMID:17475535, PMID:18996167, PMID:20211682, PMID:20524049, PMID:23127136,
+        PMID:6986370, PMID:8599762, PMID:8609605, PMID:9048893, PMID:9139042, PMID:9406547; M-CSA catalytic-residue
+        roles for His232
+  - subject: ser250
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser250 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/51/
+      snippet: steric role
+      notes: M-CSA entry 51, mechanism 1; M-CSA cites PMID:11724534, PMID:14987800, PMID:15358051, PMID:16330239,
+        PMID:16469427, PMID:17195942, PMID:17475535, PMID:18996167, PMID:20211682, PMID:20524049, PMID:23127136,
+        PMID:6986370, PMID:8599762, PMID:8609605, PMID:9048893, PMID:9139042, PMID:9406547; M-CSA catalytic-residue
+        roles for Ser250
+  - subject: lys254
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys254 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/51/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 51, mechanism 1; M-CSA cites PMID:11724534, PMID:14987800, PMID:15358051, PMID:16330239,
+        PMID:16469427, PMID:17195942, PMID:17475535, PMID:18996167, PMID:20211682, PMID:20524049, PMID:23127136,
+        PMID:6986370, PMID:8599762, PMID:8609605, PMID:9048893, PMID:9139042, PMID:9406547; M-CSA catalytic-residue
+        roles for Lys254
+  - subject: thr255
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr255 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/51/
+      snippet: metal ligand
+      notes: M-CSA entry 51, mechanism 1; M-CSA cites PMID:11724534, PMID:14987800, PMID:15358051, PMID:16330239,
+        PMID:16469427, PMID:17195942, PMID:17475535, PMID:18996167, PMID:20211682, PMID:20524049, PMID:23127136,
+        PMID:6986370, PMID:8599762, PMID:8609605, PMID:9048893, PMID:9139042, PMID:9406547; M-CSA catalytic-residue
+        roles for Thr255
+  - subject: asp269
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp269 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/51/
+      snippet: metal ligand
+      notes: M-CSA entry 51, mechanism 1; M-CSA cites PMID:11724534, PMID:14987800, PMID:15358051, PMID:16330239,
+        PMID:16469427, PMID:17195942, PMID:17475535, PMID:18996167, PMID:20211682, PMID:20524049, PMID:23127136,
+        PMID:6986370, PMID:8599762, PMID:8609605, PMID:9048893, PMID:9139042, PMID:9406547; M-CSA catalytic-residue
+        roles for Asp269
+  - subject: arg333
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg333 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/51/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 51, mechanism 1; M-CSA cites PMID:11724534, PMID:14987800, PMID:15358051, PMID:16330239,
+        PMID:16469427, PMID:17195942, PMID:17475535, PMID:18996167, PMID:20211682, PMID:20524049, PMID:23127136,
+        PMID:6986370, PMID:8599762, PMID:8609605, PMID:9048893, PMID:9139042, PMID:9406547; M-CSA catalytic-residue
+        roles for Arg333
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/51/
+      snippet: The substrate undergoes decarboxylation, resulting in the formation of an enol intermediate,
+        stabilised by positively charged residues. The oxyanion formed attacks the gamma phosphate of
+        ATP in a nucleophilic substitution, giving the products of ADP and phosphoenolpyruvate.
+      notes: M-CSA entry 51, mechanism 1; M-CSA cites PMID:11724534, PMID:14987800, PMID:15358051, PMID:16330239,
+        PMID:16469427, PMID:17195942, PMID:17475535, PMID:18996167, PMID:20211682, PMID:20524049, PMID:23127136,
+        PMID:6986370, PMID:8599762, PMID:8609605, PMID:9048893, PMID:9139042, PMID:9406547; CATH domain
+        3.40.449.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/51/
+      snippet: The substrate undergoes decarboxylation, resulting in the formation of an enol intermediate,
+        stabilised by positively charged residues. The oxyanion formed attacks the gamma phosphate of
+        ATP in a nucleophilic substitution, giving the products of ADP and phosphoenolpyruvate.
+      notes: M-CSA entry 51, mechanism 1; M-CSA cites PMID:11724534, PMID:14987800, PMID:15358051, PMID:16330239,
+        PMID:16469427, PMID:17195942, PMID:17475535, PMID:18996167, PMID:20211682, PMID:20524049, PMID:23127136,
+        PMID:6986370, PMID:8599762, PMID:8609605, PMID:9048893, PMID:9139042, PMID:9406547; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/51/
+      snippet: The substrate undergoes decarboxylation, resulting in the formation of an enol intermediate,
+        stabilised by positively charged residues. The oxyanion formed attacks the gamma phosphate of
+        ATP in a nucleophilic substitution, giving the products of ADP and phosphoenolpyruvate.
+      notes: M-CSA entry 51, mechanism 1; M-CSA cites PMID:11724534, PMID:14987800, PMID:15358051, PMID:16330239,
+        PMID:16469427, PMID:17195942, PMID:17475535, PMID:18996167, PMID:20211682, PMID:20524049, PMID:23127136,
+        PMID:6986370, PMID:8599762, PMID:8609605, PMID:9048893, PMID:9139042, PMID:9406547; M-CSA reaction
+        reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/51/
+      snippet: The substrate undergoes decarboxylation, resulting in the formation of an enol intermediate,
+        stabilised by positively charged residues. The oxyanion formed attacks the gamma phosphate of
+        ATP in a nucleophilic substitution, giving the products of ADP and phosphoenolpyruvate.
+      notes: M-CSA entry 51, mechanism 1; M-CSA cites PMID:11724534, PMID:14987800, PMID:15358051, PMID:16330239,
+        PMID:16469427, PMID:17195942, PMID:17475535, PMID:18996167, PMID:20211682, PMID:20524049, PMID:23127136,
+        PMID:6986370, PMID:8599762, PMID:8609605, PMID:9048893, PMID:9139042, PMID:9406547; M-CSA reaction
+        reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/51/
+      snippet: The substrate undergoes decarboxylation, resulting in the formation of an enol intermediate,
+        stabilised by positively charged residues. The oxyanion formed attacks the gamma phosphate of
+        ATP in a nucleophilic substitution, giving the products of ADP and phosphoenolpyruvate.
+      notes: M-CSA entry 51, mechanism 1; M-CSA cites PMID:11724534, PMID:14987800, PMID:15358051, PMID:16330239,
+        PMID:16469427, PMID:17195942, PMID:17475535, PMID:18996167, PMID:20211682, PMID:20524049, PMID:23127136,
+        PMID:6986370, PMID:8599762, PMID:8609605, PMID:9048893, PMID:9139042, PMID:9406547; M-CSA reaction
+        products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/51/
+      snippet: The substrate undergoes decarboxylation, resulting in the formation of an enol intermediate,
+        stabilised by positively charged residues. The oxyanion formed attacks the gamma phosphate of
+        ATP in a nucleophilic substitution, giving the products of ADP and phosphoenolpyruvate.
+      notes: M-CSA entry 51, mechanism 1; M-CSA cites PMID:11724534, PMID:14987800, PMID:15358051, PMID:16330239,
+        PMID:16469427, PMID:17195942, PMID:17475535, PMID:18996167, PMID:20211682, PMID:20524049, PMID:23127136,
+        PMID:6986370, PMID:8599762, PMID:8609605, PMID:9048893, PMID:9139042, PMID:9406547; M-CSA reaction
+        products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/51/
+      snippet: The substrate undergoes decarboxylation, resulting in the formation of an enol intermediate,
+        stabilised by positively charged residues. The oxyanion formed attacks the gamma phosphate of
+        ATP in a nucleophilic substitution, giving the products of ADP and phosphoenolpyruvate.
+      notes: M-CSA entry 51, mechanism 1; M-CSA cites PMID:11724534, PMID:14987800, PMID:15358051, PMID:16330239,
+        PMID:16469427, PMID:17195942, PMID:17475535, PMID:18996167, PMID:20211682, PMID:20524049, PMID:23127136,
+        PMID:6986370, PMID:8599762, PMID:8609605, PMID:9048893, PMID:9139042, PMID:9406547; M-CSA reaction
+        products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (17 evidence-backed edges) transcribed from M-CSA entry 51;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

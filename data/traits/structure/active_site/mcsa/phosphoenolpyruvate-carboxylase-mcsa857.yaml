@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.1.1.31
 - CHEBI:15377
@@ -399,4 +399,335 @@ definitions:
       Phosphoenolpyruvate carboxylase (PEPC) catalyses the irreversible carboxylation of phosphoenolpyruvate (PEP) to form oxaloacetate (OAA) and Pi using divalent Mg(II) or Mn(II) as a cofactor. The active species for initial carboxylation is not carbon dioxide but the chemically less reactive bicarbonate anion, which dominates in the cytoplasm where PEPC functions. The enzyme is present in all photosynthetic organisms, including higher plants, green algae, cyanobacteria and photosynthetic bacteria, and most nonphotosynthetic bacteria and protozoa, but is notably absent from animals, fungi, and yeasts. PEPC primarily plays an anaplerotic role by replenishing C4-dicarboxylic acids utilised for both energy and biosynthetic metabolisms.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of phosphoenolpyruvate carboxylase
+  description: Stepwise mechanism transcribed from M-CSA entry 857 (6 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: his138
+    label: catalytic His138 (M-CSA/PDB numbering; UniProt residue 138)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00864
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: arg396
+    label: catalytic Arg396 (M-CSA/PDB numbering; UniProt residue 396)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00864
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu506
+    label: catalytic Glu506 (M-CSA/PDB numbering; UniProt residue 506)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00864
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp543
+    label: catalytic Asp543 (M-CSA/PDB numbering; UniProt residue 543)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00864
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: arg581
+    label: catalytic Arg581 (M-CSA/PDB numbering; UniProt residue 581)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00864
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: arg713
+    label: catalytic Arg713 (M-CSA/PDB numbering; UniProt residue 713)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00864
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: phosphonatoenolpyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:58702
+  - node_id: reactant2
+    label: carbon dioxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+  - node_id: product0
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product1
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: product2
+    label: oxaloacetate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:16452
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: There is nucleophilic attack from the water molecule to the CO2 molecule forming carbonicacid
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The carbonic acid is deprotonated, forming a bicarbonate ion.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Nucleophilic attack by bicarbonate forms carboxyphosphate and the  enolate of pyruvate.
+      In order to make the phosphorus atom less negative, the positively charged electrostatic pocket
+      formed by the arginine residues allows the dissipation of the negative charges of the phosphate
+      group during the approach
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: His 138 acts as a general base abstracting a proton from the carboxyphosphate, this leads
+      to CO2 being released.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: "An aldol addition leads to the phosphoenolpyruvate being carboxylated.
+The phosphate\
+      \ accepts a proton from His 138."
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: phosphoenolpyruvate carboxylase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:857
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: activity
+    label: phosphoenolpyruvate carboxylase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.1.1.31
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/857/
+      snippet: The carbonic acid is deprotonated, forming a bicarbonate ion.
+      notes: M-CSA entry 857, mechanism 1; M-CSA cites PMID:12781768; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/857/
+      snippet: Nucleophilic attack by bicarbonate forms carboxyphosphate and the  enolate of pyruvate.
+        In order to make the phosphorus atom less negative, the positively charged electrostatic pocket
+        formed by the arginine residues allows the dissipation of the negative charges of the phosphate
+        group during the approach
+      notes: M-CSA entry 857, mechanism 1; M-CSA cites PMID:12781768; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/857/
+      snippet: His 138 acts as a general base abstracting a proton from the carboxyphosphate, this leads
+        to CO2 being released.
+      notes: M-CSA entry 857, mechanism 1; M-CSA cites PMID:12781768; step 4
+  - subject: his138
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: His138 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/857/
+      snippet: His 138 acts as a general base abstracting a proton from the carboxyphosphate, this leads
+        to CO2 being released.
+      notes: M-CSA entry 857, mechanism 1; M-CSA cites PMID:12781768; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/857/
+      snippet: "An aldol addition leads to the phosphoenolpyruvate being carboxylated.
+The phosphate\
+        \ accepts a proton from His 138."
+      notes: M-CSA entry 857, mechanism 1; M-CSA cites PMID:12781768; step 5
+  - subject: his138
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: His138 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/857/
+      snippet: "An aldol addition leads to the phosphoenolpyruvate being carboxylated.
+The phosphate\
+        \ accepts a proton from His 138."
+      notes: M-CSA entry 857, mechanism 1; M-CSA cites PMID:12781768; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/857/
+      snippet: Products.
+      notes: M-CSA entry 857, mechanism 1; M-CSA cites PMID:12781768; step 6
+  - subject: his138
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His138 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/857/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 857, mechanism 1; M-CSA cites PMID:12781768; M-CSA catalytic-residue roles for
+        His138
+  - subject: arg396
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg396 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/857/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 857, mechanism 1; M-CSA cites PMID:12781768; M-CSA catalytic-residue roles for
+        Arg396
+  - subject: glu506
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu506 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/857/
+      snippet: metal ligand
+      notes: M-CSA entry 857, mechanism 1; M-CSA cites PMID:12781768; M-CSA catalytic-residue roles for
+        Glu506
+  - subject: asp543
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp543 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/857/
+      snippet: metal ligand
+      notes: M-CSA entry 857, mechanism 1; M-CSA cites PMID:12781768; M-CSA catalytic-residue roles for
+        Asp543
+  - subject: arg581
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg581 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/857/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 857, mechanism 1; M-CSA cites PMID:12781768; M-CSA catalytic-residue roles for
+        Arg581
+  - subject: arg713
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg713 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/857/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 857, mechanism 1; M-CSA cites PMID:12781768; M-CSA catalytic-residue roles for
+        Arg713
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/857/
+      snippet: The first chemical step in the proposed mechanism is the nucleophilic attack by bicarbonate
+        to form carboxyphosphate and the enolate of pyruvate. In order to make the phosphorus atom less
+        negative, the positively charged electrostatic pocket formed by three arginine residues allows
+        the dissipation of the negative charges of the phosphate group during the approach. In the second
+        chemical step of th
+      notes: M-CSA entry 857, mechanism 1; M-CSA cites PMID:12781768; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/857/
+      snippet: The first chemical step in the proposed mechanism is the nucleophilic attack by bicarbonate
+        to form carboxyphosphate and the enolate of pyruvate. In order to make the phosphorus atom less
+        negative, the positively charged electrostatic pocket formed by three arginine residues allows
+        the dissipation of the negative charges of the phosphate group during the approach. In the second
+        chemical step of th
+      notes: M-CSA entry 857, mechanism 1; M-CSA cites PMID:12781768; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/857/
+      snippet: The first chemical step in the proposed mechanism is the nucleophilic attack by bicarbonate
+        to form carboxyphosphate and the enolate of pyruvate. In order to make the phosphorus atom less
+        negative, the positively charged electrostatic pocket formed by three arginine residues allows
+        the dissipation of the negative charges of the phosphate group during the approach. In the second
+        chemical step of th
+      notes: M-CSA entry 857, mechanism 1; M-CSA cites PMID:12781768; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/857/
+      snippet: The first chemical step in the proposed mechanism is the nucleophilic attack by bicarbonate
+        to form carboxyphosphate and the enolate of pyruvate. In order to make the phosphorus atom less
+        negative, the positively charged electrostatic pocket formed by three arginine residues allows
+        the dissipation of the negative charges of the phosphate group during the approach. In the second
+        chemical step of th
+      notes: M-CSA entry 857, mechanism 1; M-CSA cites PMID:12781768; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/857/
+      snippet: The first chemical step in the proposed mechanism is the nucleophilic attack by bicarbonate
+        to form carboxyphosphate and the enolate of pyruvate. In order to make the phosphorus atom less
+        negative, the positively charged electrostatic pocket formed by three arginine residues allows
+        the dissipation of the negative charges of the phosphate group during the approach. In the second
+        chemical step of th
+      notes: M-CSA entry 857, mechanism 1; M-CSA cites PMID:12781768; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/857/
+      snippet: The first chemical step in the proposed mechanism is the nucleophilic attack by bicarbonate
+        to form carboxyphosphate and the enolate of pyruvate. In order to make the phosphorus atom less
+        negative, the positively charged electrostatic pocket formed by three arginine residues allows
+        the dissipation of the negative charges of the phosphate group during the approach. In the second
+        chemical step of th
+      notes: M-CSA entry 857, mechanism 1; M-CSA cites PMID:12781768; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/857/
+      snippet: The first chemical step in the proposed mechanism is the nucleophilic attack by bicarbonate
+        to form carboxyphosphate and the enolate of pyruvate. In order to make the phosphorus atom less
+        negative, the positively charged electrostatic pocket formed by three arginine residues allows
+        the dissipation of the negative charges of the phosphate group during the approach. In the second
+        chemical step of th
+      notes: M-CSA entry 857, mechanism 1; M-CSA cites PMID:12781768; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (20 evidence-backed edges) transcribed from M-CSA entry 857;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

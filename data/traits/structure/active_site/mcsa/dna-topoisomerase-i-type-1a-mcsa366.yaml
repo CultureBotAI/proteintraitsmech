@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.6.2.1
 - CHEBI:9160
@@ -537,4 +537,275 @@ definitions:
       DNA topoisomerase enzymes modify DNA super-helicity and perform DNA decatenation using scission, manipulation and ligation reactions. Two families of topoisomerases exist, group I and II, cleaving single and double stranded DNA respectively. Each family can be subdivided into A and B groups, which represent subsets of proteins with no similarity in structure or sequence. All topoisomerases use a tyrosine to cleave DNA, forming a short-lived phosphotyrosyl intermediate. These bacterial enzymes reduce the topological stress in the DNA structure by relaxing negatively, but not positively, supercoiled DNA. Different classes of enzyme relax DNA to different extents and, for the 1A enzymes, activity correlates with the degree of DNA substrate superhelicity. Type I DNA topoisomerase enzymes alter the topology of DNA by transiently breaking one or two strands of DNA, passing a single or double strand through the break and then resealing the break. This allows for the interconversion of topological isomers, which is necessary for a number of cellular transactions such as replication, transcription and recombination. The enzyme is a member of the IA sub family, classified by the covalently bound enzyme-DNA intermediate. Unlike group II enzymes, the reactions catalysed by Escherichia coli topoisomerase are not coupled to binding or hydrolysis of ATP. Full-length topoisomerase I from Escherichia coli is a 97kDa metalloprotein containing three Zn(II) cations at the C-terminus. The structure annotated is a 67kDa, N-terminal truncation protein. While the tetra-cysteine motifs, thought to bind Zn(II) are not required for single strand DNA cleavage, without them the protein cannot relax negatively supercoiled DNA. However, the substrate specificity and reaction characteristics of the N-terminal truncation fragment are thought to parallel the full length and Zn depleted enzyme.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of DNA topoisomerase I (type 1A)
+  description: Stepwise mechanism transcribed from M-CSA entry 366 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: glu9
+    label: catalytic Glu9 (M-CSA/PDB numbering; UniProt residue 9)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06612
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      increase acidity, metal ligand, proton acceptor, proton donor, proton relay.'
+  - node_id: asp111
+    label: catalytic Asp111 (M-CSA/PDB numbering; UniProt residue 111)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06612
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      increase acidity, metal ligand, proton acceptor, proton donor, proton relay.'
+  - node_id: asp113
+    label: catalytic Asp113 (M-CSA/PDB numbering; UniProt residue 113)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06612
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu115
+    label: catalytic Glu115 (M-CSA/PDB numbering; UniProt residue 115)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06612
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: tyr319
+    label: catalytic Tyr319 (M-CSA/PDB numbering; UniProt residue 319)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06612
+    description: 'M-CSA roles: activator, covalently attached, hydrogen bond acceptor, nucleofuge, nucleophile,
+      proton acceptor, proton donor.'
+  - node_id: arg321
+    label: catalytic Arg321 (M-CSA/PDB numbering; UniProt residue 321)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06612
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his365
+    label: catalytic His365 (M-CSA/PDB numbering; UniProt residue 365)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06612
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      increase acidity, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: single-stranded DNA
+    node_type: CHEMICAL
+    grounding: CHEBI:9160
+  - node_id: product0
+    label: single-stranded DNA
+    node_type: CHEMICAL
+    grounding: CHEBI:9160
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Cleavage of the single-stranded DNA via the formation of a covalent bond between then
+      5’-phosphoryl group and the hydroxyl of the active site tyrosine. The 3’ end of the DNA remains
+      non-covalently bound to the enzyme.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Cleavage of the single-stranded DNA via the formation of a covalent bond between then
+      5'-phosphoryl group and the hydroxyl of the active site tyrosine. The 3' end of the DNA remains
+      non-covalently bound to the enzyme.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Tyr319 is reprotonated by His375, through a relay of acidic residues within the active
+      site.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: DNA topoisomerase I (type 1A) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:366
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.140 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.140
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: DNA topoisomerase I (type 1A) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.6.2.1
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/366/
+      snippet: Cleavage of the single-stranded DNA via the formation of a covalent bond between then 5'-phosphoryl
+        group and the hydroxyl of the active site tyrosine. The 3' end of the DNA remains non-covalently
+        bound to the enzyme.
+      notes: M-CSA entry 366, mechanism 2; M-CSA cites PMID:11809772, PMID:19188255, PMID:20210704, PMID:8114910,
+        PMID:9497321; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/366/
+      snippet: Tyr319 is reprotonated by His375, through a relay of acidic residues within the active
+        site.
+      notes: M-CSA entry 366, mechanism 2; M-CSA cites PMID:11809772, PMID:19188255, PMID:20210704, PMID:8114910,
+        PMID:9497321; step 3
+  - subject: tyr319
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Tyr319 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/366/
+      snippet: Tyr319 is reprotonated by His375, through a relay of acidic residues within the active
+        site.
+      notes: M-CSA entry 366, mechanism 2; M-CSA cites PMID:11809772, PMID:19188255, PMID:20210704, PMID:8114910,
+        PMID:9497321; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/366/
+      snippet: Products.
+      notes: M-CSA entry 366, mechanism 2; M-CSA cites PMID:11809772, PMID:19188255, PMID:20210704, PMID:8114910,
+        PMID:9497321; step 4
+  - subject: glu9
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu9 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/366/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, increase acidity,
+        metal ligand, proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 366, mechanism 2; M-CSA cites PMID:11809772, PMID:19188255, PMID:20210704, PMID:8114910,
+        PMID:9497321; M-CSA catalytic-residue roles for Glu9
+  - subject: asp111
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp111 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/366/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, increase acidity,
+        metal ligand, proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 366, mechanism 2; M-CSA cites PMID:11809772, PMID:19188255, PMID:20210704, PMID:8114910,
+        PMID:9497321; M-CSA catalytic-residue roles for Asp111
+  - subject: asp113
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp113 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/366/
+      snippet: metal ligand
+      notes: M-CSA entry 366, mechanism 2; M-CSA cites PMID:11809772, PMID:19188255, PMID:20210704, PMID:8114910,
+        PMID:9497321; M-CSA catalytic-residue roles for Asp113
+  - subject: glu115
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu115 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/366/
+      snippet: metal ligand
+      notes: M-CSA entry 366, mechanism 2; M-CSA cites PMID:11809772, PMID:19188255, PMID:20210704, PMID:8114910,
+        PMID:9497321; M-CSA catalytic-residue roles for Glu115
+  - subject: tyr319
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr319 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/366/
+      snippet: activator, covalently attached, hydrogen bond acceptor, nucleofuge, nucleophile, proton
+        acceptor, proton donor
+      notes: M-CSA entry 366, mechanism 2; M-CSA cites PMID:11809772, PMID:19188255, PMID:20210704, PMID:8114910,
+        PMID:9497321; M-CSA catalytic-residue roles for Tyr319
+  - subject: arg321
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg321 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/366/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 366, mechanism 2; M-CSA cites PMID:11809772, PMID:19188255, PMID:20210704, PMID:8114910,
+        PMID:9497321; M-CSA catalytic-residue roles for Arg321
+  - subject: his365
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His365 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/366/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, increase acidity,
+        proton acceptor, proton donor
+      notes: M-CSA entry 366, mechanism 2; M-CSA cites PMID:11809772, PMID:19188255, PMID:20210704, PMID:8114910,
+        PMID:9497321; M-CSA catalytic-residue roles for His365
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/366/
+      snippet: <p>The enzyme mechanism is generally accepted to proceed via two sequential trans-esterification
+        reactions. Initially, the enzyme recognises and binds a DNA region, positioning the DNA in the
+        active site. Cleavage of the single stranded DNA occurs via the nucleophilic attack of the Tyr
+        319 hydroxyl group at the 5' phosphoryl end, with the formation of a covalent bond between the
+        two, while the 3'
+      notes: M-CSA entry 366, mechanism 2; M-CSA cites PMID:11809772, PMID:19188255, PMID:20210704, PMID:8114910,
+        PMID:9497321; CATH domain 3.40.50.140 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/366/
+      snippet: <p>The enzyme mechanism is generally accepted to proceed via two sequential trans-esterification
+        reactions. Initially, the enzyme recognises and binds a DNA region, positioning the DNA in the
+        active site. Cleavage of the single stranded DNA occurs via the nucleophilic attack of the Tyr
+        319 hydroxyl group at the 5' phosphoryl end, with the formation of a covalent bond between the
+        two, while the 3'
+      notes: M-CSA entry 366, mechanism 2; M-CSA cites PMID:11809772, PMID:19188255, PMID:20210704, PMID:8114910,
+        PMID:9497321; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/366/
+      snippet: <p>The enzyme mechanism is generally accepted to proceed via two sequential trans-esterification
+        reactions. Initially, the enzyme recognises and binds a DNA region, positioning the DNA in the
+        active site. Cleavage of the single stranded DNA occurs via the nucleophilic attack of the Tyr
+        319 hydroxyl group at the 5' phosphoryl end, with the formation of a covalent bond between the
+        two, while the 3'
+      notes: M-CSA entry 366, mechanism 2; M-CSA cites PMID:11809772, PMID:19188255, PMID:20210704, PMID:8114910,
+        PMID:9497321; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/366/
+      snippet: <p>The enzyme mechanism is generally accepted to proceed via two sequential trans-esterification
+        reactions. Initially, the enzyme recognises and binds a DNA region, positioning the DNA in the
+        active site. Cleavage of the single stranded DNA occurs via the nucleophilic attack of the Tyr
+        319 hydroxyl group at the 5' phosphoryl end, with the formation of a covalent bond between the
+        two, while the 3'
+      notes: M-CSA entry 366, mechanism 2; M-CSA cites PMID:11809772, PMID:19188255, PMID:20210704, PMID:8114910,
+        PMID:9497321; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 366;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

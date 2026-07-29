@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.4.2.30
 - CHEBI:57540
@@ -497,4 +497,258 @@ definitions:
       ADP-ribosyltransferase is a eukaryotic DNA binding protein that participates in cell recovery after DNA damage, particularly in base excision repair. After activation by binding to DNA strand-breaks it modifies itself (automodification) and other nuclear proteins (heteromodification) involved in chromatin architecture and DNA metabolism by covalent attachment of ADP-ribose units of NAD+ forming extended and branched polymers.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of NAD+ ADP-ribosyltransferase
+  description: Stepwise mechanism transcribed from M-CSA entry 76 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset -3).
+  nodes:
+  - node_id: ser904
+    label: catalytic Ser904 (M-CSA/PDB numbering; UniProt residue 901)
+    node_type: RESIDUE
+    grounding: UniProtKB:P26446
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: tyr907
+    label: catalytic Tyr907 (M-CSA/PDB numbering; UniProt residue 904)
+    node_type: RESIDUE
+    grounding: UniProtKB:P26446
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor, van der waals interaction.'
+  - node_id: glu988
+    label: catalytic Glu988 (M-CSA/PDB numbering; UniProt residue 985)
+    node_type: RESIDUE
+    grounding: UniProtKB:P26446
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: NAD(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+  - node_id: reactant1
+    label: ADP-D-ribose(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57967
+  - node_id: product0
+    label: poly-ADP-D-ribose
+    node_type: CHEMICAL
+    grounding: CHEBI:61151
+  - node_id: product1
+    label: nicotinamide
+    node_type: CHEMICAL
+    grounding: CHEBI:17154
+  - node_id: product2
+    label: proton
+    node_type: CHEMICAL
+    grounding: CHEBI:24636
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu988 deprotonates the 2'-OH of the ADP-D-ribosyl-acceptor.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The oxyanion initiates a nucleophilic attack on the ribose carbon of ADP covalently attacked
+      to the nicotinamide ring in a substitution reaction, eliminating nicotinamide with concomitant deprotonation
+      of Glu988.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: In an inferred step, the nicotinamide loses a proton to the solvent, and the final product
+      is generated.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: NAD+ ADP-ribosyltransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:76
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.228.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.228.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: NAD+ ADP-ribosyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.4.2.30
+  edges:
+  - subject: glu988
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu988 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/76/
+      snippet: Glu988 deprotonates the 2'-OH of the ADP-D-ribosyl-acceptor.
+      notes: M-CSA entry 76, mechanism 1; M-CSA cites PMID:21469749, PMID:23333033, PMID:25350685, PMID:26083304,
+        PMID:9571033; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/76/
+      snippet: The oxyanion initiates a nucleophilic attack on the ribose carbon of ADP covalently attacked
+        to the nicotinamide ring in a substitution reaction, eliminating nicotinamide with concomitant
+        deprotonation of Glu988.
+      notes: M-CSA entry 76, mechanism 1; M-CSA cites PMID:21469749, PMID:23333033, PMID:25350685, PMID:26083304,
+        PMID:9571033; step 2
+  - subject: glu988
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu988 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/76/
+      snippet: The oxyanion initiates a nucleophilic attack on the ribose carbon of ADP covalently attacked
+        to the nicotinamide ring in a substitution reaction, eliminating nicotinamide with concomitant
+        deprotonation of Glu988.
+      notes: M-CSA entry 76, mechanism 1; M-CSA cites PMID:21469749, PMID:23333033, PMID:25350685, PMID:26083304,
+        PMID:9571033; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/76/
+      snippet: In an inferred step, the nicotinamide loses a proton to the solvent, and the final product
+        is generated.
+      notes: M-CSA entry 76, mechanism 1; M-CSA cites PMID:21469749, PMID:23333033, PMID:25350685, PMID:26083304,
+        PMID:9571033; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/76/
+      snippet: Products
+      notes: M-CSA entry 76, mechanism 1; M-CSA cites PMID:21469749, PMID:23333033, PMID:25350685, PMID:26083304,
+        PMID:9571033; step 4
+  - subject: ser904
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser904 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/76/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 76, mechanism 1; M-CSA cites PMID:21469749, PMID:23333033, PMID:25350685, PMID:26083304,
+        PMID:9571033; M-CSA catalytic-residue roles for Ser904
+  - subject: tyr907
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr907 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/76/
+      snippet: electrostatic stabiliser, hydrogen bond donor, van der waals interaction
+      notes: M-CSA entry 76, mechanism 1; M-CSA cites PMID:21469749, PMID:23333033, PMID:25350685, PMID:26083304,
+        PMID:9571033; M-CSA catalytic-residue roles for Tyr907
+  - subject: glu988
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu988 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/76/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+        proton donor
+      notes: M-CSA entry 76, mechanism 1; M-CSA cites PMID:21469749, PMID:23333033, PMID:25350685, PMID:26083304,
+        PMID:9571033; M-CSA catalytic-residue roles for Glu988
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/76/
+      snippet: Glutamate deprotonates the 2' OH of the ADP-D-ribosyl-acceptor. The oxyanion then initiates
+        a nucleophilic attack on the ribose carbon of ADP covalently attacked to the nicotinamide ring
+        in a substitution reaction, eliminating nicotinamide with concomitant deprotonation of Glu988
+      notes: M-CSA entry 76, mechanism 1; M-CSA cites PMID:21469749, PMID:23333033, PMID:25350685, PMID:26083304,
+        PMID:9571033; CATH domain 3.90.228.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/76/
+      snippet: Glutamate deprotonates the 2' OH of the ADP-D-ribosyl-acceptor. The oxyanion then initiates
+        a nucleophilic attack on the ribose carbon of ADP covalently attacked to the nicotinamide ring
+        in a substitution reaction, eliminating nicotinamide with concomitant deprotonation of Glu988
+      notes: M-CSA entry 76, mechanism 1; M-CSA cites PMID:21469749, PMID:23333033, PMID:25350685, PMID:26083304,
+        PMID:9571033; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/76/
+      snippet: Glutamate deprotonates the 2' OH of the ADP-D-ribosyl-acceptor. The oxyanion then initiates
+        a nucleophilic attack on the ribose carbon of ADP covalently attacked to the nicotinamide ring
+        in a substitution reaction, eliminating nicotinamide with concomitant deprotonation of Glu988
+      notes: M-CSA entry 76, mechanism 1; M-CSA cites PMID:21469749, PMID:23333033, PMID:25350685, PMID:26083304,
+        PMID:9571033; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/76/
+      snippet: Glutamate deprotonates the 2' OH of the ADP-D-ribosyl-acceptor. The oxyanion then initiates
+        a nucleophilic attack on the ribose carbon of ADP covalently attacked to the nicotinamide ring
+        in a substitution reaction, eliminating nicotinamide with concomitant deprotonation of Glu988
+      notes: M-CSA entry 76, mechanism 1; M-CSA cites PMID:21469749, PMID:23333033, PMID:25350685, PMID:26083304,
+        PMID:9571033; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/76/
+      snippet: Glutamate deprotonates the 2' OH of the ADP-D-ribosyl-acceptor. The oxyanion then initiates
+        a nucleophilic attack on the ribose carbon of ADP covalently attacked to the nicotinamide ring
+        in a substitution reaction, eliminating nicotinamide with concomitant deprotonation of Glu988
+      notes: M-CSA entry 76, mechanism 1; M-CSA cites PMID:21469749, PMID:23333033, PMID:25350685, PMID:26083304,
+        PMID:9571033; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/76/
+      snippet: Glutamate deprotonates the 2' OH of the ADP-D-ribosyl-acceptor. The oxyanion then initiates
+        a nucleophilic attack on the ribose carbon of ADP covalently attacked to the nicotinamide ring
+        in a substitution reaction, eliminating nicotinamide with concomitant deprotonation of Glu988
+      notes: M-CSA entry 76, mechanism 1; M-CSA cites PMID:21469749, PMID:23333033, PMID:25350685, PMID:26083304,
+        PMID:9571033; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/76/
+      snippet: Glutamate deprotonates the 2' OH of the ADP-D-ribosyl-acceptor. The oxyanion then initiates
+        a nucleophilic attack on the ribose carbon of ADP covalently attacked to the nicotinamide ring
+        in a substitution reaction, eliminating nicotinamide with concomitant deprotonation of Glu988
+      notes: M-CSA entry 76, mechanism 1; M-CSA cites PMID:21469749, PMID:23333033, PMID:25350685, PMID:26083304,
+        PMID:9571033; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 76;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

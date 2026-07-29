@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.7.7.39
 - CHEBI:33019
@@ -153,4 +153,205 @@ definitions:
       Glycerol-3-phosphate cytidylyltransferase catalyses the transfer of the cytidylyl group of CTP to sn-glycerol 3-phosphate so the activated glycerol 3-phosphate can be used for the biosynthesis of teichoic acid linkage units in bacterial cell walls.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of glycerol-3-phosphate cytidylyltransferase
+  description: Stepwise mechanism transcribed from M-CSA entry 296 (2 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: lys44
+    label: catalytic Lys44 (M-CSA/PDB numbering; UniProt residue 44)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27623
+    description: 'M-CSA roles: attractive charge-charge interaction, electrostatic stabiliser, hydrogen
+      bond donor.'
+  - node_id: lys46
+    label: catalytic Lys46 (M-CSA/PDB numbering; UniProt residue 46)
+    node_type: RESIDUE
+    grounding: UniProtKB:P27623
+    description: 'M-CSA roles: attractive charge-charge interaction, electrostatic stabiliser, hydrogen
+      bond donor.'
+  - node_id: reactant0
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: reactant1
+    label: CTP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:37563
+  - node_id: reactant2
+    label: sn-glycerol 3-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57597
+  - node_id: product0
+    label: diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+  - node_id: product1
+    label: (2R)-CDP-glycerol(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58311
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The glycerol-3-phosphate initiates a nucleophilic attack on the alpha phosphate of CTP
+      in a substitution reaction. . The magnesium enhances the electrophilicity of the CTP alpha phosphate
+      by reducing the repulsion between this group and the attacking nucleophile. Kinetic studies have
+      shown the divalent magnesium ion to be essential for catalysis.  Pattridge <i>et al.</i> [PMID:14506262]
+      suggests t
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: glycerol-3-phosphate cytidylyltransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:296
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.620 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.620
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: glycerol-3-phosphate cytidylyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.7.7.39
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/296/
+      snippet: Products
+      notes: M-CSA entry 296, mechanism 1; M-CSA cites PMID:10508782, PMID:14506262, PMID:8352600; step
+        2
+  - subject: lys44
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys44 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/296/
+      snippet: attractive charge-charge interaction, electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 296, mechanism 1; M-CSA cites PMID:10508782, PMID:14506262, PMID:8352600; M-CSA
+        catalytic-residue roles for Lys44
+  - subject: lys46
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys46 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/296/
+      snippet: attractive charge-charge interaction, electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 296, mechanism 1; M-CSA cites PMID:10508782, PMID:14506262, PMID:8352600; M-CSA
+        catalytic-residue roles for Lys46
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/296/
+      snippet: Proceeds via a random order reaction mechanism where there is negative cooperativity in
+        the binding of substrates but not in catalysis. Several residues has been implicated in regulating
+        a negative cooperativity between the binding of glycerol-3-phosphate and CTP. However, the NMR
+        and crystallographic data characterising such residues are inconsistent, and as of yet have not
+        explicitly identified
+      notes: M-CSA entry 296, mechanism 1; M-CSA cites PMID:10508782, PMID:14506262, PMID:8352600; CATH
+        domain 3.40.50.620 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/296/
+      snippet: Proceeds via a random order reaction mechanism where there is negative cooperativity in
+        the binding of substrates but not in catalysis. Several residues has been implicated in regulating
+        a negative cooperativity between the binding of glycerol-3-phosphate and CTP. However, the NMR
+        and crystallographic data characterising such residues are inconsistent, and as of yet have not
+        explicitly identified
+      notes: M-CSA entry 296, mechanism 1; M-CSA cites PMID:10508782, PMID:14506262, PMID:8352600; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/296/
+      snippet: Proceeds via a random order reaction mechanism where there is negative cooperativity in
+        the binding of substrates but not in catalysis. Several residues has been implicated in regulating
+        a negative cooperativity between the binding of glycerol-3-phosphate and CTP. However, the NMR
+        and crystallographic data characterising such residues are inconsistent, and as of yet have not
+        explicitly identified
+      notes: M-CSA entry 296, mechanism 1; M-CSA cites PMID:10508782, PMID:14506262, PMID:8352600; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/296/
+      snippet: Proceeds via a random order reaction mechanism where there is negative cooperativity in
+        the binding of substrates but not in catalysis. Several residues has been implicated in regulating
+        a negative cooperativity between the binding of glycerol-3-phosphate and CTP. However, the NMR
+        and crystallographic data characterising such residues are inconsistent, and as of yet have not
+        explicitly identified
+      notes: M-CSA entry 296, mechanism 1; M-CSA cites PMID:10508782, PMID:14506262, PMID:8352600; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/296/
+      snippet: Proceeds via a random order reaction mechanism where there is negative cooperativity in
+        the binding of substrates but not in catalysis. Several residues has been implicated in regulating
+        a negative cooperativity between the binding of glycerol-3-phosphate and CTP. However, the NMR
+        and crystallographic data characterising such residues are inconsistent, and as of yet have not
+        explicitly identified
+      notes: M-CSA entry 296, mechanism 1; M-CSA cites PMID:10508782, PMID:14506262, PMID:8352600; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/296/
+      snippet: Proceeds via a random order reaction mechanism where there is negative cooperativity in
+        the binding of substrates but not in catalysis. Several residues has been implicated in regulating
+        a negative cooperativity between the binding of glycerol-3-phosphate and CTP. However, the NMR
+        and crystallographic data characterising such residues are inconsistent, and as of yet have not
+        explicitly identified
+      notes: M-CSA entry 296, mechanism 1; M-CSA cites PMID:10508782, PMID:14506262, PMID:8352600; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/296/
+      snippet: Proceeds via a random order reaction mechanism where there is negative cooperativity in
+        the binding of substrates but not in catalysis. Several residues has been implicated in regulating
+        a negative cooperativity between the binding of glycerol-3-phosphate and CTP. However, the NMR
+        and crystallographic data characterising such residues are inconsistent, and as of yet have not
+        explicitly identified
+      notes: M-CSA entry 296, mechanism 1; M-CSA cites PMID:10508782, PMID:14506262, PMID:8352600; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (10 evidence-backed edges) transcribed from M-CSA entry 296;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

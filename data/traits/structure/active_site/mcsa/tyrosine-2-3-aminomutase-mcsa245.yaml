@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.4.3.6
 - CHEBI:58315
@@ -286,4 +286,192 @@ definitions:
       Tyrosine 2,3-aminomutase catalyses the MIO-dependent deamination of L-tyrosine to form the corresponding alpha,beta-unsaturated acid (S)-beta-tyrosine. This reaction forms part of the biosynthesis of the enediyne antitumour antibiotic C-1027. The MIO (3,5-dihydro-5-methylidene-4H-imidazol-4-one) cofactor is formed autocatalytically by cyclization and dehydration of the three amino-acid residues alanine, serine and glycine.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of tyrosine 2,3-aminomutase
+  description: Stepwise mechanism transcribed from M-CSA entry 245 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: tyr63
+    label: catalytic Tyr63 (M-CSA/PDB numbering; UniProt residue 63)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8GMG0
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: gly70
+    label: catalytic Gly70 (M-CSA/PDB numbering; UniProt residue 70)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8GMG0
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: reactant0
+    label: L-tyrosine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:58315
+  - node_id: product0
+    label: 3-amino-3-(4-hydroxyphenyl)propanoic acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57956
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The amine of the substrate tyrosine initiates a nucleophilic attack upon the 4-ene carbon
+      of the MIO cofator, resulting in double bond rearrangement and the formation of an oxyanion.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Tyr63 deprotonates the covalently bound tyrosine substrate initiating an elimination
+      that results in the aminated cofactor and coumarate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The oxyanion collapses, eliminating the ammonia group, which initiates a nucleophilic
+      attack on the coumarate intermediate in an addition reaction with concomitant deprotonation of Tyr63
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: tyrosine 2,3-aminomutase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:245
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.10.275.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.10.275.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: tyrosine 2,3-aminomutase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.4.3.6
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/245/
+      snippet: Tyr63 deprotonates the covalently bound tyrosine substrate initiating an elimination that
+        results in the aminated cofactor and coumarate.
+      notes: M-CSA entry 245, mechanism 1; M-CSA cites PMID:17516659, PMID:18052279; step 2
+  - subject: tyr63
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Tyr63 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/245/
+      snippet: Tyr63 deprotonates the covalently bound tyrosine substrate initiating an elimination that
+        results in the aminated cofactor and coumarate.
+      notes: M-CSA entry 245, mechanism 1; M-CSA cites PMID:17516659, PMID:18052279; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/245/
+      snippet: The oxyanion collapses, eliminating the ammonia group, which initiates a nucleophilic attack
+        on the coumarate intermediate in an addition reaction with concomitant deprotonation of Tyr63
+      notes: M-CSA entry 245, mechanism 1; M-CSA cites PMID:17516659, PMID:18052279; step 3
+  - subject: tyr63
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Tyr63 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/245/
+      snippet: The oxyanion collapses, eliminating the ammonia group, which initiates a nucleophilic attack
+        on the coumarate intermediate in an addition reaction with concomitant deprotonation of Tyr63
+      notes: M-CSA entry 245, mechanism 1; M-CSA cites PMID:17516659, PMID:18052279; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/245/
+      snippet: Products.
+      notes: M-CSA entry 245, mechanism 1; M-CSA cites PMID:17516659, PMID:18052279; step 4
+  - subject: tyr63
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr63 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/245/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 245, mechanism 1; M-CSA cites PMID:17516659, PMID:18052279; M-CSA catalytic-residue
+        roles for Tyr63
+  - subject: gly70
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly70 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/245/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 245, mechanism 1; M-CSA cites PMID:17516659, PMID:18052279; M-CSA catalytic-residue
+        roles for Gly70
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/245/
+      snippet: This mechanism represents the amino-MIO adduct path. Here, the amine of the substrate initiates
+        a nucleophilic attack on the 4-ene carbon of the cofactor. Tyr63 acts as a general acid/base which
+        initiates the elimnation that results in the aminated cofactor and coumarate. Collapse of the
+        oxyanion results in a nucleophilic attack on the coumarate intermediate in an addition reaction
+        forming the fin
+      notes: M-CSA entry 245, mechanism 1; M-CSA cites PMID:17516659, PMID:18052279; CATH domain 1.10.275.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/245/
+      snippet: This mechanism represents the amino-MIO adduct path. Here, the amine of the substrate initiates
+        a nucleophilic attack on the 4-ene carbon of the cofactor. Tyr63 acts as a general acid/base which
+        initiates the elimnation that results in the aminated cofactor and coumarate. Collapse of the
+        oxyanion results in a nucleophilic attack on the coumarate intermediate in an addition reaction
+        forming the fin
+      notes: M-CSA entry 245, mechanism 1; M-CSA cites PMID:17516659, PMID:18052279; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/245/
+      snippet: This mechanism represents the amino-MIO adduct path. Here, the amine of the substrate initiates
+        a nucleophilic attack on the 4-ene carbon of the cofactor. Tyr63 acts as a general acid/base which
+        initiates the elimnation that results in the aminated cofactor and coumarate. Collapse of the
+        oxyanion results in a nucleophilic attack on the coumarate intermediate in an addition reaction
+        forming the fin
+      notes: M-CSA entry 245, mechanism 1; M-CSA cites PMID:17516659, PMID:18052279; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/245/
+      snippet: This mechanism represents the amino-MIO adduct path. Here, the amine of the substrate initiates
+        a nucleophilic attack on the 4-ene carbon of the cofactor. Tyr63 acts as a general acid/base which
+        initiates the elimnation that results in the aminated cofactor and coumarate. Collapse of the
+        oxyanion results in a nucleophilic attack on the coumarate intermediate in an addition reaction
+        forming the fin
+      notes: M-CSA entry 245, mechanism 1; M-CSA cites PMID:17516659, PMID:18052279; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (11 evidence-backed edges) transcribed from M-CSA entry 245;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

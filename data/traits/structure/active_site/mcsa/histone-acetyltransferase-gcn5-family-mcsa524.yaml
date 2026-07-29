@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.3.1.48
 - CHEBI:29969
@@ -384,4 +384,337 @@ definitions:
       p300/CBP-associating factor (PCAF) from Homo sapiens is a histone acetyltransferase. It catalyses the transfer of an acetyl group from acetyl-coenzyme A to the epsilon-amino group of specific lysine residues within histone amino termini. The acetylation of histone plays a crucial role in the transcriptional activation of specific target genes, and in transcriptional regulation. Eukaryotic GCN5 acetyltransferases influence diverse biological processes by acetylating histones and non-histone proteins and regulating chromatin and gene-specific transcription as part of multiprotein complexes.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of histone acetyltransferase (GCN5 family)
+  description: Stepwise mechanism transcribed from M-CSA entry 524 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: phe568
+    label: catalytic Phe568 (M-CSA/PDB numbering; UniProt residue 568)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q92830
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: phe573
+    label: catalytic Phe573 (M-CSA/PDB numbering; UniProt residue 573)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q92830
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu575
+    label: catalytic Glu575 (M-CSA/PDB numbering; UniProt residue 575)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q92830
+    description: 'M-CSA roles: proton acceptor.'
+  - node_id: ile576
+    label: catalytic Ile576 (M-CSA/PDB numbering; UniProt residue 576)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q92830
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: val577
+    label: catalytic Val577 (M-CSA/PDB numbering; UniProt residue 577)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q92830
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: cys579
+    label: catalytic Cys579 (M-CSA/PDB numbering; UniProt residue 579)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q92830
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: leu611
+    label: catalytic Leu611 (M-CSA/PDB numbering; UniProt residue 611)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q92830
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ile642
+    label: catalytic Ile642 (M-CSA/PDB numbering; UniProt residue 642)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q92830
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: tyr645
+    label: catalytic Tyr645 (M-CSA/PDB numbering; UniProt residue 645)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q92830
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: L-lysinium residue
+    node_type: CHEMICAL
+    grounding: CHEBI:29969
+  - node_id: reactant1
+    label: acetyl-CoA(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+  - node_id: product0
+    label: N(6)-acetyl-L-lysine residue
+    node_type: CHEMICAL
+    grounding: CHEBI:61930
+  - node_id: product1
+    label: coenzyme A(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu570 acts as a general base and abstracts a proton from the histone lysine via a water
+      molecule.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Nucleophilic attack by the histone lysine on the acetyl group of acetyl-CoA, forming
+      a negatively charged, tetrahedral intermediate
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The C-S bond to CoA breaks, leaving the acetyl group covalently bound to the histone.
+      The protonation of the sulphur atom is inferred.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: histone acetyltransferase (GCN5 family) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:524
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.630.30 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.630.30
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: histone acetyltransferase (GCN5 family) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.3.1.48
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/524/
+      snippet: Nucleophilic attack by the histone lysine on the acetyl group of acetyl-CoA, forming a
+        negatively charged, tetrahedral intermediate
+      notes: M-CSA entry 524, mechanism 1; M-CSA cites PMID:10393169, PMID:10430873, PMID:12447351, PMID:27258188;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/524/
+      snippet: The C-S bond to CoA breaks, leaving the acetyl group covalently bound to the histone. The
+        protonation of the sulphur atom is inferred.
+      notes: M-CSA entry 524, mechanism 1; M-CSA cites PMID:10393169, PMID:10430873, PMID:12447351, PMID:27258188;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/524/
+      snippet: Products
+      notes: M-CSA entry 524, mechanism 1; M-CSA cites PMID:10393169, PMID:10430873, PMID:12447351, PMID:27258188;
+        step 4
+  - subject: phe568
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Phe568 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/524/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 524, mechanism 1; M-CSA cites PMID:10393169, PMID:10430873, PMID:12447351, PMID:27258188;
+        M-CSA catalytic-residue roles for Phe568
+  - subject: phe573
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Phe573 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/524/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 524, mechanism 1; M-CSA cites PMID:10393169, PMID:10430873, PMID:12447351, PMID:27258188;
+        M-CSA catalytic-residue roles for Phe573
+  - subject: glu575
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu575 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/524/
+      snippet: proton acceptor
+      notes: M-CSA entry 524, mechanism 1; M-CSA cites PMID:10393169, PMID:10430873, PMID:12447351, PMID:27258188;
+        M-CSA catalytic-residue roles for Glu575
+  - subject: ile576
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ile576 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/524/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 524, mechanism 1; M-CSA cites PMID:10393169, PMID:10430873, PMID:12447351, PMID:27258188;
+        M-CSA catalytic-residue roles for Ile576
+  - subject: val577
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Val577 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/524/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 524, mechanism 1; M-CSA cites PMID:10393169, PMID:10430873, PMID:12447351, PMID:27258188;
+        M-CSA catalytic-residue roles for Val577
+  - subject: cys579
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys579 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/524/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 524, mechanism 1; M-CSA cites PMID:10393169, PMID:10430873, PMID:12447351, PMID:27258188;
+        M-CSA catalytic-residue roles for Cys579
+  - subject: leu611
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Leu611 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/524/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 524, mechanism 1; M-CSA cites PMID:10393169, PMID:10430873, PMID:12447351, PMID:27258188;
+        M-CSA catalytic-residue roles for Leu611
+  - subject: ile642
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ile642 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/524/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 524, mechanism 1; M-CSA cites PMID:10393169, PMID:10430873, PMID:12447351, PMID:27258188;
+        M-CSA catalytic-residue roles for Ile642
+  - subject: tyr645
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr645 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/524/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 524, mechanism 1; M-CSA cites PMID:10393169, PMID:10430873, PMID:12447351, PMID:27258188;
+        M-CSA catalytic-residue roles for Tyr645
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/524/
+      snippet: The hydrophobic residues Phe 563, Phe 568, Ile 571, Val 572, Leu 606, Ile 637 and Tyr 640
+        raise the pKa of Glu 570, facilitating proton transfer. Glu 570 acts as a general base by abstracting
+        a proton from the N atom of lysine of the substrate histone. This activates the N atom for nucleophilic
+        attack on the C atom of the acetyl carbonyl on acetyl-CoA, forming a negatively charged, tetrahedral
+        int
+      notes: M-CSA entry 524, mechanism 1; M-CSA cites PMID:10393169, PMID:10430873, PMID:12447351, PMID:27258188;
+        CATH domain 3.40.630.30 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/524/
+      snippet: The hydrophobic residues Phe 563, Phe 568, Ile 571, Val 572, Leu 606, Ile 637 and Tyr 640
+        raise the pKa of Glu 570, facilitating proton transfer. Glu 570 acts as a general base by abstracting
+        a proton from the N atom of lysine of the substrate histone. This activates the N atom for nucleophilic
+        attack on the C atom of the acetyl carbonyl on acetyl-CoA, forming a negatively charged, tetrahedral
+        int
+      notes: M-CSA entry 524, mechanism 1; M-CSA cites PMID:10393169, PMID:10430873, PMID:12447351, PMID:27258188;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/524/
+      snippet: The hydrophobic residues Phe 563, Phe 568, Ile 571, Val 572, Leu 606, Ile 637 and Tyr 640
+        raise the pKa of Glu 570, facilitating proton transfer. Glu 570 acts as a general base by abstracting
+        a proton from the N atom of lysine of the substrate histone. This activates the N atom for nucleophilic
+        attack on the C atom of the acetyl carbonyl on acetyl-CoA, forming a negatively charged, tetrahedral
+        int
+      notes: M-CSA entry 524, mechanism 1; M-CSA cites PMID:10393169, PMID:10430873, PMID:12447351, PMID:27258188;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/524/
+      snippet: The hydrophobic residues Phe 563, Phe 568, Ile 571, Val 572, Leu 606, Ile 637 and Tyr 640
+        raise the pKa of Glu 570, facilitating proton transfer. Glu 570 acts as a general base by abstracting
+        a proton from the N atom of lysine of the substrate histone. This activates the N atom for nucleophilic
+        attack on the C atom of the acetyl carbonyl on acetyl-CoA, forming a negatively charged, tetrahedral
+        int
+      notes: M-CSA entry 524, mechanism 1; M-CSA cites PMID:10393169, PMID:10430873, PMID:12447351, PMID:27258188;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/524/
+      snippet: The hydrophobic residues Phe 563, Phe 568, Ile 571, Val 572, Leu 606, Ile 637 and Tyr 640
+        raise the pKa of Glu 570, facilitating proton transfer. Glu 570 acts as a general base by abstracting
+        a proton from the N atom of lysine of the substrate histone. This activates the N atom for nucleophilic
+        attack on the C atom of the acetyl carbonyl on acetyl-CoA, forming a negatively charged, tetrahedral
+        int
+      notes: M-CSA entry 524, mechanism 1; M-CSA cites PMID:10393169, PMID:10430873, PMID:12447351, PMID:27258188;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/524/
+      snippet: The hydrophobic residues Phe 563, Phe 568, Ile 571, Val 572, Leu 606, Ile 637 and Tyr 640
+        raise the pKa of Glu 570, facilitating proton transfer. Glu 570 acts as a general base by abstracting
+        a proton from the N atom of lysine of the substrate histone. This activates the N atom for nucleophilic
+        attack on the C atom of the acetyl carbonyl on acetyl-CoA, forming a negatively charged, tetrahedral
+        int
+      notes: M-CSA entry 524, mechanism 1; M-CSA cites PMID:10393169, PMID:10430873, PMID:12447351, PMID:27258188;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/524/
+      snippet: The hydrophobic residues Phe 563, Phe 568, Ile 571, Val 572, Leu 606, Ile 637 and Tyr 640
+        raise the pKa of Glu 570, facilitating proton transfer. Glu 570 acts as a general base by abstracting
+        a proton from the N atom of lysine of the substrate histone. This activates the N atom for nucleophilic
+        attack on the C atom of the acetyl carbonyl on acetyl-CoA, forming a negatively charged, tetrahedral
+        int
+      notes: M-CSA entry 524, mechanism 1; M-CSA cites PMID:10393169, PMID:10430873, PMID:12447351, PMID:27258188;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (19 evidence-backed edges) transcribed from M-CSA entry 524;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

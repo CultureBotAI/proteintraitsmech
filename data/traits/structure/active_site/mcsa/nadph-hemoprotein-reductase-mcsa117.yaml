@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.6.2.4
 - CHEBI:57783
@@ -534,4 +534,396 @@ definitions:
       Rat NADPH-cytochrome P450 oxidoreductase (CYPOR) catalyses the transfer of electrons from NADPH to a range of cytochrome P450 proteins. Other electron acceptors include heme oxygenase, cytochrome b5 and fatty-acid elongase. It is a 78kDa protein and is attached to the cytoplasmic side of the endoplasmic reticulum and the outer membrane of the nuclear envelope by a hydrophobic N-terminal membrane anchor. The FAD and FMN containing domains are linked by a flexible peptide hinge and it is thought that CYPOR evolved after a fusion of genes encoding for a FMN-containing flavodoxin and a FAD- binding ferredoxin-NADP reductase.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of NADPH-hemoprotein reductase
+  description: Stepwise mechanism transcribed from M-CSA entry 117 (6 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: ser457
+    label: catalytic Ser457 (M-CSA/PDB numbering; UniProt residue 457)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00388
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor,
+      proton relay, radical stabiliser.'
+  - node_id: cys630
+    label: catalytic Cys630 (M-CSA/PDB numbering; UniProt residue 630)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00388
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor, proton acceptor, proton
+      donor, proton relay, steric role, van der waals interaction.'
+  - node_id: asp675
+    label: catalytic Asp675 (M-CSA/PDB numbering; UniProt residue 675)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00388
+    description: 'M-CSA roles: hydrogen bond acceptor, modifies pKa.'
+  - node_id: trp677
+    label: catalytic Trp677 (M-CSA/PDB numbering; UniProt residue 677)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00388
+    description: 'M-CSA roles: steric role.'
+  - node_id: reactant0
+    label: NADPH(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+  - node_id: reactant1
+    label: iron(3+)
+    node_type: CHEMICAL
+    grounding: CHEBI:29034
+  - node_id: product0
+    label: NADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+  - node_id: product1
+    label: iron(2+)
+    node_type: CHEMICAL
+    grounding: CHEBI:29033
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: NADP eliminates a hydride ion, which adds to FAD, with concomitant deprotonation of water
+      at the FAD N1. Cys630 is partially responsible for the proper orientation of the nicotinamide ring
+      by making a van der Waals contact with the C4 atom and promoting hydride transfer by stabilising
+      the transient carbocation formed upon release of the hydride ion. The nicotinamide ring of NADP<sup>+</sup>
+      is dis
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Water deprotonates the N1, initiating a single electron transfer from FAD to FMN, with
+      concomitant deprotonation of water at the FMN N5.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Water deprotonates Cys630, which deprotonates Ser457 which deprotonates FAD facilitating
+      the second single electron transfer from FAD to FMN. Ser457 stabilises the semiquinone form of FAD.
+      It has also been proposed that Ser457, in conjunction with Asp675 and Cys630, forms a hydrogen bond
+      network that may promote proton release from the semiquinone [PMID:11371558]. The identity of the
+      species accep
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: FMN transfers a single electron to the hemoprotein.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Water deprotonates the FMN, facilitating the transfer of the second single electron to
+      the hemoprotein.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: NADPH-hemoprotein reductase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:117
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.40.30.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.40.30.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: NADPH-hemoprotein reductase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.6.2.4
+  edges:
+  - subject: cys630
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys630 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/117/
+      snippet: NADP eliminates a hydride ion, which adds to FAD, with concomitant deprotonation of water
+        at the FAD N1. Cys630 is partially responsible for the proper orientation of the nicotinamide
+        ring by making a van der Waals contact with the C4 atom and promoting hydride transfer by stabilising
+        the transient carbocation formed upon release of the hydride ion. The nicotinamide ring of NADP<sup>+</sup>
+        is displaced by Trp677.
+      notes: M-CSA entry 117, mechanism 1; M-CSA cites PMID:11371558, PMID:12773143, PMID:18681889, PMID:19171935,
+        PMID:21265736, PMID:21345800, PMID:22982532, PMID:23332101, PMID:26307151, PMID:27189945, PMID:9237990;
+        step 1
+  - subject: trp677
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Trp677 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/117/
+      snippet: NADP eliminates a hydride ion, which adds to FAD, with concomitant deprotonation of water
+        at the FAD N1. Cys630 is partially responsible for the proper orientation of the nicotinamide
+        ring by making a van der Waals contact with the C4 atom and promoting hydride transfer by stabilising
+        the transient carbocation formed upon release of the hydride ion. The nicotinamide ring of NADP<sup>+</sup>
+        is displaced by Trp677.
+      notes: M-CSA entry 117, mechanism 1; M-CSA cites PMID:11371558, PMID:12773143, PMID:18681889, PMID:19171935,
+        PMID:21265736, PMID:21345800, PMID:22982532, PMID:23332101, PMID:26307151, PMID:27189945, PMID:9237990;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/117/
+      snippet: Water deprotonates the N1, initiating a single electron transfer from FAD to FMN, with
+        concomitant deprotonation of water at the FMN N5.
+      notes: M-CSA entry 117, mechanism 1; M-CSA cites PMID:11371558, PMID:12773143, PMID:18681889, PMID:19171935,
+        PMID:21265736, PMID:21345800, PMID:22982532, PMID:23332101, PMID:26307151, PMID:27189945, PMID:9237990;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/117/
+      snippet: Water deprotonates Cys630, which deprotonates Ser457 which deprotonates FAD facilitating
+        the second single electron transfer from FAD to FMN. Ser457 stabilises the semiquinone form of
+        FAD. It has also been proposed that Ser457, in conjunction with Asp675 and Cys630, forms a hydrogen
+        bond network that may promote proton release from the semiquinone [PMID:11371558]. The identity
+        of the species accepting this proton is unclear, and we assume water fulfils this role.
+      notes: M-CSA entry 117, mechanism 1; M-CSA cites PMID:11371558, PMID:12773143, PMID:18681889, PMID:19171935,
+        PMID:21265736, PMID:21345800, PMID:22982532, PMID:23332101, PMID:26307151, PMID:27189945, PMID:9237990;
+        step 3
+  - subject: ser457
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Ser457 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/117/
+      snippet: Water deprotonates Cys630, which deprotonates Ser457 which deprotonates FAD facilitating
+        the second single electron transfer from FAD to FMN. Ser457 stabilises the semiquinone form of
+        FAD. It has also been proposed that Ser457, in conjunction with Asp675 and Cys630, forms a hydrogen
+        bond network that may promote proton release from the semiquinone [PMID:11371558]. The identity
+        of the species accepting this proton is unclear, and we assume water fulfils this role.
+      notes: M-CSA entry 117, mechanism 1; M-CSA cites PMID:11371558, PMID:12773143, PMID:18681889, PMID:19171935,
+        PMID:21265736, PMID:21345800, PMID:22982532, PMID:23332101, PMID:26307151, PMID:27189945, PMID:9237990;
+        step 3
+  - subject: cys630
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Cys630 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/117/
+      snippet: Water deprotonates Cys630, which deprotonates Ser457 which deprotonates FAD facilitating
+        the second single electron transfer from FAD to FMN. Ser457 stabilises the semiquinone form of
+        FAD. It has also been proposed that Ser457, in conjunction with Asp675 and Cys630, forms a hydrogen
+        bond network that may promote proton release from the semiquinone [PMID:11371558]. The identity
+        of the species accepting this proton is unclear, and we assume water fulfils this role.
+      notes: M-CSA entry 117, mechanism 1; M-CSA cites PMID:11371558, PMID:12773143, PMID:18681889, PMID:19171935,
+        PMID:21265736, PMID:21345800, PMID:22982532, PMID:23332101, PMID:26307151, PMID:27189945, PMID:9237990;
+        step 3
+  - subject: asp675
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Asp675 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/117/
+      snippet: Water deprotonates Cys630, which deprotonates Ser457 which deprotonates FAD facilitating
+        the second single electron transfer from FAD to FMN. Ser457 stabilises the semiquinone form of
+        FAD. It has also been proposed that Ser457, in conjunction with Asp675 and Cys630, forms a hydrogen
+        bond network that may promote proton release from the semiquinone [PMID:11371558]. The identity
+        of the species accepting this proton is unclear, and we assume water fulfils this role.
+      notes: M-CSA entry 117, mechanism 1; M-CSA cites PMID:11371558, PMID:12773143, PMID:18681889, PMID:19171935,
+        PMID:21265736, PMID:21345800, PMID:22982532, PMID:23332101, PMID:26307151, PMID:27189945, PMID:9237990;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/117/
+      snippet: FMN transfers a single electron to the hemoprotein.
+      notes: M-CSA entry 117, mechanism 1; M-CSA cites PMID:11371558, PMID:12773143, PMID:18681889, PMID:19171935,
+        PMID:21265736, PMID:21345800, PMID:22982532, PMID:23332101, PMID:26307151, PMID:27189945, PMID:9237990;
+        step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/117/
+      snippet: Water deprotonates the FMN, facilitating the transfer of the second single electron to
+        the hemoprotein.
+      notes: M-CSA entry 117, mechanism 1; M-CSA cites PMID:11371558, PMID:12773143, PMID:18681889, PMID:19171935,
+        PMID:21265736, PMID:21345800, PMID:22982532, PMID:23332101, PMID:26307151, PMID:27189945, PMID:9237990;
+        step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/117/
+      snippet: Products.
+      notes: M-CSA entry 117, mechanism 1; M-CSA cites PMID:11371558, PMID:12773143, PMID:18681889, PMID:19171935,
+        PMID:21265736, PMID:21345800, PMID:22982532, PMID:23332101, PMID:26307151, PMID:27189945, PMID:9237990;
+        step 6
+  - subject: ser457
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser457 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/117/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor, proton relay,
+        radical stabiliser
+      notes: M-CSA entry 117, mechanism 1; M-CSA cites PMID:11371558, PMID:12773143, PMID:18681889, PMID:19171935,
+        PMID:21265736, PMID:21345800, PMID:22982532, PMID:23332101, PMID:26307151, PMID:27189945, PMID:9237990;
+        M-CSA catalytic-residue roles for Ser457
+  - subject: cys630
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys630 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/117/
+      snippet: electrostatic stabiliser, hydrogen bond donor, proton acceptor, proton donor, proton relay,
+        steric role, van der waals interaction
+      notes: M-CSA entry 117, mechanism 1; M-CSA cites PMID:11371558, PMID:12773143, PMID:18681889, PMID:19171935,
+        PMID:21265736, PMID:21345800, PMID:22982532, PMID:23332101, PMID:26307151, PMID:27189945, PMID:9237990;
+        M-CSA catalytic-residue roles for Cys630
+  - subject: asp675
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp675 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/117/
+      snippet: hydrogen bond acceptor, modifies pKa
+      notes: M-CSA entry 117, mechanism 1; M-CSA cites PMID:11371558, PMID:12773143, PMID:18681889, PMID:19171935,
+        PMID:21265736, PMID:21345800, PMID:22982532, PMID:23332101, PMID:26307151, PMID:27189945, PMID:9237990;
+        M-CSA catalytic-residue roles for Asp675
+  - subject: trp677
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp677 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/117/
+      snippet: steric role
+      notes: M-CSA entry 117, mechanism 1; M-CSA cites PMID:11371558, PMID:12773143, PMID:18681889, PMID:19171935,
+        PMID:21265736, PMID:21345800, PMID:22982532, PMID:23332101, PMID:26307151, PMID:27189945, PMID:9237990;
+        M-CSA catalytic-residue roles for Trp677
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/117/
+      snippet: The overall reaction is the oxidation of NADPH to NADP and the reduction of cytochrome
+        P450, or other protein substrate.  Both two-electron and four-electron reduced enzyme species
+        have been detected in vitro.  It is not yet known if CYPOR is reduced to the two-, three- or four-electron
+        form during catalytic turnover in vivo.  However, it has been proposed that the electron transfer
+        leading to the
+      notes: M-CSA entry 117, mechanism 1; M-CSA cites PMID:11371558, PMID:12773143, PMID:18681889, PMID:19171935,
+        PMID:21265736, PMID:21345800, PMID:22982532, PMID:23332101, PMID:26307151, PMID:27189945, PMID:9237990;
+        CATH domain 2.40.30.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/117/
+      snippet: The overall reaction is the oxidation of NADPH to NADP and the reduction of cytochrome
+        P450, or other protein substrate.  Both two-electron and four-electron reduced enzyme species
+        have been detected in vitro.  It is not yet known if CYPOR is reduced to the two-, three- or four-electron
+        form during catalytic turnover in vivo.  However, it has been proposed that the electron transfer
+        leading to the
+      notes: M-CSA entry 117, mechanism 1; M-CSA cites PMID:11371558, PMID:12773143, PMID:18681889, PMID:19171935,
+        PMID:21265736, PMID:21345800, PMID:22982532, PMID:23332101, PMID:26307151, PMID:27189945, PMID:9237990;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/117/
+      snippet: The overall reaction is the oxidation of NADPH to NADP and the reduction of cytochrome
+        P450, or other protein substrate.  Both two-electron and four-electron reduced enzyme species
+        have been detected in vitro.  It is not yet known if CYPOR is reduced to the two-, three- or four-electron
+        form during catalytic turnover in vivo.  However, it has been proposed that the electron transfer
+        leading to the
+      notes: M-CSA entry 117, mechanism 1; M-CSA cites PMID:11371558, PMID:12773143, PMID:18681889, PMID:19171935,
+        PMID:21265736, PMID:21345800, PMID:22982532, PMID:23332101, PMID:26307151, PMID:27189945, PMID:9237990;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/117/
+      snippet: The overall reaction is the oxidation of NADPH to NADP and the reduction of cytochrome
+        P450, or other protein substrate.  Both two-electron and four-electron reduced enzyme species
+        have been detected in vitro.  It is not yet known if CYPOR is reduced to the two-, three- or four-electron
+        form during catalytic turnover in vivo.  However, it has been proposed that the electron transfer
+        leading to the
+      notes: M-CSA entry 117, mechanism 1; M-CSA cites PMID:11371558, PMID:12773143, PMID:18681889, PMID:19171935,
+        PMID:21265736, PMID:21345800, PMID:22982532, PMID:23332101, PMID:26307151, PMID:27189945, PMID:9237990;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/117/
+      snippet: The overall reaction is the oxidation of NADPH to NADP and the reduction of cytochrome
+        P450, or other protein substrate.  Both two-electron and four-electron reduced enzyme species
+        have been detected in vitro.  It is not yet known if CYPOR is reduced to the two-, three- or four-electron
+        form during catalytic turnover in vivo.  However, it has been proposed that the electron transfer
+        leading to the
+      notes: M-CSA entry 117, mechanism 1; M-CSA cites PMID:11371558, PMID:12773143, PMID:18681889, PMID:19171935,
+        PMID:21265736, PMID:21345800, PMID:22982532, PMID:23332101, PMID:26307151, PMID:27189945, PMID:9237990;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/117/
+      snippet: The overall reaction is the oxidation of NADPH to NADP and the reduction of cytochrome
+        P450, or other protein substrate.  Both two-electron and four-electron reduced enzyme species
+        have been detected in vitro.  It is not yet known if CYPOR is reduced to the two-, three- or four-electron
+        form during catalytic turnover in vivo.  However, it has been proposed that the electron transfer
+        leading to the
+      notes: M-CSA entry 117, mechanism 1; M-CSA cites PMID:11371558, PMID:12773143, PMID:18681889, PMID:19171935,
+        PMID:21265736, PMID:21345800, PMID:22982532, PMID:23332101, PMID:26307151, PMID:27189945, PMID:9237990;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/117/
+      snippet: The overall reaction is the oxidation of NADPH to NADP and the reduction of cytochrome
+        P450, or other protein substrate.  Both two-electron and four-electron reduced enzyme species
+        have been detected in vitro.  It is not yet known if CYPOR is reduced to the two-, three- or four-electron
+        form during catalytic turnover in vivo.  However, it has been proposed that the electron transfer
+        leading to the
+      notes: M-CSA entry 117, mechanism 1; M-CSA cites PMID:11371558, PMID:12773143, PMID:18681889, PMID:19171935,
+        PMID:21265736, PMID:21345800, PMID:22982532, PMID:23332101, PMID:26307151, PMID:27189945, PMID:9237990;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (21 evidence-backed edges) transcribed from M-CSA entry 117;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

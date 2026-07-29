@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.1.3.20
 - CHEBI:59967
@@ -322,4 +322,202 @@ definitions:
       ADP -L-glycero-D-mannoheptose 6-epimerase (AGME) is classified as a member of the short-chain dehydrogenase/reductase (SDR) superfamily, on the grounds of its high structural similarity with UDP-galactose epimerase and its positioning of conserved catalytic residues. AGME catalyses the interconversion between ADP-D-glycero-D-mannoheptose and ADP-L-glycero-D-mannoheptose, the last step in the biosynthesis of the precursor of L-glycero-D-mannoheptose. The enzyme is an NADP dependent epimerase which shows a diminished activity with NAD.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of ADP-glyceromanno-heptose 6-epimerase
+  description: Stepwise mechanism transcribed from M-CSA entry 557 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: ser116
+    label: catalytic Ser116 (M-CSA/PDB numbering; UniProt residue 116)
+    node_type: RESIDUE
+    grounding: UniProtKB:P67910
+    description: 'M-CSA roles: electrostatic stabiliser, proton acceptor, proton donor, proton relay.'
+  - node_id: tyr140
+    label: catalytic Tyr140 (M-CSA/PDB numbering; UniProt residue 140)
+    node_type: RESIDUE
+    grounding: UniProtKB:P67910
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: lys178
+    label: catalytic Lys178 (M-CSA/PDB numbering; UniProt residue 178)
+    node_type: RESIDUE
+    grounding: UniProtKB:P67910
+    description: 'M-CSA roles: electrostatic stabiliser, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: ADP-D-glycero-beta-D-manno-heptose(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:59967
+  - node_id: product0
+    label: ADP-L-glycero-beta-D-manno-heptose(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:61506
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Tyr140 abstracts a proton from the sugar substrate via Ser116. This in turn eliminates
+      the hydride to NADP.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The newly formed carbonyl group rotates in the active site and the NADP returns the hydride
+      to the intermediate with concomitant deprotonation of Tyr140.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: ADP-glyceromanno-heptose 6-epimerase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:557
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.720 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.720
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: ADP-glyceromanno-heptose 6-epimerase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.1.3.20
+  edges:
+  - subject: ser116
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser116 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/557/
+      snippet: Tyr140 abstracts a proton from the sugar substrate via Ser116. This in turn eliminates
+        the hydride to NADP.
+      notes: M-CSA entry 557, mechanism 2; M-CSA cites PMID:20506248; step 1
+  - subject: tyr140
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr140 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/557/
+      snippet: Tyr140 abstracts a proton from the sugar substrate via Ser116. This in turn eliminates
+        the hydride to NADP.
+      notes: M-CSA entry 557, mechanism 2; M-CSA cites PMID:20506248; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/557/
+      snippet: The newly formed carbonyl group rotates in the active site and the NADP returns the hydride
+        to the intermediate with concomitant deprotonation of Tyr140.
+      notes: M-CSA entry 557, mechanism 2; M-CSA cites PMID:20506248; step 2
+  - subject: tyr140
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Tyr140 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/557/
+      snippet: The newly formed carbonyl group rotates in the active site and the NADP returns the hydride
+        to the intermediate with concomitant deprotonation of Tyr140.
+      notes: M-CSA entry 557, mechanism 2; M-CSA cites PMID:20506248; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/557/
+      snippet: Products
+      notes: M-CSA entry 557, mechanism 2; M-CSA cites PMID:20506248; step 3
+  - subject: ser116
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser116 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/557/
+      snippet: electrostatic stabiliser, proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 557, mechanism 2; M-CSA cites PMID:20506248; M-CSA catalytic-residue roles for
+        Ser116
+  - subject: tyr140
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr140 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/557/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 557, mechanism 2; M-CSA cites PMID:20506248; M-CSA catalytic-residue roles for
+        Tyr140
+  - subject: lys178
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys178 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/557/
+      snippet: electrostatic stabiliser, proton acceptor, proton donor
+      notes: M-CSA entry 557, mechanism 2; M-CSA cites PMID:20506248; M-CSA catalytic-residue roles for
+        Lys178
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/557/
+      snippet: 'This is the one-base mechanism in which the tyrosine acts as the only general acid/base.
+        The basic mechanism is identical to the two-base proposal: the enzyme bound NAD+ coenzyme accepts
+        a hydride from the substrate''s C-6. Hydride transfer is promoted by deprotonation at C6-OH. The
+        resulting keto intermediate flips in the active site to allow return of the hydride from NADH
+        to the other face of th'
+      notes: M-CSA entry 557, mechanism 2; M-CSA cites PMID:20506248; CATH domain 3.40.50.720 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/557/
+      snippet: 'This is the one-base mechanism in which the tyrosine acts as the only general acid/base.
+        The basic mechanism is identical to the two-base proposal: the enzyme bound NAD+ coenzyme accepts
+        a hydride from the substrate''s C-6. Hydride transfer is promoted by deprotonation at C6-OH. The
+        resulting keto intermediate flips in the active site to allow return of the hydride from NADH
+        to the other face of th'
+      notes: M-CSA entry 557, mechanism 2; M-CSA cites PMID:20506248; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/557/
+      snippet: 'This is the one-base mechanism in which the tyrosine acts as the only general acid/base.
+        The basic mechanism is identical to the two-base proposal: the enzyme bound NAD+ coenzyme accepts
+        a hydride from the substrate''s C-6. Hydride transfer is promoted by deprotonation at C6-OH. The
+        resulting keto intermediate flips in the active site to allow return of the hydride from NADH
+        to the other face of th'
+      notes: M-CSA entry 557, mechanism 2; M-CSA cites PMID:20506248; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/557/
+      snippet: 'This is the one-base mechanism in which the tyrosine acts as the only general acid/base.
+        The basic mechanism is identical to the two-base proposal: the enzyme bound NAD+ coenzyme accepts
+        a hydride from the substrate''s C-6. Hydride transfer is promoted by deprotonation at C6-OH. The
+        resulting keto intermediate flips in the active site to allow return of the hydride from NADH
+        to the other face of th'
+      notes: M-CSA entry 557, mechanism 2; M-CSA cites PMID:20506248; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (12 evidence-backed edges) transcribed from M-CSA entry 557;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

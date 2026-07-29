@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.7.7.6
 - CHEBI:61557
@@ -1233,4 +1233,265 @@ definitions:
       DNA-dependent RNA polymerases bind to promoter DNA in transcription initiation, opens the duplex strands, and can convert from initiation to elongation phase conformation. More specifically, RNA polymerase II transcribes mRNA in the nucleus of eukaryotes, with closely related enzymes in bacteria and some viruses. RNA synthesis occurs through cycles of repeated ribonucleotide incorporation. While RNAPII is apart of a family containing multiple subunits, there are also single subunit RNAPs such as in the T7 bacteriophage which display high similarity to DNA polymerases.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of DNA-directed RNA polymerase
+  description: Stepwise mechanism transcribed from M-CSA entry 788 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: asp481
+    label: catalytic Asp481 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04050
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp483
+    label: catalytic Asp483 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04050
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp485
+    label: catalytic Asp485 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04050
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp837
+    label: catalytic Asp837 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04050
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his1085
+    label: catalytic His1085 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04050
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: nucleoside triphosphate(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:61557
+  - node_id: reactant1
+    label: RNA (poly(A))
+    node_type: CHEMICAL
+    grounding: CHEBI:8756
+  - node_id: product0
+    label: diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+  - node_id: product1
+    label: RNA polyanion
+    node_type: CHEMICAL
+    grounding: CHEBI:83400
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Free hydroxyl from bulk sulvent acts as a general base and deprotonates the ribose sugar's
+      3' OH. This increases the 3'OH nucleophilicity to attack the alpha phosphate on the NTP. The pyrophosphate
+      leaving group is protonated by His1085.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: His1085 is protonated, ready for another round of catalysis.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: DNA-directed RNA polymerase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:788
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.40.40.20 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.40.40.20
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: DNA-directed RNA polymerase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.7.7.6
+  edges:
+  - subject: his1085
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His1085 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/788/
+      snippet: Free hydroxyl from bulk sulvent acts as a general base and deprotonates the ribose sugar's
+        3' OH. This increases the 3'OH nucleophilicity to attack the alpha phosphate on the NTP. The pyrophosphate
+        leaving group is protonated by His1085.
+      notes: M-CSA entry 788, mechanism 1; M-CSA cites PMID:17129781, PMID:22982365, PMID:26606364, PMID:28607053;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/788/
+      snippet: His1085 is protonated, ready for another round of catalysis.
+      notes: M-CSA entry 788, mechanism 1; M-CSA cites PMID:17129781, PMID:22982365, PMID:26606364, PMID:28607053;
+        step 2
+  - subject: his1085
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His1085 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/788/
+      snippet: His1085 is protonated, ready for another round of catalysis.
+      notes: M-CSA entry 788, mechanism 1; M-CSA cites PMID:17129781, PMID:22982365, PMID:26606364, PMID:28607053;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/788/
+      snippet: Products.
+      notes: M-CSA entry 788, mechanism 1; M-CSA cites PMID:17129781, PMID:22982365, PMID:26606364, PMID:28607053;
+        step 3
+  - subject: asp481
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp481 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/788/
+      snippet: metal ligand
+      notes: M-CSA entry 788, mechanism 1; M-CSA cites PMID:17129781, PMID:22982365, PMID:26606364, PMID:28607053;
+        M-CSA catalytic-residue roles for Asp481
+  - subject: asp483
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp483 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/788/
+      snippet: metal ligand
+      notes: M-CSA entry 788, mechanism 1; M-CSA cites PMID:17129781, PMID:22982365, PMID:26606364, PMID:28607053;
+        M-CSA catalytic-residue roles for Asp483
+  - subject: asp485
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp485 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/788/
+      snippet: metal ligand
+      notes: M-CSA entry 788, mechanism 1; M-CSA cites PMID:17129781, PMID:22982365, PMID:26606364, PMID:28607053;
+        M-CSA catalytic-residue roles for Asp485
+  - subject: asp837
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp837 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/788/
+      snippet: metal ligand
+      notes: M-CSA entry 788, mechanism 1; M-CSA cites PMID:17129781, PMID:22982365, PMID:26606364, PMID:28607053;
+        M-CSA catalytic-residue roles for Asp837
+  - subject: his1085
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His1085 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/788/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 788, mechanism 1; M-CSA cites PMID:17129781, PMID:22982365, PMID:26606364, PMID:28607053;
+        M-CSA catalytic-residue roles for His1085
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/788/
+      snippet: RNA polymerases catalyse the nucleophilic attack of a bound nucleoside 5'-triphosphate
+        by the 3'-hydroxyl of an RNA primer, resulting in the incorporation of a nucleoside monophosphate
+        into RNA and the release of pyrophosphate. This is thought to occur using two-metal catalysis.
+        In RNA polymerase II, two magnesium ions are coordinated by four aspartates (3'OH of RNA also
+        proposed to weakly coordin
+      notes: M-CSA entry 788, mechanism 1; M-CSA cites PMID:17129781, PMID:22982365, PMID:26606364, PMID:28607053;
+        CATH domain 2.40.40.20 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/788/
+      snippet: RNA polymerases catalyse the nucleophilic attack of a bound nucleoside 5'-triphosphate
+        by the 3'-hydroxyl of an RNA primer, resulting in the incorporation of a nucleoside monophosphate
+        into RNA and the release of pyrophosphate. This is thought to occur using two-metal catalysis.
+        In RNA polymerase II, two magnesium ions are coordinated by four aspartates (3'OH of RNA also
+        proposed to weakly coordin
+      notes: M-CSA entry 788, mechanism 1; M-CSA cites PMID:17129781, PMID:22982365, PMID:26606364, PMID:28607053;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/788/
+      snippet: RNA polymerases catalyse the nucleophilic attack of a bound nucleoside 5'-triphosphate
+        by the 3'-hydroxyl of an RNA primer, resulting in the incorporation of a nucleoside monophosphate
+        into RNA and the release of pyrophosphate. This is thought to occur using two-metal catalysis.
+        In RNA polymerase II, two magnesium ions are coordinated by four aspartates (3'OH of RNA also
+        proposed to weakly coordin
+      notes: M-CSA entry 788, mechanism 1; M-CSA cites PMID:17129781, PMID:22982365, PMID:26606364, PMID:28607053;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/788/
+      snippet: RNA polymerases catalyse the nucleophilic attack of a bound nucleoside 5'-triphosphate
+        by the 3'-hydroxyl of an RNA primer, resulting in the incorporation of a nucleoside monophosphate
+        into RNA and the release of pyrophosphate. This is thought to occur using two-metal catalysis.
+        In RNA polymerase II, two magnesium ions are coordinated by four aspartates (3'OH of RNA also
+        proposed to weakly coordin
+      notes: M-CSA entry 788, mechanism 1; M-CSA cites PMID:17129781, PMID:22982365, PMID:26606364, PMID:28607053;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/788/
+      snippet: RNA polymerases catalyse the nucleophilic attack of a bound nucleoside 5'-triphosphate
+        by the 3'-hydroxyl of an RNA primer, resulting in the incorporation of a nucleoside monophosphate
+        into RNA and the release of pyrophosphate. This is thought to occur using two-metal catalysis.
+        In RNA polymerase II, two magnesium ions are coordinated by four aspartates (3'OH of RNA also
+        proposed to weakly coordin
+      notes: M-CSA entry 788, mechanism 1; M-CSA cites PMID:17129781, PMID:22982365, PMID:26606364, PMID:28607053;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/788/
+      snippet: RNA polymerases catalyse the nucleophilic attack of a bound nucleoside 5'-triphosphate
+        by the 3'-hydroxyl of an RNA primer, resulting in the incorporation of a nucleoside monophosphate
+        into RNA and the release of pyrophosphate. This is thought to occur using two-metal catalysis.
+        In RNA polymerase II, two magnesium ions are coordinated by four aspartates (3'OH of RNA also
+        proposed to weakly coordin
+      notes: M-CSA entry 788, mechanism 1; M-CSA cites PMID:17129781, PMID:22982365, PMID:26606364, PMID:28607053;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 788;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.3.1.94
 - CHEBI:X00672
@@ -1151,4 +1151,268 @@ definitions:
       Thioesterase domain of 6-deoxyerythronolide B synthase, a polyketide synthase, catalyses the cyclisation and release of 6-deoxyerythronolide B via lactonisation. 6-deoxyerythronolide B is the macrocyclic core of the antibiotic erythromycin
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 6-deoxyerythronolide-B synthase
+  description: Stepwise mechanism transcribed from M-CSA entry 602 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: ser142
+    label: catalytic Ser142 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q03133
+    description: 'M-CSA roles: covalently attached, nucleofuge, nucleophile, proton acceptor, proton donor.'
+  - node_id: ala143
+    label: catalytic Ala143 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q03133
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp169
+    label: catalytic Asp169 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q03133
+    description: 'M-CSA roles: electrostatic stabiliser, modifies pKa.'
+  - node_id: his259
+    label: catalytic His259 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q03133
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: 6-deoxyerythronolide B linear precursor
+    node_type: CHEMICAL
+    grounding: CHEBI:X00672
+  - node_id: product0
+    label: coenzyme A(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+  - node_id: product1
+    label: 6-deoxyerythronolide B
+    node_type: CHEMICAL
+    grounding: CHEBI:16089
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His259 deprotonates Ser142 which activates it for nucleophilic attack on the C1 carbonyl
+      carbon.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The oxyanion collapse resulting in the elimination of CoA which will accept a proton
+      from the C13 OH
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The deprotonated C11 oxygen then nucleophilically attacks the C1 carbonyl carbon.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The oxyanion intiates an elimination which results in the cleavage of the acyl-enzyme
+      bond and the released Ser142 will then accept a proton from His259.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Product
+  - node_id: active_site
+    label: 6-deoxyerythronolide-B synthase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:602
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1820 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1820
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: 6-deoxyerythronolide-B synthase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.3.1.94
+  edges:
+  - subject: ser142
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser142 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/602/
+      snippet: His259 deprotonates Ser142 which activates it for nucleophilic attack on the C1 carbonyl
+        carbon.
+      notes: M-CSA entry 602, mechanism 1; M-CSA cites PMID:11752428, PMID:27266330; step 1
+  - subject: his259
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His259 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/602/
+      snippet: His259 deprotonates Ser142 which activates it for nucleophilic attack on the C1 carbonyl
+        carbon.
+      notes: M-CSA entry 602, mechanism 1; M-CSA cites PMID:11752428, PMID:27266330; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/602/
+      snippet: The oxyanion collapse resulting in the elimination of CoA which will accept a proton from
+        the C13 OH
+      notes: M-CSA entry 602, mechanism 1; M-CSA cites PMID:11752428, PMID:27266330; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/602/
+      snippet: The deprotonated C11 oxygen then nucleophilically attacks the C1 carbonyl carbon.
+      notes: M-CSA entry 602, mechanism 1; M-CSA cites PMID:11752428, PMID:27266330; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/602/
+      snippet: The oxyanion intiates an elimination which results in the cleavage of the acyl-enzyme bond
+        and the released Ser142 will then accept a proton from His259.
+      notes: M-CSA entry 602, mechanism 1; M-CSA cites PMID:11752428, PMID:27266330; step 4
+  - subject: ser142
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Ser142 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/602/
+      snippet: The oxyanion intiates an elimination which results in the cleavage of the acyl-enzyme bond
+        and the released Ser142 will then accept a proton from His259.
+      notes: M-CSA entry 602, mechanism 1; M-CSA cites PMID:11752428, PMID:27266330; step 4
+  - subject: his259
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: His259 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/602/
+      snippet: The oxyanion intiates an elimination which results in the cleavage of the acyl-enzyme bond
+        and the released Ser142 will then accept a proton from His259.
+      notes: M-CSA entry 602, mechanism 1; M-CSA cites PMID:11752428, PMID:27266330; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/602/
+      snippet: Product
+      notes: M-CSA entry 602, mechanism 1; M-CSA cites PMID:11752428, PMID:27266330; step 5
+  - subject: ser142
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser142 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/602/
+      snippet: covalently attached, nucleofuge, nucleophile, proton acceptor, proton donor
+      notes: M-CSA entry 602, mechanism 1; M-CSA cites PMID:11752428, PMID:27266330; M-CSA catalytic-residue
+        roles for Ser142
+  - subject: ala143
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ala143 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/602/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 602, mechanism 1; M-CSA cites PMID:11752428, PMID:27266330; M-CSA catalytic-residue
+        roles for Ala143
+  - subject: asp169
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp169 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/602/
+      snippet: electrostatic stabiliser, modifies pKa
+      notes: M-CSA entry 602, mechanism 1; M-CSA cites PMID:11752428, PMID:27266330; M-CSA catalytic-residue
+        roles for Asp169
+  - subject: his259
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His259 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/602/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 602, mechanism 1; M-CSA cites PMID:11752428, PMID:27266330; M-CSA catalytic-residue
+        roles for His259
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/602/
+      snippet: The catalytic triad consists of Asp169, His259 and Ser142. His259, stabilised by Asp-169,
+        acts as a base that deprotonates Ser-142, as it attacks the ACP6-bound thioester substrate, to
+        yield an acyl-O-serine intermediate. The NH of Ala-143 may serve as the oxyanion stabilising residue.
+        The enzyme-bound intermediate is subsequently attacked by a hydroxyl group on the polyketide chain.
+      notes: M-CSA entry 602, mechanism 1; M-CSA cites PMID:11752428, PMID:27266330; CATH domain 3.40.50.1820
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/602/
+      snippet: The catalytic triad consists of Asp169, His259 and Ser142. His259, stabilised by Asp-169,
+        acts as a base that deprotonates Ser-142, as it attacks the ACP6-bound thioester substrate, to
+        yield an acyl-O-serine intermediate. The NH of Ala-143 may serve as the oxyanion stabilising residue.
+        The enzyme-bound intermediate is subsequently attacked by a hydroxyl group on the polyketide chain.
+      notes: M-CSA entry 602, mechanism 1; M-CSA cites PMID:11752428, PMID:27266330; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/602/
+      snippet: The catalytic triad consists of Asp169, His259 and Ser142. His259, stabilised by Asp-169,
+        acts as a base that deprotonates Ser-142, as it attacks the ACP6-bound thioester substrate, to
+        yield an acyl-O-serine intermediate. The NH of Ala-143 may serve as the oxyanion stabilising residue.
+        The enzyme-bound intermediate is subsequently attacked by a hydroxyl group on the polyketide chain.
+      notes: M-CSA entry 602, mechanism 1; M-CSA cites PMID:11752428, PMID:27266330; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/602/
+      snippet: The catalytic triad consists of Asp169, His259 and Ser142. His259, stabilised by Asp-169,
+        acts as a base that deprotonates Ser-142, as it attacks the ACP6-bound thioester substrate, to
+        yield an acyl-O-serine intermediate. The NH of Ala-143 may serve as the oxyanion stabilising residue.
+        The enzyme-bound intermediate is subsequently attacked by a hydroxyl group on the polyketide chain.
+      notes: M-CSA entry 602, mechanism 1; M-CSA cites PMID:11752428, PMID:27266330; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/602/
+      snippet: The catalytic triad consists of Asp169, His259 and Ser142. His259, stabilised by Asp-169,
+        acts as a base that deprotonates Ser-142, as it attacks the ACP6-bound thioester substrate, to
+        yield an acyl-O-serine intermediate. The NH of Ala-143 may serve as the oxyanion stabilising residue.
+        The enzyme-bound intermediate is subsequently attacked by a hydroxyl group on the polyketide chain.
+      notes: M-CSA entry 602, mechanism 1; M-CSA cites PMID:11752428, PMID:27266330; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (17 evidence-backed edges) transcribed from M-CSA entry 602;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

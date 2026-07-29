@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.1.-
 - CHEBI:30879
@@ -235,4 +235,294 @@ definitions:
       This esterase enzyme is secreted by the bacterium Streptomyces scabies, a causal agent of the potato scab decease. Invasion into the plant host is brought about by the liplytic action of the secreted esterase, which is presumed to hydrolyse specific ester bonds within the suberin lipid which covers the plant tubers. Although the esterase possesses a catalytic triad similar to that of other serine hydrolases, the structure remains unique among known proteins. It is the first example of a naturally occurring enzyme in which a neutral hydrogen bond acceptor, a main chain carbonyl, replaces a carboxylic acid within the triad.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of esterase (estA)
+  description: Stepwise mechanism transcribed from M-CSA entry 556 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +39).
+  nodes:
+  - node_id: ser14
+    label: catalytic Ser14 (M-CSA/PDB numbering; UniProt residue 53)
+    node_type: RESIDUE
+    grounding: UniProtKB:P22266
+    description: 'M-CSA roles: electrostatic stabiliser, nucleofuge, nucleophile, proton acceptor, proton
+      donor.'
+  - node_id: gly66
+    label: catalytic Gly66 (M-CSA/PDB numbering; UniProt residue 105)
+    node_type: RESIDUE
+    grounding: UniProtKB:P22266
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asn106
+    label: catalytic Asn106 (M-CSA/PDB numbering; UniProt residue 145)
+    node_type: RESIDUE
+    grounding: UniProtKB:P22266
+    description: 'M-CSA roles: electrostatic stabiliser, modifies pKa.'
+  - node_id: trp280
+    label: catalytic Trp280 (M-CSA/PDB numbering; UniProt residue 319)
+    node_type: RESIDUE
+    grounding: UniProtKB:P22266
+  - node_id: his283
+    label: catalytic His283 (M-CSA/PDB numbering; UniProt residue 322)
+    node_type: RESIDUE
+    grounding: UniProtKB:P22266
+    description: 'M-CSA roles: electrostatic stabiliser, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: carboxylic ester
+    node_type: CHEMICAL
+    grounding: CHEBI:33308
+  - node_id: product0
+    label: alcohol
+    node_type: CHEMICAL
+    grounding: CHEBI:30879
+  - node_id: product1
+    label: carboxylic acid
+    node_type: CHEMICAL
+    grounding: CHEBI:33575
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His283 abstracts a proton from Ser14, which initates a nucleophilic attack on the carbonyl
+      group of the substrate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The tetrahedral intermediate collapses liberating the alcohol product.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: His283 abstracts a proton from a water molecule, which initiates a nucleophilic attack
+      on the carbonyl carbon of the covalent enzyme-substrate intermediate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The tetrahedral intermediate collapses eliminating the serine with concomitant deprotonation
+      of His283 to regenerate the active site and final product.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: esterase (estA) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:556
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1110 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1110
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: esterase (estA) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.1.-
+  edges:
+  - subject: ser14
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser14 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/556/
+      snippet: His283 abstracts a proton from Ser14, which initates a nucleophilic attack on the carbonyl
+        group of the substrate.
+      notes: M-CSA entry 556, mechanism 1; M-CSA cites PMID:7773790, PMID:8920191; step 1
+  - subject: his283
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His283 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/556/
+      snippet: His283 abstracts a proton from Ser14, which initates a nucleophilic attack on the carbonyl
+        group of the substrate.
+      notes: M-CSA entry 556, mechanism 1; M-CSA cites PMID:7773790, PMID:8920191; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/556/
+      snippet: The tetrahedral intermediate collapses liberating the alcohol product.
+      notes: M-CSA entry 556, mechanism 1; M-CSA cites PMID:7773790, PMID:8920191; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/556/
+      snippet: His283 abstracts a proton from a water molecule, which initiates a nucleophilic attack
+        on the carbonyl carbon of the covalent enzyme-substrate intermediate.
+      notes: M-CSA entry 556, mechanism 1; M-CSA cites PMID:7773790, PMID:8920191; step 3
+  - subject: his283
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His283 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/556/
+      snippet: His283 abstracts a proton from a water molecule, which initiates a nucleophilic attack
+        on the carbonyl carbon of the covalent enzyme-substrate intermediate.
+      notes: M-CSA entry 556, mechanism 1; M-CSA cites PMID:7773790, PMID:8920191; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/556/
+      snippet: The tetrahedral intermediate collapses eliminating the serine with concomitant deprotonation
+        of His283 to regenerate the active site and final product.
+      notes: M-CSA entry 556, mechanism 1; M-CSA cites PMID:7773790, PMID:8920191; step 4
+  - subject: his283
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: His283 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/556/
+      snippet: The tetrahedral intermediate collapses eliminating the serine with concomitant deprotonation
+        of His283 to regenerate the active site and final product.
+      notes: M-CSA entry 556, mechanism 1; M-CSA cites PMID:7773790, PMID:8920191; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/556/
+      snippet: Products
+      notes: M-CSA entry 556, mechanism 1; M-CSA cites PMID:7773790, PMID:8920191; step 5
+  - subject: ser14
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser14 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/556/
+      snippet: electrostatic stabiliser, nucleofuge, nucleophile, proton acceptor, proton donor
+      notes: M-CSA entry 556, mechanism 1; M-CSA cites PMID:7773790, PMID:8920191; M-CSA catalytic-residue
+        roles for Ser14
+  - subject: gly66
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly66 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/556/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 556, mechanism 1; M-CSA cites PMID:7773790, PMID:8920191; M-CSA catalytic-residue
+        roles for Gly66
+  - subject: asn106
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn106 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/556/
+      snippet: electrostatic stabiliser, modifies pKa
+      notes: M-CSA entry 556, mechanism 1; M-CSA cites PMID:7773790, PMID:8920191; M-CSA catalytic-residue
+        roles for Asn106
+  - subject: trp280
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp280 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/556/
+      snippet: A nucleophilic residue attacks at the substrate carbonyl, forming a tetrahedral intermediate
+        (the anionic transition state being stabilised by an oxyanion hole). This collapses to give an
+        acyl-enzyme intermediate, which is hydrolysed to yield the free residue and substrate.
+      notes: M-CSA entry 556, mechanism 1; M-CSA cites PMID:7773790, PMID:8920191; M-CSA catalytic-residue
+        roles for Trp280
+  - subject: his283
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His283 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/556/
+      snippet: electrostatic stabiliser, proton acceptor, proton donor
+      notes: M-CSA entry 556, mechanism 1; M-CSA cites PMID:7773790, PMID:8920191; M-CSA catalytic-residue
+        roles for His283
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/556/
+      snippet: A nucleophilic residue attacks at the substrate carbonyl, forming a tetrahedral intermediate
+        (the anionic transition state being stabilised by an oxyanion hole). This collapses to give an
+        acyl-enzyme intermediate, which is hydrolysed to yield the free residue and substrate.
+      notes: M-CSA entry 556, mechanism 1; M-CSA cites PMID:7773790, PMID:8920191; CATH domain 3.40.50.1110
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/556/
+      snippet: A nucleophilic residue attacks at the substrate carbonyl, forming a tetrahedral intermediate
+        (the anionic transition state being stabilised by an oxyanion hole). This collapses to give an
+        acyl-enzyme intermediate, which is hydrolysed to yield the free residue and substrate.
+      notes: M-CSA entry 556, mechanism 1; M-CSA cites PMID:7773790, PMID:8920191; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/556/
+      snippet: A nucleophilic residue attacks at the substrate carbonyl, forming a tetrahedral intermediate
+        (the anionic transition state being stabilised by an oxyanion hole). This collapses to give an
+        acyl-enzyme intermediate, which is hydrolysed to yield the free residue and substrate.
+      notes: M-CSA entry 556, mechanism 1; M-CSA cites PMID:7773790, PMID:8920191; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/556/
+      snippet: A nucleophilic residue attacks at the substrate carbonyl, forming a tetrahedral intermediate
+        (the anionic transition state being stabilised by an oxyanion hole). This collapses to give an
+        acyl-enzyme intermediate, which is hydrolysed to yield the free residue and substrate.
+      notes: M-CSA entry 556, mechanism 1; M-CSA cites PMID:7773790, PMID:8920191; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/556/
+      snippet: A nucleophilic residue attacks at the substrate carbonyl, forming a tetrahedral intermediate
+        (the anionic transition state being stabilised by an oxyanion hole). This collapses to give an
+        acyl-enzyme intermediate, which is hydrolysed to yield the free residue and substrate.
+      notes: M-CSA entry 556, mechanism 1; M-CSA cites PMID:7773790, PMID:8920191; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/556/
+      snippet: A nucleophilic residue attacks at the substrate carbonyl, forming a tetrahedral intermediate
+        (the anionic transition state being stabilised by an oxyanion hole). This collapses to give an
+        acyl-enzyme intermediate, which is hydrolysed to yield the free residue and substrate.
+      notes: M-CSA entry 556, mechanism 1; M-CSA cites PMID:7773790, PMID:8920191; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (19 evidence-backed edges) transcribed from M-CSA entry 556;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

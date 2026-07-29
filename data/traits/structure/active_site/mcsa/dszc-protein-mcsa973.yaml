@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.14.14.21
 - CHEBI:16048
@@ -264,4 +264,470 @@ definitions:
       Dibenzothiophene (DBT) monooxygenase DszC is the key initiating enzyme in the 4S metabolic pathway, particularly found in the metabolism of many bacterial species, including Rhodococcus erythropolis, etc. DszC is responsible for the catalysis of the sequential sulphoxidation reaction of DBT to DBT sulfoxide (DBTO), then DBT sulfone (DBTO2). Due to the detrimental effects of sulfur organic compounds found in crude oil, biodesulfurization involving DszC has gained great research interest as an alternative for the currently used hydrodesulfurization technique to produce cleaner fossil fuels at lower cost together with less CO2 emissions.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of DszC protein
+  description: Stepwise mechanism transcribed from M-CSA entry 973 (9 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: his92
+    label: catalytic His92 (M-CSA/PDB numbering; UniProt residue 92)
+    node_type: RESIDUE
+    grounding: UniProtKB:A0A0C6DRW4
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: tyr96
+    label: catalytic Tyr96 (M-CSA/PDB numbering; UniProt residue 96)
+    node_type: RESIDUE
+    grounding: UniProtKB:A0A0C6DRW4
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: asn129
+    label: catalytic Asn129 (M-CSA/PDB numbering; UniProt residue 129)
+    node_type: RESIDUE
+    grounding: UniProtKB:A0A0C6DRW4
+    description: 'M-CSA roles: hydrogen bond acceptor.'
+  - node_id: ser163
+    label: catalytic Ser163 (M-CSA/PDB numbering; UniProt residue 163)
+    node_type: RESIDUE
+    grounding: UniProtKB:A0A0C6DRW4
+    description: 'M-CSA roles: hydrogen bond acceptor, proton acceptor, proton donor.'
+  - node_id: his388
+    label: catalytic His388 (M-CSA/PDB numbering; UniProt residue 388)
+    node_type: RESIDUE
+    grounding: UniProtKB:A0A0C6DRW4
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his391
+    label: catalytic His391 (M-CSA/PDB numbering; UniProt residue 391)
+    node_type: RESIDUE
+    grounding: UniProtKB:A0A0C6DRW4
+    description: 'M-CSA roles: hydrogen bond acceptor, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: FMNH2
+    node_type: CHEMICAL
+    grounding: CHEBI:16048
+  - node_id: reactant1
+    label: singlet dioxygen
+    node_type: CHEMICAL
+    grounding: CHEBI:26689
+  - node_id: reactant2
+    label: dibenzothiophene
+    node_type: CHEMICAL
+    grounding: CHEBI:23681
+  - node_id: product0
+    label: FMN
+    node_type: CHEMICAL
+    grounding: CHEBI:17621
+  - node_id: product1
+    label: dibenzothiophene 5-oxide
+    node_type: CHEMICAL
+    grounding: CHEBI:23683
+  - node_id: product2
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His391 deprotonates FMNH<sub>2</sub> cofactor, generating FMNH-
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: "Proton-coupled electron
+transfer (PCET) from FMNH- to molecular oxygen and to C4a-carbon\
+      \ atom of the isoalloxazine ring, leading to formation of FMNH• and OOH• radicals."
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: FMNH• and OOH• radicals covalently bond with each other in which each of the molecular
+      fragments donate one of the bonding electrons, resulting in formation of C4a-hydroperoxyflavin (C4aOOH)
+      intermediate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: DBT sulfur atom performs a nucleophilic attack towards the distal oxygen atom (Od) of
+      the C4aOOH intermediate. DBT (dibenzothiophene) is oxidized to DBTO (dibenzothiophene oxide) by
+      following a SN2 mechanism.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Deprotonation of Ser163- hydroxyl group by the Nε atom of His92 residue.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Ser163 deprotonates the N5 of C4aOH intermediate.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: "Tyr96 promotes dehydration of C4aOH intermediate by cleavage of the C4a−Op bond. 
+\
+      (Op = proximal oxygen atom)
+Generation of oxidized FMN cofactor."
+  - node_id: step8
+    label: mechanism step 8
+    node_type: STATE
+    description: Tyr96-phenoxide deprotonates the His92-imidazolium, allowing for regeneration of the
+      original catalytic residues.
+  - node_id: step9
+    label: mechanism step 9
+    node_type: STATE
+    description: Final products.
+  - node_id: active_site
+    label: DszC protein catalytic site
+    node_type: MOTIF
+    grounding: MCSA:973
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.10.540.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.10.540.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: DszC protein activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.14.14.21
+  edges:
+  - subject: his391
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His391 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/973/
+      snippet: His391 deprotonates FMNH<sub>2</sub> cofactor, generating FMNH-
+      notes: M-CSA entry 973, mechanism 1; M-CSA cites PMID:24470304, PMID:24975806, PMID:25627402, PMID:26144862;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/973/
+      snippet: "Proton-coupled electron
+transfer (PCET) from FMNH- to molecular oxygen and to C4a-carbon\
+        \ atom of the isoalloxazine ring, leading to formation of FMNH• and OOH• radicals."
+      notes: M-CSA entry 973, mechanism 1; M-CSA cites PMID:24470304, PMID:24975806, PMID:25627402, PMID:26144862;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/973/
+      snippet: FMNH• and OOH• radicals covalently bond with each other in which each of the molecular
+        fragments donate one of the bonding electrons, resulting in formation of C4a-hydroperoxyflavin
+        (C4aOOH) intermediate.
+      notes: M-CSA entry 973, mechanism 1; M-CSA cites PMID:24470304, PMID:24975806, PMID:25627402, PMID:26144862;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/973/
+      snippet: DBT sulfur atom performs a nucleophilic attack towards the distal oxygen atom (Od) of the
+        C4aOOH intermediate. DBT (dibenzothiophene) is oxidized to DBTO (dibenzothiophene oxide) by following
+        a SN2 mechanism.
+      notes: M-CSA entry 973, mechanism 1; M-CSA cites PMID:24470304, PMID:24975806, PMID:25627402, PMID:26144862;
+        step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/973/
+      snippet: Deprotonation of Ser163- hydroxyl group by the Nε atom of His92 residue.
+      notes: M-CSA entry 973, mechanism 1; M-CSA cites PMID:24470304, PMID:24975806, PMID:25627402, PMID:26144862;
+        step 5
+  - subject: his92
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: His92 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/973/
+      snippet: Deprotonation of Ser163- hydroxyl group by the Nε atom of His92 residue.
+      notes: M-CSA entry 973, mechanism 1; M-CSA cites PMID:24470304, PMID:24975806, PMID:25627402, PMID:26144862;
+        step 5
+  - subject: ser163
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Ser163 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/973/
+      snippet: Deprotonation of Ser163- hydroxyl group by the Nε atom of His92 residue.
+      notes: M-CSA entry 973, mechanism 1; M-CSA cites PMID:24470304, PMID:24975806, PMID:25627402, PMID:26144862;
+        step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/973/
+      snippet: Ser163 deprotonates the N5 of C4aOH intermediate.
+      notes: M-CSA entry 973, mechanism 1; M-CSA cites PMID:24470304, PMID:24975806, PMID:25627402, PMID:26144862;
+        step 6
+  - subject: ser163
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: Ser163 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/973/
+      snippet: Ser163 deprotonates the N5 of C4aOH intermediate.
+      notes: M-CSA entry 973, mechanism 1; M-CSA cites PMID:24470304, PMID:24975806, PMID:25627402, PMID:26144862;
+        step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/973/
+      snippet: "Tyr96 promotes dehydration of C4aOH intermediate by cleavage of the C4a−Op bond. 
+\
+        (Op = proximal oxygen atom)
+Generation of oxidized FMN cofactor."
+      notes: M-CSA entry 973, mechanism 1; M-CSA cites PMID:24470304, PMID:24975806, PMID:25627402, PMID:26144862;
+        step 7
+  - subject: tyr96
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step7
+    description: Tyr96 acts in step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/973/
+      snippet: "Tyr96 promotes dehydration of C4aOH intermediate by cleavage of the C4a−Op bond. 
+\
+        (Op = proximal oxygen atom)
+Generation of oxidized FMN cofactor."
+      notes: M-CSA entry 973, mechanism 1; M-CSA cites PMID:24470304, PMID:24975806, PMID:25627402, PMID:26144862;
+        step 7
+  - subject: step7
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step8
+    description: Step 7 leads to step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/973/
+      snippet: Tyr96-phenoxide deprotonates the His92-imidazolium, allowing for regeneration of the original
+        catalytic residues.
+      notes: M-CSA entry 973, mechanism 1; M-CSA cites PMID:24470304, PMID:24975806, PMID:25627402, PMID:26144862;
+        step 8
+  - subject: his92
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step8
+    description: His92 acts in step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/973/
+      snippet: Tyr96-phenoxide deprotonates the His92-imidazolium, allowing for regeneration of the original
+        catalytic residues.
+      notes: M-CSA entry 973, mechanism 1; M-CSA cites PMID:24470304, PMID:24975806, PMID:25627402, PMID:26144862;
+        step 8
+  - subject: tyr96
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step8
+    description: Tyr96 acts in step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/973/
+      snippet: Tyr96-phenoxide deprotonates the His92-imidazolium, allowing for regeneration of the original
+        catalytic residues.
+      notes: M-CSA entry 973, mechanism 1; M-CSA cites PMID:24470304, PMID:24975806, PMID:25627402, PMID:26144862;
+        step 8
+  - subject: step8
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step9
+    description: Step 8 leads to step 9.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/973/
+      snippet: Final products.
+      notes: M-CSA entry 973, mechanism 1; M-CSA cites PMID:24470304, PMID:24975806, PMID:25627402, PMID:26144862;
+        step 9
+  - subject: his92
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His92 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/973/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 973, mechanism 1; M-CSA cites PMID:24470304, PMID:24975806, PMID:25627402, PMID:26144862;
+        M-CSA catalytic-residue roles for His92
+  - subject: tyr96
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr96 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/973/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 973, mechanism 1; M-CSA cites PMID:24470304, PMID:24975806, PMID:25627402, PMID:26144862;
+        M-CSA catalytic-residue roles for Tyr96
+  - subject: asn129
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn129 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/973/
+      snippet: hydrogen bond acceptor
+      notes: M-CSA entry 973, mechanism 1; M-CSA cites PMID:24470304, PMID:24975806, PMID:25627402, PMID:26144862;
+        M-CSA catalytic-residue roles for Asn129
+  - subject: ser163
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser163 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/973/
+      snippet: hydrogen bond acceptor, proton acceptor, proton donor
+      notes: M-CSA entry 973, mechanism 1; M-CSA cites PMID:24470304, PMID:24975806, PMID:25627402, PMID:26144862;
+        M-CSA catalytic-residue roles for Ser163
+  - subject: his388
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His388 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/973/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 973, mechanism 1; M-CSA cites PMID:24470304, PMID:24975806, PMID:25627402, PMID:26144862;
+        M-CSA catalytic-residue roles for His388
+  - subject: his391
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His391 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/973/
+      snippet: hydrogen bond acceptor, proton acceptor, proton donor
+      notes: M-CSA entry 973, mechanism 1; M-CSA cites PMID:24470304, PMID:24975806, PMID:25627402, PMID:26144862;
+        M-CSA catalytic-residue roles for His391
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/973/
+      snippet: 'Mechanistic studies have shown that sulfur oxidation of dibenzothiophenes (DBT) by DszC
+        occurs in three major stages catalyzed by five main catalytic residues: His92, Tyr96, Asn129,
+        Ser163, and His391. Firstly, Cys391 catalyzes molecular oxygen activation through proton-coupled
+        electron transfer from FMNH<sub>2</sub> to dioxygen, forming C<sup>4a</sup>-hydroperoxyflavin
+        (C<sup>4a</sup>OOH) interme'
+      notes: M-CSA entry 973, mechanism 1; M-CSA cites PMID:24470304, PMID:24975806, PMID:25627402, PMID:26144862;
+        CATH domain 1.10.540.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/973/
+      snippet: 'Mechanistic studies have shown that sulfur oxidation of dibenzothiophenes (DBT) by DszC
+        occurs in three major stages catalyzed by five main catalytic residues: His92, Tyr96, Asn129,
+        Ser163, and His391. Firstly, Cys391 catalyzes molecular oxygen activation through proton-coupled
+        electron transfer from FMNH<sub>2</sub> to dioxygen, forming C<sup>4a</sup>-hydroperoxyflavin
+        (C<sup>4a</sup>OOH) interme'
+      notes: M-CSA entry 973, mechanism 1; M-CSA cites PMID:24470304, PMID:24975806, PMID:25627402, PMID:26144862;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/973/
+      snippet: 'Mechanistic studies have shown that sulfur oxidation of dibenzothiophenes (DBT) by DszC
+        occurs in three major stages catalyzed by five main catalytic residues: His92, Tyr96, Asn129,
+        Ser163, and His391. Firstly, Cys391 catalyzes molecular oxygen activation through proton-coupled
+        electron transfer from FMNH<sub>2</sub> to dioxygen, forming C<sup>4a</sup>-hydroperoxyflavin
+        (C<sup>4a</sup>OOH) interme'
+      notes: M-CSA entry 973, mechanism 1; M-CSA cites PMID:24470304, PMID:24975806, PMID:25627402, PMID:26144862;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/973/
+      snippet: 'Mechanistic studies have shown that sulfur oxidation of dibenzothiophenes (DBT) by DszC
+        occurs in three major stages catalyzed by five main catalytic residues: His92, Tyr96, Asn129,
+        Ser163, and His391. Firstly, Cys391 catalyzes molecular oxygen activation through proton-coupled
+        electron transfer from FMNH<sub>2</sub> to dioxygen, forming C<sup>4a</sup>-hydroperoxyflavin
+        (C<sup>4a</sup>OOH) interme'
+      notes: M-CSA entry 973, mechanism 1; M-CSA cites PMID:24470304, PMID:24975806, PMID:25627402, PMID:26144862;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/973/
+      snippet: 'Mechanistic studies have shown that sulfur oxidation of dibenzothiophenes (DBT) by DszC
+        occurs in three major stages catalyzed by five main catalytic residues: His92, Tyr96, Asn129,
+        Ser163, and His391. Firstly, Cys391 catalyzes molecular oxygen activation through proton-coupled
+        electron transfer from FMNH<sub>2</sub> to dioxygen, forming C<sup>4a</sup>-hydroperoxyflavin
+        (C<sup>4a</sup>OOH) interme'
+      notes: M-CSA entry 973, mechanism 1; M-CSA cites PMID:24470304, PMID:24975806, PMID:25627402, PMID:26144862;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/973/
+      snippet: 'Mechanistic studies have shown that sulfur oxidation of dibenzothiophenes (DBT) by DszC
+        occurs in three major stages catalyzed by five main catalytic residues: His92, Tyr96, Asn129,
+        Ser163, and His391. Firstly, Cys391 catalyzes molecular oxygen activation through proton-coupled
+        electron transfer from FMNH<sub>2</sub> to dioxygen, forming C<sup>4a</sup>-hydroperoxyflavin
+        (C<sup>4a</sup>OOH) interme'
+      notes: M-CSA entry 973, mechanism 1; M-CSA cites PMID:24470304, PMID:24975806, PMID:25627402, PMID:26144862;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/973/
+      snippet: 'Mechanistic studies have shown that sulfur oxidation of dibenzothiophenes (DBT) by DszC
+        occurs in three major stages catalyzed by five main catalytic residues: His92, Tyr96, Asn129,
+        Ser163, and His391. Firstly, Cys391 catalyzes molecular oxygen activation through proton-coupled
+        electron transfer from FMNH<sub>2</sub> to dioxygen, forming C<sup>4a</sup>-hydroperoxyflavin
+        (C<sup>4a</sup>OOH) interme'
+      notes: M-CSA entry 973, mechanism 1; M-CSA cites PMID:24470304, PMID:24975806, PMID:25627402, PMID:26144862;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/973/
+      snippet: 'Mechanistic studies have shown that sulfur oxidation of dibenzothiophenes (DBT) by DszC
+        occurs in three major stages catalyzed by five main catalytic residues: His92, Tyr96, Asn129,
+        Ser163, and His391. Firstly, Cys391 catalyzes molecular oxygen activation through proton-coupled
+        electron transfer from FMNH<sub>2</sub> to dioxygen, forming C<sup>4a</sup>-hydroperoxyflavin
+        (C<sup>4a</sup>OOH) interme'
+      notes: M-CSA entry 973, mechanism 1; M-CSA cites PMID:24470304, PMID:24975806, PMID:25627402, PMID:26144862;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (29 evidence-backed edges) transcribed from M-CSA entry 973;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.5.1.98
 - CHEBI:15377
@@ -219,4 +219,278 @@ definitions:
       Histone deacetylase 6 enzyme (HDAC6) is a metalloenzyme, part of the HDAC family. The HDAC family includes 18 isoforms which are grouped into four classes (I, II, III, and IV). HDACs in class III use an NAD+ cofactor, whilst the others are metalloenzymes which use a Zn(II) metal ion centre. HDAC6 is in class II and is involved in the maintenance of a cell's shape and its polarity during cell division and migration, intracellular transport and angiogenesis. HDACs catalyse the removal of the acyl group from a lysine amino acid of the substrate of nuclear and cytosol proteins. In general, protein acylation and deacylation processes are a key part of cell cycle regulation. HDAC6 has a heterodimeric structure with two different catalytic domains, CD1 and CD2. The domains present a similar structure but show differing substrate specificities and their roles remain unclear. HDAC6 is of interest for its role in the fight against cancer and various other pathologies.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of histone deacetylase 6 enzyme (HDAC6)
+  description: Stepwise mechanism transcribed from M-CSA entry 998 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: his192
+    label: catalytic His192 (M-CSA/PDB numbering; UniProt residue 192)
+    node_type: RESIDUE
+    grounding: UniProtKB:F8W4B7
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: his193
+    label: catalytic His193 (M-CSA/PDB numbering; UniProt residue 193)
+    node_type: RESIDUE
+    grounding: UniProtKB:F8W4B7
+    description: 'M-CSA roles: hydrogen bond donor, proton donor.'
+  - node_id: asp228
+    label: catalytic Asp228 (M-CSA/PDB numbering; UniProt residue 228)
+    node_type: RESIDUE
+    grounding: UniProtKB:F8W4B7
+    description: 'M-CSA roles: hydrogen bond donor, proton acceptor.'
+  - node_id: asp230
+    label: catalytic Asp230 (M-CSA/PDB numbering; UniProt residue 230)
+    node_type: RESIDUE
+    grounding: UniProtKB:F8W4B7
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his232
+    label: catalytic His232 (M-CSA/PDB numbering; UniProt residue 232)
+    node_type: RESIDUE
+    grounding: UniProtKB:F8W4B7
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp323
+    label: catalytic Asp323 (M-CSA/PDB numbering; UniProt residue 323)
+    node_type: RESIDUE
+    grounding: UniProtKB:F8W4B7
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: tyr363
+    label: catalytic Tyr363 (M-CSA/PDB numbering; UniProt residue 363)
+    node_type: RESIDUE
+    grounding: UniProtKB:F8W4B7
+    description: 'M-CSA roles: hydrogen bond donor.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: N(6)-acetyl-L-lysine residue
+    node_type: CHEMICAL
+    grounding: CHEBI:61930
+  - node_id: product0
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+  - node_id: product1
+    label: L-lysinium residue
+    node_type: CHEMICAL
+    grounding: CHEBI:29969
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: A structured hydrogen bond network activates a water molecule for nucleophilic attack
+      on amide carbon of the substrate. This forms a tetrahedral intermediate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: A proton from the protonated imidazole ring of His193 is transferred to the nitrogen
+      of the substrate. This induces C-N bond cleavage and forms the deacylated Lys and acetic acid products.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Deacylated Lys and acetic acid products released from the active site when a water molecule
+      and another substrate molecule enter the active site.
+  - node_id: active_site
+    label: histone deacetylase 6 enzyme (HDAC6) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:998
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.800.20 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.800.20
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: histone deacetylase 6 enzyme (HDAC6) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.5.1.98
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/998/
+      snippet: A proton from the protonated imidazole ring of His193 is transferred to the nitrogen of
+        the substrate. This induces C-N bond cleavage and forms the deacylated Lys and acetic acid products.
+      notes: M-CSA entry 998, mechanism 1; M-CSA cites PMID:27454933; step 2
+  - subject: his193
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His193 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/998/
+      snippet: A proton from the protonated imidazole ring of His193 is transferred to the nitrogen of
+        the substrate. This induces C-N bond cleavage and forms the deacylated Lys and acetic acid products.
+      notes: M-CSA entry 998, mechanism 1; M-CSA cites PMID:27454933; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/998/
+      snippet: Deacylated Lys and acetic acid products released from the active site when a water molecule
+        and another substrate molecule enter the active site.
+      notes: M-CSA entry 998, mechanism 1; M-CSA cites PMID:27454933; step 3
+  - subject: his192
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His192 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/998/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 998, mechanism 1; M-CSA cites PMID:27454933; M-CSA catalytic-residue roles for
+        His192
+  - subject: his193
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His193 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/998/
+      snippet: hydrogen bond donor, proton donor
+      notes: M-CSA entry 998, mechanism 1; M-CSA cites PMID:27454933; M-CSA catalytic-residue roles for
+        His193
+  - subject: asp228
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp228 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/998/
+      snippet: hydrogen bond donor, proton acceptor
+      notes: M-CSA entry 998, mechanism 1; M-CSA cites PMID:27454933; M-CSA catalytic-residue roles for
+        Asp228
+  - subject: asp230
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp230 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/998/
+      snippet: metal ligand
+      notes: M-CSA entry 998, mechanism 1; M-CSA cites PMID:27454933; M-CSA catalytic-residue roles for
+        Asp230
+  - subject: his232
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His232 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/998/
+      snippet: metal ligand
+      notes: M-CSA entry 998, mechanism 1; M-CSA cites PMID:27454933; M-CSA catalytic-residue roles for
+        His232
+  - subject: asp323
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp323 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/998/
+      snippet: metal ligand
+      notes: M-CSA entry 998, mechanism 1; M-CSA cites PMID:27454933; M-CSA catalytic-residue roles for
+        Asp323
+  - subject: tyr363
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr363 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/998/
+      snippet: hydrogen bond donor
+      notes: M-CSA entry 998, mechanism 1; M-CSA cites PMID:27454933; M-CSA catalytic-residue roles for
+        Tyr363
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/998/
+      snippet: In this mechanism proposed for both the CD1 and CD2 domains of HDAC6, a hydrogen bond network
+        activates a water molecule for nucleophilic attack on the amide carbon of the substrate, forming
+        a tetrahedral intermediate. A proton from the protonated imidazole ring of His193 is transferred
+        to the nitrogen of the substrate, forming acetic acid and eliminating the deacylated Lys product.
+        Entry of a wat
+      notes: M-CSA entry 998, mechanism 1; M-CSA cites PMID:27454933; CATH domain 3.40.800.20 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/998/
+      snippet: In this mechanism proposed for both the CD1 and CD2 domains of HDAC6, a hydrogen bond network
+        activates a water molecule for nucleophilic attack on the amide carbon of the substrate, forming
+        a tetrahedral intermediate. A proton from the protonated imidazole ring of His193 is transferred
+        to the nitrogen of the substrate, forming acetic acid and eliminating the deacylated Lys product.
+        Entry of a wat
+      notes: M-CSA entry 998, mechanism 1; M-CSA cites PMID:27454933; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/998/
+      snippet: In this mechanism proposed for both the CD1 and CD2 domains of HDAC6, a hydrogen bond network
+        activates a water molecule for nucleophilic attack on the amide carbon of the substrate, forming
+        a tetrahedral intermediate. A proton from the protonated imidazole ring of His193 is transferred
+        to the nitrogen of the substrate, forming acetic acid and eliminating the deacylated Lys product.
+        Entry of a wat
+      notes: M-CSA entry 998, mechanism 1; M-CSA cites PMID:27454933; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/998/
+      snippet: In this mechanism proposed for both the CD1 and CD2 domains of HDAC6, a hydrogen bond network
+        activates a water molecule for nucleophilic attack on the amide carbon of the substrate, forming
+        a tetrahedral intermediate. A proton from the protonated imidazole ring of His193 is transferred
+        to the nitrogen of the substrate, forming acetic acid and eliminating the deacylated Lys product.
+        Entry of a wat
+      notes: M-CSA entry 998, mechanism 1; M-CSA cites PMID:27454933; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/998/
+      snippet: In this mechanism proposed for both the CD1 and CD2 domains of HDAC6, a hydrogen bond network
+        activates a water molecule for nucleophilic attack on the amide carbon of the substrate, forming
+        a tetrahedral intermediate. A proton from the protonated imidazole ring of His193 is transferred
+        to the nitrogen of the substrate, forming acetic acid and eliminating the deacylated Lys product.
+        Entry of a wat
+      notes: M-CSA entry 998, mechanism 1; M-CSA cites PMID:27454933; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/998/
+      snippet: In this mechanism proposed for both the CD1 and CD2 domains of HDAC6, a hydrogen bond network
+        activates a water molecule for nucleophilic attack on the amide carbon of the substrate, forming
+        a tetrahedral intermediate. A proton from the protonated imidazole ring of His193 is transferred
+        to the nitrogen of the substrate, forming acetic acid and eliminating the deacylated Lys product.
+        Entry of a wat
+      notes: M-CSA entry 998, mechanism 1; M-CSA cites PMID:27454933; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (16 evidence-backed edges) transcribed from M-CSA entry 998;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.7.2.3
 - CHEBI:29034
@@ -547,4 +547,243 @@ definitions:
       Trimethylamine N-oxide (TMAO) has been found in a variety of marine organisms including fish, molluscs, crustaceans and seaweed [PMID:16221580]. TMAO is found in marine organisms as an osmolyte in combination with urea. In sharks, who lack a swim bladder, TMAO and urea contribute to buoyancy. A number of marine-fish spoilage organisms use TMAO as an electron acceptor in anaerobic respiration [PMID:3904597]. Trimethylamine (TMA), the volatile product of this reaction, has the specific odour of rotting fish. In Escherichia coli, the TMAO respiratory chain consists of a quinol electron donor, a membrane-bound multiheme c-type cytochrome TorC, and a periplasmic terminal reductase TorA that contains bis(molybdopterin guanine dinucleotide)molybdenum cofactor (this entry). This molybdoenzyme belongs to the dimethyl sulfoxide (DMSO) reductase family.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of trimethylamine-N-oxide reductase (cytochrome c)
+  description: Stepwise mechanism transcribed from M-CSA entry 894 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +31).
+  nodes:
+  - node_id: trp118
+    label: catalytic Trp118 (M-CSA/PDB numbering; UniProt residue 149)
+    node_type: RESIDUE
+    grounding: UniProtKB:O87948
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: ser149
+    label: catalytic Ser149 (M-CSA/PDB numbering; UniProt residue 180)
+    node_type: RESIDUE
+    grounding: UniProtKB:O87948
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: iron(2+)
+    node_type: CHEMICAL
+    grounding: CHEBI:29033
+  - node_id: reactant1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: reactant2
+    label: trimethylamine N-oxide
+    node_type: CHEMICAL
+    grounding: CHEBI:15724
+  - node_id: product0
+    label: iron(3+)
+    node_type: CHEMICAL
+    grounding: CHEBI:29034
+  - node_id: product1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product2
+    label: trimethylammonium
+    node_type: CHEMICAL
+    grounding: CHEBI:58389
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The Ser149 stabilises the moco molybdenum by forming a coordination sphere and allowing
+      the oxygen to donate electrons to the trimethylamine molecule. Trp118 also stabilises the transitional
+      structure of the oxygen.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The transition state collapses by reducing the Mo<sup>5+</sup> into a Mo<sup>4+</sup>
+      and releasing the oxygen atom to the trimethylamine turning it into trimethylamine <t>N</t>-oxide.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Final product.
+  - node_id: active_site
+    label: trimethylamine-N-oxide reductase (cytochrome c) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:894
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.740 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.740
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: trimethylamine-N-oxide reductase (cytochrome c) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.7.2.3
+  edges:
+  - subject: trp118
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Trp118 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/894/
+      snippet: The Ser149 stabilises the moco molybdenum by forming a coordination sphere and allowing
+        the oxygen to donate electrons to the trimethylamine molecule. Trp118 also stabilises the transitional
+        structure of the oxygen.
+      notes: M-CSA entry 894, mechanism 1; M-CSA cites PMID:11278798, PMID:16221580, PMID:25698503, PMID:26932500,
+        PMID:3904597, PMID:9813128; step 1
+  - subject: ser149
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser149 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/894/
+      snippet: The Ser149 stabilises the moco molybdenum by forming a coordination sphere and allowing
+        the oxygen to donate electrons to the trimethylamine molecule. Trp118 also stabilises the transitional
+        structure of the oxygen.
+      notes: M-CSA entry 894, mechanism 1; M-CSA cites PMID:11278798, PMID:16221580, PMID:25698503, PMID:26932500,
+        PMID:3904597, PMID:9813128; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/894/
+      snippet: The transition state collapses by reducing the Mo<sup>5+</sup> into a Mo<sup>4+</sup> and
+        releasing the oxygen atom to the trimethylamine turning it into trimethylamine <t>N</t>-oxide.
+      notes: M-CSA entry 894, mechanism 1; M-CSA cites PMID:11278798, PMID:16221580, PMID:25698503, PMID:26932500,
+        PMID:3904597, PMID:9813128; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/894/
+      snippet: Final product.
+      notes: M-CSA entry 894, mechanism 1; M-CSA cites PMID:11278798, PMID:16221580, PMID:25698503, PMID:26932500,
+        PMID:3904597, PMID:9813128; step 3
+  - subject: trp118
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp118 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/894/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 894, mechanism 1; M-CSA cites PMID:11278798, PMID:16221580, PMID:25698503, PMID:26932500,
+        PMID:3904597, PMID:9813128; M-CSA catalytic-residue roles for Trp118
+  - subject: ser149
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser149 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/894/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 894, mechanism 1; M-CSA cites PMID:11278798, PMID:16221580, PMID:25698503, PMID:26932500,
+        PMID:3904597, PMID:9813128; M-CSA catalytic-residue roles for Ser149
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/894/
+      snippet: Mo(IV) is oxidised to Mo(VI) by two successive single electron transfers to the trimethylamine
+        molecule. This transfer is stabilised by Ser149 and Trp118 that coordinate the molybdenum and
+        the oxygen molecule which is transferred to the trimethylamine, respectively.
+      notes: M-CSA entry 894, mechanism 1; M-CSA cites PMID:11278798, PMID:16221580, PMID:25698503, PMID:26932500,
+        PMID:3904597, PMID:9813128; CATH domain 3.40.50.740 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/894/
+      snippet: Mo(IV) is oxidised to Mo(VI) by two successive single electron transfers to the trimethylamine
+        molecule. This transfer is stabilised by Ser149 and Trp118 that coordinate the molybdenum and
+        the oxygen molecule which is transferred to the trimethylamine, respectively.
+      notes: M-CSA entry 894, mechanism 1; M-CSA cites PMID:11278798, PMID:16221580, PMID:25698503, PMID:26932500,
+        PMID:3904597, PMID:9813128; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/894/
+      snippet: Mo(IV) is oxidised to Mo(VI) by two successive single electron transfers to the trimethylamine
+        molecule. This transfer is stabilised by Ser149 and Trp118 that coordinate the molybdenum and
+        the oxygen molecule which is transferred to the trimethylamine, respectively.
+      notes: M-CSA entry 894, mechanism 1; M-CSA cites PMID:11278798, PMID:16221580, PMID:25698503, PMID:26932500,
+        PMID:3904597, PMID:9813128; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/894/
+      snippet: Mo(IV) is oxidised to Mo(VI) by two successive single electron transfers to the trimethylamine
+        molecule. This transfer is stabilised by Ser149 and Trp118 that coordinate the molybdenum and
+        the oxygen molecule which is transferred to the trimethylamine, respectively.
+      notes: M-CSA entry 894, mechanism 1; M-CSA cites PMID:11278798, PMID:16221580, PMID:25698503, PMID:26932500,
+        PMID:3904597, PMID:9813128; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/894/
+      snippet: Mo(IV) is oxidised to Mo(VI) by two successive single electron transfers to the trimethylamine
+        molecule. This transfer is stabilised by Ser149 and Trp118 that coordinate the molybdenum and
+        the oxygen molecule which is transferred to the trimethylamine, respectively.
+      notes: M-CSA entry 894, mechanism 1; M-CSA cites PMID:11278798, PMID:16221580, PMID:25698503, PMID:26932500,
+        PMID:3904597, PMID:9813128; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/894/
+      snippet: Mo(IV) is oxidised to Mo(VI) by two successive single electron transfers to the trimethylamine
+        molecule. This transfer is stabilised by Ser149 and Trp118 that coordinate the molybdenum and
+        the oxygen molecule which is transferred to the trimethylamine, respectively.
+      notes: M-CSA entry 894, mechanism 1; M-CSA cites PMID:11278798, PMID:16221580, PMID:25698503, PMID:26932500,
+        PMID:3904597, PMID:9813128; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/894/
+      snippet: Mo(IV) is oxidised to Mo(VI) by two successive single electron transfers to the trimethylamine
+        molecule. This transfer is stabilised by Ser149 and Trp118 that coordinate the molybdenum and
+        the oxygen molecule which is transferred to the trimethylamine, respectively.
+      notes: M-CSA entry 894, mechanism 1; M-CSA cites PMID:11278798, PMID:16221580, PMID:25698503, PMID:26932500,
+        PMID:3904597, PMID:9813128; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/894/
+      snippet: Mo(IV) is oxidised to Mo(VI) by two successive single electron transfers to the trimethylamine
+        molecule. This transfer is stabilised by Ser149 and Trp118 that coordinate the molybdenum and
+        the oxygen molecule which is transferred to the trimethylamine, respectively.
+      notes: M-CSA entry 894, mechanism 1; M-CSA cites PMID:11278798, PMID:16221580, PMID:25698503, PMID:26932500,
+        PMID:3904597, PMID:9813128; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (14 evidence-backed edges) transcribed from M-CSA entry 894;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

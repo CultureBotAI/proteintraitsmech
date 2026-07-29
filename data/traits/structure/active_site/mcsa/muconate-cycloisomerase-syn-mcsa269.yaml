@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.5.1.1
 - CHEBI:32379
@@ -98,4 +98,282 @@ definitions:
       Catalyses the syn cycloisomerisation of +-muconolactone to cis-cis-muconate. Involved in the second step of the subpathway that synthesizes 5-oxo-4,5-dihydro-2-furylacetate from catechol.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of muconate cycloisomerase (syn)
+  description: Stepwise mechanism transcribed from M-CSA entry 269 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset -2).
+  nodes:
+  - node_id: his24
+    label: catalytic His24 (M-CSA/PDB numbering; UniProt residue 22)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q4K9X1
+    description: 'M-CSA roles: steric role.'
+  - node_id: lys169
+    label: catalytic Lys169 (M-CSA/PDB numbering; UniProt residue 167)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q4K9X1
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: lys171
+    label: catalytic Lys171 (M-CSA/PDB numbering; UniProt residue 169)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q4K9X1
+    description: 'M-CSA roles: electrostatic stabiliser, proton donor.'
+  - node_id: asp200
+    label: catalytic Asp200 (M-CSA/PDB numbering; UniProt residue 198)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q4K9X1
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu226
+    label: catalytic Glu226 (M-CSA/PDB numbering; UniProt residue 224)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q4K9X1
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp251
+    label: catalytic Asp251 (M-CSA/PDB numbering; UniProt residue 249)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q4K9X1
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: lys275
+    label: catalytic Lys275 (M-CSA/PDB numbering; UniProt residue 273)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q4K9X1
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu329
+    label: catalytic Glu329 (M-CSA/PDB numbering; UniProt residue 327)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q4K9X1
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: cis,cis-muconate
+    node_type: CHEMICAL
+    grounding: CHEBI:32379
+  - node_id: reactant1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product0
+    label: (S)-5-oxo-2,5-dihydro-2-furylacetate
+    node_type: CHEMICAL
+    grounding: CHEBI:58736
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The C1 carboxylate initiates a nucleophilic attack on the C4 double bond, initiating
+      double bond rearrangement and forming the enol intermediate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Glu329 deprotonates the enol resulting in the protonation of C5, supplied by Lys171,
+      to produce the cyclic non-planar product. At the end of this step the enzyme is in the correct state
+      to perform the reverse reaction.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: muconate cycloisomerase (syn) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:269
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.390.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.390.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: muconate cycloisomerase (syn) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.5.1.1
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/269/
+      snippet: Glu329 deprotonates the enol resulting in the protonation of C5, supplied by Lys171, to
+        produce the cyclic non-planar product. At the end of this step the enzyme is in the correct state
+        to perform the reverse reaction.
+      notes: M-CSA entry 269, mechanism 2; M-CSA cites PMID:10336378, PMID:12855164, PMID:12930985, PMID:19220063,
+        PMID:21541743, PMID:2215699, PMID:7500361, PMID:9724714; step 2
+  - subject: lys171
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Lys171 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/269/
+      snippet: Glu329 deprotonates the enol resulting in the protonation of C5, supplied by Lys171, to
+        produce the cyclic non-planar product. At the end of this step the enzyme is in the correct state
+        to perform the reverse reaction.
+      notes: M-CSA entry 269, mechanism 2; M-CSA cites PMID:10336378, PMID:12855164, PMID:12930985, PMID:19220063,
+        PMID:21541743, PMID:2215699, PMID:7500361, PMID:9724714; step 2
+  - subject: glu329
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu329 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/269/
+      snippet: Glu329 deprotonates the enol resulting in the protonation of C5, supplied by Lys171, to
+        produce the cyclic non-planar product. At the end of this step the enzyme is in the correct state
+        to perform the reverse reaction.
+      notes: M-CSA entry 269, mechanism 2; M-CSA cites PMID:10336378, PMID:12855164, PMID:12930985, PMID:19220063,
+        PMID:21541743, PMID:2215699, PMID:7500361, PMID:9724714; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/269/
+      snippet: Products
+      notes: M-CSA entry 269, mechanism 2; M-CSA cites PMID:10336378, PMID:12855164, PMID:12930985, PMID:19220063,
+        PMID:21541743, PMID:2215699, PMID:7500361, PMID:9724714; step 3
+  - subject: his24
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His24 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/269/
+      snippet: steric role
+      notes: M-CSA entry 269, mechanism 2; M-CSA cites PMID:10336378, PMID:12855164, PMID:12930985, PMID:19220063,
+        PMID:21541743, PMID:2215699, PMID:7500361, PMID:9724714; M-CSA catalytic-residue roles for His24
+  - subject: lys169
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys169 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/269/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 269, mechanism 2; M-CSA cites PMID:10336378, PMID:12855164, PMID:12930985, PMID:19220063,
+        PMID:21541743, PMID:2215699, PMID:7500361, PMID:9724714; M-CSA catalytic-residue roles for Lys169
+  - subject: lys171
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys171 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/269/
+      snippet: electrostatic stabiliser, proton donor
+      notes: M-CSA entry 269, mechanism 2; M-CSA cites PMID:10336378, PMID:12855164, PMID:12930985, PMID:19220063,
+        PMID:21541743, PMID:2215699, PMID:7500361, PMID:9724714; M-CSA catalytic-residue roles for Lys171
+  - subject: asp200
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp200 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/269/
+      snippet: metal ligand
+      notes: M-CSA entry 269, mechanism 2; M-CSA cites PMID:10336378, PMID:12855164, PMID:12930985, PMID:19220063,
+        PMID:21541743, PMID:2215699, PMID:7500361, PMID:9724714; M-CSA catalytic-residue roles for Asp200
+  - subject: glu226
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu226 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/269/
+      snippet: metal ligand
+      notes: M-CSA entry 269, mechanism 2; M-CSA cites PMID:10336378, PMID:12855164, PMID:12930985, PMID:19220063,
+        PMID:21541743, PMID:2215699, PMID:7500361, PMID:9724714; M-CSA catalytic-residue roles for Glu226
+  - subject: asp251
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp251 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/269/
+      snippet: metal ligand
+      notes: M-CSA entry 269, mechanism 2; M-CSA cites PMID:10336378, PMID:12855164, PMID:12930985, PMID:19220063,
+        PMID:21541743, PMID:2215699, PMID:7500361, PMID:9724714; M-CSA catalytic-residue roles for Asp251
+  - subject: lys275
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys275 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/269/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 269, mechanism 2; M-CSA cites PMID:10336378, PMID:12855164, PMID:12930985, PMID:19220063,
+        PMID:21541743, PMID:2215699, PMID:7500361, PMID:9724714; M-CSA catalytic-residue roles for Lys275
+  - subject: glu329
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu329 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/269/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 269, mechanism 2; M-CSA cites PMID:10336378, PMID:12855164, PMID:12930985, PMID:19220063,
+        PMID:21541743, PMID:2215699, PMID:7500361, PMID:9724714; M-CSA catalytic-residue roles for Glu329
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/269/
+      snippet: Catalyses an addition of the C1 carboxylate oxygen in substrate, muconate, to the C4 double-bonded
+        carbon, and an isomerisation, through an enolate intermediate.
+      notes: M-CSA entry 269, mechanism 2; M-CSA cites PMID:10336378, PMID:12855164, PMID:12930985, PMID:19220063,
+        PMID:21541743, PMID:2215699, PMID:7500361, PMID:9724714; CATH domain 3.30.390.10 assigned to the
+        catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/269/
+      snippet: Catalyses an addition of the C1 carboxylate oxygen in substrate, muconate, to the C4 double-bonded
+        carbon, and an isomerisation, through an enolate intermediate.
+      notes: M-CSA entry 269, mechanism 2; M-CSA cites PMID:10336378, PMID:12855164, PMID:12930985, PMID:19220063,
+        PMID:21541743, PMID:2215699, PMID:7500361, PMID:9724714; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/269/
+      snippet: Catalyses an addition of the C1 carboxylate oxygen in substrate, muconate, to the C4 double-bonded
+        carbon, and an isomerisation, through an enolate intermediate.
+      notes: M-CSA entry 269, mechanism 2; M-CSA cites PMID:10336378, PMID:12855164, PMID:12930985, PMID:19220063,
+        PMID:21541743, PMID:2215699, PMID:7500361, PMID:9724714; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/269/
+      snippet: Catalyses an addition of the C1 carboxylate oxygen in substrate, muconate, to the C4 double-bonded
+        carbon, and an isomerisation, through an enolate intermediate.
+      notes: M-CSA entry 269, mechanism 2; M-CSA cites PMID:10336378, PMID:12855164, PMID:12930985, PMID:19220063,
+        PMID:21541743, PMID:2215699, PMID:7500361, PMID:9724714; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/269/
+      snippet: Catalyses an addition of the C1 carboxylate oxygen in substrate, muconate, to the C4 double-bonded
+        carbon, and an isomerisation, through an enolate intermediate.
+      notes: M-CSA entry 269, mechanism 2; M-CSA cites PMID:10336378, PMID:12855164, PMID:12930985, PMID:19220063,
+        PMID:21541743, PMID:2215699, PMID:7500361, PMID:9724714; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (17 evidence-backed edges) transcribed from M-CSA entry 269;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.5.99.7
 - CHEBI:58360
@@ -230,4 +230,378 @@ definitions:
       1-aminocyclopropane-1-carboxylate (ACC) deaminase is a pyridoxal phosphate-dependent enzyme which catalyses a cyclopropane ring-opening reaction, the irreversible conversion of ACC to ammonia and alpha-ketobutyrate. In plants, the latter is a precursor of the ripening hormone ethylene. Some plant growth-promoting rhizobacteria can produce 1-aminocyclopropane-1-carboxylate deaminase to enhance plant growth. ACC deaminase is unique amongst PLP-dependent enzymes, since the ring cleavage catalysed by ACC deaminase cannot proceed through an α-carbanionic intermediate due to the lack of an abstractable alpha-hydrogen atom from the substrate ACC.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 1-aminocyclopropane-1-carboxylate deaminase
+  description: Stepwise mechanism transcribed from M-CSA entry 545 (10 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: lys51
+    label: catalytic Lys51 (M-CSA/PDB numbering; UniProt residue 51)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q7M523
+    description: 'M-CSA roles: covalently attached, electron pair acceptor, electron pair donor, nucleofuge,
+      nucleophile, proton acceptor, proton donor.'
+  - node_id: tyr269
+    label: catalytic Tyr269 (M-CSA/PDB numbering; UniProt residue 269)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q7M523
+    description: 'M-CSA roles: covalently attached, electrostatic stabiliser, nucleofuge, nucleophile.'
+  - node_id: tyr295
+    label: catalytic Tyr295 (M-CSA/PDB numbering; UniProt residue 295)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q7M523
+    description: 'M-CSA roles: electrostatic stabiliser, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: 1-aminocyclopropanecarboxylic acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:58360
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: 2-oxobutanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:16763
+  - node_id: product1
+    label: ammonium
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The substrate initiates a nucleophilic attack on the covalently bound PLP-Lys Schiff
+      base.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Lys51 is eliminated from the PLP-cofactor to form the PLP-substrate Schiff base intermediate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Tyr269 initiates a nucleophilic attack on the propane ring of the intermediate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Tyr295 abstracts a proton from the intermediate, eliminating the Tyr269.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: The PLP cofactor undergoes rearrangement to abstract a proton from Tyr295.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Lys51 initiates the nucleophilic attack that is the first step in the transaldimination
+      reaction to release the product.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: In the final step of the transaldimination reaction, the PLP-Lys cofactor is regenerated
+      and the enzyme's final product released.
+  - node_id: step8
+    label: mechanism step 8
+    node_type: STATE
+    description: The enzyme product undergoes hydrolysis to produce the final products. It is likely that
+      this process occurs outside the active site.
+  - node_id: step9
+    label: mechanism step 9
+    node_type: STATE
+    description: Final step of the external hydrolysis of the product.
+  - node_id: step10
+    label: mechanism step 10
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: 1-aminocyclopropane-1-carboxylate deaminase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:545
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1100 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1100
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: 1-aminocyclopropane-1-carboxylate deaminase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.5.99.7
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/545/
+      snippet: Lys51 is eliminated from the PLP-cofactor to form the PLP-substrate Schiff base intermediate.
+      notes: M-CSA entry 545, mechanism 1; M-CSA cites PMID:12882962, PMID:15491139, PMID:16524684; step
+        2
+  - subject: lys51
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Lys51 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/545/
+      snippet: Lys51 is eliminated from the PLP-cofactor to form the PLP-substrate Schiff base intermediate.
+      notes: M-CSA entry 545, mechanism 1; M-CSA cites PMID:12882962, PMID:15491139, PMID:16524684; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/545/
+      snippet: Tyr269 initiates a nucleophilic attack on the propane ring of the intermediate.
+      notes: M-CSA entry 545, mechanism 1; M-CSA cites PMID:12882962, PMID:15491139, PMID:16524684; step
+        3
+  - subject: tyr269
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Tyr269 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/545/
+      snippet: Tyr269 initiates a nucleophilic attack on the propane ring of the intermediate.
+      notes: M-CSA entry 545, mechanism 1; M-CSA cites PMID:12882962, PMID:15491139, PMID:16524684; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/545/
+      snippet: Tyr295 abstracts a proton from the intermediate, eliminating the Tyr269.
+      notes: M-CSA entry 545, mechanism 1; M-CSA cites PMID:12882962, PMID:15491139, PMID:16524684; step
+        4
+  - subject: tyr269
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Tyr269 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/545/
+      snippet: Tyr295 abstracts a proton from the intermediate, eliminating the Tyr269.
+      notes: M-CSA entry 545, mechanism 1; M-CSA cites PMID:12882962, PMID:15491139, PMID:16524684; step
+        4
+  - subject: tyr295
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Tyr295 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/545/
+      snippet: Tyr295 abstracts a proton from the intermediate, eliminating the Tyr269.
+      notes: M-CSA entry 545, mechanism 1; M-CSA cites PMID:12882962, PMID:15491139, PMID:16524684; step
+        4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/545/
+      snippet: The PLP cofactor undergoes rearrangement to abstract a proton from Tyr295.
+      notes: M-CSA entry 545, mechanism 1; M-CSA cites PMID:12882962, PMID:15491139, PMID:16524684; step
+        5
+  - subject: tyr295
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Tyr295 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/545/
+      snippet: The PLP cofactor undergoes rearrangement to abstract a proton from Tyr295.
+      notes: M-CSA entry 545, mechanism 1; M-CSA cites PMID:12882962, PMID:15491139, PMID:16524684; step
+        5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/545/
+      snippet: Lys51 initiates the nucleophilic attack that is the first step in the transaldimination
+        reaction to release the product.
+      notes: M-CSA entry 545, mechanism 1; M-CSA cites PMID:12882962, PMID:15491139, PMID:16524684; step
+        6
+  - subject: lys51
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: Lys51 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/545/
+      snippet: Lys51 initiates the nucleophilic attack that is the first step in the transaldimination
+        reaction to release the product.
+      notes: M-CSA entry 545, mechanism 1; M-CSA cites PMID:12882962, PMID:15491139, PMID:16524684; step
+        6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/545/
+      snippet: In the final step of the transaldimination reaction, the PLP-Lys cofactor is regenerated
+        and the enzyme's final product released.
+      notes: M-CSA entry 545, mechanism 1; M-CSA cites PMID:12882962, PMID:15491139, PMID:16524684; step
+        7
+  - subject: step7
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step8
+    description: Step 7 leads to step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/545/
+      snippet: The enzyme product undergoes hydrolysis to produce the final products. It is likely that
+        this process occurs outside the active site.
+      notes: M-CSA entry 545, mechanism 1; M-CSA cites PMID:12882962, PMID:15491139, PMID:16524684; step
+        8
+  - subject: step8
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step9
+    description: Step 8 leads to step 9.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/545/
+      snippet: Final step of the external hydrolysis of the product.
+      notes: M-CSA entry 545, mechanism 1; M-CSA cites PMID:12882962, PMID:15491139, PMID:16524684; step
+        9
+  - subject: step9
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step10
+    description: Step 9 leads to step 10.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/545/
+      snippet: Products
+      notes: M-CSA entry 545, mechanism 1; M-CSA cites PMID:12882962, PMID:15491139, PMID:16524684; step
+        10
+  - subject: lys51
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys51 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/545/
+      snippet: covalently attached, electron pair acceptor, electron pair donor, nucleofuge, nucleophile,
+        proton acceptor, proton donor
+      notes: M-CSA entry 545, mechanism 1; M-CSA cites PMID:12882962, PMID:15491139, PMID:16524684; M-CSA
+        catalytic-residue roles for Lys51
+  - subject: tyr269
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr269 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/545/
+      snippet: covalently attached, electrostatic stabiliser, nucleofuge, nucleophile
+      notes: M-CSA entry 545, mechanism 1; M-CSA cites PMID:12882962, PMID:15491139, PMID:16524684; M-CSA
+        catalytic-residue roles for Tyr269
+  - subject: tyr295
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr295 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/545/
+      snippet: electrostatic stabiliser, proton acceptor, proton donor
+      notes: M-CSA entry 545, mechanism 1; M-CSA cites PMID:12882962, PMID:15491139, PMID:16524684; M-CSA
+        catalytic-residue roles for Tyr295
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/545/
+      snippet: The substrate ACC reacts with the PLP cofactor and with the enzyme ACC deaminase to first
+        produce an internal aldimine between the PLP and the Lys residue of the protein. This is followed
+        by an aminyl intermediate which produces the external aldimine. This is followed by nucleophilic
+        attack by a basic residue on the pro-S beta-carbon of ACC. Ring opening is initiated, aided by
+        a nearby second basi
+      notes: M-CSA entry 545, mechanism 1; M-CSA cites PMID:12882962, PMID:15491139, PMID:16524684; CATH
+        domain 3.40.50.1100 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/545/
+      snippet: The substrate ACC reacts with the PLP cofactor and with the enzyme ACC deaminase to first
+        produce an internal aldimine between the PLP and the Lys residue of the protein. This is followed
+        by an aminyl intermediate which produces the external aldimine. This is followed by nucleophilic
+        attack by a basic residue on the pro-S beta-carbon of ACC. Ring opening is initiated, aided by
+        a nearby second basi
+      notes: M-CSA entry 545, mechanism 1; M-CSA cites PMID:12882962, PMID:15491139, PMID:16524684; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/545/
+      snippet: The substrate ACC reacts with the PLP cofactor and with the enzyme ACC deaminase to first
+        produce an internal aldimine between the PLP and the Lys residue of the protein. This is followed
+        by an aminyl intermediate which produces the external aldimine. This is followed by nucleophilic
+        attack by a basic residue on the pro-S beta-carbon of ACC. Ring opening is initiated, aided by
+        a nearby second basi
+      notes: M-CSA entry 545, mechanism 1; M-CSA cites PMID:12882962, PMID:15491139, PMID:16524684; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/545/
+      snippet: The substrate ACC reacts with the PLP cofactor and with the enzyme ACC deaminase to first
+        produce an internal aldimine between the PLP and the Lys residue of the protein. This is followed
+        by an aminyl intermediate which produces the external aldimine. This is followed by nucleophilic
+        attack by a basic residue on the pro-S beta-carbon of ACC. Ring opening is initiated, aided by
+        a nearby second basi
+      notes: M-CSA entry 545, mechanism 1; M-CSA cites PMID:12882962, PMID:15491139, PMID:16524684; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/545/
+      snippet: The substrate ACC reacts with the PLP cofactor and with the enzyme ACC deaminase to first
+        produce an internal aldimine between the PLP and the Lys residue of the protein. This is followed
+        by an aminyl intermediate which produces the external aldimine. This is followed by nucleophilic
+        attack by a basic residue on the pro-S beta-carbon of ACC. Ring opening is initiated, aided by
+        a nearby second basi
+      notes: M-CSA entry 545, mechanism 1; M-CSA cites PMID:12882962, PMID:15491139, PMID:16524684; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/545/
+      snippet: The substrate ACC reacts with the PLP cofactor and with the enzyme ACC deaminase to first
+        produce an internal aldimine between the PLP and the Lys residue of the protein. This is followed
+        by an aminyl intermediate which produces the external aldimine. This is followed by nucleophilic
+        attack by a basic residue on the pro-S beta-carbon of ACC. Ring opening is initiated, aided by
+        a nearby second basi
+      notes: M-CSA entry 545, mechanism 1; M-CSA cites PMID:12882962, PMID:15491139, PMID:16524684; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (24 evidence-backed edges) transcribed from M-CSA entry 545;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

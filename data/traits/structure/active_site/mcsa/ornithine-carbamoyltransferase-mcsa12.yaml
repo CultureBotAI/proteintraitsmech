@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.1.3.3
 - CHEBI:58228
@@ -399,4 +399,255 @@ definitions:
       Ornithine transcarbamoylase (OTCase) catalyses the formation of citrulline from carbamoyl phosphate (CP) and L-ornithine (ORN) in the urea cycle. Deleterious mutations in the human OTCase gene are associated with clinical hyperammonemia, neurological symptoms or even death. Approximately 140 mutations that result in OTCase-linked disorders have been identified, and several mutant enzymes have been purified and characterized biochemically.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of ornithine carbamoyltransferase
+  description: Stepwise mechanism transcribed from M-CSA entry 12 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: arg141
+    label: catalytic Arg141 (M-CSA/PDB numbering; UniProt residue 141)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00480
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: his168
+    label: catalytic His168 (M-CSA/PDB numbering; UniProt residue 168)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00480
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: gln171
+    label: catalytic Gln171 (M-CSA/PDB numbering; UniProt residue 171)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00480
+    description: 'M-CSA roles: activator, hydrogen bond acceptor.'
+  - node_id: asp263
+    label: catalytic Asp263 (M-CSA/PDB numbering; UniProt residue 263)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00480
+    description: 'M-CSA roles: activator, electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond
+      donor, proton acceptor, proton donor.'
+  - node_id: cys303
+    label: catalytic Cys303 (M-CSA/PDB numbering; UniProt residue 303)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00480
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor,
+      proton relay.'
+  - node_id: arg330
+    label: catalytic Arg330 (M-CSA/PDB numbering; UniProt residue 330)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00480
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: reactant0
+    label: carbamoyl phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58228
+  - node_id: reactant1
+    label: L-ornithine
+    node_type: CHEMICAL
+    grounding: CHEBI:15729
+  - node_id: product0
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: product1
+    label: L-citrulline zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57743
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The ornithine amine initiates a nucleophilic attack on the carbonyl carbon of the carbamic
+      acid phosphate ester in an addition reaction.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The oxyanion collapses, eliminating phosphate, which deprotonates the newly formed secondary
+      amine.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: ornithine carbamoyltransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:12
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1370 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1370
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: ornithine carbamoyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.1.3.3
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/12/
+      snippet: The oxyanion collapses, eliminating phosphate, which deprotonates the newly formed secondary
+        amine.
+      notes: M-CSA entry 12, mechanism 2; M-CSA cites PMID:10813810, PMID:2290837, PMID:9253409, PMID:9852088;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/12/
+      snippet: Products.
+      notes: M-CSA entry 12, mechanism 2; M-CSA cites PMID:10813810, PMID:2290837, PMID:9253409, PMID:9852088;
+        step 3
+  - subject: arg141
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg141 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/12/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 12, mechanism 2; M-CSA cites PMID:10813810, PMID:2290837, PMID:9253409, PMID:9852088;
+        M-CSA catalytic-residue roles for Arg141
+  - subject: his168
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His168 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/12/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 12, mechanism 2; M-CSA cites PMID:10813810, PMID:2290837, PMID:9253409, PMID:9852088;
+        M-CSA catalytic-residue roles for His168
+  - subject: gln171
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln171 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/12/
+      snippet: activator, hydrogen bond acceptor
+      notes: M-CSA entry 12, mechanism 2; M-CSA cites PMID:10813810, PMID:2290837, PMID:9253409, PMID:9852088;
+        M-CSA catalytic-residue roles for Gln171
+  - subject: asp263
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp263 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/12/
+      snippet: activator, electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, proton
+        acceptor, proton donor
+      notes: M-CSA entry 12, mechanism 2; M-CSA cites PMID:10813810, PMID:2290837, PMID:9253409, PMID:9852088;
+        M-CSA catalytic-residue roles for Asp263
+  - subject: cys303
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys303 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/12/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 12, mechanism 2; M-CSA cites PMID:10813810, PMID:2290837, PMID:9253409, PMID:9852088;
+        M-CSA catalytic-residue roles for Cys303
+  - subject: arg330
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg330 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/12/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 12, mechanism 2; M-CSA cites PMID:10813810, PMID:2290837, PMID:9253409, PMID:9852088;
+        M-CSA catalytic-residue roles for Arg330
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/12/
+      snippet: Here, the protein active site acts to stabilise the intermediates and transition states.
+        The ornithine substrate binds in the neutral form. The amine group initiates a nucleophilic attach
+        on the carbonyl of the carbamoyl phosphate substrate. This forms a tetrahedral intermediate that
+        collapses, eliminating the phosphate product with concomitant deprotonation of the L-citrulline.
+      notes: M-CSA entry 12, mechanism 2; M-CSA cites PMID:10813810, PMID:2290837, PMID:9253409, PMID:9852088;
+        CATH domain 3.40.50.1370 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/12/
+      snippet: Here, the protein active site acts to stabilise the intermediates and transition states.
+        The ornithine substrate binds in the neutral form. The amine group initiates a nucleophilic attach
+        on the carbonyl of the carbamoyl phosphate substrate. This forms a tetrahedral intermediate that
+        collapses, eliminating the phosphate product with concomitant deprotonation of the L-citrulline.
+      notes: M-CSA entry 12, mechanism 2; M-CSA cites PMID:10813810, PMID:2290837, PMID:9253409, PMID:9852088;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/12/
+      snippet: Here, the protein active site acts to stabilise the intermediates and transition states.
+        The ornithine substrate binds in the neutral form. The amine group initiates a nucleophilic attach
+        on the carbonyl of the carbamoyl phosphate substrate. This forms a tetrahedral intermediate that
+        collapses, eliminating the phosphate product with concomitant deprotonation of the L-citrulline.
+      notes: M-CSA entry 12, mechanism 2; M-CSA cites PMID:10813810, PMID:2290837, PMID:9253409, PMID:9852088;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/12/
+      snippet: Here, the protein active site acts to stabilise the intermediates and transition states.
+        The ornithine substrate binds in the neutral form. The amine group initiates a nucleophilic attach
+        on the carbonyl of the carbamoyl phosphate substrate. This forms a tetrahedral intermediate that
+        collapses, eliminating the phosphate product with concomitant deprotonation of the L-citrulline.
+      notes: M-CSA entry 12, mechanism 2; M-CSA cites PMID:10813810, PMID:2290837, PMID:9253409, PMID:9852088;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/12/
+      snippet: Here, the protein active site acts to stabilise the intermediates and transition states.
+        The ornithine substrate binds in the neutral form. The amine group initiates a nucleophilic attach
+        on the carbonyl of the carbamoyl phosphate substrate. This forms a tetrahedral intermediate that
+        collapses, eliminating the phosphate product with concomitant deprotonation of the L-citrulline.
+      notes: M-CSA entry 12, mechanism 2; M-CSA cites PMID:10813810, PMID:2290837, PMID:9253409, PMID:9852088;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/12/
+      snippet: Here, the protein active site acts to stabilise the intermediates and transition states.
+        The ornithine substrate binds in the neutral form. The amine group initiates a nucleophilic attach
+        on the carbonyl of the carbamoyl phosphate substrate. This forms a tetrahedral intermediate that
+        collapses, eliminating the phosphate product with concomitant deprotonation of the L-citrulline.
+      notes: M-CSA entry 12, mechanism 2; M-CSA cites PMID:10813810, PMID:2290837, PMID:9253409, PMID:9852088;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (14 evidence-backed edges) transcribed from M-CSA entry 12;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.13.11.2
 - CHEBI:15379
@@ -208,4 +208,376 @@ definitions:
       The catecholic dioxygenases catalyse the addition of molecular oxygen and subsequent ring cleavage into catecholic ring structures. Extradiol catecholic dioxygenases add oxygen into bonds other than the intradiol 4,5 bond.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of catechol 2,3-dioxygenase
+  description: Stepwise mechanism transcribed from M-CSA entry 34 (8 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: his153
+    label: catalytic His153 (M-CSA/PDB numbering; UniProt residue 153)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06622
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his199
+    label: catalytic His199 (M-CSA/PDB numbering; UniProt residue 199)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06622
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: his214
+    label: catalytic His214 (M-CSA/PDB numbering; UniProt residue 214)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06622
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his246
+    label: catalytic His246 (M-CSA/PDB numbering; UniProt residue 246)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06622
+    description: 'M-CSA roles: polar/non-polar interaction, steric role.'
+  - node_id: tyr255
+    label: catalytic Tyr255 (M-CSA/PDB numbering; UniProt residue 255)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06622
+    description: 'M-CSA roles: polar/non-polar interaction, steric role.'
+  - node_id: glu265
+    label: catalytic Glu265 (M-CSA/PDB numbering; UniProt residue 265)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06622
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: dioxygen
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+  - node_id: reactant1
+    label: catechol
+    node_type: CHEMICAL
+    grounding: CHEBI:18135
+  - node_id: product0
+    label: 2-hydroxy-6-oxohexa-2,4-dienoic acid
+    node_type: CHEMICAL
+    grounding: CHEBI:17236
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The leaving hydroxide ion deprotonates the catechol, which binds to the Fe(II) centre
+      in a substitution reaction.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Iron donates an electron to the oxygen substrate, which becomes a ligand of the iron
+      in a redox reaction.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: His199 deprotonates the remaining hydroxyl group of the bound catechol, initiating double
+      bond rearrangement that results in a single electron transfer from the catechol to the iron centre
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The dioxygen iron ligand initiates a nucleophilic attack on the carbon adjacent to the
+      radical formed in the previous step in an addition reaction. The oxygen of the catechol bound to
+      the iron donates one electron to the radical iron-bound oxygen, and another to the carbon radical,
+      forming a carbonyl bond. Double bond rearrangement from the addition results in deprotonation of
+      His199.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: His199 deprotonates the hydroxide, initiating double bond rearrangement which results
+      in extension of the ring by one atom and cleavage of the peroxo bond in a substitution reaction.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: The oxo iron-ligand initiated a nucleophilic attack on the carbonyl carbon in a substitution
+      reaction, cleaving the rind and initiating double bond rearrangement that results in the deprotonation
+      of His199.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: The product deprotonates a water molecule and is displaced from the iron centre by the
+      hydroxide and water in an inferred return step.
+  - node_id: step8
+    label: mechanism step 8
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: catechol 2,3-dioxygenase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:34
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.10.180.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.10.180.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: catechol 2,3-dioxygenase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.13.11.2
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/34/
+      snippet: Iron donates an electron to the oxygen substrate, which becomes a ligand of the iron in
+        a redox reaction.
+      notes: M-CSA entry 34, mechanism 1; M-CSA cites PMID:10368270, PMID:11076500, PMID:15347689; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/34/
+      snippet: His199 deprotonates the remaining hydroxyl group of the bound catechol, initiating double
+        bond rearrangement that results in a single electron transfer from the catechol to the iron centre
+      notes: M-CSA entry 34, mechanism 1; M-CSA cites PMID:10368270, PMID:11076500, PMID:15347689; step
+        3
+  - subject: his199
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His199 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/34/
+      snippet: His199 deprotonates the remaining hydroxyl group of the bound catechol, initiating double
+        bond rearrangement that results in a single electron transfer from the catechol to the iron centre
+      notes: M-CSA entry 34, mechanism 1; M-CSA cites PMID:10368270, PMID:11076500, PMID:15347689; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/34/
+      snippet: The dioxygen iron ligand initiates a nucleophilic attack on the carbon adjacent to the
+        radical formed in the previous step in an addition reaction. The oxygen of the catechol bound
+        to the iron donates one electron to the radical iron-bound oxygen, and another to the carbon radical,
+        forming a carbonyl bond. Double bond rearrangement from the addition results in deprotonation
+        of His199.
+      notes: M-CSA entry 34, mechanism 1; M-CSA cites PMID:10368270, PMID:11076500, PMID:15347689; step
+        4
+  - subject: his199
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: His199 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/34/
+      snippet: The dioxygen iron ligand initiates a nucleophilic attack on the carbon adjacent to the
+        radical formed in the previous step in an addition reaction. The oxygen of the catechol bound
+        to the iron donates one electron to the radical iron-bound oxygen, and another to the carbon radical,
+        forming a carbonyl bond. Double bond rearrangement from the addition results in deprotonation
+        of His199.
+      notes: M-CSA entry 34, mechanism 1; M-CSA cites PMID:10368270, PMID:11076500, PMID:15347689; step
+        4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/34/
+      snippet: His199 deprotonates the hydroxide, initiating double bond rearrangement which results in
+        extension of the ring by one atom and cleavage of the peroxo bond in a substitution reaction.
+      notes: M-CSA entry 34, mechanism 1; M-CSA cites PMID:10368270, PMID:11076500, PMID:15347689; step
+        5
+  - subject: his199
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: His199 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/34/
+      snippet: His199 deprotonates the hydroxide, initiating double bond rearrangement which results in
+        extension of the ring by one atom and cleavage of the peroxo bond in a substitution reaction.
+      notes: M-CSA entry 34, mechanism 1; M-CSA cites PMID:10368270, PMID:11076500, PMID:15347689; step
+        5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/34/
+      snippet: The oxo iron-ligand initiated a nucleophilic attack on the carbonyl carbon in a substitution
+        reaction, cleaving the rind and initiating double bond rearrangement that results in the deprotonation
+        of His199.
+      notes: M-CSA entry 34, mechanism 1; M-CSA cites PMID:10368270, PMID:11076500, PMID:15347689; step
+        6
+  - subject: his199
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: His199 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/34/
+      snippet: The oxo iron-ligand initiated a nucleophilic attack on the carbonyl carbon in a substitution
+        reaction, cleaving the rind and initiating double bond rearrangement that results in the deprotonation
+        of His199.
+      notes: M-CSA entry 34, mechanism 1; M-CSA cites PMID:10368270, PMID:11076500, PMID:15347689; step
+        6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/34/
+      snippet: The product deprotonates a water molecule and is displaced from the iron centre by the
+        hydroxide and water in an inferred return step.
+      notes: M-CSA entry 34, mechanism 1; M-CSA cites PMID:10368270, PMID:11076500, PMID:15347689; step
+        7
+  - subject: step7
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step8
+    description: Step 7 leads to step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/34/
+      snippet: Products.
+      notes: M-CSA entry 34, mechanism 1; M-CSA cites PMID:10368270, PMID:11076500, PMID:15347689; step
+        8
+  - subject: his153
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His153 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/34/
+      snippet: metal ligand
+      notes: M-CSA entry 34, mechanism 1; M-CSA cites PMID:10368270, PMID:11076500, PMID:15347689; M-CSA
+        catalytic-residue roles for His153
+  - subject: his199
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His199 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/34/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 34, mechanism 1; M-CSA cites PMID:10368270, PMID:11076500, PMID:15347689; M-CSA
+        catalytic-residue roles for His199
+  - subject: his214
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His214 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/34/
+      snippet: metal ligand
+      notes: M-CSA entry 34, mechanism 1; M-CSA cites PMID:10368270, PMID:11076500, PMID:15347689; M-CSA
+        catalytic-residue roles for His214
+  - subject: his246
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His246 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/34/
+      snippet: polar/non-polar interaction, steric role
+      notes: M-CSA entry 34, mechanism 1; M-CSA cites PMID:10368270, PMID:11076500, PMID:15347689; M-CSA
+        catalytic-residue roles for His246
+  - subject: tyr255
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr255 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/34/
+      snippet: polar/non-polar interaction, steric role
+      notes: M-CSA entry 34, mechanism 1; M-CSA cites PMID:10368270, PMID:11076500, PMID:15347689; M-CSA
+        catalytic-residue roles for Tyr255
+  - subject: glu265
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu265 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/34/
+      snippet: metal ligand
+      notes: M-CSA entry 34, mechanism 1; M-CSA cites PMID:10368270, PMID:11076500, PMID:15347689; M-CSA
+        catalytic-residue roles for Glu265
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/34/
+      snippet: Circular dichroism, magnetic circular dichroism and X-ray absorption spectroscopy on the
+        resting enzyme all support the presence of a five-coordinated Fe(II) site with square-pyramidal
+        geometry. Fe is co-ordinated by histidines 153 and 214, and glutamate 265 as well as a water and
+        a hydroxyl.  Only the Glu265, Tyr255 and the water molecules - of which there are two bound to
+        the active site Fe(II)
+      notes: M-CSA entry 34, mechanism 1; M-CSA cites PMID:10368270, PMID:11076500, PMID:15347689; CATH
+        domain 3.10.180.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/34/
+      snippet: Circular dichroism, magnetic circular dichroism and X-ray absorption spectroscopy on the
+        resting enzyme all support the presence of a five-coordinated Fe(II) site with square-pyramidal
+        geometry. Fe is co-ordinated by histidines 153 and 214, and glutamate 265 as well as a water and
+        a hydroxyl.  Only the Glu265, Tyr255 and the water molecules - of which there are two bound to
+        the active site Fe(II)
+      notes: M-CSA entry 34, mechanism 1; M-CSA cites PMID:10368270, PMID:11076500, PMID:15347689; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/34/
+      snippet: Circular dichroism, magnetic circular dichroism and X-ray absorption spectroscopy on the
+        resting enzyme all support the presence of a five-coordinated Fe(II) site with square-pyramidal
+        geometry. Fe is co-ordinated by histidines 153 and 214, and glutamate 265 as well as a water and
+        a hydroxyl.  Only the Glu265, Tyr255 and the water molecules - of which there are two bound to
+        the active site Fe(II)
+      notes: M-CSA entry 34, mechanism 1; M-CSA cites PMID:10368270, PMID:11076500, PMID:15347689; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/34/
+      snippet: Circular dichroism, magnetic circular dichroism and X-ray absorption spectroscopy on the
+        resting enzyme all support the presence of a five-coordinated Fe(II) site with square-pyramidal
+        geometry. Fe is co-ordinated by histidines 153 and 214, and glutamate 265 as well as a water and
+        a hydroxyl.  Only the Glu265, Tyr255 and the water molecules - of which there are two bound to
+        the active site Fe(II)
+      notes: M-CSA entry 34, mechanism 1; M-CSA cites PMID:10368270, PMID:11076500, PMID:15347689; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/34/
+      snippet: Circular dichroism, magnetic circular dichroism and X-ray absorption spectroscopy on the
+        resting enzyme all support the presence of a five-coordinated Fe(II) site with square-pyramidal
+        geometry. Fe is co-ordinated by histidines 153 and 214, and glutamate 265 as well as a water and
+        a hydroxyl.  Only the Glu265, Tyr255 and the water molecules - of which there are two bound to
+        the active site Fe(II)
+      notes: M-CSA entry 34, mechanism 1; M-CSA cites PMID:10368270, PMID:11076500, PMID:15347689; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (22 evidence-backed edges) transcribed from M-CSA entry 34;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

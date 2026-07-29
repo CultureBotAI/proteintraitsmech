@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.22.46
 - CHEBI:18019
@@ -797,4 +797,314 @@ definitions:
       The leader protease of foot-and-mouth disease virus FMDV Lpro is a papain-like protease where, as well as cleaving itself from the nascent viral polyprotein, disables host cell protein synthesis by specific proteolysis of a cellular protein: the eukaryotic initiation factor 4G (eIF4G). Its sole role in viral maturation is to free itself from the polyprotein by cleavage between its own C-terminus and the N-terminus of VP4 at the sequence ArgLys LeuLys-|-GlyAlaGlySer. Later it plays the role of lysing the host cell protein eukaryotic initiation factor eIF4G at the sequence AlaAsnLeuGly-|-ArgThrThrLeu and other eIF4G sequences. As a result, the domain of eIF4G which binds the cap-binding protein eIF4E is separated from the domain of eIF4G which binds eIF3, so that the infected cell is unable to recruit its own capped mRNA to the 40S ribosome. Substrate specificity is achieved with four acidic residues 163-166, not seen in other papain-like proteases.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of L-peptidase
+  description: Stepwise mechanism transcribed from M-CSA entry 746 (6 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: asn46
+    label: catalytic Asn46 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P03305
+    description: 'M-CSA roles: electrostatic stabiliser, polar interaction.'
+  - node_id: ala51
+    label: catalytic Ala51 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P03305
+    description: 'M-CSA roles: electrostatic stabiliser, polar interaction.'
+  - node_id: his148
+    label: catalytic His148 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P03305
+    description: 'M-CSA roles: hydrogen bond acceptor, proton acceptor, proton donor.'
+  - node_id: asp163
+    label: catalytic Asp163 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P03305
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: reactant0
+    label: Lys-Gly
+    node_type: CHEMICAL
+    grounding: CHEBI:73604
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: L-lysine
+    node_type: CHEMICAL
+    grounding: CHEBI:18019
+  - node_id: product1
+    label: glycine
+    node_type: CHEMICAL
+    grounding: CHEBI:15428
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His148 deprotonates Cys51 thiol group.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Thiolate of Cys51 attacks the carbonyl carbon in the peptide bond in a nucleophilic addition.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Peptide bond cleavage occurs by elimination of the amine  leaving group, aided by His148
+      proton donation.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: His148 deprotonates a water molecule, increasing its nucleophilicity to attack the C-terminal
+      carbonyl carbon, releasing covalently attached cysteine.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: To regenerate the active site, His148 protonates Cys51, ready for another round of catalysis.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: L-peptidase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:746
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.70.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.70.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: L-peptidase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.22.46
+  edges:
+  - subject: his148
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His148 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/746/
+      snippet: His148 deprotonates Cys51 thiol group.
+      notes: M-CSA entry 746, mechanism 1; M-CSA cites PMID:12475203, PMID:25240326, PMID:9857201; step
+        1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/746/
+      snippet: Thiolate of Cys51 attacks the carbonyl carbon in the peptide bond in a nucleophilic addition.
+      notes: M-CSA entry 746, mechanism 1; M-CSA cites PMID:12475203, PMID:25240326, PMID:9857201; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/746/
+      snippet: Peptide bond cleavage occurs by elimination of the amine  leaving group, aided by His148
+        proton donation.
+      notes: M-CSA entry 746, mechanism 1; M-CSA cites PMID:12475203, PMID:25240326, PMID:9857201; step
+        3
+  - subject: his148
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His148 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/746/
+      snippet: Peptide bond cleavage occurs by elimination of the amine  leaving group, aided by His148
+        proton donation.
+      notes: M-CSA entry 746, mechanism 1; M-CSA cites PMID:12475203, PMID:25240326, PMID:9857201; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/746/
+      snippet: His148 deprotonates a water molecule, increasing its nucleophilicity to attack the C-terminal
+        carbonyl carbon, releasing covalently attached cysteine.
+      notes: M-CSA entry 746, mechanism 1; M-CSA cites PMID:12475203, PMID:25240326, PMID:9857201; step
+        4
+  - subject: his148
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: His148 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/746/
+      snippet: His148 deprotonates a water molecule, increasing its nucleophilicity to attack the C-terminal
+        carbonyl carbon, releasing covalently attached cysteine.
+      notes: M-CSA entry 746, mechanism 1; M-CSA cites PMID:12475203, PMID:25240326, PMID:9857201; step
+        4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/746/
+      snippet: To regenerate the active site, His148 protonates Cys51, ready for another round of catalysis.
+      notes: M-CSA entry 746, mechanism 1; M-CSA cites PMID:12475203, PMID:25240326, PMID:9857201; step
+        5
+  - subject: his148
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: His148 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/746/
+      snippet: To regenerate the active site, His148 protonates Cys51, ready for another round of catalysis.
+      notes: M-CSA entry 746, mechanism 1; M-CSA cites PMID:12475203, PMID:25240326, PMID:9857201; step
+        5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/746/
+      snippet: Products.
+      notes: M-CSA entry 746, mechanism 1; M-CSA cites PMID:12475203, PMID:25240326, PMID:9857201; step
+        6
+  - subject: asn46
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn46 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/746/
+      snippet: electrostatic stabiliser, polar interaction
+      notes: M-CSA entry 746, mechanism 1; M-CSA cites PMID:12475203, PMID:25240326, PMID:9857201; M-CSA
+        catalytic-residue roles for Asn46
+  - subject: ala51
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ala51 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/746/
+      snippet: electrostatic stabiliser, polar interaction
+      notes: M-CSA entry 746, mechanism 1; M-CSA cites PMID:12475203, PMID:25240326, PMID:9857201; M-CSA
+        catalytic-residue roles for Ala51
+  - subject: his148
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His148 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/746/
+      snippet: hydrogen bond acceptor, proton acceptor, proton donor
+      notes: M-CSA entry 746, mechanism 1; M-CSA cites PMID:12475203, PMID:25240326, PMID:9857201; M-CSA
+        catalytic-residue roles for His148
+  - subject: asp163
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp163 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/746/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 746, mechanism 1; M-CSA cites PMID:12475203, PMID:25240326, PMID:9857201; M-CSA
+        catalytic-residue roles for Asp163
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/746/
+      snippet: FMDV Leader protease is a classic cysteine protease with a unique binding domain which
+        allows specific selection of its substrates - its own C terminus and eIF4G. His148 is positioned
+        by Asp163 so as to be able to deprotonate Cys51, increasing its nucleophilicity, prior to Cys51
+        attacking the carbon of carbonyl group of the peptide bond. This results in the formation of a
+        charged tetrahedral inter
+      notes: M-CSA entry 746, mechanism 1; M-CSA cites PMID:12475203, PMID:25240326, PMID:9857201; CATH
+        domain 3.90.70.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/746/
+      snippet: FMDV Leader protease is a classic cysteine protease with a unique binding domain which
+        allows specific selection of its substrates - its own C terminus and eIF4G. His148 is positioned
+        by Asp163 so as to be able to deprotonate Cys51, increasing its nucleophilicity, prior to Cys51
+        attacking the carbon of carbonyl group of the peptide bond. This results in the formation of a
+        charged tetrahedral inter
+      notes: M-CSA entry 746, mechanism 1; M-CSA cites PMID:12475203, PMID:25240326, PMID:9857201; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/746/
+      snippet: FMDV Leader protease is a classic cysteine protease with a unique binding domain which
+        allows specific selection of its substrates - its own C terminus and eIF4G. His148 is positioned
+        by Asp163 so as to be able to deprotonate Cys51, increasing its nucleophilicity, prior to Cys51
+        attacking the carbon of carbonyl group of the peptide bond. This results in the formation of a
+        charged tetrahedral inter
+      notes: M-CSA entry 746, mechanism 1; M-CSA cites PMID:12475203, PMID:25240326, PMID:9857201; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/746/
+      snippet: FMDV Leader protease is a classic cysteine protease with a unique binding domain which
+        allows specific selection of its substrates - its own C terminus and eIF4G. His148 is positioned
+        by Asp163 so as to be able to deprotonate Cys51, increasing its nucleophilicity, prior to Cys51
+        attacking the carbon of carbonyl group of the peptide bond. This results in the formation of a
+        charged tetrahedral inter
+      notes: M-CSA entry 746, mechanism 1; M-CSA cites PMID:12475203, PMID:25240326, PMID:9857201; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/746/
+      snippet: FMDV Leader protease is a classic cysteine protease with a unique binding domain which
+        allows specific selection of its substrates - its own C terminus and eIF4G. His148 is positioned
+        by Asp163 so as to be able to deprotonate Cys51, increasing its nucleophilicity, prior to Cys51
+        attacking the carbon of carbonyl group of the peptide bond. This results in the formation of a
+        charged tetrahedral inter
+      notes: M-CSA entry 746, mechanism 1; M-CSA cites PMID:12475203, PMID:25240326, PMID:9857201; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/746/
+      snippet: FMDV Leader protease is a classic cysteine protease with a unique binding domain which
+        allows specific selection of its substrates - its own C terminus and eIF4G. His148 is positioned
+        by Asp163 so as to be able to deprotonate Cys51, increasing its nucleophilicity, prior to Cys51
+        attacking the carbon of carbonyl group of the peptide bond. This results in the formation of a
+        charged tetrahedral inter
+      notes: M-CSA entry 746, mechanism 1; M-CSA cites PMID:12475203, PMID:25240326, PMID:9857201; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (19 evidence-backed edges) transcribed from M-CSA entry 746;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

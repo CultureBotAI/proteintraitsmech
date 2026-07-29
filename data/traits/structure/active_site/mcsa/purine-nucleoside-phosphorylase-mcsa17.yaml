@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.4.2.1
 - CHEBI:17596
@@ -287,4 +287,343 @@ definitions:
       Purine-nucleoside phosphorylase (PNP) catalyses the reversible phosphorolysis of purine nucleosides to generate the corresponding purine base and ribose 1-phosphate. There are two types of this enzyme, showing reasonably high sequence similarity within families and little identity between them. Type I (of which this entry is an example) tend to be trimeric and are found mainly in mammals. Type I enzymes are specific for inosine/guanine nucleosides and have a molecular mass of around 90kDa. Type II tend to be hexameric (although some are thought to be tetramers) and have broad substrate specificity. Type II enzymes are found mainly in prokaryotes and have a molecular mass between 110 and 150 kDa. There are also some PNP enzymes which fall into neither class.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of purine-nucleoside phosphorylase
+  description: Stepwise mechanism transcribed from M-CSA entry 17 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: ser33
+    label: catalytic Ser33 (M-CSA/PDB numbering; UniProt residue 33)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00491
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: his64
+    label: catalytic His64 (M-CSA/PDB numbering; UniProt residue 64)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00491
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his86
+    label: catalytic His86 (M-CSA/PDB numbering; UniProt residue 86)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00491
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      proton acceptor, proton donor.'
+  - node_id: tyr88
+    label: catalytic Tyr88 (M-CSA/PDB numbering; UniProt residue 88)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00491
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: glu89
+    label: catalytic Glu89 (M-CSA/PDB numbering; UniProt residue 89)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00491
+    description: 'M-CSA roles: activator, electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: ala116
+    label: catalytic Ala116 (M-CSA/PDB numbering; UniProt residue 116)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00491
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: met219
+    label: catalytic Met219 (M-CSA/PDB numbering; UniProt residue 219)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00491
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: ser220
+    label: catalytic Ser220 (M-CSA/PDB numbering; UniProt residue 220)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00491
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: asn243
+    label: catalytic Asn243 (M-CSA/PDB numbering; UniProt residue 243)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00491
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor, polar interaction.'
+  - node_id: his257
+    label: catalytic His257 (M-CSA/PDB numbering; UniProt residue 257)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00491
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: reactant0
+    label: inosine
+    node_type: CHEMICAL
+    grounding: CHEBI:17596
+  - node_id: reactant1
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: product0
+    label: alpha-D-ribose 1-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57720
+  - node_id: product1
+    label: hypoxanthine
+    node_type: CHEMICAL
+    grounding: CHEBI:17368
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The incoming nucleophilic phosphate group is stabilised by the Ser33-His64-His86 catalytic
+      triad. O4 on the phosphate attacks the glycosidic C1.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Proton shuttle from the phosphate group via the 2' and 3' OH on the ribose sugar to N9
+      on hypoxanthine.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: purine-nucleoside phosphorylase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:17
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1580 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1580
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: purine-nucleoside phosphorylase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.4.2.1
+  edges:
+  - subject: ser33
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser33 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/17/
+      snippet: The incoming nucleophilic phosphate group is stabilised by the Ser33-His64-His86 catalytic
+        triad. O4 on the phosphate attacks the glycosidic C1.
+      notes: M-CSA entry 17, mechanism 3; M-CSA cites PMID:14982926, PMID:26985580; step 1
+  - subject: his64
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His64 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/17/
+      snippet: The incoming nucleophilic phosphate group is stabilised by the Ser33-His64-His86 catalytic
+        triad. O4 on the phosphate attacks the glycosidic C1.
+      notes: M-CSA entry 17, mechanism 3; M-CSA cites PMID:14982926, PMID:26985580; step 1
+  - subject: his86
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His86 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/17/
+      snippet: The incoming nucleophilic phosphate group is stabilised by the Ser33-His64-His86 catalytic
+        triad. O4 on the phosphate attacks the glycosidic C1.
+      notes: M-CSA entry 17, mechanism 3; M-CSA cites PMID:14982926, PMID:26985580; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/17/
+      snippet: Proton shuttle from the phosphate group via the 2' and 3' OH on the ribose sugar to N9
+        on hypoxanthine.
+      notes: M-CSA entry 17, mechanism 3; M-CSA cites PMID:14982926, PMID:26985580; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/17/
+      snippet: Products.
+      notes: M-CSA entry 17, mechanism 3; M-CSA cites PMID:14982926, PMID:26985580; step 3
+  - subject: ser33
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser33 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/17/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 17, mechanism 3; M-CSA cites PMID:14982926, PMID:26985580; M-CSA catalytic-residue
+        roles for Ser33
+  - subject: his64
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His64 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/17/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 17, mechanism 3; M-CSA cites PMID:14982926, PMID:26985580; M-CSA catalytic-residue
+        roles for His64
+  - subject: his86
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His86 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/17/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+        proton donor
+      notes: M-CSA entry 17, mechanism 3; M-CSA cites PMID:14982926, PMID:26985580; M-CSA catalytic-residue
+        roles for His86
+  - subject: tyr88
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr88 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/17/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 17, mechanism 3; M-CSA cites PMID:14982926, PMID:26985580; M-CSA catalytic-residue
+        roles for Tyr88
+  - subject: glu89
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu89 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/17/
+      snippet: activator, electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 17, mechanism 3; M-CSA cites PMID:14982926, PMID:26985580; M-CSA catalytic-residue
+        roles for Glu89
+  - subject: ala116
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ala116 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/17/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 17, mechanism 3; M-CSA cites PMID:14982926, PMID:26985580; M-CSA catalytic-residue
+        roles for Ala116
+  - subject: met219
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Met219 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/17/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 17, mechanism 3; M-CSA cites PMID:14982926, PMID:26985580; M-CSA catalytic-residue
+        roles for Met219
+  - subject: ser220
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser220 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/17/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 17, mechanism 3; M-CSA cites PMID:14982926, PMID:26985580; M-CSA catalytic-residue
+        roles for Ser220
+  - subject: asn243
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn243 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/17/
+      snippet: electrostatic stabiliser, hydrogen bond donor, polar interaction
+      notes: M-CSA entry 17, mechanism 3; M-CSA cites PMID:14982926, PMID:26985580; M-CSA catalytic-residue
+        roles for Asn243
+  - subject: his257
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His257 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/17/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 17, mechanism 3; M-CSA cites PMID:14982926, PMID:26985580; M-CSA catalytic-residue
+        roles for His257
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/17/
+      snippet: The phosphate group is di-anionic and is stabilised by the Ser33-His64-His86 catalytic
+        triad. It attacks the electrophilic C1 involved in the glycosidic bond in an SN2 manner. His257,
+        Tyr88, Met119 all stabilise the ribose ring transition state while Ala116 and Ser220 also stabilise
+        alongside the triad the phosphate transition state. Hypoxanthine is then protonated by the phosphoryl
+        proton via the
+      notes: M-CSA entry 17, mechanism 3; M-CSA cites PMID:14982926, PMID:26985580; CATH domain 3.40.50.1580
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/17/
+      snippet: The phosphate group is di-anionic and is stabilised by the Ser33-His64-His86 catalytic
+        triad. It attacks the electrophilic C1 involved in the glycosidic bond in an SN2 manner. His257,
+        Tyr88, Met119 all stabilise the ribose ring transition state while Ala116 and Ser220 also stabilise
+        alongside the triad the phosphate transition state. Hypoxanthine is then protonated by the phosphoryl
+        proton via the
+      notes: M-CSA entry 17, mechanism 3; M-CSA cites PMID:14982926, PMID:26985580; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/17/
+      snippet: The phosphate group is di-anionic and is stabilised by the Ser33-His64-His86 catalytic
+        triad. It attacks the electrophilic C1 involved in the glycosidic bond in an SN2 manner. His257,
+        Tyr88, Met119 all stabilise the ribose ring transition state while Ala116 and Ser220 also stabilise
+        alongside the triad the phosphate transition state. Hypoxanthine is then protonated by the phosphoryl
+        proton via the
+      notes: M-CSA entry 17, mechanism 3; M-CSA cites PMID:14982926, PMID:26985580; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/17/
+      snippet: The phosphate group is di-anionic and is stabilised by the Ser33-His64-His86 catalytic
+        triad. It attacks the electrophilic C1 involved in the glycosidic bond in an SN2 manner. His257,
+        Tyr88, Met119 all stabilise the ribose ring transition state while Ala116 and Ser220 also stabilise
+        alongside the triad the phosphate transition state. Hypoxanthine is then protonated by the phosphoryl
+        proton via the
+      notes: M-CSA entry 17, mechanism 3; M-CSA cites PMID:14982926, PMID:26985580; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/17/
+      snippet: The phosphate group is di-anionic and is stabilised by the Ser33-His64-His86 catalytic
+        triad. It attacks the electrophilic C1 involved in the glycosidic bond in an SN2 manner. His257,
+        Tyr88, Met119 all stabilise the ribose ring transition state while Ala116 and Ser220 also stabilise
+        alongside the triad the phosphate transition state. Hypoxanthine is then protonated by the phosphoryl
+        proton via the
+      notes: M-CSA entry 17, mechanism 3; M-CSA cites PMID:14982926, PMID:26985580; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/17/
+      snippet: The phosphate group is di-anionic and is stabilised by the Ser33-His64-His86 catalytic
+        triad. It attacks the electrophilic C1 involved in the glycosidic bond in an SN2 manner. His257,
+        Tyr88, Met119 all stabilise the ribose ring transition state while Ala116 and Ser220 also stabilise
+        alongside the triad the phosphate transition state. Hypoxanthine is then protonated by the phosphoryl
+        proton via the
+      notes: M-CSA entry 17, mechanism 3; M-CSA cites PMID:14982926, PMID:26985580; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (21 evidence-backed edges) transcribed from M-CSA entry 17;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

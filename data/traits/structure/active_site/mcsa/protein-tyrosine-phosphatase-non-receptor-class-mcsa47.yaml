@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.3.48
 - CHEBI:15377
@@ -246,4 +246,348 @@ definitions:
       The protein tyrosine phosphatases are a group of enzymes that remove the phosphate groups from tyrosine residues. These enzymes are important in cell signalling during growth and development and act antagonistically with the protein tyrosine kinases. The PTP family is subdivided into several groups including the tyrosine specific receptor and non-receptor-like enzymes, the dual-specificity group, the low molecular weight PTPs and the cdc25 group. All members share the same mechanism of hydrolysis and are characterised by a CX5R sequence motif. The CX5R motif forms a loop that provides an oxyanion hole for the stabilisation of the phosphate group. Binding to this loop causes the movement of a conserved aspartic acid into the active site. However the cdc25 group is highly divergent. A cysteine-phosphate intermediate is formed during the reaction and is then hydrolysed. Although the different groups of PTPs are relatively divergent their active sites are highly conserved. The Yersinia genus contains a plasmid encoding a virulence factor, YopH, a tyrosine phosphatase which translocates itself into the host cell using the N-terminus. YopH is hyperactive compared to human PTPases. The catalytic domains are structurally homologous to human PTP1B, which is also a tyrosine phosphatase. YopH cleaves the phosphate off phosphorylated tyrosine residues on host proteins, interrupting the control of many eukaryotic cellular processes, and contributes to the ability to resist phagocytosis by peritoneal macrophages.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of protein-tyrosine-phosphatase non-receptor class
+  description: Stepwise mechanism transcribed from M-CSA entry 47 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: glu290
+    label: catalytic Glu290 (M-CSA/PDB numbering; UniProt residue 290)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15273
+    description: 'M-CSA roles: steric role.'
+  - node_id: trp354
+    label: catalytic Trp354 (M-CSA/PDB numbering; UniProt residue 354)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15273
+    description: 'M-CSA roles: steric role.'
+  - node_id: asp356
+    label: catalytic Asp356 (M-CSA/PDB numbering; UniProt residue 356)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15273
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: his402
+    label: catalytic His402 (M-CSA/PDB numbering; UniProt residue 402)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15273
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: cys403
+    label: catalytic Cys403 (M-CSA/PDB numbering; UniProt residue 403)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15273
+    description: 'M-CSA roles: nucleofuge, nucleophile.'
+  - node_id: arg409
+    label: catalytic Arg409 (M-CSA/PDB numbering; UniProt residue 409)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15273
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: thr410
+    label: catalytic Thr410 (M-CSA/PDB numbering; UniProt residue 410)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15273
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: O(4)-phosphonato-L-tyrosine(2-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:61978
+  - node_id: product0
+    label: tyrosine residue
+    node_type: CHEMICAL
+    grounding: CHEBI:32789
+  - node_id: product1
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Cys403 initiates a nucleophilic attack upon the phosphate of the substrate in a substitution
+      reaction, which eliminates the tyrosine with concomitant deprotonation of Asp356.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Asp356 deprotonates water, which initiates a nucleophilic attack upon the phosphate of
+      the covalently bound intermediate in a substitution reaction, which eliminates Cys403.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: protein-tyrosine-phosphatase non-receptor class catalytic site
+    node_type: MOTIF
+    grounding: MCSA:47
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.190.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.190.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: protein-tyrosine-phosphatase non-receptor class activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.3.48
+  edges:
+  - subject: asp356
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp356 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/47/
+      snippet: Cys403 initiates a nucleophilic attack upon the phosphate of the substrate in a substitution
+        reaction, which eliminates the tyrosine with concomitant deprotonation of Asp356.
+      notes: M-CSA entry 47, mechanism 1; M-CSA cites PMID:12882518, PMID:1654322, PMID:19140798, PMID:22564106,
+        PMID:26445170, PMID:7803389, PMID:8052312, PMID:8127855, PMID:8702535, PMID:8845365, PMID:8987394,
+        PMID:9553104, PMID:9799489; step 1
+  - subject: cys403
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys403 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/47/
+      snippet: Cys403 initiates a nucleophilic attack upon the phosphate of the substrate in a substitution
+        reaction, which eliminates the tyrosine with concomitant deprotonation of Asp356.
+      notes: M-CSA entry 47, mechanism 1; M-CSA cites PMID:12882518, PMID:1654322, PMID:19140798, PMID:22564106,
+        PMID:26445170, PMID:7803389, PMID:8052312, PMID:8127855, PMID:8702535, PMID:8845365, PMID:8987394,
+        PMID:9553104, PMID:9799489; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/47/
+      snippet: Asp356 deprotonates water, which initiates a nucleophilic attack upon the phosphate of
+        the covalently bound intermediate in a substitution reaction, which eliminates Cys403.
+      notes: M-CSA entry 47, mechanism 1; M-CSA cites PMID:12882518, PMID:1654322, PMID:19140798, PMID:22564106,
+        PMID:26445170, PMID:7803389, PMID:8052312, PMID:8127855, PMID:8702535, PMID:8845365, PMID:8987394,
+        PMID:9553104, PMID:9799489; step 2
+  - subject: asp356
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Asp356 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/47/
+      snippet: Asp356 deprotonates water, which initiates a nucleophilic attack upon the phosphate of
+        the covalently bound intermediate in a substitution reaction, which eliminates Cys403.
+      notes: M-CSA entry 47, mechanism 1; M-CSA cites PMID:12882518, PMID:1654322, PMID:19140798, PMID:22564106,
+        PMID:26445170, PMID:7803389, PMID:8052312, PMID:8127855, PMID:8702535, PMID:8845365, PMID:8987394,
+        PMID:9553104, PMID:9799489; step 2
+  - subject: cys403
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Cys403 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/47/
+      snippet: Asp356 deprotonates water, which initiates a nucleophilic attack upon the phosphate of
+        the covalently bound intermediate in a substitution reaction, which eliminates Cys403.
+      notes: M-CSA entry 47, mechanism 1; M-CSA cites PMID:12882518, PMID:1654322, PMID:19140798, PMID:22564106,
+        PMID:26445170, PMID:7803389, PMID:8052312, PMID:8127855, PMID:8702535, PMID:8845365, PMID:8987394,
+        PMID:9553104, PMID:9799489; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/47/
+      snippet: Products
+      notes: M-CSA entry 47, mechanism 1; M-CSA cites PMID:12882518, PMID:1654322, PMID:19140798, PMID:22564106,
+        PMID:26445170, PMID:7803389, PMID:8052312, PMID:8127855, PMID:8702535, PMID:8845365, PMID:8987394,
+        PMID:9553104, PMID:9799489; step 3
+  - subject: glu290
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu290 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/47/
+      snippet: steric role
+      notes: M-CSA entry 47, mechanism 1; M-CSA cites PMID:12882518, PMID:1654322, PMID:19140798, PMID:22564106,
+        PMID:26445170, PMID:7803389, PMID:8052312, PMID:8127855, PMID:8702535, PMID:8845365, PMID:8987394,
+        PMID:9553104, PMID:9799489; M-CSA catalytic-residue roles for Glu290
+  - subject: trp354
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp354 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/47/
+      snippet: steric role
+      notes: M-CSA entry 47, mechanism 1; M-CSA cites PMID:12882518, PMID:1654322, PMID:19140798, PMID:22564106,
+        PMID:26445170, PMID:7803389, PMID:8052312, PMID:8127855, PMID:8702535, PMID:8845365, PMID:8987394,
+        PMID:9553104, PMID:9799489; M-CSA catalytic-residue roles for Trp354
+  - subject: asp356
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp356 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/47/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 47, mechanism 1; M-CSA cites PMID:12882518, PMID:1654322, PMID:19140798, PMID:22564106,
+        PMID:26445170, PMID:7803389, PMID:8052312, PMID:8127855, PMID:8702535, PMID:8845365, PMID:8987394,
+        PMID:9553104, PMID:9799489; M-CSA catalytic-residue roles for Asp356
+  - subject: his402
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His402 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/47/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 47, mechanism 1; M-CSA cites PMID:12882518, PMID:1654322, PMID:19140798, PMID:22564106,
+        PMID:26445170, PMID:7803389, PMID:8052312, PMID:8127855, PMID:8702535, PMID:8845365, PMID:8987394,
+        PMID:9553104, PMID:9799489; M-CSA catalytic-residue roles for His402
+  - subject: cys403
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys403 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/47/
+      snippet: nucleofuge, nucleophile
+      notes: M-CSA entry 47, mechanism 1; M-CSA cites PMID:12882518, PMID:1654322, PMID:19140798, PMID:22564106,
+        PMID:26445170, PMID:7803389, PMID:8052312, PMID:8127855, PMID:8702535, PMID:8845365, PMID:8987394,
+        PMID:9553104, PMID:9799489; M-CSA catalytic-residue roles for Cys403
+  - subject: arg409
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg409 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/47/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 47, mechanism 1; M-CSA cites PMID:12882518, PMID:1654322, PMID:19140798, PMID:22564106,
+        PMID:26445170, PMID:7803389, PMID:8052312, PMID:8127855, PMID:8702535, PMID:8845365, PMID:8987394,
+        PMID:9553104, PMID:9799489; M-CSA catalytic-residue roles for Arg409
+  - subject: thr410
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr410 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/47/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 47, mechanism 1; M-CSA cites PMID:12882518, PMID:1654322, PMID:19140798, PMID:22564106,
+        PMID:26445170, PMID:7803389, PMID:8052312, PMID:8127855, PMID:8702535, PMID:8845365, PMID:8987394,
+        PMID:9553104, PMID:9799489; M-CSA catalytic-residue roles for Thr410
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/47/
+      snippet: "The mechanism is thought to be primarily dissociative, with more catalytic importance\
+        \ placed on stabilising the negative charge on the leaving group, rather than activation of the\
+        \ nucleophile. Phosphoryl transfer occurs in a single step, with an inline displacement mechanism.\
+        \ The key components are as follows:  
+<ol>
+<li>Thr 410 hydrogen bonds to Cys 403, lowering\
+        \ Cys 403's pKa and stabilising a"
+      notes: M-CSA entry 47, mechanism 1; M-CSA cites PMID:12882518, PMID:1654322, PMID:19140798, PMID:22564106,
+        PMID:26445170, PMID:7803389, PMID:8052312, PMID:8127855, PMID:8702535, PMID:8845365, PMID:8987394,
+        PMID:9553104, PMID:9799489; CATH domain 3.90.190.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/47/
+      snippet: "The mechanism is thought to be primarily dissociative, with more catalytic importance\
+        \ placed on stabilising the negative charge on the leaving group, rather than activation of the\
+        \ nucleophile. Phosphoryl transfer occurs in a single step, with an inline displacement mechanism.\
+        \ The key components are as follows:  
+<ol>
+<li>Thr 410 hydrogen bonds to Cys 403, lowering\
+        \ Cys 403's pKa and stabilising a"
+      notes: M-CSA entry 47, mechanism 1; M-CSA cites PMID:12882518, PMID:1654322, PMID:19140798, PMID:22564106,
+        PMID:26445170, PMID:7803389, PMID:8052312, PMID:8127855, PMID:8702535, PMID:8845365, PMID:8987394,
+        PMID:9553104, PMID:9799489; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/47/
+      snippet: "The mechanism is thought to be primarily dissociative, with more catalytic importance\
+        \ placed on stabilising the negative charge on the leaving group, rather than activation of the\
+        \ nucleophile. Phosphoryl transfer occurs in a single step, with an inline displacement mechanism.\
+        \ The key components are as follows:  
+<ol>
+<li>Thr 410 hydrogen bonds to Cys 403, lowering\
+        \ Cys 403's pKa and stabilising a"
+      notes: M-CSA entry 47, mechanism 1; M-CSA cites PMID:12882518, PMID:1654322, PMID:19140798, PMID:22564106,
+        PMID:26445170, PMID:7803389, PMID:8052312, PMID:8127855, PMID:8702535, PMID:8845365, PMID:8987394,
+        PMID:9553104, PMID:9799489; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/47/
+      snippet: "The mechanism is thought to be primarily dissociative, with more catalytic importance\
+        \ placed on stabilising the negative charge on the leaving group, rather than activation of the\
+        \ nucleophile. Phosphoryl transfer occurs in a single step, with an inline displacement mechanism.\
+        \ The key components are as follows:  
+<ol>
+<li>Thr 410 hydrogen bonds to Cys 403, lowering\
+        \ Cys 403's pKa and stabilising a"
+      notes: M-CSA entry 47, mechanism 1; M-CSA cites PMID:12882518, PMID:1654322, PMID:19140798, PMID:22564106,
+        PMID:26445170, PMID:7803389, PMID:8052312, PMID:8127855, PMID:8702535, PMID:8845365, PMID:8987394,
+        PMID:9553104, PMID:9799489; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/47/
+      snippet: "The mechanism is thought to be primarily dissociative, with more catalytic importance\
+        \ placed on stabilising the negative charge on the leaving group, rather than activation of the\
+        \ nucleophile. Phosphoryl transfer occurs in a single step, with an inline displacement mechanism.\
+        \ The key components are as follows:  
+<ol>
+<li>Thr 410 hydrogen bonds to Cys 403, lowering\
+        \ Cys 403's pKa and stabilising a"
+      notes: M-CSA entry 47, mechanism 1; M-CSA cites PMID:12882518, PMID:1654322, PMID:19140798, PMID:22564106,
+        PMID:26445170, PMID:7803389, PMID:8052312, PMID:8127855, PMID:8702535, PMID:8845365, PMID:8987394,
+        PMID:9553104, PMID:9799489; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/47/
+      snippet: "The mechanism is thought to be primarily dissociative, with more catalytic importance\
+        \ placed on stabilising the negative charge on the leaving group, rather than activation of the\
+        \ nucleophile. Phosphoryl transfer occurs in a single step, with an inline displacement mechanism.\
+        \ The key components are as follows:  
+<ol>
+<li>Thr 410 hydrogen bonds to Cys 403, lowering\
+        \ Cys 403's pKa and stabilising a"
+      notes: M-CSA entry 47, mechanism 1; M-CSA cites PMID:12882518, PMID:1654322, PMID:19140798, PMID:22564106,
+        PMID:26445170, PMID:7803389, PMID:8052312, PMID:8127855, PMID:8702535, PMID:8845365, PMID:8987394,
+        PMID:9553104, PMID:9799489; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (19 evidence-backed edges) transcribed from M-CSA entry 47;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

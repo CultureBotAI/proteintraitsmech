@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:6.3.3.2
 - CHEBI:57457
@@ -178,4 +178,258 @@ definitions:
       Tetrahydrofolates (THFs) are cofactors that donate or accept single carbon units in metabolic processes. 5,10-methenyltetrahydrofolate synthetase (MTHFS) is the only known enzyme to use 5-formylTHF. MTHFS catalyses tbe conversion of 5-formyTHF to 5,10-methenylTHF coupled to the hydrolysis of ATP to ADP in the presence of magnesium.In solution, MTHFS exists 50% dimeric form, 50% in monomeric form.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 5-formyltetrahydrofolate cyclo-ligase
+  description: Stepwise mechanism transcribed from M-CSA entry 541 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: arg115
+    label: catalytic Arg115 (M-CSA/PDB numbering; UniProt residue 115)
+    node_type: RESIDUE
+    grounding: UniProtKB:P75430
+    description: 'M-CSA roles: electrostatic stabiliser, increase electrophilicity.'
+  - node_id: asp124
+    label: catalytic Asp124 (M-CSA/PDB numbering; UniProt residue 124)
+    node_type: RESIDUE
+    grounding: UniProtKB:P75430
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp154
+    label: catalytic Asp154 (M-CSA/PDB numbering; UniProt residue 154)
+    node_type: RESIDUE
+    grounding: UniProtKB:P75430
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: (6S)-5-formyltetrahydrofolate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57457
+  - node_id: reactant1
+    label: ATP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+  - node_id: product0
+    label: (6R)-5,10-methenyltetrahydrofolate
+    node_type: CHEMICAL
+    grounding: CHEBI:57455
+  - node_id: product1
+    label: ADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+  - node_id: product2
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The substrate tautomerizes into the enolate form
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The enolate oxygen performs a nucleophilic attack on the gamma-phosphate causing ADP
+      to be displaced.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: N10 attacks the intermediate forming a new tetrahedral intermediate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The intermediate collapses and the product is formed.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: 5-formyltetrahydrofolate cyclo-ligase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:541
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.10420 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.10420
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: 5-formyltetrahydrofolate cyclo-ligase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:6.3.3.2
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/541/
+      snippet: The enolate oxygen performs a nucleophilic attack on the gamma-phosphate causing ADP to
+        be displaced.
+      notes: M-CSA entry 541, mechanism 1; M-CSA cites PMID:18473156, PMID:22773193, PMID:7673211; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/541/
+      snippet: N10 attacks the intermediate forming a new tetrahedral intermediate.
+      notes: M-CSA entry 541, mechanism 1; M-CSA cites PMID:18473156, PMID:22773193, PMID:7673211; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/541/
+      snippet: The intermediate collapses and the product is formed.
+      notes: M-CSA entry 541, mechanism 1; M-CSA cites PMID:18473156, PMID:22773193, PMID:7673211; step
+        4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/541/
+      snippet: Products.
+      notes: M-CSA entry 541, mechanism 1; M-CSA cites PMID:18473156, PMID:22773193, PMID:7673211; step
+        5
+  - subject: arg115
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg115 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/541/
+      snippet: electrostatic stabiliser, increase electrophilicity
+      notes: M-CSA entry 541, mechanism 1; M-CSA cites PMID:18473156, PMID:22773193, PMID:7673211; M-CSA
+        catalytic-residue roles for Arg115
+  - subject: asp124
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp124 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/541/
+      snippet: metal ligand
+      notes: M-CSA entry 541, mechanism 1; M-CSA cites PMID:18473156, PMID:22773193, PMID:7673211; M-CSA
+        catalytic-residue roles for Asp124
+  - subject: asp154
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp154 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/541/
+      snippet: metal ligand
+      notes: M-CSA entry 541, mechanism 1; M-CSA cites PMID:18473156, PMID:22773193, PMID:7673211; M-CSA
+        catalytic-residue roles for Asp154
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/541/
+      snippet: The formyl oxygen of the major rotamer of the enolate form of 5-formylTHF makes a nucleophilic
+        attack on the gamma-phosphoryl group of ATP to form a phosphorylated intermediate. At this intermediate,
+        enzyme-bound ADP can freely equilibriate with the solvent ADP. The N10 of the iminium phosphate
+        intermediate attacks the formyl carbon nucleophilically to form a putative tetrahedral intermediate.
+        Thi
+      notes: M-CSA entry 541, mechanism 1; M-CSA cites PMID:18473156, PMID:22773193, PMID:7673211; CATH
+        domain 3.40.50.10420 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/541/
+      snippet: The formyl oxygen of the major rotamer of the enolate form of 5-formylTHF makes a nucleophilic
+        attack on the gamma-phosphoryl group of ATP to form a phosphorylated intermediate. At this intermediate,
+        enzyme-bound ADP can freely equilibriate with the solvent ADP. The N10 of the iminium phosphate
+        intermediate attacks the formyl carbon nucleophilically to form a putative tetrahedral intermediate.
+        Thi
+      notes: M-CSA entry 541, mechanism 1; M-CSA cites PMID:18473156, PMID:22773193, PMID:7673211; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/541/
+      snippet: The formyl oxygen of the major rotamer of the enolate form of 5-formylTHF makes a nucleophilic
+        attack on the gamma-phosphoryl group of ATP to form a phosphorylated intermediate. At this intermediate,
+        enzyme-bound ADP can freely equilibriate with the solvent ADP. The N10 of the iminium phosphate
+        intermediate attacks the formyl carbon nucleophilically to form a putative tetrahedral intermediate.
+        Thi
+      notes: M-CSA entry 541, mechanism 1; M-CSA cites PMID:18473156, PMID:22773193, PMID:7673211; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/541/
+      snippet: The formyl oxygen of the major rotamer of the enolate form of 5-formylTHF makes a nucleophilic
+        attack on the gamma-phosphoryl group of ATP to form a phosphorylated intermediate. At this intermediate,
+        enzyme-bound ADP can freely equilibriate with the solvent ADP. The N10 of the iminium phosphate
+        intermediate attacks the formyl carbon nucleophilically to form a putative tetrahedral intermediate.
+        Thi
+      notes: M-CSA entry 541, mechanism 1; M-CSA cites PMID:18473156, PMID:22773193, PMID:7673211; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/541/
+      snippet: The formyl oxygen of the major rotamer of the enolate form of 5-formylTHF makes a nucleophilic
+        attack on the gamma-phosphoryl group of ATP to form a phosphorylated intermediate. At this intermediate,
+        enzyme-bound ADP can freely equilibriate with the solvent ADP. The N10 of the iminium phosphate
+        intermediate attacks the formyl carbon nucleophilically to form a putative tetrahedral intermediate.
+        Thi
+      notes: M-CSA entry 541, mechanism 1; M-CSA cites PMID:18473156, PMID:22773193, PMID:7673211; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/541/
+      snippet: The formyl oxygen of the major rotamer of the enolate form of 5-formylTHF makes a nucleophilic
+        attack on the gamma-phosphoryl group of ATP to form a phosphorylated intermediate. At this intermediate,
+        enzyme-bound ADP can freely equilibriate with the solvent ADP. The N10 of the iminium phosphate
+        intermediate attacks the formyl carbon nucleophilically to form a putative tetrahedral intermediate.
+        Thi
+      notes: M-CSA entry 541, mechanism 1; M-CSA cites PMID:18473156, PMID:22773193, PMID:7673211; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/541/
+      snippet: The formyl oxygen of the major rotamer of the enolate form of 5-formylTHF makes a nucleophilic
+        attack on the gamma-phosphoryl group of ATP to form a phosphorylated intermediate. At this intermediate,
+        enzyme-bound ADP can freely equilibriate with the solvent ADP. The N10 of the iminium phosphate
+        intermediate attacks the formyl carbon nucleophilically to form a putative tetrahedral intermediate.
+        Thi
+      notes: M-CSA entry 541, mechanism 1; M-CSA cites PMID:18473156, PMID:22773193, PMID:7673211; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (14 evidence-backed edges) transcribed from M-CSA entry 541;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

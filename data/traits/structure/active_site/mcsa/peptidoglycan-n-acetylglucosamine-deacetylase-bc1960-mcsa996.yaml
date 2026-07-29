@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.5.1.104
 - CHEBI:X00690
@@ -181,4 +181,273 @@ definitions:
       Peptidoglycan N-acetylglucosamine (GlcNAc) deacetylase Bc1960 is a Bacillus cereus enzyme with backbone modifications is the Cα hydroxylation of a proline in the active site. Bc1960 is a polysaccharide deacetylase (PDA) that catalyzes the reaction of turning peptidoglycan-N-acetyl-D-glucosamine to peptidoglycan-D-glucosamine. Modification of peptidoglycan by N-deacetylation is an important factor in virulence of Helicobacter pylori, Listeria monocytogenes and Streptococcus suis.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of Peptidoglycan-N-acetylglucosamine deacetylase Bc1960
+  description: Stepwise mechanism transcribed from M-CSA entry 996 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +8).
+  nodes:
+  - node_id: asp80
+    label: catalytic Asp80 (M-CSA/PDB numbering; UniProt residue 88)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q81EK9
+    description: 'M-CSA roles: proton acceptor.'
+  - node_id: asp81
+    label: catalytic Asp81 (M-CSA/PDB numbering; UniProt residue 89)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q81EK9
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his131
+    label: catalytic His131 (M-CSA/PDB numbering; UniProt residue 139)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q81EK9
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his135
+    label: catalytic His135 (M-CSA/PDB numbering; UniProt residue 143)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q81EK9
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his225
+    label: catalytic His225 (M-CSA/PDB numbering; UniProt residue 233)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q81EK9
+    description: 'M-CSA roles: proton donor.'
+  - node_id: reactant0
+    label: Peptidoglycan(N-acetyl-D-glucosamine)
+    node_type: CHEMICAL
+    grounding: CHEBI:X00691
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: Peptidoglycan-D-glucosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:X00690
+  - node_id: product1
+    label: acetic acid
+    node_type: CHEMICAL
+    grounding: CHEBI:15366
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The first step is the deprotonation of Asp80 of the catalytic water. This creates a nucleophile
+      hydroxide coordinated to a Zn<sup>2+</sup> ion.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The hydroxide coordinated by the active site and Zn<sup>2+</sup> cation performs nucleophilic
+      attack on the carbonyl carbon of the substrate. This is stabilised by the carbonyl oxygen coordinating
+      to the Zn<sup>2+</sup>.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The His225 protonates the nitrogen atom of the substrate releasing the acetate leaving
+      group.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Final step.
+  - node_id: active_site
+    label: Peptidoglycan-N-acetylglucosamine deacetylase Bc1960 catalytic site
+    node_type: MOTIF
+    grounding: MCSA:996
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.370 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.370
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: Peptidoglycan-N-acetylglucosamine deacetylase Bc1960 activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.5.1.104
+  edges:
+  - subject: asp80
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp80 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/996/
+      snippet: The first step is the deprotonation of Asp80 of the catalytic water. This creates a nucleophile
+        hydroxide coordinated to a Zn<sup>2+</sup> ion.
+      notes: M-CSA entry 996, mechanism 1; M-CSA cites PMID:28333455, PMID:31617504; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/996/
+      snippet: The hydroxide coordinated by the active site and Zn<sup>2+</sup> cation performs nucleophilic
+        attack on the carbonyl carbon of the substrate. This is stabilised by the carbonyl oxygen coordinating
+        to the Zn<sup>2+</sup>.
+      notes: M-CSA entry 996, mechanism 1; M-CSA cites PMID:28333455, PMID:31617504; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/996/
+      snippet: The His225 protonates the nitrogen atom of the substrate releasing the acetate leaving
+        group.
+      notes: M-CSA entry 996, mechanism 1; M-CSA cites PMID:28333455, PMID:31617504; step 3
+  - subject: his225
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His225 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/996/
+      snippet: The His225 protonates the nitrogen atom of the substrate releasing the acetate leaving
+        group.
+      notes: M-CSA entry 996, mechanism 1; M-CSA cites PMID:28333455, PMID:31617504; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/996/
+      snippet: Final step.
+      notes: M-CSA entry 996, mechanism 1; M-CSA cites PMID:28333455, PMID:31617504; step 4
+  - subject: asp80
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp80 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/996/
+      snippet: proton acceptor
+      notes: M-CSA entry 996, mechanism 1; M-CSA cites PMID:28333455, PMID:31617504; M-CSA catalytic-residue
+        roles for Asp80
+  - subject: asp81
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp81 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/996/
+      snippet: metal ligand
+      notes: M-CSA entry 996, mechanism 1; M-CSA cites PMID:28333455, PMID:31617504; M-CSA catalytic-residue
+        roles for Asp81
+  - subject: his131
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His131 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/996/
+      snippet: metal ligand
+      notes: M-CSA entry 996, mechanism 1; M-CSA cites PMID:28333455, PMID:31617504; M-CSA catalytic-residue
+        roles for His131
+  - subject: his135
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His135 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/996/
+      snippet: metal ligand
+      notes: M-CSA entry 996, mechanism 1; M-CSA cites PMID:28333455, PMID:31617504; M-CSA catalytic-residue
+        roles for His135
+  - subject: his225
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His225 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/996/
+      snippet: proton donor
+      notes: M-CSA entry 996, mechanism 1; M-CSA cites PMID:28333455, PMID:31617504; M-CSA catalytic-residue
+        roles for His225
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/996/
+      snippet: In this reaction Asp80 firstly deprotonates a water molecule coordinated to the Zn<sup>2+</sup>
+        ion which is coordinated to the active site by His131, His135 and Asp81. This creates a hydroxide
+        which is stabilised by Hyp171 through a bridging water molecule. The hydroxide is a strong nucleophile
+        and as such attacks the carbonyl carbon of the substrate. A tetrahedral intermediate is formed
+        and stab
+      notes: M-CSA entry 996, mechanism 1; M-CSA cites PMID:28333455, PMID:31617504; CATH domain 3.20.20.370
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/996/
+      snippet: In this reaction Asp80 firstly deprotonates a water molecule coordinated to the Zn<sup>2+</sup>
+        ion which is coordinated to the active site by His131, His135 and Asp81. This creates a hydroxide
+        which is stabilised by Hyp171 through a bridging water molecule. The hydroxide is a strong nucleophile
+        and as such attacks the carbonyl carbon of the substrate. A tetrahedral intermediate is formed
+        and stab
+      notes: M-CSA entry 996, mechanism 1; M-CSA cites PMID:28333455, PMID:31617504; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/996/
+      snippet: In this reaction Asp80 firstly deprotonates a water molecule coordinated to the Zn<sup>2+</sup>
+        ion which is coordinated to the active site by His131, His135 and Asp81. This creates a hydroxide
+        which is stabilised by Hyp171 through a bridging water molecule. The hydroxide is a strong nucleophile
+        and as such attacks the carbonyl carbon of the substrate. A tetrahedral intermediate is formed
+        and stab
+      notes: M-CSA entry 996, mechanism 1; M-CSA cites PMID:28333455, PMID:31617504; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/996/
+      snippet: In this reaction Asp80 firstly deprotonates a water molecule coordinated to the Zn<sup>2+</sup>
+        ion which is coordinated to the active site by His131, His135 and Asp81. This creates a hydroxide
+        which is stabilised by Hyp171 through a bridging water molecule. The hydroxide is a strong nucleophile
+        and as such attacks the carbonyl carbon of the substrate. A tetrahedral intermediate is formed
+        and stab
+      notes: M-CSA entry 996, mechanism 1; M-CSA cites PMID:28333455, PMID:31617504; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/996/
+      snippet: In this reaction Asp80 firstly deprotonates a water molecule coordinated to the Zn<sup>2+</sup>
+        ion which is coordinated to the active site by His131, His135 and Asp81. This creates a hydroxide
+        which is stabilised by Hyp171 through a bridging water molecule. The hydroxide is a strong nucleophile
+        and as such attacks the carbonyl carbon of the substrate. A tetrahedral intermediate is formed
+        and stab
+      notes: M-CSA entry 996, mechanism 1; M-CSA cites PMID:28333455, PMID:31617504; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/996/
+      snippet: In this reaction Asp80 firstly deprotonates a water molecule coordinated to the Zn<sup>2+</sup>
+        ion which is coordinated to the active site by His131, His135 and Asp81. This creates a hydroxide
+        which is stabilised by Hyp171 through a bridging water molecule. The hydroxide is a strong nucleophile
+        and as such attacks the carbonyl carbon of the substrate. A tetrahedral intermediate is formed
+        and stab
+      notes: M-CSA entry 996, mechanism 1; M-CSA cites PMID:28333455, PMID:31617504; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (16 evidence-backed edges) transcribed from M-CSA entry 996;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

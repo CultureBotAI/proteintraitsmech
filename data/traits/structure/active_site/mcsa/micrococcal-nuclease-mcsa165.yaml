@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.31.1
 - CHEBI:136412
@@ -232,4 +232,319 @@ definitions:
       Staphyloccal nuclease is a Ca2+ activated phosphodiesterase which catalyses the hydrolysis of both DND and RNA at the 5' position of the phophodiester bond to yield a 3'-mononucleotides and polynucleotides.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of micrococcal nuclease
+  description: Stepwise mechanism transcribed from M-CSA entry 165 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: asp21
+    label: catalytic Asp21 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00644
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: arg35
+    label: catalytic Arg35 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00644
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: asp40
+    label: catalytic Asp40 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00644
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: thr41
+    label: catalytic Thr41 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00644
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu43
+    label: catalytic Glu43 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00644
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: arg87
+    label: catalytic Arg87 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00644
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: single-stranded DNA
+    node_type: CHEMICAL
+    grounding: CHEBI:9160
+  - node_id: product0
+    label: 5'-end 2'-deoxyribonucleotide(2-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:136412
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: 2'-deoxynucleoside 3'-monophosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:131705
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu43 deprotonates the calcium activated water molecule, which then attacks the DNA phosphate
+      bond in a nucleophilic substitution. The 3' DNA hydroxyl protonates from Arg87.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Arg87 deprotonates water, and water deprotonates Glu43 in an inferred step.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: micrococcal nuclease catalytic site
+    node_type: MOTIF
+    grounding: MCSA:165
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.40.50.90 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.40.50.90
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: micrococcal nuclease activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.31.1
+  edges:
+  - subject: glu43
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu43 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/165/
+      snippet: Glu43 deprotonates the calcium activated water molecule, which then attacks the DNA phosphate
+        bond in a nucleophilic substitution. The 3' DNA hydroxyl protonates from Arg87.
+      notes: M-CSA entry 165, mechanism 1; M-CSA cites PMID:1518799, PMID:2111164, PMID:3567171, PMID:8025105,
+        PMID:8338846; step 1
+  - subject: arg87
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg87 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/165/
+      snippet: Glu43 deprotonates the calcium activated water molecule, which then attacks the DNA phosphate
+        bond in a nucleophilic substitution. The 3' DNA hydroxyl protonates from Arg87.
+      notes: M-CSA entry 165, mechanism 1; M-CSA cites PMID:1518799, PMID:2111164, PMID:3567171, PMID:8025105,
+        PMID:8338846; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/165/
+      snippet: Arg87 deprotonates water, and water deprotonates Glu43 in an inferred step.
+      notes: M-CSA entry 165, mechanism 1; M-CSA cites PMID:1518799, PMID:2111164, PMID:3567171, PMID:8025105,
+        PMID:8338846; step 2
+  - subject: glu43
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu43 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/165/
+      snippet: Arg87 deprotonates water, and water deprotonates Glu43 in an inferred step.
+      notes: M-CSA entry 165, mechanism 1; M-CSA cites PMID:1518799, PMID:2111164, PMID:3567171, PMID:8025105,
+        PMID:8338846; step 2
+  - subject: arg87
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Arg87 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/165/
+      snippet: Arg87 deprotonates water, and water deprotonates Glu43 in an inferred step.
+      notes: M-CSA entry 165, mechanism 1; M-CSA cites PMID:1518799, PMID:2111164, PMID:3567171, PMID:8025105,
+        PMID:8338846; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/165/
+      snippet: Products.
+      notes: M-CSA entry 165, mechanism 1; M-CSA cites PMID:1518799, PMID:2111164, PMID:3567171, PMID:8025105,
+        PMID:8338846; step 3
+  - subject: asp21
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp21 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/165/
+      snippet: metal ligand
+      notes: M-CSA entry 165, mechanism 1; M-CSA cites PMID:1518799, PMID:2111164, PMID:3567171, PMID:8025105,
+        PMID:8338846; M-CSA catalytic-residue roles for Asp21
+  - subject: arg35
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg35 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/165/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 165, mechanism 1; M-CSA cites PMID:1518799, PMID:2111164, PMID:3567171, PMID:8025105,
+        PMID:8338846; M-CSA catalytic-residue roles for Arg35
+  - subject: asp40
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp40 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/165/
+      snippet: metal ligand
+      notes: M-CSA entry 165, mechanism 1; M-CSA cites PMID:1518799, PMID:2111164, PMID:3567171, PMID:8025105,
+        PMID:8338846; M-CSA catalytic-residue roles for Asp40
+  - subject: thr41
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr41 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/165/
+      snippet: metal ligand
+      notes: M-CSA entry 165, mechanism 1; M-CSA cites PMID:1518799, PMID:2111164, PMID:3567171, PMID:8025105,
+        PMID:8338846; M-CSA catalytic-residue roles for Thr41
+  - subject: glu43
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu43 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/165/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 165, mechanism 1; M-CSA cites PMID:1518799, PMID:2111164, PMID:3567171, PMID:8025105,
+        PMID:8338846; M-CSA catalytic-residue roles for Glu43
+  - subject: arg87
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg87 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/165/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+        proton donor
+      notes: M-CSA entry 165, mechanism 1; M-CSA cites PMID:1518799, PMID:2111164, PMID:3567171, PMID:8025105,
+        PMID:8338846; M-CSA catalytic-residue roles for Arg87
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/165/
+      snippet: The hydrolysis proceeds via direct nucleophilic attack on phosphate with formation of a
+        five-coordinate, trigonal bipyramidal transition state or meta-stable intermediate followed by
+        breakdown to from the product. The attacking nucleophile is a water molecule coordinated to the
+        Ca2+ ion. Ca2+ facilitates the generation of hydroxide ion to allow its nucleophilic attack on
+        the phosphate group. It al
+      notes: M-CSA entry 165, mechanism 1; M-CSA cites PMID:1518799, PMID:2111164, PMID:3567171, PMID:8025105,
+        PMID:8338846; CATH domain 2.40.50.90 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/165/
+      snippet: The hydrolysis proceeds via direct nucleophilic attack on phosphate with formation of a
+        five-coordinate, trigonal bipyramidal transition state or meta-stable intermediate followed by
+        breakdown to from the product. The attacking nucleophile is a water molecule coordinated to the
+        Ca2+ ion. Ca2+ facilitates the generation of hydroxide ion to allow its nucleophilic attack on
+        the phosphate group. It al
+      notes: M-CSA entry 165, mechanism 1; M-CSA cites PMID:1518799, PMID:2111164, PMID:3567171, PMID:8025105,
+        PMID:8338846; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/165/
+      snippet: The hydrolysis proceeds via direct nucleophilic attack on phosphate with formation of a
+        five-coordinate, trigonal bipyramidal transition state or meta-stable intermediate followed by
+        breakdown to from the product. The attacking nucleophile is a water molecule coordinated to the
+        Ca2+ ion. Ca2+ facilitates the generation of hydroxide ion to allow its nucleophilic attack on
+        the phosphate group. It al
+      notes: M-CSA entry 165, mechanism 1; M-CSA cites PMID:1518799, PMID:2111164, PMID:3567171, PMID:8025105,
+        PMID:8338846; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/165/
+      snippet: The hydrolysis proceeds via direct nucleophilic attack on phosphate with formation of a
+        five-coordinate, trigonal bipyramidal transition state or meta-stable intermediate followed by
+        breakdown to from the product. The attacking nucleophile is a water molecule coordinated to the
+        Ca2+ ion. Ca2+ facilitates the generation of hydroxide ion to allow its nucleophilic attack on
+        the phosphate group. It al
+      notes: M-CSA entry 165, mechanism 1; M-CSA cites PMID:1518799, PMID:2111164, PMID:3567171, PMID:8025105,
+        PMID:8338846; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/165/
+      snippet: The hydrolysis proceeds via direct nucleophilic attack on phosphate with formation of a
+        five-coordinate, trigonal bipyramidal transition state or meta-stable intermediate followed by
+        breakdown to from the product. The attacking nucleophile is a water molecule coordinated to the
+        Ca2+ ion. Ca2+ facilitates the generation of hydroxide ion to allow its nucleophilic attack on
+        the phosphate group. It al
+      notes: M-CSA entry 165, mechanism 1; M-CSA cites PMID:1518799, PMID:2111164, PMID:3567171, PMID:8025105,
+        PMID:8338846; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/165/
+      snippet: The hydrolysis proceeds via direct nucleophilic attack on phosphate with formation of a
+        five-coordinate, trigonal bipyramidal transition state or meta-stable intermediate followed by
+        breakdown to from the product. The attacking nucleophile is a water molecule coordinated to the
+        Ca2+ ion. Ca2+ facilitates the generation of hydroxide ion to allow its nucleophilic attack on
+        the phosphate group. It al
+      notes: M-CSA entry 165, mechanism 1; M-CSA cites PMID:1518799, PMID:2111164, PMID:3567171, PMID:8025105,
+        PMID:8338846; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/165/
+      snippet: The hydrolysis proceeds via direct nucleophilic attack on phosphate with formation of a
+        five-coordinate, trigonal bipyramidal transition state or meta-stable intermediate followed by
+        breakdown to from the product. The attacking nucleophile is a water molecule coordinated to the
+        Ca2+ ion. Ca2+ facilitates the generation of hydroxide ion to allow its nucleophilic attack on
+        the phosphate group. It al
+      notes: M-CSA entry 165, mechanism 1; M-CSA cites PMID:1518799, PMID:2111164, PMID:3567171, PMID:8025105,
+        PMID:8338846; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (19 evidence-backed edges) transcribed from M-CSA entry 165;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

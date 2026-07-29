@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.3.1.76
 - CHEBI:57540
@@ -207,4 +207,213 @@ definitions:
       Biosynthesis of the sirohaem cofactor is completed by Met8p, by a beta-NAD+-dependent dehydrogenation of precorrin-2 to produce sirohydrochlorin, followed by ferrochelation to generate sirohaem. Met8p has a similar role in cobalamin biosynthesis.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of precorrin-2 dehydrogenase
+  description: Stepwise mechanism transcribed from M-CSA entry 610 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: asp141
+    label: catalytic Asp141 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15807
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: NAD(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+  - node_id: reactant1
+    label: precorrin-2(7-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58827
+  - node_id: product0
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product1
+    label: NADH(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+  - node_id: product2
+    label: sirohydrochlorin(8-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58351
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp141 acts as a general base to deprotonate the pyrrole nitrogen of ring C of the substrate.
+      This is accompanied by hydride transfer from the prochiral bridge carbon to NAD, forming the product
+      and NADH.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: In an inferred step Asp141 is deprotonated to regenerate the native state of the enzyme.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: precorrin-2 dehydrogenase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:610
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.720 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.720
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: precorrin-2 dehydrogenase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.3.1.76
+  edges:
+  - subject: asp141
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp141 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/610/
+      snippet: Asp141 acts as a general base to deprotonate the pyrrole nitrogen of ring C of the substrate.
+        This is accompanied by hydride transfer from the prochiral bridge carbon to NAD, forming the product
+        and NADH.
+      notes: M-CSA entry 610, mechanism 1; M-CSA cites PMID:11980703, PMID:12196147; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/610/
+      snippet: In an inferred step Asp141 is deprotonated to regenerate the native state of the enzyme.
+      notes: M-CSA entry 610, mechanism 1; M-CSA cites PMID:11980703, PMID:12196147; step 2
+  - subject: asp141
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Asp141 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/610/
+      snippet: In an inferred step Asp141 is deprotonated to regenerate the native state of the enzyme.
+      notes: M-CSA entry 610, mechanism 1; M-CSA cites PMID:11980703, PMID:12196147; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/610/
+      snippet: Products.
+      notes: M-CSA entry 610, mechanism 1; M-CSA cites PMID:11980703, PMID:12196147; step 3
+  - subject: asp141
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp141 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/610/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 610, mechanism 1; M-CSA cites PMID:11980703, PMID:12196147; M-CSA catalytic-residue
+        roles for Asp141
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/610/
+      snippet: NAD-dependent dehydrogenation occurs by Asp 141 functioning as a catalytic general base
+        to abstract a proton from the pyrrole nitrogen of ring C with concomitant hydride transfer from
+        the prochiral bridge carbon to the nicotinamide ring of NAD. During ferrochelation Asp 141 again
+        acts as a general base to remove additional protons from the pyrrole nitrogens during metal ion
+        insertion.
+      notes: M-CSA entry 610, mechanism 1; M-CSA cites PMID:11980703, PMID:12196147; CATH domain 3.40.50.720
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/610/
+      snippet: NAD-dependent dehydrogenation occurs by Asp 141 functioning as a catalytic general base
+        to abstract a proton from the pyrrole nitrogen of ring C with concomitant hydride transfer from
+        the prochiral bridge carbon to the nicotinamide ring of NAD. During ferrochelation Asp 141 again
+        acts as a general base to remove additional protons from the pyrrole nitrogens during metal ion
+        insertion.
+      notes: M-CSA entry 610, mechanism 1; M-CSA cites PMID:11980703, PMID:12196147; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/610/
+      snippet: NAD-dependent dehydrogenation occurs by Asp 141 functioning as a catalytic general base
+        to abstract a proton from the pyrrole nitrogen of ring C with concomitant hydride transfer from
+        the prochiral bridge carbon to the nicotinamide ring of NAD. During ferrochelation Asp 141 again
+        acts as a general base to remove additional protons from the pyrrole nitrogens during metal ion
+        insertion.
+      notes: M-CSA entry 610, mechanism 1; M-CSA cites PMID:11980703, PMID:12196147; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/610/
+      snippet: NAD-dependent dehydrogenation occurs by Asp 141 functioning as a catalytic general base
+        to abstract a proton from the pyrrole nitrogen of ring C with concomitant hydride transfer from
+        the prochiral bridge carbon to the nicotinamide ring of NAD. During ferrochelation Asp 141 again
+        acts as a general base to remove additional protons from the pyrrole nitrogens during metal ion
+        insertion.
+      notes: M-CSA entry 610, mechanism 1; M-CSA cites PMID:11980703, PMID:12196147; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/610/
+      snippet: NAD-dependent dehydrogenation occurs by Asp 141 functioning as a catalytic general base
+        to abstract a proton from the pyrrole nitrogen of ring C with concomitant hydride transfer from
+        the prochiral bridge carbon to the nicotinamide ring of NAD. During ferrochelation Asp 141 again
+        acts as a general base to remove additional protons from the pyrrole nitrogens during metal ion
+        insertion.
+      notes: M-CSA entry 610, mechanism 1; M-CSA cites PMID:11980703, PMID:12196147; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/610/
+      snippet: NAD-dependent dehydrogenation occurs by Asp 141 functioning as a catalytic general base
+        to abstract a proton from the pyrrole nitrogen of ring C with concomitant hydride transfer from
+        the prochiral bridge carbon to the nicotinamide ring of NAD. During ferrochelation Asp 141 again
+        acts as a general base to remove additional protons from the pyrrole nitrogens during metal ion
+        insertion.
+      notes: M-CSA entry 610, mechanism 1; M-CSA cites PMID:11980703, PMID:12196147; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/610/
+      snippet: NAD-dependent dehydrogenation occurs by Asp 141 functioning as a catalytic general base
+        to abstract a proton from the pyrrole nitrogen of ring C with concomitant hydride transfer from
+        the prochiral bridge carbon to the nicotinamide ring of NAD. During ferrochelation Asp 141 again
+        acts as a general base to remove additional protons from the pyrrole nitrogens during metal ion
+        insertion.
+      notes: M-CSA entry 610, mechanism 1; M-CSA cites PMID:11980703, PMID:12196147; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (12 evidence-backed edges) transcribed from M-CSA entry 610;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

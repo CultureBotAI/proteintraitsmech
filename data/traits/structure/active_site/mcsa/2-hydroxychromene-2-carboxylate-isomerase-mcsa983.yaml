@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.99.1.4
 - CHEBI:59350
@@ -159,4 +159,229 @@ definitions:
       Catalyzes the reversible glutathione-dependent isomerization of 2-hydroxychromene-2-carboxylate (HCCA) to trans-O-hydroxybenzylidenepyruvate (THBPA). HCCA isomerases are present in most aerobic organisms including microorganisms, plants, and animals. The group kappa GSH transferases (k-GSTs) are a close relative of the largest group of proteins in nature; the GST group. k-GSTs are dimers with a main catalytic domain, which is the N-terminal domain containing the thioredoxin domain, and the C-terminal domain which is mostly alfa-helical and unlike its GST relatives, inserted into the N-terminal domain. HCCA is a part of the naphthalene catabolic pathway of Pseudomonas putida.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 2-hydroxychromene-2-carboxylate isomerase
+  description: Stepwise mechanism transcribed from M-CSA entry 983 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: ser11
+    label: catalytic Ser11 (M-CSA/PDB numbering; UniProt residue 11)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q51948
+    description: 'M-CSA roles: activator, proton acceptor.'
+  - node_id: val168
+    label: catalytic Val168 (M-CSA/PDB numbering; UniProt residue 168)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q51948
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: trp179
+    label: catalytic Trp179 (M-CSA/PDB numbering; UniProt residue 179)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q51948
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asn181
+    label: catalytic Asn181 (M-CSA/PDB numbering; UniProt residue 181)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q51948
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp182
+    label: catalytic Asp182 (M-CSA/PDB numbering; UniProt residue 182)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q51948
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: 2-hydroxychromene-2-carboxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:59350
+  - node_id: product0
+    label: (3E)-4-(2-hydroxyphenyl)-2-oxobut-3-enoate
+    node_type: CHEMICAL
+    grounding: CHEBI:59353
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Ser11 deprotonates and activates GSH. GSH is more likey to release a proton due to residues
+      interacting with it. The residues anchoring GSH are essential for this reaction.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: GSH bonds its nucleophilic sulphur to the C7 atom of the sustrate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The proton transfer in the substrate is inferred by the curator. The substrate rotates
+      and is rearranged. This bond rearrangement causes a bond cleavage between the substrate and GSH.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Final product.
+  - node_id: active_site
+    label: 2-hydroxychromene-2-carboxylate isomerase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:983
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.30.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.30.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: 2-hydroxychromene-2-carboxylate isomerase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.99.1.4
+  edges:
+  - subject: ser11
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser11 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/983/
+      snippet: Ser11 deprotonates and activates GSH. GSH is more likey to release a proton due to residues
+        interacting with it. The residues anchoring GSH are essential for this reaction.
+      notes: M-CSA entry 983, mechanism 1; M-CSA cites PMID:14717589, PMID:17508726; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/983/
+      snippet: GSH bonds its nucleophilic sulphur to the C7 atom of the sustrate.
+      notes: M-CSA entry 983, mechanism 1; M-CSA cites PMID:14717589, PMID:17508726; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/983/
+      snippet: The proton transfer in the substrate is inferred by the curator. The substrate rotates
+        and is rearranged. This bond rearrangement causes a bond cleavage between the substrate and GSH.
+      notes: M-CSA entry 983, mechanism 1; M-CSA cites PMID:14717589, PMID:17508726; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/983/
+      snippet: Final product.
+      notes: M-CSA entry 983, mechanism 1; M-CSA cites PMID:14717589, PMID:17508726; step 4
+  - subject: ser11
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser11 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/983/
+      snippet: activator, proton acceptor
+      notes: M-CSA entry 983, mechanism 1; M-CSA cites PMID:14717589, PMID:17508726; M-CSA catalytic-residue
+        roles for Ser11
+  - subject: val168
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Val168 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/983/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 983, mechanism 1; M-CSA cites PMID:14717589, PMID:17508726; M-CSA catalytic-residue
+        roles for Val168
+  - subject: trp179
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp179 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/983/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 983, mechanism 1; M-CSA cites PMID:14717589, PMID:17508726; M-CSA catalytic-residue
+        roles for Trp179
+  - subject: asn181
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn181 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/983/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 983, mechanism 1; M-CSA cites PMID:14717589, PMID:17508726; M-CSA catalytic-residue
+        roles for Asn181
+  - subject: asp182
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp182 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/983/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 983, mechanism 1; M-CSA cites PMID:14717589, PMID:17508726; M-CSA catalytic-residue
+        roles for Asp182
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/983/
+      snippet: "Ser11 deprotonates GSH which then turns into a nucleophile. The nucleophilic sulphur atom\
+        \ attacks C7 of the substrate causing a isomerisation and rearrangement of the molecule. The end\
+        \ of this rearrangement causes the GSH to cleave its S-C connection to the substrate, ending the\
+        \ reaction.
+GSH is bound to Val168, Trp179, Asp182 and Asn181. The research indicates the stabilisation\
+        \ of GSH by these r"
+      notes: M-CSA entry 983, mechanism 1; M-CSA cites PMID:14717589, PMID:17508726; CATH domain 3.40.30.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/983/
+      snippet: "Ser11 deprotonates GSH which then turns into a nucleophile. The nucleophilic sulphur atom\
+        \ attacks C7 of the substrate causing a isomerisation and rearrangement of the molecule. The end\
+        \ of this rearrangement causes the GSH to cleave its S-C connection to the substrate, ending the\
+        \ reaction.
+GSH is bound to Val168, Trp179, Asp182 and Asn181. The research indicates the stabilisation\
+        \ of GSH by these r"
+      notes: M-CSA entry 983, mechanism 1; M-CSA cites PMID:14717589, PMID:17508726; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/983/
+      snippet: "Ser11 deprotonates GSH which then turns into a nucleophile. The nucleophilic sulphur atom\
+        \ attacks C7 of the substrate causing a isomerisation and rearrangement of the molecule. The end\
+        \ of this rearrangement causes the GSH to cleave its S-C connection to the substrate, ending the\
+        \ reaction.
+GSH is bound to Val168, Trp179, Asp182 and Asn181. The research indicates the stabilisation\
+        \ of GSH by these r"
+      notes: M-CSA entry 983, mechanism 1; M-CSA cites PMID:14717589, PMID:17508726; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/983/
+      snippet: "Ser11 deprotonates GSH which then turns into a nucleophile. The nucleophilic sulphur atom\
+        \ attacks C7 of the substrate causing a isomerisation and rearrangement of the molecule. The end\
+        \ of this rearrangement causes the GSH to cleave its S-C connection to the substrate, ending the\
+        \ reaction.
+GSH is bound to Val168, Trp179, Asp182 and Asn181. The research indicates the stabilisation\
+        \ of GSH by these r"
+      notes: M-CSA entry 983, mechanism 1; M-CSA cites PMID:14717589, PMID:17508726; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 983;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

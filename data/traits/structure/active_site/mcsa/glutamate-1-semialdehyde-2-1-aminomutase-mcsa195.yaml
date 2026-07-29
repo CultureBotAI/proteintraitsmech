@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.4.3.8
 - CHEBI:57501
@@ -301,4 +301,409 @@ definitions:
       Tetrapyrroles are large macrocyclic compounds derived from a common biosynthetic pathway. The end-product, uroporphyrinogen III, is used to synthesise a number of important molecules, including vitamin B12, haem, sirohaem, chlorophyll, coenzyme F430 and phytochromobilin. This entry represents glutamate-1-semialdehyde (GSA) aminotransferase (EC:5.4.3.8), which catalyses a transamination reaction to produce 5-aminoaevulinic acid during the first stage of tetrapyrrole biosynthesis by the C5 pathway. It is a class III aminotransferase.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of glutamate-1-semialdehyde 2,1-aminomutase
+  description: Stepwise mechanism transcribed from M-CSA entry 195 (13 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: tyr150
+    label: catalytic Tyr150 (M-CSA/PDB numbering; UniProt residue 150)
+    node_type: RESIDUE
+    grounding: UniProtKB:P24630
+    description: 'M-CSA roles: steric role.'
+  - node_id: asp245
+    label: catalytic Asp245 (M-CSA/PDB numbering; UniProt residue 245)
+    node_type: RESIDUE
+    grounding: UniProtKB:P24630
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: lys273
+    label: catalytic Lys273 (M-CSA/PDB numbering; UniProt residue 273)
+    node_type: RESIDUE
+    grounding: UniProtKB:P24630
+    description: 'M-CSA roles: covalently attached, electron pair acceptor, electron pair donor, hydrogen
+      bond acceptor, hydrogen bond donor, nucleofuge, nucleophile, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: (S)-4-amino-5-oxopentanoic acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57501
+  - node_id: product0
+    label: 5-ammoniolevulinate
+    node_type: CHEMICAL
+    grounding: CHEBI:356416
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The amine of the PMP cofactor attacks the carbonyl carbon of the (S)-4-amino-5-oxopentanoate
+      substrate in a nucleophilic addition. This results in a the oxyanion formed deprotonating the newly
+      attached amine.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The secondary amine that results from the initial attack initiates an elimination of
+      water, resulting in the substrate being covalently bound as a Schiff base.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The amine of Lys273 deprotonates the C1 of the PMP, which acts as an electron sink and
+      undergoes a double bond rearrangement.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The PMP initiates a deprotonation of the Lys273 through its conjugated pi-bond system,
+      resulting in the protonation at the covalently bound carbon of the intermediate.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: The amine of Lys273 attacks the PMP in a nucleophilic addition reaction, the secondary
+      amine of the attached intermediate reprotonates from the bound Lys229
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: The secondary amine that results from the initial attack initiates an elimination of
+      the covalently bound PMP, and the free diamino intermediate.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: The original amine of the intermediate attacks the covalently bound PMP cofactor in a
+      nucleophilic addition and the bound Lys273 deprotonates the newly attached amine.
+  - node_id: step8
+    label: mechanism step 8
+    node_type: STATE
+    description: The secondary amine that results from the attack initiates an elimination of the covalently
+      bound lysine, resulting in free PMP and lysine in a neutral state.
+  - node_id: step9
+    label: mechanism step 9
+    node_type: STATE
+    description: Lys273 deprotonates the carbon next to the covalently attached nitrogen, which initiates
+      a double bond rearrangement through the conjugated pi-bond system of PMP.
+  - node_id: step10
+    label: mechanism step 10
+    node_type: STATE
+    description: The PMP initiates a deprotonation of the Lys273 through its conjugated pi-bond system,
+      resulting in the protonation at the C1 of the PMP cofactor.
+  - node_id: step11
+    label: mechanism step 11
+    node_type: STATE
+    description: Water attacks the imine in a nucleophilic addition reaction, which deprotonates the attacking
+      water.
+  - node_id: step12
+    label: mechanism step 12
+    node_type: STATE
+    description: Lys273 deprotonates the hydroxyl group, initiating an elimination of the PMP cofactor
+      and 5-aminolevulinate product.
+  - node_id: step13
+    label: mechanism step 13
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: glutamate-1-semialdehyde 2,1-aminomutase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:195
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.640.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.640.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: glutamate-1-semialdehyde 2,1-aminomutase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.4.3.8
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/195/
+      snippet: The secondary amine that results from the initial attack initiates an elimination of water,
+        resulting in the substrate being covalently bound as a Schiff base.
+      notes: M-CSA entry 195, mechanism 1; M-CSA cites PMID:1445864, PMID:1730703, PMID:29684343, PMID:8519748,
+        PMID:9144156; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/195/
+      snippet: The amine of Lys273 deprotonates the C1 of the PMP, which acts as an electron sink and
+        undergoes a double bond rearrangement.
+      notes: M-CSA entry 195, mechanism 1; M-CSA cites PMID:1445864, PMID:1730703, PMID:29684343, PMID:8519748,
+        PMID:9144156; step 3
+  - subject: lys273
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Lys273 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/195/
+      snippet: The amine of Lys273 deprotonates the C1 of the PMP, which acts as an electron sink and
+        undergoes a double bond rearrangement.
+      notes: M-CSA entry 195, mechanism 1; M-CSA cites PMID:1445864, PMID:1730703, PMID:29684343, PMID:8519748,
+        PMID:9144156; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/195/
+      snippet: The PMP initiates a deprotonation of the Lys273 through its conjugated pi-bond system,
+        resulting in the protonation at the covalently bound carbon of the intermediate.
+      notes: M-CSA entry 195, mechanism 1; M-CSA cites PMID:1445864, PMID:1730703, PMID:29684343, PMID:8519748,
+        PMID:9144156; step 4
+  - subject: lys273
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Lys273 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/195/
+      snippet: The PMP initiates a deprotonation of the Lys273 through its conjugated pi-bond system,
+        resulting in the protonation at the covalently bound carbon of the intermediate.
+      notes: M-CSA entry 195, mechanism 1; M-CSA cites PMID:1445864, PMID:1730703, PMID:29684343, PMID:8519748,
+        PMID:9144156; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/195/
+      snippet: The amine of Lys273 attacks the PMP in a nucleophilic addition reaction, the secondary
+        amine of the attached intermediate reprotonates from the bound Lys229
+      notes: M-CSA entry 195, mechanism 1; M-CSA cites PMID:1445864, PMID:1730703, PMID:29684343, PMID:8519748,
+        PMID:9144156; step 5
+  - subject: lys273
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Lys273 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/195/
+      snippet: The amine of Lys273 attacks the PMP in a nucleophilic addition reaction, the secondary
+        amine of the attached intermediate reprotonates from the bound Lys229
+      notes: M-CSA entry 195, mechanism 1; M-CSA cites PMID:1445864, PMID:1730703, PMID:29684343, PMID:8519748,
+        PMID:9144156; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/195/
+      snippet: The secondary amine that results from the initial attack initiates an elimination of the
+        covalently bound PMP, and the free diamino intermediate.
+      notes: M-CSA entry 195, mechanism 1; M-CSA cites PMID:1445864, PMID:1730703, PMID:29684343, PMID:8519748,
+        PMID:9144156; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/195/
+      snippet: The original amine of the intermediate attacks the covalently bound PMP cofactor in a nucleophilic
+        addition and the bound Lys273 deprotonates the newly attached amine.
+      notes: M-CSA entry 195, mechanism 1; M-CSA cites PMID:1445864, PMID:1730703, PMID:29684343, PMID:8519748,
+        PMID:9144156; step 7
+  - subject: lys273
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step7
+    description: Lys273 acts in step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/195/
+      snippet: The original amine of the intermediate attacks the covalently bound PMP cofactor in a nucleophilic
+        addition and the bound Lys273 deprotonates the newly attached amine.
+      notes: M-CSA entry 195, mechanism 1; M-CSA cites PMID:1445864, PMID:1730703, PMID:29684343, PMID:8519748,
+        PMID:9144156; step 7
+  - subject: step7
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step8
+    description: Step 7 leads to step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/195/
+      snippet: The secondary amine that results from the attack initiates an elimination of the covalently
+        bound lysine, resulting in free PMP and lysine in a neutral state.
+      notes: M-CSA entry 195, mechanism 1; M-CSA cites PMID:1445864, PMID:1730703, PMID:29684343, PMID:8519748,
+        PMID:9144156; step 8
+  - subject: step8
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step9
+    description: Step 8 leads to step 9.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/195/
+      snippet: Lys273 deprotonates the carbon next to the covalently attached nitrogen, which initiates
+        a double bond rearrangement through the conjugated pi-bond system of PMP.
+      notes: M-CSA entry 195, mechanism 1; M-CSA cites PMID:1445864, PMID:1730703, PMID:29684343, PMID:8519748,
+        PMID:9144156; step 9
+  - subject: lys273
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step9
+    description: Lys273 acts in step 9.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/195/
+      snippet: Lys273 deprotonates the carbon next to the covalently attached nitrogen, which initiates
+        a double bond rearrangement through the conjugated pi-bond system of PMP.
+      notes: M-CSA entry 195, mechanism 1; M-CSA cites PMID:1445864, PMID:1730703, PMID:29684343, PMID:8519748,
+        PMID:9144156; step 9
+  - subject: step9
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step10
+    description: Step 9 leads to step 10.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/195/
+      snippet: The PMP initiates a deprotonation of the Lys273 through its conjugated pi-bond system,
+        resulting in the protonation at the C1 of the PMP cofactor.
+      notes: M-CSA entry 195, mechanism 1; M-CSA cites PMID:1445864, PMID:1730703, PMID:29684343, PMID:8519748,
+        PMID:9144156; step 10
+  - subject: lys273
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step10
+    description: Lys273 acts in step 10.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/195/
+      snippet: The PMP initiates a deprotonation of the Lys273 through its conjugated pi-bond system,
+        resulting in the protonation at the C1 of the PMP cofactor.
+      notes: M-CSA entry 195, mechanism 1; M-CSA cites PMID:1445864, PMID:1730703, PMID:29684343, PMID:8519748,
+        PMID:9144156; step 10
+  - subject: step10
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step11
+    description: Step 10 leads to step 11.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/195/
+      snippet: Water attacks the imine in a nucleophilic addition reaction, which deprotonates the attacking
+        water.
+      notes: M-CSA entry 195, mechanism 1; M-CSA cites PMID:1445864, PMID:1730703, PMID:29684343, PMID:8519748,
+        PMID:9144156; step 11
+  - subject: step11
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step12
+    description: Step 11 leads to step 12.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/195/
+      snippet: Lys273 deprotonates the hydroxyl group, initiating an elimination of the PMP cofactor and
+        5-aminolevulinate product.
+      notes: M-CSA entry 195, mechanism 1; M-CSA cites PMID:1445864, PMID:1730703, PMID:29684343, PMID:8519748,
+        PMID:9144156; step 12
+  - subject: lys273
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step12
+    description: Lys273 acts in step 12.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/195/
+      snippet: Lys273 deprotonates the hydroxyl group, initiating an elimination of the PMP cofactor and
+        5-aminolevulinate product.
+      notes: M-CSA entry 195, mechanism 1; M-CSA cites PMID:1445864, PMID:1730703, PMID:29684343, PMID:8519748,
+        PMID:9144156; step 12
+  - subject: step12
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step13
+    description: Step 12 leads to step 13.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/195/
+      snippet: Products.
+      notes: M-CSA entry 195, mechanism 1; M-CSA cites PMID:1445864, PMID:1730703, PMID:29684343, PMID:8519748,
+        PMID:9144156; step 13
+  - subject: tyr150
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr150 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/195/
+      snippet: steric role
+      notes: M-CSA entry 195, mechanism 1; M-CSA cites PMID:1445864, PMID:1730703, PMID:29684343, PMID:8519748,
+        PMID:9144156; M-CSA catalytic-residue roles for Tyr150
+  - subject: asp245
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp245 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/195/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 195, mechanism 1; M-CSA cites PMID:1445864, PMID:1730703, PMID:29684343, PMID:8519748,
+        PMID:9144156; M-CSA catalytic-residue roles for Asp245
+  - subject: lys273
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys273 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/195/
+      snippet: covalently attached, electron pair acceptor, electron pair donor, hydrogen bond acceptor,
+        hydrogen bond donor, nucleofuge, nucleophile, proton acceptor, proton donor
+      notes: M-CSA entry 195, mechanism 1; M-CSA cites PMID:1445864, PMID:1730703, PMID:29684343, PMID:8519748,
+        PMID:9144156; M-CSA catalytic-residue roles for Lys273
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/195/
+      snippet: This is a pyridoxal-phosphate (PLP) dependent enzyme. It is possible that the same group
+        of the enzyme is responsible for all the general acid and base steps of the mechanism. By analogy
+        to aspartate aminotransferase this group is assumed to be the Lys273A [PMID:8519748,PMID:1730703].
+      notes: M-CSA entry 195, mechanism 1; M-CSA cites PMID:1445864, PMID:1730703, PMID:29684343, PMID:8519748,
+        PMID:9144156; CATH domain 3.40.640.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/195/
+      snippet: This is a pyridoxal-phosphate (PLP) dependent enzyme. It is possible that the same group
+        of the enzyme is responsible for all the general acid and base steps of the mechanism. By analogy
+        to aspartate aminotransferase this group is assumed to be the Lys273A [PMID:8519748,PMID:1730703].
+      notes: M-CSA entry 195, mechanism 1; M-CSA cites PMID:1445864, PMID:1730703, PMID:29684343, PMID:8519748,
+        PMID:9144156; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/195/
+      snippet: This is a pyridoxal-phosphate (PLP) dependent enzyme. It is possible that the same group
+        of the enzyme is responsible for all the general acid and base steps of the mechanism. By analogy
+        to aspartate aminotransferase this group is assumed to be the Lys273A [PMID:8519748,PMID:1730703].
+      notes: M-CSA entry 195, mechanism 1; M-CSA cites PMID:1445864, PMID:1730703, PMID:29684343, PMID:8519748,
+        PMID:9144156; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/195/
+      snippet: This is a pyridoxal-phosphate (PLP) dependent enzyme. It is possible that the same group
+        of the enzyme is responsible for all the general acid and base steps of the mechanism. By analogy
+        to aspartate aminotransferase this group is assumed to be the Lys273A [PMID:8519748,PMID:1730703].
+      notes: M-CSA entry 195, mechanism 1; M-CSA cites PMID:1445864, PMID:1730703, PMID:29684343, PMID:8519748,
+        PMID:9144156; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (26 evidence-backed edges) transcribed from M-CSA entry 195;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

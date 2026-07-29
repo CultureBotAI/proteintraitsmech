@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.11.1.5
 - CHEBI:29033
@@ -297,4 +297,470 @@ definitions:
       Cytochrome c peroxidase (CcP) is a heme-dependent yeast mitochondrial oxidoreductase enzyme that catalyses the the reduction of hydrogen peroxide to water, using reducing equivalents ferrocytochrome c. The catalytic mechanism couples the one-electron oxidation of ferrocytochrome c to the two-electron reduction of hydrogen peroxide to water.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of cytochrome-c peroxidase (mono-heme type)
+  description: Stepwise mechanism transcribed from M-CSA entry 709 (8 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: ala48
+    label: catalytic Ala48 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00431
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his52
+    label: catalytic His52 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00431
+    description: 'M-CSA roles: electrostatic stabiliser, proton acceptor, proton donor.'
+  - node_id: trp191
+    label: catalytic Trp191 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00431
+    description: 'M-CSA roles: single electron acceptor, single electron donor.'
+  - node_id: reactant0
+    label: iron(2+)
+    node_type: CHEMICAL
+    grounding: CHEBI:29033
+  - node_id: reactant1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: reactant2
+    label: hydrogen peroxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+  - node_id: product0
+    label: iron(3+)
+    node_type: CHEMICAL
+    grounding: CHEBI:29034
+  - node_id: product1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His52 acts as a general base to abstract a proton from the peroxide. The peroxide then
+      binds to the Fe3+ centre.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The oxygen-oxygen bond is cleaved heterolytically leaving an electron-deficient 'oxene'
+      bound to the heme iron. His52 donates its proton to the hydroxide to form water. The electron-deficient
+      'oxene' is stabilised by electron transfer from the porphyrin ring and heme iron, resulting in a
+      oxy-ferryl Fe(IV) porphyrin pi-cation radical species.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Trp191 reduces the porphryin pi-cation radical to generate the stable form of CcP Compound
+      I (Cpd-I).
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Cc(Fe2+) binds to the high affinity binding site and transfers an electron to Trp191,
+      forming Compound II (CpdII) and Cc(Fe3+).
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: The oxy-ferryl heme is reduced by Trp191 and the radical Trp191 cation is regenerated.
+      Oxygen accepts a proton to form a hydroxide ion.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: The hydroxide ion accepts another proton and a second molecule of water is produced.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: Cc3+ dissociates and a second molecule of Cc2+ binds. The Trp191 radical cation is reduced
+      and Cc3+ is formed. Cc3+ dissociates and the native state of the enzyme is restored.
+  - node_id: step8
+    label: mechanism step 8
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: cytochrome-c peroxidase (mono-heme type) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:709
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.10.520.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.10.520.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: cytochrome-c peroxidase (mono-heme type) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.11.1.5
+  edges:
+  - subject: his52
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His52 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/709/
+      snippet: His52 acts as a general base to abstract a proton from the peroxide. The peroxide then
+        binds to the Fe3+ centre.
+      notes: M-CSA entry 709, mechanism 1; M-CSA cites PMID:12044899, PMID:1645185, PMID:2156573, PMID:21820401,
+        PMID:25084495, PMID:2557891, PMID:28451256, PMID:8396973, PMID:8961943; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/709/
+      snippet: The oxygen-oxygen bond is cleaved heterolytically leaving an electron-deficient 'oxene'
+        bound to the heme iron. His52 donates its proton to the hydroxide to form water. The electron-deficient
+        'oxene' is stabilised by electron transfer from the porphyrin ring and heme iron, resulting in
+        a oxy-ferryl Fe(IV) porphyrin pi-cation radical species.
+      notes: M-CSA entry 709, mechanism 1; M-CSA cites PMID:12044899, PMID:1645185, PMID:2156573, PMID:21820401,
+        PMID:25084495, PMID:2557891, PMID:28451256, PMID:8396973, PMID:8961943; step 2
+  - subject: his52
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His52 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/709/
+      snippet: The oxygen-oxygen bond is cleaved heterolytically leaving an electron-deficient 'oxene'
+        bound to the heme iron. His52 donates its proton to the hydroxide to form water. The electron-deficient
+        'oxene' is stabilised by electron transfer from the porphyrin ring and heme iron, resulting in
+        a oxy-ferryl Fe(IV) porphyrin pi-cation radical species.
+      notes: M-CSA entry 709, mechanism 1; M-CSA cites PMID:12044899, PMID:1645185, PMID:2156573, PMID:21820401,
+        PMID:25084495, PMID:2557891, PMID:28451256, PMID:8396973, PMID:8961943; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/709/
+      snippet: Trp191 reduces the porphryin pi-cation radical to generate the stable form of CcP Compound
+        I (Cpd-I).
+      notes: M-CSA entry 709, mechanism 1; M-CSA cites PMID:12044899, PMID:1645185, PMID:2156573, PMID:21820401,
+        PMID:25084495, PMID:2557891, PMID:28451256, PMID:8396973, PMID:8961943; step 3
+  - subject: trp191
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Trp191 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/709/
+      snippet: Trp191 reduces the porphryin pi-cation radical to generate the stable form of CcP Compound
+        I (Cpd-I).
+      notes: M-CSA entry 709, mechanism 1; M-CSA cites PMID:12044899, PMID:1645185, PMID:2156573, PMID:21820401,
+        PMID:25084495, PMID:2557891, PMID:28451256, PMID:8396973, PMID:8961943; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/709/
+      snippet: Cc(Fe2+) binds to the high affinity binding site and transfers an electron to Trp191, forming
+        Compound II (CpdII) and Cc(Fe3+).
+      notes: M-CSA entry 709, mechanism 1; M-CSA cites PMID:12044899, PMID:1645185, PMID:2156573, PMID:21820401,
+        PMID:25084495, PMID:2557891, PMID:28451256, PMID:8396973, PMID:8961943; step 4
+  - subject: trp191
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Trp191 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/709/
+      snippet: Cc(Fe2+) binds to the high affinity binding site and transfers an electron to Trp191, forming
+        Compound II (CpdII) and Cc(Fe3+).
+      notes: M-CSA entry 709, mechanism 1; M-CSA cites PMID:12044899, PMID:1645185, PMID:2156573, PMID:21820401,
+        PMID:25084495, PMID:2557891, PMID:28451256, PMID:8396973, PMID:8961943; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/709/
+      snippet: The oxy-ferryl heme is reduced by Trp191 and the radical Trp191 cation is regenerated.
+        Oxygen accepts a proton to form a hydroxide ion.
+      notes: M-CSA entry 709, mechanism 1; M-CSA cites PMID:12044899, PMID:1645185, PMID:2156573, PMID:21820401,
+        PMID:25084495, PMID:2557891, PMID:28451256, PMID:8396973, PMID:8961943; step 5
+  - subject: trp191
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Trp191 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/709/
+      snippet: The oxy-ferryl heme is reduced by Trp191 and the radical Trp191 cation is regenerated.
+        Oxygen accepts a proton to form a hydroxide ion.
+      notes: M-CSA entry 709, mechanism 1; M-CSA cites PMID:12044899, PMID:1645185, PMID:2156573, PMID:21820401,
+        PMID:25084495, PMID:2557891, PMID:28451256, PMID:8396973, PMID:8961943; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/709/
+      snippet: The hydroxide ion accepts another proton and a second molecule of water is produced.
+      notes: M-CSA entry 709, mechanism 1; M-CSA cites PMID:12044899, PMID:1645185, PMID:2156573, PMID:21820401,
+        PMID:25084495, PMID:2557891, PMID:28451256, PMID:8396973, PMID:8961943; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/709/
+      snippet: Cc3+ dissociates and a second molecule of Cc2+ binds. The Trp191 radical cation is reduced
+        and Cc3+ is formed. Cc3+ dissociates and the native state of the enzyme is restored.
+      notes: M-CSA entry 709, mechanism 1; M-CSA cites PMID:12044899, PMID:1645185, PMID:2156573, PMID:21820401,
+        PMID:25084495, PMID:2557891, PMID:28451256, PMID:8396973, PMID:8961943; step 7
+  - subject: trp191
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step7
+    description: Trp191 acts in step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/709/
+      snippet: Cc3+ dissociates and a second molecule of Cc2+ binds. The Trp191 radical cation is reduced
+        and Cc3+ is formed. Cc3+ dissociates and the native state of the enzyme is restored.
+      notes: M-CSA entry 709, mechanism 1; M-CSA cites PMID:12044899, PMID:1645185, PMID:2156573, PMID:21820401,
+        PMID:25084495, PMID:2557891, PMID:28451256, PMID:8396973, PMID:8961943; step 7
+  - subject: step7
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step8
+    description: Step 7 leads to step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/709/
+      snippet: Products.
+      notes: M-CSA entry 709, mechanism 1; M-CSA cites PMID:12044899, PMID:1645185, PMID:2156573, PMID:21820401,
+        PMID:25084495, PMID:2557891, PMID:28451256, PMID:8396973, PMID:8961943; step 8
+  - subject: ala48
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ala48 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/709/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 709, mechanism 1; M-CSA cites PMID:12044899, PMID:1645185, PMID:2156573, PMID:21820401,
+        PMID:25084495, PMID:2557891, PMID:28451256, PMID:8396973, PMID:8961943; M-CSA catalytic-residue
+        roles for Ala48
+  - subject: his52
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His52 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/709/
+      snippet: electrostatic stabiliser, proton acceptor, proton donor
+      notes: M-CSA entry 709, mechanism 1; M-CSA cites PMID:12044899, PMID:1645185, PMID:2156573, PMID:21820401,
+        PMID:25084495, PMID:2557891, PMID:28451256, PMID:8396973, PMID:8961943; M-CSA catalytic-residue
+        roles for His52
+  - subject: trp191
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp191 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/709/
+      snippet: single electron acceptor, single electron donor
+      notes: M-CSA entry 709, mechanism 1; M-CSA cites PMID:12044899, PMID:1645185, PMID:2156573, PMID:21820401,
+        PMID:25084495, PMID:2557891, PMID:28451256, PMID:8396973, PMID:8961943; M-CSA catalytic-residue
+        roles for Trp191
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/709/
+      snippet: "The catalytic cycle consists of at three major steps: 
+
+<p> 1) Reaction of CcP with\
+        \ peroxide to form Compound I (CpdI)
+
+<br>CcP(Fe3+) + H2O2 => CpdI + H2O</p>
+
+<p>\
+        \ 2) One-electron reduction of CpdI by Cc(Fe2+) to Compound II (CpdII)
+
+<br>CpdI + Cc(Fe2+)\
+        \ => CpdII + Cc(Fe3+)</p>
+
+<p> 3) Subsequent reduction of CpdII by another Cc(Fe2+) to regenerate\
+        \ the resting-state CcP(Fe3+) 
+
+<br>CpdI"
+      notes: M-CSA entry 709, mechanism 1; M-CSA cites PMID:12044899, PMID:1645185, PMID:2156573, PMID:21820401,
+        PMID:25084495, PMID:2557891, PMID:28451256, PMID:8396973, PMID:8961943; CATH domain 1.10.520.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/709/
+      snippet: "The catalytic cycle consists of at three major steps: 
+
+<p> 1) Reaction of CcP with\
+        \ peroxide to form Compound I (CpdI)
+
+<br>CcP(Fe3+) + H2O2 => CpdI + H2O</p>
+
+<p>\
+        \ 2) One-electron reduction of CpdI by Cc(Fe2+) to Compound II (CpdII)
+
+<br>CpdI + Cc(Fe2+)\
+        \ => CpdII + Cc(Fe3+)</p>
+
+<p> 3) Subsequent reduction of CpdII by another Cc(Fe2+) to regenerate\
+        \ the resting-state CcP(Fe3+) 
+
+<br>CpdI"
+      notes: M-CSA entry 709, mechanism 1; M-CSA cites PMID:12044899, PMID:1645185, PMID:2156573, PMID:21820401,
+        PMID:25084495, PMID:2557891, PMID:28451256, PMID:8396973, PMID:8961943; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/709/
+      snippet: "The catalytic cycle consists of at three major steps: 
+
+<p> 1) Reaction of CcP with\
+        \ peroxide to form Compound I (CpdI)
+
+<br>CcP(Fe3+) + H2O2 => CpdI + H2O</p>
+
+<p>\
+        \ 2) One-electron reduction of CpdI by Cc(Fe2+) to Compound II (CpdII)
+
+<br>CpdI + Cc(Fe2+)\
+        \ => CpdII + Cc(Fe3+)</p>
+
+<p> 3) Subsequent reduction of CpdII by another Cc(Fe2+) to regenerate\
+        \ the resting-state CcP(Fe3+) 
+
+<br>CpdI"
+      notes: M-CSA entry 709, mechanism 1; M-CSA cites PMID:12044899, PMID:1645185, PMID:2156573, PMID:21820401,
+        PMID:25084495, PMID:2557891, PMID:28451256, PMID:8396973, PMID:8961943; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/709/
+      snippet: "The catalytic cycle consists of at three major steps: 
+
+<p> 1) Reaction of CcP with\
+        \ peroxide to form Compound I (CpdI)
+
+<br>CcP(Fe3+) + H2O2 => CpdI + H2O</p>
+
+<p>\
+        \ 2) One-electron reduction of CpdI by Cc(Fe2+) to Compound II (CpdII)
+
+<br>CpdI + Cc(Fe2+)\
+        \ => CpdII + Cc(Fe3+)</p>
+
+<p> 3) Subsequent reduction of CpdII by another Cc(Fe2+) to regenerate\
+        \ the resting-state CcP(Fe3+) 
+
+<br>CpdI"
+      notes: M-CSA entry 709, mechanism 1; M-CSA cites PMID:12044899, PMID:1645185, PMID:2156573, PMID:21820401,
+        PMID:25084495, PMID:2557891, PMID:28451256, PMID:8396973, PMID:8961943; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/709/
+      snippet: "The catalytic cycle consists of at three major steps: 
+
+<p> 1) Reaction of CcP with\
+        \ peroxide to form Compound I (CpdI)
+
+<br>CcP(Fe3+) + H2O2 => CpdI + H2O</p>
+
+<p>\
+        \ 2) One-electron reduction of CpdI by Cc(Fe2+) to Compound II (CpdII)
+
+<br>CpdI + Cc(Fe2+)\
+        \ => CpdII + Cc(Fe3+)</p>
+
+<p> 3) Subsequent reduction of CpdII by another Cc(Fe2+) to regenerate\
+        \ the resting-state CcP(Fe3+) 
+
+<br>CpdI"
+      notes: M-CSA entry 709, mechanism 1; M-CSA cites PMID:12044899, PMID:1645185, PMID:2156573, PMID:21820401,
+        PMID:25084495, PMID:2557891, PMID:28451256, PMID:8396973, PMID:8961943; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/709/
+      snippet: "The catalytic cycle consists of at three major steps: 
+
+<p> 1) Reaction of CcP with\
+        \ peroxide to form Compound I (CpdI)
+
+<br>CcP(Fe3+) + H2O2 => CpdI + H2O</p>
+
+<p>\
+        \ 2) One-electron reduction of CpdI by Cc(Fe2+) to Compound II (CpdII)
+
+<br>CpdI + Cc(Fe2+)\
+        \ => CpdII + Cc(Fe3+)</p>
+
+<p> 3) Subsequent reduction of CpdII by another Cc(Fe2+) to regenerate\
+        \ the resting-state CcP(Fe3+) 
+
+<br>CpdI"
+      notes: M-CSA entry 709, mechanism 1; M-CSA cites PMID:12044899, PMID:1645185, PMID:2156573, PMID:21820401,
+        PMID:25084495, PMID:2557891, PMID:28451256, PMID:8396973, PMID:8961943; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/709/
+      snippet: "The catalytic cycle consists of at three major steps: 
+
+<p> 1) Reaction of CcP with\
+        \ peroxide to form Compound I (CpdI)
+
+<br>CcP(Fe3+) + H2O2 => CpdI + H2O</p>
+
+<p>\
+        \ 2) One-electron reduction of CpdI by Cc(Fe2+) to Compound II (CpdII)
+
+<br>CpdI + Cc(Fe2+)\
+        \ => CpdII + Cc(Fe3+)</p>
+
+<p> 3) Subsequent reduction of CpdII by another Cc(Fe2+) to regenerate\
+        \ the resting-state CcP(Fe3+) 
+
+<br>CpdI"
+      notes: M-CSA entry 709, mechanism 1; M-CSA cites PMID:12044899, PMID:1645185, PMID:2156573, PMID:21820401,
+        PMID:25084495, PMID:2557891, PMID:28451256, PMID:8396973, PMID:8961943; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (23 evidence-backed edges) transcribed from M-CSA entry 709;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

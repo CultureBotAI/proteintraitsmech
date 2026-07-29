@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.13.22
 - CHEBI:15377
@@ -177,4 +177,265 @@ definitions:
       VanX is a Zn(II)-containing metalloenzyme that cleaves D-alanyl-D-alanine dipeptide (D-ala-D-ala), increasing the cytoplasmic pool of free D-ala available for use by VanA to form D-ala-D-lac. The enzyme is stereospecific and is found in solution as a mixture of monomers and dimers. The dipeptidase is a critical component of a system that mediates transposon-based, high-level vancomycin resistance in enterococci. Vancomycin acts by binding to the terminal D-ala-D-ala moiety of the bacterial peptidoglycan precursor, interfering with growth of the peptidoglycan chain and normal cell wall formation. The substitution of D-ala-D-ala by D-ala-D-lac at the extracellular terminus of the peptidoglycan chain diminishes the affinity of vancomycin by 1000-fold.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of D-Ala-D-Ala dipeptidase
+  description: Stepwise mechanism transcribed from M-CSA entry 706 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: arg71
+    label: catalytic Arg71 (M-CSA/PDB numbering; UniProt residue 71)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q06241
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his116
+    label: catalytic His116 (M-CSA/PDB numbering; UniProt residue 116)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q06241
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp123
+    label: catalytic Asp123 (M-CSA/PDB numbering; UniProt residue 123)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q06241
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu181
+    label: catalytic Glu181 (M-CSA/PDB numbering; UniProt residue 181)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q06241
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: his184
+    label: catalytic His184 (M-CSA/PDB numbering; UniProt residue 184)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q06241
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: D-alanyl-D-alanine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57822
+  - node_id: product0
+    label: D-alanine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57416
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu181 deprotonates a water which alongside Zn polarising the hydroxide activates it
+      so it can attack the carbon of the carbonyl in a nucleophilic addition. The incoming pe-ptide also
+      coordinates to the Zinc which further stabilises the tetrahedral intermediate produced.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The oxyanion initiates an elimination which results in the cleavage of the peptide bond.
+      The N-terminal product then accepts a proton from Glu181.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The N-terminal product accepts a proton from the C-terminal product to produce the kinetically
+      favourable products.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Product
+  - node_id: active_site
+    label: D-Ala-D-Ala dipeptidase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:706
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.1380.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.1380.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: D-Ala-D-Ala dipeptidase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.13.22
+  edges:
+  - subject: glu181
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu181 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/706/
+      snippet: Glu181 deprotonates a water which alongside Zn polarising the hydroxide activates it so
+        it can attack the carbon of the carbonyl in a nucleophilic addition. The incoming pe-ptide also
+        coordinates to the Zinc which further stabilises the tetrahedral intermediate produced.
+      notes: M-CSA entry 706, mechanism 1; M-CSA cites PMID:15657055, PMID:17017774, PMID:24711382, PMID:9265630,
+        PMID:9702193; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/706/
+      snippet: The oxyanion initiates an elimination which results in the cleavage of the peptide bond.
+        The N-terminal product then accepts a proton from Glu181.
+      notes: M-CSA entry 706, mechanism 1; M-CSA cites PMID:15657055, PMID:17017774, PMID:24711382, PMID:9265630,
+        PMID:9702193; step 2
+  - subject: glu181
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu181 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/706/
+      snippet: The oxyanion initiates an elimination which results in the cleavage of the peptide bond.
+        The N-terminal product then accepts a proton from Glu181.
+      notes: M-CSA entry 706, mechanism 1; M-CSA cites PMID:15657055, PMID:17017774, PMID:24711382, PMID:9265630,
+        PMID:9702193; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/706/
+      snippet: The N-terminal product accepts a proton from the C-terminal product to produce the kinetically
+        favourable products.
+      notes: M-CSA entry 706, mechanism 1; M-CSA cites PMID:15657055, PMID:17017774, PMID:24711382, PMID:9265630,
+        PMID:9702193; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/706/
+      snippet: Product
+      notes: M-CSA entry 706, mechanism 1; M-CSA cites PMID:15657055, PMID:17017774, PMID:24711382, PMID:9265630,
+        PMID:9702193; step 4
+  - subject: arg71
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg71 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/706/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 706, mechanism 1; M-CSA cites PMID:15657055, PMID:17017774, PMID:24711382, PMID:9265630,
+        PMID:9702193; M-CSA catalytic-residue roles for Arg71
+  - subject: his116
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His116 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/706/
+      snippet: metal ligand
+      notes: M-CSA entry 706, mechanism 1; M-CSA cites PMID:15657055, PMID:17017774, PMID:24711382, PMID:9265630,
+        PMID:9702193; M-CSA catalytic-residue roles for His116
+  - subject: asp123
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp123 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/706/
+      snippet: metal ligand
+      notes: M-CSA entry 706, mechanism 1; M-CSA cites PMID:15657055, PMID:17017774, PMID:24711382, PMID:9265630,
+        PMID:9702193; M-CSA catalytic-residue roles for Asp123
+  - subject: glu181
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu181 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/706/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 706, mechanism 1; M-CSA cites PMID:15657055, PMID:17017774, PMID:24711382, PMID:9265630,
+        PMID:9702193; M-CSA catalytic-residue roles for Glu181
+  - subject: his184
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His184 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/706/
+      snippet: metal ligand
+      notes: M-CSA entry 706, mechanism 1; M-CSA cites PMID:15657055, PMID:17017774, PMID:24711382, PMID:9265630,
+        PMID:9702193; M-CSA catalytic-residue roles for His184
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/706/
+      snippet: An incoming peptide displaces a zinc-bound water molecule towards Glu181, giving a six-coordinated
+        metal ion. The nucleophilic hydroxide is generated by zinc and Glu181 from the water molecule,
+        and the nucleophile attacks the polarised carbonyl to form a tetrahedral intermediate. This forms
+        a bidentate complex with the zinc and is stabilised further by interactions with Arg71. It is
+        likely that Gl
+      notes: M-CSA entry 706, mechanism 1; M-CSA cites PMID:15657055, PMID:17017774, PMID:24711382, PMID:9265630,
+        PMID:9702193; CATH domain 3.30.1380.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/706/
+      snippet: An incoming peptide displaces a zinc-bound water molecule towards Glu181, giving a six-coordinated
+        metal ion. The nucleophilic hydroxide is generated by zinc and Glu181 from the water molecule,
+        and the nucleophile attacks the polarised carbonyl to form a tetrahedral intermediate. This forms
+        a bidentate complex with the zinc and is stabilised further by interactions with Arg71. It is
+        likely that Gl
+      notes: M-CSA entry 706, mechanism 1; M-CSA cites PMID:15657055, PMID:17017774, PMID:24711382, PMID:9265630,
+        PMID:9702193; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/706/
+      snippet: An incoming peptide displaces a zinc-bound water molecule towards Glu181, giving a six-coordinated
+        metal ion. The nucleophilic hydroxide is generated by zinc and Glu181 from the water molecule,
+        and the nucleophile attacks the polarised carbonyl to form a tetrahedral intermediate. This forms
+        a bidentate complex with the zinc and is stabilised further by interactions with Arg71. It is
+        likely that Gl
+      notes: M-CSA entry 706, mechanism 1; M-CSA cites PMID:15657055, PMID:17017774, PMID:24711382, PMID:9265630,
+        PMID:9702193; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/706/
+      snippet: An incoming peptide displaces a zinc-bound water molecule towards Glu181, giving a six-coordinated
+        metal ion. The nucleophilic hydroxide is generated by zinc and Glu181 from the water molecule,
+        and the nucleophile attacks the polarised carbonyl to form a tetrahedral intermediate. This forms
+        a bidentate complex with the zinc and is stabilised further by interactions with Arg71. It is
+        likely that Gl
+      notes: M-CSA entry 706, mechanism 1; M-CSA cites PMID:15657055, PMID:17017774, PMID:24711382, PMID:9265630,
+        PMID:9702193; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/706/
+      snippet: An incoming peptide displaces a zinc-bound water molecule towards Glu181, giving a six-coordinated
+        metal ion. The nucleophilic hydroxide is generated by zinc and Glu181 from the water molecule,
+        and the nucleophile attacks the polarised carbonyl to form a tetrahedral intermediate. This forms
+        a bidentate complex with the zinc and is stabilised further by interactions with Arg71. It is
+        likely that Gl
+      notes: M-CSA entry 706, mechanism 1; M-CSA cites PMID:15657055, PMID:17017774, PMID:24711382, PMID:9265630,
+        PMID:9702193; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 706;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

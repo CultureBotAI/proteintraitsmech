@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.1.10
 - CHEBI:15377
@@ -364,4 +364,274 @@ definitions:
       Oligo-1,6-glucosidase (dextrin 6-alpha-D-glucanohydrolase) hydrolyses the non-reducing terminal alpha-1,6-glucosidic bonds of isomaltosaccharides, panose, and alpha-limit dextrins, but fails to act on alpha,1,4-glucosidic bonds of maltosaccharides [PMID:8370659]. The anomeric configuration of the substrate is retained, thus the mechanism proceeds via a double displacement process [PMID:9193006, PMID:10331869]. In addition, this enzyme belongs to the family 13 of glycosyl hydrolases, also known as the alpha-amylase family.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of oligo-1,6-glucosidase
+  description: Stepwise mechanism transcribed from M-CSA entry 285 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: asp98
+    label: catalytic Asp98 (M-CSA/PDB numbering; UniProt residue 98)
+    node_type: RESIDUE
+    grounding: UniProtKB:P21332
+    description: 'M-CSA roles: electrostatic destabiliser, electrostatic stabiliser, repulsive charge-charge
+      interaction, steric role.'
+  - node_id: asp199
+    label: catalytic Asp199 (M-CSA/PDB numbering; UniProt residue 199)
+    node_type: RESIDUE
+    grounding: UniProtKB:P21332
+    description: 'M-CSA roles: covalently attached, nucleofuge, nucleophile, polar interaction.'
+  - node_id: glu255
+    label: catalytic Glu255 (M-CSA/PDB numbering; UniProt residue 255)
+    node_type: RESIDUE
+    grounding: UniProtKB:P21332
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor,
+      repulsive charge-charge interaction.'
+  - node_id: his328
+    label: catalytic His328 (M-CSA/PDB numbering; UniProt residue 328)
+    node_type: RESIDUE
+    grounding: UniProtKB:P21332
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: asp329
+    label: catalytic Asp329 (M-CSA/PDB numbering; UniProt residue 329)
+    node_type: RESIDUE
+    grounding: UniProtKB:P21332
+    description: 'M-CSA roles: transition state stabiliser.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: isomaltose
+    node_type: CHEMICAL
+    grounding: CHEBI:28189
+  - node_id: product0
+    label: alpha-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:17925
+  - node_id: product1
+    label: D-glucopyranose
+    node_type: CHEMICAL
+    grounding: CHEBI:4167
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp displaces the terminal sugar in a nucleophilic substitution reaction, forming a covalent
+      bond between the enzyme and substrate. The mechanism proceeds through a high-energy oxocarbenium-like
+      transition state, in which the reaction centre of the sugar is planar and positively charged [PMID:10331869].
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Glu255 deprotonates the water, which initiates a nucleophilic attack on the covalently
+      bound sugar, displacing the Asp199. The mechanism proceeds through a high-energy oxocarbenium-like
+      transition state, in which the reaction centre of the sugar is planar and positively charged [PMID:10331869].
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: oligo-1,6-glucosidase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:285
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.80 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.80
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: oligo-1,6-glucosidase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.1.10
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/285/
+      snippet: Glu255 deprotonates the water, which initiates a nucleophilic attack on the covalently
+        bound sugar, displacing the Asp199. The mechanism proceeds through a high-energy oxocarbenium-like
+        transition state, in which the reaction centre of the sugar is planar and positively charged [PMID:10331869].
+      notes: M-CSA entry 285, mechanism 1; M-CSA cites PMID:10331869, PMID:11676021, PMID:15940457, PMID:8370659,
+        PMID:9193006; step 2
+  - subject: asp199
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Asp199 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/285/
+      snippet: Glu255 deprotonates the water, which initiates a nucleophilic attack on the covalently
+        bound sugar, displacing the Asp199. The mechanism proceeds through a high-energy oxocarbenium-like
+        transition state, in which the reaction centre of the sugar is planar and positively charged [PMID:10331869].
+      notes: M-CSA entry 285, mechanism 1; M-CSA cites PMID:10331869, PMID:11676021, PMID:15940457, PMID:8370659,
+        PMID:9193006; step 2
+  - subject: glu255
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu255 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/285/
+      snippet: Glu255 deprotonates the water, which initiates a nucleophilic attack on the covalently
+        bound sugar, displacing the Asp199. The mechanism proceeds through a high-energy oxocarbenium-like
+        transition state, in which the reaction centre of the sugar is planar and positively charged [PMID:10331869].
+      notes: M-CSA entry 285, mechanism 1; M-CSA cites PMID:10331869, PMID:11676021, PMID:15940457, PMID:8370659,
+        PMID:9193006; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/285/
+      snippet: Products.
+      notes: M-CSA entry 285, mechanism 1; M-CSA cites PMID:10331869, PMID:11676021, PMID:15940457, PMID:8370659,
+        PMID:9193006; step 3
+  - subject: asp98
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp98 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/285/
+      snippet: electrostatic destabiliser, electrostatic stabiliser, repulsive charge-charge interaction,
+        steric role
+      notes: M-CSA entry 285, mechanism 1; M-CSA cites PMID:10331869, PMID:11676021, PMID:15940457, PMID:8370659,
+        PMID:9193006; M-CSA catalytic-residue roles for Asp98
+  - subject: asp199
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp199 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/285/
+      snippet: covalently attached, nucleofuge, nucleophile, polar interaction
+      notes: M-CSA entry 285, mechanism 1; M-CSA cites PMID:10331869, PMID:11676021, PMID:15940457, PMID:8370659,
+        PMID:9193006; M-CSA catalytic-residue roles for Asp199
+  - subject: glu255
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu255 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/285/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor, repulsive charge-charge
+        interaction
+      notes: M-CSA entry 285, mechanism 1; M-CSA cites PMID:10331869, PMID:11676021, PMID:15940457, PMID:8370659,
+        PMID:9193006; M-CSA catalytic-residue roles for Glu255
+  - subject: his328
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His328 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/285/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 285, mechanism 1; M-CSA cites PMID:10331869, PMID:11676021, PMID:15940457, PMID:8370659,
+        PMID:9193006; M-CSA catalytic-residue roles for His328
+  - subject: asp329
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp329 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/285/
+      snippet: transition state stabiliser
+      notes: M-CSA entry 285, mechanism 1; M-CSA cites PMID:10331869, PMID:11676021, PMID:15940457, PMID:8370659,
+        PMID:9193006; M-CSA catalytic-residue roles for Asp329
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/285/
+      snippet: The mechanism here is shown utilising isomaltose. The alpha-retaining mechanism is a double
+        displacement process, which proceeds in two steps. In the first step, Oligo-1,6-glucosidase cleaves
+        an alpha(1-6) glycosidic bond in its substrate, dextrin or isomaltose, and forms a covalent beta(1-6)-linked
+        glycosyl-enzyme intermediate [PMID:10331869]. In the second step, the resulting glycosyl enzyme
+        is
+      notes: M-CSA entry 285, mechanism 1; M-CSA cites PMID:10331869, PMID:11676021, PMID:15940457, PMID:8370659,
+        PMID:9193006; CATH domain 3.20.20.80 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/285/
+      snippet: The mechanism here is shown utilising isomaltose. The alpha-retaining mechanism is a double
+        displacement process, which proceeds in two steps. In the first step, Oligo-1,6-glucosidase cleaves
+        an alpha(1-6) glycosidic bond in its substrate, dextrin or isomaltose, and forms a covalent beta(1-6)-linked
+        glycosyl-enzyme intermediate [PMID:10331869]. In the second step, the resulting glycosyl enzyme
+        is
+      notes: M-CSA entry 285, mechanism 1; M-CSA cites PMID:10331869, PMID:11676021, PMID:15940457, PMID:8370659,
+        PMID:9193006; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/285/
+      snippet: The mechanism here is shown utilising isomaltose. The alpha-retaining mechanism is a double
+        displacement process, which proceeds in two steps. In the first step, Oligo-1,6-glucosidase cleaves
+        an alpha(1-6) glycosidic bond in its substrate, dextrin or isomaltose, and forms a covalent beta(1-6)-linked
+        glycosyl-enzyme intermediate [PMID:10331869]. In the second step, the resulting glycosyl enzyme
+        is
+      notes: M-CSA entry 285, mechanism 1; M-CSA cites PMID:10331869, PMID:11676021, PMID:15940457, PMID:8370659,
+        PMID:9193006; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/285/
+      snippet: The mechanism here is shown utilising isomaltose. The alpha-retaining mechanism is a double
+        displacement process, which proceeds in two steps. In the first step, Oligo-1,6-glucosidase cleaves
+        an alpha(1-6) glycosidic bond in its substrate, dextrin or isomaltose, and forms a covalent beta(1-6)-linked
+        glycosyl-enzyme intermediate [PMID:10331869]. In the second step, the resulting glycosyl enzyme
+        is
+      notes: M-CSA entry 285, mechanism 1; M-CSA cites PMID:10331869, PMID:11676021, PMID:15940457, PMID:8370659,
+        PMID:9193006; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/285/
+      snippet: The mechanism here is shown utilising isomaltose. The alpha-retaining mechanism is a double
+        displacement process, which proceeds in two steps. In the first step, Oligo-1,6-glucosidase cleaves
+        an alpha(1-6) glycosidic bond in its substrate, dextrin or isomaltose, and forms a covalent beta(1-6)-linked
+        glycosyl-enzyme intermediate [PMID:10331869]. In the second step, the resulting glycosyl enzyme
+        is
+      notes: M-CSA entry 285, mechanism 1; M-CSA cites PMID:10331869, PMID:11676021, PMID:15940457, PMID:8370659,
+        PMID:9193006; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/285/
+      snippet: The mechanism here is shown utilising isomaltose. The alpha-retaining mechanism is a double
+        displacement process, which proceeds in two steps. In the first step, Oligo-1,6-glucosidase cleaves
+        an alpha(1-6) glycosidic bond in its substrate, dextrin or isomaltose, and forms a covalent beta(1-6)-linked
+        glycosyl-enzyme intermediate [PMID:10331869]. In the second step, the resulting glycosyl enzyme
+        is
+      notes: M-CSA entry 285, mechanism 1; M-CSA cites PMID:10331869, PMID:11676021, PMID:15940457, PMID:8370659,
+        PMID:9193006; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 285;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

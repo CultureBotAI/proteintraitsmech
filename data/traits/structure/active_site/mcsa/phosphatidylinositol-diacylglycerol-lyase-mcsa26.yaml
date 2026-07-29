@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.6.1.13
 - CHEBI:57880
@@ -234,4 +234,282 @@ definitions:
       Phosphatidylinositol-specific phospholipase C (PI-PLC) is a ubiquitous enzyme involved in a vast range of cellular signalling cascades. Prokaryotic PLCs act as virulence factors in some bacteria, catalysing the hydrolysis of the sn-3 phosphodiester bond of phosphatidylinositol (PI) producing diacylglycerol (DAG) and inositol 1-phosphate (I(1)P). For the bacterial enzyme, the main product is the cyclic intermediate, myo-inositol 1,2-cyclic phosphate, which is rapidly hydrolysed to I(1)P by the eukaryotic PI-PLCs whereas the mammalian enzyme undergoes complete catalysis. PI-PLC from Bacillus cereus, and the nearly identical enzyme from B. thuringiensis have been used as model systems for the study of IP-PLCs as a whole. Bacterial PI-PLCs are metal-ion-independent. This is in contrast to mammalian PI-PLCs which are Ca(II) dependent. The R69D mutant of B. thuringiensis PI-PLC is calcium dependent and has been used to investigate the role of calcium in catalysis by PI-PLCs [PMID:16042375].
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of phosphatidylinositol diacylglycerol-lyase
+  description: Stepwise mechanism transcribed from M-CSA entry 26 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +31).
+  nodes:
+  - node_id: his32
+    label: catalytic His32 (M-CSA/PDB numbering; UniProt residue 63)
+    node_type: RESIDUE
+    grounding: UniProtKB:P14262
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: asp33
+    label: catalytic Asp33 (M-CSA/PDB numbering; UniProt residue 64)
+    node_type: RESIDUE
+    grounding: UniProtKB:P14262
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: arg69
+    label: catalytic Arg69 (M-CSA/PDB numbering; UniProt residue 100)
+    node_type: RESIDUE
+    grounding: UniProtKB:P14262
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: his82
+    label: catalytic His82 (M-CSA/PDB numbering; UniProt residue 113)
+    node_type: RESIDUE
+    grounding: UniProtKB:P14262
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: asp274
+    label: catalytic Asp274 (M-CSA/PDB numbering; UniProt residue 305)
+    node_type: RESIDUE
+    grounding: UniProtKB:P14262
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: reactant0
+    label: 1-phosphatidyl-1D-myo-inositol(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57880
+  - node_id: product0
+    label: 1,2-diacyl-sn-glycerol
+    node_type: CHEMICAL
+    grounding: CHEBI:17815
+  - node_id: product1
+    label: 1D-myo-inositol 1,2-cyclic phosphate(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58484
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His32 deprotonates the hydroxy group adjacent to the phosphate, which initiates an intramolecular
+      nucleophilic addition of the oxyanion to the phosphate, which proceeds through a pentavalent transition
+      state, to eliminate the product alcohol in a substitution reaction, with concomitant deprotonation
+      of His82.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: His82 deprotonates water, which in turn deprotonates His32 in an inferred step.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: phosphatidylinositol diacylglycerol-lyase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:26
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.190 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.190
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: phosphatidylinositol diacylglycerol-lyase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.6.1.13
+  edges:
+  - subject: his32
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His32 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/26/
+      snippet: His32 deprotonates the hydroxy group adjacent to the phosphate, which initiates an intramolecular
+        nucleophilic addition of the oxyanion to the phosphate, which proceeds through a pentavalent transition
+        state, to eliminate the product alcohol in a substitution reaction, with concomitant deprotonation
+        of His82.
+      notes: M-CSA entry 26, mechanism 1; M-CSA cites PMID:11583175, PMID:16042375, PMID:9048554, PMID:9335537,
+        PMID:9367761, PMID:9466937, PMID:9521777, PMID:9838022; step 1
+  - subject: his82
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His82 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/26/
+      snippet: His32 deprotonates the hydroxy group adjacent to the phosphate, which initiates an intramolecular
+        nucleophilic addition of the oxyanion to the phosphate, which proceeds through a pentavalent transition
+        state, to eliminate the product alcohol in a substitution reaction, with concomitant deprotonation
+        of His82.
+      notes: M-CSA entry 26, mechanism 1; M-CSA cites PMID:11583175, PMID:16042375, PMID:9048554, PMID:9335537,
+        PMID:9367761, PMID:9466937, PMID:9521777, PMID:9838022; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/26/
+      snippet: His82 deprotonates water, which in turn deprotonates His32 in an inferred step.
+      notes: M-CSA entry 26, mechanism 1; M-CSA cites PMID:11583175, PMID:16042375, PMID:9048554, PMID:9335537,
+        PMID:9367761, PMID:9466937, PMID:9521777, PMID:9838022; step 2
+  - subject: his32
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His32 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/26/
+      snippet: His82 deprotonates water, which in turn deprotonates His32 in an inferred step.
+      notes: M-CSA entry 26, mechanism 1; M-CSA cites PMID:11583175, PMID:16042375, PMID:9048554, PMID:9335537,
+        PMID:9367761, PMID:9466937, PMID:9521777, PMID:9838022; step 2
+  - subject: his82
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His82 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/26/
+      snippet: His82 deprotonates water, which in turn deprotonates His32 in an inferred step.
+      notes: M-CSA entry 26, mechanism 1; M-CSA cites PMID:11583175, PMID:16042375, PMID:9048554, PMID:9335537,
+        PMID:9367761, PMID:9466937, PMID:9521777, PMID:9838022; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/26/
+      snippet: Products
+      notes: M-CSA entry 26, mechanism 1; M-CSA cites PMID:11583175, PMID:16042375, PMID:9048554, PMID:9335537,
+        PMID:9367761, PMID:9466937, PMID:9521777, PMID:9838022; step 3
+  - subject: his32
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His32 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/26/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 26, mechanism 1; M-CSA cites PMID:11583175, PMID:16042375, PMID:9048554, PMID:9335537,
+        PMID:9367761, PMID:9466937, PMID:9521777, PMID:9838022; M-CSA catalytic-residue roles for His32
+  - subject: asp33
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp33 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/26/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 26, mechanism 1; M-CSA cites PMID:11583175, PMID:16042375, PMID:9048554, PMID:9335537,
+        PMID:9367761, PMID:9466937, PMID:9521777, PMID:9838022; M-CSA catalytic-residue roles for Asp33
+  - subject: arg69
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg69 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/26/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 26, mechanism 1; M-CSA cites PMID:11583175, PMID:16042375, PMID:9048554, PMID:9335537,
+        PMID:9367761, PMID:9466937, PMID:9521777, PMID:9838022; M-CSA catalytic-residue roles for Arg69
+  - subject: his82
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His82 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/26/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 26, mechanism 1; M-CSA cites PMID:11583175, PMID:16042375, PMID:9048554, PMID:9335537,
+        PMID:9367761, PMID:9466937, PMID:9521777, PMID:9838022; M-CSA catalytic-residue roles for His82
+  - subject: asp274
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp274 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/26/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 26, mechanism 1; M-CSA cites PMID:11583175, PMID:16042375, PMID:9048554, PMID:9335537,
+        PMID:9367761, PMID:9466937, PMID:9521777, PMID:9838022; M-CSA catalytic-residue roles for Asp274
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/26/
+      snippet: "<p>The first step of the is an intramolecular nucleophilic attack by the C2 hydroxyl of\
+        \ the substrate on the phosphorus producing IP and a myo-inositol 1,2-cyclic phosphate.  This\
+        \ is catalysed by His32 and His82 acting as general base and general acid catalysts respectively.\
+        \ </p>
+
+<p>The second step is reverse of the first step but with water acting as the nucleophile.\
+        \ This results in the hydrol"
+      notes: M-CSA entry 26, mechanism 1; M-CSA cites PMID:11583175, PMID:16042375, PMID:9048554, PMID:9335537,
+        PMID:9367761, PMID:9466937, PMID:9521777, PMID:9838022; CATH domain 3.20.20.190 assigned to the
+        catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/26/
+      snippet: "<p>The first step of the is an intramolecular nucleophilic attack by the C2 hydroxyl of\
+        \ the substrate on the phosphorus producing IP and a myo-inositol 1,2-cyclic phosphate.  This\
+        \ is catalysed by His32 and His82 acting as general base and general acid catalysts respectively.\
+        \ </p>
+
+<p>The second step is reverse of the first step but with water acting as the nucleophile.\
+        \ This results in the hydrol"
+      notes: M-CSA entry 26, mechanism 1; M-CSA cites PMID:11583175, PMID:16042375, PMID:9048554, PMID:9335537,
+        PMID:9367761, PMID:9466937, PMID:9521777, PMID:9838022; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/26/
+      snippet: "<p>The first step of the is an intramolecular nucleophilic attack by the C2 hydroxyl of\
+        \ the substrate on the phosphorus producing IP and a myo-inositol 1,2-cyclic phosphate.  This\
+        \ is catalysed by His32 and His82 acting as general base and general acid catalysts respectively.\
+        \ </p>
+
+<p>The second step is reverse of the first step but with water acting as the nucleophile.\
+        \ This results in the hydrol"
+      notes: M-CSA entry 26, mechanism 1; M-CSA cites PMID:11583175, PMID:16042375, PMID:9048554, PMID:9335537,
+        PMID:9367761, PMID:9466937, PMID:9521777, PMID:9838022; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/26/
+      snippet: "<p>The first step of the is an intramolecular nucleophilic attack by the C2 hydroxyl of\
+        \ the substrate on the phosphorus producing IP and a myo-inositol 1,2-cyclic phosphate.  This\
+        \ is catalysed by His32 and His82 acting as general base and general acid catalysts respectively.\
+        \ </p>
+
+<p>The second step is reverse of the first step but with water acting as the nucleophile.\
+        \ This results in the hydrol"
+      notes: M-CSA entry 26, mechanism 1; M-CSA cites PMID:11583175, PMID:16042375, PMID:9048554, PMID:9335537,
+        PMID:9367761, PMID:9466937, PMID:9521777, PMID:9838022; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/26/
+      snippet: "<p>The first step of the is an intramolecular nucleophilic attack by the C2 hydroxyl of\
+        \ the substrate on the phosphorus producing IP and a myo-inositol 1,2-cyclic phosphate.  This\
+        \ is catalysed by His32 and His82 acting as general base and general acid catalysts respectively.\
+        \ </p>
+
+<p>The second step is reverse of the first step but with water acting as the nucleophile.\
+        \ This results in the hydrol"
+      notes: M-CSA entry 26, mechanism 1; M-CSA cites PMID:11583175, PMID:16042375, PMID:9048554, PMID:9335537,
+        PMID:9367761, PMID:9466937, PMID:9521777, PMID:9838022; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (16 evidence-backed edges) transcribed from M-CSA entry 26;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

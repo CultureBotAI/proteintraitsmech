@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.1.1.2
 - CHEBI:15378
@@ -384,4 +384,259 @@ definitions:
       This entry represents the aldo-keto reductase family which includes a number of related monomeric NAD(P)H-dependent oxidoreductases, such as aldehyde reductase, aldose reductase, prostaglandin F synthase, xylose reductase, rho crystallin, etc. [PMID:2498333]. Aldehyde Reductase, sourced from Homo sapiens, catalyses the NADPH-dependent reduction of a wide range of carbonyl compounds such as sugars, aldehyde metabolites, corticosteroid hormones and xenobiotic aldehydes. Interest in this enzyme stems from it's ability to reduce glucose and galactose, causing diabetic and galactosemic complications affecting the lens, retina, nerves and kidneys.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of aldehyde reductase
+  description: Stepwise mechanism transcribed from M-CSA entry 725 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: asp43
+    label: catalytic Asp43 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15121
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his48
+    label: catalytic His48 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15121
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: lys77
+    label: catalytic Lys77 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15121
+    description: 'M-CSA roles: electrostatic stabiliser, modifies pKa.'
+  - node_id: his110
+    label: catalytic His110 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15121
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: primary alcohol
+    node_type: CHEMICAL
+    grounding: CHEBI:15734
+  - node_id: reactant1
+    label: NADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+  - node_id: product0
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product1
+    label: aldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:17478
+  - node_id: product2
+    label: NADPH(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: NAD(P)H eliminated a hydride from the pro-R hydrogen to the pseudo re-side of the ketone.
+      Re- and si-side are denoted according to the relative steric requirements of the carbonyl group
+      substituents where the H represents a small group and R1 the large group. The ketone then abstracts
+      a proton from the tyrosine.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: In an inferred return step, water donates a proton to the active site tyrosine.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: aldehyde reductase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:725
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.100 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.100
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: aldehyde reductase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.1.1.2
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/725/
+      snippet: In an inferred return step, water donates a proton to the active site tyrosine.
+      notes: M-CSA entry 725, mechanism 1; M-CSA cites PMID:10584067, PMID:14718658, PMID:15109252, PMID:15272156,
+        PMID:15299353, PMID:15769597, PMID:15799715, PMID:16107153, PMID:1621098, PMID:18276838, PMID:18300247,
+        PMID:19026644, PMID:19342796, PMID:25131535, PMID:7552731, PMID:8117659, PMID:8192670, PMID:9307009,
+        PMID:9618487; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/725/
+      snippet: Products.
+      notes: M-CSA entry 725, mechanism 1; M-CSA cites PMID:10584067, PMID:14718658, PMID:15109252, PMID:15272156,
+        PMID:15299353, PMID:15769597, PMID:15799715, PMID:16107153, PMID:1621098, PMID:18276838, PMID:18300247,
+        PMID:19026644, PMID:19342796, PMID:25131535, PMID:7552731, PMID:8117659, PMID:8192670, PMID:9307009,
+        PMID:9618487; step 3
+  - subject: asp43
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp43 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/725/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 725, mechanism 1; M-CSA cites PMID:10584067, PMID:14718658, PMID:15109252, PMID:15272156,
+        PMID:15299353, PMID:15769597, PMID:15799715, PMID:16107153, PMID:1621098, PMID:18276838, PMID:18300247,
+        PMID:19026644, PMID:19342796, PMID:25131535, PMID:7552731, PMID:8117659, PMID:8192670, PMID:9307009,
+        PMID:9618487; M-CSA catalytic-residue roles for Asp43
+  - subject: his48
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His48 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/725/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 725, mechanism 1; M-CSA cites PMID:10584067, PMID:14718658, PMID:15109252, PMID:15272156,
+        PMID:15299353, PMID:15769597, PMID:15799715, PMID:16107153, PMID:1621098, PMID:18276838, PMID:18300247,
+        PMID:19026644, PMID:19342796, PMID:25131535, PMID:7552731, PMID:8117659, PMID:8192670, PMID:9307009,
+        PMID:9618487; M-CSA catalytic-residue roles for His48
+  - subject: lys77
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys77 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/725/
+      snippet: electrostatic stabiliser, modifies pKa
+      notes: M-CSA entry 725, mechanism 1; M-CSA cites PMID:10584067, PMID:14718658, PMID:15109252, PMID:15272156,
+        PMID:15299353, PMID:15769597, PMID:15799715, PMID:16107153, PMID:1621098, PMID:18276838, PMID:18300247,
+        PMID:19026644, PMID:19342796, PMID:25131535, PMID:7552731, PMID:8117659, PMID:8192670, PMID:9307009,
+        PMID:9618487; M-CSA catalytic-residue roles for Lys77
+  - subject: his110
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His110 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/725/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 725, mechanism 1; M-CSA cites PMID:10584067, PMID:14718658, PMID:15109252, PMID:15272156,
+        PMID:15299353, PMID:15769597, PMID:15799715, PMID:16107153, PMID:1621098, PMID:18276838, PMID:18300247,
+        PMID:19026644, PMID:19342796, PMID:25131535, PMID:7552731, PMID:8117659, PMID:8192670, PMID:9307009,
+        PMID:9618487; M-CSA catalytic-residue roles for His110
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/725/
+      snippet: The pro-R hydrogen of NAD(P)H is transferred to the re face of the carbonyl group of the
+        substrate. The forming alcohol group is protonated by Tyr 48, which acts as a general acid. The
+        Tyr 48 anion is stabilised electrostatically by Lys 77. Lys 77 is stabilised by Asp 43.
+      notes: M-CSA entry 725, mechanism 1; M-CSA cites PMID:10584067, PMID:14718658, PMID:15109252, PMID:15272156,
+        PMID:15299353, PMID:15769597, PMID:15799715, PMID:16107153, PMID:1621098, PMID:18276838, PMID:18300247,
+        PMID:19026644, PMID:19342796, PMID:25131535, PMID:7552731, PMID:8117659, PMID:8192670, PMID:9307009,
+        PMID:9618487; CATH domain 3.20.20.100 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/725/
+      snippet: The pro-R hydrogen of NAD(P)H is transferred to the re face of the carbonyl group of the
+        substrate. The forming alcohol group is protonated by Tyr 48, which acts as a general acid. The
+        Tyr 48 anion is stabilised electrostatically by Lys 77. Lys 77 is stabilised by Asp 43.
+      notes: M-CSA entry 725, mechanism 1; M-CSA cites PMID:10584067, PMID:14718658, PMID:15109252, PMID:15272156,
+        PMID:15299353, PMID:15769597, PMID:15799715, PMID:16107153, PMID:1621098, PMID:18276838, PMID:18300247,
+        PMID:19026644, PMID:19342796, PMID:25131535, PMID:7552731, PMID:8117659, PMID:8192670, PMID:9307009,
+        PMID:9618487; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/725/
+      snippet: The pro-R hydrogen of NAD(P)H is transferred to the re face of the carbonyl group of the
+        substrate. The forming alcohol group is protonated by Tyr 48, which acts as a general acid. The
+        Tyr 48 anion is stabilised electrostatically by Lys 77. Lys 77 is stabilised by Asp 43.
+      notes: M-CSA entry 725, mechanism 1; M-CSA cites PMID:10584067, PMID:14718658, PMID:15109252, PMID:15272156,
+        PMID:15299353, PMID:15769597, PMID:15799715, PMID:16107153, PMID:1621098, PMID:18276838, PMID:18300247,
+        PMID:19026644, PMID:19342796, PMID:25131535, PMID:7552731, PMID:8117659, PMID:8192670, PMID:9307009,
+        PMID:9618487; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/725/
+      snippet: The pro-R hydrogen of NAD(P)H is transferred to the re face of the carbonyl group of the
+        substrate. The forming alcohol group is protonated by Tyr 48, which acts as a general acid. The
+        Tyr 48 anion is stabilised electrostatically by Lys 77. Lys 77 is stabilised by Asp 43.
+      notes: M-CSA entry 725, mechanism 1; M-CSA cites PMID:10584067, PMID:14718658, PMID:15109252, PMID:15272156,
+        PMID:15299353, PMID:15769597, PMID:15799715, PMID:16107153, PMID:1621098, PMID:18276838, PMID:18300247,
+        PMID:19026644, PMID:19342796, PMID:25131535, PMID:7552731, PMID:8117659, PMID:8192670, PMID:9307009,
+        PMID:9618487; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/725/
+      snippet: The pro-R hydrogen of NAD(P)H is transferred to the re face of the carbonyl group of the
+        substrate. The forming alcohol group is protonated by Tyr 48, which acts as a general acid. The
+        Tyr 48 anion is stabilised electrostatically by Lys 77. Lys 77 is stabilised by Asp 43.
+      notes: M-CSA entry 725, mechanism 1; M-CSA cites PMID:10584067, PMID:14718658, PMID:15109252, PMID:15272156,
+        PMID:15299353, PMID:15769597, PMID:15799715, PMID:16107153, PMID:1621098, PMID:18276838, PMID:18300247,
+        PMID:19026644, PMID:19342796, PMID:25131535, PMID:7552731, PMID:8117659, PMID:8192670, PMID:9307009,
+        PMID:9618487; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/725/
+      snippet: The pro-R hydrogen of NAD(P)H is transferred to the re face of the carbonyl group of the
+        substrate. The forming alcohol group is protonated by Tyr 48, which acts as a general acid. The
+        Tyr 48 anion is stabilised electrostatically by Lys 77. Lys 77 is stabilised by Asp 43.
+      notes: M-CSA entry 725, mechanism 1; M-CSA cites PMID:10584067, PMID:14718658, PMID:15109252, PMID:15272156,
+        PMID:15299353, PMID:15769597, PMID:15799715, PMID:16107153, PMID:1621098, PMID:18276838, PMID:18300247,
+        PMID:19026644, PMID:19342796, PMID:25131535, PMID:7552731, PMID:8117659, PMID:8192670, PMID:9307009,
+        PMID:9618487; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/725/
+      snippet: The pro-R hydrogen of NAD(P)H is transferred to the re face of the carbonyl group of the
+        substrate. The forming alcohol group is protonated by Tyr 48, which acts as a general acid. The
+        Tyr 48 anion is stabilised electrostatically by Lys 77. Lys 77 is stabilised by Asp 43.
+      notes: M-CSA entry 725, mechanism 1; M-CSA cites PMID:10584067, PMID:14718658, PMID:15109252, PMID:15272156,
+        PMID:15299353, PMID:15769597, PMID:15799715, PMID:16107153, PMID:1621098, PMID:18276838, PMID:18300247,
+        PMID:19026644, PMID:19342796, PMID:25131535, PMID:7552731, PMID:8117659, PMID:8192670, PMID:9307009,
+        PMID:9618487; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 725;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

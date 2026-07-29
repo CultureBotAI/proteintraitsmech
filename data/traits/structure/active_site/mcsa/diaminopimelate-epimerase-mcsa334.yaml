@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.1.1.7
 - CHEBI:57609
@@ -248,4 +248,224 @@ definitions:
       Diaminopimelate epimerase catalyses the isomerisation of L,L-dimaminopimelate to meso-DAP in the biosynthetic pathway leading from aspartate to lysine. It is a member of the broader family of PLP-independent amino acid racemases. Diaminopimelic acid is an essential component of bacterial cell wall biosynthesis. Diaminopimelate epimerase utilises a pair of cysteine residues in catalysis, as seen in other non-PLP dependent alpha-amino acid racemases. However, its specificity for a substrate with two stereo-centres separates the kinetic from data that presented by functionally related enzymes [PMID:16723397, PMID:10194362].
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of diaminopimelate epimerase
+  description: Stepwise mechanism transcribed from M-CSA entry 334 (2 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: cys73
+    label: catalytic Cys73 (M-CSA/PDB numbering; UniProt residue 73)
+    node_type: RESIDUE
+    grounding: UniProtKB:P44859
+    description: 'M-CSA roles: hydrogen bond acceptor, proton acceptor.'
+  - node_id: his159
+    label: catalytic His159 (M-CSA/PDB numbering; UniProt residue 159)
+    node_type: RESIDUE
+    grounding: UniProtKB:P44859
+    description: 'M-CSA roles: activator, electrostatic stabiliser.'
+  - node_id: glu208
+    label: catalytic Glu208 (M-CSA/PDB numbering; UniProt residue 208)
+    node_type: RESIDUE
+    grounding: UniProtKB:P44859
+    description: 'M-CSA roles: activator, electrostatic stabiliser.'
+  - node_id: cys217
+    label: catalytic Cys217 (M-CSA/PDB numbering; UniProt residue 217)
+    node_type: RESIDUE
+    grounding: UniProtKB:P44859
+    description: 'M-CSA roles: hydrogen bond donor, proton donor.'
+  - node_id: gly220
+    label: catalytic Gly220 (M-CSA/PDB numbering; UniProt residue 220)
+    node_type: RESIDUE
+    grounding: UniProtKB:P44859
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: reactant0
+    label: (2S,6S)-2,6-diaminopimelic acid dizwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57609
+  - node_id: product0
+    label: meso-2,6-diaminopimelic acid dizwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57791
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The Cys73 thiolate abstracts the substrate's alpha position proton, generating a carbanion
+      transition state which rapidly abstracts a proton from Cys217. This residue is positioned on the
+      alternative face of the molecule Cys73 and therefore, on reprotonation the stereochemistry at this
+      centre is inverted. The stereochemsitry of the bound substrate interconverts until it dissociates
+      from the active
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: diaminopimelate epimerase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:334
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.10.310.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.10.310.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: diaminopimelate epimerase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.1.1.7
+  edges:
+  - subject: cys73
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys73 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/334/
+      snippet: The Cys73 thiolate abstracts the substrate's alpha position proton, generating a carbanion
+        transition state which rapidly abstracts a proton from Cys217. This residue is positioned on the
+        alternative face of the molecule Cys73 and therefore, on reprotonation the stereochemistry at
+        this centre is inverted. The stereochemsitry of the bound substrate interconverts until it dissociates
+        from the active site. The enzyme is therefore not regenerated, per say, before a second round
+        of catalysis occurs [PMID:16723397, PMID:10194362].
+      notes: M-CSA entry 334, mechanism 1; M-CSA cites PMID:10194362, PMID:16327902, PMID:16723397, PMID:26610016,
+        PMID:9843410; step 1
+  - subject: cys217
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys217 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/334/
+      snippet: The Cys73 thiolate abstracts the substrate's alpha position proton, generating a carbanion
+        transition state which rapidly abstracts a proton from Cys217. This residue is positioned on the
+        alternative face of the molecule Cys73 and therefore, on reprotonation the stereochemistry at
+        this centre is inverted. The stereochemsitry of the bound substrate interconverts until it dissociates
+        from the active site. The enzyme is therefore not regenerated, per say, before a second round
+        of catalysis occurs [PMID:16723397, PMID:10194362].
+      notes: M-CSA entry 334, mechanism 1; M-CSA cites PMID:10194362, PMID:16327902, PMID:16723397, PMID:26610016,
+        PMID:9843410; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/334/
+      snippet: Products.
+      notes: M-CSA entry 334, mechanism 1; M-CSA cites PMID:10194362, PMID:16327902, PMID:16723397, PMID:26610016,
+        PMID:9843410; step 2
+  - subject: cys73
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys73 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/334/
+      snippet: hydrogen bond acceptor, proton acceptor
+      notes: M-CSA entry 334, mechanism 1; M-CSA cites PMID:10194362, PMID:16327902, PMID:16723397, PMID:26610016,
+        PMID:9843410; M-CSA catalytic-residue roles for Cys73
+  - subject: his159
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His159 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/334/
+      snippet: activator, electrostatic stabiliser
+      notes: M-CSA entry 334, mechanism 1; M-CSA cites PMID:10194362, PMID:16327902, PMID:16723397, PMID:26610016,
+        PMID:9843410; M-CSA catalytic-residue roles for His159
+  - subject: glu208
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu208 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/334/
+      snippet: activator, electrostatic stabiliser
+      notes: M-CSA entry 334, mechanism 1; M-CSA cites PMID:10194362, PMID:16327902, PMID:16723397, PMID:26610016,
+        PMID:9843410; M-CSA catalytic-residue roles for Glu208
+  - subject: cys217
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys217 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/334/
+      snippet: hydrogen bond donor, proton donor
+      notes: M-CSA entry 334, mechanism 1; M-CSA cites PMID:10194362, PMID:16327902, PMID:16723397, PMID:26610016,
+        PMID:9843410; M-CSA catalytic-residue roles for Cys217
+  - subject: gly220
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly220 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/334/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 334, mechanism 1; M-CSA cites PMID:10194362, PMID:16327902, PMID:16723397, PMID:26610016,
+        PMID:9843410; M-CSA catalytic-residue roles for Gly220
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/334/
+      snippet: The Cys73 thiolate abstracts the substrate's alpha position proton, generating a carbanion
+        transition state which rapidly abstracts a proton from Cys217. This residue is positioned on the
+        alternative face of the molecule Cys73 and therefore, on reprotonation the stereochemistry at
+        this centre is inverted. The enzyme is able to catalyse the interconversion of either S or R stereochemistry,
+        creating
+      notes: M-CSA entry 334, mechanism 1; M-CSA cites PMID:10194362, PMID:16327902, PMID:16723397, PMID:26610016,
+        PMID:9843410; CATH domain 3.10.310.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/334/
+      snippet: The Cys73 thiolate abstracts the substrate's alpha position proton, generating a carbanion
+        transition state which rapidly abstracts a proton from Cys217. This residue is positioned on the
+        alternative face of the molecule Cys73 and therefore, on reprotonation the stereochemistry at
+        this centre is inverted. The enzyme is able to catalyse the interconversion of either S or R stereochemistry,
+        creating
+      notes: M-CSA entry 334, mechanism 1; M-CSA cites PMID:10194362, PMID:16327902, PMID:16723397, PMID:26610016,
+        PMID:9843410; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/334/
+      snippet: The Cys73 thiolate abstracts the substrate's alpha position proton, generating a carbanion
+        transition state which rapidly abstracts a proton from Cys217. This residue is positioned on the
+        alternative face of the molecule Cys73 and therefore, on reprotonation the stereochemistry at
+        this centre is inverted. The enzyme is able to catalyse the interconversion of either S or R stereochemistry,
+        creating
+      notes: M-CSA entry 334, mechanism 1; M-CSA cites PMID:10194362, PMID:16327902, PMID:16723397, PMID:26610016,
+        PMID:9843410; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/334/
+      snippet: The Cys73 thiolate abstracts the substrate's alpha position proton, generating a carbanion
+        transition state which rapidly abstracts a proton from Cys217. This residue is positioned on the
+        alternative face of the molecule Cys73 and therefore, on reprotonation the stereochemistry at
+        this centre is inverted. The enzyme is able to catalyse the interconversion of either S or R stereochemistry,
+        creating
+      notes: M-CSA entry 334, mechanism 1; M-CSA cites PMID:10194362, PMID:16327902, PMID:16723397, PMID:26610016,
+        PMID:9843410; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (12 evidence-backed edges) transcribed from M-CSA entry 334;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.5.1.20
 - CHEBI:15636
@@ -268,4 +268,318 @@ definitions:
       E. coli methylenetetrahydrofolate reductase (MTHFR) catalyses the NADH-dependent reduction of 5,10-methylenetetrahydrofolate (CH2-H4folate) to 5 methyltetrahydrofolate (CH3-H4folate) using the cofactor flavin adenine dinucleotide (FAD) as an intermediate hydride acceptor and donor. MTHFR is the only route of CH3-H4folate which is used by methionine synthase to convert homocysteine to methionine. E. coli MTHFR is a homotetramer that dissociates into dimers on dilution. Its catalytic domain is a (beta-alpha)8 barrel. Bacterial MTHFR enzymes are simpler than mammalian MTHFR in that the catatlytic domain constitutes the entire sequence, with no regulatory sequence present.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of methylenetetrahydrofolate reductase [NAD(P)H]
+  description: Stepwise mechanism transcribed from M-CSA entry 120 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: ser26
+    label: catalytic Ser26 (M-CSA/PDB numbering; UniProt residue 26)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AEZ1
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor,
+      proton relay.'
+  - node_id: glu28
+    label: catalytic Glu28 (M-CSA/PDB numbering; UniProt residue 28)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AEZ1
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor,
+      proton relay.'
+  - node_id: asp120
+    label: catalytic Asp120 (M-CSA/PDB numbering; UniProt residue 120)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AEZ1
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: phe223
+    label: catalytic Phe223 (M-CSA/PDB numbering; UniProt residue 223)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AEZ1
+    description: 'M-CSA roles: steric locator.'
+  - node_id: his273
+    label: catalytic His273 (M-CSA/PDB numbering; UniProt residue 273)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AEZ1
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor,
+      proton relay.'
+  - node_id: reactant0
+    label: (6R)-5,10-methylenetetrahydrofolate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:15636
+  - node_id: reactant1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: reactant2
+    label: NADPH(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+  - node_id: product0
+    label: 5-methyltetrahydrofolate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:18608
+  - node_id: product1
+    label: NADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: NAD(P) eliminates a hydride ion, which adds to FAD with concomitant deprotonation of
+      water at the N1.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The substrate initiates the cleavage of the five-membered ring, forming the 5-iminium
+      cation intermediate, with concomitant deprotonation of water through a proton relay chain of water,
+      Glu28, His273 and Ser26.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Water deprotonates FAD, causing the elimination of a hydride which is added to the 5-iminium
+      carbon of the intermediate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: methylenetetrahydrofolate reductase [NAD(P)H] catalytic site
+    node_type: MOTIF
+    grounding: MCSA:120
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.220 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.220
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: methylenetetrahydrofolate reductase [NAD(P)H] activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.5.1.20
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/120/
+      snippet: The substrate initiates the cleavage of the five-membered ring, forming the 5-iminium cation
+        intermediate, with concomitant deprotonation of water through a proton relay chain of water, Glu28,
+        His273 and Ser26.
+      notes: M-CSA entry 120, mechanism 1; M-CSA cites PMID:11371182, PMID:15865426, PMID:16114881, PMID:16605249,
+        PMID:19610625; step 2
+  - subject: ser26
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Ser26 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/120/
+      snippet: The substrate initiates the cleavage of the five-membered ring, forming the 5-iminium cation
+        intermediate, with concomitant deprotonation of water through a proton relay chain of water, Glu28,
+        His273 and Ser26.
+      notes: M-CSA entry 120, mechanism 1; M-CSA cites PMID:11371182, PMID:15865426, PMID:16114881, PMID:16605249,
+        PMID:19610625; step 2
+  - subject: glu28
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu28 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/120/
+      snippet: The substrate initiates the cleavage of the five-membered ring, forming the 5-iminium cation
+        intermediate, with concomitant deprotonation of water through a proton relay chain of water, Glu28,
+        His273 and Ser26.
+      notes: M-CSA entry 120, mechanism 1; M-CSA cites PMID:11371182, PMID:15865426, PMID:16114881, PMID:16605249,
+        PMID:19610625; step 2
+  - subject: his273
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His273 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/120/
+      snippet: The substrate initiates the cleavage of the five-membered ring, forming the 5-iminium cation
+        intermediate, with concomitant deprotonation of water through a proton relay chain of water, Glu28,
+        His273 and Ser26.
+      notes: M-CSA entry 120, mechanism 1; M-CSA cites PMID:11371182, PMID:15865426, PMID:16114881, PMID:16605249,
+        PMID:19610625; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/120/
+      snippet: Water deprotonates FAD, causing the elimination of a hydride which is added to the 5-iminium
+        carbon of the intermediate.
+      notes: M-CSA entry 120, mechanism 1; M-CSA cites PMID:11371182, PMID:15865426, PMID:16114881, PMID:16605249,
+        PMID:19610625; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/120/
+      snippet: Products.
+      notes: M-CSA entry 120, mechanism 1; M-CSA cites PMID:11371182, PMID:15865426, PMID:16114881, PMID:16605249,
+        PMID:19610625; step 4
+  - subject: ser26
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser26 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/120/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 120, mechanism 1; M-CSA cites PMID:11371182, PMID:15865426, PMID:16114881, PMID:16605249,
+        PMID:19610625; M-CSA catalytic-residue roles for Ser26
+  - subject: glu28
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu28 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/120/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 120, mechanism 1; M-CSA cites PMID:11371182, PMID:15865426, PMID:16114881, PMID:16605249,
+        PMID:19610625; M-CSA catalytic-residue roles for Glu28
+  - subject: asp120
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp120 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/120/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 120, mechanism 1; M-CSA cites PMID:11371182, PMID:15865426, PMID:16114881, PMID:16605249,
+        PMID:19610625; M-CSA catalytic-residue roles for Asp120
+  - subject: phe223
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Phe223 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/120/
+      snippet: steric locator
+      notes: M-CSA entry 120, mechanism 1; M-CSA cites PMID:11371182, PMID:15865426, PMID:16114881, PMID:16605249,
+        PMID:19610625; M-CSA catalytic-residue roles for Phe223
+  - subject: his273
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His273 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/120/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 120, mechanism 1; M-CSA cites PMID:11371182, PMID:15865426, PMID:16114881, PMID:16605249,
+        PMID:19610625; M-CSA catalytic-residue roles for His273
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/120/
+      snippet: <p><i>E. coli</i> MTHFR catalysis proceeds by a ping pong Bi-Bi reaction mechanism. The
+        enzyme catalyses individual half-reactions, with the reduction of enzyme-bound FAD by NADH to
+        form NAD<sup>+</sup>, which is released prior to CH<sub>2</sub>-H4folate binding. CH<sub>2</sub>-H4folate
+        is thought to be converted to CH<sub>3</sub>-H4folate by reduced E-FAD via a 5-iminium cation
+        intermediate.</p>
+      notes: M-CSA entry 120, mechanism 1; M-CSA cites PMID:11371182, PMID:15865426, PMID:16114881, PMID:16605249,
+        PMID:19610625; CATH domain 3.20.20.220 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/120/
+      snippet: <p><i>E. coli</i> MTHFR catalysis proceeds by a ping pong Bi-Bi reaction mechanism. The
+        enzyme catalyses individual half-reactions, with the reduction of enzyme-bound FAD by NADH to
+        form NAD<sup>+</sup>, which is released prior to CH<sub>2</sub>-H4folate binding. CH<sub>2</sub>-H4folate
+        is thought to be converted to CH<sub>3</sub>-H4folate by reduced E-FAD via a 5-iminium cation
+        intermediate.</p>
+      notes: M-CSA entry 120, mechanism 1; M-CSA cites PMID:11371182, PMID:15865426, PMID:16114881, PMID:16605249,
+        PMID:19610625; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/120/
+      snippet: <p><i>E. coli</i> MTHFR catalysis proceeds by a ping pong Bi-Bi reaction mechanism. The
+        enzyme catalyses individual half-reactions, with the reduction of enzyme-bound FAD by NADH to
+        form NAD<sup>+</sup>, which is released prior to CH<sub>2</sub>-H4folate binding. CH<sub>2</sub>-H4folate
+        is thought to be converted to CH<sub>3</sub>-H4folate by reduced E-FAD via a 5-iminium cation
+        intermediate.</p>
+      notes: M-CSA entry 120, mechanism 1; M-CSA cites PMID:11371182, PMID:15865426, PMID:16114881, PMID:16605249,
+        PMID:19610625; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/120/
+      snippet: <p><i>E. coli</i> MTHFR catalysis proceeds by a ping pong Bi-Bi reaction mechanism. The
+        enzyme catalyses individual half-reactions, with the reduction of enzyme-bound FAD by NADH to
+        form NAD<sup>+</sup>, which is released prior to CH<sub>2</sub>-H4folate binding. CH<sub>2</sub>-H4folate
+        is thought to be converted to CH<sub>3</sub>-H4folate by reduced E-FAD via a 5-iminium cation
+        intermediate.</p>
+      notes: M-CSA entry 120, mechanism 1; M-CSA cites PMID:11371182, PMID:15865426, PMID:16114881, PMID:16605249,
+        PMID:19610625; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/120/
+      snippet: <p><i>E. coli</i> MTHFR catalysis proceeds by a ping pong Bi-Bi reaction mechanism. The
+        enzyme catalyses individual half-reactions, with the reduction of enzyme-bound FAD by NADH to
+        form NAD<sup>+</sup>, which is released prior to CH<sub>2</sub>-H4folate binding. CH<sub>2</sub>-H4folate
+        is thought to be converted to CH<sub>3</sub>-H4folate by reduced E-FAD via a 5-iminium cation
+        intermediate.</p>
+      notes: M-CSA entry 120, mechanism 1; M-CSA cites PMID:11371182, PMID:15865426, PMID:16114881, PMID:16605249,
+        PMID:19610625; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/120/
+      snippet: <p><i>E. coli</i> MTHFR catalysis proceeds by a ping pong Bi-Bi reaction mechanism. The
+        enzyme catalyses individual half-reactions, with the reduction of enzyme-bound FAD by NADH to
+        form NAD<sup>+</sup>, which is released prior to CH<sub>2</sub>-H4folate binding. CH<sub>2</sub>-H4folate
+        is thought to be converted to CH<sub>3</sub>-H4folate by reduced E-FAD via a 5-iminium cation
+        intermediate.</p>
+      notes: M-CSA entry 120, mechanism 1; M-CSA cites PMID:11371182, PMID:15865426, PMID:16114881, PMID:16605249,
+        PMID:19610625; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/120/
+      snippet: <p><i>E. coli</i> MTHFR catalysis proceeds by a ping pong Bi-Bi reaction mechanism. The
+        enzyme catalyses individual half-reactions, with the reduction of enzyme-bound FAD by NADH to
+        form NAD<sup>+</sup>, which is released prior to CH<sub>2</sub>-H4folate binding. CH<sub>2</sub>-H4folate
+        is thought to be converted to CH<sub>3</sub>-H4folate by reduced E-FAD via a 5-iminium cation
+        intermediate.</p>
+      notes: M-CSA entry 120, mechanism 1; M-CSA cites PMID:11371182, PMID:15865426, PMID:16114881, PMID:16605249,
+        PMID:19610625; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (18 evidence-backed edges) transcribed from M-CSA entry 120;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

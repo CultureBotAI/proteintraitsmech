@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.2.6
 - CHEBI:15377
@@ -252,4 +252,358 @@ definitions:
       Glyoxalase II participates in the cellular detoxification of cytotoxic and mutagenic 2-oxoaldehydes. Glyoxalase I converts methylglyoxal (a cytotoxic byproduct of many cellular reactions) and glutathione into S-D-lactoylglutathione (SLG) which is also cytotoxic; the role of glyoxalase II is to hydrolyse SLG into D-lactic acid and glutathione. The substrate of this reaction is the product of Lactoylglutathione lyase, an enzyme which catalyses the initial steps in detoxifying methyl-glyoxyl. This enzyme regnerates the glutathione cofactor utilised by lactoylglutathione lyase.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of hydroxyacylglutathione hydrolase
+  description: Stepwise mechanism transcribed from M-CSA entry 157 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +48).
+  nodes:
+  - node_id: his54
+    label: catalytic His54 (M-CSA/PDB numbering; UniProt residue 102)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q16775
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his56
+    label: catalytic His56 (M-CSA/PDB numbering; UniProt residue 104)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q16775
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp58
+    label: catalytic Asp58 (M-CSA/PDB numbering; UniProt residue 106)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q16775
+    description: 'M-CSA roles: activator, electrostatic stabiliser, hydrogen bond acceptor, metal ligand,
+      proton acceptor, proton donor.'
+  - node_id: his59
+    label: catalytic His59 (M-CSA/PDB numbering; UniProt residue 107)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q16775
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his110
+    label: catalytic His110 (M-CSA/PDB numbering; UniProt residue 158)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q16775
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp134
+    label: catalytic Asp134 (M-CSA/PDB numbering; UniProt residue 182)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q16775
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his173
+    label: catalytic His173 (M-CSA/PDB numbering; UniProt residue 221)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q16775
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: (R)-S-lactoylglutathionate(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57474
+  - node_id: product0
+    label: (R)-lactate
+    node_type: CHEMICAL
+    grounding: CHEBI:16004
+  - node_id: product1
+    label: glutathionate(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57925
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Zinc activate water attacked the carbonyl carbon of the (R)-S-lactoylglutathione substrate
+      in a nucleophilic addition, forming a tetrahedral intermediate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The tetrahedral intermediate collapses releasing the (R)-lactate product and the thiolate
+      form of glutathione. Asp58 accepts a proton from the bridging oxygen.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The thiolate of glutathione deprotonates Asp58, regenerating the glutathione cofactor
+      used in the initial formation of hydroacetylglutathione.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Asp58 deprotonates a new bridging water molecule regenerating the active site. This proton
+      can then be transferred from Asp58 to solution.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: hydroxyacylglutathione hydrolase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:157
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.60.15.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.60.15.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: hydroxyacylglutathione hydrolase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.2.6
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/157/
+      snippet: The tetrahedral intermediate collapses releasing the (R)-lactate product and the thiolate
+        form of glutathione. Asp58 accepts a proton from the bridging oxygen.
+      notes: M-CSA entry 157, mechanism 1; M-CSA cites PMID:10508780, PMID:11085979, PMID:19062100; step
+        2
+  - subject: asp58
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Asp58 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/157/
+      snippet: The tetrahedral intermediate collapses releasing the (R)-lactate product and the thiolate
+        form of glutathione. Asp58 accepts a proton from the bridging oxygen.
+      notes: M-CSA entry 157, mechanism 1; M-CSA cites PMID:10508780, PMID:11085979, PMID:19062100; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/157/
+      snippet: The thiolate of glutathione deprotonates Asp58, regenerating the glutathione cofactor used
+        in the initial formation of hydroacetylglutathione.
+      notes: M-CSA entry 157, mechanism 1; M-CSA cites PMID:10508780, PMID:11085979, PMID:19062100; step
+        3
+  - subject: asp58
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Asp58 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/157/
+      snippet: The thiolate of glutathione deprotonates Asp58, regenerating the glutathione cofactor used
+        in the initial formation of hydroacetylglutathione.
+      notes: M-CSA entry 157, mechanism 1; M-CSA cites PMID:10508780, PMID:11085979, PMID:19062100; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/157/
+      snippet: Asp58 deprotonates a new bridging water molecule regenerating the active site. This proton
+        can then be transferred from Asp58 to solution.
+      notes: M-CSA entry 157, mechanism 1; M-CSA cites PMID:10508780, PMID:11085979, PMID:19062100; step
+        4
+  - subject: asp58
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Asp58 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/157/
+      snippet: Asp58 deprotonates a new bridging water molecule regenerating the active site. This proton
+        can then be transferred from Asp58 to solution.
+      notes: M-CSA entry 157, mechanism 1; M-CSA cites PMID:10508780, PMID:11085979, PMID:19062100; step
+        4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/157/
+      snippet: Products.
+      notes: M-CSA entry 157, mechanism 1; M-CSA cites PMID:10508780, PMID:11085979, PMID:19062100; step
+        5
+  - subject: his54
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His54 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/157/
+      snippet: metal ligand
+      notes: M-CSA entry 157, mechanism 1; M-CSA cites PMID:10508780, PMID:11085979, PMID:19062100; M-CSA
+        catalytic-residue roles for His54
+  - subject: his56
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His56 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/157/
+      snippet: metal ligand
+      notes: M-CSA entry 157, mechanism 1; M-CSA cites PMID:10508780, PMID:11085979, PMID:19062100; M-CSA
+        catalytic-residue roles for His56
+  - subject: asp58
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp58 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/157/
+      snippet: activator, electrostatic stabiliser, hydrogen bond acceptor, metal ligand, proton acceptor,
+        proton donor
+      notes: M-CSA entry 157, mechanism 1; M-CSA cites PMID:10508780, PMID:11085979, PMID:19062100; M-CSA
+        catalytic-residue roles for Asp58
+  - subject: his59
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His59 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/157/
+      snippet: metal ligand
+      notes: M-CSA entry 157, mechanism 1; M-CSA cites PMID:10508780, PMID:11085979, PMID:19062100; M-CSA
+        catalytic-residue roles for His59
+  - subject: his110
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His110 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/157/
+      snippet: metal ligand
+      notes: M-CSA entry 157, mechanism 1; M-CSA cites PMID:10508780, PMID:11085979, PMID:19062100; M-CSA
+        catalytic-residue roles for His110
+  - subject: asp134
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp134 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/157/
+      snippet: metal ligand
+      notes: M-CSA entry 157, mechanism 1; M-CSA cites PMID:10508780, PMID:11085979, PMID:19062100; M-CSA
+        catalytic-residue roles for Asp134
+  - subject: his173
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His173 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/157/
+      snippet: metal ligand
+      notes: M-CSA entry 157, mechanism 1; M-CSA cites PMID:10508780, PMID:11085979, PMID:19062100; M-CSA
+        catalytic-residue roles for His173
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/157/
+      snippet: Glyoxalase II has a binuclear centre that has affinity for both Zn(II) and Fe(II) and is
+        functional with either metal in either of its metal-binding sites.  Both metals coordinate a bridging
+        hydroxide ion. This hydroxide nucleophile attacks the carbonyl carbon of the thioester group of
+        SLG. A tetrahedral intermediate is formed. Metal 1 stabilises the negative charge forming on the
+        thioester oxygen
+      notes: M-CSA entry 157, mechanism 1; M-CSA cites PMID:10508780, PMID:11085979, PMID:19062100; CATH
+        domain 3.60.15.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/157/
+      snippet: Glyoxalase II has a binuclear centre that has affinity for both Zn(II) and Fe(II) and is
+        functional with either metal in either of its metal-binding sites.  Both metals coordinate a bridging
+        hydroxide ion. This hydroxide nucleophile attacks the carbonyl carbon of the thioester group of
+        SLG. A tetrahedral intermediate is formed. Metal 1 stabilises the negative charge forming on the
+        thioester oxygen
+      notes: M-CSA entry 157, mechanism 1; M-CSA cites PMID:10508780, PMID:11085979, PMID:19062100; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/157/
+      snippet: Glyoxalase II has a binuclear centre that has affinity for both Zn(II) and Fe(II) and is
+        functional with either metal in either of its metal-binding sites.  Both metals coordinate a bridging
+        hydroxide ion. This hydroxide nucleophile attacks the carbonyl carbon of the thioester group of
+        SLG. A tetrahedral intermediate is formed. Metal 1 stabilises the negative charge forming on the
+        thioester oxygen
+      notes: M-CSA entry 157, mechanism 1; M-CSA cites PMID:10508780, PMID:11085979, PMID:19062100; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/157/
+      snippet: Glyoxalase II has a binuclear centre that has affinity for both Zn(II) and Fe(II) and is
+        functional with either metal in either of its metal-binding sites.  Both metals coordinate a bridging
+        hydroxide ion. This hydroxide nucleophile attacks the carbonyl carbon of the thioester group of
+        SLG. A tetrahedral intermediate is formed. Metal 1 stabilises the negative charge forming on the
+        thioester oxygen
+      notes: M-CSA entry 157, mechanism 1; M-CSA cites PMID:10508780, PMID:11085979, PMID:19062100; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/157/
+      snippet: Glyoxalase II has a binuclear centre that has affinity for both Zn(II) and Fe(II) and is
+        functional with either metal in either of its metal-binding sites.  Both metals coordinate a bridging
+        hydroxide ion. This hydroxide nucleophile attacks the carbonyl carbon of the thioester group of
+        SLG. A tetrahedral intermediate is formed. Metal 1 stabilises the negative charge forming on the
+        thioester oxygen
+      notes: M-CSA entry 157, mechanism 1; M-CSA cites PMID:10508780, PMID:11085979, PMID:19062100; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/157/
+      snippet: Glyoxalase II has a binuclear centre that has affinity for both Zn(II) and Fe(II) and is
+        functional with either metal in either of its metal-binding sites.  Both metals coordinate a bridging
+        hydroxide ion. This hydroxide nucleophile attacks the carbonyl carbon of the thioester group of
+        SLG. A tetrahedral intermediate is formed. Metal 1 stabilises the negative charge forming on the
+        thioester oxygen
+      notes: M-CSA entry 157, mechanism 1; M-CSA cites PMID:10508780, PMID:11085979, PMID:19062100; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/157/
+      snippet: Glyoxalase II has a binuclear centre that has affinity for both Zn(II) and Fe(II) and is
+        functional with either metal in either of its metal-binding sites.  Both metals coordinate a bridging
+        hydroxide ion. This hydroxide nucleophile attacks the carbonyl carbon of the thioester group of
+        SLG. A tetrahedral intermediate is formed. Metal 1 stabilises the negative charge forming on the
+        thioester oxygen
+      notes: M-CSA entry 157, mechanism 1; M-CSA cites PMID:10508780, PMID:11085979, PMID:19062100; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (21 evidence-backed edges) transcribed from M-CSA entry 157;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

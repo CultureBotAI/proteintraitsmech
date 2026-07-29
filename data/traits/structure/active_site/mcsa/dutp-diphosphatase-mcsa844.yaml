@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.6.1.23
 - CHEBI:15377
@@ -159,4 +159,262 @@ definitions:
       dUTP diphosphatase(dUTPase) hydrolyses dUTP to dUMP and pyrophosphate, simultaneously reducing dUTP levels and providing the dUMP for dTTP biosynthesis. This reaction is critical for the fidelity of DNA replication and repair as dUTPase decreases the intracellular concentration of dUPT so that uracil cannot be incorporated into DNA.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of dUTP diphosphatase
+  description: Stepwise mechanism transcribed from M-CSA entry 844 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: ala29
+    label: catalytic Ala29 (M-CSA/PDB numbering; UniProt residue 29)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06968
+    description: 'M-CSA roles: activator.'
+  - node_id: arg71
+    label: catalytic Arg71 (M-CSA/PDB numbering; UniProt residue 71)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06968
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: gly73
+    label: catalytic Gly73 (M-CSA/PDB numbering; UniProt residue 73)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06968
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ile80
+    label: catalytic Ile80 (M-CSA/PDB numbering; UniProt residue 80)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06968
+    description: 'M-CSA roles: modifies pKa.'
+  - node_id: asp90
+    label: catalytic Asp90 (M-CSA/PDB numbering; UniProt residue 90)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06968
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: dUTP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:61555
+  - node_id: product0
+    label: diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: dUMP(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:246422
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp90 abstracts a proton from water, which initiates a nucleophilic attack on the gamma
+      phosphate, eliminating pyrophosphate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: In an inferred return step, a water molecule abstracts a proton from Asp90, regenerating
+      the active site.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: dUTP diphosphatase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:844
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.70.40.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.70.40.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: dUTP diphosphatase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.6.1.23
+  edges:
+  - subject: asp90
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp90 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/844/
+      snippet: Asp90 abstracts a proton from water, which initiates a nucleophilic attack on the gamma
+        phosphate, eliminating pyrophosphate.
+      notes: M-CSA entry 844, mechanism 1; M-CSA cites PMID:1311056, PMID:15208312, PMID:23982515; step
+        1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/844/
+      snippet: In an inferred return step, a water molecule abstracts a proton from Asp90, regenerating
+        the active site.
+      notes: M-CSA entry 844, mechanism 1; M-CSA cites PMID:1311056, PMID:15208312, PMID:23982515; step
+        2
+  - subject: asp90
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Asp90 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/844/
+      snippet: In an inferred return step, a water molecule abstracts a proton from Asp90, regenerating
+        the active site.
+      notes: M-CSA entry 844, mechanism 1; M-CSA cites PMID:1311056, PMID:15208312, PMID:23982515; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/844/
+      snippet: Products
+      notes: M-CSA entry 844, mechanism 1; M-CSA cites PMID:1311056, PMID:15208312, PMID:23982515; step
+        3
+  - subject: ala29
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ala29 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/844/
+      snippet: activator
+      notes: M-CSA entry 844, mechanism 1; M-CSA cites PMID:1311056, PMID:15208312, PMID:23982515; M-CSA
+        catalytic-residue roles for Ala29
+  - subject: arg71
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg71 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/844/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 844, mechanism 1; M-CSA cites PMID:1311056, PMID:15208312, PMID:23982515; M-CSA
+        catalytic-residue roles for Arg71
+  - subject: gly73
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly73 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/844/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 844, mechanism 1; M-CSA cites PMID:1311056, PMID:15208312, PMID:23982515; M-CSA
+        catalytic-residue roles for Gly73
+  - subject: ile80
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ile80 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/844/
+      snippet: modifies pKa
+      notes: M-CSA entry 844, mechanism 1; M-CSA cites PMID:1311056, PMID:15208312, PMID:23982515; M-CSA
+        catalytic-residue roles for Ile80
+  - subject: asp90
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp90 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/844/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 844, mechanism 1; M-CSA cites PMID:1311056, PMID:15208312, PMID:23982515; M-CSA
+        catalytic-residue roles for Asp90
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/844/
+      snippet: Asp90 activates the catalytic water, which attacks the gamma phosphate, elimintating the
+        diphoshate and forming dUMP.
+      notes: M-CSA entry 844, mechanism 1; M-CSA cites PMID:1311056, PMID:15208312, PMID:23982515; CATH
+        domain 2.70.40.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/844/
+      snippet: Asp90 activates the catalytic water, which attacks the gamma phosphate, elimintating the
+        diphoshate and forming dUMP.
+      notes: M-CSA entry 844, mechanism 1; M-CSA cites PMID:1311056, PMID:15208312, PMID:23982515; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/844/
+      snippet: Asp90 activates the catalytic water, which attacks the gamma phosphate, elimintating the
+        diphoshate and forming dUMP.
+      notes: M-CSA entry 844, mechanism 1; M-CSA cites PMID:1311056, PMID:15208312, PMID:23982515; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/844/
+      snippet: Asp90 activates the catalytic water, which attacks the gamma phosphate, elimintating the
+        diphoshate and forming dUMP.
+      notes: M-CSA entry 844, mechanism 1; M-CSA cites PMID:1311056, PMID:15208312, PMID:23982515; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/844/
+      snippet: Asp90 activates the catalytic water, which attacks the gamma phosphate, elimintating the
+        diphoshate and forming dUMP.
+      notes: M-CSA entry 844, mechanism 1; M-CSA cites PMID:1311056, PMID:15208312, PMID:23982515; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/844/
+      snippet: Asp90 activates the catalytic water, which attacks the gamma phosphate, elimintating the
+        diphoshate and forming dUMP.
+      notes: M-CSA entry 844, mechanism 1; M-CSA cites PMID:1311056, PMID:15208312, PMID:23982515; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/844/
+      snippet: Asp90 activates the catalytic water, which attacks the gamma phosphate, elimintating the
+        diphoshate and forming dUMP.
+      notes: M-CSA entry 844, mechanism 1; M-CSA cites PMID:1311056, PMID:15208312, PMID:23982515; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (16 evidence-backed edges) transcribed from M-CSA entry 844;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

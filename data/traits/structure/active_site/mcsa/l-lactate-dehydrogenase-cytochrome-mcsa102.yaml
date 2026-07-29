@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.1.2.3
 - CHEBI:29033
@@ -457,4 +457,309 @@ definitions:
       The flavo-cytochrome enzyme is a lactate dehydrogenase that catalyses the transfer of a hydride equivalent from its hydroxy acid substrate to the enzyme bound flavin, and thence to proteins of the mitochondrial electron transport chain via a bound cytochrome. The enzyme contains two domains, the flavin domain, capable of converting lactate to pyruvate by itself, and the heme domain which contains the prosthetic group involved in electron transfer from the reduced flavin to an acceptor cytochrome.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of L-lactate dehydrogenase (cytochrome)
+  description: Stepwise mechanism transcribed from M-CSA entry 102 (7 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: tyr254
+    label: catalytic Tyr254 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00175
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: asp282
+    label: catalytic Asp282 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00175
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: his373
+    label: catalytic His373 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00175
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: (S)-lactate
+    node_type: CHEMICAL
+    grounding: CHEBI:16651
+  - node_id: reactant1
+    label: iron(3+)
+    node_type: CHEMICAL
+    grounding: CHEBI:29034
+  - node_id: product0
+    label: iron(2+)
+    node_type: CHEMICAL
+    grounding: CHEBI:29033
+  - node_id: product1
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His373 deprotonates the alcohol of the lactate which eliminates a hydride ion that is
+      added to FAD.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: A single electron is transferred from the FAD to the haem cofactor.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The haem cofactor transfers the electron to ferricytochrome c.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Water deprotonates the FAD, initiating the second single electron transfer from FAD to
+      the haem cofactor.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: The haem cofactor transfers the electron to ferricytochrome c.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Water deprotonates His373 in an inferred return step.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: L-lactate dehydrogenase (cytochrome) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:102
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.70 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.70
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: L-lactate dehydrogenase (cytochrome) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.1.2.3
+  edges:
+  - subject: his373
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His373 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/102/
+      snippet: His373 deprotonates the alcohol of the lactate which eliminates a hydride ion that is added
+        to FAD.
+      notes: M-CSA entry 102, mechanism 1; M-CSA cites PMID:11170421, PMID:11559361, PMID:15260495, PMID:17563122,
+        PMID:1980477, PMID:25416784; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/102/
+      snippet: A single electron is transferred from the FAD to the haem cofactor.
+      notes: M-CSA entry 102, mechanism 1; M-CSA cites PMID:11170421, PMID:11559361, PMID:15260495, PMID:17563122,
+        PMID:1980477, PMID:25416784; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/102/
+      snippet: The haem cofactor transfers the electron to ferricytochrome c.
+      notes: M-CSA entry 102, mechanism 1; M-CSA cites PMID:11170421, PMID:11559361, PMID:15260495, PMID:17563122,
+        PMID:1980477, PMID:25416784; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/102/
+      snippet: Water deprotonates the FAD, initiating the second single electron transfer from FAD to
+        the haem cofactor.
+      notes: M-CSA entry 102, mechanism 1; M-CSA cites PMID:11170421, PMID:11559361, PMID:15260495, PMID:17563122,
+        PMID:1980477, PMID:25416784; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/102/
+      snippet: The haem cofactor transfers the electron to ferricytochrome c.
+      notes: M-CSA entry 102, mechanism 1; M-CSA cites PMID:11170421, PMID:11559361, PMID:15260495, PMID:17563122,
+        PMID:1980477, PMID:25416784; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/102/
+      snippet: Water deprotonates His373 in an inferred return step.
+      notes: M-CSA entry 102, mechanism 1; M-CSA cites PMID:11170421, PMID:11559361, PMID:15260495, PMID:17563122,
+        PMID:1980477, PMID:25416784; step 6
+  - subject: his373
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: His373 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/102/
+      snippet: Water deprotonates His373 in an inferred return step.
+      notes: M-CSA entry 102, mechanism 1; M-CSA cites PMID:11170421, PMID:11559361, PMID:15260495, PMID:17563122,
+        PMID:1980477, PMID:25416784; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/102/
+      snippet: Products.
+      notes: M-CSA entry 102, mechanism 1; M-CSA cites PMID:11170421, PMID:11559361, PMID:15260495, PMID:17563122,
+        PMID:1980477, PMID:25416784; step 7
+  - subject: tyr254
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr254 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/102/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 102, mechanism 1; M-CSA cites PMID:11170421, PMID:11559361, PMID:15260495, PMID:17563122,
+        PMID:1980477, PMID:25416784; M-CSA catalytic-residue roles for Tyr254
+  - subject: asp282
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp282 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/102/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 102, mechanism 1; M-CSA cites PMID:11170421, PMID:11559361, PMID:15260495, PMID:17563122,
+        PMID:1980477, PMID:25416784; M-CSA catalytic-residue roles for Asp282
+  - subject: his373
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His373 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/102/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 102, mechanism 1; M-CSA cites PMID:11170421, PMID:11559361, PMID:15260495, PMID:17563122,
+        PMID:1980477, PMID:25416784; M-CSA catalytic-residue roles for His373
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/102/
+      snippet: The enzyme catalyses the oxidation of lactate to pyruvate. In the wild type enzyme the
+        OH and CH bond cleavages in lactate are highly asynchronous. The lactate hydroxyl proton is abstracted
+        by His 373 to form the alkoxide either early in the reaction or in a pre-equilibrium. The developing
+        charge on the oxygen is stabilised by Tyr254. The hydride is then transferred to the flavin, forming
+        pyruvate
+      notes: M-CSA entry 102, mechanism 1; M-CSA cites PMID:11170421, PMID:11559361, PMID:15260495, PMID:17563122,
+        PMID:1980477, PMID:25416784; CATH domain 3.20.20.70 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/102/
+      snippet: The enzyme catalyses the oxidation of lactate to pyruvate. In the wild type enzyme the
+        OH and CH bond cleavages in lactate are highly asynchronous. The lactate hydroxyl proton is abstracted
+        by His 373 to form the alkoxide either early in the reaction or in a pre-equilibrium. The developing
+        charge on the oxygen is stabilised by Tyr254. The hydride is then transferred to the flavin, forming
+        pyruvate
+      notes: M-CSA entry 102, mechanism 1; M-CSA cites PMID:11170421, PMID:11559361, PMID:15260495, PMID:17563122,
+        PMID:1980477, PMID:25416784; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/102/
+      snippet: The enzyme catalyses the oxidation of lactate to pyruvate. In the wild type enzyme the
+        OH and CH bond cleavages in lactate are highly asynchronous. The lactate hydroxyl proton is abstracted
+        by His 373 to form the alkoxide either early in the reaction or in a pre-equilibrium. The developing
+        charge on the oxygen is stabilised by Tyr254. The hydride is then transferred to the flavin, forming
+        pyruvate
+      notes: M-CSA entry 102, mechanism 1; M-CSA cites PMID:11170421, PMID:11559361, PMID:15260495, PMID:17563122,
+        PMID:1980477, PMID:25416784; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/102/
+      snippet: The enzyme catalyses the oxidation of lactate to pyruvate. In the wild type enzyme the
+        OH and CH bond cleavages in lactate are highly asynchronous. The lactate hydroxyl proton is abstracted
+        by His 373 to form the alkoxide either early in the reaction or in a pre-equilibrium. The developing
+        charge on the oxygen is stabilised by Tyr254. The hydride is then transferred to the flavin, forming
+        pyruvate
+      notes: M-CSA entry 102, mechanism 1; M-CSA cites PMID:11170421, PMID:11559361, PMID:15260495, PMID:17563122,
+        PMID:1980477, PMID:25416784; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/102/
+      snippet: The enzyme catalyses the oxidation of lactate to pyruvate. In the wild type enzyme the
+        OH and CH bond cleavages in lactate are highly asynchronous. The lactate hydroxyl proton is abstracted
+        by His 373 to form the alkoxide either early in the reaction or in a pre-equilibrium. The developing
+        charge on the oxygen is stabilised by Tyr254. The hydride is then transferred to the flavin, forming
+        pyruvate
+      notes: M-CSA entry 102, mechanism 1; M-CSA cites PMID:11170421, PMID:11559361, PMID:15260495, PMID:17563122,
+        PMID:1980477, PMID:25416784; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/102/
+      snippet: The enzyme catalyses the oxidation of lactate to pyruvate. In the wild type enzyme the
+        OH and CH bond cleavages in lactate are highly asynchronous. The lactate hydroxyl proton is abstracted
+        by His 373 to form the alkoxide either early in the reaction or in a pre-equilibrium. The developing
+        charge on the oxygen is stabilised by Tyr254. The hydride is then transferred to the flavin, forming
+        pyruvate
+      notes: M-CSA entry 102, mechanism 1; M-CSA cites PMID:11170421, PMID:11559361, PMID:15260495, PMID:17563122,
+        PMID:1980477, PMID:25416784; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/102/
+      snippet: The enzyme catalyses the oxidation of lactate to pyruvate. In the wild type enzyme the
+        OH and CH bond cleavages in lactate are highly asynchronous. The lactate hydroxyl proton is abstracted
+        by His 373 to form the alkoxide either early in the reaction or in a pre-equilibrium. The developing
+        charge on the oxygen is stabilised by Tyr254. The hydride is then transferred to the flavin, forming
+        pyruvate
+      notes: M-CSA entry 102, mechanism 1; M-CSA cites PMID:11170421, PMID:11559361, PMID:15260495, PMID:17563122,
+        PMID:1980477, PMID:25416784; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (18 evidence-backed edges) transcribed from M-CSA entry 102;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

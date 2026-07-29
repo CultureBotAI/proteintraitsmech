@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.6.4.12
 - CHEBI:30616
@@ -547,4 +547,259 @@ definitions:
       PcrA DNA helicase is a 3'-5' DNA helicase. It is a single-stranded DNA (ssDNA)-dependent ATPase that uses the free energy of ATP hydrolysis to unwind duplex DNA. PcrA is known to be essential in some species, such as Bacillus subtilis and Staphylococcus aureus, with roles in DNA repair and rolling circle replication. This annotation covers the ATPase activity of PcrA. The conformational changes brought about through ATP binding, hydrolysis and subsequent release allow PcrA to bind to DNA and unwind the helix. In particular a Glutamine residue that binds to the gamma phosphate of ATP is part of the motif III switch which bridges the ATPase domain and the DNA binding domain. So the binding of the gamma phosphate and its cleavage from the ATP in the ATPase domain can result in conformational changes in the DNA binding domain which enables PcrA to bind to DNA.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of DNA helicase
+  description: Stepwise mechanism transcribed from M-CSA entry 833 (2 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: lys37
+    label: catalytic Lys37 (M-CSA/PDB numbering; UniProt residue 37)
+    node_type: RESIDUE
+    grounding: UniProtKB:P56255
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: thr38
+    label: catalytic Thr38 (M-CSA/PDB numbering; UniProt residue 38)
+    node_type: RESIDUE
+    grounding: UniProtKB:P56255
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp223
+    label: catalytic Asp223 (M-CSA/PDB numbering; UniProt residue 223)
+    node_type: RESIDUE
+    grounding: UniProtKB:P56255
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu224
+    label: catalytic Glu224 (M-CSA/PDB numbering; UniProt residue 224)
+    node_type: RESIDUE
+    grounding: UniProtKB:P56255
+    description: 'M-CSA roles: proton acceptor.'
+  - node_id: gln254
+    label: catalytic Gln254 (M-CSA/PDB numbering; UniProt residue 254)
+    node_type: RESIDUE
+    grounding: UniProtKB:P56255
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: arg610
+    label: catalytic Arg610 (M-CSA/PDB numbering; UniProt residue 610)
+    node_type: RESIDUE
+    grounding: UniProtKB:P56255
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: ATP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: ADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: A water molecule is activated for nucleophilic attack through deprotonation by Glu 224.
+      The nucleophile then attacks the gamma phosphate resulting in the cleavage of the phosphoanhydride
+      bond.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Product
+  - node_id: active_site
+    label: DNA helicase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:833
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.300 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.300
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: DNA helicase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.6.4.12
+  edges:
+  - subject: glu224
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu224 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/833/
+      snippet: A water molecule is activated for nucleophilic attack through deprotonation by Glu 224.
+        The nucleophile then attacks the gamma phosphate resulting in the cleavage of the phosphoanhydride
+        bond.
+      notes: M-CSA entry 833, mechanism 1; M-CSA cites PMID:10199404, PMID:10388562, PMID:26860503; step
+        1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/833/
+      snippet: Product
+      notes: M-CSA entry 833, mechanism 1; M-CSA cites PMID:10199404, PMID:10388562, PMID:26860503; step
+        2
+  - subject: lys37
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys37 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/833/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 833, mechanism 1; M-CSA cites PMID:10199404, PMID:10388562, PMID:26860503; M-CSA
+        catalytic-residue roles for Lys37
+  - subject: thr38
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr38 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/833/
+      snippet: metal ligand
+      notes: M-CSA entry 833, mechanism 1; M-CSA cites PMID:10199404, PMID:10388562, PMID:26860503; M-CSA
+        catalytic-residue roles for Thr38
+  - subject: asp223
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp223 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/833/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 833, mechanism 1; M-CSA cites PMID:10199404, PMID:10388562, PMID:26860503; M-CSA
+        catalytic-residue roles for Asp223
+  - subject: glu224
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu224 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/833/
+      snippet: proton acceptor
+      notes: M-CSA entry 833, mechanism 1; M-CSA cites PMID:10199404, PMID:10388562, PMID:26860503; M-CSA
+        catalytic-residue roles for Glu224
+  - subject: gln254
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln254 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/833/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 833, mechanism 1; M-CSA cites PMID:10199404, PMID:10388562, PMID:26860503; M-CSA
+        catalytic-residue roles for Gln254
+  - subject: arg610
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg610 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/833/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 833, mechanism 1; M-CSA cites PMID:10199404, PMID:10388562, PMID:26860503; M-CSA
+        catalytic-residue roles for Arg610
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/833/
+      snippet: PcrA uses Glu 224 as a general base to deprotonate the water molecule that attacks the
+        gamma phosphate of ATP. In addition, Lys 37,Arg 387, Arg 610, Gln 254 and an Mg2+ ion contact
+        the triphosphate chain of ATP and stabilise negative charge in the transition state.
+      notes: M-CSA entry 833, mechanism 1; M-CSA cites PMID:10199404, PMID:10388562, PMID:26860503; CATH
+        domain 3.40.50.300 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/833/
+      snippet: PcrA uses Glu 224 as a general base to deprotonate the water molecule that attacks the
+        gamma phosphate of ATP. In addition, Lys 37,Arg 387, Arg 610, Gln 254 and an Mg2+ ion contact
+        the triphosphate chain of ATP and stabilise negative charge in the transition state.
+      notes: M-CSA entry 833, mechanism 1; M-CSA cites PMID:10199404, PMID:10388562, PMID:26860503; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/833/
+      snippet: PcrA uses Glu 224 as a general base to deprotonate the water molecule that attacks the
+        gamma phosphate of ATP. In addition, Lys 37,Arg 387, Arg 610, Gln 254 and an Mg2+ ion contact
+        the triphosphate chain of ATP and stabilise negative charge in the transition state.
+      notes: M-CSA entry 833, mechanism 1; M-CSA cites PMID:10199404, PMID:10388562, PMID:26860503; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/833/
+      snippet: PcrA uses Glu 224 as a general base to deprotonate the water molecule that attacks the
+        gamma phosphate of ATP. In addition, Lys 37,Arg 387, Arg 610, Gln 254 and an Mg2+ ion contact
+        the triphosphate chain of ATP and stabilise negative charge in the transition state.
+      notes: M-CSA entry 833, mechanism 1; M-CSA cites PMID:10199404, PMID:10388562, PMID:26860503; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/833/
+      snippet: PcrA uses Glu 224 as a general base to deprotonate the water molecule that attacks the
+        gamma phosphate of ATP. In addition, Lys 37,Arg 387, Arg 610, Gln 254 and an Mg2+ ion contact
+        the triphosphate chain of ATP and stabilise negative charge in the transition state.
+      notes: M-CSA entry 833, mechanism 1; M-CSA cites PMID:10199404, PMID:10388562, PMID:26860503; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/833/
+      snippet: PcrA uses Glu 224 as a general base to deprotonate the water molecule that attacks the
+        gamma phosphate of ATP. In addition, Lys 37,Arg 387, Arg 610, Gln 254 and an Mg2+ ion contact
+        the triphosphate chain of ATP and stabilise negative charge in the transition state.
+      notes: M-CSA entry 833, mechanism 1; M-CSA cites PMID:10199404, PMID:10388562, PMID:26860503; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/833/
+      snippet: PcrA uses Glu 224 as a general base to deprotonate the water molecule that attacks the
+        gamma phosphate of ATP. In addition, Lys 37,Arg 387, Arg 610, Gln 254 and an Mg2+ ion contact
+        the triphosphate chain of ATP and stabilise negative charge in the transition state.
+      notes: M-CSA entry 833, mechanism 1; M-CSA cites PMID:10199404, PMID:10388562, PMID:26860503; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 833;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

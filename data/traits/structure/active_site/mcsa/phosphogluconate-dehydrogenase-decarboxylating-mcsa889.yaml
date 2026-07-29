@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.1.1.44
 - CHEBI:16526
@@ -363,4 +363,370 @@ definitions:
       The enzyme participates in the oxidative branch of the pentose phosphate pathway, whose main purpose is to produce NADPH and pentose for biosynthetic reactions. It catalyses the oxidative decarboxylation of 6-phosphogluconate to ribulose 5-phosphate and CO2, with concomitant reduction of NADP to NADPH.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of phosphogluconate dehydrogenase (decarboxylating)
+  description: Stepwise mechanism transcribed from M-CSA entry 889 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +1).
+  nodes:
+  - node_id: ser128
+    label: catalytic Ser128 (M-CSA/PDB numbering; UniProt residue 129)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00349
+    description: 'M-CSA roles: electrostatic stabiliser, promote heterolysis.'
+  - node_id: lys183
+    label: catalytic Lys183 (M-CSA/PDB numbering; UniProt residue 184)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00349
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: his186
+    label: catalytic His186 (M-CSA/PDB numbering; UniProt residue 187)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00349
+    description: 'M-CSA roles: electrostatic stabiliser, promote heterolysis.'
+  - node_id: asn187
+    label: catalytic Asn187 (M-CSA/PDB numbering; UniProt residue 188)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00349
+    description: 'M-CSA roles: electrostatic stabiliser, promote heterolysis.'
+  - node_id: glu190
+    label: catalytic Glu190 (M-CSA/PDB numbering; UniProt residue 191)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00349
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: 6-phosphonatooxy-D-gluconate
+    node_type: CHEMICAL
+    grounding: CHEBI:58759
+  - node_id: reactant1
+    label: NADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+  - node_id: product0
+    label: carbon dioxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+  - node_id: product1
+    label: D-ribulose 5-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58121
+  - node_id: product2
+    label: NADPH(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Lys183 abstracts a proton from the sugar substrate, eliminating a hydride ion, which
+      is added to the NADP cosubstrate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The NADPH rotates away from the active centre. The substrate than undergoes decarboxylation
+      and Lys183 donates a proton back to the intermediate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Carbon dioxide diffuses from the active site. Lys183 initiates an assisted keto-enol
+      tautomerisation to form the final product which diffuses from the active site along with NADPH.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Inferred return step to regenerate the active site protonation states. We assume that
+      the proton can be directly transferred from Glu190 to Lys183.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: phosphogluconate dehydrogenase (decarboxylating) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:889
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.720 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.720
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: phosphogluconate dehydrogenase (decarboxylating) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.1.1.44
+  edges:
+  - subject: lys183
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys183 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/889/
+      snippet: Lys183 abstracts a proton from the sugar substrate, eliminating a hydride ion, which is
+        added to the NADP cosubstrate.
+      notes: M-CSA entry 889, mechanism 1; M-CSA cites PMID:10471272, PMID:15189039, PMID:15709755, PMID:16571018,
+        PMID:17042485, PMID:17222187, PMID:17570834, PMID:18205398, PMID:19686854, PMID:24568863, PMID:8766712,
+        PMID:8954568, PMID:9737929, PMID:9843373; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/889/
+      snippet: The NADPH rotates away from the active centre. The substrate than undergoes decarboxylation
+        and Lys183 donates a proton back to the intermediate.
+      notes: M-CSA entry 889, mechanism 1; M-CSA cites PMID:10471272, PMID:15189039, PMID:15709755, PMID:16571018,
+        PMID:17042485, PMID:17222187, PMID:17570834, PMID:18205398, PMID:19686854, PMID:24568863, PMID:8766712,
+        PMID:8954568, PMID:9737929, PMID:9843373; step 2
+  - subject: lys183
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Lys183 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/889/
+      snippet: The NADPH rotates away from the active centre. The substrate than undergoes decarboxylation
+        and Lys183 donates a proton back to the intermediate.
+      notes: M-CSA entry 889, mechanism 1; M-CSA cites PMID:10471272, PMID:15189039, PMID:15709755, PMID:16571018,
+        PMID:17042485, PMID:17222187, PMID:17570834, PMID:18205398, PMID:19686854, PMID:24568863, PMID:8766712,
+        PMID:8954568, PMID:9737929, PMID:9843373; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/889/
+      snippet: Carbon dioxide diffuses from the active site. Lys183 initiates an assisted keto-enol tautomerisation
+        to form the final product which diffuses from the active site along with NADPH.
+      notes: M-CSA entry 889, mechanism 1; M-CSA cites PMID:10471272, PMID:15189039, PMID:15709755, PMID:16571018,
+        PMID:17042485, PMID:17222187, PMID:17570834, PMID:18205398, PMID:19686854, PMID:24568863, PMID:8766712,
+        PMID:8954568, PMID:9737929, PMID:9843373; step 3
+  - subject: lys183
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Lys183 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/889/
+      snippet: Carbon dioxide diffuses from the active site. Lys183 initiates an assisted keto-enol tautomerisation
+        to form the final product which diffuses from the active site along with NADPH.
+      notes: M-CSA entry 889, mechanism 1; M-CSA cites PMID:10471272, PMID:15189039, PMID:15709755, PMID:16571018,
+        PMID:17042485, PMID:17222187, PMID:17570834, PMID:18205398, PMID:19686854, PMID:24568863, PMID:8766712,
+        PMID:8954568, PMID:9737929, PMID:9843373; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/889/
+      snippet: Inferred return step to regenerate the active site protonation states. We assume that the
+        proton can be directly transferred from Glu190 to Lys183.
+      notes: M-CSA entry 889, mechanism 1; M-CSA cites PMID:10471272, PMID:15189039, PMID:15709755, PMID:16571018,
+        PMID:17042485, PMID:17222187, PMID:17570834, PMID:18205398, PMID:19686854, PMID:24568863, PMID:8766712,
+        PMID:8954568, PMID:9737929, PMID:9843373; step 4
+  - subject: lys183
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Lys183 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/889/
+      snippet: Inferred return step to regenerate the active site protonation states. We assume that the
+        proton can be directly transferred from Glu190 to Lys183.
+      notes: M-CSA entry 889, mechanism 1; M-CSA cites PMID:10471272, PMID:15189039, PMID:15709755, PMID:16571018,
+        PMID:17042485, PMID:17222187, PMID:17570834, PMID:18205398, PMID:19686854, PMID:24568863, PMID:8766712,
+        PMID:8954568, PMID:9737929, PMID:9843373; step 4
+  - subject: glu190
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Glu190 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/889/
+      snippet: Inferred return step to regenerate the active site protonation states. We assume that the
+        proton can be directly transferred from Glu190 to Lys183.
+      notes: M-CSA entry 889, mechanism 1; M-CSA cites PMID:10471272, PMID:15189039, PMID:15709755, PMID:16571018,
+        PMID:17042485, PMID:17222187, PMID:17570834, PMID:18205398, PMID:19686854, PMID:24568863, PMID:8766712,
+        PMID:8954568, PMID:9737929, PMID:9843373; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/889/
+      snippet: Products.
+      notes: M-CSA entry 889, mechanism 1; M-CSA cites PMID:10471272, PMID:15189039, PMID:15709755, PMID:16571018,
+        PMID:17042485, PMID:17222187, PMID:17570834, PMID:18205398, PMID:19686854, PMID:24568863, PMID:8766712,
+        PMID:8954568, PMID:9737929, PMID:9843373; step 5
+  - subject: ser128
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser128 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/889/
+      snippet: electrostatic stabiliser, promote heterolysis
+      notes: M-CSA entry 889, mechanism 1; M-CSA cites PMID:10471272, PMID:15189039, PMID:15709755, PMID:16571018,
+        PMID:17042485, PMID:17222187, PMID:17570834, PMID:18205398, PMID:19686854, PMID:24568863, PMID:8766712,
+        PMID:8954568, PMID:9737929, PMID:9843373; M-CSA catalytic-residue roles for Ser128
+  - subject: lys183
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys183 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/889/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 889, mechanism 1; M-CSA cites PMID:10471272, PMID:15189039, PMID:15709755, PMID:16571018,
+        PMID:17042485, PMID:17222187, PMID:17570834, PMID:18205398, PMID:19686854, PMID:24568863, PMID:8766712,
+        PMID:8954568, PMID:9737929, PMID:9843373; M-CSA catalytic-residue roles for Lys183
+  - subject: his186
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His186 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/889/
+      snippet: electrostatic stabiliser, promote heterolysis
+      notes: M-CSA entry 889, mechanism 1; M-CSA cites PMID:10471272, PMID:15189039, PMID:15709755, PMID:16571018,
+        PMID:17042485, PMID:17222187, PMID:17570834, PMID:18205398, PMID:19686854, PMID:24568863, PMID:8766712,
+        PMID:8954568, PMID:9737929, PMID:9843373; M-CSA catalytic-residue roles for His186
+  - subject: asn187
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn187 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/889/
+      snippet: electrostatic stabiliser, promote heterolysis
+      notes: M-CSA entry 889, mechanism 1; M-CSA cites PMID:10471272, PMID:15189039, PMID:15709755, PMID:16571018,
+        PMID:17042485, PMID:17222187, PMID:17570834, PMID:18205398, PMID:19686854, PMID:24568863, PMID:8766712,
+        PMID:8954568, PMID:9737929, PMID:9843373; M-CSA catalytic-residue roles for Asn187
+  - subject: glu190
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu190 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/889/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 889, mechanism 1; M-CSA cites PMID:10471272, PMID:15189039, PMID:15709755, PMID:16571018,
+        PMID:17042485, PMID:17222187, PMID:17570834, PMID:18205398, PMID:19686854, PMID:24568863, PMID:8766712,
+        PMID:8954568, PMID:9737929, PMID:9843373; M-CSA catalytic-residue roles for Glu190
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/889/
+      snippet: The general base accepts a proton from the 3-hydroxyl group of 6PG concomitant with hydride
+        transfer and then shuttles the proton between itself and the sugar oxygen throughout the reaction,
+        ultimately accepting it as ribulose is formed. The general acid presumably plays a role in only
+        the last of the three steps, namely, the tautomerisation of the enediol of ribulose 5-phosphate
+        to the keto produ
+      notes: M-CSA entry 889, mechanism 1; M-CSA cites PMID:10471272, PMID:15189039, PMID:15709755, PMID:16571018,
+        PMID:17042485, PMID:17222187, PMID:17570834, PMID:18205398, PMID:19686854, PMID:24568863, PMID:8766712,
+        PMID:8954568, PMID:9737929, PMID:9843373; CATH domain 3.40.50.720 assigned to the catalytic chain
+        by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/889/
+      snippet: The general base accepts a proton from the 3-hydroxyl group of 6PG concomitant with hydride
+        transfer and then shuttles the proton between itself and the sugar oxygen throughout the reaction,
+        ultimately accepting it as ribulose is formed. The general acid presumably plays a role in only
+        the last of the three steps, namely, the tautomerisation of the enediol of ribulose 5-phosphate
+        to the keto produ
+      notes: M-CSA entry 889, mechanism 1; M-CSA cites PMID:10471272, PMID:15189039, PMID:15709755, PMID:16571018,
+        PMID:17042485, PMID:17222187, PMID:17570834, PMID:18205398, PMID:19686854, PMID:24568863, PMID:8766712,
+        PMID:8954568, PMID:9737929, PMID:9843373; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/889/
+      snippet: The general base accepts a proton from the 3-hydroxyl group of 6PG concomitant with hydride
+        transfer and then shuttles the proton between itself and the sugar oxygen throughout the reaction,
+        ultimately accepting it as ribulose is formed. The general acid presumably plays a role in only
+        the last of the three steps, namely, the tautomerisation of the enediol of ribulose 5-phosphate
+        to the keto produ
+      notes: M-CSA entry 889, mechanism 1; M-CSA cites PMID:10471272, PMID:15189039, PMID:15709755, PMID:16571018,
+        PMID:17042485, PMID:17222187, PMID:17570834, PMID:18205398, PMID:19686854, PMID:24568863, PMID:8766712,
+        PMID:8954568, PMID:9737929, PMID:9843373; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/889/
+      snippet: The general base accepts a proton from the 3-hydroxyl group of 6PG concomitant with hydride
+        transfer and then shuttles the proton between itself and the sugar oxygen throughout the reaction,
+        ultimately accepting it as ribulose is formed. The general acid presumably plays a role in only
+        the last of the three steps, namely, the tautomerisation of the enediol of ribulose 5-phosphate
+        to the keto produ
+      notes: M-CSA entry 889, mechanism 1; M-CSA cites PMID:10471272, PMID:15189039, PMID:15709755, PMID:16571018,
+        PMID:17042485, PMID:17222187, PMID:17570834, PMID:18205398, PMID:19686854, PMID:24568863, PMID:8766712,
+        PMID:8954568, PMID:9737929, PMID:9843373; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/889/
+      snippet: The general base accepts a proton from the 3-hydroxyl group of 6PG concomitant with hydride
+        transfer and then shuttles the proton between itself and the sugar oxygen throughout the reaction,
+        ultimately accepting it as ribulose is formed. The general acid presumably plays a role in only
+        the last of the three steps, namely, the tautomerisation of the enediol of ribulose 5-phosphate
+        to the keto produ
+      notes: M-CSA entry 889, mechanism 1; M-CSA cites PMID:10471272, PMID:15189039, PMID:15709755, PMID:16571018,
+        PMID:17042485, PMID:17222187, PMID:17570834, PMID:18205398, PMID:19686854, PMID:24568863, PMID:8766712,
+        PMID:8954568, PMID:9737929, PMID:9843373; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/889/
+      snippet: The general base accepts a proton from the 3-hydroxyl group of 6PG concomitant with hydride
+        transfer and then shuttles the proton between itself and the sugar oxygen throughout the reaction,
+        ultimately accepting it as ribulose is formed. The general acid presumably plays a role in only
+        the last of the three steps, namely, the tautomerisation of the enediol of ribulose 5-phosphate
+        to the keto produ
+      notes: M-CSA entry 889, mechanism 1; M-CSA cites PMID:10471272, PMID:15189039, PMID:15709755, PMID:16571018,
+        PMID:17042485, PMID:17222187, PMID:17570834, PMID:18205398, PMID:19686854, PMID:24568863, PMID:8766712,
+        PMID:8954568, PMID:9737929, PMID:9843373; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/889/
+      snippet: The general base accepts a proton from the 3-hydroxyl group of 6PG concomitant with hydride
+        transfer and then shuttles the proton between itself and the sugar oxygen throughout the reaction,
+        ultimately accepting it as ribulose is formed. The general acid presumably plays a role in only
+        the last of the three steps, namely, the tautomerisation of the enediol of ribulose 5-phosphate
+        to the keto produ
+      notes: M-CSA entry 889, mechanism 1; M-CSA cites PMID:10471272, PMID:15189039, PMID:15709755, PMID:16571018,
+        PMID:17042485, PMID:17222187, PMID:17570834, PMID:18205398, PMID:19686854, PMID:24568863, PMID:8766712,
+        PMID:8954568, PMID:9737929, PMID:9843373; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (21 evidence-backed edges) transcribed from M-CSA entry 889;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

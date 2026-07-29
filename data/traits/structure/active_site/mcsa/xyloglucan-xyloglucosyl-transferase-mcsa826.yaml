@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.4.1.207
 - CHEBI:137466
@@ -283,4 +283,236 @@ definitions:
       Xyloglucan Endotransglycosylase (XET) is sourced from Populus tremula. It cleaves and religates xyloglucan (a soluble hemicellulose with a backbone composed of beta(1->4)-linked glucose residues similar to cellulose) in plant cell walls via a transglycosylation mechanism. XET is therefore a key enzyme in plant cell processes requiring cell wall remodelling, such as germination, growth, fruit ripening, organ abscission and vascular differentiation. Specifically, XET breaks a beta-(1->4) bond in the backbone of a xyloglucan and transfers the xyloglucanyl segment onto the O-4 of the non-reducing terminal glucose residue of an acceptor. This acceptor can be a xyloglucan or an oligosaccharide of xyloglucan. During processes such as fruit ripening, hydrolytic enzymes can be produced to degrade the cell wall. After cell wall expansion and elongation, cell wall loosening is a temporary requirement that must be followed by reinforcement of the cell wall. In the first step XET catalyses endolytic cleavage of a cross-linking xyloglucan polymer, which permits cellulose microfibres to separate allowing cell expansion. In the second step XET transfers the newly generated end to another sugar polymer, restoring stable cell wall structure. XET requires sugar residues in both the donor and acceptor sites before it is able to catalyse the reaction.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of xyloglucan:xyloglucosyl transferase
+  description: Stepwise mechanism transcribed from M-CSA entry 826 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +22).
+  nodes:
+  - node_id: glu85
+    label: catalytic Glu85 (M-CSA/PDB numbering; UniProt residue 107)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8GZD5
+    description: 'M-CSA roles: covalently attached, hydrogen bond acceptor, nucleofuge, nucleophile.'
+  - node_id: asp87
+    label: catalytic Asp87 (M-CSA/PDB numbering; UniProt residue 109)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8GZD5
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: glu89
+    label: catalytic Glu89 (M-CSA/PDB numbering; UniProt residue 111)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8GZD5
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: alpha-D-Xyl-(1->6)-[alpha-D-Xyl-(1->6)-beta-D-Glc-(->4)]-beta-D-Glc
+    node_type: CHEMICAL
+    grounding: CHEBI:137466
+  - node_id: reactant1
+    label: alpha-D-Xyl-(1->6)-[alpha-D-Xyl-(1->6)-[alpha-D-Xyl-(1->6)-beta-D-Glc-(1->4)]-beta-D-Glc-(1->4)]-beta-D-Glc-(1->4)-beta-D-Glc-(1->4)-beta-D-GlC-(1->4)-D-Glc
+    node_type: CHEMICAL
+    grounding: CHEBI:137468
+  - node_id: product0
+    label: alpha-D-Xyl-(1->6)-[alpha-D-Xyl-(1->6)-beta-D-Glc-(->4)]-beta-D-Glc
+    node_type: CHEMICAL
+    grounding: CHEBI:137466
+  - node_id: product1
+    label: alpha-D-Xyl-(1->6)-[alpha-D-Xyl-(1->6)-[alpha-D-Xyl-(1->6)-beta-D-Glc-(1->4)]-beta-D-Glc-(1->4)]-beta-D-Glc-(1->4)-beta-D-Glc-(1->4)-beta-D-GlC-(1->4)-D-Glc
+    node_type: CHEMICAL
+    grounding: CHEBI:137468
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu89, positioned by a hydrogen bond to Asp87 acts as a nucleophile and attacks the carbon
+      on glucose.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Glu89 acts as a base catalyst to activate incoming hydroxyl nucleophile to attack the
+      covalent intermediate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: xyloglucan:xyloglucosyl transferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:826
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.60.120.200 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.60.120.200
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: xyloglucan:xyloglucosyl transferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.4.1.207
+  edges:
+  - subject: asp87
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp87 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/826/
+      snippet: Glu89, positioned by a hydrogen bond to Asp87 acts as a nucleophile and attacks the carbon
+        on glucose.
+      notes: M-CSA entry 826, mechanism 1; M-CSA cites PMID:15020748, PMID:19076217; step 1
+  - subject: glu89
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu89 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/826/
+      snippet: Glu89, positioned by a hydrogen bond to Asp87 acts as a nucleophile and attacks the carbon
+        on glucose.
+      notes: M-CSA entry 826, mechanism 1; M-CSA cites PMID:15020748, PMID:19076217; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/826/
+      snippet: Glu89 acts as a base catalyst to activate incoming hydroxyl nucleophile to attack the covalent
+        intermediate.
+      notes: M-CSA entry 826, mechanism 1; M-CSA cites PMID:15020748, PMID:19076217; step 2
+  - subject: glu89
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu89 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/826/
+      snippet: Glu89 acts as a base catalyst to activate incoming hydroxyl nucleophile to attack the covalent
+        intermediate.
+      notes: M-CSA entry 826, mechanism 1; M-CSA cites PMID:15020748, PMID:19076217; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/826/
+      snippet: Products.
+      notes: M-CSA entry 826, mechanism 1; M-CSA cites PMID:15020748, PMID:19076217; step 3
+  - subject: glu85
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu85 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/826/
+      snippet: covalently attached, hydrogen bond acceptor, nucleofuge, nucleophile
+      notes: M-CSA entry 826, mechanism 1; M-CSA cites PMID:15020748, PMID:19076217; M-CSA catalytic-residue
+        roles for Glu85
+  - subject: asp87
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp87 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/826/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 826, mechanism 1; M-CSA cites PMID:15020748, PMID:19076217; M-CSA catalytic-residue
+        roles for Asp87
+  - subject: glu89
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu89 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/826/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 826, mechanism 1; M-CSA cites PMID:15020748, PMID:19076217; M-CSA catalytic-residue
+        roles for Glu89
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/826/
+      snippet: The reaction proceeds using a double displacement mechanism via two transition states (first
+        being oxocarbenium-like in character). Sugar residues bind to the acceptor and donor sites, aiding
+        orientation of the glycosidic bond relative to the catalytic residues. Glu 85 performs nucleophilic
+        attack upon the anomeric carbon of the sugar ring. Asp 87 stabilises Glu 85 through hydrogen bonding.
+        Glu 89
+      notes: M-CSA entry 826, mechanism 1; M-CSA cites PMID:15020748, PMID:19076217; CATH domain 2.60.120.200
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/826/
+      snippet: The reaction proceeds using a double displacement mechanism via two transition states (first
+        being oxocarbenium-like in character). Sugar residues bind to the acceptor and donor sites, aiding
+        orientation of the glycosidic bond relative to the catalytic residues. Glu 85 performs nucleophilic
+        attack upon the anomeric carbon of the sugar ring. Asp 87 stabilises Glu 85 through hydrogen bonding.
+        Glu 89
+      notes: M-CSA entry 826, mechanism 1; M-CSA cites PMID:15020748, PMID:19076217; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/826/
+      snippet: The reaction proceeds using a double displacement mechanism via two transition states (first
+        being oxocarbenium-like in character). Sugar residues bind to the acceptor and donor sites, aiding
+        orientation of the glycosidic bond relative to the catalytic residues. Glu 85 performs nucleophilic
+        attack upon the anomeric carbon of the sugar ring. Asp 87 stabilises Glu 85 through hydrogen bonding.
+        Glu 89
+      notes: M-CSA entry 826, mechanism 1; M-CSA cites PMID:15020748, PMID:19076217; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/826/
+      snippet: The reaction proceeds using a double displacement mechanism via two transition states (first
+        being oxocarbenium-like in character). Sugar residues bind to the acceptor and donor sites, aiding
+        orientation of the glycosidic bond relative to the catalytic residues. Glu 85 performs nucleophilic
+        attack upon the anomeric carbon of the sugar ring. Asp 87 stabilises Glu 85 through hydrogen bonding.
+        Glu 89
+      notes: M-CSA entry 826, mechanism 1; M-CSA cites PMID:15020748, PMID:19076217; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/826/
+      snippet: The reaction proceeds using a double displacement mechanism via two transition states (first
+        being oxocarbenium-like in character). Sugar residues bind to the acceptor and donor sites, aiding
+        orientation of the glycosidic bond relative to the catalytic residues. Glu 85 performs nucleophilic
+        attack upon the anomeric carbon of the sugar ring. Asp 87 stabilises Glu 85 through hydrogen bonding.
+        Glu 89
+      notes: M-CSA entry 826, mechanism 1; M-CSA cites PMID:15020748, PMID:19076217; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/826/
+      snippet: The reaction proceeds using a double displacement mechanism via two transition states (first
+        being oxocarbenium-like in character). Sugar residues bind to the acceptor and donor sites, aiding
+        orientation of the glycosidic bond relative to the catalytic residues. Glu 85 performs nucleophilic
+        attack upon the anomeric carbon of the sugar ring. Asp 87 stabilises Glu 85 through hydrogen bonding.
+        Glu 89
+      notes: M-CSA entry 826, mechanism 1; M-CSA cites PMID:15020748, PMID:19076217; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (14 evidence-backed edges) transcribed from M-CSA entry 826;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.5.1.77
 - CHEBI:15377
@@ -225,4 +225,408 @@ definitions:
       N-carbomyl-D-amino-acid amidohydrolase catalyses the hydrolysis of N-carbamoyl-D-amino acids to the corresponding D-amino acids which are useful intermediates in the preparation of beta-lactam antibiotics. Industrial production of beta-lactam antibiotics is now being developed using this enzyme.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of N-carbamoyl-D-amino-acid hydrolase
+  description: Stepwise mechanism transcribed from M-CSA entry 671 (6 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: glu47
+    label: catalytic Glu47 (M-CSA/PDB numbering; UniProt residue 47)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q44185
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: asn110
+    label: catalytic Asn110 (M-CSA/PDB numbering; UniProt residue 110)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q44185
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: lys127
+    label: catalytic Lys127 (M-CSA/PDB numbering; UniProt residue 127)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q44185
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu146
+    label: catalytic Glu146 (M-CSA/PDB numbering; UniProt residue 146)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q44185
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: cys172
+    label: catalytic Cys172 (M-CSA/PDB numbering; UniProt residue 172)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q44185
+    description: 'M-CSA roles: nucleofuge, nucleophile, proton acceptor, proton donor.'
+  - node_id: asn197
+    label: catalytic Asn197 (M-CSA/PDB numbering; UniProt residue 197)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q44185
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: N-carbamoyl-D-alpha-amino acid anion
+    node_type: CHEMICAL
+    grounding: CHEBI:85602
+  - node_id: reactant2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product0
+    label: ammonium
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+  - node_id: product1
+    label: carbon dioxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+  - node_id: product2
+    label: D-alpha-amino acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:59871
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu47 deprotonates Cys172 which activates it nucleophilically attack the carbon of the
+      carbonyl group.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The oxyanion initiates an elimination which results in the cleavage of the amino group
+      which is protonated by Glu47 to produce ammonia.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Glu47 deprotonates a water molecule which activates it to nucleophilically attack the
+      carbon of the carbonyl group.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The oxyanion once again initiates an elimination which results in the cleavage of the
+      acyl-enzyme and Cys172 is protonated by Glu47 which returns the active site to its native state.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: The released intermediate further decomposes to release CO2 and the D-amino acid product,
+      which is protonated by the surrounding solvent.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: N-carbamoyl-D-amino-acid hydrolase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:671
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.60.110.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.60.110.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: N-carbamoyl-D-amino-acid hydrolase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.5.1.77
+  edges:
+  - subject: glu47
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu47 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/671/
+      snippet: Glu47 deprotonates Cys172 which activates it nucleophilically attack the carbon of the
+        carbonyl group.
+      notes: M-CSA entry 671, mechanism 1; M-CSA cites PMID:11237598, PMID:12709423, PMID:8621596; step
+        1
+  - subject: cys172
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys172 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/671/
+      snippet: Glu47 deprotonates Cys172 which activates it nucleophilically attack the carbon of the
+        carbonyl group.
+      notes: M-CSA entry 671, mechanism 1; M-CSA cites PMID:11237598, PMID:12709423, PMID:8621596; step
+        1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/671/
+      snippet: The oxyanion initiates an elimination which results in the cleavage of the amino group
+        which is protonated by Glu47 to produce ammonia.
+      notes: M-CSA entry 671, mechanism 1; M-CSA cites PMID:11237598, PMID:12709423, PMID:8621596; step
+        2
+  - subject: glu47
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu47 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/671/
+      snippet: The oxyanion initiates an elimination which results in the cleavage of the amino group
+        which is protonated by Glu47 to produce ammonia.
+      notes: M-CSA entry 671, mechanism 1; M-CSA cites PMID:11237598, PMID:12709423, PMID:8621596; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/671/
+      snippet: Glu47 deprotonates a water molecule which activates it to nucleophilically attack the carbon
+        of the carbonyl group.
+      notes: M-CSA entry 671, mechanism 1; M-CSA cites PMID:11237598, PMID:12709423, PMID:8621596; step
+        3
+  - subject: glu47
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Glu47 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/671/
+      snippet: Glu47 deprotonates a water molecule which activates it to nucleophilically attack the carbon
+        of the carbonyl group.
+      notes: M-CSA entry 671, mechanism 1; M-CSA cites PMID:11237598, PMID:12709423, PMID:8621596; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/671/
+      snippet: The oxyanion once again initiates an elimination which results in the cleavage of the acyl-enzyme
+        and Cys172 is protonated by Glu47 which returns the active site to its native state.
+      notes: M-CSA entry 671, mechanism 1; M-CSA cites PMID:11237598, PMID:12709423, PMID:8621596; step
+        4
+  - subject: glu47
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Glu47 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/671/
+      snippet: The oxyanion once again initiates an elimination which results in the cleavage of the acyl-enzyme
+        and Cys172 is protonated by Glu47 which returns the active site to its native state.
+      notes: M-CSA entry 671, mechanism 1; M-CSA cites PMID:11237598, PMID:12709423, PMID:8621596; step
+        4
+  - subject: cys172
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Cys172 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/671/
+      snippet: The oxyanion once again initiates an elimination which results in the cleavage of the acyl-enzyme
+        and Cys172 is protonated by Glu47 which returns the active site to its native state.
+      notes: M-CSA entry 671, mechanism 1; M-CSA cites PMID:11237598, PMID:12709423, PMID:8621596; step
+        4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/671/
+      snippet: The released intermediate further decomposes to release CO2 and the D-amino acid product,
+        which is protonated by the surrounding solvent.
+      notes: M-CSA entry 671, mechanism 1; M-CSA cites PMID:11237598, PMID:12709423, PMID:8621596; step
+        5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/671/
+      snippet: Products
+      notes: M-CSA entry 671, mechanism 1; M-CSA cites PMID:11237598, PMID:12709423, PMID:8621596; step
+        6
+  - subject: glu47
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu47 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/671/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 671, mechanism 1; M-CSA cites PMID:11237598, PMID:12709423, PMID:8621596; M-CSA
+        catalytic-residue roles for Glu47
+  - subject: asn110
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn110 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/671/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 671, mechanism 1; M-CSA cites PMID:11237598, PMID:12709423, PMID:8621596; M-CSA
+        catalytic-residue roles for Asn110
+  - subject: lys127
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys127 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/671/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 671, mechanism 1; M-CSA cites PMID:11237598, PMID:12709423, PMID:8621596; M-CSA
+        catalytic-residue roles for Lys127
+  - subject: glu146
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu146 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/671/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 671, mechanism 1; M-CSA cites PMID:11237598, PMID:12709423, PMID:8621596; M-CSA
+        catalytic-residue roles for Glu146
+  - subject: cys172
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys172 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/671/
+      snippet: nucleofuge, nucleophile, proton acceptor, proton donor
+      notes: M-CSA entry 671, mechanism 1; M-CSA cites PMID:11237598, PMID:12709423, PMID:8621596; M-CSA
+        catalytic-residue roles for Cys172
+  - subject: asn197
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn197 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/671/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 671, mechanism 1; M-CSA cites PMID:11237598, PMID:12709423, PMID:8621596; M-CSA
+        catalytic-residue roles for Asn197
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/671/
+      snippet: N-carbomyl-D-amino-acid amidohydrolase catalyses the hydrolysis of N-carbamoyl-D-amino
+        acids to the corresponding D-amino acids with the release of carbon dioxide and ammonia. The catalytic
+        mechanism of N-carbomyl-D-amino-acid amidohydrolase begins with an acylation reaction. The sulphur
+        atom of Cys 172 makes a nucleophilic attack on the C atom of the substrate carbonyl group, with
+        Glu 47 acting a
+      notes: M-CSA entry 671, mechanism 1; M-CSA cites PMID:11237598, PMID:12709423, PMID:8621596; CATH
+        domain 3.60.110.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/671/
+      snippet: N-carbomyl-D-amino-acid amidohydrolase catalyses the hydrolysis of N-carbamoyl-D-amino
+        acids to the corresponding D-amino acids with the release of carbon dioxide and ammonia. The catalytic
+        mechanism of N-carbomyl-D-amino-acid amidohydrolase begins with an acylation reaction. The sulphur
+        atom of Cys 172 makes a nucleophilic attack on the C atom of the substrate carbonyl group, with
+        Glu 47 acting a
+      notes: M-CSA entry 671, mechanism 1; M-CSA cites PMID:11237598, PMID:12709423, PMID:8621596; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/671/
+      snippet: N-carbomyl-D-amino-acid amidohydrolase catalyses the hydrolysis of N-carbamoyl-D-amino
+        acids to the corresponding D-amino acids with the release of carbon dioxide and ammonia. The catalytic
+        mechanism of N-carbomyl-D-amino-acid amidohydrolase begins with an acylation reaction. The sulphur
+        atom of Cys 172 makes a nucleophilic attack on the C atom of the substrate carbonyl group, with
+        Glu 47 acting a
+      notes: M-CSA entry 671, mechanism 1; M-CSA cites PMID:11237598, PMID:12709423, PMID:8621596; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/671/
+      snippet: N-carbomyl-D-amino-acid amidohydrolase catalyses the hydrolysis of N-carbamoyl-D-amino
+        acids to the corresponding D-amino acids with the release of carbon dioxide and ammonia. The catalytic
+        mechanism of N-carbomyl-D-amino-acid amidohydrolase begins with an acylation reaction. The sulphur
+        atom of Cys 172 makes a nucleophilic attack on the C atom of the substrate carbonyl group, with
+        Glu 47 acting a
+      notes: M-CSA entry 671, mechanism 1; M-CSA cites PMID:11237598, PMID:12709423, PMID:8621596; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/671/
+      snippet: N-carbomyl-D-amino-acid amidohydrolase catalyses the hydrolysis of N-carbamoyl-D-amino
+        acids to the corresponding D-amino acids with the release of carbon dioxide and ammonia. The catalytic
+        mechanism of N-carbomyl-D-amino-acid amidohydrolase begins with an acylation reaction. The sulphur
+        atom of Cys 172 makes a nucleophilic attack on the C atom of the substrate carbonyl group, with
+        Glu 47 acting a
+      notes: M-CSA entry 671, mechanism 1; M-CSA cites PMID:11237598, PMID:12709423, PMID:8621596; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/671/
+      snippet: N-carbomyl-D-amino-acid amidohydrolase catalyses the hydrolysis of N-carbamoyl-D-amino
+        acids to the corresponding D-amino acids with the release of carbon dioxide and ammonia. The catalytic
+        mechanism of N-carbomyl-D-amino-acid amidohydrolase begins with an acylation reaction. The sulphur
+        atom of Cys 172 makes a nucleophilic attack on the C atom of the substrate carbonyl group, with
+        Glu 47 acting a
+      notes: M-CSA entry 671, mechanism 1; M-CSA cites PMID:11237598, PMID:12709423, PMID:8621596; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/671/
+      snippet: N-carbomyl-D-amino-acid amidohydrolase catalyses the hydrolysis of N-carbamoyl-D-amino
+        acids to the corresponding D-amino acids with the release of carbon dioxide and ammonia. The catalytic
+        mechanism of N-carbomyl-D-amino-acid amidohydrolase begins with an acylation reaction. The sulphur
+        atom of Cys 172 makes a nucleophilic attack on the C atom of the substrate carbonyl group, with
+        Glu 47 acting a
+      notes: M-CSA entry 671, mechanism 1; M-CSA cites PMID:11237598, PMID:12709423, PMID:8621596; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/671/
+      snippet: N-carbomyl-D-amino-acid amidohydrolase catalyses the hydrolysis of N-carbamoyl-D-amino
+        acids to the corresponding D-amino acids with the release of carbon dioxide and ammonia. The catalytic
+        mechanism of N-carbomyl-D-amino-acid amidohydrolase begins with an acylation reaction. The sulphur
+        atom of Cys 172 makes a nucleophilic attack on the C atom of the substrate carbonyl group, with
+        Glu 47 acting a
+      notes: M-CSA entry 671, mechanism 1; M-CSA cites PMID:11237598, PMID:12709423, PMID:8621596; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (25 evidence-backed edges) transcribed from M-CSA entry 671;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

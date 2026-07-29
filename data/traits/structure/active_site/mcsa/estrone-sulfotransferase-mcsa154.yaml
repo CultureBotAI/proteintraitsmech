@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.8.2.4
 - CHEBI:17263
@@ -231,4 +231,209 @@ definitions:
       Estrogen sulfotransferase (EST) transfers the sulfate group from 3'-phosphoadenosine 5'-phosphosulfate (PAPS) to the phenolic oxygen of estrogenic steroids. EST plays a role in many carcinogenic processes, with polymorphism implicated in genetic risk towards some cancers.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of estrone sulfotransferase
+  description: Stepwise mechanism transcribed from M-CSA entry 154 (2 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: lys47
+    label: catalytic Lys47 (M-CSA/PDB numbering; UniProt residue 47)
+    node_type: RESIDUE
+    grounding: UniProtKB:P49888
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: his107
+    label: catalytic His107 (M-CSA/PDB numbering; UniProt residue 107)
+    node_type: RESIDUE
+    grounding: UniProtKB:P49888
+    description: 'M-CSA roles: hydrogen bond acceptor, proton acceptor, proton donor, proton relay.'
+  - node_id: ser137
+    label: catalytic Ser137 (M-CSA/PDB numbering; UniProt residue 137)
+    node_type: RESIDUE
+    grounding: UniProtKB:P49888
+    description: 'M-CSA roles: hydrogen bond acceptor, steric role.'
+  - node_id: reactant0
+    label: estrone
+    node_type: CHEMICAL
+    grounding: CHEBI:17263
+  - node_id: reactant1
+    label: 3'-phosphonato-5'-adenylyl sulfate(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58339
+  - node_id: product0
+    label: estrone 3-sulfate
+    node_type: CHEMICAL
+    grounding: CHEBI:17474
+  - node_id: product1
+    label: adenosine 3',5'-bismonophosphate(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58343
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The sulfate of 3'-phosphoadenylyl sulfate attacks the alcohol group of estrone, which
+      then attacks the sulfate in a nucleophilic substitution. The transition state of this reaction involves
+      a strong hydrogen bond between the His107 and estrone, which effectively results in a proton relay.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: estrone sulfotransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:154
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.300 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.300
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: estrone sulfotransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.8.2.4
+  edges:
+  - subject: his107
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His107 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/154/
+      snippet: The sulfate of 3'-phosphoadenylyl sulfate attacks the alcohol group of estrone, which then
+        attacks the sulfate in a nucleophilic substitution. The transition state of this reaction involves
+        a strong hydrogen bond between the His107 and estrone, which effectively results in a proton relay.
+      notes: M-CSA entry 154, mechanism 1; M-CSA cites PMID:11884392, PMID:15293241; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/154/
+      snippet: Products
+      notes: M-CSA entry 154, mechanism 1; M-CSA cites PMID:11884392, PMID:15293241; step 2
+  - subject: lys47
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys47 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/154/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 154, mechanism 1; M-CSA cites PMID:11884392, PMID:15293241; M-CSA catalytic-residue
+        roles for Lys47
+  - subject: his107
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His107 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/154/
+      snippet: hydrogen bond acceptor, proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 154, mechanism 1; M-CSA cites PMID:11884392, PMID:15293241; M-CSA catalytic-residue
+        roles for His107
+  - subject: ser137
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser137 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/154/
+      snippet: hydrogen bond acceptor, steric role
+      notes: M-CSA entry 154, mechanism 1; M-CSA cites PMID:11884392, PMID:15293241; M-CSA catalytic-residue
+        roles for Ser137
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/154/
+      snippet: "<p>The mechanism is an S<sub>N</sub>2-like in-line displacement, with the phenolic hydroxy\
+        \ group acting as the nucleophile (made more nucleophilic by hydrogen bonding with His 107, which\
+        \ also transfers the phenolic proton to the sulfate group).</p>
+<p>Lys 47 hydrogen bonds to\
+        \ the oxygen atom bridging PAPS 5' phosphate and sulfate groups. This promotes dissociation of\
+        \ the sulfate group from PAPS a"
+      notes: M-CSA entry 154, mechanism 1; M-CSA cites PMID:11884392, PMID:15293241; CATH domain 3.40.50.300
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/154/
+      snippet: "<p>The mechanism is an S<sub>N</sub>2-like in-line displacement, with the phenolic hydroxy\
+        \ group acting as the nucleophile (made more nucleophilic by hydrogen bonding with His 107, which\
+        \ also transfers the phenolic proton to the sulfate group).</p>
+<p>Lys 47 hydrogen bonds to\
+        \ the oxygen atom bridging PAPS 5' phosphate and sulfate groups. This promotes dissociation of\
+        \ the sulfate group from PAPS a"
+      notes: M-CSA entry 154, mechanism 1; M-CSA cites PMID:11884392, PMID:15293241; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/154/
+      snippet: "<p>The mechanism is an S<sub>N</sub>2-like in-line displacement, with the phenolic hydroxy\
+        \ group acting as the nucleophile (made more nucleophilic by hydrogen bonding with His 107, which\
+        \ also transfers the phenolic proton to the sulfate group).</p>
+<p>Lys 47 hydrogen bonds to\
+        \ the oxygen atom bridging PAPS 5' phosphate and sulfate groups. This promotes dissociation of\
+        \ the sulfate group from PAPS a"
+      notes: M-CSA entry 154, mechanism 1; M-CSA cites PMID:11884392, PMID:15293241; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/154/
+      snippet: "<p>The mechanism is an S<sub>N</sub>2-like in-line displacement, with the phenolic hydroxy\
+        \ group acting as the nucleophile (made more nucleophilic by hydrogen bonding with His 107, which\
+        \ also transfers the phenolic proton to the sulfate group).</p>
+<p>Lys 47 hydrogen bonds to\
+        \ the oxygen atom bridging PAPS 5' phosphate and sulfate groups. This promotes dissociation of\
+        \ the sulfate group from PAPS a"
+      notes: M-CSA entry 154, mechanism 1; M-CSA cites PMID:11884392, PMID:15293241; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/154/
+      snippet: "<p>The mechanism is an S<sub>N</sub>2-like in-line displacement, with the phenolic hydroxy\
+        \ group acting as the nucleophile (made more nucleophilic by hydrogen bonding with His 107, which\
+        \ also transfers the phenolic proton to the sulfate group).</p>
+<p>Lys 47 hydrogen bonds to\
+        \ the oxygen atom bridging PAPS 5' phosphate and sulfate groups. This promotes dissociation of\
+        \ the sulfate group from PAPS a"
+      notes: M-CSA entry 154, mechanism 1; M-CSA cites PMID:11884392, PMID:15293241; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/154/
+      snippet: "<p>The mechanism is an S<sub>N</sub>2-like in-line displacement, with the phenolic hydroxy\
+        \ group acting as the nucleophile (made more nucleophilic by hydrogen bonding with His 107, which\
+        \ also transfers the phenolic proton to the sulfate group).</p>
+<p>Lys 47 hydrogen bonds to\
+        \ the oxygen atom bridging PAPS 5' phosphate and sulfate groups. This promotes dissociation of\
+        \ the sulfate group from PAPS a"
+      notes: M-CSA entry 154, mechanism 1; M-CSA cites PMID:11884392, PMID:15293241; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (11 evidence-backed edges) transcribed from M-CSA entry 154;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

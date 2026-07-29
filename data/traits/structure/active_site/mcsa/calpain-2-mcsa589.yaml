@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.22.53
 - CHEBI:15377
@@ -848,4 +848,349 @@ definitions:
       Calpain is an intracellular, cytostolic, calcium dependent cysteine protease containing a conserved papain-like catalytic fold. Thus, in the presence of clacium, calpain catalyses the hydrolysis of peptide bonds in proteins. Two major, heterodimeric isoforms exist, micro- and m-calpain, which differ in their concentration requirements of calcium ions for activation. Calpains are the only known mammalian enzymes that combine protease activity with dependence on calcium ion binding to EF-hands in one molecule. Calcium regulates calpain-1 activity by affecting the orientation of the two catalytic lobes (domains I and II). calcium binding occurs at multiple sites, including EF-hands and loops near the active site itself. At low calcium levels, domains I and II are locked by the regulatory domains of the proteins in an open, inhibited conformation, where the catalytic residues are too far apart to form the triad. (Cys of domain I, His and Asp of domain II). Calpain exists in animals, but not in plants, yeast or bacteria. Through proteolysis of key cellular components, calpain plays a significant physiological role and is involved in a variety of cellular functions, including nerve growth, muscle homeostasis, signal transduction and apoptosis. Calpains have been known as biomodulators since their physiological activity involves cleavage of substrates at inter-domain boundaries, hence modulating the function of these substrates rather than digesting them. Excessive activation and calcium dependent proteolysis by calpain has been implicated in neurodegenerative and demyelinating diseases including cerebral ischemia, ischemic myocardial infarction, spinal cord injury, muscular dystrophy and cataract. Calpain inhibition should help to control symptoms, hence calpains are ideal targets for pharmacological intervention. The catalytic triad is not assembled prior to calcium binding. The calcium ion induces conformational changes to bring together the domain I Cis residue and the domain II His and Asp residues. In the inactive form, the residues are too far apart to form the triad since the Cis-His ion pair cannot be formed over such a distance. Calpain is also capable of autoproteolysis.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of calpain-2
+  description: Stepwise mechanism transcribed from M-CSA entry 589 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: gln99
+    label: catalytic Gln99 (M-CSA/PDB numbering; UniProt residue 99)
+    node_type: RESIDUE
+    grounding: UniProtKB:P17655
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: cys105
+    label: catalytic Cys105 (M-CSA/PDB numbering; UniProt residue 105)
+    node_type: RESIDUE
+    grounding: UniProtKB:P17655
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his262
+    label: catalytic His262 (M-CSA/PDB numbering; UniProt residue 262)
+    node_type: RESIDUE
+    grounding: UniProtKB:P17655
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: asn286
+    label: catalytic Asn286 (M-CSA/PDB numbering; UniProt residue 286)
+    node_type: RESIDUE
+    grounding: UniProtKB:P17655
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: trp288
+    label: catalytic Trp288 (M-CSA/PDB numbering; UniProt residue 288)
+    node_type: RESIDUE
+    grounding: UniProtKB:P17655
+    description: 'M-CSA roles: steric role.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: dipeptide zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:90799
+  - node_id: product0
+    label: L-alpha-amino acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:59869
+  - node_id: product1
+    label: L-alpha-amino acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:59869
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His262 deprotonates Cys105 activating it so it can nucleophilically attack the carbon
+      of the carbonyl forming the oxyanion intermediate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The oxyanion initiates an elimination which results in the cleavage of the peptide bond.
+      The N-terminal product then accepts a proton from His262 which prevents reformation of the peptide
+      bond.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: His262 deprotonates water acrtivating it so it can attack the carbon of the thioester
+      bond in a nucleophilic addition which produces another oxyanion intermediate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The oxyanion initiates another elimination which results in the cleavage of the thioester
+      bond. The released Cys105 now accepts a proton from His262 which returns the enzyme to its native
+      state.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Product
+  - node_id: active_site
+    label: calpain-2 catalytic site
+    node_type: MOTIF
+    grounding: MCSA:589
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.70.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.70.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: calpain-2 activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.22.53
+  edges:
+  - subject: cys105
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys105 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/589/
+      snippet: His262 deprotonates Cys105 activating it so it can nucleophilically attack the carbon of
+        the carbonyl forming the oxyanion intermediate.
+      notes: M-CSA entry 589, mechanism 1; M-CSA cites PMID:10601010, PMID:10639123, PMID:12665854, PMID:12684003,
+        PMID:19020623, PMID:8439300, PMID:9228946; step 1
+  - subject: his262
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His262 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/589/
+      snippet: His262 deprotonates Cys105 activating it so it can nucleophilically attack the carbon of
+        the carbonyl forming the oxyanion intermediate.
+      notes: M-CSA entry 589, mechanism 1; M-CSA cites PMID:10601010, PMID:10639123, PMID:12665854, PMID:12684003,
+        PMID:19020623, PMID:8439300, PMID:9228946; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/589/
+      snippet: The oxyanion initiates an elimination which results in the cleavage of the peptide bond.
+        The N-terminal product then accepts a proton from His262 which prevents reformation of the peptide
+        bond.
+      notes: M-CSA entry 589, mechanism 1; M-CSA cites PMID:10601010, PMID:10639123, PMID:12665854, PMID:12684003,
+        PMID:19020623, PMID:8439300, PMID:9228946; step 2
+  - subject: his262
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His262 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/589/
+      snippet: The oxyanion initiates an elimination which results in the cleavage of the peptide bond.
+        The N-terminal product then accepts a proton from His262 which prevents reformation of the peptide
+        bond.
+      notes: M-CSA entry 589, mechanism 1; M-CSA cites PMID:10601010, PMID:10639123, PMID:12665854, PMID:12684003,
+        PMID:19020623, PMID:8439300, PMID:9228946; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/589/
+      snippet: His262 deprotonates water acrtivating it so it can attack the carbon of the thioester bond
+        in a nucleophilic addition which produces another oxyanion intermediate.
+      notes: M-CSA entry 589, mechanism 1; M-CSA cites PMID:10601010, PMID:10639123, PMID:12665854, PMID:12684003,
+        PMID:19020623, PMID:8439300, PMID:9228946; step 3
+  - subject: his262
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His262 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/589/
+      snippet: His262 deprotonates water acrtivating it so it can attack the carbon of the thioester bond
+        in a nucleophilic addition which produces another oxyanion intermediate.
+      notes: M-CSA entry 589, mechanism 1; M-CSA cites PMID:10601010, PMID:10639123, PMID:12665854, PMID:12684003,
+        PMID:19020623, PMID:8439300, PMID:9228946; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/589/
+      snippet: The oxyanion initiates another elimination which results in the cleavage of the thioester
+        bond. The released Cys105 now accepts a proton from His262 which returns the enzyme to its native
+        state.
+      notes: M-CSA entry 589, mechanism 1; M-CSA cites PMID:10601010, PMID:10639123, PMID:12665854, PMID:12684003,
+        PMID:19020623, PMID:8439300, PMID:9228946; step 4
+  - subject: cys105
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Cys105 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/589/
+      snippet: The oxyanion initiates another elimination which results in the cleavage of the thioester
+        bond. The released Cys105 now accepts a proton from His262 which returns the enzyme to its native
+        state.
+      notes: M-CSA entry 589, mechanism 1; M-CSA cites PMID:10601010, PMID:10639123, PMID:12665854, PMID:12684003,
+        PMID:19020623, PMID:8439300, PMID:9228946; step 4
+  - subject: his262
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: His262 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/589/
+      snippet: The oxyanion initiates another elimination which results in the cleavage of the thioester
+        bond. The released Cys105 now accepts a proton from His262 which returns the enzyme to its native
+        state.
+      notes: M-CSA entry 589, mechanism 1; M-CSA cites PMID:10601010, PMID:10639123, PMID:12665854, PMID:12684003,
+        PMID:19020623, PMID:8439300, PMID:9228946; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/589/
+      snippet: Product
+      notes: M-CSA entry 589, mechanism 1; M-CSA cites PMID:10601010, PMID:10639123, PMID:12665854, PMID:12684003,
+        PMID:19020623, PMID:8439300, PMID:9228946; step 5
+  - subject: gln99
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln99 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/589/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 589, mechanism 1; M-CSA cites PMID:10601010, PMID:10639123, PMID:12665854, PMID:12684003,
+        PMID:19020623, PMID:8439300, PMID:9228946; M-CSA catalytic-residue roles for Gln99
+  - subject: cys105
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys105 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/589/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 589, mechanism 1; M-CSA cites PMID:10601010, PMID:10639123, PMID:12665854, PMID:12684003,
+        PMID:19020623, PMID:8439300, PMID:9228946; M-CSA catalytic-residue roles for Cys105
+  - subject: his262
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His262 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/589/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 589, mechanism 1; M-CSA cites PMID:10601010, PMID:10639123, PMID:12665854, PMID:12684003,
+        PMID:19020623, PMID:8439300, PMID:9228946; M-CSA catalytic-residue roles for His262
+  - subject: asn286
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn286 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/589/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 589, mechanism 1; M-CSA cites PMID:10601010, PMID:10639123, PMID:12665854, PMID:12684003,
+        PMID:19020623, PMID:8439300, PMID:9228946; M-CSA catalytic-residue roles for Asn286
+  - subject: trp288
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp288 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/589/
+      snippet: steric role
+      notes: M-CSA entry 589, mechanism 1; M-CSA cites PMID:10601010, PMID:10639123, PMID:12665854, PMID:12684003,
+        PMID:19020623, PMID:8439300, PMID:9228946; M-CSA catalytic-residue roles for Trp288
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/589/
+      snippet: The calpain active site contains a Cis-His-Asp catalytic triad. Upon calcium binding, conformational
+        changes brings the Cys105 (D-I) close to His 262 and Asn 286 (D-II).  The overall mechanism involves
+        a nucleophilic cysteine thiol in a catalytic triad.  Deprotonation of the Cys 105 thiol group
+        by His 262 with a basic side chain. The thiolate ion is stabilised through the formation of an
+        ion pair
+      notes: M-CSA entry 589, mechanism 1; M-CSA cites PMID:10601010, PMID:10639123, PMID:12665854, PMID:12684003,
+        PMID:19020623, PMID:8439300, PMID:9228946; CATH domain 3.90.70.10 assigned to the catalytic chain
+        by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/589/
+      snippet: The calpain active site contains a Cis-His-Asp catalytic triad. Upon calcium binding, conformational
+        changes brings the Cys105 (D-I) close to His 262 and Asn 286 (D-II).  The overall mechanism involves
+        a nucleophilic cysteine thiol in a catalytic triad.  Deprotonation of the Cys 105 thiol group
+        by His 262 with a basic side chain. The thiolate ion is stabilised through the formation of an
+        ion pair
+      notes: M-CSA entry 589, mechanism 1; M-CSA cites PMID:10601010, PMID:10639123, PMID:12665854, PMID:12684003,
+        PMID:19020623, PMID:8439300, PMID:9228946; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/589/
+      snippet: The calpain active site contains a Cis-His-Asp catalytic triad. Upon calcium binding, conformational
+        changes brings the Cys105 (D-I) close to His 262 and Asn 286 (D-II).  The overall mechanism involves
+        a nucleophilic cysteine thiol in a catalytic triad.  Deprotonation of the Cys 105 thiol group
+        by His 262 with a basic side chain. The thiolate ion is stabilised through the formation of an
+        ion pair
+      notes: M-CSA entry 589, mechanism 1; M-CSA cites PMID:10601010, PMID:10639123, PMID:12665854, PMID:12684003,
+        PMID:19020623, PMID:8439300, PMID:9228946; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/589/
+      snippet: The calpain active site contains a Cis-His-Asp catalytic triad. Upon calcium binding, conformational
+        changes brings the Cys105 (D-I) close to His 262 and Asn 286 (D-II).  The overall mechanism involves
+        a nucleophilic cysteine thiol in a catalytic triad.  Deprotonation of the Cys 105 thiol group
+        by His 262 with a basic side chain. The thiolate ion is stabilised through the formation of an
+        ion pair
+      notes: M-CSA entry 589, mechanism 1; M-CSA cites PMID:10601010, PMID:10639123, PMID:12665854, PMID:12684003,
+        PMID:19020623, PMID:8439300, PMID:9228946; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/589/
+      snippet: The calpain active site contains a Cis-His-Asp catalytic triad. Upon calcium binding, conformational
+        changes brings the Cys105 (D-I) close to His 262 and Asn 286 (D-II).  The overall mechanism involves
+        a nucleophilic cysteine thiol in a catalytic triad.  Deprotonation of the Cys 105 thiol group
+        by His 262 with a basic side chain. The thiolate ion is stabilised through the formation of an
+        ion pair
+      notes: M-CSA entry 589, mechanism 1; M-CSA cites PMID:10601010, PMID:10639123, PMID:12665854, PMID:12684003,
+        PMID:19020623, PMID:8439300, PMID:9228946; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/589/
+      snippet: The calpain active site contains a Cis-His-Asp catalytic triad. Upon calcium binding, conformational
+        changes brings the Cys105 (D-I) close to His 262 and Asn 286 (D-II).  The overall mechanism involves
+        a nucleophilic cysteine thiol in a catalytic triad.  Deprotonation of the Cys 105 thiol group
+        by His 262 with a basic side chain. The thiolate ion is stabilised through the formation of an
+        ion pair
+      notes: M-CSA entry 589, mechanism 1; M-CSA cites PMID:10601010, PMID:10639123, PMID:12665854, PMID:12684003,
+        PMID:19020623, PMID:8439300, PMID:9228946; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (21 evidence-backed edges) transcribed from M-CSA entry 589;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

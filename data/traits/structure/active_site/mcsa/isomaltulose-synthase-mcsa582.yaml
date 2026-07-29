@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.4.99.11
 - CHEBI:17992
@@ -85,4 +85,173 @@ definitions:
       Isomaltulose synthase (PalI), also known as sucrose isomerase, catalyses the isomerisation of sucrose to produce isomaltulose (alpha-D-glucosylpyranosyl-1,6-D-fructofuranose) and trehalulose (alpha-D-glucosylpyranosyl-1,1-D-fructofuranose) as the main products with residual amounts of glucose and fructose isomaltulose and trehalulose, two functional isomers of sucrose, have been suggested as non-cariogenic alternatives to sucrose and are widely used in health products and the food industry.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of isomaltulose synthase
+  description: Stepwise mechanism transcribed from M-CSA entry 582 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: asp241
+    label: catalytic Asp241 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8KR84
+    description: 'M-CSA roles: nucleofuge, nucleophile.'
+  - node_id: glu295
+    label: catalytic Glu295 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8KR84
+    description: 'M-CSA roles: proton donor.'
+  - node_id: reactant0
+    label: sucrose
+    node_type: CHEMICAL
+    grounding: CHEBI:17992
+  - node_id: product0
+    label: 6-O-alpha-D-glucopyranosyl-D-fructofuranose
+    node_type: CHEMICAL
+    grounding: CHEBI:18394
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: There is nucleophilic attack from Asp 241 on the C1 atom of the glucose component, this
+      is in concert with oxygen of the glycosidic link being protonated by Glu 295. This results in the
+      link being broken in an SN2 reaction and an enzyme bound intermediate being formed.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: There is a second SN2 reaction where C6 hydroxyl of the fructose attacks C1 of the Asp-glucose
+      intermediate. This results in a new glycosidic linkage and the formation of Isomaltulose.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: isomaltulose synthase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:582
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.80 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.80
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: isomaltulose synthase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.4.99.11
+  edges:
+  - subject: asp241
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp241 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/582/
+      snippet: There is nucleophilic attack from Asp 241 on the C1 atom of the glucose component, this
+        is in concert with oxygen of the glycosidic link being protonated by Glu 295. This results in
+        the link being broken in an SN2 reaction and an enzyme bound intermediate being formed.
+      notes: M-CSA entry 582, mechanism 1; M-CSA cites PMID:12819210; step 1
+  - subject: glu295
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu295 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/582/
+      snippet: There is nucleophilic attack from Asp 241 on the C1 atom of the glucose component, this
+        is in concert with oxygen of the glycosidic link being protonated by Glu 295. This results in
+        the link being broken in an SN2 reaction and an enzyme bound intermediate being formed.
+      notes: M-CSA entry 582, mechanism 1; M-CSA cites PMID:12819210; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/582/
+      snippet: There is a second SN2 reaction where C6 hydroxyl of the fructose attacks C1 of the Asp-glucose
+        intermediate. This results in a new glycosidic linkage and the formation of Isomaltulose.
+      notes: M-CSA entry 582, mechanism 1; M-CSA cites PMID:12819210; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/582/
+      snippet: Products.
+      notes: M-CSA entry 582, mechanism 1; M-CSA cites PMID:12819210; step 3
+  - subject: asp241
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp241 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/582/
+      snippet: nucleofuge, nucleophile
+      notes: M-CSA entry 582, mechanism 1; M-CSA cites PMID:12819210; M-CSA catalytic-residue roles for
+        Asp241
+  - subject: glu295
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu295 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/582/
+      snippet: proton donor
+      notes: M-CSA entry 582, mechanism 1; M-CSA cites PMID:12819210; M-CSA catalytic-residue roles for
+        Glu295
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/582/
+      snippet: Glu295 protonates the oxygen atom of the glycosidic link, in concert with the nucleophile
+        Asp241 attacking at C1, yielding a molecule of fructose and a glucose-enzyme complex. Sucrose
+        then attacks at C1 with the C6 hydroxyl group, displacing Asp241 to form Isomatulose.
+      notes: M-CSA entry 582, mechanism 1; M-CSA cites PMID:12819210; CATH domain 3.20.20.80 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/582/
+      snippet: Glu295 protonates the oxygen atom of the glycosidic link, in concert with the nucleophile
+        Asp241 attacking at C1, yielding a molecule of fructose and a glucose-enzyme complex. Sucrose
+        then attacks at C1 with the C6 hydroxyl group, displacing Asp241 to form Isomatulose.
+      notes: M-CSA entry 582, mechanism 1; M-CSA cites PMID:12819210; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/582/
+      snippet: Glu295 protonates the oxygen atom of the glycosidic link, in concert with the nucleophile
+        Asp241 attacking at C1, yielding a molecule of fructose and a glucose-enzyme complex. Sucrose
+        then attacks at C1 with the C6 hydroxyl group, displacing Asp241 to form Isomatulose.
+      notes: M-CSA entry 582, mechanism 1; M-CSA cites PMID:12819210; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/582/
+      snippet: Glu295 protonates the oxygen atom of the glycosidic link, in concert with the nucleophile
+        Asp241 attacking at C1, yielding a molecule of fructose and a glucose-enzyme complex. Sucrose
+        then attacks at C1 with the C6 hydroxyl group, displacing Asp241 to form Isomatulose.
+      notes: M-CSA entry 582, mechanism 1; M-CSA cites PMID:12819210; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (10 evidence-backed edges) transcribed from M-CSA entry 582;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

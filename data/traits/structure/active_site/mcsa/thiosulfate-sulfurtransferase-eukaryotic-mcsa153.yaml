@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.8.1.1
 - CHEBI:18407
@@ -328,4 +328,328 @@ definitions:
       Thiosulfate sulfurtransferase (rhodanese) is an ubiquitous enzyme that in vitro catalyses the transfer of a sulfur atom from suitable donors to nucleophilic acceptors by way of a double displacement mechanism. During the catalytic process the enzyme cycles between a sulfur-free and a persulfide-containing form, via formation of a persulfide linkage to a catalytic Cys residue.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of thiosulfate sulfurtransferase (eukaryotic)
+  description: Stepwise mechanism transcribed from M-CSA entry 153 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +1).
+  nodes:
+  - node_id: arg186
+    label: catalytic Arg186 (M-CSA/PDB numbering; UniProt residue 187)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00586
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: cys247
+    label: catalytic Cys247 (M-CSA/PDB numbering; UniProt residue 248)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00586
+    description: 'M-CSA roles: nucleofuge, nucleophile.'
+  - node_id: arg248
+    label: catalytic Arg248 (M-CSA/PDB numbering; UniProt residue 249)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00586
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: lys249
+    label: catalytic Lys249 (M-CSA/PDB numbering; UniProt residue 250)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00586
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: gly250
+    label: catalytic Gly250 (M-CSA/PDB numbering; UniProt residue 251)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00586
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: val251
+    label: catalytic Val251 (M-CSA/PDB numbering; UniProt residue 252)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00586
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: thr252
+    label: catalytic Thr252 (M-CSA/PDB numbering; UniProt residue 253)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00586
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: ser274
+    label: catalytic Ser274 (M-CSA/PDB numbering; UniProt residue 275)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00586
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: hydrogen cyanide
+    node_type: CHEMICAL
+    grounding: CHEBI:18407
+  - node_id: reactant1
+    label: trioxidosulfanidosulfate(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:33542
+  - node_id: product0
+    label: sulfite
+    node_type: CHEMICAL
+    grounding: CHEBI:17359
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: thiocyanate
+    node_type: CHEMICAL
+    grounding: CHEBI:18022
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The thiolate of Cys247 attacks the thiosulfate substrate in a nucleophilic substitution,
+      resulting in the formation of the sulfite product an a sulfonated cysteine residue.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The cyanate substrate attacks the sulfonated Cys247 in a nucleophilic substitution, resulting
+      in the thiocyanate product and the regeneration of Cys247.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: thiosulfate sulfurtransferase (eukaryotic) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:153
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.250.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.250.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: thiosulfate sulfurtransferase (eukaryotic) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.8.1.1
+  edges:
+  - subject: cys247
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys247 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/153/
+      snippet: The thiolate of Cys247 attacks the thiosulfate substrate in a nucleophilic substitution,
+        resulting in the formation of the sulfite product an a sulfonated cysteine residue.
+      notes: M-CSA entry 153, mechanism 1; M-CSA cites PMID:10788330, PMID:8132546, PMID:8702871, PMID:to
+        delete; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/153/
+      snippet: The cyanate substrate attacks the sulfonated Cys247 in a nucleophilic substitution, resulting
+        in the thiocyanate product and the regeneration of Cys247.
+      notes: M-CSA entry 153, mechanism 1; M-CSA cites PMID:10788330, PMID:8132546, PMID:8702871, PMID:to
+        delete; step 2
+  - subject: cys247
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Cys247 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/153/
+      snippet: The cyanate substrate attacks the sulfonated Cys247 in a nucleophilic substitution, resulting
+        in the thiocyanate product and the regeneration of Cys247.
+      notes: M-CSA entry 153, mechanism 1; M-CSA cites PMID:10788330, PMID:8132546, PMID:8702871, PMID:to
+        delete; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/153/
+      snippet: Products
+      notes: M-CSA entry 153, mechanism 1; M-CSA cites PMID:10788330, PMID:8132546, PMID:8702871, PMID:to
+        delete; step 3
+  - subject: arg186
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg186 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/153/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 153, mechanism 1; M-CSA cites PMID:10788330, PMID:8132546, PMID:8702871, PMID:to
+        delete; M-CSA catalytic-residue roles for Arg186
+  - subject: cys247
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys247 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/153/
+      snippet: nucleofuge, nucleophile
+      notes: M-CSA entry 153, mechanism 1; M-CSA cites PMID:10788330, PMID:8132546, PMID:8702871, PMID:to
+        delete; M-CSA catalytic-residue roles for Cys247
+  - subject: arg248
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg248 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/153/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 153, mechanism 1; M-CSA cites PMID:10788330, PMID:8132546, PMID:8702871, PMID:to
+        delete; M-CSA catalytic-residue roles for Arg248
+  - subject: lys249
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys249 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/153/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 153, mechanism 1; M-CSA cites PMID:10788330, PMID:8132546, PMID:8702871, PMID:to
+        delete; M-CSA catalytic-residue roles for Lys249
+  - subject: gly250
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly250 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/153/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 153, mechanism 1; M-CSA cites PMID:10788330, PMID:8132546, PMID:8702871, PMID:to
+        delete; M-CSA catalytic-residue roles for Gly250
+  - subject: val251
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Val251 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/153/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 153, mechanism 1; M-CSA cites PMID:10788330, PMID:8132546, PMID:8702871, PMID:to
+        delete; M-CSA catalytic-residue roles for Val251
+  - subject: thr252
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr252 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/153/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 153, mechanism 1; M-CSA cites PMID:10788330, PMID:8132546, PMID:8702871, PMID:to
+        delete; M-CSA catalytic-residue roles for Thr252
+  - subject: ser274
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser274 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/153/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 153, mechanism 1; M-CSA cites PMID:10788330, PMID:8132546, PMID:8702871, PMID:to
+        delete; M-CSA catalytic-residue roles for Ser274
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/153/
+      snippet: Cys247, held in its thiolate form by the positively charged electrostatic field of the
+        active site, attacks the thiosulfate substrate in a nucleophilic substitution reaction. The resulting
+        persulfate bond is well stabilised by the active site eletrostatic field. Cyanate then binds and
+        attacks the sulfonates cysteine residue (in a double displacement mechanism), resulting in the
+        thiocyanate substra
+      notes: M-CSA entry 153, mechanism 1; M-CSA cites PMID:10788330, PMID:8132546, PMID:8702871, PMID:to
+        delete; CATH domain 3.40.250.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/153/
+      snippet: Cys247, held in its thiolate form by the positively charged electrostatic field of the
+        active site, attacks the thiosulfate substrate in a nucleophilic substitution reaction. The resulting
+        persulfate bond is well stabilised by the active site eletrostatic field. Cyanate then binds and
+        attacks the sulfonates cysteine residue (in a double displacement mechanism), resulting in the
+        thiocyanate substra
+      notes: M-CSA entry 153, mechanism 1; M-CSA cites PMID:10788330, PMID:8132546, PMID:8702871, PMID:to
+        delete; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/153/
+      snippet: Cys247, held in its thiolate form by the positively charged electrostatic field of the
+        active site, attacks the thiosulfate substrate in a nucleophilic substitution reaction. The resulting
+        persulfate bond is well stabilised by the active site eletrostatic field. Cyanate then binds and
+        attacks the sulfonates cysteine residue (in a double displacement mechanism), resulting in the
+        thiocyanate substra
+      notes: M-CSA entry 153, mechanism 1; M-CSA cites PMID:10788330, PMID:8132546, PMID:8702871, PMID:to
+        delete; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/153/
+      snippet: Cys247, held in its thiolate form by the positively charged electrostatic field of the
+        active site, attacks the thiosulfate substrate in a nucleophilic substitution reaction. The resulting
+        persulfate bond is well stabilised by the active site eletrostatic field. Cyanate then binds and
+        attacks the sulfonates cysteine residue (in a double displacement mechanism), resulting in the
+        thiocyanate substra
+      notes: M-CSA entry 153, mechanism 1; M-CSA cites PMID:10788330, PMID:8132546, PMID:8702871, PMID:to
+        delete; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/153/
+      snippet: Cys247, held in its thiolate form by the positively charged electrostatic field of the
+        active site, attacks the thiosulfate substrate in a nucleophilic substitution reaction. The resulting
+        persulfate bond is well stabilised by the active site eletrostatic field. Cyanate then binds and
+        attacks the sulfonates cysteine residue (in a double displacement mechanism), resulting in the
+        thiocyanate substra
+      notes: M-CSA entry 153, mechanism 1; M-CSA cites PMID:10788330, PMID:8132546, PMID:8702871, PMID:to
+        delete; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/153/
+      snippet: Cys247, held in its thiolate form by the positively charged electrostatic field of the
+        active site, attacks the thiosulfate substrate in a nucleophilic substitution reaction. The resulting
+        persulfate bond is well stabilised by the active site eletrostatic field. Cyanate then binds and
+        attacks the sulfonates cysteine residue (in a double displacement mechanism), resulting in the
+        thiocyanate substra
+      notes: M-CSA entry 153, mechanism 1; M-CSA cites PMID:10788330, PMID:8132546, PMID:8702871, PMID:to
+        delete; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/153/
+      snippet: Cys247, held in its thiolate form by the positively charged electrostatic field of the
+        active site, attacks the thiosulfate substrate in a nucleophilic substitution reaction. The resulting
+        persulfate bond is well stabilised by the active site eletrostatic field. Cyanate then binds and
+        attacks the sulfonates cysteine residue (in a double displacement mechanism), resulting in the
+        thiocyanate substra
+      notes: M-CSA entry 153, mechanism 1; M-CSA cites PMID:10788330, PMID:8132546, PMID:8702871, PMID:to
+        delete; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (19 evidence-backed edges) transcribed from M-CSA entry 153;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

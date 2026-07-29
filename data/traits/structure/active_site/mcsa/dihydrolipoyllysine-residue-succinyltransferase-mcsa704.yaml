@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.3.1.61
 - CHEBI:57292
@@ -283,4 +283,246 @@ definitions:
       The alpha-ketoglutarate dehydrogenase complex (KGDC), also known as the oxoglutarate dehydrogenase complex (OGDC), is composed of multiple copies of three enzymes: oxoglutarate dehydrogenase (E1o), dihydrolipoamide succinyltransferase (E2o), and dihydrolipoamide dehydrogenase (E3o). The E2o component of the KGDC is a modular protein that is composed of one lipoyl domain at the N-terminus, followed by an E1o- and/or E3o-binding domain, and then by a carboxyl terminal catalytic domain. Although the catalytic domain forms trimers, the enzyme forms the octahedral inner core of the multienzyme complex, an aggregation of 24 subunits arranged with 432 point group symmetry. The substrate (dihydrolipoamide) is covalently bound to a specific lysine residue in the lipoyl domain. The enzyme catalyses the transfer of a succinyl group from the S-succinyldihydrolipoyl moiety to coenzyme A.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of dihydrolipoyllysine-residue succinyltransferase
+  description: Stepwise mechanism transcribed from M-CSA entry 704 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +1).
+  nodes:
+  - node_id: thr323
+    label: catalytic Thr323 (M-CSA/PDB numbering; UniProt residue 324)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AFG6
+    description: 'M-CSA roles: electrostatic stabiliser, polar interaction.'
+  - node_id: his375
+    label: catalytic His375 (M-CSA/PDB numbering; UniProt residue 376)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AFG6
+    description: 'M-CSA roles: activator, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: N(6)-[(R)-S(8)-succinyldihydrolipoyl]-L-lysine(1-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:83120
+  - node_id: reactant1
+    label: coenzyme A(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+  - node_id: product0
+    label: succinyl-CoA(5-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57292
+  - node_id: product1
+    label: N(6)-[(R)-dihydrolipoyl]-L-lysine residue
+    node_type: CHEMICAL
+    grounding: CHEBI:83100
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His275 deprotonates the thiol group.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Activated thiolate performs a nucleophilic attack on the carbonyl carbon on the succinyl
+      dihydrolipoyl moiety to form a tetrahedral intermediate stabilised by Thr323.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Tetrahedral intermediate collapse which sees the succinyl group transferred to CoA.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: His375 protonates the dihydrolipoyl moiety.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: dihydrolipoyllysine-residue succinyltransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:704
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.559.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.559.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: dihydrolipoyllysine-residue succinyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.3.1.61
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/704/
+      snippet: Activated thiolate performs a nucleophilic attack on the carbonyl carbon on the succinyl
+        dihydrolipoyl moiety to form a tetrahedral intermediate stabilised by Thr323.
+      notes: M-CSA entry 704, mechanism 1; M-CSA cites PMID:10739245, PMID:10966480, PMID:9677295; step
+        2
+  - subject: thr323
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Thr323 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/704/
+      snippet: Activated thiolate performs a nucleophilic attack on the carbonyl carbon on the succinyl
+        dihydrolipoyl moiety to form a tetrahedral intermediate stabilised by Thr323.
+      notes: M-CSA entry 704, mechanism 1; M-CSA cites PMID:10739245, PMID:10966480, PMID:9677295; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/704/
+      snippet: Tetrahedral intermediate collapse which sees the succinyl group transferred to CoA.
+      notes: M-CSA entry 704, mechanism 1; M-CSA cites PMID:10739245, PMID:10966480, PMID:9677295; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/704/
+      snippet: His375 protonates the dihydrolipoyl moiety.
+      notes: M-CSA entry 704, mechanism 1; M-CSA cites PMID:10739245, PMID:10966480, PMID:9677295; step
+        4
+  - subject: his375
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: His375 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/704/
+      snippet: His375 protonates the dihydrolipoyl moiety.
+      notes: M-CSA entry 704, mechanism 1; M-CSA cites PMID:10739245, PMID:10966480, PMID:9677295; step
+        4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/704/
+      snippet: Products.
+      notes: M-CSA entry 704, mechanism 1; M-CSA cites PMID:10739245, PMID:10966480, PMID:9677295; step
+        5
+  - subject: thr323
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr323 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/704/
+      snippet: electrostatic stabiliser, polar interaction
+      notes: M-CSA entry 704, mechanism 1; M-CSA cites PMID:10739245, PMID:10966480, PMID:9677295; M-CSA
+        catalytic-residue roles for Thr323
+  - subject: his375
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His375 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/704/
+      snippet: activator, proton acceptor, proton donor
+      notes: M-CSA entry 704, mechanism 1; M-CSA cites PMID:10739245, PMID:10966480, PMID:9677295; M-CSA
+        catalytic-residue roles for His375
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/704/
+      snippet: The first step is the deprotonation of the thiol group of coenzyme A by the active site
+        residue His375. The activated thiolate attacks the carbonyl carbon of the succinylated dihydrolipoyl
+        moiety to form a tetrahedral intermediate, which is stabilised by Thr323'. The collapse of the
+        tetrahedral intermediate results in the succinylation of coenzyme A, and the protonation of the
+        dihydrolipoyl moiety
+      notes: M-CSA entry 704, mechanism 1; M-CSA cites PMID:10739245, PMID:10966480, PMID:9677295; CATH
+        domain 3.30.559.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/704/
+      snippet: The first step is the deprotonation of the thiol group of coenzyme A by the active site
+        residue His375. The activated thiolate attacks the carbonyl carbon of the succinylated dihydrolipoyl
+        moiety to form a tetrahedral intermediate, which is stabilised by Thr323'. The collapse of the
+        tetrahedral intermediate results in the succinylation of coenzyme A, and the protonation of the
+        dihydrolipoyl moiety
+      notes: M-CSA entry 704, mechanism 1; M-CSA cites PMID:10739245, PMID:10966480, PMID:9677295; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/704/
+      snippet: The first step is the deprotonation of the thiol group of coenzyme A by the active site
+        residue His375. The activated thiolate attacks the carbonyl carbon of the succinylated dihydrolipoyl
+        moiety to form a tetrahedral intermediate, which is stabilised by Thr323'. The collapse of the
+        tetrahedral intermediate results in the succinylation of coenzyme A, and the protonation of the
+        dihydrolipoyl moiety
+      notes: M-CSA entry 704, mechanism 1; M-CSA cites PMID:10739245, PMID:10966480, PMID:9677295; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/704/
+      snippet: The first step is the deprotonation of the thiol group of coenzyme A by the active site
+        residue His375. The activated thiolate attacks the carbonyl carbon of the succinylated dihydrolipoyl
+        moiety to form a tetrahedral intermediate, which is stabilised by Thr323'. The collapse of the
+        tetrahedral intermediate results in the succinylation of coenzyme A, and the protonation of the
+        dihydrolipoyl moiety
+      notes: M-CSA entry 704, mechanism 1; M-CSA cites PMID:10739245, PMID:10966480, PMID:9677295; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/704/
+      snippet: The first step is the deprotonation of the thiol group of coenzyme A by the active site
+        residue His375. The activated thiolate attacks the carbonyl carbon of the succinylated dihydrolipoyl
+        moiety to form a tetrahedral intermediate, which is stabilised by Thr323'. The collapse of the
+        tetrahedral intermediate results in the succinylation of coenzyme A, and the protonation of the
+        dihydrolipoyl moiety
+      notes: M-CSA entry 704, mechanism 1; M-CSA cites PMID:10739245, PMID:10966480, PMID:9677295; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/704/
+      snippet: The first step is the deprotonation of the thiol group of coenzyme A by the active site
+        residue His375. The activated thiolate attacks the carbonyl carbon of the succinylated dihydrolipoyl
+        moiety to form a tetrahedral intermediate, which is stabilised by Thr323'. The collapse of the
+        tetrahedral intermediate results in the succinylation of coenzyme A, and the protonation of the
+        dihydrolipoyl moiety
+      notes: M-CSA entry 704, mechanism 1; M-CSA cites PMID:10739245, PMID:10966480, PMID:9677295; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (14 evidence-backed edges) transcribed from M-CSA entry 704;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

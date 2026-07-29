@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.4.1.125
 - CHEBI:18269
@@ -491,4 +491,240 @@ definitions:
       Glucotransferases are multidomain enzymes that catalyze the polymerization of glucans. They are found in Streptococcus mutants and are an essential agent in dental caries pathogenesis for which they have gained importance in the search for new treatments against infection.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of Glucansucrases (GTF-SI)
+  description: Stepwise mechanism transcribed from M-CSA entry 1002 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: asp477
+    label: catalytic Asp477 (M-CSA/PDB numbering; UniProt residue 477)
+    node_type: RESIDUE
+    grounding: UniProtKB:P13470
+    description: 'M-CSA roles: nucleofuge, nucleophile.'
+  - node_id: glu515
+    label: catalytic Glu515 (M-CSA/PDB numbering; UniProt residue 515)
+    node_type: RESIDUE
+    grounding: UniProtKB:P13470
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: asp588
+    label: catalytic Asp588 (M-CSA/PDB numbering; UniProt residue 588)
+    node_type: RESIDUE
+    grounding: UniProtKB:P13470
+    description: 'M-CSA roles: transition state stabiliser.'
+  - node_id: reactant0
+    label: (1->6)-alpha-D-glucan
+    node_type: CHEMICAL
+    grounding: CHEBI:18269
+  - node_id: reactant1
+    label: sucrose
+    node_type: CHEMICAL
+    grounding: CHEBI:17992
+  - node_id: product0
+    label: D-fructofuranose
+    node_type: CHEMICAL
+    grounding: CHEBI:37721
+  - node_id: product1
+    label: ' (1->6)-alpha-D-glucan (n+1)'
+    node_type: CHEMICAL
+    grounding: CHEBI:X00693
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp477 mounts a nucleophilic attack to the anomeric carbon of the glucosyl moiety of
+      sucrose. Glu515 protonates the glycosidic oxygen which leads to fructosyl leaving group.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The leaving fructose from the previous step is exchanged with another sucrose. Glu515  deprotonates
+      this sucrose which inturn attacks the anomeric carbon of the Asp-sucrose molecule, Asp477 departs.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Product is formed.
+  - node_id: active_site
+    label: Glucansucrases (GTF-SI) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:1002
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.80 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.80
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: Glucansucrases (GTF-SI) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.4.1.125
+  edges:
+  - subject: asp477
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp477 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1002/
+      snippet: Asp477 mounts a nucleophilic attack to the anomeric carbon of the glucosyl moiety of sucrose.
+        Glu515 protonates the glycosidic oxygen which leads to fructosyl leaving group.
+      notes: M-CSA entry 1002, mechanism 1; M-CSA cites PMID:29557467; step 1
+  - subject: glu515
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu515 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1002/
+      snippet: Asp477 mounts a nucleophilic attack to the anomeric carbon of the glucosyl moiety of sucrose.
+        Glu515 protonates the glycosidic oxygen which leads to fructosyl leaving group.
+      notes: M-CSA entry 1002, mechanism 1; M-CSA cites PMID:29557467; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1002/
+      snippet: The leaving fructose from the previous step is exchanged with another sucrose. Glu515  deprotonates
+        this sucrose which inturn attacks the anomeric carbon of the Asp-sucrose molecule, Asp477 departs.
+      notes: M-CSA entry 1002, mechanism 1; M-CSA cites PMID:29557467; step 2
+  - subject: asp477
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Asp477 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1002/
+      snippet: The leaving fructose from the previous step is exchanged with another sucrose. Glu515  deprotonates
+        this sucrose which inturn attacks the anomeric carbon of the Asp-sucrose molecule, Asp477 departs.
+      notes: M-CSA entry 1002, mechanism 1; M-CSA cites PMID:29557467; step 2
+  - subject: glu515
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu515 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1002/
+      snippet: The leaving fructose from the previous step is exchanged with another sucrose. Glu515  deprotonates
+        this sucrose which inturn attacks the anomeric carbon of the Asp-sucrose molecule, Asp477 departs.
+      notes: M-CSA entry 1002, mechanism 1; M-CSA cites PMID:29557467; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1002/
+      snippet: Product is formed.
+      notes: M-CSA entry 1002, mechanism 1; M-CSA cites PMID:29557467; step 3
+  - subject: asp477
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp477 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1002/
+      snippet: nucleofuge, nucleophile
+      notes: M-CSA entry 1002, mechanism 1; M-CSA cites PMID:29557467; M-CSA catalytic-residue roles for
+        Asp477
+  - subject: glu515
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu515 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1002/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 1002, mechanism 1; M-CSA cites PMID:29557467; M-CSA catalytic-residue roles for
+        Glu515
+  - subject: asp588
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp588 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1002/
+      snippet: transition state stabiliser
+      notes: M-CSA entry 1002, mechanism 1; M-CSA cites PMID:29557467; M-CSA catalytic-residue roles for
+        Asp588
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1002/
+      snippet: A concerted mechanism for sucrose hydrolysis in which the first event corresponds to the
+        glyosidic bond breakage assisted by Glu515, followed by the nucleophilic attack of Asp477, leading
+        to the formation of the Covalent Glycosyl Enzyme (CGE) intermediate which breaks down to give
+        the products.
+      notes: M-CSA entry 1002, mechanism 1; M-CSA cites PMID:29557467; CATH domain 3.20.20.80 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1002/
+      snippet: A concerted mechanism for sucrose hydrolysis in which the first event corresponds to the
+        glyosidic bond breakage assisted by Glu515, followed by the nucleophilic attack of Asp477, leading
+        to the formation of the Covalent Glycosyl Enzyme (CGE) intermediate which breaks down to give
+        the products.
+      notes: M-CSA entry 1002, mechanism 1; M-CSA cites PMID:29557467; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1002/
+      snippet: A concerted mechanism for sucrose hydrolysis in which the first event corresponds to the
+        glyosidic bond breakage assisted by Glu515, followed by the nucleophilic attack of Asp477, leading
+        to the formation of the Covalent Glycosyl Enzyme (CGE) intermediate which breaks down to give
+        the products.
+      notes: M-CSA entry 1002, mechanism 1; M-CSA cites PMID:29557467; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1002/
+      snippet: A concerted mechanism for sucrose hydrolysis in which the first event corresponds to the
+        glyosidic bond breakage assisted by Glu515, followed by the nucleophilic attack of Asp477, leading
+        to the formation of the Covalent Glycosyl Enzyme (CGE) intermediate which breaks down to give
+        the products.
+      notes: M-CSA entry 1002, mechanism 1; M-CSA cites PMID:29557467; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1002/
+      snippet: A concerted mechanism for sucrose hydrolysis in which the first event corresponds to the
+        glyosidic bond breakage assisted by Glu515, followed by the nucleophilic attack of Asp477, leading
+        to the formation of the Covalent Glycosyl Enzyme (CGE) intermediate which breaks down to give
+        the products.
+      notes: M-CSA entry 1002, mechanism 1; M-CSA cites PMID:29557467; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1002/
+      snippet: A concerted mechanism for sucrose hydrolysis in which the first event corresponds to the
+        glyosidic bond breakage assisted by Glu515, followed by the nucleophilic attack of Asp477, leading
+        to the formation of the Covalent Glycosyl Enzyme (CGE) intermediate which breaks down to give
+        the products.
+      notes: M-CSA entry 1002, mechanism 1; M-CSA cites PMID:29557467; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 1002;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

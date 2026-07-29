@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.24.64
 - CHEBI:60466
@@ -534,4 +534,242 @@ definitions:
       Mitochondrial processing peptidase is a metalloendopeptidase that cleaves N-terminal signal sequences of proteins produced from nuclear information, transported from the cytosol to mitochondria. Cleavage of the signal sequence occurs at a single specific site. The enzyme shows functional and structural convergent evolution of this protease family with that of thermolysin, which has a very similar active site.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of mitochondrial processing peptidase
+  description: Stepwise mechanism transcribed from M-CSA entry 657 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: his70
+    label: catalytic His70 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11914
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu73
+    label: catalytic Glu73 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11914
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: his74
+    label: catalytic His74 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11914
+    description: 'M-CSA roles: hydrogen bond donor, metal ligand.'
+  - node_id: glu143
+    label: catalytic Glu143 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11914
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: glu150
+    label: catalytic Glu150 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P11914
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: peptide zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:60466
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: alpha-amino acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:78608
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu73B deprotonates water, which attacks the carbon of the carbonyl group in a nucleophilic
+      addition. This results in coordination of the oxyanion to Zinc.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The oxyanion initiates an elimination which results in the cleavage of the peptide bond.
+      The N-terminal product then accepts a proton from Glu73B.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The N-terminal product deprotonates the C-terminal product to form kinetically favourable
+      products.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Product
+  - node_id: active_site
+    label: mitochondrial processing peptidase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:657
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.830.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.830.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: mitochondrial processing peptidase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.24.64
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/657/
+      snippet: The oxyanion initiates an elimination which results in the cleavage of the peptide bond.
+        The N-terminal product then accepts a proton from Glu73B.
+      notes: M-CSA entry 657, mechanism 1; M-CSA cites PMID:10595562, PMID:11470436, PMID:1570301, PMID:21988451,
+        PMID:6525336, PMID:7490252; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/657/
+      snippet: The N-terminal product deprotonates the C-terminal product to form kinetically favourable
+        products.
+      notes: M-CSA entry 657, mechanism 1; M-CSA cites PMID:10595562, PMID:11470436, PMID:1570301, PMID:21988451,
+        PMID:6525336, PMID:7490252; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/657/
+      snippet: Product
+      notes: M-CSA entry 657, mechanism 1; M-CSA cites PMID:10595562, PMID:11470436, PMID:1570301, PMID:21988451,
+        PMID:6525336, PMID:7490252; step 4
+  - subject: his70
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His70 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/657/
+      snippet: metal ligand
+      notes: M-CSA entry 657, mechanism 1; M-CSA cites PMID:10595562, PMID:11470436, PMID:1570301, PMID:21988451,
+        PMID:6525336, PMID:7490252; M-CSA catalytic-residue roles for His70
+  - subject: glu73
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu73 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/657/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 657, mechanism 1; M-CSA cites PMID:10595562, PMID:11470436, PMID:1570301, PMID:21988451,
+        PMID:6525336, PMID:7490252; M-CSA catalytic-residue roles for Glu73
+  - subject: his74
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His74 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/657/
+      snippet: hydrogen bond donor, metal ligand
+      notes: M-CSA entry 657, mechanism 1; M-CSA cites PMID:10595562, PMID:11470436, PMID:1570301, PMID:21988451,
+        PMID:6525336, PMID:7490252; M-CSA catalytic-residue roles for His74
+  - subject: glu143
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu143 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/657/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 657, mechanism 1; M-CSA cites PMID:10595562, PMID:11470436, PMID:1570301, PMID:21988451,
+        PMID:6525336, PMID:7490252; M-CSA catalytic-residue roles for Glu143
+  - subject: glu150
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu150 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/657/
+      snippet: metal ligand
+      notes: M-CSA entry 657, mechanism 1; M-CSA cites PMID:10595562, PMID:11470436, PMID:1570301, PMID:21988451,
+        PMID:6525336, PMID:7490252; M-CSA catalytic-residue roles for Glu150
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/657/
+      snippet: The mechanism of mitochondrial processing peptidase occurs in a thermolysin-like general-base-type
+        mechanism. The zinc ion co-ordinates water which is displaced in substrate coordination towards
+        Glu beta-73 which acts via general base catalysis to activate the water oxygen for nucleophilic
+        attack on the carbonyl carbon of the scissile bond. The zinc ion also has a role in activating
+        the water mole
+      notes: M-CSA entry 657, mechanism 1; M-CSA cites PMID:10595562, PMID:11470436, PMID:1570301, PMID:21988451,
+        PMID:6525336, PMID:7490252; CATH domain 3.30.830.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/657/
+      snippet: The mechanism of mitochondrial processing peptidase occurs in a thermolysin-like general-base-type
+        mechanism. The zinc ion co-ordinates water which is displaced in substrate coordination towards
+        Glu beta-73 which acts via general base catalysis to activate the water oxygen for nucleophilic
+        attack on the carbonyl carbon of the scissile bond. The zinc ion also has a role in activating
+        the water mole
+      notes: M-CSA entry 657, mechanism 1; M-CSA cites PMID:10595562, PMID:11470436, PMID:1570301, PMID:21988451,
+        PMID:6525336, PMID:7490252; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/657/
+      snippet: The mechanism of mitochondrial processing peptidase occurs in a thermolysin-like general-base-type
+        mechanism. The zinc ion co-ordinates water which is displaced in substrate coordination towards
+        Glu beta-73 which acts via general base catalysis to activate the water oxygen for nucleophilic
+        attack on the carbonyl carbon of the scissile bond. The zinc ion also has a role in activating
+        the water mole
+      notes: M-CSA entry 657, mechanism 1; M-CSA cites PMID:10595562, PMID:11470436, PMID:1570301, PMID:21988451,
+        PMID:6525336, PMID:7490252; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/657/
+      snippet: The mechanism of mitochondrial processing peptidase occurs in a thermolysin-like general-base-type
+        mechanism. The zinc ion co-ordinates water which is displaced in substrate coordination towards
+        Glu beta-73 which acts via general base catalysis to activate the water oxygen for nucleophilic
+        attack on the carbonyl carbon of the scissile bond. The zinc ion also has a role in activating
+        the water mole
+      notes: M-CSA entry 657, mechanism 1; M-CSA cites PMID:10595562, PMID:11470436, PMID:1570301, PMID:21988451,
+        PMID:6525336, PMID:7490252; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/657/
+      snippet: The mechanism of mitochondrial processing peptidase occurs in a thermolysin-like general-base-type
+        mechanism. The zinc ion co-ordinates water which is displaced in substrate coordination towards
+        Glu beta-73 which acts via general base catalysis to activate the water oxygen for nucleophilic
+        attack on the carbonyl carbon of the scissile bond. The zinc ion also has a role in activating
+        the water mole
+      notes: M-CSA entry 657, mechanism 1; M-CSA cites PMID:10595562, PMID:11470436, PMID:1570301, PMID:21988451,
+        PMID:6525336, PMID:7490252; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 657;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

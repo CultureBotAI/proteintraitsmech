@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.5.1.19
 - CHEBI:17154
@@ -71,4 +71,405 @@ definitions:
       Pyrazinamide (PZA) is a prodrug used in the treatment of tuberculosis. PZA is converted to the active pyrazinoic acid by the bacterial PZAase enzyme; mutations in PZAase can therefore confer PZA resistance to M. tuberculosis. The gene product of Pyrococcus horikoshii 999 (PH999) shows PZAase and nicotinamidase activity, and extensive sequence homology to M. tuberculosis PZAase.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of nicotinamidase
+  description: Stepwise mechanism transcribed from M-CSA entry 716 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: asp10
+    label: catalytic Asp10 (M-CSA/PDB numbering; UniProt residue 10)
+    node_type: RESIDUE
+    grounding: UniProtKB:O58727
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: asp52
+    label: catalytic Asp52 (M-CSA/PDB numbering; UniProt residue 52)
+    node_type: RESIDUE
+    grounding: UniProtKB:O58727
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his54
+    label: catalytic His54 (M-CSA/PDB numbering; UniProt residue 54)
+    node_type: RESIDUE
+    grounding: UniProtKB:O58727
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: ser60
+    label: catalytic Ser60 (M-CSA/PDB numbering; UniProt residue 60)
+    node_type: RESIDUE
+    grounding: UniProtKB:O58727
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his71
+    label: catalytic His71 (M-CSA/PDB numbering; UniProt residue 71)
+    node_type: RESIDUE
+    grounding: UniProtKB:O58727
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: lys94
+    label: catalytic Lys94 (M-CSA/PDB numbering; UniProt residue 94)
+    node_type: RESIDUE
+    grounding: UniProtKB:O58727
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu101
+    label: catalytic Glu101 (M-CSA/PDB numbering; UniProt residue 101)
+    node_type: RESIDUE
+    grounding: UniProtKB:O58727
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ala129
+    label: catalytic Ala129 (M-CSA/PDB numbering; UniProt residue 129)
+    node_type: RESIDUE
+    grounding: UniProtKB:O58727
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: cys133
+    label: catalytic Cys133 (M-CSA/PDB numbering; UniProt residue 133)
+    node_type: RESIDUE
+    grounding: UniProtKB:O58727
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: nicotinamide
+    node_type: CHEMICAL
+    grounding: CHEBI:17154
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: ammonium
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+  - node_id: product1
+    label: nicotinate
+    node_type: CHEMICAL
+    grounding: CHEBI:32544
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp10 deprotonates Cys133 which then nucleophilically attacks the carbon of the carbonyl
+      group of Nicotinamide.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The amine group is protonated by Asp10 which initiates an elimination from the oxyanion
+      which results in the cleavage of the amide bond an the release of ammonia.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Asp10 deprotonates water which activates it to nucleophilically attack the carbon of
+      the carbonyl group.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The oxyanion initiates an elimination which results in the cleavage of the acyl-enzyme
+      which releases Cys133 which then accepts a proton from Asp10 returning the active site to its native
+      state.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Product
+  - node_id: active_site
+    label: nicotinamidase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:716
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.850 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.850
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: nicotinamidase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.5.1.19
+  edges:
+  - subject: asp10
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp10 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/716/
+      snippet: Asp10 deprotonates Cys133 which then nucleophilically attacks the carbon of the carbonyl
+        group of Nicotinamide.
+      notes: M-CSA entry 716, mechanism 1; M-CSA cites PMID:10390238, PMID:11714269, PMID:1381445, PMID:24413890;
+        step 1
+  - subject: cys133
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys133 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/716/
+      snippet: Asp10 deprotonates Cys133 which then nucleophilically attacks the carbon of the carbonyl
+        group of Nicotinamide.
+      notes: M-CSA entry 716, mechanism 1; M-CSA cites PMID:10390238, PMID:11714269, PMID:1381445, PMID:24413890;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/716/
+      snippet: The amine group is protonated by Asp10 which initiates an elimination from the oxyanion
+        which results in the cleavage of the amide bond an the release of ammonia.
+      notes: M-CSA entry 716, mechanism 1; M-CSA cites PMID:10390238, PMID:11714269, PMID:1381445, PMID:24413890;
+        step 2
+  - subject: asp10
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Asp10 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/716/
+      snippet: The amine group is protonated by Asp10 which initiates an elimination from the oxyanion
+        which results in the cleavage of the amide bond an the release of ammonia.
+      notes: M-CSA entry 716, mechanism 1; M-CSA cites PMID:10390238, PMID:11714269, PMID:1381445, PMID:24413890;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/716/
+      snippet: Asp10 deprotonates water which activates it to nucleophilically attack the carbon of the
+        carbonyl group.
+      notes: M-CSA entry 716, mechanism 1; M-CSA cites PMID:10390238, PMID:11714269, PMID:1381445, PMID:24413890;
+        step 3
+  - subject: asp10
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Asp10 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/716/
+      snippet: Asp10 deprotonates water which activates it to nucleophilically attack the carbon of the
+        carbonyl group.
+      notes: M-CSA entry 716, mechanism 1; M-CSA cites PMID:10390238, PMID:11714269, PMID:1381445, PMID:24413890;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/716/
+      snippet: The oxyanion initiates an elimination which results in the cleavage of the acyl-enzyme
+        which releases Cys133 which then accepts a proton from Asp10 returning the active site to its
+        native state.
+      notes: M-CSA entry 716, mechanism 1; M-CSA cites PMID:10390238, PMID:11714269, PMID:1381445, PMID:24413890;
+        step 4
+  - subject: asp10
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Asp10 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/716/
+      snippet: The oxyanion initiates an elimination which results in the cleavage of the acyl-enzyme
+        which releases Cys133 which then accepts a proton from Asp10 returning the active site to its
+        native state.
+      notes: M-CSA entry 716, mechanism 1; M-CSA cites PMID:10390238, PMID:11714269, PMID:1381445, PMID:24413890;
+        step 4
+  - subject: cys133
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Cys133 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/716/
+      snippet: The oxyanion initiates an elimination which results in the cleavage of the acyl-enzyme
+        which releases Cys133 which then accepts a proton from Asp10 returning the active site to its
+        native state.
+      notes: M-CSA entry 716, mechanism 1; M-CSA cites PMID:10390238, PMID:11714269, PMID:1381445, PMID:24413890;
+        step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/716/
+      snippet: Product
+      notes: M-CSA entry 716, mechanism 1; M-CSA cites PMID:10390238, PMID:11714269, PMID:1381445, PMID:24413890;
+        step 5
+  - subject: asp10
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp10 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/716/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 716, mechanism 1; M-CSA cites PMID:10390238, PMID:11714269, PMID:1381445, PMID:24413890;
+        M-CSA catalytic-residue roles for Asp10
+  - subject: asp52
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp52 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/716/
+      snippet: metal ligand
+      notes: M-CSA entry 716, mechanism 1; M-CSA cites PMID:10390238, PMID:11714269, PMID:1381445, PMID:24413890;
+        M-CSA catalytic-residue roles for Asp52
+  - subject: his54
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His54 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/716/
+      snippet: metal ligand
+      notes: M-CSA entry 716, mechanism 1; M-CSA cites PMID:10390238, PMID:11714269, PMID:1381445, PMID:24413890;
+        M-CSA catalytic-residue roles for His54
+  - subject: ser60
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser60 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/716/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 716, mechanism 1; M-CSA cites PMID:10390238, PMID:11714269, PMID:1381445, PMID:24413890;
+        M-CSA catalytic-residue roles for Ser60
+  - subject: his71
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His71 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/716/
+      snippet: metal ligand
+      notes: M-CSA entry 716, mechanism 1; M-CSA cites PMID:10390238, PMID:11714269, PMID:1381445, PMID:24413890;
+        M-CSA catalytic-residue roles for His71
+  - subject: lys94
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys94 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/716/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 716, mechanism 1; M-CSA cites PMID:10390238, PMID:11714269, PMID:1381445, PMID:24413890;
+        M-CSA catalytic-residue roles for Lys94
+  - subject: glu101
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu101 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/716/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 716, mechanism 1; M-CSA cites PMID:10390238, PMID:11714269, PMID:1381445, PMID:24413890;
+        M-CSA catalytic-residue roles for Glu101
+  - subject: ala129
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ala129 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/716/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 716, mechanism 1; M-CSA cites PMID:10390238, PMID:11714269, PMID:1381445, PMID:24413890;
+        M-CSA catalytic-residue roles for Ala129
+  - subject: cys133
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys133 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/716/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 716, mechanism 1; M-CSA cites PMID:10390238, PMID:11714269, PMID:1381445, PMID:24413890;
+        M-CSA catalytic-residue roles for Cys133
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/716/
+      snippet: The mechanism of PH999 can be inferred by homology to other enzymes like <i>Arthrobacter
+        sp.</i> CSHase and <i>E. coli</i> YcaC. The mechanism of substrate amide hydrolysis is likely
+        to be via an acylated cysteine intermediate. Asp 10 deprotonates Cys 133, activating Cys as a
+        nucleophile. The Cys 133 thiolate attacks the amide group of pyrazinamide. The tetrahedral intermediate
+        is stabilised by an
+      notes: M-CSA entry 716, mechanism 1; M-CSA cites PMID:10390238, PMID:11714269, PMID:1381445, PMID:24413890;
+        CATH domain 3.40.50.850 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/716/
+      snippet: The mechanism of PH999 can be inferred by homology to other enzymes like <i>Arthrobacter
+        sp.</i> CSHase and <i>E. coli</i> YcaC. The mechanism of substrate amide hydrolysis is likely
+        to be via an acylated cysteine intermediate. Asp 10 deprotonates Cys 133, activating Cys as a
+        nucleophile. The Cys 133 thiolate attacks the amide group of pyrazinamide. The tetrahedral intermediate
+        is stabilised by an
+      notes: M-CSA entry 716, mechanism 1; M-CSA cites PMID:10390238, PMID:11714269, PMID:1381445, PMID:24413890;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/716/
+      snippet: The mechanism of PH999 can be inferred by homology to other enzymes like <i>Arthrobacter
+        sp.</i> CSHase and <i>E. coli</i> YcaC. The mechanism of substrate amide hydrolysis is likely
+        to be via an acylated cysteine intermediate. Asp 10 deprotonates Cys 133, activating Cys as a
+        nucleophile. The Cys 133 thiolate attacks the amide group of pyrazinamide. The tetrahedral intermediate
+        is stabilised by an
+      notes: M-CSA entry 716, mechanism 1; M-CSA cites PMID:10390238, PMID:11714269, PMID:1381445, PMID:24413890;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/716/
+      snippet: The mechanism of PH999 can be inferred by homology to other enzymes like <i>Arthrobacter
+        sp.</i> CSHase and <i>E. coli</i> YcaC. The mechanism of substrate amide hydrolysis is likely
+        to be via an acylated cysteine intermediate. Asp 10 deprotonates Cys 133, activating Cys as a
+        nucleophile. The Cys 133 thiolate attacks the amide group of pyrazinamide. The tetrahedral intermediate
+        is stabilised by an
+      notes: M-CSA entry 716, mechanism 1; M-CSA cites PMID:10390238, PMID:11714269, PMID:1381445, PMID:24413890;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/716/
+      snippet: The mechanism of PH999 can be inferred by homology to other enzymes like <i>Arthrobacter
+        sp.</i> CSHase and <i>E. coli</i> YcaC. The mechanism of substrate amide hydrolysis is likely
+        to be via an acylated cysteine intermediate. Asp 10 deprotonates Cys 133, activating Cys as a
+        nucleophile. The Cys 133 thiolate attacks the amide group of pyrazinamide. The tetrahedral intermediate
+        is stabilised by an
+      notes: M-CSA entry 716, mechanism 1; M-CSA cites PMID:10390238, PMID:11714269, PMID:1381445, PMID:24413890;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/716/
+      snippet: The mechanism of PH999 can be inferred by homology to other enzymes like <i>Arthrobacter
+        sp.</i> CSHase and <i>E. coli</i> YcaC. The mechanism of substrate amide hydrolysis is likely
+        to be via an acylated cysteine intermediate. Asp 10 deprotonates Cys 133, activating Cys as a
+        nucleophile. The Cys 133 thiolate attacks the amide group of pyrazinamide. The tetrahedral intermediate
+        is stabilised by an
+      notes: M-CSA entry 716, mechanism 1; M-CSA cites PMID:10390238, PMID:11714269, PMID:1381445, PMID:24413890;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (25 evidence-backed edges) transcribed from M-CSA entry 716;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.3.8.4
 - CHEBI:57692
@@ -412,4 +412,318 @@ definitions:
       Isovaryl-CoA dehydrogenase (IVD) belongs to an important flavoprotein family of acyl CoA dehydrogenases that catalyse the alpha,beta-dehydrogenation of their various thioester substrates. IVD is most reactive for a small, branched-chain substrate, catalysing the conversion of isovaleryl-CoA (3-methylbutyryl-CoA) into 3-methylcrotonyl-CoA as the third step of leucine catabolism. This enzyme is a tetrameric flavoprotein which contains one molecule of flavin adenine dinucleotide (FAD) per monomer. Deficiency of IVD results in isovaleric acidemia (IVA), a life-threatening disorder in which leucine catabolism is blocked and organic acids accumulate in the body.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of isovaleryl-CoA dehydrogenase
+  description: Stepwise mechanism transcribed from M-CSA entry 68 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +32).
+  nodes:
+  - node_id: met135
+    label: catalytic Met135 (M-CSA/PDB numbering; UniProt residue 167)
+    node_type: RESIDUE
+    grounding: UniProtKB:P26440
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: ser136
+    label: catalytic Ser136 (M-CSA/PDB numbering; UniProt residue 168)
+    node_type: RESIDUE
+    grounding: UniProtKB:P26440
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: glu254
+    label: catalytic Glu254 (M-CSA/PDB numbering; UniProt residue 286)
+    node_type: RESIDUE
+    grounding: UniProtKB:P26440
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor,
+      steric role.'
+  - node_id: arg387
+    label: catalytic Arg387 (M-CSA/PDB numbering; UniProt residue 419)
+    node_type: RESIDUE
+    grounding: UniProtKB:P26440
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: FAD(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57692
+  - node_id: reactant1
+    label: isovaleryl-CoA(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57345
+  - node_id: reactant2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product0
+    label: 3-methylbut-2-enoyl-CoA(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57344
+  - node_id: product1
+    label: FADH2(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58307
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu254 deprotonates C2 of the 3-methylbutanoyl-CoA which initiates the elimination of
+      a hydride ion from the C3, forming 3-methylbut-2-enoyl-CoA and reduced FAD.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The first single electron transfer from FAD to ETF
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The second single electron transfer from FAD to ETF, which is facilitated by the abstraction
+      of a proton from the FAD by an unidentified base (shown here as a hydroxide ion).
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Water deprotonates Glu254 in an inferred return step.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: isovaleryl-CoA dehydrogenase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:68
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.40.110.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.40.110.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: isovaleryl-CoA dehydrogenase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.3.8.4
+  edges:
+  - subject: glu254
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu254 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/68/
+      snippet: Glu254 deprotonates C2 of the 3-methylbutanoyl-CoA which initiates the elimination of a
+        hydride ion from the C3, forming 3-methylbut-2-enoyl-CoA and reduced FAD.
+      notes: M-CSA entry 68, mechanism 1; M-CSA cites PMID:11592819, PMID:14728676, PMID:15337167, PMID:15574432,
+        PMID:16376132, PMID:17027310, PMID:17576084, PMID:22004070, PMID:22350545, PMID:23587913, PMID:25220015,
+        PMID:25450250, PMID:7601336, PMID:9201918, PMID:9214289, PMID:9665741; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/68/
+      snippet: The first single electron transfer from FAD to ETF
+      notes: M-CSA entry 68, mechanism 1; M-CSA cites PMID:11592819, PMID:14728676, PMID:15337167, PMID:15574432,
+        PMID:16376132, PMID:17027310, PMID:17576084, PMID:22004070, PMID:22350545, PMID:23587913, PMID:25220015,
+        PMID:25450250, PMID:7601336, PMID:9201918, PMID:9214289, PMID:9665741; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/68/
+      snippet: The second single electron transfer from FAD to ETF, which is facilitated by the abstraction
+        of a proton from the FAD by an unidentified base (shown here as a hydroxide ion).
+      notes: M-CSA entry 68, mechanism 1; M-CSA cites PMID:11592819, PMID:14728676, PMID:15337167, PMID:15574432,
+        PMID:16376132, PMID:17027310, PMID:17576084, PMID:22004070, PMID:22350545, PMID:23587913, PMID:25220015,
+        PMID:25450250, PMID:7601336, PMID:9201918, PMID:9214289, PMID:9665741; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/68/
+      snippet: Water deprotonates Glu254 in an inferred return step.
+      notes: M-CSA entry 68, mechanism 1; M-CSA cites PMID:11592819, PMID:14728676, PMID:15337167, PMID:15574432,
+        PMID:16376132, PMID:17027310, PMID:17576084, PMID:22004070, PMID:22350545, PMID:23587913, PMID:25220015,
+        PMID:25450250, PMID:7601336, PMID:9201918, PMID:9214289, PMID:9665741; step 4
+  - subject: glu254
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Glu254 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/68/
+      snippet: Water deprotonates Glu254 in an inferred return step.
+      notes: M-CSA entry 68, mechanism 1; M-CSA cites PMID:11592819, PMID:14728676, PMID:15337167, PMID:15574432,
+        PMID:16376132, PMID:17027310, PMID:17576084, PMID:22004070, PMID:22350545, PMID:23587913, PMID:25220015,
+        PMID:25450250, PMID:7601336, PMID:9201918, PMID:9214289, PMID:9665741; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/68/
+      snippet: Products.
+      notes: M-CSA entry 68, mechanism 1; M-CSA cites PMID:11592819, PMID:14728676, PMID:15337167, PMID:15574432,
+        PMID:16376132, PMID:17027310, PMID:17576084, PMID:22004070, PMID:22350545, PMID:23587913, PMID:25220015,
+        PMID:25450250, PMID:7601336, PMID:9201918, PMID:9214289, PMID:9665741; step 5
+  - subject: met135
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Met135 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/68/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 68, mechanism 1; M-CSA cites PMID:11592819, PMID:14728676, PMID:15337167, PMID:15574432,
+        PMID:16376132, PMID:17027310, PMID:17576084, PMID:22004070, PMID:22350545, PMID:23587913, PMID:25220015,
+        PMID:25450250, PMID:7601336, PMID:9201918, PMID:9214289, PMID:9665741; M-CSA catalytic-residue
+        roles for Met135
+  - subject: ser136
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser136 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/68/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 68, mechanism 1; M-CSA cites PMID:11592819, PMID:14728676, PMID:15337167, PMID:15574432,
+        PMID:16376132, PMID:17027310, PMID:17576084, PMID:22004070, PMID:22350545, PMID:23587913, PMID:25220015,
+        PMID:25450250, PMID:7601336, PMID:9201918, PMID:9214289, PMID:9665741; M-CSA catalytic-residue
+        roles for Ser136
+  - subject: glu254
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu254 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/68/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor, steric role
+      notes: M-CSA entry 68, mechanism 1; M-CSA cites PMID:11592819, PMID:14728676, PMID:15337167, PMID:15574432,
+        PMID:16376132, PMID:17027310, PMID:17576084, PMID:22004070, PMID:22350545, PMID:23587913, PMID:25220015,
+        PMID:25450250, PMID:7601336, PMID:9201918, PMID:9214289, PMID:9665741; M-CSA catalytic-residue
+        roles for Glu254
+  - subject: arg387
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg387 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/68/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 68, mechanism 1; M-CSA cites PMID:11592819, PMID:14728676, PMID:15337167, PMID:15574432,
+        PMID:16376132, PMID:17027310, PMID:17576084, PMID:22004070, PMID:22350545, PMID:23587913, PMID:25220015,
+        PMID:25450250, PMID:7601336, PMID:9201918, PMID:9214289, PMID:9665741; M-CSA catalytic-residue
+        roles for Arg387
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/68/
+      snippet: The dehydrogenation reaction is initiated as Glu254 acts as a catalytic base abstracting
+        the R -hydrogen of substrate in the form of a proton, with a concomitant transfer of the alpha
+        -hydrogen from substrate as a hydride to the N(5) position of the isoalloxazine ring of the FAD,
+        forming a trans  double bond between the C(alpha)  and C(beta)  of the fatty acyl-CoA substrate.
+        Ultimately, reducing e
+      notes: M-CSA entry 68, mechanism 1; M-CSA cites PMID:11592819, PMID:14728676, PMID:15337167, PMID:15574432,
+        PMID:16376132, PMID:17027310, PMID:17576084, PMID:22004070, PMID:22350545, PMID:23587913, PMID:25220015,
+        PMID:25450250, PMID:7601336, PMID:9201918, PMID:9214289, PMID:9665741; CATH domain 2.40.110.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/68/
+      snippet: The dehydrogenation reaction is initiated as Glu254 acts as a catalytic base abstracting
+        the R -hydrogen of substrate in the form of a proton, with a concomitant transfer of the alpha
+        -hydrogen from substrate as a hydride to the N(5) position of the isoalloxazine ring of the FAD,
+        forming a trans  double bond between the C(alpha)  and C(beta)  of the fatty acyl-CoA substrate.
+        Ultimately, reducing e
+      notes: M-CSA entry 68, mechanism 1; M-CSA cites PMID:11592819, PMID:14728676, PMID:15337167, PMID:15574432,
+        PMID:16376132, PMID:17027310, PMID:17576084, PMID:22004070, PMID:22350545, PMID:23587913, PMID:25220015,
+        PMID:25450250, PMID:7601336, PMID:9201918, PMID:9214289, PMID:9665741; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/68/
+      snippet: The dehydrogenation reaction is initiated as Glu254 acts as a catalytic base abstracting
+        the R -hydrogen of substrate in the form of a proton, with a concomitant transfer of the alpha
+        -hydrogen from substrate as a hydride to the N(5) position of the isoalloxazine ring of the FAD,
+        forming a trans  double bond between the C(alpha)  and C(beta)  of the fatty acyl-CoA substrate.
+        Ultimately, reducing e
+      notes: M-CSA entry 68, mechanism 1; M-CSA cites PMID:11592819, PMID:14728676, PMID:15337167, PMID:15574432,
+        PMID:16376132, PMID:17027310, PMID:17576084, PMID:22004070, PMID:22350545, PMID:23587913, PMID:25220015,
+        PMID:25450250, PMID:7601336, PMID:9201918, PMID:9214289, PMID:9665741; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/68/
+      snippet: The dehydrogenation reaction is initiated as Glu254 acts as a catalytic base abstracting
+        the R -hydrogen of substrate in the form of a proton, with a concomitant transfer of the alpha
+        -hydrogen from substrate as a hydride to the N(5) position of the isoalloxazine ring of the FAD,
+        forming a trans  double bond between the C(alpha)  and C(beta)  of the fatty acyl-CoA substrate.
+        Ultimately, reducing e
+      notes: M-CSA entry 68, mechanism 1; M-CSA cites PMID:11592819, PMID:14728676, PMID:15337167, PMID:15574432,
+        PMID:16376132, PMID:17027310, PMID:17576084, PMID:22004070, PMID:22350545, PMID:23587913, PMID:25220015,
+        PMID:25450250, PMID:7601336, PMID:9201918, PMID:9214289, PMID:9665741; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/68/
+      snippet: The dehydrogenation reaction is initiated as Glu254 acts as a catalytic base abstracting
+        the R -hydrogen of substrate in the form of a proton, with a concomitant transfer of the alpha
+        -hydrogen from substrate as a hydride to the N(5) position of the isoalloxazine ring of the FAD,
+        forming a trans  double bond between the C(alpha)  and C(beta)  of the fatty acyl-CoA substrate.
+        Ultimately, reducing e
+      notes: M-CSA entry 68, mechanism 1; M-CSA cites PMID:11592819, PMID:14728676, PMID:15337167, PMID:15574432,
+        PMID:16376132, PMID:17027310, PMID:17576084, PMID:22004070, PMID:22350545, PMID:23587913, PMID:25220015,
+        PMID:25450250, PMID:7601336, PMID:9201918, PMID:9214289, PMID:9665741; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/68/
+      snippet: The dehydrogenation reaction is initiated as Glu254 acts as a catalytic base abstracting
+        the R -hydrogen of substrate in the form of a proton, with a concomitant transfer of the alpha
+        -hydrogen from substrate as a hydride to the N(5) position of the isoalloxazine ring of the FAD,
+        forming a trans  double bond between the C(alpha)  and C(beta)  of the fatty acyl-CoA substrate.
+        Ultimately, reducing e
+      notes: M-CSA entry 68, mechanism 1; M-CSA cites PMID:11592819, PMID:14728676, PMID:15337167, PMID:15574432,
+        PMID:16376132, PMID:17027310, PMID:17576084, PMID:22004070, PMID:22350545, PMID:23587913, PMID:25220015,
+        PMID:25450250, PMID:7601336, PMID:9201918, PMID:9214289, PMID:9665741; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/68/
+      snippet: The dehydrogenation reaction is initiated as Glu254 acts as a catalytic base abstracting
+        the R -hydrogen of substrate in the form of a proton, with a concomitant transfer of the alpha
+        -hydrogen from substrate as a hydride to the N(5) position of the isoalloxazine ring of the FAD,
+        forming a trans  double bond between the C(alpha)  and C(beta)  of the fatty acyl-CoA substrate.
+        Ultimately, reducing e
+      notes: M-CSA entry 68, mechanism 1; M-CSA cites PMID:11592819, PMID:14728676, PMID:15337167, PMID:15574432,
+        PMID:16376132, PMID:17027310, PMID:17576084, PMID:22004070, PMID:22350545, PMID:23587913, PMID:25220015,
+        PMID:25450250, PMID:7601336, PMID:9201918, PMID:9214289, PMID:9665741; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (17 evidence-backed edges) transcribed from M-CSA entry 68;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

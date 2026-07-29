@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.3.1.29
 - CHEBI:15428
@@ -245,4 +245,391 @@ definitions:
       Threonine is degraded into glycine and the acetyl group in a pathway common to prokaryotic and eukaryotic cells. The pathway is two steps long; the first step is the oxidation of the hydroxy group of threonine to create 2-amino-3-ketobutyrate by L-threonine dehydrogenase. The second step is catalysed by 2-amino-3-ketobutyrate CoA ligase (KBL); this is a PLP-dependent acetyltransferase, transferring the newly formed acetyl group of the substrate to Coenzyme A to give glycine and acetyl-CoA. The two enzymes needed for the pathway form a complex; this is because the aminoketobutyrate intermediate (substrate for KBL) spontaneously decarboxylates in aqueous solution.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of glycine C-acetyltransferase
+  description: Stepwise mechanism transcribed from M-CSA entry 762 (9 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: ser185
+    label: catalytic Ser185 (M-CSA/PDB numbering; UniProt residue 185)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AB77
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: his213
+    label: catalytic His213 (M-CSA/PDB numbering; UniProt residue 213)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AB77
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: lys244
+    label: catalytic Lys244 (M-CSA/PDB numbering; UniProt residue 244)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AB77
+    description: 'M-CSA roles: covalently attached, electron pair acceptor, electron pair donor, electrostatic
+      stabiliser, hydrogen bond acceptor, hydrogen bond donor, nucleofuge, nucleophile, proton acceptor,
+      proton donor.'
+  - node_id: reactant0
+    label: coenzyme A(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+  - node_id: reactant1
+    label: L-2-amino-3-oxobutanoic acid
+    node_type: CHEMICAL
+    grounding: CHEBI:40673
+  - node_id: product0
+    label: glycine
+    node_type: CHEMICAL
+    grounding: CHEBI:15428
+  - node_id: product1
+    label: acetyl-CoA(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His213 acts as an acid catalyst for the transaldimation reaction. The amine of the substrate
+      L-2-amino-3-oxobutanoic acid attacks the PLP cofactor in a nucleophilic addition and the bound Lys244
+      deprotonates the newly attached amine.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: His213 accepts a proton from the secondary amine that results from the initial attack
+      which also initiates an elimination of the covalently bound lysine, resulting in free PLP and lysine
+      in a neutral state.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: CoA thiol group attacks PLP-substrate to form a tetrahedral intermediate in which Lys244
+      removes the excess proton. Ser185 stabilises oxyanion intermediate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Unimolecular elimination to form acetyl-CoA , which is released and also a quinoid intermediate,
+      PLP acts an electron sink.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Lys244 protonates the quinoid intermediate, PLP feeds an electron pair back to form the
+      glycine external aldimine.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: In the reverse reaction, this is the first step of the His213 catalysed Lys244 displacing
+      the product glycine.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: Unimolecular elimination to release the product glycine.
+  - node_id: step8
+    label: mechanism step 8
+    node_type: STATE
+    description: Proton transfer from PLP to His213 to regenerate active site.
+  - node_id: step9
+    label: mechanism step 9
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: glycine C-acetyltransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:762
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.640.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.640.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: glycine C-acetyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.3.1.29
+  edges:
+  - subject: his213
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His213 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/762/
+      snippet: His213 acts as an acid catalyst for the transaldimation reaction. The amine of the substrate
+        L-2-amino-3-oxobutanoic acid attacks the PLP cofactor in a nucleophilic addition and the bound
+        Lys244 deprotonates the newly attached amine.
+      notes: M-CSA entry 762, mechanism 1; M-CSA cites PMID:11318637, PMID:21182990; step 1
+  - subject: lys244
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys244 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/762/
+      snippet: His213 acts as an acid catalyst for the transaldimation reaction. The amine of the substrate
+        L-2-amino-3-oxobutanoic acid attacks the PLP cofactor in a nucleophilic addition and the bound
+        Lys244 deprotonates the newly attached amine.
+      notes: M-CSA entry 762, mechanism 1; M-CSA cites PMID:11318637, PMID:21182990; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/762/
+      snippet: His213 accepts a proton from the secondary amine that results from the initial attack which
+        also initiates an elimination of the covalently bound lysine, resulting in free PLP and lysine
+        in a neutral state.
+      notes: M-CSA entry 762, mechanism 1; M-CSA cites PMID:11318637, PMID:21182990; step 2
+  - subject: his213
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His213 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/762/
+      snippet: His213 accepts a proton from the secondary amine that results from the initial attack which
+        also initiates an elimination of the covalently bound lysine, resulting in free PLP and lysine
+        in a neutral state.
+      notes: M-CSA entry 762, mechanism 1; M-CSA cites PMID:11318637, PMID:21182990; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/762/
+      snippet: CoA thiol group attacks PLP-substrate to form a tetrahedral intermediate in which Lys244
+        removes the excess proton. Ser185 stabilises oxyanion intermediate.
+      notes: M-CSA entry 762, mechanism 1; M-CSA cites PMID:11318637, PMID:21182990; step 3
+  - subject: ser185
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Ser185 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/762/
+      snippet: CoA thiol group attacks PLP-substrate to form a tetrahedral intermediate in which Lys244
+        removes the excess proton. Ser185 stabilises oxyanion intermediate.
+      notes: M-CSA entry 762, mechanism 1; M-CSA cites PMID:11318637, PMID:21182990; step 3
+  - subject: lys244
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Lys244 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/762/
+      snippet: CoA thiol group attacks PLP-substrate to form a tetrahedral intermediate in which Lys244
+        removes the excess proton. Ser185 stabilises oxyanion intermediate.
+      notes: M-CSA entry 762, mechanism 1; M-CSA cites PMID:11318637, PMID:21182990; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/762/
+      snippet: Unimolecular elimination to form acetyl-CoA , which is released and also a quinoid intermediate,
+        PLP acts an electron sink.
+      notes: M-CSA entry 762, mechanism 1; M-CSA cites PMID:11318637, PMID:21182990; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/762/
+      snippet: Lys244 protonates the quinoid intermediate, PLP feeds an electron pair back to form the
+        glycine external aldimine.
+      notes: M-CSA entry 762, mechanism 1; M-CSA cites PMID:11318637, PMID:21182990; step 5
+  - subject: lys244
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Lys244 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/762/
+      snippet: Lys244 protonates the quinoid intermediate, PLP feeds an electron pair back to form the
+        glycine external aldimine.
+      notes: M-CSA entry 762, mechanism 1; M-CSA cites PMID:11318637, PMID:21182990; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/762/
+      snippet: In the reverse reaction, this is the first step of the His213 catalysed Lys244 displacing
+        the product glycine.
+      notes: M-CSA entry 762, mechanism 1; M-CSA cites PMID:11318637, PMID:21182990; step 6
+  - subject: his213
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: His213 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/762/
+      snippet: In the reverse reaction, this is the first step of the His213 catalysed Lys244 displacing
+        the product glycine.
+      notes: M-CSA entry 762, mechanism 1; M-CSA cites PMID:11318637, PMID:21182990; step 6
+  - subject: lys244
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: Lys244 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/762/
+      snippet: In the reverse reaction, this is the first step of the His213 catalysed Lys244 displacing
+        the product glycine.
+      notes: M-CSA entry 762, mechanism 1; M-CSA cites PMID:11318637, PMID:21182990; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/762/
+      snippet: Unimolecular elimination to release the product glycine.
+      notes: M-CSA entry 762, mechanism 1; M-CSA cites PMID:11318637, PMID:21182990; step 7
+  - subject: step7
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step8
+    description: Step 7 leads to step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/762/
+      snippet: Proton transfer from PLP to His213 to regenerate active site.
+      notes: M-CSA entry 762, mechanism 1; M-CSA cites PMID:11318637, PMID:21182990; step 8
+  - subject: his213
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step8
+    description: His213 acts in step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/762/
+      snippet: Proton transfer from PLP to His213 to regenerate active site.
+      notes: M-CSA entry 762, mechanism 1; M-CSA cites PMID:11318637, PMID:21182990; step 8
+  - subject: step8
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step9
+    description: Step 8 leads to step 9.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/762/
+      snippet: Products.
+      notes: M-CSA entry 762, mechanism 1; M-CSA cites PMID:11318637, PMID:21182990; step 9
+  - subject: ser185
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser185 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/762/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 762, mechanism 1; M-CSA cites PMID:11318637, PMID:21182990; M-CSA catalytic-residue
+        roles for Ser185
+  - subject: his213
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His213 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/762/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 762, mechanism 1; M-CSA cites PMID:11318637, PMID:21182990; M-CSA catalytic-residue
+        roles for His213
+  - subject: lys244
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys244 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/762/
+      snippet: covalently attached, electron pair acceptor, electron pair donor, electrostatic stabiliser,
+        hydrogen bond acceptor, hydrogen bond donor, nucleofuge, nucleophile, proton acceptor, proton
+        donor
+      notes: M-CSA entry 762, mechanism 1; M-CSA cites PMID:11318637, PMID:21182990; M-CSA catalytic-residue
+        roles for Lys244
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/762/
+      snippet: Lys 244 has a Schiff base linkage with the PLP cofactor. It is displaced by the amino acid
+        substrate, in the usual fashion to give an external aldimine (PLP and threonine with a Schiff
+        base linkage). In these steps His 213 acts as a general acid to the phenolic oxygen of PLP (with
+        the phenolic proton being transferred to Lys 244), and a general base to the amino group of the
+        joining threonine.  Th
+      notes: M-CSA entry 762, mechanism 1; M-CSA cites PMID:11318637, PMID:21182990; CATH domain 3.40.640.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/762/
+      snippet: Lys 244 has a Schiff base linkage with the PLP cofactor. It is displaced by the amino acid
+        substrate, in the usual fashion to give an external aldimine (PLP and threonine with a Schiff
+        base linkage). In these steps His 213 acts as a general acid to the phenolic oxygen of PLP (with
+        the phenolic proton being transferred to Lys 244), and a general base to the amino group of the
+        joining threonine.  Th
+      notes: M-CSA entry 762, mechanism 1; M-CSA cites PMID:11318637, PMID:21182990; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/762/
+      snippet: Lys 244 has a Schiff base linkage with the PLP cofactor. It is displaced by the amino acid
+        substrate, in the usual fashion to give an external aldimine (PLP and threonine with a Schiff
+        base linkage). In these steps His 213 acts as a general acid to the phenolic oxygen of PLP (with
+        the phenolic proton being transferred to Lys 244), and a general base to the amino group of the
+        joining threonine.  Th
+      notes: M-CSA entry 762, mechanism 1; M-CSA cites PMID:11318637, PMID:21182990; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/762/
+      snippet: Lys 244 has a Schiff base linkage with the PLP cofactor. It is displaced by the amino acid
+        substrate, in the usual fashion to give an external aldimine (PLP and threonine with a Schiff
+        base linkage). In these steps His 213 acts as a general acid to the phenolic oxygen of PLP (with
+        the phenolic proton being transferred to Lys 244), and a general base to the amino group of the
+        joining threonine.  Th
+      notes: M-CSA entry 762, mechanism 1; M-CSA cites PMID:11318637, PMID:21182990; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/762/
+      snippet: Lys 244 has a Schiff base linkage with the PLP cofactor. It is displaced by the amino acid
+        substrate, in the usual fashion to give an external aldimine (PLP and threonine with a Schiff
+        base linkage). In these steps His 213 acts as a general acid to the phenolic oxygen of PLP (with
+        the phenolic proton being transferred to Lys 244), and a general base to the amino group of the
+        joining threonine.  Th
+      notes: M-CSA entry 762, mechanism 1; M-CSA cites PMID:11318637, PMID:21182990; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/762/
+      snippet: Lys 244 has a Schiff base linkage with the PLP cofactor. It is displaced by the amino acid
+        substrate, in the usual fashion to give an external aldimine (PLP and threonine with a Schiff
+        base linkage). In these steps His 213 acts as a general acid to the phenolic oxygen of PLP (with
+        the phenolic proton being transferred to Lys 244), and a general base to the amino group of the
+        joining threonine.  Th
+      notes: M-CSA entry 762, mechanism 1; M-CSA cites PMID:11318637, PMID:21182990; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (26 evidence-backed edges) transcribed from M-CSA entry 762;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

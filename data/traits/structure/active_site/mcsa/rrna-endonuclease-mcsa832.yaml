@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.27.10
 - CHEBI:15377
@@ -184,4 +184,293 @@ definitions:
       Alpha-sarcin is an extracellular cytotoxic protein produced by the mold Aspergillus giganteus. It is a specific ribonuclease which inhibits protein synthesis by cleaving a specific phosphodiester bond in the highly conserved sarcin-ricin loop of the 28S rRNA. The enzyme is a member of a distinctive family of fungal ribonucleases known as ribotoxins, which are produced by different Aspergillus species. The ribotoxins show high sequence homology to each other and are also related to the RNAse T1 subfamily of microbial ribonucleases.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of rRNA endonuclease
+  description: Stepwise mechanism transcribed from M-CSA entry 832 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +27).
+  nodes:
+  - node_id: his50
+    label: catalytic His50 (M-CSA/PDB numbering; UniProt residue 77)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00655
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu96
+    label: catalytic Glu96 (M-CSA/PDB numbering; UniProt residue 123)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00655
+    description: 'M-CSA roles: increase nucleophilicity, promote heterolysis, proton acceptor, proton
+      donor.'
+  - node_id: his137
+    label: catalytic His137 (M-CSA/PDB numbering; UniProt residue 164)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00655
+    description: 'M-CSA roles: increase nucleophilicity, promote heterolysis, proton acceptor, proton
+      donor.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: poly[(GA)]
+    node_type: CHEMICAL
+    grounding: CHEBI:137464
+  - node_id: product0
+    label: GMP 3'-end residue
+    node_type: CHEMICAL
+    grounding: CHEBI:53114
+  - node_id: product1
+    label: AMP 5'-end residue
+    node_type: CHEMICAL
+    grounding: CHEBI:53098
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu96 deprotonates the 2' hydroxyl group this promotes its nucleophilic attack on the
+      phosphate group forming a cyclic intermediate. His137 protonates the the 5' hydroxyl leaving group
+      promoting the cleavage.This SN2 reaction proceeds via a penta-coordinate transition state stabilized
+      by His50.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: His137 now acting as a base deprotonates a water molecule allowing it to perform a nucleophillic
+      attack on the phosphate group. This leads to the cleavage of the 2' hydroxyl- phosphate bond upon
+      protonation by Glu96.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Product.
+  - node_id: active_site
+    label: rRNA endonuclease catalytic site
+    node_type: MOTIF
+    grounding: MCSA:832
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.10.450.30 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.10.450.30
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: rRNA endonuclease activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.27.10
+  edges:
+  - subject: his50
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His50 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/832/
+      snippet: Glu96 deprotonates the 2' hydroxyl group this promotes its nucleophilic attack on the phosphate
+        group forming a cyclic intermediate. His137 protonates the the 5' hydroxyl leaving group promoting
+        the cleavage.This SN2 reaction proceeds via a penta-coordinate transition state stabilized by
+        His50.
+      notes: M-CSA entry 832, mechanism 1; M-CSA cites PMID:10591106, PMID:10843858, PMID:8980143, PMID:9580156;
+        step 1
+  - subject: glu96
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu96 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/832/
+      snippet: Glu96 deprotonates the 2' hydroxyl group this promotes its nucleophilic attack on the phosphate
+        group forming a cyclic intermediate. His137 protonates the the 5' hydroxyl leaving group promoting
+        the cleavage.This SN2 reaction proceeds via a penta-coordinate transition state stabilized by
+        His50.
+      notes: M-CSA entry 832, mechanism 1; M-CSA cites PMID:10591106, PMID:10843858, PMID:8980143, PMID:9580156;
+        step 1
+  - subject: his137
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His137 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/832/
+      snippet: Glu96 deprotonates the 2' hydroxyl group this promotes its nucleophilic attack on the phosphate
+        group forming a cyclic intermediate. His137 protonates the the 5' hydroxyl leaving group promoting
+        the cleavage.This SN2 reaction proceeds via a penta-coordinate transition state stabilized by
+        His50.
+      notes: M-CSA entry 832, mechanism 1; M-CSA cites PMID:10591106, PMID:10843858, PMID:8980143, PMID:9580156;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/832/
+      snippet: His137 now acting as a base deprotonates a water molecule allowing it to perform a nucleophillic
+        attack on the phosphate group. This leads to the cleavage of the 2' hydroxyl- phosphate bond upon
+        protonation by Glu96.
+      notes: M-CSA entry 832, mechanism 1; M-CSA cites PMID:10591106, PMID:10843858, PMID:8980143, PMID:9580156;
+        step 2
+  - subject: glu96
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu96 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/832/
+      snippet: His137 now acting as a base deprotonates a water molecule allowing it to perform a nucleophillic
+        attack on the phosphate group. This leads to the cleavage of the 2' hydroxyl- phosphate bond upon
+        protonation by Glu96.
+      notes: M-CSA entry 832, mechanism 1; M-CSA cites PMID:10591106, PMID:10843858, PMID:8980143, PMID:9580156;
+        step 2
+  - subject: his137
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His137 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/832/
+      snippet: His137 now acting as a base deprotonates a water molecule allowing it to perform a nucleophillic
+        attack on the phosphate group. This leads to the cleavage of the 2' hydroxyl- phosphate bond upon
+        protonation by Glu96.
+      notes: M-CSA entry 832, mechanism 1; M-CSA cites PMID:10591106, PMID:10843858, PMID:8980143, PMID:9580156;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/832/
+      snippet: Product.
+      notes: M-CSA entry 832, mechanism 1; M-CSA cites PMID:10591106, PMID:10843858, PMID:8980143, PMID:9580156;
+        step 3
+  - subject: his50
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His50 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/832/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 832, mechanism 1; M-CSA cites PMID:10591106, PMID:10843858, PMID:8980143, PMID:9580156;
+        M-CSA catalytic-residue roles for His50
+  - subject: glu96
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu96 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/832/
+      snippet: increase nucleophilicity, promote heterolysis, proton acceptor, proton donor
+      notes: M-CSA entry 832, mechanism 1; M-CSA cites PMID:10591106, PMID:10843858, PMID:8980143, PMID:9580156;
+        M-CSA catalytic-residue roles for Glu96
+  - subject: his137
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His137 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/832/
+      snippet: increase nucleophilicity, promote heterolysis, proton acceptor, proton donor
+      notes: M-CSA entry 832, mechanism 1; M-CSA cites PMID:10591106, PMID:10843858, PMID:8980143, PMID:9580156;
+        M-CSA catalytic-residue roles for His137
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/832/
+      snippet: Alpha-sarcin is a cyclizing RNAse. Deprotonation of the 2' OH group by Glu 96 allows this
+        group to attack the 3' phosphate. The 5' oxygen of the departing nucleotide is protonated by His
+        137. Subsequent hydrolysis of the produced 2',3'-cyclic phosphate completes the reaction to give
+        the corresponding 3'-mononucleotide.
+      notes: M-CSA entry 832, mechanism 1; M-CSA cites PMID:10591106, PMID:10843858, PMID:8980143, PMID:9580156;
+        CATH domain 3.10.450.30 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/832/
+      snippet: Alpha-sarcin is a cyclizing RNAse. Deprotonation of the 2' OH group by Glu 96 allows this
+        group to attack the 3' phosphate. The 5' oxygen of the departing nucleotide is protonated by His
+        137. Subsequent hydrolysis of the produced 2',3'-cyclic phosphate completes the reaction to give
+        the corresponding 3'-mononucleotide.
+      notes: M-CSA entry 832, mechanism 1; M-CSA cites PMID:10591106, PMID:10843858, PMID:8980143, PMID:9580156;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/832/
+      snippet: Alpha-sarcin is a cyclizing RNAse. Deprotonation of the 2' OH group by Glu 96 allows this
+        group to attack the 3' phosphate. The 5' oxygen of the departing nucleotide is protonated by His
+        137. Subsequent hydrolysis of the produced 2',3'-cyclic phosphate completes the reaction to give
+        the corresponding 3'-mononucleotide.
+      notes: M-CSA entry 832, mechanism 1; M-CSA cites PMID:10591106, PMID:10843858, PMID:8980143, PMID:9580156;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/832/
+      snippet: Alpha-sarcin is a cyclizing RNAse. Deprotonation of the 2' OH group by Glu 96 allows this
+        group to attack the 3' phosphate. The 5' oxygen of the departing nucleotide is protonated by His
+        137. Subsequent hydrolysis of the produced 2',3'-cyclic phosphate completes the reaction to give
+        the corresponding 3'-mononucleotide.
+      notes: M-CSA entry 832, mechanism 1; M-CSA cites PMID:10591106, PMID:10843858, PMID:8980143, PMID:9580156;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/832/
+      snippet: Alpha-sarcin is a cyclizing RNAse. Deprotonation of the 2' OH group by Glu 96 allows this
+        group to attack the 3' phosphate. The 5' oxygen of the departing nucleotide is protonated by His
+        137. Subsequent hydrolysis of the produced 2',3'-cyclic phosphate completes the reaction to give
+        the corresponding 3'-mononucleotide.
+      notes: M-CSA entry 832, mechanism 1; M-CSA cites PMID:10591106, PMID:10843858, PMID:8980143, PMID:9580156;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/832/
+      snippet: Alpha-sarcin is a cyclizing RNAse. Deprotonation of the 2' OH group by Glu 96 allows this
+        group to attack the 3' phosphate. The 5' oxygen of the departing nucleotide is protonated by His
+        137. Subsequent hydrolysis of the produced 2',3'-cyclic phosphate completes the reaction to give
+        the corresponding 3'-mononucleotide.
+      notes: M-CSA entry 832, mechanism 1; M-CSA cites PMID:10591106, PMID:10843858, PMID:8980143, PMID:9580156;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/832/
+      snippet: Alpha-sarcin is a cyclizing RNAse. Deprotonation of the 2' OH group by Glu 96 allows this
+        group to attack the 3' phosphate. The 5' oxygen of the departing nucleotide is protonated by His
+        137. Subsequent hydrolysis of the produced 2',3'-cyclic phosphate completes the reaction to give
+        the corresponding 3'-mononucleotide.
+      notes: M-CSA entry 832, mechanism 1; M-CSA cites PMID:10591106, PMID:10843858, PMID:8980143, PMID:9580156;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (17 evidence-backed edges) transcribed from M-CSA entry 832;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.3.2.-
 - CHEBI:15722
@@ -150,4 +150,402 @@ definitions:
       Protein splicing is a post-translational process associated with several proteins from yeast, eubacteriae and the archae. Extein ligation differentiates protein splicing from other forms of self proteolysis such as the autocleavage function of glycosylasparaginase. The first intein to be discovered was the Saccharomyces cerevisiae VMA intein found to interrupt the 69,000 Mr catalytic subunit of vaculor H+-ATPase. The GyrA intein is 198 residues in length and lacks the normal endonuclease activity.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of GyrA intein (Class 1 intein)
+  description: Stepwise mechanism transcribed from M-CSA entry 744 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: ser1
+    label: catalytic Ser1 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P72065
+    description: 'M-CSA roles: nucleophile, proton acceptor, proton donor.'
+  - node_id: ser53
+    label: catalytic Ser53 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P72065
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: thr72
+    label: catalytic Thr72 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P72065
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asn74
+    label: catalytic Asn74 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P72065
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his75
+    label: catalytic His75 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P72065
+    description: 'M-CSA roles: electrostatic stabiliser, proton donor.'
+  - node_id: val182
+    label: catalytic Val182 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P72065
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his187
+    label: catalytic His187 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P72065
+    description: 'M-CSA roles: activator, proton acceptor.'
+  - node_id: ser196
+    label: catalytic Ser196 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P72065
+    description: 'M-CSA roles: activator, electrostatic stabiliser.'
+  - node_id: his197
+    label: catalytic His197 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P72065
+    description: 'M-CSA roles: electrostatic stabiliser, proton donor.'
+  - node_id: asn198
+    label: catalytic Asn198 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P72065
+    description: 'M-CSA roles: nucleophile, proton donor.'
+  - node_id: reactant0
+    label: peptidyl amide
+    node_type: CHEMICAL
+    grounding: CHEBI:15722
+  - node_id: product0
+    label: peptidyl amide
+    node_type: CHEMICAL
+    grounding: CHEBI:15722
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Cys1 performs a N-S switch by attacking the carbonly carbon of Ala0. The adjacent N-C
+      bond is broken and a S-C bond is formed.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: His75 donates a proton causing the intermediate to collapse. Thr199 performs a nucleophilic
+      attack on the carbonyl carbon of Ala0. Its inferred that the hydrogen from Thr199 is taken by the
+      solution.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: His187 deprotonates Asn198 nitrogen side chain while Val182 stabilises the deprotonated
+      nitrogen via its main chain amide. Asn198 then proceeds to attack the upstream carbonyl carbon between
+      itself and Thr199. Creating a cyclic molecule and detaching Thr199 and C-extein from the rest of
+      the intein.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The last step is the O-N shift which proceeds by the main chain amide of Thr199 attacking
+      the carbonyl carbon and breaking the C-O bond. This step is stabilised by a oxyanion hole made out
+      of Asn74 and Thr72. Its inferred by the curator that the Thr199 oxygen receives its proton from
+      the -NH<sub>2</sub> group.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Final product.
+  - node_id: active_site
+    label: GyrA intein (Class 1 intein) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:744
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.170.16.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.170.16.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: GyrA intein (Class 1 intein) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.3.2.-
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/744/
+      snippet: His75 donates a proton causing the intermediate to collapse. Thr199 performs a nucleophilic
+        attack on the carbonyl carbon of Ala0. Its inferred that the hydrogen from Thr199 is taken by
+        the solution.
+      notes: M-CSA entry 744, mechanism 1; M-CSA cites PMID:17544410, PMID:22179261, PMID:8895558, PMID:9437427;
+        step 2
+  - subject: his75
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His75 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/744/
+      snippet: His75 donates a proton causing the intermediate to collapse. Thr199 performs a nucleophilic
+        attack on the carbonyl carbon of Ala0. Its inferred that the hydrogen from Thr199 is taken by
+        the solution.
+      notes: M-CSA entry 744, mechanism 1; M-CSA cites PMID:17544410, PMID:22179261, PMID:8895558, PMID:9437427;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/744/
+      snippet: His187 deprotonates Asn198 nitrogen side chain while Val182 stabilises the deprotonated
+        nitrogen via its main chain amide. Asn198 then proceeds to attack the upstream carbonyl carbon
+        between itself and Thr199. Creating a cyclic molecule and detaching Thr199 and C-extein from the
+        rest of the intein.
+      notes: M-CSA entry 744, mechanism 1; M-CSA cites PMID:17544410, PMID:22179261, PMID:8895558, PMID:9437427;
+        step 3
+  - subject: val182
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Val182 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/744/
+      snippet: His187 deprotonates Asn198 nitrogen side chain while Val182 stabilises the deprotonated
+        nitrogen via its main chain amide. Asn198 then proceeds to attack the upstream carbonyl carbon
+        between itself and Thr199. Creating a cyclic molecule and detaching Thr199 and C-extein from the
+        rest of the intein.
+      notes: M-CSA entry 744, mechanism 1; M-CSA cites PMID:17544410, PMID:22179261, PMID:8895558, PMID:9437427;
+        step 3
+  - subject: his187
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His187 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/744/
+      snippet: His187 deprotonates Asn198 nitrogen side chain while Val182 stabilises the deprotonated
+        nitrogen via its main chain amide. Asn198 then proceeds to attack the upstream carbonyl carbon
+        between itself and Thr199. Creating a cyclic molecule and detaching Thr199 and C-extein from the
+        rest of the intein.
+      notes: M-CSA entry 744, mechanism 1; M-CSA cites PMID:17544410, PMID:22179261, PMID:8895558, PMID:9437427;
+        step 3
+  - subject: asn198
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Asn198 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/744/
+      snippet: His187 deprotonates Asn198 nitrogen side chain while Val182 stabilises the deprotonated
+        nitrogen via its main chain amide. Asn198 then proceeds to attack the upstream carbonyl carbon
+        between itself and Thr199. Creating a cyclic molecule and detaching Thr199 and C-extein from the
+        rest of the intein.
+      notes: M-CSA entry 744, mechanism 1; M-CSA cites PMID:17544410, PMID:22179261, PMID:8895558, PMID:9437427;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/744/
+      snippet: The last step is the O-N shift which proceeds by the main chain amide of Thr199 attacking
+        the carbonyl carbon and breaking the C-O bond. This step is stabilised by a oxyanion hole made
+        out of Asn74 and Thr72. Its inferred by the curator that the Thr199 oxygen receives its proton
+        from the -NH<sub>2</sub> group.
+      notes: M-CSA entry 744, mechanism 1; M-CSA cites PMID:17544410, PMID:22179261, PMID:8895558, PMID:9437427;
+        step 4
+  - subject: thr72
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Thr72 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/744/
+      snippet: The last step is the O-N shift which proceeds by the main chain amide of Thr199 attacking
+        the carbonyl carbon and breaking the C-O bond. This step is stabilised by a oxyanion hole made
+        out of Asn74 and Thr72. Its inferred by the curator that the Thr199 oxygen receives its proton
+        from the -NH<sub>2</sub> group.
+      notes: M-CSA entry 744, mechanism 1; M-CSA cites PMID:17544410, PMID:22179261, PMID:8895558, PMID:9437427;
+        step 4
+  - subject: asn74
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Asn74 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/744/
+      snippet: The last step is the O-N shift which proceeds by the main chain amide of Thr199 attacking
+        the carbonyl carbon and breaking the C-O bond. This step is stabilised by a oxyanion hole made
+        out of Asn74 and Thr72. Its inferred by the curator that the Thr199 oxygen receives its proton
+        from the -NH<sub>2</sub> group.
+      notes: M-CSA entry 744, mechanism 1; M-CSA cites PMID:17544410, PMID:22179261, PMID:8895558, PMID:9437427;
+        step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/744/
+      snippet: Final product.
+      notes: M-CSA entry 744, mechanism 1; M-CSA cites PMID:17544410, PMID:22179261, PMID:8895558, PMID:9437427;
+        step 5
+  - subject: ser1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser1 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/744/
+      snippet: nucleophile, proton acceptor, proton donor
+      notes: M-CSA entry 744, mechanism 1; M-CSA cites PMID:17544410, PMID:22179261, PMID:8895558, PMID:9437427;
+        M-CSA catalytic-residue roles for Ser1
+  - subject: ser53
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser53 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/744/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 744, mechanism 1; M-CSA cites PMID:17544410, PMID:22179261, PMID:8895558, PMID:9437427;
+        M-CSA catalytic-residue roles for Ser53
+  - subject: thr72
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr72 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/744/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 744, mechanism 1; M-CSA cites PMID:17544410, PMID:22179261, PMID:8895558, PMID:9437427;
+        M-CSA catalytic-residue roles for Thr72
+  - subject: asn74
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn74 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/744/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 744, mechanism 1; M-CSA cites PMID:17544410, PMID:22179261, PMID:8895558, PMID:9437427;
+        M-CSA catalytic-residue roles for Asn74
+  - subject: his75
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His75 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/744/
+      snippet: electrostatic stabiliser, proton donor
+      notes: M-CSA entry 744, mechanism 1; M-CSA cites PMID:17544410, PMID:22179261, PMID:8895558, PMID:9437427;
+        M-CSA catalytic-residue roles for His75
+  - subject: val182
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Val182 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/744/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 744, mechanism 1; M-CSA cites PMID:17544410, PMID:22179261, PMID:8895558, PMID:9437427;
+        M-CSA catalytic-residue roles for Val182
+  - subject: his187
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His187 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/744/
+      snippet: activator, proton acceptor
+      notes: M-CSA entry 744, mechanism 1; M-CSA cites PMID:17544410, PMID:22179261, PMID:8895558, PMID:9437427;
+        M-CSA catalytic-residue roles for His187
+  - subject: ser196
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser196 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/744/
+      snippet: activator, electrostatic stabiliser
+      notes: M-CSA entry 744, mechanism 1; M-CSA cites PMID:17544410, PMID:22179261, PMID:8895558, PMID:9437427;
+        M-CSA catalytic-residue roles for Ser196
+  - subject: his197
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His197 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/744/
+      snippet: electrostatic stabiliser, proton donor
+      notes: M-CSA entry 744, mechanism 1; M-CSA cites PMID:17544410, PMID:22179261, PMID:8895558, PMID:9437427;
+        M-CSA catalytic-residue roles for His197
+  - subject: asn198
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn198 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/744/
+      snippet: nucleophile, proton donor
+      notes: M-CSA entry 744, mechanism 1; M-CSA cites PMID:17544410, PMID:22179261, PMID:8895558, PMID:9437427;
+        M-CSA catalytic-residue roles for Asn198
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/744/
+      snippet: After synthesis of a nascent protein an internal protein domain (termmed the intein) is
+        excised from the precursor and the two external polypeptides (termed exteins) are ligated together
+        through a peptide bond. Catalysis begins with cleavage of the N-extein-intein peptide bond by
+        nucleophilic attack of the Cys at the intein N terminus on the immediate upstream carbonyl carbon.
+        A tetrahedral interm
+      notes: M-CSA entry 744, mechanism 1; M-CSA cites PMID:17544410, PMID:22179261, PMID:8895558, PMID:9437427;
+        CATH domain 2.170.16.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/744/
+      snippet: After synthesis of a nascent protein an internal protein domain (termmed the intein) is
+        excised from the precursor and the two external polypeptides (termed exteins) are ligated together
+        through a peptide bond. Catalysis begins with cleavage of the N-extein-intein peptide bond by
+        nucleophilic attack of the Cys at the intein N terminus on the immediate upstream carbonyl carbon.
+        A tetrahedral interm
+      notes: M-CSA entry 744, mechanism 1; M-CSA cites PMID:17544410, PMID:22179261, PMID:8895558, PMID:9437427;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/744/
+      snippet: After synthesis of a nascent protein an internal protein domain (termmed the intein) is
+        excised from the precursor and the two external polypeptides (termed exteins) are ligated together
+        through a peptide bond. Catalysis begins with cleavage of the N-extein-intein peptide bond by
+        nucleophilic attack of the Cys at the intein N terminus on the immediate upstream carbonyl carbon.
+        A tetrahedral interm
+      notes: M-CSA entry 744, mechanism 1; M-CSA cites PMID:17544410, PMID:22179261, PMID:8895558, PMID:9437427;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/744/
+      snippet: After synthesis of a nascent protein an internal protein domain (termmed the intein) is
+        excised from the precursor and the two external polypeptides (termed exteins) are ligated together
+        through a peptide bond. Catalysis begins with cleavage of the N-extein-intein peptide bond by
+        nucleophilic attack of the Cys at the intein N terminus on the immediate upstream carbonyl carbon.
+        A tetrahedral interm
+      notes: M-CSA entry 744, mechanism 1; M-CSA cites PMID:17544410, PMID:22179261, PMID:8895558, PMID:9437427;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (24 evidence-backed edges) transcribed from M-CSA entry 744;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

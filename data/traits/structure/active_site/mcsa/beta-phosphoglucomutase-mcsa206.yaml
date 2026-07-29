@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.4.2.6
 - CHEBI:57684
@@ -272,4 +272,377 @@ definitions:
       This enzyme catalyses the interconversion of D-glucose 1-phosphate (G1P) and D-glucose 6-phosphate (G6P), forming beta-D-glucose 1,6-(bis)phosphate (beta-G16P) as an intermediate. It requires Mg(II) and phosphorylation of an aspartate residue at the active site. The enzyme is able to autophosphorylate itself with its substrate beta-D-glucose 1-phosphate. Although this is a slow reaction, only a single turnover is required for activation. Once the phosphorylated enzyme is formed, it generates the reaction intermediate beta-D-glucose 1,6-bisphosphate, which can be used to phosphorylate the enzyme in subsequent cycles [PMID:16784233].
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of beta-phosphoglucomutase
+  description: Stepwise mechanism transcribed from M-CSA entry 206 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: asp1008
+    label: catalytic Asp1008 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P71447
+    description: 'M-CSA roles: metal ligand, nucleofuge, nucleophile.'
+  - node_id: leu1009
+    label: catalytic Leu1009 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P71447
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: asp1010
+    label: catalytic Asp1010 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P71447
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor.'
+  - node_id: thr1016
+    label: catalytic Thr1016 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P71447
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: lys1045
+    label: catalytic Lys1045 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P71447
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ser1114
+    label: catalytic Ser1114 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P71447
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: ala1115
+    label: catalytic Ala1115 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P71447
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: lys1145
+    label: catalytic Lys1145 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P71447
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: glu1169
+    label: catalytic Glu1169 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P71447
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp1170
+    label: catalytic Asp1170 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P71447
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: beta-D-glucose 1-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57684
+  - node_id: product0
+    label: beta-D-glucose 6-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58247
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp1010 deprotonates the -CH<sub>2</sub>-OH group of the substrate sugar, which attacks
+      the phosphate of the phosphorylated Asp1008 in a nucleophilic addition. This produces a pentavalent,
+      covalently attached intermediate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The pentavalent, covalently attached intermediate collapses, eliminating Asp1008 in an
+      un-phosphorylated state.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The bisphosphate intermediate rotates in the active site. Asp1008 attacks the C1 phosphate
+      of the intermediate in a nucleophilic addition. This produces a pentavalent, covalently attached
+      intermediate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The pentavalent, covalently attached intermediate collapses, eliminating the final product
+      and Asp1008 in its phosphorylated state.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: beta-phosphoglucomutase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:206
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1000 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1000
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: beta-phosphoglucomutase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.4.2.6
+  edges:
+  - subject: asp1008
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp1008 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/206/
+      snippet: Asp1010 deprotonates the -CH<sub>2</sub>-OH group of the substrate sugar, which attacks
+        the phosphate of the phosphorylated Asp1008 in a nucleophilic addition. This produces a pentavalent,
+        covalently attached intermediate.
+      notes: M-CSA entry 206, mechanism 1; M-CSA cites PMID:12637673, PMID:15337123, PMID:15826149, PMID:15996095,
+        PMID:16784233, PMID:20602355, PMID:29508879; step 1
+  - subject: asp1010
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp1010 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/206/
+      snippet: Asp1010 deprotonates the -CH<sub>2</sub>-OH group of the substrate sugar, which attacks
+        the phosphate of the phosphorylated Asp1008 in a nucleophilic addition. This produces a pentavalent,
+        covalently attached intermediate.
+      notes: M-CSA entry 206, mechanism 1; M-CSA cites PMID:12637673, PMID:15337123, PMID:15826149, PMID:15996095,
+        PMID:16784233, PMID:20602355, PMID:29508879; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/206/
+      snippet: The pentavalent, covalently attached intermediate collapses, eliminating Asp1008 in an
+        un-phosphorylated state.
+      notes: M-CSA entry 206, mechanism 1; M-CSA cites PMID:12637673, PMID:15337123, PMID:15826149, PMID:15996095,
+        PMID:16784233, PMID:20602355, PMID:29508879; step 2
+  - subject: asp1008
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Asp1008 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/206/
+      snippet: The pentavalent, covalently attached intermediate collapses, eliminating Asp1008 in an
+        un-phosphorylated state.
+      notes: M-CSA entry 206, mechanism 1; M-CSA cites PMID:12637673, PMID:15337123, PMID:15826149, PMID:15996095,
+        PMID:16784233, PMID:20602355, PMID:29508879; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/206/
+      snippet: The bisphosphate intermediate rotates in the active site. Asp1008 attacks the C1 phosphate
+        of the intermediate in a nucleophilic addition. This produces a pentavalent, covalently attached
+        intermediate.
+      notes: M-CSA entry 206, mechanism 1; M-CSA cites PMID:12637673, PMID:15337123, PMID:15826149, PMID:15996095,
+        PMID:16784233, PMID:20602355, PMID:29508879; step 3
+  - subject: asp1008
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Asp1008 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/206/
+      snippet: The bisphosphate intermediate rotates in the active site. Asp1008 attacks the C1 phosphate
+        of the intermediate in a nucleophilic addition. This produces a pentavalent, covalently attached
+        intermediate.
+      notes: M-CSA entry 206, mechanism 1; M-CSA cites PMID:12637673, PMID:15337123, PMID:15826149, PMID:15996095,
+        PMID:16784233, PMID:20602355, PMID:29508879; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/206/
+      snippet: The pentavalent, covalently attached intermediate collapses, eliminating the final product
+        and Asp1008 in its phosphorylated state.
+      notes: M-CSA entry 206, mechanism 1; M-CSA cites PMID:12637673, PMID:15337123, PMID:15826149, PMID:15996095,
+        PMID:16784233, PMID:20602355, PMID:29508879; step 4
+  - subject: asp1008
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Asp1008 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/206/
+      snippet: The pentavalent, covalently attached intermediate collapses, eliminating the final product
+        and Asp1008 in its phosphorylated state.
+      notes: M-CSA entry 206, mechanism 1; M-CSA cites PMID:12637673, PMID:15337123, PMID:15826149, PMID:15996095,
+        PMID:16784233, PMID:20602355, PMID:29508879; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/206/
+      snippet: Products.
+      notes: M-CSA entry 206, mechanism 1; M-CSA cites PMID:12637673, PMID:15337123, PMID:15826149, PMID:15996095,
+        PMID:16784233, PMID:20602355, PMID:29508879; step 5
+  - subject: asp1008
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp1008 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/206/
+      snippet: metal ligand, nucleofuge, nucleophile
+      notes: M-CSA entry 206, mechanism 1; M-CSA cites PMID:12637673, PMID:15337123, PMID:15826149, PMID:15996095,
+        PMID:16784233, PMID:20602355, PMID:29508879; M-CSA catalytic-residue roles for Asp1008
+  - subject: leu1009
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Leu1009 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/206/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 206, mechanism 1; M-CSA cites PMID:12637673, PMID:15337123, PMID:15826149, PMID:15996095,
+        PMID:16784233, PMID:20602355, PMID:29508879; M-CSA catalytic-residue roles for Leu1009
+  - subject: asp1010
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp1010 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/206/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor
+      notes: M-CSA entry 206, mechanism 1; M-CSA cites PMID:12637673, PMID:15337123, PMID:15826149, PMID:15996095,
+        PMID:16784233, PMID:20602355, PMID:29508879; M-CSA catalytic-residue roles for Asp1010
+  - subject: thr1016
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr1016 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/206/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 206, mechanism 1; M-CSA cites PMID:12637673, PMID:15337123, PMID:15826149, PMID:15996095,
+        PMID:16784233, PMID:20602355, PMID:29508879; M-CSA catalytic-residue roles for Thr1016
+  - subject: lys1045
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys1045 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/206/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 206, mechanism 1; M-CSA cites PMID:12637673, PMID:15337123, PMID:15826149, PMID:15996095,
+        PMID:16784233, PMID:20602355, PMID:29508879; M-CSA catalytic-residue roles for Lys1045
+  - subject: ser1114
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser1114 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/206/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 206, mechanism 1; M-CSA cites PMID:12637673, PMID:15337123, PMID:15826149, PMID:15996095,
+        PMID:16784233, PMID:20602355, PMID:29508879; M-CSA catalytic-residue roles for Ser1114
+  - subject: ala1115
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ala1115 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/206/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 206, mechanism 1; M-CSA cites PMID:12637673, PMID:15337123, PMID:15826149, PMID:15996095,
+        PMID:16784233, PMID:20602355, PMID:29508879; M-CSA catalytic-residue roles for Ala1115
+  - subject: lys1145
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys1145 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/206/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 206, mechanism 1; M-CSA cites PMID:12637673, PMID:15337123, PMID:15826149, PMID:15996095,
+        PMID:16784233, PMID:20602355, PMID:29508879; M-CSA catalytic-residue roles for Lys1145
+  - subject: glu1169
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu1169 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/206/
+      snippet: metal ligand
+      notes: M-CSA entry 206, mechanism 1; M-CSA cites PMID:12637673, PMID:15337123, PMID:15826149, PMID:15996095,
+        PMID:16784233, PMID:20602355, PMID:29508879; M-CSA catalytic-residue roles for Glu1169
+  - subject: asp1170
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp1170 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/206/
+      snippet: metal ligand
+      notes: M-CSA entry 206, mechanism 1; M-CSA cites PMID:12637673, PMID:15337123, PMID:15826149, PMID:15996095,
+        PMID:16784233, PMID:20602355, PMID:29508879; M-CSA catalytic-residue roles for Asp1170
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/206/
+      snippet: Asp10 initiates the reaction by abstracting a proton from the -CH<sub>2</sub>-OH group
+        of the substrate sugar, which attacks the phosphate of the phosphorylated Asp8 in a nucleophilic
+        addition. This produces a pentavalent, covalently attached intermediate. The pentavalent, covalently
+        attached intermediate collapses, eliminating Asp8 in an un-phosphorylated state. The bisphosphate
+        intermediate rota
+      notes: M-CSA entry 206, mechanism 1; M-CSA cites PMID:12637673, PMID:15337123, PMID:15826149, PMID:15996095,
+        PMID:16784233, PMID:20602355, PMID:29508879; CATH domain 3.40.50.1000 assigned to the catalytic
+        chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/206/
+      snippet: Asp10 initiates the reaction by abstracting a proton from the -CH<sub>2</sub>-OH group
+        of the substrate sugar, which attacks the phosphate of the phosphorylated Asp8 in a nucleophilic
+        addition. This produces a pentavalent, covalently attached intermediate. The pentavalent, covalently
+        attached intermediate collapses, eliminating Asp8 in an un-phosphorylated state. The bisphosphate
+        intermediate rota
+      notes: M-CSA entry 206, mechanism 1; M-CSA cites PMID:12637673, PMID:15337123, PMID:15826149, PMID:15996095,
+        PMID:16784233, PMID:20602355, PMID:29508879; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/206/
+      snippet: Asp10 initiates the reaction by abstracting a proton from the -CH<sub>2</sub>-OH group
+        of the substrate sugar, which attacks the phosphate of the phosphorylated Asp8 in a nucleophilic
+        addition. This produces a pentavalent, covalently attached intermediate. The pentavalent, covalently
+        attached intermediate collapses, eliminating Asp8 in an un-phosphorylated state. The bisphosphate
+        intermediate rota
+      notes: M-CSA entry 206, mechanism 1; M-CSA cites PMID:12637673, PMID:15337123, PMID:15826149, PMID:15996095,
+        PMID:16784233, PMID:20602355, PMID:29508879; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/206/
+      snippet: Asp10 initiates the reaction by abstracting a proton from the -CH<sub>2</sub>-OH group
+        of the substrate sugar, which attacks the phosphate of the phosphorylated Asp8 in a nucleophilic
+        addition. This produces a pentavalent, covalently attached intermediate. The pentavalent, covalently
+        attached intermediate collapses, eliminating Asp8 in an un-phosphorylated state. The bisphosphate
+        intermediate rota
+      notes: M-CSA entry 206, mechanism 1; M-CSA cites PMID:12637673, PMID:15337123, PMID:15826149, PMID:15996095,
+        PMID:16784233, PMID:20602355, PMID:29508879; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (23 evidence-backed edges) transcribed from M-CSA entry 206;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

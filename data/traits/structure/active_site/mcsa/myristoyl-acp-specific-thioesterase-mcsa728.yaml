@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.3.1.-
 - CHEBI:57385
@@ -205,4 +205,311 @@ definitions:
       Myristoyl acyl carrier protein specific thioesterase (C14ACP-TE) is a lux-specific acyltransferase belonging to the alpha/beta hydrolase family. The acyl transferase is part of the fatty acid reductase system required for aldehyde biosynthesis. It produces fatty acids for the light-emitting reaction catalysed by luciferase in luminescent bacteria. In Vibrio harveyi, C14ACP-TE is responsible for catalysing the transfer or hydrolysis of acyl group from either myristoyl-ACP or myristoyl-CoA to form myristic acid, and for diverting the myristic acid to the bioluminescence pathway, where it undergoes NADPH-dependent reduction and subsequent FMNH2- and O2-dependent oxidation of the corresponding aldehyde, with accompanying emission of light.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of myristoyl-ACP-specific thioesterase
+  description: Stepwise mechanism transcribed from M-CSA entry 728 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: ser114
+    label: catalytic Ser114 (M-CSA/PDB numbering; UniProt residue 114)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05521
+    description: 'M-CSA roles: covalently attached, nucleofuge, nucleophile, proton acceptor, proton donor.'
+  - node_id: asp211
+    label: catalytic Asp211 (M-CSA/PDB numbering; UniProt residue 211)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05521
+    description: 'M-CSA roles: electrostatic stabiliser, modifies pKa.'
+  - node_id: his241
+    label: catalytic His241 (M-CSA/PDB numbering; UniProt residue 241)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05521
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: myristoyl-CoA(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57385
+  - node_id: reactant1
+    label: acyl-carrier protein
+    node_type: CHEMICAL
+    grounding: CHEBI:13534
+  - node_id: product0
+    label: myristoyl-[acyl-carrier protein]
+    node_type: CHEMICAL
+    grounding: CHEBI:50651
+  - node_id: product1
+    label: coenzyme A(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His241 abstracts a proton from Ser114 and activates it for nucleophilic attack on the
+      thioester carbonyl of myristoyl-CoA.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: His241 protonates the sulphur that bridges the CoA extremity and myristoyl which results
+      in the collapse of the tetrahedral intermediate and the cleavage of the S-C bond.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: His241 deprotonates the the sulphur of ACP which activates it to nucleophilically attack
+      the carbonyl carbon of the acyl-enzyme intermediate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The tetrahedral intermediate collapses resulting in the cleavage of the acyl-enzyme bond
+      which releases Ser 114 which can now accept a proton from His 241.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: myristoyl-ACP-specific thioesterase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:728
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1820 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1820
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: myristoyl-ACP-specific thioesterase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.3.1.-
+  edges:
+  - subject: ser114
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser114 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/728/
+      snippet: His241 abstracts a proton from Ser114 and activates it for nucleophilic attack on the thioester
+        carbonyl of myristoyl-CoA.
+      notes: M-CSA entry 728, mechanism 1; M-CSA cites PMID:8068614, PMID:8120025, PMID:8756458; step
+        1
+  - subject: his241
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His241 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/728/
+      snippet: His241 abstracts a proton from Ser114 and activates it for nucleophilic attack on the thioester
+        carbonyl of myristoyl-CoA.
+      notes: M-CSA entry 728, mechanism 1; M-CSA cites PMID:8068614, PMID:8120025, PMID:8756458; step
+        1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/728/
+      snippet: His241 protonates the sulphur that bridges the CoA extremity and myristoyl which results
+        in the collapse of the tetrahedral intermediate and the cleavage of the S-C bond.
+      notes: M-CSA entry 728, mechanism 1; M-CSA cites PMID:8068614, PMID:8120025, PMID:8756458; step
+        2
+  - subject: his241
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His241 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/728/
+      snippet: His241 protonates the sulphur that bridges the CoA extremity and myristoyl which results
+        in the collapse of the tetrahedral intermediate and the cleavage of the S-C bond.
+      notes: M-CSA entry 728, mechanism 1; M-CSA cites PMID:8068614, PMID:8120025, PMID:8756458; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/728/
+      snippet: His241 deprotonates the the sulphur of ACP which activates it to nucleophilically attack
+        the carbonyl carbon of the acyl-enzyme intermediate.
+      notes: M-CSA entry 728, mechanism 1; M-CSA cites PMID:8068614, PMID:8120025, PMID:8756458; step
+        3
+  - subject: his241
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His241 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/728/
+      snippet: His241 deprotonates the the sulphur of ACP which activates it to nucleophilically attack
+        the carbonyl carbon of the acyl-enzyme intermediate.
+      notes: M-CSA entry 728, mechanism 1; M-CSA cites PMID:8068614, PMID:8120025, PMID:8756458; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/728/
+      snippet: The tetrahedral intermediate collapses resulting in the cleavage of the acyl-enzyme bond
+        which releases Ser 114 which can now accept a proton from His 241.
+      notes: M-CSA entry 728, mechanism 1; M-CSA cites PMID:8068614, PMID:8120025, PMID:8756458; step
+        4
+  - subject: ser114
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Ser114 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/728/
+      snippet: The tetrahedral intermediate collapses resulting in the cleavage of the acyl-enzyme bond
+        which releases Ser 114 which can now accept a proton from His 241.
+      notes: M-CSA entry 728, mechanism 1; M-CSA cites PMID:8068614, PMID:8120025, PMID:8756458; step
+        4
+  - subject: his241
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: His241 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/728/
+      snippet: The tetrahedral intermediate collapses resulting in the cleavage of the acyl-enzyme bond
+        which releases Ser 114 which can now accept a proton from His 241.
+      notes: M-CSA entry 728, mechanism 1; M-CSA cites PMID:8068614, PMID:8120025, PMID:8756458; step
+        4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/728/
+      snippet: Products
+      notes: M-CSA entry 728, mechanism 1; M-CSA cites PMID:8068614, PMID:8120025, PMID:8756458; step
+        5
+  - subject: ser114
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser114 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/728/
+      snippet: covalently attached, nucleofuge, nucleophile, proton acceptor, proton donor
+      notes: M-CSA entry 728, mechanism 1; M-CSA cites PMID:8068614, PMID:8120025, PMID:8756458; M-CSA
+        catalytic-residue roles for Ser114
+  - subject: asp211
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp211 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/728/
+      snippet: electrostatic stabiliser, modifies pKa
+      notes: M-CSA entry 728, mechanism 1; M-CSA cites PMID:8068614, PMID:8120025, PMID:8756458; M-CSA
+        catalytic-residue roles for Asp211
+  - subject: his241
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His241 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/728/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 728, mechanism 1; M-CSA cites PMID:8068614, PMID:8120025, PMID:8756458; M-CSA
+        catalytic-residue roles for His241
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/728/
+      snippet: Enzymatic hydrolysis of the thioester bond proceeds using the catalytic triad of Ser 114,
+        Asp 211, and His 241. His 241 activates Ser 114 as a nucleophile by abstracting a proton from
+        the serine hydroxyl as the carbonyl carbon of the substrate is attacked by the nucleophile. His
+        241 is stabilised by hydrogen bonding to Asp 211 which lowers the pKa of His so that it more willingly
+        accepts a proton.
+      notes: M-CSA entry 728, mechanism 1; M-CSA cites PMID:8068614, PMID:8120025, PMID:8756458; CATH
+        domain 3.40.50.1820 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/728/
+      snippet: Enzymatic hydrolysis of the thioester bond proceeds using the catalytic triad of Ser 114,
+        Asp 211, and His 241. His 241 activates Ser 114 as a nucleophile by abstracting a proton from
+        the serine hydroxyl as the carbonyl carbon of the substrate is attacked by the nucleophile. His
+        241 is stabilised by hydrogen bonding to Asp 211 which lowers the pKa of His so that it more willingly
+        accepts a proton.
+      notes: M-CSA entry 728, mechanism 1; M-CSA cites PMID:8068614, PMID:8120025, PMID:8756458; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/728/
+      snippet: Enzymatic hydrolysis of the thioester bond proceeds using the catalytic triad of Ser 114,
+        Asp 211, and His 241. His 241 activates Ser 114 as a nucleophile by abstracting a proton from
+        the serine hydroxyl as the carbonyl carbon of the substrate is attacked by the nucleophile. His
+        241 is stabilised by hydrogen bonding to Asp 211 which lowers the pKa of His so that it more willingly
+        accepts a proton.
+      notes: M-CSA entry 728, mechanism 1; M-CSA cites PMID:8068614, PMID:8120025, PMID:8756458; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/728/
+      snippet: Enzymatic hydrolysis of the thioester bond proceeds using the catalytic triad of Ser 114,
+        Asp 211, and His 241. His 241 activates Ser 114 as a nucleophile by abstracting a proton from
+        the serine hydroxyl as the carbonyl carbon of the substrate is attacked by the nucleophile. His
+        241 is stabilised by hydrogen bonding to Asp 211 which lowers the pKa of His so that it more willingly
+        accepts a proton.
+      notes: M-CSA entry 728, mechanism 1; M-CSA cites PMID:8068614, PMID:8120025, PMID:8756458; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/728/
+      snippet: Enzymatic hydrolysis of the thioester bond proceeds using the catalytic triad of Ser 114,
+        Asp 211, and His 241. His 241 activates Ser 114 as a nucleophile by abstracting a proton from
+        the serine hydroxyl as the carbonyl carbon of the substrate is attacked by the nucleophile. His
+        241 is stabilised by hydrogen bonding to Asp 211 which lowers the pKa of His so that it more willingly
+        accepts a proton.
+      notes: M-CSA entry 728, mechanism 1; M-CSA cites PMID:8068614, PMID:8120025, PMID:8756458; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/728/
+      snippet: Enzymatic hydrolysis of the thioester bond proceeds using the catalytic triad of Ser 114,
+        Asp 211, and His 241. His 241 activates Ser 114 as a nucleophile by abstracting a proton from
+        the serine hydroxyl as the carbonyl carbon of the substrate is attacked by the nucleophile. His
+        241 is stabilised by hydrogen bonding to Asp 211 which lowers the pKa of His so that it more willingly
+        accepts a proton.
+      notes: M-CSA entry 728, mechanism 1; M-CSA cites PMID:8068614, PMID:8120025, PMID:8756458; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (19 evidence-backed edges) transcribed from M-CSA entry 728;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

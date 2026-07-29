@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.4.99.6
 - CHEBI:32689
@@ -280,4 +280,363 @@ definitions:
       D-arginine dehydrogenase (DADH) is a flavin-dependent oxidoreductase. It is a member of the structural family consisting of D-amino acid oxidase, sarcosine oxidase, dimethyl glycine oxidase, and glycine oxidase. The enzyme has broad substrate specificity towards D-amino acids, particularly with cationic and hydrophobic D-amino acids. DADH and L-arginine dehydrogenase (LADH) make up a two-enzyme system involved in D- to L-arginine racemisation in pseudomonads and related species and both enzymes are products of the dauBAR operon, by D-arginine and D-lysine. Crystallographic data shows that DADH from Pseudomonas aeruginosa (PaDADH) contains an active site loop L1 with two flexible segments that span the FAD-binding site and the substrate-binding site. It can occupy two distinct conformations, an open conformation competent for substrate binding and a closed conformation which is catalytically relevant and ligand-bound.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of D-arginine dehydrogenase
+  description: Stepwise mechanism transcribed from M-CSA entry 978 (7 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: ser1045
+    label: catalytic Ser1045 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9HXE3
+    description: 'M-CSA roles: steric role.'
+  - node_id: ala1046
+    label: catalytic Ala1046 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9HXE3
+    description: 'M-CSA roles: steric role.'
+  - node_id: his1048
+    label: catalytic His1048 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9HXE3
+    description: 'M-CSA roles: increase acidity.'
+  - node_id: tyr1053
+    label: catalytic Tyr1053 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9HXE3
+    description: 'M-CSA roles: transition state stabiliser.'
+  - node_id: glu1087
+    label: catalytic Glu1087 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9HXE3
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: tyr1249
+    label: catalytic Tyr1249 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9HXE3
+    description: 'M-CSA roles: transition state stabiliser.'
+  - node_id: reactant0
+    label: D-argininium(1+)
+    node_type: CHEMICAL
+    grounding: CHEBI:32689
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant2
+    label: FAD2-
+    node_type: CHEMICAL
+    grounding: CHEBI:X00681
+  - node_id: product0
+    label: 5-guanidino-2-oxopentanoic acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:58489
+  - node_id: product1
+    label: ammonium
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+  - node_id: product2
+    label: FADH3-
+    node_type: CHEMICAL
+    grounding: CHEBI:X00682
+  - node_id: product3
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Deprotonation of the substrate α-amine, triggering CH bond cleavage in the next step.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: "CH bond cleavage through the transfer of a hydride ion from the
+substrate to the\
+      \ flavin N5 atom."
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Non-enzymatic hydrolysis of intermediate iminoacid to α-keto acid and ammonia. Begins
+      with the addition of water.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Proton transfer.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Elimination of ammonia.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Deprotonation to form final product.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: '-'
+  - node_id: active_site
+    label: D-arginine dehydrogenase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:978
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.50.50.60 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.50.50.60
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: D-arginine dehydrogenase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.4.99.6
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/978/
+      snippet: "CH bond cleavage through the transfer of a hydride ion from the
+substrate to the flavin\
+        \ N5 atom."
+      notes: M-CSA entry 978, mechanism 1; M-CSA cites PMID:21707047, PMID:21999550, PMID:25243743, PMID:25637657,
+        PMID:28625766; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/978/
+      snippet: Non-enzymatic hydrolysis of intermediate iminoacid to α-keto acid and ammonia. Begins with
+        the addition of water.
+      notes: M-CSA entry 978, mechanism 1; M-CSA cites PMID:21707047, PMID:21999550, PMID:25243743, PMID:25637657,
+        PMID:28625766; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/978/
+      snippet: Proton transfer.
+      notes: M-CSA entry 978, mechanism 1; M-CSA cites PMID:21707047, PMID:21999550, PMID:25243743, PMID:25637657,
+        PMID:28625766; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/978/
+      snippet: Elimination of ammonia.
+      notes: M-CSA entry 978, mechanism 1; M-CSA cites PMID:21707047, PMID:21999550, PMID:25243743, PMID:25637657,
+        PMID:28625766; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/978/
+      snippet: Deprotonation to form final product.
+      notes: M-CSA entry 978, mechanism 1; M-CSA cites PMID:21707047, PMID:21999550, PMID:25243743, PMID:25637657,
+        PMID:28625766; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/978/
+      snippet: '-'
+      notes: M-CSA entry 978, mechanism 1; M-CSA cites PMID:21707047, PMID:21999550, PMID:25243743, PMID:25637657,
+        PMID:28625766; step 7
+  - subject: ser1045
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser1045 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/978/
+      snippet: steric role
+      notes: M-CSA entry 978, mechanism 1; M-CSA cites PMID:21707047, PMID:21999550, PMID:25243743, PMID:25637657,
+        PMID:28625766; M-CSA catalytic-residue roles for Ser1045
+  - subject: ala1046
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ala1046 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/978/
+      snippet: steric role
+      notes: M-CSA entry 978, mechanism 1; M-CSA cites PMID:21707047, PMID:21999550, PMID:25243743, PMID:25637657,
+        PMID:28625766; M-CSA catalytic-residue roles for Ala1046
+  - subject: his1048
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His1048 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/978/
+      snippet: increase acidity
+      notes: M-CSA entry 978, mechanism 1; M-CSA cites PMID:21707047, PMID:21999550, PMID:25243743, PMID:25637657,
+        PMID:28625766; M-CSA catalytic-residue roles for His1048
+  - subject: tyr1053
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr1053 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/978/
+      snippet: transition state stabiliser
+      notes: M-CSA entry 978, mechanism 1; M-CSA cites PMID:21707047, PMID:21999550, PMID:25243743, PMID:25637657,
+        PMID:28625766; M-CSA catalytic-residue roles for Tyr1053
+  - subject: glu1087
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu1087 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/978/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 978, mechanism 1; M-CSA cites PMID:21707047, PMID:21999550, PMID:25243743, PMID:25637657,
+        PMID:28625766; M-CSA catalytic-residue roles for Glu1087
+  - subject: tyr1249
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr1249 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/978/
+      snippet: transition state stabiliser
+      notes: M-CSA entry 978, mechanism 1; M-CSA cites PMID:21707047, PMID:21999550, PMID:25243743, PMID:25637657,
+        PMID:28625766; M-CSA catalytic-residue roles for Tyr1249
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/978/
+      snippet: Hydride transfer mechanism supported by kinetic studies. In principle, transfer of an electron
+        and a hydrogen atom from the substrate to the flavin is possible, but there is no evidence for
+        presence of a radical as of yet. Deprotonation of the substrate α-amine occurs first, triggering
+        CH bond cleavage through hydride transfer to the flavin N5 atom. Subsequent hydrolysis forms 5-guanidino-2-oxopen
+      notes: M-CSA entry 978, mechanism 1; M-CSA cites PMID:21707047, PMID:21999550, PMID:25243743, PMID:25637657,
+        PMID:28625766; CATH domain 3.50.50.60 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/978/
+      snippet: Hydride transfer mechanism supported by kinetic studies. In principle, transfer of an electron
+        and a hydrogen atom from the substrate to the flavin is possible, but there is no evidence for
+        presence of a radical as of yet. Deprotonation of the substrate α-amine occurs first, triggering
+        CH bond cleavage through hydride transfer to the flavin N5 atom. Subsequent hydrolysis forms 5-guanidino-2-oxopen
+      notes: M-CSA entry 978, mechanism 1; M-CSA cites PMID:21707047, PMID:21999550, PMID:25243743, PMID:25637657,
+        PMID:28625766; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/978/
+      snippet: Hydride transfer mechanism supported by kinetic studies. In principle, transfer of an electron
+        and a hydrogen atom from the substrate to the flavin is possible, but there is no evidence for
+        presence of a radical as of yet. Deprotonation of the substrate α-amine occurs first, triggering
+        CH bond cleavage through hydride transfer to the flavin N5 atom. Subsequent hydrolysis forms 5-guanidino-2-oxopen
+      notes: M-CSA entry 978, mechanism 1; M-CSA cites PMID:21707047, PMID:21999550, PMID:25243743, PMID:25637657,
+        PMID:28625766; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/978/
+      snippet: Hydride transfer mechanism supported by kinetic studies. In principle, transfer of an electron
+        and a hydrogen atom from the substrate to the flavin is possible, but there is no evidence for
+        presence of a radical as of yet. Deprotonation of the substrate α-amine occurs first, triggering
+        CH bond cleavage through hydride transfer to the flavin N5 atom. Subsequent hydrolysis forms 5-guanidino-2-oxopen
+      notes: M-CSA entry 978, mechanism 1; M-CSA cites PMID:21707047, PMID:21999550, PMID:25243743, PMID:25637657,
+        PMID:28625766; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/978/
+      snippet: Hydride transfer mechanism supported by kinetic studies. In principle, transfer of an electron
+        and a hydrogen atom from the substrate to the flavin is possible, but there is no evidence for
+        presence of a radical as of yet. Deprotonation of the substrate α-amine occurs first, triggering
+        CH bond cleavage through hydride transfer to the flavin N5 atom. Subsequent hydrolysis forms 5-guanidino-2-oxopen
+      notes: M-CSA entry 978, mechanism 1; M-CSA cites PMID:21707047, PMID:21999550, PMID:25243743, PMID:25637657,
+        PMID:28625766; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/978/
+      snippet: Hydride transfer mechanism supported by kinetic studies. In principle, transfer of an electron
+        and a hydrogen atom from the substrate to the flavin is possible, but there is no evidence for
+        presence of a radical as of yet. Deprotonation of the substrate α-amine occurs first, triggering
+        CH bond cleavage through hydride transfer to the flavin N5 atom. Subsequent hydrolysis forms 5-guanidino-2-oxopen
+      notes: M-CSA entry 978, mechanism 1; M-CSA cites PMID:21707047, PMID:21999550, PMID:25243743, PMID:25637657,
+        PMID:28625766; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/978/
+      snippet: Hydride transfer mechanism supported by kinetic studies. In principle, transfer of an electron
+        and a hydrogen atom from the substrate to the flavin is possible, but there is no evidence for
+        presence of a radical as of yet. Deprotonation of the substrate α-amine occurs first, triggering
+        CH bond cleavage through hydride transfer to the flavin N5 atom. Subsequent hydrolysis forms 5-guanidino-2-oxopen
+      notes: M-CSA entry 978, mechanism 1; M-CSA cites PMID:21707047, PMID:21999550, PMID:25243743, PMID:25637657,
+        PMID:28625766; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/978/
+      snippet: Hydride transfer mechanism supported by kinetic studies. In principle, transfer of an electron
+        and a hydrogen atom from the substrate to the flavin is possible, but there is no evidence for
+        presence of a radical as of yet. Deprotonation of the substrate α-amine occurs first, triggering
+        CH bond cleavage through hydride transfer to the flavin N5 atom. Subsequent hydrolysis forms 5-guanidino-2-oxopen
+      notes: M-CSA entry 978, mechanism 1; M-CSA cites PMID:21707047, PMID:21999550, PMID:25243743, PMID:25637657,
+        PMID:28625766; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product3
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/978/
+      snippet: Hydride transfer mechanism supported by kinetic studies. In principle, transfer of an electron
+        and a hydrogen atom from the substrate to the flavin is possible, but there is no evidence for
+        presence of a radical as of yet. Deprotonation of the substrate α-amine occurs first, triggering
+        CH bond cleavage through hydride transfer to the flavin N5 atom. Subsequent hydrolysis forms 5-guanidino-2-oxopen
+      notes: M-CSA entry 978, mechanism 1; M-CSA cites PMID:21707047, PMID:21999550, PMID:25243743, PMID:25637657,
+        PMID:28625766; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (21 evidence-backed edges) transcribed from M-CSA entry 978;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

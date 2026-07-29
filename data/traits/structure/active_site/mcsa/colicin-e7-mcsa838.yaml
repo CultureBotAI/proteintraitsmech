@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.-.-
 - CHEBI:8756
@@ -365,4 +365,229 @@ definitions:
       The ColE7 endonuclease from Escherichia coli binds nucleic acids and hydrolyses a phosphodiester bond. It contains the His-metal finger motif and may function with a range of metals, although the physiological metal is thought to be Zn(II).
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of Colicin-E7
+  description: Stepwise mechanism transcribed from M-CSA entry 838 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: his544
+    label: catalytic His544 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q03708
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu545
+    label: catalytic Glu545 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q03708
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: his569
+    label: catalytic His569 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q03708
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his573
+    label: catalytic His573 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q03708
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: RNA (poly(A))
+    node_type: CHEMICAL
+    grounding: CHEBI:8756
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: RNA (poly(A))
+    node_type: CHEMICAL
+    grounding: CHEBI:8756
+  - node_id: product1
+    label: RNA (poly(A))
+    node_type: CHEMICAL
+    grounding: CHEBI:8756
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His545 abstracts a proton from a water which activates it to nucleophilically attack
+      the phosphate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Arg447 protonates the leaving group oxygen which initiates an elimination from the oxyanion
+      and results the cleavage if the phosphodiester bond. Arg447 is reprotonated by His545.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: Colicin-E7 catalytic site
+    node_type: MOTIF
+    grounding: MCSA:838
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.540.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.540.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: Colicin-E7 activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.-.-
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/838/
+      snippet: Arg447 protonates the leaving group oxygen which initiates an elimination from the oxyanion
+        and results the cleavage if the phosphodiester bond. Arg447 is reprotonated by His545.
+      notes: M-CSA entry 838, mechanism 1; M-CSA cites PMID:16434744, PMID:23334162, PMID:24895333, PMID:25156149,
+        PMID:25179124; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/838/
+      snippet: Products
+      notes: M-CSA entry 838, mechanism 1; M-CSA cites PMID:16434744, PMID:23334162, PMID:24895333, PMID:25156149,
+        PMID:25179124; step 3
+  - subject: his544
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His544 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/838/
+      snippet: metal ligand
+      notes: M-CSA entry 838, mechanism 1; M-CSA cites PMID:16434744, PMID:23334162, PMID:24895333, PMID:25156149,
+        PMID:25179124; M-CSA catalytic-residue roles for His544
+  - subject: glu545
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu545 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/838/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 838, mechanism 1; M-CSA cites PMID:16434744, PMID:23334162, PMID:24895333, PMID:25156149,
+        PMID:25179124; M-CSA catalytic-residue roles for Glu545
+  - subject: his569
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His569 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/838/
+      snippet: metal ligand
+      notes: M-CSA entry 838, mechanism 1; M-CSA cites PMID:16434744, PMID:23334162, PMID:24895333, PMID:25156149,
+        PMID:25179124; M-CSA catalytic-residue roles for His569
+  - subject: his573
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His573 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/838/
+      snippet: metal ligand
+      notes: M-CSA entry 838, mechanism 1; M-CSA cites PMID:16434744, PMID:23334162, PMID:24895333, PMID:25156149,
+        PMID:25179124; M-CSA catalytic-residue roles for His573
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/838/
+      snippet: A water nucleophile is polarised by His 545, which acts as a general base to generate hydroxide.
+        An non-bridging oxygen of the scissile phosphodiester group coordinates to Zn(II), making the
+        phosphorus more electrophilic.  Hydroxide attacks the scissile phosphodiester bond.  Zn(II) stabilises
+        the charge build-up in the pentacovalent transition state.  The transition state collapses upon
+        protonatio
+      notes: M-CSA entry 838, mechanism 1; M-CSA cites PMID:16434744, PMID:23334162, PMID:24895333, PMID:25156149,
+        PMID:25179124; CATH domain 3.90.540.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/838/
+      snippet: A water nucleophile is polarised by His 545, which acts as a general base to generate hydroxide.
+        An non-bridging oxygen of the scissile phosphodiester group coordinates to Zn(II), making the
+        phosphorus more electrophilic.  Hydroxide attacks the scissile phosphodiester bond.  Zn(II) stabilises
+        the charge build-up in the pentacovalent transition state.  The transition state collapses upon
+        protonatio
+      notes: M-CSA entry 838, mechanism 1; M-CSA cites PMID:16434744, PMID:23334162, PMID:24895333, PMID:25156149,
+        PMID:25179124; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/838/
+      snippet: A water nucleophile is polarised by His 545, which acts as a general base to generate hydroxide.
+        An non-bridging oxygen of the scissile phosphodiester group coordinates to Zn(II), making the
+        phosphorus more electrophilic.  Hydroxide attacks the scissile phosphodiester bond.  Zn(II) stabilises
+        the charge build-up in the pentacovalent transition state.  The transition state collapses upon
+        protonatio
+      notes: M-CSA entry 838, mechanism 1; M-CSA cites PMID:16434744, PMID:23334162, PMID:24895333, PMID:25156149,
+        PMID:25179124; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/838/
+      snippet: A water nucleophile is polarised by His 545, which acts as a general base to generate hydroxide.
+        An non-bridging oxygen of the scissile phosphodiester group coordinates to Zn(II), making the
+        phosphorus more electrophilic.  Hydroxide attacks the scissile phosphodiester bond.  Zn(II) stabilises
+        the charge build-up in the pentacovalent transition state.  The transition state collapses upon
+        protonatio
+      notes: M-CSA entry 838, mechanism 1; M-CSA cites PMID:16434744, PMID:23334162, PMID:24895333, PMID:25156149,
+        PMID:25179124; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/838/
+      snippet: A water nucleophile is polarised by His 545, which acts as a general base to generate hydroxide.
+        An non-bridging oxygen of the scissile phosphodiester group coordinates to Zn(II), making the
+        phosphorus more electrophilic.  Hydroxide attacks the scissile phosphodiester bond.  Zn(II) stabilises
+        the charge build-up in the pentacovalent transition state.  The transition state collapses upon
+        protonatio
+      notes: M-CSA entry 838, mechanism 1; M-CSA cites PMID:16434744, PMID:23334162, PMID:24895333, PMID:25156149,
+        PMID:25179124; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/838/
+      snippet: A water nucleophile is polarised by His 545, which acts as a general base to generate hydroxide.
+        An non-bridging oxygen of the scissile phosphodiester group coordinates to Zn(II), making the
+        phosphorus more electrophilic.  Hydroxide attacks the scissile phosphodiester bond.  Zn(II) stabilises
+        the charge build-up in the pentacovalent transition state.  The transition state collapses upon
+        protonatio
+      notes: M-CSA entry 838, mechanism 1; M-CSA cites PMID:16434744, PMID:23334162, PMID:24895333, PMID:25156149,
+        PMID:25179124; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (12 evidence-backed edges) transcribed from M-CSA entry 838;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

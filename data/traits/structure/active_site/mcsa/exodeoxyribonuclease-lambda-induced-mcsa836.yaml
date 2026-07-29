@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.11.3
 - CHEBI:15377
@@ -176,4 +176,305 @@ definitions:
       Lambda-exonuclease from Bacteriophage lambda is a 5'->3' exonuclease. It catalyses the hydrolysis of one strand of double stranded DNA in a 5' to 3' direction, leaving single stranded DNA. This is involved in DNA replication, recombination and repair. Once started on a reaction, lambda-exonuclease will continue to hydrolyse until either the DNA strand ends, or the enzyme dissociates into monomers.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of exodeoxyribonuclease (lambda-induced)
+  description: Stepwise mechanism transcribed from M-CSA entry 836 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: glu93
+    label: catalytic Glu93 (M-CSA/PDB numbering; UniProt residue 93)
+    node_type: RESIDUE
+    grounding: UniProtKB:P03697
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu102
+    label: catalytic Glu102 (M-CSA/PDB numbering; UniProt residue 102)
+    node_type: RESIDUE
+    grounding: UniProtKB:P03697
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp109
+    label: catalytic Asp109 (M-CSA/PDB numbering; UniProt residue 109)
+    node_type: RESIDUE
+    grounding: UniProtKB:P03697
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu129
+    label: catalytic Glu129 (M-CSA/PDB numbering; UniProt residue 129)
+    node_type: RESIDUE
+    grounding: UniProtKB:P03697
+    description: 'M-CSA roles: increase nucleophilicity, metal ligand, proton acceptor, proton donor.'
+  - node_id: leu130
+    label: catalytic Leu130 (M-CSA/PDB numbering; UniProt residue 130)
+    node_type: RESIDUE
+    grounding: UniProtKB:P03697
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: lys131
+    label: catalytic Lys131 (M-CSA/PDB numbering; UniProt residue 131)
+    node_type: RESIDUE
+    grounding: UniProtKB:P03697
+    description: 'M-CSA roles: electrostatic stabiliser, proton acceptor, proton donor, proton relay.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: single-stranded DNA
+    node_type: CHEMICAL
+    grounding: CHEBI:9160
+  - node_id: product0
+    label: 5'-end 2'-deoxyribonucleotide(2-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:136412
+  - node_id: product1
+    label: 2'-deoxynucleoside 3'-monophosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:131705
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu129 deprotonates a  water molecule this will activate it for nucleophillic attack.
+      The deprotonating oxygen of Glu129 and the hydroxide will decoordinate from the magnesium ions after
+      the proton transfer has occurred.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The activated hydroxide ion performs a nucleophillic on the phosphate group forming a
+      penta-covalent intermediate. Lys131 acts to orientate the hydroxide ion for the nucleophilic attack.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The intermediate collapses forming the products. This is facilitated by the leaving group
+      hydroxyl accepting a proton from a water molecule with the concomitant deprotonation of Glu129 by
+      the same water molecule. Glu129 can now re-coordinate to the magnesium ion.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: products
+  - node_id: active_site
+    label: exodeoxyribonuclease (lambda-induced) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:836
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.320.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.320.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: exodeoxyribonuclease (lambda-induced) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.11.3
+  edges:
+  - subject: glu129
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu129 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/836/
+      snippet: Glu129 deprotonates a  water molecule this will activate it for nucleophillic attack. The
+        deprotonating oxygen of Glu129 and the hydroxide will decoordinate from the magnesium ions after
+        the proton transfer has occurred.
+      notes: M-CSA entry 836, mechanism 2; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/836/
+      snippet: The activated hydroxide ion performs a nucleophillic on the phosphate group forming a penta-covalent
+        intermediate. Lys131 acts to orientate the hydroxide ion for the nucleophilic attack.
+      notes: M-CSA entry 836, mechanism 2; step 2
+  - subject: lys131
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Lys131 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/836/
+      snippet: The activated hydroxide ion performs a nucleophillic on the phosphate group forming a penta-covalent
+        intermediate. Lys131 acts to orientate the hydroxide ion for the nucleophilic attack.
+      notes: M-CSA entry 836, mechanism 2; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/836/
+      snippet: The intermediate collapses forming the products. This is facilitated by the leaving group
+        hydroxyl accepting a proton from a water molecule with the concomitant deprotonation of Glu129
+        by the same water molecule. Glu129 can now re-coordinate to the magnesium ion.
+      notes: M-CSA entry 836, mechanism 2; step 3
+  - subject: glu129
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Glu129 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/836/
+      snippet: The intermediate collapses forming the products. This is facilitated by the leaving group
+        hydroxyl accepting a proton from a water molecule with the concomitant deprotonation of Glu129
+        by the same water molecule. Glu129 can now re-coordinate to the magnesium ion.
+      notes: M-CSA entry 836, mechanism 2; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/836/
+      snippet: products
+      notes: M-CSA entry 836, mechanism 2; step 4
+  - subject: glu93
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu93 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/836/
+      snippet: metal ligand
+      notes: M-CSA entry 836, mechanism 2; M-CSA catalytic-residue roles for Glu93
+  - subject: glu102
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu102 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/836/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 836, mechanism 2; M-CSA catalytic-residue roles for Glu102
+  - subject: asp109
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp109 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/836/
+      snippet: metal ligand
+      notes: M-CSA entry 836, mechanism 2; M-CSA catalytic-residue roles for Asp109
+  - subject: glu129
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu129 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/836/
+      snippet: increase nucleophilicity, metal ligand, proton acceptor, proton donor
+      notes: M-CSA entry 836, mechanism 2; M-CSA catalytic-residue roles for Glu129
+  - subject: leu130
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Leu130 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/836/
+      snippet: metal ligand
+      notes: M-CSA entry 836, mechanism 2; M-CSA catalytic-residue roles for Leu130
+  - subject: lys131
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys131 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/836/
+      snippet: electrostatic stabiliser, proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 836, mechanism 2; M-CSA catalytic-residue roles for Lys131
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/836/
+      snippet: "In this associative mechanism Glu129 activates a water molecule for nucleophilic attack\
+        \ on the scissile phosphate. A penta-covalent intermediate is formed which collapses to form the\
+        \ products and restore the enzyme to its native state.
+See other mechanism for the references."
+      notes: M-CSA entry 836, mechanism 2; CATH domain 3.90.320.10 assigned to the catalytic chain by
+        M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/836/
+      snippet: "In this associative mechanism Glu129 activates a water molecule for nucleophilic attack\
+        \ on the scissile phosphate. A penta-covalent intermediate is formed which collapses to form the\
+        \ products and restore the enzyme to its native state.
+See other mechanism for the references."
+      notes: M-CSA entry 836, mechanism 2; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/836/
+      snippet: "In this associative mechanism Glu129 activates a water molecule for nucleophilic attack\
+        \ on the scissile phosphate. A penta-covalent intermediate is formed which collapses to form the\
+        \ products and restore the enzyme to its native state.
+See other mechanism for the references."
+      notes: M-CSA entry 836, mechanism 2; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/836/
+      snippet: "In this associative mechanism Glu129 activates a water molecule for nucleophilic attack\
+        \ on the scissile phosphate. A penta-covalent intermediate is formed which collapses to form the\
+        \ products and restore the enzyme to its native state.
+See other mechanism for the references."
+      notes: M-CSA entry 836, mechanism 2; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/836/
+      snippet: "In this associative mechanism Glu129 activates a water molecule for nucleophilic attack\
+        \ on the scissile phosphate. A penta-covalent intermediate is formed which collapses to form the\
+        \ products and restore the enzyme to its native state.
+See other mechanism for the references."
+      notes: M-CSA entry 836, mechanism 2; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/836/
+      snippet: "In this associative mechanism Glu129 activates a water molecule for nucleophilic attack\
+        \ on the scissile phosphate. A penta-covalent intermediate is formed which collapses to form the\
+        \ products and restore the enzyme to its native state.
+See other mechanism for the references."
+      notes: M-CSA entry 836, mechanism 2; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/836/
+      snippet: "In this associative mechanism Glu129 activates a water molecule for nucleophilic attack\
+        \ on the scissile phosphate. A penta-covalent intermediate is formed which collapses to form the\
+        \ products and restore the enzyme to its native state.
+See other mechanism for the references."
+      notes: M-CSA entry 836, mechanism 2; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (19 evidence-backed edges) transcribed from M-CSA entry 836;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.1.1.47
 - CHEBI:36655
@@ -387,4 +387,313 @@ definitions:
       Glyoxylate carboligase, also called tartronate-semialdehyde synthase, releases carbon dioxide while synthesising a single molecule of tartronate semialdehyde from two molecules of glyoxylate. It is a thiamine pyrophosphate-dependent enzyme, closely related in sequence to the large subunit of acetolactate synthase. In the D-glycerate pathway, part of allantoin degradation in the Enterobacteriaceae, tartronate semialdehyde is converted to D-glycerate and then 3-phosphoglycerate, a product of glycolysis and entry point in the general metabolism.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of tartronate-semialdehyde synthase
+  description: Stepwise mechanism transcribed from M-CSA entry 298 (7 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: val25
+    label: catalytic Val25 (M-CSA/PDB numbering; UniProt residue 25)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AEP7
+    description: 'M-CSA roles: polar/non-polar interaction.'
+  - node_id: val51
+    label: catalytic Val51 (M-CSA/PDB numbering; UniProt residue 51)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AEP7
+    description: 'M-CSA roles: electrostatic stabiliser, polar/non-polar interaction.'
+  - node_id: leu421
+    label: catalytic Leu421 (M-CSA/PDB numbering; UniProt residue 421)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AEP7
+    description: 'M-CSA roles: polar/non-polar interaction.'
+  - node_id: leu476
+    label: catalytic Leu476 (M-CSA/PDB numbering; UniProt residue 476)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AEP7
+    description: 'M-CSA roles: polar/non-polar interaction.'
+  - node_id: ile479
+    label: catalytic Ile479 (M-CSA/PDB numbering; UniProt residue 479)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AEP7
+    description: 'M-CSA roles: polar/non-polar interaction.'
+  - node_id: reactant0
+    label: glyoxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:36655
+  - node_id: reactant1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product0
+    label: carbon dioxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+  - node_id: product1
+    label: 2-hydroxy-3-oxopropanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:57978
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The cofactor undergoes an intramolecular proton transfer between the pyrimidine and thiazole
+      ring, forming a carbon-nitrogen ylid.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The carbanion of thiamine diphosphate initiates a nucleophilic attack on the carbonyl
+      carbon of glyoxylate in an addition reaction. The conjugated double bond system of the cofactor
+      undergoes rearrangement.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The glyoxylate-TDP adduct undergoes decarboxylation with concomitant bond rearrangement
+      on the thiazole ring. The aliphatic region around the cofactor encourages decarboxylation through
+      polar, non-polar interactions, which act to increase the ground state energy of the intermediate
+      towards that of the transition state [PMID:18176558, PMID:15501823, PMID:15709735]
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The nitrogen of the thiazole ring initiates conjugate nucleophilic attack at the carbonyl
+      of the second glyoxylate molecule, with inferred, concomitant, intramolecular proton rearrangement.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: The oxyanion initiates elimination, forming the single S enantiomer of 2-Hydroxy-3-oxopropanoate
+      and regenerating the activated form of the thiamine diphosphate cofactor.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Protonation at the C2 position regenerates the thiamine diphosphate cofactor, and the
+      enzyme active site.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: tartronate-semialdehyde synthase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:298
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.970 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.970
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: tartronate-semialdehyde synthase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.1.1.47
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/298/
+      snippet: The carbanion of thiamine diphosphate initiates a nucleophilic attack on the carbonyl carbon
+        of glyoxylate in an addition reaction. The conjugated double bond system of the cofactor undergoes
+        rearrangement.
+      notes: M-CSA entry 298, mechanism 1; M-CSA cites PMID:15501823, PMID:15709735, PMID:18176558, PMID:19476486,
+        PMID:22970650; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/298/
+      snippet: The glyoxylate-TDP adduct undergoes decarboxylation with concomitant bond rearrangement
+        on the thiazole ring. The aliphatic region around the cofactor encourages decarboxylation through
+        polar, non-polar interactions, which act to increase the ground state energy of the intermediate
+        towards that of the transition state [PMID:18176558, PMID:15501823, PMID:15709735]
+      notes: M-CSA entry 298, mechanism 1; M-CSA cites PMID:15501823, PMID:15709735, PMID:18176558, PMID:19476486,
+        PMID:22970650; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/298/
+      snippet: The nitrogen of the thiazole ring initiates conjugate nucleophilic attack at the carbonyl
+        of the second glyoxylate molecule, with inferred, concomitant, intramolecular proton rearrangement.
+      notes: M-CSA entry 298, mechanism 1; M-CSA cites PMID:15501823, PMID:15709735, PMID:18176558, PMID:19476486,
+        PMID:22970650; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/298/
+      snippet: The oxyanion initiates elimination, forming the single S enantiomer of 2-Hydroxy-3-oxopropanoate
+        and regenerating the activated form of the thiamine diphosphate cofactor.
+      notes: M-CSA entry 298, mechanism 1; M-CSA cites PMID:15501823, PMID:15709735, PMID:18176558, PMID:19476486,
+        PMID:22970650; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/298/
+      snippet: Protonation at the C2 position regenerates the thiamine diphosphate cofactor, and the enzyme
+        active site.
+      notes: M-CSA entry 298, mechanism 1; M-CSA cites PMID:15501823, PMID:15709735, PMID:18176558, PMID:19476486,
+        PMID:22970650; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/298/
+      snippet: Products.
+      notes: M-CSA entry 298, mechanism 1; M-CSA cites PMID:15501823, PMID:15709735, PMID:18176558, PMID:19476486,
+        PMID:22970650; step 7
+  - subject: val25
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Val25 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/298/
+      snippet: polar/non-polar interaction
+      notes: M-CSA entry 298, mechanism 1; M-CSA cites PMID:15501823, PMID:15709735, PMID:18176558, PMID:19476486,
+        PMID:22970650; M-CSA catalytic-residue roles for Val25
+  - subject: val51
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Val51 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/298/
+      snippet: electrostatic stabiliser, polar/non-polar interaction
+      notes: M-CSA entry 298, mechanism 1; M-CSA cites PMID:15501823, PMID:15709735, PMID:18176558, PMID:19476486,
+        PMID:22970650; M-CSA catalytic-residue roles for Val51
+  - subject: leu421
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Leu421 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/298/
+      snippet: polar/non-polar interaction
+      notes: M-CSA entry 298, mechanism 1; M-CSA cites PMID:15501823, PMID:15709735, PMID:18176558, PMID:19476486,
+        PMID:22970650; M-CSA catalytic-residue roles for Leu421
+  - subject: leu476
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Leu476 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/298/
+      snippet: polar/non-polar interaction
+      notes: M-CSA entry 298, mechanism 1; M-CSA cites PMID:15501823, PMID:15709735, PMID:18176558, PMID:19476486,
+        PMID:22970650; M-CSA catalytic-residue roles for Leu476
+  - subject: ile479
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ile479 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/298/
+      snippet: polar/non-polar interaction
+      notes: M-CSA entry 298, mechanism 1; M-CSA cites PMID:15501823, PMID:15709735, PMID:18176558, PMID:19476486,
+        PMID:22970650; M-CSA catalytic-residue roles for Ile479
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/298/
+      snippet: This enzyme utilises a thiamine diphosphate cofactor to catalyse the condensation reaction
+        between two molecules of glyoxylate. The mechanism, however, does not begin with a proton transfer
+        to a conserved gluatmate, as is the case for every other enzyme that uses this cofactor. Instead,
+        the aliphatic residues surrounding the cofactor act to lower the dielectric constant of the active
+        site, leading
+      notes: M-CSA entry 298, mechanism 1; M-CSA cites PMID:15501823, PMID:15709735, PMID:18176558, PMID:19476486,
+        PMID:22970650; CATH domain 3.40.50.970 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/298/
+      snippet: This enzyme utilises a thiamine diphosphate cofactor to catalyse the condensation reaction
+        between two molecules of glyoxylate. The mechanism, however, does not begin with a proton transfer
+        to a conserved gluatmate, as is the case for every other enzyme that uses this cofactor. Instead,
+        the aliphatic residues surrounding the cofactor act to lower the dielectric constant of the active
+        site, leading
+      notes: M-CSA entry 298, mechanism 1; M-CSA cites PMID:15501823, PMID:15709735, PMID:18176558, PMID:19476486,
+        PMID:22970650; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/298/
+      snippet: This enzyme utilises a thiamine diphosphate cofactor to catalyse the condensation reaction
+        between two molecules of glyoxylate. The mechanism, however, does not begin with a proton transfer
+        to a conserved gluatmate, as is the case for every other enzyme that uses this cofactor. Instead,
+        the aliphatic residues surrounding the cofactor act to lower the dielectric constant of the active
+        site, leading
+      notes: M-CSA entry 298, mechanism 1; M-CSA cites PMID:15501823, PMID:15709735, PMID:18176558, PMID:19476486,
+        PMID:22970650; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/298/
+      snippet: This enzyme utilises a thiamine diphosphate cofactor to catalyse the condensation reaction
+        between two molecules of glyoxylate. The mechanism, however, does not begin with a proton transfer
+        to a conserved gluatmate, as is the case for every other enzyme that uses this cofactor. Instead,
+        the aliphatic residues surrounding the cofactor act to lower the dielectric constant of the active
+        site, leading
+      notes: M-CSA entry 298, mechanism 1; M-CSA cites PMID:15501823, PMID:15709735, PMID:18176558, PMID:19476486,
+        PMID:22970650; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/298/
+      snippet: This enzyme utilises a thiamine diphosphate cofactor to catalyse the condensation reaction
+        between two molecules of glyoxylate. The mechanism, however, does not begin with a proton transfer
+        to a conserved gluatmate, as is the case for every other enzyme that uses this cofactor. Instead,
+        the aliphatic residues surrounding the cofactor act to lower the dielectric constant of the active
+        site, leading
+      notes: M-CSA entry 298, mechanism 1; M-CSA cites PMID:15501823, PMID:15709735, PMID:18176558, PMID:19476486,
+        PMID:22970650; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/298/
+      snippet: This enzyme utilises a thiamine diphosphate cofactor to catalyse the condensation reaction
+        between two molecules of glyoxylate. The mechanism, however, does not begin with a proton transfer
+        to a conserved gluatmate, as is the case for every other enzyme that uses this cofactor. Instead,
+        the aliphatic residues surrounding the cofactor act to lower the dielectric constant of the active
+        site, leading
+      notes: M-CSA entry 298, mechanism 1; M-CSA cites PMID:15501823, PMID:15709735, PMID:18176558, PMID:19476486,
+        PMID:22970650; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (17 evidence-backed edges) transcribed from M-CSA entry 298;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

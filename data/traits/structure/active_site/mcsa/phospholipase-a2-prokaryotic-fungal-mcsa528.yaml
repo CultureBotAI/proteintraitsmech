@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.1.4
 - CHEBI:57643
@@ -84,4 +84,263 @@ definitions:
       The secreted phospholipase A2 (PLA2) from Streptomyces violaceoruber is the first identified prokaryotic PLA2. This Ca II dependent, lipolytic enzyme hydrolyses the 2-acyl ester bonds of 1,2-diacylglycero-3-phospholipids. The very high catalytic activities of secreted PLA2's relative to the aggregated substrates when compared to the monomeric substrates is due to interfacial activation.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of phospholipase A2 (prokaryotic/fungal)
+  description: Stepwise mechanism transcribed from M-CSA entry 528 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +29).
+  nodes:
+  - node_id: asp43
+    label: catalytic Asp43 (M-CSA/PDB numbering; UniProt residue 72)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q6UV28
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: leu44
+    label: catalytic Leu44 (M-CSA/PDB numbering; UniProt residue 73)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q6UV28
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his64
+    label: catalytic His64 (M-CSA/PDB numbering; UniProt residue 93)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q6UV28
+    description: 'M-CSA roles: electrostatic stabiliser, proton acceptor, proton donor.'
+  - node_id: asp65
+    label: catalytic Asp65 (M-CSA/PDB numbering; UniProt residue 94)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q6UV28
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp85
+    label: catalytic Asp85 (M-CSA/PDB numbering; UniProt residue 114)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q6UV28
+    description: 'M-CSA roles: electrostatic stabiliser, increase basicity.'
+  - node_id: reactant0
+    label: 1,2-diacyl-sn-glycero-3-phosphocholine
+    node_type: CHEMICAL
+    grounding: CHEBI:57643
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product1
+    label: fatty acid anion
+    node_type: CHEMICAL
+    grounding: CHEBI:28868
+  - node_id: product2
+    label: 1-O-acyl-sn-glycero-3-phosphocholine
+    node_type: CHEMICAL
+    grounding: CHEBI:58168
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The His93 and Asp114 dyad activates a water molecule which performs a nucleophilic attack
+      on the ester carbonyl carbon. This results in an oxyanion intermediate forming which is stabilized
+      by the calcium ion- the oxyanion becomes ligated to the calcium in the place of one of the water
+      molecules.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The tetrahedral intermediate collapses with His93 protonating the leaving group- generating
+      the products.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: phospholipase A2 (prokaryotic/fungal) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:528
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.20.90.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.20.90.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: phospholipase A2 (prokaryotic/fungal) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.1.4
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/528/
+      snippet: The tetrahedral intermediate collapses with His93 protonating the leaving group- generating
+        the products.
+      notes: M-CSA entry 528, mechanism 1; M-CSA cites PMID:11897785, PMID:11897786, PMID:12696056; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/528/
+      snippet: Products.
+      notes: M-CSA entry 528, mechanism 1; M-CSA cites PMID:11897785, PMID:11897786, PMID:12696056; step
+        3
+  - subject: asp43
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp43 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/528/
+      snippet: metal ligand
+      notes: M-CSA entry 528, mechanism 1; M-CSA cites PMID:11897785, PMID:11897786, PMID:12696056; M-CSA
+        catalytic-residue roles for Asp43
+  - subject: leu44
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Leu44 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/528/
+      snippet: metal ligand
+      notes: M-CSA entry 528, mechanism 1; M-CSA cites PMID:11897785, PMID:11897786, PMID:12696056; M-CSA
+        catalytic-residue roles for Leu44
+  - subject: his64
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His64 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/528/
+      snippet: electrostatic stabiliser, proton acceptor, proton donor
+      notes: M-CSA entry 528, mechanism 1; M-CSA cites PMID:11897785, PMID:11897786, PMID:12696056; M-CSA
+        catalytic-residue roles for His64
+  - subject: asp65
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp65 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/528/
+      snippet: metal ligand
+      notes: M-CSA entry 528, mechanism 1; M-CSA cites PMID:11897785, PMID:11897786, PMID:12696056; M-CSA
+        catalytic-residue roles for Asp65
+  - subject: asp85
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp85 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/528/
+      snippet: electrostatic stabiliser, increase basicity
+      notes: M-CSA entry 528, mechanism 1; M-CSA cites PMID:11897785, PMID:11897786, PMID:12696056; M-CSA
+        catalytic-residue roles for Asp85
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/528/
+      snippet: Prokaryotic PLA2 is Ca II dependent and catalyses the hydrolysis of the 2-acyl ester bonds
+        of 1,2-diacylglycero-3-phospholipids. According to the enzyme model of interfacial activation,
+        the conformational change in PLA2 induced by phospholipid binding optimises the active site and
+        enhances catalysis in the enzyme.  A catalytic dyad is formed between His 93 and Asp 114, and
+        the hydrogen bonding net
+      notes: M-CSA entry 528, mechanism 1; M-CSA cites PMID:11897785, PMID:11897786, PMID:12696056; CATH
+        domain 1.20.90.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/528/
+      snippet: Prokaryotic PLA2 is Ca II dependent and catalyses the hydrolysis of the 2-acyl ester bonds
+        of 1,2-diacylglycero-3-phospholipids. According to the enzyme model of interfacial activation,
+        the conformational change in PLA2 induced by phospholipid binding optimises the active site and
+        enhances catalysis in the enzyme.  A catalytic dyad is formed between His 93 and Asp 114, and
+        the hydrogen bonding net
+      notes: M-CSA entry 528, mechanism 1; M-CSA cites PMID:11897785, PMID:11897786, PMID:12696056; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/528/
+      snippet: Prokaryotic PLA2 is Ca II dependent and catalyses the hydrolysis of the 2-acyl ester bonds
+        of 1,2-diacylglycero-3-phospholipids. According to the enzyme model of interfacial activation,
+        the conformational change in PLA2 induced by phospholipid binding optimises the active site and
+        enhances catalysis in the enzyme.  A catalytic dyad is formed between His 93 and Asp 114, and
+        the hydrogen bonding net
+      notes: M-CSA entry 528, mechanism 1; M-CSA cites PMID:11897785, PMID:11897786, PMID:12696056; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/528/
+      snippet: Prokaryotic PLA2 is Ca II dependent and catalyses the hydrolysis of the 2-acyl ester bonds
+        of 1,2-diacylglycero-3-phospholipids. According to the enzyme model of interfacial activation,
+        the conformational change in PLA2 induced by phospholipid binding optimises the active site and
+        enhances catalysis in the enzyme.  A catalytic dyad is formed between His 93 and Asp 114, and
+        the hydrogen bonding net
+      notes: M-CSA entry 528, mechanism 1; M-CSA cites PMID:11897785, PMID:11897786, PMID:12696056; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/528/
+      snippet: Prokaryotic PLA2 is Ca II dependent and catalyses the hydrolysis of the 2-acyl ester bonds
+        of 1,2-diacylglycero-3-phospholipids. According to the enzyme model of interfacial activation,
+        the conformational change in PLA2 induced by phospholipid binding optimises the active site and
+        enhances catalysis in the enzyme.  A catalytic dyad is formed between His 93 and Asp 114, and
+        the hydrogen bonding net
+      notes: M-CSA entry 528, mechanism 1; M-CSA cites PMID:11897785, PMID:11897786, PMID:12696056; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/528/
+      snippet: Prokaryotic PLA2 is Ca II dependent and catalyses the hydrolysis of the 2-acyl ester bonds
+        of 1,2-diacylglycero-3-phospholipids. According to the enzyme model of interfacial activation,
+        the conformational change in PLA2 induced by phospholipid binding optimises the active site and
+        enhances catalysis in the enzyme.  A catalytic dyad is formed between His 93 and Asp 114, and
+        the hydrogen bonding net
+      notes: M-CSA entry 528, mechanism 1; M-CSA cites PMID:11897785, PMID:11897786, PMID:12696056; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/528/
+      snippet: Prokaryotic PLA2 is Ca II dependent and catalyses the hydrolysis of the 2-acyl ester bonds
+        of 1,2-diacylglycero-3-phospholipids. According to the enzyme model of interfacial activation,
+        the conformational change in PLA2 induced by phospholipid binding optimises the active site and
+        enhances catalysis in the enzyme.  A catalytic dyad is formed between His 93 and Asp 114, and
+        the hydrogen bonding net
+      notes: M-CSA entry 528, mechanism 1; M-CSA cites PMID:11897785, PMID:11897786, PMID:12696056; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (14 evidence-backed edges) transcribed from M-CSA entry 528;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.7.7.49
 - CHEBI:61560
@@ -1089,4 +1089,263 @@ definitions:
       HIV-1 reverse transcriptase (RT) is a component of gag-pol polyprotein encoded by the human immunodeficiency virus-1 (HIV-1) genome. HIV-1 reverse transcriptase contains both DNA polymerase and ribonuclease H (RNase H) activities to convert the viral genomic RNA to double-stranded DNA, which is then integrated into the host genome and replicated along with the infected host cells. Understanding the HIV-1 reverse transcriptase catalytic mechanism is key for discovery of potent drugs and development of more effective, less toxic drugs and multi-drug combinations.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of HIV-1 reverse transcriptase
+  description: Stepwise mechanism transcribed from M-CSA entry 1000 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: asp110
+    label: catalytic Asp110 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P03366
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: val111
+    label: catalytic Val111 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P03366
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp185
+    label: catalytic Asp185 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P03366
+    description: 'M-CSA roles: metal ligand, proton acceptor.'
+  - node_id: asp186
+    label: catalytic Asp186 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P03366
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: lys220
+    label: catalytic Lys220 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P03366
+    description: 'M-CSA roles: proton donor.'
+  - node_id: reactant0
+    label: 2'-deoxyribonucleoside 5'-triphosphate(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:61560
+  - node_id: reactant1
+    label: DNA polyanion
+    node_type: CHEMICAL
+    grounding: CHEBI:83828
+  - node_id: product0
+    label: diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+  - node_id: product1
+    label: DNA polyanion (n+1)
+    node_type: CHEMICAL
+    grounding: CHEBI:X00692
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp185 acts a general base to deprotonate the 3'-OH primer terminus. Active site residues
+      serve as ligand to coordinate the metal ions Mg2+.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Resulting hydroxide 3'-O performs nucleophilic attack towards the alpha-phosphate, leading
+      to polymerization of nucleotides and hydrolysis of pyrophosphate. The pyrophosphate leaving group
+      is protonated by Lys220.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Final products.
+  - node_id: active_site
+    label: HIV-1 reverse transcriptase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:1000
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.70.270 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.70.270
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: HIV-1 reverse transcriptase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.7.7.49
+  edges:
+  - subject: asp185
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp185 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1000/
+      snippet: Asp185 acts a general base to deprotonate the 3'-OH primer terminus. Active site residues
+        serve as ligand to coordinate the metal ions Mg2+.
+      notes: M-CSA entry 1000, mechanism 1; M-CSA cites PMID:17046299, PMID:17360513, PMID:19151724, PMID:9831551;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1000/
+      snippet: Resulting hydroxide 3'-O performs nucleophilic attack towards the alpha-phosphate, leading
+        to polymerization of nucleotides and hydrolysis of pyrophosphate. The pyrophosphate leaving group
+        is protonated by Lys220.
+      notes: M-CSA entry 1000, mechanism 1; M-CSA cites PMID:17046299, PMID:17360513, PMID:19151724, PMID:9831551;
+        step 2
+  - subject: lys220
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Lys220 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1000/
+      snippet: Resulting hydroxide 3'-O performs nucleophilic attack towards the alpha-phosphate, leading
+        to polymerization of nucleotides and hydrolysis of pyrophosphate. The pyrophosphate leaving group
+        is protonated by Lys220.
+      notes: M-CSA entry 1000, mechanism 1; M-CSA cites PMID:17046299, PMID:17360513, PMID:19151724, PMID:9831551;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1000/
+      snippet: Final products.
+      notes: M-CSA entry 1000, mechanism 1; M-CSA cites PMID:17046299, PMID:17360513, PMID:19151724, PMID:9831551;
+        step 3
+  - subject: asp110
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp110 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1000/
+      snippet: metal ligand
+      notes: M-CSA entry 1000, mechanism 1; M-CSA cites PMID:17046299, PMID:17360513, PMID:19151724, PMID:9831551;
+        M-CSA catalytic-residue roles for Asp110
+  - subject: val111
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Val111 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1000/
+      snippet: metal ligand
+      notes: M-CSA entry 1000, mechanism 1; M-CSA cites PMID:17046299, PMID:17360513, PMID:19151724, PMID:9831551;
+        M-CSA catalytic-residue roles for Val111
+  - subject: asp185
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp185 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1000/
+      snippet: metal ligand, proton acceptor
+      notes: M-CSA entry 1000, mechanism 1; M-CSA cites PMID:17046299, PMID:17360513, PMID:19151724, PMID:9831551;
+        M-CSA catalytic-residue roles for Asp185
+  - subject: asp186
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp186 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1000/
+      snippet: metal ligand
+      notes: M-CSA entry 1000, mechanism 1; M-CSA cites PMID:17046299, PMID:17360513, PMID:19151724, PMID:9831551;
+        M-CSA catalytic-residue roles for Asp186
+  - subject: lys220
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys220 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1000/
+      snippet: proton donor
+      notes: M-CSA entry 1000, mechanism 1; M-CSA cites PMID:17046299, PMID:17360513, PMID:19151724, PMID:9831551;
+        M-CSA catalytic-residue roles for Lys220
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1000/
+      snippet: 'HIV-1 reverse transcriptase mechanism consists of two main steps: deprotonation of the
+        3''-primer terminus by Asp185 followed by nucleophilic attack of the 3''OH towards the alpha-phosphate
+        of the incoming deoxy-nucleotide (dNTP). The pyrophosphate leaving group is then protonated by
+        Lys220.'
+      notes: M-CSA entry 1000, mechanism 1; M-CSA cites PMID:17046299, PMID:17360513, PMID:19151724, PMID:9831551;
+        CATH domain 3.30.70.270 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1000/
+      snippet: 'HIV-1 reverse transcriptase mechanism consists of two main steps: deprotonation of the
+        3''-primer terminus by Asp185 followed by nucleophilic attack of the 3''OH towards the alpha-phosphate
+        of the incoming deoxy-nucleotide (dNTP). The pyrophosphate leaving group is then protonated by
+        Lys220.'
+      notes: M-CSA entry 1000, mechanism 1; M-CSA cites PMID:17046299, PMID:17360513, PMID:19151724, PMID:9831551;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1000/
+      snippet: 'HIV-1 reverse transcriptase mechanism consists of two main steps: deprotonation of the
+        3''-primer terminus by Asp185 followed by nucleophilic attack of the 3''OH towards the alpha-phosphate
+        of the incoming deoxy-nucleotide (dNTP). The pyrophosphate leaving group is then protonated by
+        Lys220.'
+      notes: M-CSA entry 1000, mechanism 1; M-CSA cites PMID:17046299, PMID:17360513, PMID:19151724, PMID:9831551;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1000/
+      snippet: 'HIV-1 reverse transcriptase mechanism consists of two main steps: deprotonation of the
+        3''-primer terminus by Asp185 followed by nucleophilic attack of the 3''OH towards the alpha-phosphate
+        of the incoming deoxy-nucleotide (dNTP). The pyrophosphate leaving group is then protonated by
+        Lys220.'
+      notes: M-CSA entry 1000, mechanism 1; M-CSA cites PMID:17046299, PMID:17360513, PMID:19151724, PMID:9831551;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1000/
+      snippet: 'HIV-1 reverse transcriptase mechanism consists of two main steps: deprotonation of the
+        3''-primer terminus by Asp185 followed by nucleophilic attack of the 3''OH towards the alpha-phosphate
+        of the incoming deoxy-nucleotide (dNTP). The pyrophosphate leaving group is then protonated by
+        Lys220.'
+      notes: M-CSA entry 1000, mechanism 1; M-CSA cites PMID:17046299, PMID:17360513, PMID:19151724, PMID:9831551;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1000/
+      snippet: 'HIV-1 reverse transcriptase mechanism consists of two main steps: deprotonation of the
+        3''-primer terminus by Asp185 followed by nucleophilic attack of the 3''OH towards the alpha-phosphate
+        of the incoming deoxy-nucleotide (dNTP). The pyrophosphate leaving group is then protonated by
+        Lys220.'
+      notes: M-CSA entry 1000, mechanism 1; M-CSA cites PMID:17046299, PMID:17360513, PMID:19151724, PMID:9831551;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 1000;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

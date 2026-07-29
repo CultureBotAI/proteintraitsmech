@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.11.18
 - CHEBI:15377
@@ -231,4 +231,294 @@ definitions:
       Methionine aminopeptidase (MAP) catalyses the hydrolytic cleavage of the N-terminal methionine from newly synthesised polypeptides. These enzymes have a requirement for a divalent metal which has been shown to be feasible with multiple different metal ions including Co(II), Mn(II), Fe(II) and Zn(II) with Zinc showing to be the lowest activation energy .
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of methionyl aminopeptidase
+  description: Stepwise mechanism transcribed from M-CSA entry 917 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: asp82
+    label: catalytic Asp82 (M-CSA/PDB numbering; UniProt residue 82)
+    node_type: RESIDUE
+    grounding: UniProtKB:P56218
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp93
+    label: catalytic Asp93 (M-CSA/PDB numbering; UniProt residue 93)
+    node_type: RESIDUE
+    grounding: UniProtKB:P56218
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his153
+    label: catalytic His153 (M-CSA/PDB numbering; UniProt residue 153)
+    node_type: RESIDUE
+    grounding: UniProtKB:P56218
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his161
+    label: catalytic His161 (M-CSA/PDB numbering; UniProt residue 161)
+    node_type: RESIDUE
+    grounding: UniProtKB:P56218
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu187
+    label: catalytic Glu187 (M-CSA/PDB numbering; UniProt residue 187)
+    node_type: RESIDUE
+    grounding: UniProtKB:P56218
+    description: 'M-CSA roles: metal ligand, proton acceptor, proton donor.'
+  - node_id: glu280
+    label: catalytic Glu280 (M-CSA/PDB numbering; UniProt residue 280)
+    node_type: RESIDUE
+    grounding: UniProtKB:P56218
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: Met-Ala
+    node_type: CHEMICAL
+    grounding: CHEBI:73610
+  - node_id: product0
+    label: L-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:16977
+  - node_id: product1
+    label: L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:16643
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu187 deprotonates the Iron activated water.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The activated hydroxide attacks the peptide carbonyl in a nucleophilic addition producing
+      an oxyanion intermediate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The oxyanion initiates an elimination which results in the cleavage of the peptide bond.
+      The N-terminal amino group accepts a proton from Glu187.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Product
+  - node_id: active_site
+    label: methionyl aminopeptidase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:917
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.230.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.230.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: methionyl aminopeptidase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.11.18
+  edges:
+  - subject: glu187
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu187 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/917/
+      snippet: Glu187 deprotonates the Iron activated water.
+      notes: M-CSA entry 917, mechanism 1; M-CSA cites PMID:12044150, PMID:15628852, PMID:17523636, PMID:19019076,
+        PMID:9811545; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/917/
+      snippet: The activated hydroxide attacks the peptide carbonyl in a nucleophilic addition producing
+        an oxyanion intermediate.
+      notes: M-CSA entry 917, mechanism 1; M-CSA cites PMID:12044150, PMID:15628852, PMID:17523636, PMID:19019076,
+        PMID:9811545; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/917/
+      snippet: The oxyanion initiates an elimination which results in the cleavage of the peptide bond.
+        The N-terminal amino group accepts a proton from Glu187.
+      notes: M-CSA entry 917, mechanism 1; M-CSA cites PMID:12044150, PMID:15628852, PMID:17523636, PMID:19019076,
+        PMID:9811545; step 3
+  - subject: glu187
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Glu187 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/917/
+      snippet: The oxyanion initiates an elimination which results in the cleavage of the peptide bond.
+        The N-terminal amino group accepts a proton from Glu187.
+      notes: M-CSA entry 917, mechanism 1; M-CSA cites PMID:12044150, PMID:15628852, PMID:17523636, PMID:19019076,
+        PMID:9811545; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/917/
+      snippet: Product
+      notes: M-CSA entry 917, mechanism 1; M-CSA cites PMID:12044150, PMID:15628852, PMID:17523636, PMID:19019076,
+        PMID:9811545; step 4
+  - subject: asp82
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp82 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/917/
+      snippet: metal ligand
+      notes: M-CSA entry 917, mechanism 1; M-CSA cites PMID:12044150, PMID:15628852, PMID:17523636, PMID:19019076,
+        PMID:9811545; M-CSA catalytic-residue roles for Asp82
+  - subject: asp93
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp93 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/917/
+      snippet: metal ligand
+      notes: M-CSA entry 917, mechanism 1; M-CSA cites PMID:12044150, PMID:15628852, PMID:17523636, PMID:19019076,
+        PMID:9811545; M-CSA catalytic-residue roles for Asp93
+  - subject: his153
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His153 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/917/
+      snippet: metal ligand
+      notes: M-CSA entry 917, mechanism 1; M-CSA cites PMID:12044150, PMID:15628852, PMID:17523636, PMID:19019076,
+        PMID:9811545; M-CSA catalytic-residue roles for His153
+  - subject: his161
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His161 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/917/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 917, mechanism 1; M-CSA cites PMID:12044150, PMID:15628852, PMID:17523636, PMID:19019076,
+        PMID:9811545; M-CSA catalytic-residue roles for His161
+  - subject: glu187
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu187 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/917/
+      snippet: metal ligand, proton acceptor, proton donor
+      notes: M-CSA entry 917, mechanism 1; M-CSA cites PMID:12044150, PMID:15628852, PMID:17523636, PMID:19019076,
+        PMID:9811545; M-CSA catalytic-residue roles for Glu187
+  - subject: glu280
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu280 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/917/
+      snippet: metal ligand
+      notes: M-CSA entry 917, mechanism 1; M-CSA cites PMID:12044150, PMID:15628852, PMID:17523636, PMID:19019076,
+        PMID:9811545; M-CSA catalytic-residue roles for Glu280
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/917/
+      snippet: Water is polarised by coordinating to Zinc which is a strong Lewis acid as a result Glu
+        187 can more easily abstract a proton from the activated water molecule. The activated hydroxide
+        can then nucleophilically attack the carbon of the scissille peptide bond and produce an oxyanion
+        intermediate which is stabilised by coordination to zinc and hydrogen bonding to His 161. The
+        oxyanion will then init
+      notes: M-CSA entry 917, mechanism 1; M-CSA cites PMID:12044150, PMID:15628852, PMID:17523636, PMID:19019076,
+        PMID:9811545; CATH domain 3.90.230.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/917/
+      snippet: Water is polarised by coordinating to Zinc which is a strong Lewis acid as a result Glu
+        187 can more easily abstract a proton from the activated water molecule. The activated hydroxide
+        can then nucleophilically attack the carbon of the scissille peptide bond and produce an oxyanion
+        intermediate which is stabilised by coordination to zinc and hydrogen bonding to His 161. The
+        oxyanion will then init
+      notes: M-CSA entry 917, mechanism 1; M-CSA cites PMID:12044150, PMID:15628852, PMID:17523636, PMID:19019076,
+        PMID:9811545; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/917/
+      snippet: Water is polarised by coordinating to Zinc which is a strong Lewis acid as a result Glu
+        187 can more easily abstract a proton from the activated water molecule. The activated hydroxide
+        can then nucleophilically attack the carbon of the scissille peptide bond and produce an oxyanion
+        intermediate which is stabilised by coordination to zinc and hydrogen bonding to His 161. The
+        oxyanion will then init
+      notes: M-CSA entry 917, mechanism 1; M-CSA cites PMID:12044150, PMID:15628852, PMID:17523636, PMID:19019076,
+        PMID:9811545; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/917/
+      snippet: Water is polarised by coordinating to Zinc which is a strong Lewis acid as a result Glu
+        187 can more easily abstract a proton from the activated water molecule. The activated hydroxide
+        can then nucleophilically attack the carbon of the scissille peptide bond and produce an oxyanion
+        intermediate which is stabilised by coordination to zinc and hydrogen bonding to His 161. The
+        oxyanion will then init
+      notes: M-CSA entry 917, mechanism 1; M-CSA cites PMID:12044150, PMID:15628852, PMID:17523636, PMID:19019076,
+        PMID:9811545; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/917/
+      snippet: Water is polarised by coordinating to Zinc which is a strong Lewis acid as a result Glu
+        187 can more easily abstract a proton from the activated water molecule. The activated hydroxide
+        can then nucleophilically attack the carbon of the scissille peptide bond and produce an oxyanion
+        intermediate which is stabilised by coordination to zinc and hydrogen bonding to His 161. The
+        oxyanion will then init
+      notes: M-CSA entry 917, mechanism 1; M-CSA cites PMID:12044150, PMID:15628852, PMID:17523636, PMID:19019076,
+        PMID:9811545; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/917/
+      snippet: Water is polarised by coordinating to Zinc which is a strong Lewis acid as a result Glu
+        187 can more easily abstract a proton from the activated water molecule. The activated hydroxide
+        can then nucleophilically attack the carbon of the scissille peptide bond and produce an oxyanion
+        intermediate which is stabilised by coordination to zinc and hydrogen bonding to His 161. The
+        oxyanion will then init
+      notes: M-CSA entry 917, mechanism 1; M-CSA cites PMID:12044150, PMID:15628852, PMID:17523636, PMID:19019076,
+        PMID:9811545; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (17 evidence-backed edges) transcribed from M-CSA entry 917;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

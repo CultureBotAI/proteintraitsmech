@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.5.1.1
 - CHEBI:16130
@@ -185,4 +185,172 @@ definitions:
       This glutathione reductase is known to perform the conjugation of reduced glutathione to a wide number of exogenous and endogenous hydrophobic electrophiles [PMID:22082028, PMID:20417639]. Has DDT dehydrochlorinase activity [PMID:20417639] and may also be involved in detoxification [PMID:22082028]. Docking and NMR studies have shown that the DDT molecule binds in the H-site.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of DDT-dehydrochlorinase
+  description: Stepwise mechanism transcribed from M-CSA entry 950 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: ser10
+    label: catalytic Ser10 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P20432
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: DDT
+    node_type: CHEMICAL
+    grounding: CHEBI:16130
+  - node_id: product0
+    label: DDE
+    node_type: CHEMICAL
+    grounding: CHEBI:16598
+  - node_id: product1
+    label: chloride
+    node_type: CHEMICAL
+    grounding: CHEBI:17996
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Activated glutathione abstracts the beta proton from the DDT substrate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: In an inferred return step the activated glutathione species is regenerated. The species
+      responsible for the final proton abstraction is not known, shown here as the product chloride anion.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: DDT-dehydrochlorinase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:950
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.30.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.30.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: DDT-dehydrochlorinase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.5.1.1
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/950/
+      snippet: In an inferred return step the activated glutathione species is regenerated. The species
+        responsible for the final proton abstraction is not known, shown here as the product chloride
+        anion.
+      notes: M-CSA entry 950, mechanism 1; M-CSA cites PMID:14646079, PMID:18778777, PMID:20417639, PMID:22082028,
+        PMID:22206003, PMID:22475449; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/950/
+      snippet: Products
+      notes: M-CSA entry 950, mechanism 1; M-CSA cites PMID:14646079, PMID:18778777, PMID:20417639, PMID:22082028,
+        PMID:22206003, PMID:22475449; step 3
+  - subject: ser10
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser10 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/950/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 950, mechanism 1; M-CSA cites PMID:14646079, PMID:18778777, PMID:20417639, PMID:22082028,
+        PMID:22206003, PMID:22475449; M-CSA catalytic-residue roles for Ser10
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/950/
+      snippet: The thiolate group of activated ionic GSH abstracts the DDT beta-hydrogen, which eliminates
+        a chloride ion from DDT to yield the final product DDE. The chloride anion then abstracts the
+        proton from GSH to regenerate the enzyme active site.
+      notes: M-CSA entry 950, mechanism 1; M-CSA cites PMID:14646079, PMID:18778777, PMID:20417639, PMID:22082028,
+        PMID:22206003, PMID:22475449; CATH domain 3.40.30.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/950/
+      snippet: The thiolate group of activated ionic GSH abstracts the DDT beta-hydrogen, which eliminates
+        a chloride ion from DDT to yield the final product DDE. The chloride anion then abstracts the
+        proton from GSH to regenerate the enzyme active site.
+      notes: M-CSA entry 950, mechanism 1; M-CSA cites PMID:14646079, PMID:18778777, PMID:20417639, PMID:22082028,
+        PMID:22206003, PMID:22475449; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/950/
+      snippet: The thiolate group of activated ionic GSH abstracts the DDT beta-hydrogen, which eliminates
+        a chloride ion from DDT to yield the final product DDE. The chloride anion then abstracts the
+        proton from GSH to regenerate the enzyme active site.
+      notes: M-CSA entry 950, mechanism 1; M-CSA cites PMID:14646079, PMID:18778777, PMID:20417639, PMID:22082028,
+        PMID:22206003, PMID:22475449; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/950/
+      snippet: The thiolate group of activated ionic GSH abstracts the DDT beta-hydrogen, which eliminates
+        a chloride ion from DDT to yield the final product DDE. The chloride anion then abstracts the
+        proton from GSH to regenerate the enzyme active site.
+      notes: M-CSA entry 950, mechanism 1; M-CSA cites PMID:14646079, PMID:18778777, PMID:20417639, PMID:22082028,
+        PMID:22206003, PMID:22475449; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/950/
+      snippet: The thiolate group of activated ionic GSH abstracts the DDT beta-hydrogen, which eliminates
+        a chloride ion from DDT to yield the final product DDE. The chloride anion then abstracts the
+        proton from GSH to regenerate the enzyme active site.
+      notes: M-CSA entry 950, mechanism 1; M-CSA cites PMID:14646079, PMID:18778777, PMID:20417639, PMID:22082028,
+        PMID:22206003, PMID:22475449; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/950/
+      snippet: The thiolate group of activated ionic GSH abstracts the DDT beta-hydrogen, which eliminates
+        a chloride ion from DDT to yield the final product DDE. The chloride anion then abstracts the
+        proton from GSH to regenerate the enzyme active site.
+      notes: M-CSA entry 950, mechanism 1; M-CSA cites PMID:14646079, PMID:18778777, PMID:20417639, PMID:22082028,
+        PMID:22206003, PMID:22475449; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (9 evidence-backed edges) transcribed from M-CSA entry 950;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

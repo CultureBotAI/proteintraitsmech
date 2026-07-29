@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.4.2.8
 - CHEBI:58017
@@ -266,4 +266,245 @@ definitions:
       Converts guanine to guanosine monophosphate, and hypoxanthine to inosine monophosphate. Transfers the 5-phosphoribosyl group from 5-phosphoribosylpyrophosphate onto the purine. Plays a central role in the generation of purine nucleotides through the purine salvage pathway and is involved in the first step of the subpathway that synthesizes IMP from hypoxanthine.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of hypoxanthine phosphoribosyltransferase
+  description: Stepwise mechanism transcribed from M-CSA entry 48 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +1).
+  nodes:
+  - node_id: glu133
+    label: catalytic Glu133 (M-CSA/PDB numbering; UniProt residue 134)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00492
+    description: 'M-CSA roles: attractive charge-charge interaction, electrostatic stabiliser.'
+  - node_id: asp134
+    label: catalytic Asp134 (M-CSA/PDB numbering; UniProt residue 135)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00492
+    description: 'M-CSA roles: attractive charge-charge interaction, electrostatic stabiliser.'
+  - node_id: asp137
+    label: catalytic Asp137 (M-CSA/PDB numbering; UniProt residue 138)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00492
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: phe186
+    label: catalytic Phe186 (M-CSA/PDB numbering; UniProt residue 187)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00492
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: arg199
+    label: catalytic Arg199 (M-CSA/PDB numbering; UniProt residue 200)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00492
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: 5-O-phosphonato-alpha-D-ribofuranosyl diphosphate(5-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58017
+  - node_id: reactant1
+    label: guanine
+    node_type: CHEMICAL
+    grounding: CHEBI:16235
+  - node_id: product0
+    label: guanosine 5'-monophosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58115
+  - node_id: product1
+    label: diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp137 deprotonates the guanine which initiates a nucleophilic attack upon the C2 of
+      the ribose ring in a substitution reaction, eliminating diphosphate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The diphosphate product deprotonates Asp137 in an inferred return step.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: hypoxanthine phosphoribosyltransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:48
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.2020 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.2020
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: hypoxanthine phosphoribosyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.4.2.8
+  edges:
+  - subject: asp137
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp137 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/48/
+      snippet: Asp137 deprotonates the guanine which initiates a nucleophilic attack upon the C2 of the
+        ribose ring in a substitution reaction, eliminating diphosphate.
+      notes: M-CSA entry 48, mechanism 1; M-CSA cites PMID:10360366, PMID:10545171, PMID:11258886, PMID:23170881,
+        PMID:25944719, PMID:9083019, PMID:9521733; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/48/
+      snippet: The diphosphate product deprotonates Asp137 in an inferred return step.
+      notes: M-CSA entry 48, mechanism 1; M-CSA cites PMID:10360366, PMID:10545171, PMID:11258886, PMID:23170881,
+        PMID:25944719, PMID:9083019, PMID:9521733; step 2
+  - subject: asp137
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Asp137 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/48/
+      snippet: The diphosphate product deprotonates Asp137 in an inferred return step.
+      notes: M-CSA entry 48, mechanism 1; M-CSA cites PMID:10360366, PMID:10545171, PMID:11258886, PMID:23170881,
+        PMID:25944719, PMID:9083019, PMID:9521733; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/48/
+      snippet: Products
+      notes: M-CSA entry 48, mechanism 1; M-CSA cites PMID:10360366, PMID:10545171, PMID:11258886, PMID:23170881,
+        PMID:25944719, PMID:9083019, PMID:9521733; step 3
+  - subject: glu133
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu133 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/48/
+      snippet: attractive charge-charge interaction, electrostatic stabiliser
+      notes: M-CSA entry 48, mechanism 1; M-CSA cites PMID:10360366, PMID:10545171, PMID:11258886, PMID:23170881,
+        PMID:25944719, PMID:9083019, PMID:9521733; M-CSA catalytic-residue roles for Glu133
+  - subject: asp134
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp134 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/48/
+      snippet: attractive charge-charge interaction, electrostatic stabiliser
+      notes: M-CSA entry 48, mechanism 1; M-CSA cites PMID:10360366, PMID:10545171, PMID:11258886, PMID:23170881,
+        PMID:25944719, PMID:9083019, PMID:9521733; M-CSA catalytic-residue roles for Asp134
+  - subject: asp137
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp137 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/48/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 48, mechanism 1; M-CSA cites PMID:10360366, PMID:10545171, PMID:11258886, PMID:23170881,
+        PMID:25944719, PMID:9083019, PMID:9521733; M-CSA catalytic-residue roles for Asp137
+  - subject: phe186
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Phe186 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/48/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 48, mechanism 1; M-CSA cites PMID:10360366, PMID:10545171, PMID:11258886, PMID:23170881,
+        PMID:25944719, PMID:9083019, PMID:9521733; M-CSA catalytic-residue roles for Phe186
+  - subject: arg199
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg199 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/48/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 48, mechanism 1; M-CSA cites PMID:10360366, PMID:10545171, PMID:11258886, PMID:23170881,
+        PMID:25944719, PMID:9083019, PMID:9521733; M-CSA catalytic-residue roles for Arg199
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/48/
+      snippet: In a nucleophilic bimolecular substitution, Asp137 activates the guanine for attach on
+        the C2 of the substrate ribose, the reaction proceeds via a positively charged transition state.
+      notes: M-CSA entry 48, mechanism 1; M-CSA cites PMID:10360366, PMID:10545171, PMID:11258886, PMID:23170881,
+        PMID:25944719, PMID:9083019, PMID:9521733; CATH domain 3.40.50.2020 assigned to the catalytic
+        chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/48/
+      snippet: In a nucleophilic bimolecular substitution, Asp137 activates the guanine for attach on
+        the C2 of the substrate ribose, the reaction proceeds via a positively charged transition state.
+      notes: M-CSA entry 48, mechanism 1; M-CSA cites PMID:10360366, PMID:10545171, PMID:11258886, PMID:23170881,
+        PMID:25944719, PMID:9083019, PMID:9521733; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/48/
+      snippet: In a nucleophilic bimolecular substitution, Asp137 activates the guanine for attach on
+        the C2 of the substrate ribose, the reaction proceeds via a positively charged transition state.
+      notes: M-CSA entry 48, mechanism 1; M-CSA cites PMID:10360366, PMID:10545171, PMID:11258886, PMID:23170881,
+        PMID:25944719, PMID:9083019, PMID:9521733; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/48/
+      snippet: In a nucleophilic bimolecular substitution, Asp137 activates the guanine for attach on
+        the C2 of the substrate ribose, the reaction proceeds via a positively charged transition state.
+      notes: M-CSA entry 48, mechanism 1; M-CSA cites PMID:10360366, PMID:10545171, PMID:11258886, PMID:23170881,
+        PMID:25944719, PMID:9083019, PMID:9521733; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/48/
+      snippet: In a nucleophilic bimolecular substitution, Asp137 activates the guanine for attach on
+        the C2 of the substrate ribose, the reaction proceeds via a positively charged transition state.
+      notes: M-CSA entry 48, mechanism 1; M-CSA cites PMID:10360366, PMID:10545171, PMID:11258886, PMID:23170881,
+        PMID:25944719, PMID:9083019, PMID:9521733; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/48/
+      snippet: In a nucleophilic bimolecular substitution, Asp137 activates the guanine for attach on
+        the C2 of the substrate ribose, the reaction proceeds via a positively charged transition state.
+      notes: M-CSA entry 48, mechanism 1; M-CSA cites PMID:10360366, PMID:10545171, PMID:11258886, PMID:23170881,
+        PMID:25944719, PMID:9083019, PMID:9521733; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 48;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

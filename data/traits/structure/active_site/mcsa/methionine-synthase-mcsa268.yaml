@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.1.1.13
 - CHEBI:58199
@@ -432,4 +432,275 @@ definitions:
       Methionine synthase (MetH) is a cobalamin (vitamin B12) and zinc dependent enzyme that catalyses the transfer of a methyl group from methyl-cobalamin to homocysteine, yielding enzyme-bound cob(I)alamin and methionine. The enzyme's cofactor is re-methylated using methyltetrahydrofolate. During the catalytic cycle, the highly reactive cob(I)alamin intermediate can be oxidised to produce an inactive cob(II)alamin enzyme; the enzyme is then reactivated via reductive methylation by the activation domain.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of methionine synthase
+  description: Stepwise mechanism transcribed from M-CSA entry 268 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: asp757
+    label: catalytic Asp757 (M-CSA/PDB numbering; UniProt residue 757)
+    node_type: RESIDUE
+    grounding: UniProtKB:P13009
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor,
+      proton relay.'
+  - node_id: his759
+    label: catalytic His759 (M-CSA/PDB numbering; UniProt residue 759)
+    node_type: RESIDUE
+    grounding: UniProtKB:P13009
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, increase electrophilicity,
+      increase nucleophilicity, metal ligand, proton acceptor, proton donor.'
+  - node_id: ser810
+    label: catalytic Ser810 (M-CSA/PDB numbering; UniProt residue 810)
+    node_type: RESIDUE
+    grounding: UniProtKB:P13009
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor,
+      proton relay.'
+  - node_id: reactant0
+    label: L-homocysteine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:58199
+  - node_id: reactant1
+    label: 5-methyltetrahydrofolate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:18608
+  - node_id: product0
+    label: L-methionine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57844
+  - node_id: product1
+    label: (6S)-5,6,7,8-tetrahydrofolate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57453
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The sulfur of homocysteine (assumed to bind in the deprotonated form) initiates a nulceophilic
+      attack on the methyl of methylcobalamin, forming Co(I)alamin and the methionine product in a substitution
+      reaction. A proton relay between His759 and bulk solvent modulates the reactivity of the cobalamin
+      cofactor. In the methylated form of the enzyme, His759 and Asp757 share a single proton with one
+      neg
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The cob(I)alamin initiates a nucleophilic attack on the methyl group of methyltetrahydrofolate,
+      proceeding through a three centre two electron bond, to form the methylcobalamin and covalently
+      bound tetrahydrofolate. It is assumed that this reaction proceeds <i>via</i> a three center, two
+      electron bond between the N, Co and C of the methyl group [PMID:11076529].
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The tetrahydrofolate product dissociated from the cobalamin cofactor with protonation
+      (assumed to be from the bulk solvent). It is not clear when the protonation occurs, it is thought
+      that protonation of the leaving group is esential for the cleavage of the Co-N bond. It is assumed
+      that this proton comes from the bulk solvent. [PMID:11076529]
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: methionine synthase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:268
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.280 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.280
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: methionine synthase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.1.1.13
+  edges:
+  - subject: asp757
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp757 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/268/
+      snippet: The sulfur of homocysteine (assumed to bind in the deprotonated form) initiates a nulceophilic
+        attack on the methyl of methylcobalamin, forming Co(I)alamin and the methionine product in a substitution
+        reaction. A proton relay between His759 and bulk solvent modulates the reactivity of the cobalamin
+        cofactor. In the methylated form of the enzyme, His759 and Asp757 share a single proton with one
+        negative charge delocalised over two residues. Partial deprotonation of His757 greatly increases
+        the bascicity of the ligand, stabilising the methylated form of the cofactor. [PMID:7992050]
+      notes: M-CSA entry 268, mechanism 1; M-CSA cites PMID:11076529, PMID:11731805, PMID:2407589, PMID:24164324,
+        PMID:7712296, PMID:7992050, PMID:8652590; step 1
+  - subject: his759
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His759 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/268/
+      snippet: The sulfur of homocysteine (assumed to bind in the deprotonated form) initiates a nulceophilic
+        attack on the methyl of methylcobalamin, forming Co(I)alamin and the methionine product in a substitution
+        reaction. A proton relay between His759 and bulk solvent modulates the reactivity of the cobalamin
+        cofactor. In the methylated form of the enzyme, His759 and Asp757 share a single proton with one
+        negative charge delocalised over two residues. Partial deprotonation of His757 greatly increases
+        the bascicity of the ligand, stabilising the methylated form of the cofactor. [PMID:7992050]
+      notes: M-CSA entry 268, mechanism 1; M-CSA cites PMID:11076529, PMID:11731805, PMID:2407589, PMID:24164324,
+        PMID:7712296, PMID:7992050, PMID:8652590; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/268/
+      snippet: The cob(I)alamin initiates a nucleophilic attack on the methyl group of methyltetrahydrofolate,
+        proceeding through a three centre two electron bond, to form the methylcobalamin and covalently
+        bound tetrahydrofolate. It is assumed that this reaction proceeds <i>via</i> a three center, two
+        electron bond between the N, Co and C of the methyl group [PMID:11076529].
+      notes: M-CSA entry 268, mechanism 1; M-CSA cites PMID:11076529, PMID:11731805, PMID:2407589, PMID:24164324,
+        PMID:7712296, PMID:7992050, PMID:8652590; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/268/
+      snippet: The tetrahydrofolate product dissociated from the cobalamin cofactor with protonation (assumed
+        to be from the bulk solvent). It is not clear when the protonation occurs, it is thought that
+        protonation of the leaving group is esential for the cleavage of the Co-N bond. It is assumed
+        that this proton comes from the bulk solvent. [PMID:11076529]
+      notes: M-CSA entry 268, mechanism 1; M-CSA cites PMID:11076529, PMID:11731805, PMID:2407589, PMID:24164324,
+        PMID:7712296, PMID:7992050, PMID:8652590; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/268/
+      snippet: Products.
+      notes: M-CSA entry 268, mechanism 1; M-CSA cites PMID:11076529, PMID:11731805, PMID:2407589, PMID:24164324,
+        PMID:7712296, PMID:7992050, PMID:8652590; step 4
+  - subject: asp757
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp757 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/268/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 268, mechanism 1; M-CSA cites PMID:11076529, PMID:11731805, PMID:2407589, PMID:24164324,
+        PMID:7712296, PMID:7992050, PMID:8652590; M-CSA catalytic-residue roles for Asp757
+  - subject: his759
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His759 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/268/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, increase electrophilicity, increase nucleophilicity,
+        metal ligand, proton acceptor, proton donor
+      notes: M-CSA entry 268, mechanism 1; M-CSA cites PMID:11076529, PMID:11731805, PMID:2407589, PMID:24164324,
+        PMID:7712296, PMID:7992050, PMID:8652590; M-CSA catalytic-residue roles for His759
+  - subject: ser810
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser810 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/268/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 268, mechanism 1; M-CSA cites PMID:11076529, PMID:11731805, PMID:2407589, PMID:24164324,
+        PMID:7712296, PMID:7992050, PMID:8652590; M-CSA catalytic-residue roles for Ser810
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/268/
+      snippet: This enzyme is unique in E. coli in that it utilises methylcobalamin (rather than adenosylcobalamin)
+        and catalysis involves a heterolytic (rather than homolytic) cleavage of the Co-C bond [PMID:8652590].
+        The Cob(I)alamin intermediate generated by this heterolytic cleavage is highly reactive and is
+        occasionally oxidised to an inactive cob(II)alamin species. The enzyme must then re reactivated
+        by re
+      notes: M-CSA entry 268, mechanism 1; M-CSA cites PMID:11076529, PMID:11731805, PMID:2407589, PMID:24164324,
+        PMID:7712296, PMID:7992050, PMID:8652590; CATH domain 3.40.50.280 assigned to the catalytic chain
+        by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/268/
+      snippet: This enzyme is unique in E. coli in that it utilises methylcobalamin (rather than adenosylcobalamin)
+        and catalysis involves a heterolytic (rather than homolytic) cleavage of the Co-C bond [PMID:8652590].
+        The Cob(I)alamin intermediate generated by this heterolytic cleavage is highly reactive and is
+        occasionally oxidised to an inactive cob(II)alamin species. The enzyme must then re reactivated
+        by re
+      notes: M-CSA entry 268, mechanism 1; M-CSA cites PMID:11076529, PMID:11731805, PMID:2407589, PMID:24164324,
+        PMID:7712296, PMID:7992050, PMID:8652590; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/268/
+      snippet: This enzyme is unique in E. coli in that it utilises methylcobalamin (rather than adenosylcobalamin)
+        and catalysis involves a heterolytic (rather than homolytic) cleavage of the Co-C bond [PMID:8652590].
+        The Cob(I)alamin intermediate generated by this heterolytic cleavage is highly reactive and is
+        occasionally oxidised to an inactive cob(II)alamin species. The enzyme must then re reactivated
+        by re
+      notes: M-CSA entry 268, mechanism 1; M-CSA cites PMID:11076529, PMID:11731805, PMID:2407589, PMID:24164324,
+        PMID:7712296, PMID:7992050, PMID:8652590; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/268/
+      snippet: This enzyme is unique in E. coli in that it utilises methylcobalamin (rather than adenosylcobalamin)
+        and catalysis involves a heterolytic (rather than homolytic) cleavage of the Co-C bond [PMID:8652590].
+        The Cob(I)alamin intermediate generated by this heterolytic cleavage is highly reactive and is
+        occasionally oxidised to an inactive cob(II)alamin species. The enzyme must then re reactivated
+        by re
+      notes: M-CSA entry 268, mechanism 1; M-CSA cites PMID:11076529, PMID:11731805, PMID:2407589, PMID:24164324,
+        PMID:7712296, PMID:7992050, PMID:8652590; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/268/
+      snippet: This enzyme is unique in E. coli in that it utilises methylcobalamin (rather than adenosylcobalamin)
+        and catalysis involves a heterolytic (rather than homolytic) cleavage of the Co-C bond [PMID:8652590].
+        The Cob(I)alamin intermediate generated by this heterolytic cleavage is highly reactive and is
+        occasionally oxidised to an inactive cob(II)alamin species. The enzyme must then re reactivated
+        by re
+      notes: M-CSA entry 268, mechanism 1; M-CSA cites PMID:11076529, PMID:11731805, PMID:2407589, PMID:24164324,
+        PMID:7712296, PMID:7992050, PMID:8652590; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/268/
+      snippet: This enzyme is unique in E. coli in that it utilises methylcobalamin (rather than adenosylcobalamin)
+        and catalysis involves a heterolytic (rather than homolytic) cleavage of the Co-C bond [PMID:8652590].
+        The Cob(I)alamin intermediate generated by this heterolytic cleavage is highly reactive and is
+        occasionally oxidised to an inactive cob(II)alamin species. The enzyme must then re reactivated
+        by re
+      notes: M-CSA entry 268, mechanism 1; M-CSA cites PMID:11076529, PMID:11731805, PMID:2407589, PMID:24164324,
+        PMID:7712296, PMID:7992050, PMID:8652590; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (14 evidence-backed edges) transcribed from M-CSA entry 268;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

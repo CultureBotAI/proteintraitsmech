@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.1.11
 - CHEBI:15377
@@ -275,4 +275,340 @@ definitions:
       Pectin methylesterases catalyse pectin deesterification by converting methyl-D-galactopyranosol residues of pectin to carboxylates and methanol. These enzymes have a role in plant cell wall metabolism.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of pectinesterase
+  description: Stepwise mechanism transcribed from M-CSA entry 681 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: gln113
+    label: catalytic Gln113 (M-CSA/PDB numbering; UniProt residue 113)
+    node_type: RESIDUE
+    grounding: UniProtKB:P83218
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: gln135
+    label: catalytic Gln135 (M-CSA/PDB numbering; UniProt residue 135)
+    node_type: RESIDUE
+    grounding: UniProtKB:P83218
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp136
+    label: catalytic Asp136 (M-CSA/PDB numbering; UniProt residue 136)
+    node_type: RESIDUE
+    grounding: UniProtKB:P83218
+    description: 'M-CSA roles: increase nucleophilicity, proton acceptor, proton donor.'
+  - node_id: asp157
+    label: catalytic Asp157 (M-CSA/PDB numbering; UniProt residue 157)
+    node_type: RESIDUE
+    grounding: UniProtKB:P83218
+    description: 'M-CSA roles: covalently attached, nucleofuge, nucleophile.'
+  - node_id: arg225
+    label: catalytic Arg225 (M-CSA/PDB numbering; UniProt residue 225)
+    node_type: RESIDUE
+    grounding: UniProtKB:P83218
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: pectin
+    node_type: CHEMICAL
+    grounding: CHEBI:17309
+  - node_id: product0
+    label: pectate
+    node_type: CHEMICAL
+    grounding: CHEBI:68837
+  - node_id: product1
+    label: methanol
+    node_type: CHEMICAL
+    grounding: CHEBI:17790
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp157 performs a nucleophilic attack on the carbonyl carbon this forms an oxyanion intermediate
+      which can be stabilized by Gln113 and Gln135.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The tetrahedral intermediate collapses with Asp136 acting as an acid promoting the elimination
+      of methanol.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Asp136 now acts as a base in order to activate a water molecule for nucleophilic attack
+      on the carbonyl carbon forming a second oxyanion intermediate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Asp157 is then eliminated from the intermediate and the product is formed.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: pectinesterase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:681
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.160.20.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.160.20.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: pectinesterase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.1.11
+  edges:
+  - subject: gln113
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Gln113 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/681/
+      snippet: Asp157 performs a nucleophilic attack on the carbonyl carbon this forms an oxyanion intermediate
+        which can be stabilized by Gln113 and Gln135.
+      notes: M-CSA entry 681, mechanism 1; M-CSA cites PMID:11943159, PMID:17717531; step 1
+  - subject: gln135
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Gln135 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/681/
+      snippet: Asp157 performs a nucleophilic attack on the carbonyl carbon this forms an oxyanion intermediate
+        which can be stabilized by Gln113 and Gln135.
+      notes: M-CSA entry 681, mechanism 1; M-CSA cites PMID:11943159, PMID:17717531; step 1
+  - subject: asp157
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp157 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/681/
+      snippet: Asp157 performs a nucleophilic attack on the carbonyl carbon this forms an oxyanion intermediate
+        which can be stabilized by Gln113 and Gln135.
+      notes: M-CSA entry 681, mechanism 1; M-CSA cites PMID:11943159, PMID:17717531; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/681/
+      snippet: The tetrahedral intermediate collapses with Asp136 acting as an acid promoting the elimination
+        of methanol.
+      notes: M-CSA entry 681, mechanism 1; M-CSA cites PMID:11943159, PMID:17717531; step 2
+  - subject: asp136
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Asp136 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/681/
+      snippet: The tetrahedral intermediate collapses with Asp136 acting as an acid promoting the elimination
+        of methanol.
+      notes: M-CSA entry 681, mechanism 1; M-CSA cites PMID:11943159, PMID:17717531; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/681/
+      snippet: Asp136 now acts as a base in order to activate a water molecule for nucleophilic attack
+        on the carbonyl carbon forming a second oxyanion intermediate.
+      notes: M-CSA entry 681, mechanism 1; M-CSA cites PMID:11943159, PMID:17717531; step 3
+  - subject: asp136
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Asp136 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/681/
+      snippet: Asp136 now acts as a base in order to activate a water molecule for nucleophilic attack
+        on the carbonyl carbon forming a second oxyanion intermediate.
+      notes: M-CSA entry 681, mechanism 1; M-CSA cites PMID:11943159, PMID:17717531; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/681/
+      snippet: Asp157 is then eliminated from the intermediate and the product is formed.
+      notes: M-CSA entry 681, mechanism 1; M-CSA cites PMID:11943159, PMID:17717531; step 4
+  - subject: asp157
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Asp157 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/681/
+      snippet: Asp157 is then eliminated from the intermediate and the product is formed.
+      notes: M-CSA entry 681, mechanism 1; M-CSA cites PMID:11943159, PMID:17717531; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/681/
+      snippet: Products.
+      notes: M-CSA entry 681, mechanism 1; M-CSA cites PMID:11943159, PMID:17717531; step 5
+  - subject: gln113
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln113 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/681/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 681, mechanism 1; M-CSA cites PMID:11943159, PMID:17717531; M-CSA catalytic-residue
+        roles for Gln113
+  - subject: gln135
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln135 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/681/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 681, mechanism 1; M-CSA cites PMID:11943159, PMID:17717531; M-CSA catalytic-residue
+        roles for Gln135
+  - subject: asp136
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp136 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/681/
+      snippet: increase nucleophilicity, proton acceptor, proton donor
+      notes: M-CSA entry 681, mechanism 1; M-CSA cites PMID:11943159, PMID:17717531; M-CSA catalytic-residue
+        roles for Asp136
+  - subject: asp157
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp157 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/681/
+      snippet: covalently attached, nucleofuge, nucleophile
+      notes: M-CSA entry 681, mechanism 1; M-CSA cites PMID:11943159, PMID:17717531; M-CSA catalytic-residue
+        roles for Asp157
+  - subject: arg225
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg225 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/681/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 681, mechanism 1; M-CSA cites PMID:11943159, PMID:17717531; M-CSA catalytic-residue
+        roles for Arg225
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/681/
+      snippet: Pectin methylesterases hydrolyse the ester bond of methylated galacturonid units - this
+        produces a polymer and methanol. Asp 157 is the nucleophile for the attack on the carboxymethyl
+        carbonyl carbon. A negatively-charged tetrahedral intermediate is then stabilised by the anion
+        hole formed by Gln 113 and Gln 135. Asp 136 acts as a general acid catalyst in the first cleavage
+        step where methanol is
+      notes: M-CSA entry 681, mechanism 1; M-CSA cites PMID:11943159, PMID:17717531; CATH domain 2.160.20.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/681/
+      snippet: Pectin methylesterases hydrolyse the ester bond of methylated galacturonid units - this
+        produces a polymer and methanol. Asp 157 is the nucleophile for the attack on the carboxymethyl
+        carbonyl carbon. A negatively-charged tetrahedral intermediate is then stabilised by the anion
+        hole formed by Gln 113 and Gln 135. Asp 136 acts as a general acid catalyst in the first cleavage
+        step where methanol is
+      notes: M-CSA entry 681, mechanism 1; M-CSA cites PMID:11943159, PMID:17717531; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/681/
+      snippet: Pectin methylesterases hydrolyse the ester bond of methylated galacturonid units - this
+        produces a polymer and methanol. Asp 157 is the nucleophile for the attack on the carboxymethyl
+        carbonyl carbon. A negatively-charged tetrahedral intermediate is then stabilised by the anion
+        hole formed by Gln 113 and Gln 135. Asp 136 acts as a general acid catalyst in the first cleavage
+        step where methanol is
+      notes: M-CSA entry 681, mechanism 1; M-CSA cites PMID:11943159, PMID:17717531; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/681/
+      snippet: Pectin methylesterases hydrolyse the ester bond of methylated galacturonid units - this
+        produces a polymer and methanol. Asp 157 is the nucleophile for the attack on the carboxymethyl
+        carbonyl carbon. A negatively-charged tetrahedral intermediate is then stabilised by the anion
+        hole formed by Gln 113 and Gln 135. Asp 136 acts as a general acid catalyst in the first cleavage
+        step where methanol is
+      notes: M-CSA entry 681, mechanism 1; M-CSA cites PMID:11943159, PMID:17717531; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/681/
+      snippet: Pectin methylesterases hydrolyse the ester bond of methylated galacturonid units - this
+        produces a polymer and methanol. Asp 157 is the nucleophile for the attack on the carboxymethyl
+        carbonyl carbon. A negatively-charged tetrahedral intermediate is then stabilised by the anion
+        hole formed by Gln 113 and Gln 135. Asp 136 acts as a general acid catalyst in the first cleavage
+        step where methanol is
+      notes: M-CSA entry 681, mechanism 1; M-CSA cites PMID:11943159, PMID:17717531; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/681/
+      snippet: Pectin methylesterases hydrolyse the ester bond of methylated galacturonid units - this
+        produces a polymer and methanol. Asp 157 is the nucleophile for the attack on the carboxymethyl
+        carbonyl carbon. A negatively-charged tetrahedral intermediate is then stabilised by the anion
+        hole formed by Gln 113 and Gln 135. Asp 136 acts as a general acid catalyst in the first cleavage
+        step where methanol is
+      notes: M-CSA entry 681, mechanism 1; M-CSA cites PMID:11943159, PMID:17717531; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/681/
+      snippet: Pectin methylesterases hydrolyse the ester bond of methylated galacturonid units - this
+        produces a polymer and methanol. Asp 157 is the nucleophile for the attack on the carboxymethyl
+        carbonyl carbon. A negatively-charged tetrahedral intermediate is then stabilised by the anion
+        hole formed by Gln 113 and Gln 135. Asp 136 acts as a general acid catalyst in the first cleavage
+        step where methanol is
+      notes: M-CSA entry 681, mechanism 1; M-CSA cites PMID:11943159, PMID:17717531; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (22 evidence-backed edges) transcribed from M-CSA entry 681;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

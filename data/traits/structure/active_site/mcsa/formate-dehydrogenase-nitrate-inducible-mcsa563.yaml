@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.17.5.3
 - CHEBI:15740
@@ -987,4 +987,365 @@ definitions:
       Formate dehydrogenase-N (Fdn-N) isolated from Escherichia coli catalyses the oxidation of formate to carbon dioxide and a proton, coupled to the reduction of menaquinone to menaquinol. Fdn-N is involved in nitrate respiration and forms a redox loop with dissimilatory nitrate reductase (Nar). Together they pump protons across the membrane by reducing menaquinone at Fdn-N (taking up protons from the cytoplasm) and oxidising menaquinol at Nar, (releasing protons into the periplasm). They also generate a membrane potential by moving electrons from Fdn-N to Nar. Fdn-N contains an active site for formate oxidation (alpha subunit) and an active site for menaquinone reduction (gamma subunit). They are linked by a redox chain containing two haem groups (gamma), five [4Fe-4S] clusters (FeS-0 in alpha and FeS-1 to FeS-4 in beta) and a molybdenum(VI) ion coordinated to two molybdopterin-guanine dinucleotides, the selenate group from Se-Cys196(alpha) and a hydroxide ion (alpha).
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of formate dehydrogenase (nitrate-inducible)
+  description: Stepwise mechanism transcribed from M-CSA entry 563 (7 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: his169
+    label: catalytic His169 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P24183
+    description: 'M-CSA roles: hydrogen bond donor, proton acceptor, proton donor, single electron acceptor,
+      single electron donor, single electron relay.'
+  - node_id: sec196
+    label: catalytic Sec196 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P24183
+    description: 'M-CSA roles: covalently attached, metal ligand, nucleofuge.'
+  - node_id: his197
+    label: catalytic His197 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P24183
+  - node_id: reactant0
+    label: formate
+    node_type: CHEMICAL
+    grounding: CHEBI:15740
+  - node_id: reactant1
+    label: menaquinone
+    node_type: CHEMICAL
+    grounding: CHEBI:16374
+  - node_id: reactant2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product0
+    label: carbon dioxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+  - node_id: product1
+    label: menaquinol
+    node_type: CHEMICAL
+    grounding: CHEBI:18151
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Formate displaces Sec196 and coordinates to the Mo(VI) centre.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: His197 accepts a proton from formate, forming carbon dioxide and reducing the Mo centre
+      to Mo(IV). The proton abstraction may proceed via a selenium-carboxylated intermediate. Following
+      this step Sec196 re-coordinates to the metal centre.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: An electron is passed down a chain of iron-sulfur centres in the alpha then beta subunit
+      of the protein.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The electron is then transferred to haem bp, haem bc, His169 then accepted by menaquinone
+      in the gamma subunit of the protein. The oxygen accepts a proton through a water chain to form a
+      radical menasemiquinone intermediate.The O1 atom of menaquinone accepts a hydrogen bond from His169.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Mo(V) donates another electron which is transferred through the iron sulfur clusters
+      and haem cofactors to menasemiquinone. Mo(V) is oxidised to regenerate Mo(VI) and menasemiquinone
+      is reduced.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: The alkoxide accepts a proton from His169 and menaquinol is released. Deprotonated His169
+      is very unstable so it is immediately reprotonated via an extended water channel.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: formate dehydrogenase (nitrate-inducible) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:563
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.20.950.20 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.20.950.20
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: formate dehydrogenase (nitrate-inducible) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.17.5.3
+  edges:
+  - subject: sec196
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Sec196 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/563/
+      snippet: Formate displaces Sec196 and coordinates to the Mo(VI) centre.
+      notes: M-CSA entry 563, mechanism 1; M-CSA cites PMID:11289300, PMID:11884747, PMID:16830149; step
+        1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/563/
+      snippet: His197 accepts a proton from formate, forming carbon dioxide and reducing the Mo centre
+        to Mo(IV). The proton abstraction may proceed via a selenium-carboxylated intermediate. Following
+        this step Sec196 re-coordinates to the metal centre.
+      notes: M-CSA entry 563, mechanism 1; M-CSA cites PMID:11289300, PMID:11884747, PMID:16830149; step
+        2
+  - subject: sec196
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Sec196 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/563/
+      snippet: His197 accepts a proton from formate, forming carbon dioxide and reducing the Mo centre
+        to Mo(IV). The proton abstraction may proceed via a selenium-carboxylated intermediate. Following
+        this step Sec196 re-coordinates to the metal centre.
+      notes: M-CSA entry 563, mechanism 1; M-CSA cites PMID:11289300, PMID:11884747, PMID:16830149; step
+        2
+  - subject: his197
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His197 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/563/
+      snippet: His197 accepts a proton from formate, forming carbon dioxide and reducing the Mo centre
+        to Mo(IV). The proton abstraction may proceed via a selenium-carboxylated intermediate. Following
+        this step Sec196 re-coordinates to the metal centre.
+      notes: M-CSA entry 563, mechanism 1; M-CSA cites PMID:11289300, PMID:11884747, PMID:16830149; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/563/
+      snippet: An electron is passed down a chain of iron-sulfur centres in the alpha then beta subunit
+        of the protein.
+      notes: M-CSA entry 563, mechanism 1; M-CSA cites PMID:11289300, PMID:11884747, PMID:16830149; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/563/
+      snippet: The electron is then transferred to haem bp, haem bc, His169 then accepted by menaquinone
+        in the gamma subunit of the protein. The oxygen accepts a proton through a water chain to form
+        a radical menasemiquinone intermediate.The O1 atom of menaquinone accepts a hydrogen bond from
+        His169.
+      notes: M-CSA entry 563, mechanism 1; M-CSA cites PMID:11289300, PMID:11884747, PMID:16830149; step
+        4
+  - subject: his169
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: His169 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/563/
+      snippet: The electron is then transferred to haem bp, haem bc, His169 then accepted by menaquinone
+        in the gamma subunit of the protein. The oxygen accepts a proton through a water chain to form
+        a radical menasemiquinone intermediate.The O1 atom of menaquinone accepts a hydrogen bond from
+        His169.
+      notes: M-CSA entry 563, mechanism 1; M-CSA cites PMID:11289300, PMID:11884747, PMID:16830149; step
+        4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/563/
+      snippet: Mo(V) donates another electron which is transferred through the iron sulfur clusters and
+        haem cofactors to menasemiquinone. Mo(V) is oxidised to regenerate Mo(VI) and menasemiquinone
+        is reduced.
+      notes: M-CSA entry 563, mechanism 1; M-CSA cites PMID:11289300, PMID:11884747, PMID:16830149; step
+        5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/563/
+      snippet: The alkoxide accepts a proton from His169 and menaquinol is released. Deprotonated His169
+        is very unstable so it is immediately reprotonated via an extended water channel.
+      notes: M-CSA entry 563, mechanism 1; M-CSA cites PMID:11289300, PMID:11884747, PMID:16830149; step
+        6
+  - subject: his169
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: His169 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/563/
+      snippet: The alkoxide accepts a proton from His169 and menaquinol is released. Deprotonated His169
+        is very unstable so it is immediately reprotonated via an extended water channel.
+      notes: M-CSA entry 563, mechanism 1; M-CSA cites PMID:11289300, PMID:11884747, PMID:16830149; step
+        6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/563/
+      snippet: Products.
+      notes: M-CSA entry 563, mechanism 1; M-CSA cites PMID:11289300, PMID:11884747, PMID:16830149; step
+        7
+  - subject: his169
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His169 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/563/
+      snippet: hydrogen bond donor, proton acceptor, proton donor, single electron acceptor, single electron
+        donor, single electron relay
+      notes: M-CSA entry 563, mechanism 1; M-CSA cites PMID:11289300, PMID:11884747, PMID:16830149; M-CSA
+        catalytic-residue roles for His169
+  - subject: sec196
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Sec196 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/563/
+      snippet: covalently attached, metal ligand, nucleofuge
+      notes: M-CSA entry 563, mechanism 1; M-CSA cites PMID:11289300, PMID:11884747, PMID:16830149; M-CSA
+        catalytic-residue roles for Sec196
+  - subject: his197
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His197 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/563/
+      snippet: Formate displaces the selenate group of Se-Cys196(alpha) from the Mo(VI) centre. His197(alpha)
+        accepts a proton from formate, which leads to the formation of carbon dioxide (possibly via a
+        selenium-carboxylated intermediate) and the reduction of the molybdenum centre to Mo(IV). The
+        selenate group then re-coordinates to the metal centre. An electron is passed down a chain of
+        iron-sulfur centres in
+      notes: M-CSA entry 563, mechanism 1; M-CSA cites PMID:11289300, PMID:11884747, PMID:16830149; M-CSA
+        catalytic-residue roles for His197
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/563/
+      snippet: Formate displaces the selenate group of Se-Cys196(alpha) from the Mo(VI) centre. His197(alpha)
+        accepts a proton from formate, which leads to the formation of carbon dioxide (possibly via a
+        selenium-carboxylated intermediate) and the reduction of the molybdenum centre to Mo(IV). The
+        selenate group then re-coordinates to the metal centre. An electron is passed down a chain of
+        iron-sulfur centres in
+      notes: M-CSA entry 563, mechanism 1; M-CSA cites PMID:11289300, PMID:11884747, PMID:16830149; CATH
+        domain 1.20.950.20 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/563/
+      snippet: Formate displaces the selenate group of Se-Cys196(alpha) from the Mo(VI) centre. His197(alpha)
+        accepts a proton from formate, which leads to the formation of carbon dioxide (possibly via a
+        selenium-carboxylated intermediate) and the reduction of the molybdenum centre to Mo(IV). The
+        selenate group then re-coordinates to the metal centre. An electron is passed down a chain of
+        iron-sulfur centres in
+      notes: M-CSA entry 563, mechanism 1; M-CSA cites PMID:11289300, PMID:11884747, PMID:16830149; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/563/
+      snippet: Formate displaces the selenate group of Se-Cys196(alpha) from the Mo(VI) centre. His197(alpha)
+        accepts a proton from formate, which leads to the formation of carbon dioxide (possibly via a
+        selenium-carboxylated intermediate) and the reduction of the molybdenum centre to Mo(IV). The
+        selenate group then re-coordinates to the metal centre. An electron is passed down a chain of
+        iron-sulfur centres in
+      notes: M-CSA entry 563, mechanism 1; M-CSA cites PMID:11289300, PMID:11884747, PMID:16830149; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/563/
+      snippet: Formate displaces the selenate group of Se-Cys196(alpha) from the Mo(VI) centre. His197(alpha)
+        accepts a proton from formate, which leads to the formation of carbon dioxide (possibly via a
+        selenium-carboxylated intermediate) and the reduction of the molybdenum centre to Mo(IV). The
+        selenate group then re-coordinates to the metal centre. An electron is passed down a chain of
+        iron-sulfur centres in
+      notes: M-CSA entry 563, mechanism 1; M-CSA cites PMID:11289300, PMID:11884747, PMID:16830149; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/563/
+      snippet: Formate displaces the selenate group of Se-Cys196(alpha) from the Mo(VI) centre. His197(alpha)
+        accepts a proton from formate, which leads to the formation of carbon dioxide (possibly via a
+        selenium-carboxylated intermediate) and the reduction of the molybdenum centre to Mo(IV). The
+        selenate group then re-coordinates to the metal centre. An electron is passed down a chain of
+        iron-sulfur centres in
+      notes: M-CSA entry 563, mechanism 1; M-CSA cites PMID:11289300, PMID:11884747, PMID:16830149; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/563/
+      snippet: Formate displaces the selenate group of Se-Cys196(alpha) from the Mo(VI) centre. His197(alpha)
+        accepts a proton from formate, which leads to the formation of carbon dioxide (possibly via a
+        selenium-carboxylated intermediate) and the reduction of the molybdenum centre to Mo(IV). The
+        selenate group then re-coordinates to the metal centre. An electron is passed down a chain of
+        iron-sulfur centres in
+      notes: M-CSA entry 563, mechanism 1; M-CSA cites PMID:11289300, PMID:11884747, PMID:16830149; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/563/
+      snippet: Formate displaces the selenate group of Se-Cys196(alpha) from the Mo(VI) centre. His197(alpha)
+        accepts a proton from formate, which leads to the formation of carbon dioxide (possibly via a
+        selenium-carboxylated intermediate) and the reduction of the molybdenum centre to Mo(IV). The
+        selenate group then re-coordinates to the metal centre. An electron is passed down a chain of
+        iron-sulfur centres in
+      notes: M-CSA entry 563, mechanism 1; M-CSA cites PMID:11289300, PMID:11884747, PMID:16830149; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (21 evidence-backed edges) transcribed from M-CSA entry 563;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.8.1.7
 - CHEBI:58297
@@ -423,4 +423,421 @@ definitions:
       The pyrimidine nucleotide-disulphide oxidoreductases are a family of proteins which transfer electrons from NAD(P)H via FAD to a redox-active disulphide bond in the enzyme active site, which then reduces the substrate. The structure of the ubiquitous enzyme glutathione reductase (EC 1.6.4.2), which helps protect cells from oxidative stress, is similar to trypanothione reductase (EC 1.6.4.8), lipoamide dehydrogenase (EC 1.8.1.4), higher eukaryotic thioredoxin reductase (EC 1.6.4.5) and mercuric reductase (1.16.1.1).
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of glutathione-disulfide reductase
+  description: Stepwise mechanism transcribed from M-CSA entry 6 (7 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +44).
+  nodes:
+  - node_id: cys58
+    label: catalytic Cys58 (M-CSA/PDB numbering; UniProt residue 102)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00390
+    description: 'M-CSA roles: electrofuge, electrophile, nucleofuge, nucleophile.'
+  - node_id: cys63
+    label: catalytic Cys63 (M-CSA/PDB numbering; UniProt residue 107)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00390
+    description: 'M-CSA roles: electrofuge, electrophile, hydrogen bond acceptor, hydrogen bond donor,
+      nucleofuge, nucleophile, proton acceptor, proton donor.'
+  - node_id: lys66
+    label: catalytic Lys66 (M-CSA/PDB numbering; UniProt residue 110)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00390
+    description: 'M-CSA roles: activator, electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: tyr197
+    label: catalytic Tyr197 (M-CSA/PDB numbering; UniProt residue 241)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00390
+    description: 'M-CSA roles: activator.'
+  - node_id: glu201
+    label: catalytic Glu201 (M-CSA/PDB numbering; UniProt residue 245)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00390
+    description: 'M-CSA roles: activator, electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: his467
+    label: catalytic His467 (M-CSA/PDB numbering; UniProt residue 511)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00390
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: glu472
+    label: catalytic Glu472 (M-CSA/PDB numbering; UniProt residue 516)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00390
+    description: 'M-CSA roles: activator, electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: reactant0
+    label: glutathione disulfide(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58297
+  - node_id: reactant1
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:16474
+  - node_id: reactant2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product0
+    label: glutathionate(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57925
+  - node_id: product1
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:18009
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: NADP eliminates a hydride ion, which attacks the FAD cofactor with concomitant double
+      bond rearrangement.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The FAD oxyanion collapses, initiating a nucleophilic attack on Cys63 in a substitution
+      reaction that eliminates Cys58 from the disulfide bond.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The FAD cofactor eliminates Cys63 with concomitant deprotonation of the nitrogen to which
+      the hydride was added.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: His467B deprotonates Cys63A.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Cys58 initiates a nucleophilic attack on the disulfide bond of oxidised glutathione in
+      a substitution reaction, eliminating glutathione with concomitant deprotonation of His467B.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Cys63 initiates a nucleophilic attack on Cys58 in a substitution reaction, eliminating
+      glutathione with concomitant deprotonation of water.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: glutathione-disulfide reductase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:6
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.50.50.60 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.50.50.60
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: glutathione-disulfide reductase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.8.1.7
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/6/
+      snippet: The FAD oxyanion collapses, initiating a nucleophilic attack on Cys63 in a substitution
+        reaction that eliminates Cys58 from the disulfide bond.
+      notes: M-CSA entry 6, mechanism 1; M-CSA cites PMID:1888731, PMID:2558727, PMID:2585516, PMID:3656429,
+        PMID:6822532; step 2
+  - subject: cys58
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Cys58 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/6/
+      snippet: The FAD oxyanion collapses, initiating a nucleophilic attack on Cys63 in a substitution
+        reaction that eliminates Cys58 from the disulfide bond.
+      notes: M-CSA entry 6, mechanism 1; M-CSA cites PMID:1888731, PMID:2558727, PMID:2585516, PMID:3656429,
+        PMID:6822532; step 2
+  - subject: cys63
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Cys63 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/6/
+      snippet: The FAD oxyanion collapses, initiating a nucleophilic attack on Cys63 in a substitution
+        reaction that eliminates Cys58 from the disulfide bond.
+      notes: M-CSA entry 6, mechanism 1; M-CSA cites PMID:1888731, PMID:2558727, PMID:2585516, PMID:3656429,
+        PMID:6822532; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/6/
+      snippet: The FAD cofactor eliminates Cys63 with concomitant deprotonation of the nitrogen to which
+        the hydride was added.
+      notes: M-CSA entry 6, mechanism 1; M-CSA cites PMID:1888731, PMID:2558727, PMID:2585516, PMID:3656429,
+        PMID:6822532; step 3
+  - subject: cys63
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Cys63 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/6/
+      snippet: The FAD cofactor eliminates Cys63 with concomitant deprotonation of the nitrogen to which
+        the hydride was added.
+      notes: M-CSA entry 6, mechanism 1; M-CSA cites PMID:1888731, PMID:2558727, PMID:2585516, PMID:3656429,
+        PMID:6822532; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/6/
+      snippet: His467B deprotonates Cys63A.
+      notes: M-CSA entry 6, mechanism 1; M-CSA cites PMID:1888731, PMID:2558727, PMID:2585516, PMID:3656429,
+        PMID:6822532; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/6/
+      snippet: Cys58 initiates a nucleophilic attack on the disulfide bond of oxidised glutathione in
+        a substitution reaction, eliminating glutathione with concomitant deprotonation of His467B.
+      notes: M-CSA entry 6, mechanism 1; M-CSA cites PMID:1888731, PMID:2558727, PMID:2585516, PMID:3656429,
+        PMID:6822532; step 5
+  - subject: cys58
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Cys58 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/6/
+      snippet: Cys58 initiates a nucleophilic attack on the disulfide bond of oxidised glutathione in
+        a substitution reaction, eliminating glutathione with concomitant deprotonation of His467B.
+      notes: M-CSA entry 6, mechanism 1; M-CSA cites PMID:1888731, PMID:2558727, PMID:2585516, PMID:3656429,
+        PMID:6822532; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/6/
+      snippet: Cys63 initiates a nucleophilic attack on Cys58 in a substitution reaction, eliminating
+        glutathione with concomitant deprotonation of water.
+      notes: M-CSA entry 6, mechanism 1; M-CSA cites PMID:1888731, PMID:2558727, PMID:2585516, PMID:3656429,
+        PMID:6822532; step 6
+  - subject: cys58
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: Cys58 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/6/
+      snippet: Cys63 initiates a nucleophilic attack on Cys58 in a substitution reaction, eliminating
+        glutathione with concomitant deprotonation of water.
+      notes: M-CSA entry 6, mechanism 1; M-CSA cites PMID:1888731, PMID:2558727, PMID:2585516, PMID:3656429,
+        PMID:6822532; step 6
+  - subject: cys63
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: Cys63 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/6/
+      snippet: Cys63 initiates a nucleophilic attack on Cys58 in a substitution reaction, eliminating
+        glutathione with concomitant deprotonation of water.
+      notes: M-CSA entry 6, mechanism 1; M-CSA cites PMID:1888731, PMID:2558727, PMID:2585516, PMID:3656429,
+        PMID:6822532; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/6/
+      snippet: Products.
+      notes: M-CSA entry 6, mechanism 1; M-CSA cites PMID:1888731, PMID:2558727, PMID:2585516, PMID:3656429,
+        PMID:6822532; step 7
+  - subject: cys58
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys58 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/6/
+      snippet: electrofuge, electrophile, nucleofuge, nucleophile
+      notes: M-CSA entry 6, mechanism 1; M-CSA cites PMID:1888731, PMID:2558727, PMID:2585516, PMID:3656429,
+        PMID:6822532; M-CSA catalytic-residue roles for Cys58
+  - subject: cys63
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys63 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/6/
+      snippet: electrofuge, electrophile, hydrogen bond acceptor, hydrogen bond donor, nucleofuge, nucleophile,
+        proton acceptor, proton donor
+      notes: M-CSA entry 6, mechanism 1; M-CSA cites PMID:1888731, PMID:2558727, PMID:2585516, PMID:3656429,
+        PMID:6822532; M-CSA catalytic-residue roles for Cys63
+  - subject: lys66
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys66 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/6/
+      snippet: activator, electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 6, mechanism 1; M-CSA cites PMID:1888731, PMID:2558727, PMID:2585516, PMID:3656429,
+        PMID:6822532; M-CSA catalytic-residue roles for Lys66
+  - subject: tyr197
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr197 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/6/
+      snippet: activator
+      notes: M-CSA entry 6, mechanism 1; M-CSA cites PMID:1888731, PMID:2558727, PMID:2585516, PMID:3656429,
+        PMID:6822532; M-CSA catalytic-residue roles for Tyr197
+  - subject: glu201
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu201 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/6/
+      snippet: activator, electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 6, mechanism 1; M-CSA cites PMID:1888731, PMID:2558727, PMID:2585516, PMID:3656429,
+        PMID:6822532; M-CSA catalytic-residue roles for Glu201
+  - subject: his467
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His467 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/6/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 6, mechanism 1; M-CSA cites PMID:1888731, PMID:2558727, PMID:2585516, PMID:3656429,
+        PMID:6822532; M-CSA catalytic-residue roles for His467
+  - subject: glu472
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu472 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/6/
+      snippet: activator, electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 6, mechanism 1; M-CSA cites PMID:1888731, PMID:2558727, PMID:2585516, PMID:3656429,
+        PMID:6822532; M-CSA catalytic-residue roles for Glu472
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/6/
+      snippet: Initially, the enzyme is in the oxidised state, with its redox active cysteines 58 and
+        63 forming a disulphide bond to each other. A hydride is transferred from NAD(P)H to FAD, a process
+        facilitated by Glu201, Lys66 and Tyr197, as demonstrated by mutagenesis and structural studies.
+        From there the electron makes an SN2 attack on the sulfur atom of Cys63, causing Cys58 to be displaced
+        as thiolate. T
+      notes: M-CSA entry 6, mechanism 1; M-CSA cites PMID:1888731, PMID:2558727, PMID:2585516, PMID:3656429,
+        PMID:6822532; CATH domain 3.50.50.60 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/6/
+      snippet: Initially, the enzyme is in the oxidised state, with its redox active cysteines 58 and
+        63 forming a disulphide bond to each other. A hydride is transferred from NAD(P)H to FAD, a process
+        facilitated by Glu201, Lys66 and Tyr197, as demonstrated by mutagenesis and structural studies.
+        From there the electron makes an SN2 attack on the sulfur atom of Cys63, causing Cys58 to be displaced
+        as thiolate. T
+      notes: M-CSA entry 6, mechanism 1; M-CSA cites PMID:1888731, PMID:2558727, PMID:2585516, PMID:3656429,
+        PMID:6822532; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/6/
+      snippet: Initially, the enzyme is in the oxidised state, with its redox active cysteines 58 and
+        63 forming a disulphide bond to each other. A hydride is transferred from NAD(P)H to FAD, a process
+        facilitated by Glu201, Lys66 and Tyr197, as demonstrated by mutagenesis and structural studies.
+        From there the electron makes an SN2 attack on the sulfur atom of Cys63, causing Cys58 to be displaced
+        as thiolate. T
+      notes: M-CSA entry 6, mechanism 1; M-CSA cites PMID:1888731, PMID:2558727, PMID:2585516, PMID:3656429,
+        PMID:6822532; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/6/
+      snippet: Initially, the enzyme is in the oxidised state, with its redox active cysteines 58 and
+        63 forming a disulphide bond to each other. A hydride is transferred from NAD(P)H to FAD, a process
+        facilitated by Glu201, Lys66 and Tyr197, as demonstrated by mutagenesis and structural studies.
+        From there the electron makes an SN2 attack on the sulfur atom of Cys63, causing Cys58 to be displaced
+        as thiolate. T
+      notes: M-CSA entry 6, mechanism 1; M-CSA cites PMID:1888731, PMID:2558727, PMID:2585516, PMID:3656429,
+        PMID:6822532; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/6/
+      snippet: Initially, the enzyme is in the oxidised state, with its redox active cysteines 58 and
+        63 forming a disulphide bond to each other. A hydride is transferred from NAD(P)H to FAD, a process
+        facilitated by Glu201, Lys66 and Tyr197, as demonstrated by mutagenesis and structural studies.
+        From there the electron makes an SN2 attack on the sulfur atom of Cys63, causing Cys58 to be displaced
+        as thiolate. T
+      notes: M-CSA entry 6, mechanism 1; M-CSA cites PMID:1888731, PMID:2558727, PMID:2585516, PMID:3656429,
+        PMID:6822532; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/6/
+      snippet: Initially, the enzyme is in the oxidised state, with its redox active cysteines 58 and
+        63 forming a disulphide bond to each other. A hydride is transferred from NAD(P)H to FAD, a process
+        facilitated by Glu201, Lys66 and Tyr197, as demonstrated by mutagenesis and structural studies.
+        From there the electron makes an SN2 attack on the sulfur atom of Cys63, causing Cys58 to be displaced
+        as thiolate. T
+      notes: M-CSA entry 6, mechanism 1; M-CSA cites PMID:1888731, PMID:2558727, PMID:2585516, PMID:3656429,
+        PMID:6822532; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/6/
+      snippet: Initially, the enzyme is in the oxidised state, with its redox active cysteines 58 and
+        63 forming a disulphide bond to each other. A hydride is transferred from NAD(P)H to FAD, a process
+        facilitated by Glu201, Lys66 and Tyr197, as demonstrated by mutagenesis and structural studies.
+        From there the electron makes an SN2 attack on the sulfur atom of Cys63, causing Cys58 to be displaced
+        as thiolate. T
+      notes: M-CSA entry 6, mechanism 1; M-CSA cites PMID:1888731, PMID:2558727, PMID:2585516, PMID:3656429,
+        PMID:6822532; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (26 evidence-backed edges) transcribed from M-CSA entry 6; SEEDED
+    -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

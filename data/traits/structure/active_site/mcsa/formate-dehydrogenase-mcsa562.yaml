@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.17.1.9
 - CHEBI:15339
@@ -637,4 +637,363 @@ definitions:
       Formate Dehydrogenase H (FDH-H) from Escherichi coli is a 79kDa polypeptide component of the anaerobic formate hydrogen lyase complex. The enzyme catalyses the oxidation of formate (produced from pyruvate during anaerobic growth) to carbon dioxide, in the absence of exogenous electron acceptors, with the concomitant release of two electrons and two protons.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of formate dehydrogenase
+  description: Stepwise mechanism transcribed from M-CSA entry 562 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: lys44
+    label: catalytic Lys44 (M-CSA/PDB numbering; UniProt residue 44)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07658
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: sec140
+    label: catalytic Sec140 (M-CSA/PDB numbering; UniProt residue 140)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07658
+    description: 'M-CSA roles: electrophile, metal ligand, nucleofuge, nucleophile, proton acceptor, proton
+      donor.'
+  - node_id: his141
+    label: catalytic His141 (M-CSA/PDB numbering; UniProt residue 141)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07658
+    description: 'M-CSA roles: electrostatic stabiliser, proton acceptor.'
+  - node_id: arg333
+    label: catalytic Arg333 (M-CSA/PDB numbering; UniProt residue 333)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07658
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: reactant0
+    label: acceptor
+    node_type: CHEMICAL
+    grounding: CHEBI:15339
+  - node_id: reactant1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: reactant2
+    label: formate
+    node_type: CHEMICAL
+    grounding: CHEBI:15740
+  - node_id: product0
+    label: hydrogen donor
+    node_type: CHEMICAL
+    grounding: CHEBI:17499
+  - node_id: product1
+    label: carbon dioxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Catalysis begins with the formate displacing the Mo-bound Sec140 group in the oxidised
+      form of the enzyme.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The formate proton is abstracted by Sec140. The CO2 molecule is released and two electrons
+      are transferred to Mo, forming Mo(IV).
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: An electron is shuttled from Mo(IV) to an electron acceptor (R) through an MGD ligand,
+      a water molecule, then the Fe4S4 cluster. This results in a Mo(V) intermediate. The formate proton
+      is transferred from Sec140 to His141. This leads to hydrogen bond formation between His141 and Sec140.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Once the Fe4S4 cluster is reoxidized, a second electron is transferred from Mo(V) to
+      the Fe4S4 cluster. The oxidation of Mo(V) to Mo(VI) causes the hydrogen bond between Sec140 and
+      His141 to break, releasing the proton of His141 to solvent. Sec140 re-cordinates to the Mo(VI) centre.
+      After the Fe4S4 cluster is reoxidised for a second time, the enzyme is restored to its initial state.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: formate dehydrogenase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:562
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.20.25.90 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.20.25.90
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: formate dehydrogenase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.17.1.9
+  edges:
+  - subject: sec140
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Sec140 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/562/
+      snippet: Catalysis begins with the formate displacing the Mo-bound Sec140 group in the oxidised
+        form of the enzyme.
+      notes: M-CSA entry 562, mechanism 1; M-CSA cites PMID:16830149, PMID:18671310, PMID:9036855; step
+        1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/562/
+      snippet: The formate proton is abstracted by Sec140. The CO2 molecule is released and two electrons
+        are transferred to Mo, forming Mo(IV).
+      notes: M-CSA entry 562, mechanism 1; M-CSA cites PMID:16830149, PMID:18671310, PMID:9036855; step
+        2
+  - subject: sec140
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Sec140 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/562/
+      snippet: The formate proton is abstracted by Sec140. The CO2 molecule is released and two electrons
+        are transferred to Mo, forming Mo(IV).
+      notes: M-CSA entry 562, mechanism 1; M-CSA cites PMID:16830149, PMID:18671310, PMID:9036855; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/562/
+      snippet: An electron is shuttled from Mo(IV) to an electron acceptor (R) through an MGD ligand,
+        a water molecule, then the Fe4S4 cluster. This results in a Mo(V) intermediate. The formate proton
+        is transferred from Sec140 to His141. This leads to hydrogen bond formation between His141 and
+        Sec140.
+      notes: M-CSA entry 562, mechanism 1; M-CSA cites PMID:16830149, PMID:18671310, PMID:9036855; step
+        3
+  - subject: sec140
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Sec140 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/562/
+      snippet: An electron is shuttled from Mo(IV) to an electron acceptor (R) through an MGD ligand,
+        a water molecule, then the Fe4S4 cluster. This results in a Mo(V) intermediate. The formate proton
+        is transferred from Sec140 to His141. This leads to hydrogen bond formation between His141 and
+        Sec140.
+      notes: M-CSA entry 562, mechanism 1; M-CSA cites PMID:16830149, PMID:18671310, PMID:9036855; step
+        3
+  - subject: his141
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His141 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/562/
+      snippet: An electron is shuttled from Mo(IV) to an electron acceptor (R) through an MGD ligand,
+        a water molecule, then the Fe4S4 cluster. This results in a Mo(V) intermediate. The formate proton
+        is transferred from Sec140 to His141. This leads to hydrogen bond formation between His141 and
+        Sec140.
+      notes: M-CSA entry 562, mechanism 1; M-CSA cites PMID:16830149, PMID:18671310, PMID:9036855; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/562/
+      snippet: Once the Fe4S4 cluster is reoxidized, a second electron is transferred from Mo(V) to the
+        Fe4S4 cluster. The oxidation of Mo(V) to Mo(VI) causes the hydrogen bond between Sec140 and His141
+        to break, releasing the proton of His141 to solvent. Sec140 re-cordinates to the Mo(VI) centre.
+        After the Fe4S4 cluster is reoxidised for a second time, the enzyme is restored to its initial
+        state.
+      notes: M-CSA entry 562, mechanism 1; M-CSA cites PMID:16830149, PMID:18671310, PMID:9036855; step
+        4
+  - subject: sec140
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Sec140 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/562/
+      snippet: Once the Fe4S4 cluster is reoxidized, a second electron is transferred from Mo(V) to the
+        Fe4S4 cluster. The oxidation of Mo(V) to Mo(VI) causes the hydrogen bond between Sec140 and His141
+        to break, releasing the proton of His141 to solvent. Sec140 re-cordinates to the Mo(VI) centre.
+        After the Fe4S4 cluster is reoxidised for a second time, the enzyme is restored to its initial
+        state.
+      notes: M-CSA entry 562, mechanism 1; M-CSA cites PMID:16830149, PMID:18671310, PMID:9036855; step
+        4
+  - subject: his141
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: His141 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/562/
+      snippet: Once the Fe4S4 cluster is reoxidized, a second electron is transferred from Mo(V) to the
+        Fe4S4 cluster. The oxidation of Mo(V) to Mo(VI) causes the hydrogen bond between Sec140 and His141
+        to break, releasing the proton of His141 to solvent. Sec140 re-cordinates to the Mo(VI) centre.
+        After the Fe4S4 cluster is reoxidised for a second time, the enzyme is restored to its initial
+        state.
+      notes: M-CSA entry 562, mechanism 1; M-CSA cites PMID:16830149, PMID:18671310, PMID:9036855; step
+        4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/562/
+      snippet: Products.
+      notes: M-CSA entry 562, mechanism 1; M-CSA cites PMID:16830149, PMID:18671310, PMID:9036855; step
+        5
+  - subject: lys44
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys44 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/562/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 562, mechanism 1; M-CSA cites PMID:16830149, PMID:18671310, PMID:9036855; M-CSA
+        catalytic-residue roles for Lys44
+  - subject: sec140
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Sec140 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/562/
+      snippet: electrophile, metal ligand, nucleofuge, nucleophile, proton acceptor, proton donor
+      notes: M-CSA entry 562, mechanism 1; M-CSA cites PMID:16830149, PMID:18671310, PMID:9036855; M-CSA
+        catalytic-residue roles for Sec140
+  - subject: his141
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His141 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/562/
+      snippet: electrostatic stabiliser, proton acceptor
+      notes: M-CSA entry 562, mechanism 1; M-CSA cites PMID:16830149, PMID:18671310, PMID:9036855; M-CSA
+        catalytic-residue roles for His141
+  - subject: arg333
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg333 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/562/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 562, mechanism 1; M-CSA cites PMID:16830149, PMID:18671310, PMID:9036855; M-CSA
+        catalytic-residue roles for Arg333
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/562/
+      snippet: Initially, formate binds to Mo 800 via one of its oxygens and displaces SeCys140.  Formate
+        is then oxidised to carbon dioxide.  Two electrons are transferred to Mo800 reducing it from Mo(VI)
+        to Mo(IV).  The transfer of electrons from formate to Mo 800 may occur by direct two-electron
+        transfer or by direct hydride transfer.  The alpha proton of formate is transferred to SeCys140
+        and then to His141.
+      notes: M-CSA entry 562, mechanism 1; M-CSA cites PMID:16830149, PMID:18671310, PMID:9036855; CATH
+        domain 2.20.25.90 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/562/
+      snippet: Initially, formate binds to Mo 800 via one of its oxygens and displaces SeCys140.  Formate
+        is then oxidised to carbon dioxide.  Two electrons are transferred to Mo800 reducing it from Mo(VI)
+        to Mo(IV).  The transfer of electrons from formate to Mo 800 may occur by direct two-electron
+        transfer or by direct hydride transfer.  The alpha proton of formate is transferred to SeCys140
+        and then to His141.
+      notes: M-CSA entry 562, mechanism 1; M-CSA cites PMID:16830149, PMID:18671310, PMID:9036855; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/562/
+      snippet: Initially, formate binds to Mo 800 via one of its oxygens and displaces SeCys140.  Formate
+        is then oxidised to carbon dioxide.  Two electrons are transferred to Mo800 reducing it from Mo(VI)
+        to Mo(IV).  The transfer of electrons from formate to Mo 800 may occur by direct two-electron
+        transfer or by direct hydride transfer.  The alpha proton of formate is transferred to SeCys140
+        and then to His141.
+      notes: M-CSA entry 562, mechanism 1; M-CSA cites PMID:16830149, PMID:18671310, PMID:9036855; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/562/
+      snippet: Initially, formate binds to Mo 800 via one of its oxygens and displaces SeCys140.  Formate
+        is then oxidised to carbon dioxide.  Two electrons are transferred to Mo800 reducing it from Mo(VI)
+        to Mo(IV).  The transfer of electrons from formate to Mo 800 may occur by direct two-electron
+        transfer or by direct hydride transfer.  The alpha proton of formate is transferred to SeCys140
+        and then to His141.
+      notes: M-CSA entry 562, mechanism 1; M-CSA cites PMID:16830149, PMID:18671310, PMID:9036855; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/562/
+      snippet: Initially, formate binds to Mo 800 via one of its oxygens and displaces SeCys140.  Formate
+        is then oxidised to carbon dioxide.  Two electrons are transferred to Mo800 reducing it from Mo(VI)
+        to Mo(IV).  The transfer of electrons from formate to Mo 800 may occur by direct two-electron
+        transfer or by direct hydride transfer.  The alpha proton of formate is transferred to SeCys140
+        and then to His141.
+      notes: M-CSA entry 562, mechanism 1; M-CSA cites PMID:16830149, PMID:18671310, PMID:9036855; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/562/
+      snippet: Initially, formate binds to Mo 800 via one of its oxygens and displaces SeCys140.  Formate
+        is then oxidised to carbon dioxide.  Two electrons are transferred to Mo800 reducing it from Mo(VI)
+        to Mo(IV).  The transfer of electrons from formate to Mo 800 may occur by direct two-electron
+        transfer or by direct hydride transfer.  The alpha proton of formate is transferred to SeCys140
+        and then to His141.
+      notes: M-CSA entry 562, mechanism 1; M-CSA cites PMID:16830149, PMID:18671310, PMID:9036855; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/562/
+      snippet: Initially, formate binds to Mo 800 via one of its oxygens and displaces SeCys140.  Formate
+        is then oxidised to carbon dioxide.  Two electrons are transferred to Mo800 reducing it from Mo(VI)
+        to Mo(IV).  The transfer of electrons from formate to Mo 800 may occur by direct two-electron
+        transfer or by direct hydride transfer.  The alpha proton of formate is transferred to SeCys140
+        and then to His141.
+      notes: M-CSA entry 562, mechanism 1; M-CSA cites PMID:16830149, PMID:18671310, PMID:9036855; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (21 evidence-backed edges) transcribed from M-CSA entry 562;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

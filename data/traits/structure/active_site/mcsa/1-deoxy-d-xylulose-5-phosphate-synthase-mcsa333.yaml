@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.2.1.7
 - CHEBI:15361
@@ -432,4 +432,322 @@ definitions:
       1-Deoxy-D-xylulose-5-phosphate synthase (DXS ) is a regulatory enzyme of the mevalonate-independent pathway involved in terpenoid biosynthesis. DXP synthase is a thiamine diphosphate-dependent enzyme related to transketolase and the pyruvate dehydrogenase E1-beta subunit. DXS is found in bacteria (gene:dxs) and plants (gene:CLA1) which catalyses the thiamine pyrophosphoate-dependent acyloin condensation reaction between carbon atoms 2 and 3 of pyruvate and glyceraldehyde 3-phosphate to yield 1-deoxy-D-xylulose-5-phosphate (DXP), a precursor in the biosynthetic pathway to isoprenoids, thiamine (vitamin B1), and pyridoxol (vitamin B6). DXS is evolutionary related to TK. This reaction is the first and rate limiting step of the mevalonate-independent pathway for the biosynthesis of isopentyl pyrophosphate, a process undertaken only in fungi, algae and bacteria. DXS differs from related thiamine diphosphate dependent enzymes by virtue of its domain arrangement: the active site is not situated on a chain interface, as seen in related enzymes, but instead resides between two domain faces within the same monomer of a homodimeric complex [PMID:17135236].
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 1-deoxy-D-xylulose 5-phosphate synthase
+  description: Stepwise mechanism transcribed from M-CSA entry 333 (8 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: lys289
+    label: catalytic Lys289 (M-CSA/PDB numbering; UniProt residue 289)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9RUB5
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu373
+    label: catalytic Glu373 (M-CSA/PDB numbering; UniProt residue 373)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9RUB5
+    description: 'M-CSA roles: activator, electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond
+      donor, proton acceptor, proton donor.'
+  - node_id: arg401
+    label: catalytic Arg401 (M-CSA/PDB numbering; UniProt residue 401)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9RUB5
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: reactant0
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+  - node_id: reactant1
+    label: D-glyceraldehyde 3-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:59776
+  - node_id: reactant2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product0
+    label: carbon dioxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+  - node_id: product1
+    label: 1-deoxy-D-xylulose 5-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57792
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu373 deprotonates the N1 position of TDP. Charge delocalisation across the conjugated
+      molecule results in concomitant deprotonation of the thiazole ring, activating the cofactor for
+      the next steps in catalysis. The ionisation of TDP is fast compared to enzymatic turnover, and is
+      therefore not rate determining [PMID:19476486].
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The TDP carbanion, stabilised as an ylid, attacks the carbonyl of pyruvate forming a
+      covalently bound intermediate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The oxyanion intermediate collapses to generate carbon dioxide and a TDP-enol intermediate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The carbanion attacks at the glyceraldehyde group to form a tetrahedral oxyanion intermediate.
+      Electron delocalisation across the thiazole ring allows for several resonance structures.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: The tetrahedral intermediate collapses releasing the TDP ylid and 1-deoxy-D-xylulose
+      5-phosphate, the product which enters the isoprenoid biosynthesis pathway [PMID:19778006].
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: The cofactor is reprotonated.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: The cofactor is reprotonated in an inferred return step.
+  - node_id: step8
+    label: mechanism step 8
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: 1-deoxy-D-xylulose 5-phosphate synthase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:333
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.970 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.970
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: 1-deoxy-D-xylulose 5-phosphate synthase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.2.1.7
+  edges:
+  - subject: glu373
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu373 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/333/
+      snippet: Glu373 deprotonates the N1 position of TDP. Charge delocalisation across the conjugated
+        molecule results in concomitant deprotonation of the thiazole ring, activating the cofactor for
+        the next steps in catalysis. The ionisation of TDP is fast compared to enzymatic turnover, and
+        is therefore not rate determining [PMID:19476486].
+      notes: M-CSA entry 333, mechanism 1; M-CSA cites PMID:17135236, PMID:19348578, PMID:19476486, PMID:19778006,
+        PMID:27995802; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/333/
+      snippet: The TDP carbanion, stabilised as an ylid, attacks the carbonyl of pyruvate forming a covalently
+        bound intermediate.
+      notes: M-CSA entry 333, mechanism 1; M-CSA cites PMID:17135236, PMID:19348578, PMID:19476486, PMID:19778006,
+        PMID:27995802; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/333/
+      snippet: The oxyanion intermediate collapses to generate carbon dioxide and a TDP-enol intermediate.
+      notes: M-CSA entry 333, mechanism 1; M-CSA cites PMID:17135236, PMID:19348578, PMID:19476486, PMID:19778006,
+        PMID:27995802; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/333/
+      snippet: The carbanion attacks at the glyceraldehyde group to form a tetrahedral oxyanion intermediate.
+        Electron delocalisation across the thiazole ring allows for several resonance structures.
+      notes: M-CSA entry 333, mechanism 1; M-CSA cites PMID:17135236, PMID:19348578, PMID:19476486, PMID:19778006,
+        PMID:27995802; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/333/
+      snippet: The tetrahedral intermediate collapses releasing the TDP ylid and 1-deoxy-D-xylulose 5-phosphate,
+        the product which enters the isoprenoid biosynthesis pathway [PMID:19778006].
+      notes: M-CSA entry 333, mechanism 1; M-CSA cites PMID:17135236, PMID:19348578, PMID:19476486, PMID:19778006,
+        PMID:27995802; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/333/
+      snippet: The cofactor is reprotonated.
+      notes: M-CSA entry 333, mechanism 1; M-CSA cites PMID:17135236, PMID:19348578, PMID:19476486, PMID:19778006,
+        PMID:27995802; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/333/
+      snippet: The cofactor is reprotonated in an inferred return step.
+      notes: M-CSA entry 333, mechanism 1; M-CSA cites PMID:17135236, PMID:19348578, PMID:19476486, PMID:19778006,
+        PMID:27995802; step 7
+  - subject: step7
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step8
+    description: Step 7 leads to step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/333/
+      snippet: Products.
+      notes: M-CSA entry 333, mechanism 1; M-CSA cites PMID:17135236, PMID:19348578, PMID:19476486, PMID:19778006,
+        PMID:27995802; step 8
+  - subject: lys289
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys289 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/333/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 333, mechanism 1; M-CSA cites PMID:17135236, PMID:19348578, PMID:19476486, PMID:19778006,
+        PMID:27995802; M-CSA catalytic-residue roles for Lys289
+  - subject: glu373
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu373 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/333/
+      snippet: activator, electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, proton
+        acceptor, proton donor
+      notes: M-CSA entry 333, mechanism 1; M-CSA cites PMID:17135236, PMID:19348578, PMID:19476486, PMID:19778006,
+        PMID:27995802; M-CSA catalytic-residue roles for Glu373
+  - subject: arg401
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg401 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/333/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 333, mechanism 1; M-CSA cites PMID:17135236, PMID:19348578, PMID:19476486, PMID:19778006,
+        PMID:27995802; M-CSA catalytic-residue roles for Arg401
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/333/
+      snippet: Glu373 deprotonates the N1 position of TDP. Charge delocalisation across the conjugated
+        molecule results in concomitant deprotonation of the thiazole ring, activating the cofactor for
+        the next steps in catalysis. The TDP carbanion, stabilised as an ylid, attacks the carbonyl of
+        pyruvate forming a covalently bound intermediate. The oxyanion intermediate collapses to generate
+        carbon dioxide and a TD
+      notes: M-CSA entry 333, mechanism 1; M-CSA cites PMID:17135236, PMID:19348578, PMID:19476486, PMID:19778006,
+        PMID:27995802; CATH domain 3.40.50.970 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/333/
+      snippet: Glu373 deprotonates the N1 position of TDP. Charge delocalisation across the conjugated
+        molecule results in concomitant deprotonation of the thiazole ring, activating the cofactor for
+        the next steps in catalysis. The TDP carbanion, stabilised as an ylid, attacks the carbonyl of
+        pyruvate forming a covalently bound intermediate. The oxyanion intermediate collapses to generate
+        carbon dioxide and a TD
+      notes: M-CSA entry 333, mechanism 1; M-CSA cites PMID:17135236, PMID:19348578, PMID:19476486, PMID:19778006,
+        PMID:27995802; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/333/
+      snippet: Glu373 deprotonates the N1 position of TDP. Charge delocalisation across the conjugated
+        molecule results in concomitant deprotonation of the thiazole ring, activating the cofactor for
+        the next steps in catalysis. The TDP carbanion, stabilised as an ylid, attacks the carbonyl of
+        pyruvate forming a covalently bound intermediate. The oxyanion intermediate collapses to generate
+        carbon dioxide and a TD
+      notes: M-CSA entry 333, mechanism 1; M-CSA cites PMID:17135236, PMID:19348578, PMID:19476486, PMID:19778006,
+        PMID:27995802; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/333/
+      snippet: Glu373 deprotonates the N1 position of TDP. Charge delocalisation across the conjugated
+        molecule results in concomitant deprotonation of the thiazole ring, activating the cofactor for
+        the next steps in catalysis. The TDP carbanion, stabilised as an ylid, attacks the carbonyl of
+        pyruvate forming a covalently bound intermediate. The oxyanion intermediate collapses to generate
+        carbon dioxide and a TD
+      notes: M-CSA entry 333, mechanism 1; M-CSA cites PMID:17135236, PMID:19348578, PMID:19476486, PMID:19778006,
+        PMID:27995802; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/333/
+      snippet: Glu373 deprotonates the N1 position of TDP. Charge delocalisation across the conjugated
+        molecule results in concomitant deprotonation of the thiazole ring, activating the cofactor for
+        the next steps in catalysis. The TDP carbanion, stabilised as an ylid, attacks the carbonyl of
+        pyruvate forming a covalently bound intermediate. The oxyanion intermediate collapses to generate
+        carbon dioxide and a TD
+      notes: M-CSA entry 333, mechanism 1; M-CSA cites PMID:17135236, PMID:19348578, PMID:19476486, PMID:19778006,
+        PMID:27995802; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/333/
+      snippet: Glu373 deprotonates the N1 position of TDP. Charge delocalisation across the conjugated
+        molecule results in concomitant deprotonation of the thiazole ring, activating the cofactor for
+        the next steps in catalysis. The TDP carbanion, stabilised as an ylid, attacks the carbonyl of
+        pyruvate forming a covalently bound intermediate. The oxyanion intermediate collapses to generate
+        carbon dioxide and a TD
+      notes: M-CSA entry 333, mechanism 1; M-CSA cites PMID:17135236, PMID:19348578, PMID:19476486, PMID:19778006,
+        PMID:27995802; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/333/
+      snippet: Glu373 deprotonates the N1 position of TDP. Charge delocalisation across the conjugated
+        molecule results in concomitant deprotonation of the thiazole ring, activating the cofactor for
+        the next steps in catalysis. The TDP carbanion, stabilised as an ylid, attacks the carbonyl of
+        pyruvate forming a covalently bound intermediate. The oxyanion intermediate collapses to generate
+        carbon dioxide and a TD
+      notes: M-CSA entry 333, mechanism 1; M-CSA cites PMID:17135236, PMID:19348578, PMID:19476486, PMID:19778006,
+        PMID:27995802; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (18 evidence-backed edges) transcribed from M-CSA entry 333;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

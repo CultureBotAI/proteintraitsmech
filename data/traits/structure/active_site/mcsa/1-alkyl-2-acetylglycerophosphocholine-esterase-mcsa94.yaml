@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.1.47
 - CHEBI:15377
@@ -202,4 +202,383 @@ definitions:
       2-acetyl-1-alkylglycerophosphocholine esterase, also known as known as platelet-activating factor acetylhydrolase (PAF-AH). Mammalian brain contains significant levels of platelet activating-factor (PAF), these act as a synapse messenger and transcription inducer of the early response genes c-fos and c-jun. The platelet-activating factor PAF is a potent lipid first messenger active in general cell activation, fertilisation, inflammatory and allergic reactions, asthma, HIV pathogenesis, carcinogenesis, and apoptosis. PAF has also been implicated as a messenger in long-term potentiation, a cellular model of memory formation. Inactivation of this factor is carried out by PAF-AH, a subfamily of phospholipases A2 that remove the sn-2 acetyl group. Mammalian brain contains at least three intracellular isoforms, 1b being the best characterised. From experimentation it can be assumed that PAF-AH maintains the PAF concentration within a certain range during brain development. The protein is an unusual G-protein like (alpha1/alpha2)beta trimer. PAF-AH is a heterotrimer composed of 26-,26-, and 45-Kda polypeptides. The alpha (26KDa) is the catalytic subunit. The active site is made up of a trypsin-like triad of Ser 47, His 195 and Asp 192. The other subunit is not essential for the catalytic activity. The catalytic subunit contains a single alpha/beta domain with a central, parallel, 6-stranded beta sheet. This fold is very like that found in GTPase. Experimental data has demonstrated that the catalytic subunit of brain PAF acetylhydrolase is a novel type of serine esterase.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 1-alkyl-2-acetylglycerophosphocholine esterase
+  description: Stepwise mechanism transcribed from M-CSA entry 94 (6 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: ser47
+    label: catalytic Ser47 (M-CSA/PDB numbering; UniProt residue 47)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q29460
+    description: 'M-CSA roles: covalently attached, hydrogen bond acceptor, hydrogen bond donor, nucleofuge,
+      nucleophile, proton acceptor, proton donor.'
+  - node_id: gly74
+    label: catalytic Gly74 (M-CSA/PDB numbering; UniProt residue 74)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q29460
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: asn104
+    label: catalytic Asn104 (M-CSA/PDB numbering; UniProt residue 104)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q29460
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: asp192
+    label: catalytic Asp192 (M-CSA/PDB numbering; UniProt residue 192)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q29460
+    description: 'M-CSA roles: activator, electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: his195
+    label: catalytic His195 (M-CSA/PDB numbering; UniProt residue 195)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q29460
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: 2-acetyl-1-alkyl-sn-glycero-3-phosphocholine
+    node_type: CHEMICAL
+    grounding: CHEBI:36707
+  - node_id: product0
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+  - node_id: product1
+    label: 1-alkyl-sn-glycero-3-phosphocholine
+    node_type: CHEMICAL
+    grounding: CHEBI:30909
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His195 deprotonates Ser47.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Ser47 initiates a nucleophilic attack upon the carbonyl carbon of the substrate in an
+      addition reaction.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The oxyanion formed collapses, eliminating phosphocholine with concomitant deprotonation
+      of His195.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: His195 deprotonates water, which initiates a nucleophilic attack upon the carbonyl carbon
+      of the acyl-intermediate in an addition reaction.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: The oxyanion collapses, eliminating Ser47 with concomitant deprotonation of His195.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: 1-alkyl-2-acetylglycerophosphocholine esterase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:94
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1110 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1110
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: 1-alkyl-2-acetylglycerophosphocholine esterase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.1.47
+  edges:
+  - subject: ser47
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser47 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/94/
+      snippet: His195 deprotonates Ser47.
+      notes: M-CSA entry 94, mechanism 1; M-CSA cites PMID:10469831, PMID:18838739, PMID:19271773, PMID:8083218,
+        PMID:8985254; step 1
+  - subject: his195
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His195 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/94/
+      snippet: His195 deprotonates Ser47.
+      notes: M-CSA entry 94, mechanism 1; M-CSA cites PMID:10469831, PMID:18838739, PMID:19271773, PMID:8083218,
+        PMID:8985254; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/94/
+      snippet: Ser47 initiates a nucleophilic attack upon the carbonyl carbon of the substrate in an addition
+        reaction.
+      notes: M-CSA entry 94, mechanism 1; M-CSA cites PMID:10469831, PMID:18838739, PMID:19271773, PMID:8083218,
+        PMID:8985254; step 2
+  - subject: ser47
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Ser47 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/94/
+      snippet: Ser47 initiates a nucleophilic attack upon the carbonyl carbon of the substrate in an addition
+        reaction.
+      notes: M-CSA entry 94, mechanism 1; M-CSA cites PMID:10469831, PMID:18838739, PMID:19271773, PMID:8083218,
+        PMID:8985254; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/94/
+      snippet: The oxyanion formed collapses, eliminating phosphocholine with concomitant deprotonation
+        of His195.
+      notes: M-CSA entry 94, mechanism 1; M-CSA cites PMID:10469831, PMID:18838739, PMID:19271773, PMID:8083218,
+        PMID:8985254; step 3
+  - subject: his195
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His195 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/94/
+      snippet: The oxyanion formed collapses, eliminating phosphocholine with concomitant deprotonation
+        of His195.
+      notes: M-CSA entry 94, mechanism 1; M-CSA cites PMID:10469831, PMID:18838739, PMID:19271773, PMID:8083218,
+        PMID:8985254; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/94/
+      snippet: His195 deprotonates water, which initiates a nucleophilic attack upon the carbonyl carbon
+        of the acyl-intermediate in an addition reaction.
+      notes: M-CSA entry 94, mechanism 1; M-CSA cites PMID:10469831, PMID:18838739, PMID:19271773, PMID:8083218,
+        PMID:8985254; step 4
+  - subject: his195
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: His195 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/94/
+      snippet: His195 deprotonates water, which initiates a nucleophilic attack upon the carbonyl carbon
+        of the acyl-intermediate in an addition reaction.
+      notes: M-CSA entry 94, mechanism 1; M-CSA cites PMID:10469831, PMID:18838739, PMID:19271773, PMID:8083218,
+        PMID:8985254; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/94/
+      snippet: The oxyanion collapses, eliminating Ser47 with concomitant deprotonation of His195.
+      notes: M-CSA entry 94, mechanism 1; M-CSA cites PMID:10469831, PMID:18838739, PMID:19271773, PMID:8083218,
+        PMID:8985254; step 5
+  - subject: ser47
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Ser47 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/94/
+      snippet: The oxyanion collapses, eliminating Ser47 with concomitant deprotonation of His195.
+      notes: M-CSA entry 94, mechanism 1; M-CSA cites PMID:10469831, PMID:18838739, PMID:19271773, PMID:8083218,
+        PMID:8985254; step 5
+  - subject: his195
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: His195 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/94/
+      snippet: The oxyanion collapses, eliminating Ser47 with concomitant deprotonation of His195.
+      notes: M-CSA entry 94, mechanism 1; M-CSA cites PMID:10469831, PMID:18838739, PMID:19271773, PMID:8083218,
+        PMID:8985254; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/94/
+      snippet: Products.
+      notes: M-CSA entry 94, mechanism 1; M-CSA cites PMID:10469831, PMID:18838739, PMID:19271773, PMID:8083218,
+        PMID:8985254; step 6
+  - subject: ser47
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser47 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/94/
+      snippet: covalently attached, hydrogen bond acceptor, hydrogen bond donor, nucleofuge, nucleophile,
+        proton acceptor, proton donor
+      notes: M-CSA entry 94, mechanism 1; M-CSA cites PMID:10469831, PMID:18838739, PMID:19271773, PMID:8083218,
+        PMID:8985254; M-CSA catalytic-residue roles for Ser47
+  - subject: gly74
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly74 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/94/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 94, mechanism 1; M-CSA cites PMID:10469831, PMID:18838739, PMID:19271773, PMID:8083218,
+        PMID:8985254; M-CSA catalytic-residue roles for Gly74
+  - subject: asn104
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn104 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/94/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 94, mechanism 1; M-CSA cites PMID:10469831, PMID:18838739, PMID:19271773, PMID:8083218,
+        PMID:8985254; M-CSA catalytic-residue roles for Asn104
+  - subject: asp192
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp192 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/94/
+      snippet: activator, electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 94, mechanism 1; M-CSA cites PMID:10469831, PMID:18838739, PMID:19271773, PMID:8083218,
+        PMID:8985254; M-CSA catalytic-residue roles for Asp192
+  - subject: his195
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His195 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/94/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+        proton donor
+      notes: M-CSA entry 94, mechanism 1; M-CSA cites PMID:10469831, PMID:18838739, PMID:19271773, PMID:8083218,
+        PMID:8985254; M-CSA catalytic-residue roles for His195
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/94/
+      snippet: Ser47 is close to His195, the imidazole ring of His195 is hydrogen-bonded through its nitrogen
+        (delta 1) atom to the side-chain carboxyl of Asp192. This forms a classical Ser-His-Asp triad,
+        and Ser47 is thought to be the catalytic nucleophile. The chirality of the triad is the same as
+        that found in the active sites of other esterases and neutral lipases, where nucleophilic attack
+        is on the re face
+      notes: M-CSA entry 94, mechanism 1; M-CSA cites PMID:10469831, PMID:18838739, PMID:19271773, PMID:8083218,
+        PMID:8985254; CATH domain 3.40.50.1110 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/94/
+      snippet: Ser47 is close to His195, the imidazole ring of His195 is hydrogen-bonded through its nitrogen
+        (delta 1) atom to the side-chain carboxyl of Asp192. This forms a classical Ser-His-Asp triad,
+        and Ser47 is thought to be the catalytic nucleophile. The chirality of the triad is the same as
+        that found in the active sites of other esterases and neutral lipases, where nucleophilic attack
+        is on the re face
+      notes: M-CSA entry 94, mechanism 1; M-CSA cites PMID:10469831, PMID:18838739, PMID:19271773, PMID:8083218,
+        PMID:8985254; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/94/
+      snippet: Ser47 is close to His195, the imidazole ring of His195 is hydrogen-bonded through its nitrogen
+        (delta 1) atom to the side-chain carboxyl of Asp192. This forms a classical Ser-His-Asp triad,
+        and Ser47 is thought to be the catalytic nucleophile. The chirality of the triad is the same as
+        that found in the active sites of other esterases and neutral lipases, where nucleophilic attack
+        is on the re face
+      notes: M-CSA entry 94, mechanism 1; M-CSA cites PMID:10469831, PMID:18838739, PMID:19271773, PMID:8083218,
+        PMID:8985254; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/94/
+      snippet: Ser47 is close to His195, the imidazole ring of His195 is hydrogen-bonded through its nitrogen
+        (delta 1) atom to the side-chain carboxyl of Asp192. This forms a classical Ser-His-Asp triad,
+        and Ser47 is thought to be the catalytic nucleophile. The chirality of the triad is the same as
+        that found in the active sites of other esterases and neutral lipases, where nucleophilic attack
+        is on the re face
+      notes: M-CSA entry 94, mechanism 1; M-CSA cites PMID:10469831, PMID:18838739, PMID:19271773, PMID:8083218,
+        PMID:8985254; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/94/
+      snippet: Ser47 is close to His195, the imidazole ring of His195 is hydrogen-bonded through its nitrogen
+        (delta 1) atom to the side-chain carboxyl of Asp192. This forms a classical Ser-His-Asp triad,
+        and Ser47 is thought to be the catalytic nucleophile. The chirality of the triad is the same as
+        that found in the active sites of other esterases and neutral lipases, where nucleophilic attack
+        is on the re face
+      notes: M-CSA entry 94, mechanism 1; M-CSA cites PMID:10469831, PMID:18838739, PMID:19271773, PMID:8083218,
+        PMID:8985254; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/94/
+      snippet: Ser47 is close to His195, the imidazole ring of His195 is hydrogen-bonded through its nitrogen
+        (delta 1) atom to the side-chain carboxyl of Asp192. This forms a classical Ser-His-Asp triad,
+        and Ser47 is thought to be the catalytic nucleophile. The chirality of the triad is the same as
+        that found in the active sites of other esterases and neutral lipases, where nucleophilic attack
+        is on the re face
+      notes: M-CSA entry 94, mechanism 1; M-CSA cites PMID:10469831, PMID:18838739, PMID:19271773, PMID:8083218,
+        PMID:8985254; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/94/
+      snippet: Ser47 is close to His195, the imidazole ring of His195 is hydrogen-bonded through its nitrogen
+        (delta 1) atom to the side-chain carboxyl of Asp192. This forms a classical Ser-His-Asp triad,
+        and Ser47 is thought to be the catalytic nucleophile. The chirality of the triad is the same as
+        that found in the active sites of other esterases and neutral lipases, where nucleophilic attack
+        is on the re face
+      notes: M-CSA entry 94, mechanism 1; M-CSA cites PMID:10469831, PMID:18838739, PMID:19271773, PMID:8083218,
+        PMID:8985254; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (24 evidence-backed edges) transcribed from M-CSA entry 94;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

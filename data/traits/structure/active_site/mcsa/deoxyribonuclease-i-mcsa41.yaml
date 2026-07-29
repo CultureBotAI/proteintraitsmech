@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.21.1
 - CHEBI:15377
@@ -250,4 +250,334 @@ definitions:
       DNase I is a vertebrate enzyme that cleaves double stranded DNA to 5'-phosphodinucleotide and 5'-phospho-oligonucletide end-products. DNase I requires calcium and magnesium for full activity. It is a glycoprotein that causes single-stranded nicks on double-stranded DNA. DNase I shares structural homology to the Human Apurinic/Apyrimidinic endonuclease and Exonuclease III. These three enzymes also share similar mechanisms of DNA cleavage. The overall reaction has been created using poly dAMP to show the chemical reaction.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of deoxyribonuclease I
+  description: Stepwise mechanism transcribed from M-CSA entry 41 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +22).
+  nodes:
+  - node_id: glu39
+    label: catalytic Glu39 (M-CSA/PDB numbering; UniProt residue 61)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00639
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: tyr76
+    label: catalytic Tyr76 (M-CSA/PDB numbering; UniProt residue 98)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00639
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu78
+    label: catalytic Glu78 (M-CSA/PDB numbering; UniProt residue 100)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00639
+    description: 'M-CSA roles: electrostatic stabiliser, increase acidity, increase basicity.'
+  - node_id: his134
+    label: catalytic His134 (M-CSA/PDB numbering; UniProt residue 156)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00639
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: asp168
+    label: catalytic Asp168 (M-CSA/PDB numbering; UniProt residue 190)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00639
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp212
+    label: catalytic Asp212 (M-CSA/PDB numbering; UniProt residue 234)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00639
+    description: 'M-CSA roles: electrostatic stabiliser, increase acidity, increase basicity.'
+  - node_id: his252
+    label: catalytic His252 (M-CSA/PDB numbering; UniProt residue 274)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00639
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: single-stranded DNA
+    node_type: CHEMICAL
+    grounding: CHEBI:9160
+  - node_id: product0
+    label: 5'-end 2'-deoxyribonucleotide(2-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:136412
+  - node_id: product1
+    label: 2'-deoxynucleoside 3'-monophosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:131705
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His252 deprotonates water, which initiates a nucleophilic attack on the phosphate of
+      the DNA in a substitution reaction which eliminates the 5' end of the DNA, with concomitant deprotonation
+      of His134.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: His134 deprotonates water, which in turn deprotonates His252 in an inferred return step.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: deoxyribonuclease I catalytic site
+    node_type: MOTIF
+    grounding: MCSA:41
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.60.10.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.60.10.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: deoxyribonuclease I activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.21.1
+  edges:
+  - subject: his134
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His134 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/41/
+      snippet: His252 deprotonates water, which initiates a nucleophilic attack on the phosphate of the
+        DNA in a substitution reaction which eliminates the 5' end of the DNA, with concomitant deprotonation
+        of His134.
+      notes: M-CSA entry 41, mechanism 1; M-CSA cites PMID:17141190, PMID:2395459, PMID:9000637; step
+        1
+  - subject: his252
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His252 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/41/
+      snippet: His252 deprotonates water, which initiates a nucleophilic attack on the phosphate of the
+        DNA in a substitution reaction which eliminates the 5' end of the DNA, with concomitant deprotonation
+        of His134.
+      notes: M-CSA entry 41, mechanism 1; M-CSA cites PMID:17141190, PMID:2395459, PMID:9000637; step
+        1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/41/
+      snippet: His134 deprotonates water, which in turn deprotonates His252 in an inferred return step.
+      notes: M-CSA entry 41, mechanism 1; M-CSA cites PMID:17141190, PMID:2395459, PMID:9000637; step
+        2
+  - subject: his134
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His134 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/41/
+      snippet: His134 deprotonates water, which in turn deprotonates His252 in an inferred return step.
+      notes: M-CSA entry 41, mechanism 1; M-CSA cites PMID:17141190, PMID:2395459, PMID:9000637; step
+        2
+  - subject: his252
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His252 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/41/
+      snippet: His134 deprotonates water, which in turn deprotonates His252 in an inferred return step.
+      notes: M-CSA entry 41, mechanism 1; M-CSA cites PMID:17141190, PMID:2395459, PMID:9000637; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/41/
+      snippet: Products
+      notes: M-CSA entry 41, mechanism 1; M-CSA cites PMID:17141190, PMID:2395459, PMID:9000637; step
+        3
+  - subject: glu39
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu39 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/41/
+      snippet: metal ligand
+      notes: M-CSA entry 41, mechanism 1; M-CSA cites PMID:17141190, PMID:2395459, PMID:9000637; M-CSA
+        catalytic-residue roles for Glu39
+  - subject: tyr76
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr76 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/41/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 41, mechanism 1; M-CSA cites PMID:17141190, PMID:2395459, PMID:9000637; M-CSA
+        catalytic-residue roles for Tyr76
+  - subject: glu78
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu78 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/41/
+      snippet: electrostatic stabiliser, increase acidity, increase basicity
+      notes: M-CSA entry 41, mechanism 1; M-CSA cites PMID:17141190, PMID:2395459, PMID:9000637; M-CSA
+        catalytic-residue roles for Glu78
+  - subject: his134
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His134 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/41/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 41, mechanism 1; M-CSA cites PMID:17141190, PMID:2395459, PMID:9000637; M-CSA
+        catalytic-residue roles for His134
+  - subject: asp168
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp168 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/41/
+      snippet: metal ligand
+      notes: M-CSA entry 41, mechanism 1; M-CSA cites PMID:17141190, PMID:2395459, PMID:9000637; M-CSA
+        catalytic-residue roles for Asp168
+  - subject: asp212
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp212 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/41/
+      snippet: electrostatic stabiliser, increase acidity, increase basicity
+      notes: M-CSA entry 41, mechanism 1; M-CSA cites PMID:17141190, PMID:2395459, PMID:9000637; M-CSA
+        catalytic-residue roles for Asp212
+  - subject: his252
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His252 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/41/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 41, mechanism 1; M-CSA cites PMID:17141190, PMID:2395459, PMID:9000637; M-CSA
+        catalytic-residue roles for His252
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/41/
+      snippet: The reaction involves an in-line attack at the DNA phosphorus group by a water molecule.
+        His252 may act as a general base to abstract a proton from a water molecule opposite the O3' atom.
+        Subsequent attack at the phosphorus group with inversion of its configuration gives rise to a
+        penta-covalent state that may be stabilised by the metal ion. His134 is in an ideal position to
+        protonate the leaving
+      notes: M-CSA entry 41, mechanism 1; M-CSA cites PMID:17141190, PMID:2395459, PMID:9000637; CATH
+        domain 3.60.10.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/41/
+      snippet: The reaction involves an in-line attack at the DNA phosphorus group by a water molecule.
+        His252 may act as a general base to abstract a proton from a water molecule opposite the O3' atom.
+        Subsequent attack at the phosphorus group with inversion of its configuration gives rise to a
+        penta-covalent state that may be stabilised by the metal ion. His134 is in an ideal position to
+        protonate the leaving
+      notes: M-CSA entry 41, mechanism 1; M-CSA cites PMID:17141190, PMID:2395459, PMID:9000637; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/41/
+      snippet: The reaction involves an in-line attack at the DNA phosphorus group by a water molecule.
+        His252 may act as a general base to abstract a proton from a water molecule opposite the O3' atom.
+        Subsequent attack at the phosphorus group with inversion of its configuration gives rise to a
+        penta-covalent state that may be stabilised by the metal ion. His134 is in an ideal position to
+        protonate the leaving
+      notes: M-CSA entry 41, mechanism 1; M-CSA cites PMID:17141190, PMID:2395459, PMID:9000637; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/41/
+      snippet: The reaction involves an in-line attack at the DNA phosphorus group by a water molecule.
+        His252 may act as a general base to abstract a proton from a water molecule opposite the O3' atom.
+        Subsequent attack at the phosphorus group with inversion of its configuration gives rise to a
+        penta-covalent state that may be stabilised by the metal ion. His134 is in an ideal position to
+        protonate the leaving
+      notes: M-CSA entry 41, mechanism 1; M-CSA cites PMID:17141190, PMID:2395459, PMID:9000637; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/41/
+      snippet: The reaction involves an in-line attack at the DNA phosphorus group by a water molecule.
+        His252 may act as a general base to abstract a proton from a water molecule opposite the O3' atom.
+        Subsequent attack at the phosphorus group with inversion of its configuration gives rise to a
+        penta-covalent state that may be stabilised by the metal ion. His134 is in an ideal position to
+        protonate the leaving
+      notes: M-CSA entry 41, mechanism 1; M-CSA cites PMID:17141190, PMID:2395459, PMID:9000637; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/41/
+      snippet: The reaction involves an in-line attack at the DNA phosphorus group by a water molecule.
+        His252 may act as a general base to abstract a proton from a water molecule opposite the O3' atom.
+        Subsequent attack at the phosphorus group with inversion of its configuration gives rise to a
+        penta-covalent state that may be stabilised by the metal ion. His134 is in an ideal position to
+        protonate the leaving
+      notes: M-CSA entry 41, mechanism 1; M-CSA cites PMID:17141190, PMID:2395459, PMID:9000637; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/41/
+      snippet: The reaction involves an in-line attack at the DNA phosphorus group by a water molecule.
+        His252 may act as a general base to abstract a proton from a water molecule opposite the O3' atom.
+        Subsequent attack at the phosphorus group with inversion of its configuration gives rise to a
+        penta-covalent state that may be stabilised by the metal ion. His134 is in an ideal position to
+        protonate the leaving
+      notes: M-CSA entry 41, mechanism 1; M-CSA cites PMID:17141190, PMID:2395459, PMID:9000637; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (20 evidence-backed edges) transcribed from M-CSA entry 41;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.1.1
 - CHEBI:17925
@@ -452,4 +452,275 @@ definitions:
       Alpha-amylase catalyses the hydrolysis of internal alpha-glucosidic linkages in starch and other related oligo- and polysaccharides. These enzymes are widespread among the higher plants, animals and micro-organisms. Cereal alpha-amylases play an important role in the production of beer and other alcoholic beverages. In humans, alpha-amylase is present in salivary and pancreatic secretions. Human pancreatic alpha-amylase (HPA) is a 496 amino acid single polypeptide chain which binds to essential calcium and chloride ions, and is responsible for the hydrolysis of the partially digested starch (smaller oligosaccharides) reaching the gut, into glucose. Inhibition of HPA provides an effective target for the treatment of diabetes.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of alpha-amylase
+  description: Stepwise mechanism transcribed from M-CSA entry 397 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +24).
+  nodes:
+  - node_id: asp179
+    label: catalytic Asp179 (M-CSA/PDB numbering; UniProt residue 203)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04063
+    description: 'M-CSA roles: covalent catalysis.'
+  - node_id: glu204
+    label: catalytic Glu204 (M-CSA/PDB numbering; UniProt residue 228)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04063
+    description: 'M-CSA roles: hydrogen radical acceptor, proton shuttle (general acid/base).'
+  - node_id: asp289
+    label: catalytic Asp289 (M-CSA/PDB numbering; UniProt residue 313)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04063
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen radical acceptor, proton shuttle (general
+      acid/base).'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: alpha-maltose
+    node_type: CHEMICAL
+    grounding: CHEBI:18167
+  - node_id: product0
+    label: alpha-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:17925
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Nucleophilic attack at the sugar anomeric centre by Asp179 side chain. This is assisted
+      by general acid catalysis by Glu204 and Asp289. H atoms omitted for clarity.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The covalent glycosyl intermediate undergoes general base catalysed hydrolysis via attack
+      of nucleophilic water at the anomeric centre, again catalysed by Glu204 and Asp289. These residues
+      also form hydrogen bonds to the molecule. This leads to a oxocarbenium ion-like transition state,
+      which forms the deglycosylated product.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Product.
+  - node_id: active_site
+    label: alpha-amylase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:397
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.80 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.80
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: alpha-amylase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.1.1
+  edges:
+  - subject: asp179
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp179 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/397/
+      snippet: Nucleophilic attack at the sugar anomeric centre by Asp179 side chain. This is assisted
+        by general acid catalysis by Glu204 and Asp289. H atoms omitted for clarity.
+      notes: M-CSA entry 397, mechanism 2; M-CSA cites PMID:10769135, PMID:11914097, PMID:17123489, PMID:26575550,
+        PMID:8196040, PMID:8535779, PMID:9571044; step 1
+  - subject: glu204
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu204 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/397/
+      snippet: Nucleophilic attack at the sugar anomeric centre by Asp179 side chain. This is assisted
+        by general acid catalysis by Glu204 and Asp289. H atoms omitted for clarity.
+      notes: M-CSA entry 397, mechanism 2; M-CSA cites PMID:10769135, PMID:11914097, PMID:17123489, PMID:26575550,
+        PMID:8196040, PMID:8535779, PMID:9571044; step 1
+  - subject: asp289
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp289 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/397/
+      snippet: Nucleophilic attack at the sugar anomeric centre by Asp179 side chain. This is assisted
+        by general acid catalysis by Glu204 and Asp289. H atoms omitted for clarity.
+      notes: M-CSA entry 397, mechanism 2; M-CSA cites PMID:10769135, PMID:11914097, PMID:17123489, PMID:26575550,
+        PMID:8196040, PMID:8535779, PMID:9571044; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/397/
+      snippet: The covalent glycosyl intermediate undergoes general base catalysed hydrolysis via attack
+        of nucleophilic water at the anomeric centre, again catalysed by Glu204 and Asp289. These residues
+        also form hydrogen bonds to the molecule. This leads to a oxocarbenium ion-like transition state,
+        which forms the deglycosylated product.
+      notes: M-CSA entry 397, mechanism 2; M-CSA cites PMID:10769135, PMID:11914097, PMID:17123489, PMID:26575550,
+        PMID:8196040, PMID:8535779, PMID:9571044; step 2
+  - subject: glu204
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu204 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/397/
+      snippet: The covalent glycosyl intermediate undergoes general base catalysed hydrolysis via attack
+        of nucleophilic water at the anomeric centre, again catalysed by Glu204 and Asp289. These residues
+        also form hydrogen bonds to the molecule. This leads to a oxocarbenium ion-like transition state,
+        which forms the deglycosylated product.
+      notes: M-CSA entry 397, mechanism 2; M-CSA cites PMID:10769135, PMID:11914097, PMID:17123489, PMID:26575550,
+        PMID:8196040, PMID:8535779, PMID:9571044; step 2
+  - subject: asp289
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Asp289 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/397/
+      snippet: The covalent glycosyl intermediate undergoes general base catalysed hydrolysis via attack
+        of nucleophilic water at the anomeric centre, again catalysed by Glu204 and Asp289. These residues
+        also form hydrogen bonds to the molecule. This leads to a oxocarbenium ion-like transition state,
+        which forms the deglycosylated product.
+      notes: M-CSA entry 397, mechanism 2; M-CSA cites PMID:10769135, PMID:11914097, PMID:17123489, PMID:26575550,
+        PMID:8196040, PMID:8535779, PMID:9571044; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/397/
+      snippet: Product.
+      notes: M-CSA entry 397, mechanism 2; M-CSA cites PMID:10769135, PMID:11914097, PMID:17123489, PMID:26575550,
+        PMID:8196040, PMID:8535779, PMID:9571044; step 3
+  - subject: asp179
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp179 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/397/
+      snippet: covalent catalysis
+      notes: M-CSA entry 397, mechanism 2; M-CSA cites PMID:10769135, PMID:11914097, PMID:17123489, PMID:26575550,
+        PMID:8196040, PMID:8535779, PMID:9571044; M-CSA catalytic-residue roles for Asp179
+  - subject: glu204
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu204 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/397/
+      snippet: hydrogen radical acceptor, proton shuttle (general acid/base)
+      notes: M-CSA entry 397, mechanism 2; M-CSA cites PMID:10769135, PMID:11914097, PMID:17123489, PMID:26575550,
+        PMID:8196040, PMID:8535779, PMID:9571044; M-CSA catalytic-residue roles for Glu204
+  - subject: asp289
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp289 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/397/
+      snippet: electrostatic stabiliser, hydrogen radical acceptor, proton shuttle (general acid/base)
+      notes: M-CSA entry 397, mechanism 2; M-CSA cites PMID:10769135, PMID:11914097, PMID:17123489, PMID:26575550,
+        PMID:8196040, PMID:8535779, PMID:9571044; M-CSA catalytic-residue roles for Asp289
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/397/
+      snippet: "This reaction occurs via a double displacement mechanism involving the formation and hydrolysis\
+        \ of a covalent beta-glycosyl enzyme intermediate.
+<ol>
+<li>Formation of the intermediate\
+        \ involves attack at the sugar anomeric centre by a nucleophilic Asp 179 side chain. This is assisted\
+        \ by general acid catalysis of Glu 204 and Asp 289. </li>
+<li>The covalent glycosyl intermediate\
+        \ undergoes general"
+      notes: M-CSA entry 397, mechanism 2; M-CSA cites PMID:10769135, PMID:11914097, PMID:17123489, PMID:26575550,
+        PMID:8196040, PMID:8535779, PMID:9571044; CATH domain 3.20.20.80 assigned to the catalytic chain
+        by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/397/
+      snippet: "This reaction occurs via a double displacement mechanism involving the formation and hydrolysis\
+        \ of a covalent beta-glycosyl enzyme intermediate.
+<ol>
+<li>Formation of the intermediate\
+        \ involves attack at the sugar anomeric centre by a nucleophilic Asp 179 side chain. This is assisted\
+        \ by general acid catalysis of Glu 204 and Asp 289. </li>
+<li>The covalent glycosyl intermediate\
+        \ undergoes general"
+      notes: M-CSA entry 397, mechanism 2; M-CSA cites PMID:10769135, PMID:11914097, PMID:17123489, PMID:26575550,
+        PMID:8196040, PMID:8535779, PMID:9571044; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/397/
+      snippet: "This reaction occurs via a double displacement mechanism involving the formation and hydrolysis\
+        \ of a covalent beta-glycosyl enzyme intermediate.
+<ol>
+<li>Formation of the intermediate\
+        \ involves attack at the sugar anomeric centre by a nucleophilic Asp 179 side chain. This is assisted\
+        \ by general acid catalysis of Glu 204 and Asp 289. </li>
+<li>The covalent glycosyl intermediate\
+        \ undergoes general"
+      notes: M-CSA entry 397, mechanism 2; M-CSA cites PMID:10769135, PMID:11914097, PMID:17123489, PMID:26575550,
+        PMID:8196040, PMID:8535779, PMID:9571044; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/397/
+      snippet: "This reaction occurs via a double displacement mechanism involving the formation and hydrolysis\
+        \ of a covalent beta-glycosyl enzyme intermediate.
+<ol>
+<li>Formation of the intermediate\
+        \ involves attack at the sugar anomeric centre by a nucleophilic Asp 179 side chain. This is assisted\
+        \ by general acid catalysis of Glu 204 and Asp 289. </li>
+<li>The covalent glycosyl intermediate\
+        \ undergoes general"
+      notes: M-CSA entry 397, mechanism 2; M-CSA cites PMID:10769135, PMID:11914097, PMID:17123489, PMID:26575550,
+        PMID:8196040, PMID:8535779, PMID:9571044; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/397/
+      snippet: "This reaction occurs via a double displacement mechanism involving the formation and hydrolysis\
+        \ of a covalent beta-glycosyl enzyme intermediate.
+<ol>
+<li>Formation of the intermediate\
+        \ involves attack at the sugar anomeric centre by a nucleophilic Asp 179 side chain. This is assisted\
+        \ by general acid catalysis of Glu 204 and Asp 289. </li>
+<li>The covalent glycosyl intermediate\
+        \ undergoes general"
+      notes: M-CSA entry 397, mechanism 2; M-CSA cites PMID:10769135, PMID:11914097, PMID:17123489, PMID:26575550,
+        PMID:8196040, PMID:8535779, PMID:9571044; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 397;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

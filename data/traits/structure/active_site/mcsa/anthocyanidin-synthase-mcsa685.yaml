@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.14.20.4
 - CHEBI:15379
@@ -282,4 +282,354 @@ definitions:
       The 2-oxoglutarate dependent enzyme anthocyanidin synthase is able to catalyse the synthesis of anthocyanidin from quercetin, a vital step in the synthesis of flavoids and flavones in plant cells. The reaction is coupled to the decarboxylation of 2-oxoglutarate to form succinate. It is part of the family of 2OG dependent non-haem iron oxygenases, which use 2-oxoglutarate as a cosubstrate and Iron (II) as a cofactor in their reaction mechanisms. The enzyme is of particular interest to geneticists as a mutated form is responsible for the original tall/dwarf dimorphism observed in peas by Mendel.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of anthocyanidin synthase
+  description: Stepwise mechanism transcribed from M-CSA entry 685 (8 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: lys213
+    label: catalytic Lys213 (M-CSA/PDB numbering; UniProt residue 213)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q96323
+    description: 'M-CSA roles: proton acceptor, proton donor, proton relay.'
+  - node_id: his232
+    label: catalytic His232 (M-CSA/PDB numbering; UniProt residue 232)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q96323
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp234
+    label: catalytic Asp234 (M-CSA/PDB numbering; UniProt residue 234)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q96323
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his288
+    label: catalytic His288 (M-CSA/PDB numbering; UniProt residue 288)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q96323
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: dioxygen
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+  - node_id: reactant1
+    label: 2-oxoglutarate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:16810
+  - node_id: reactant2
+    label: (2R,3S,4S)-leucocyanidin
+    node_type: CHEMICAL
+    grounding: CHEBI:11412
+  - node_id: product0
+    label: carbon dioxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+  - node_id: product1
+    label: succinate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30031
+  - node_id: product2
+    label: (+)-taxifolin
+    node_type: CHEMICAL
+    grounding: CHEBI:17948
+  - node_id: product3
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Fe(II) transfers an electron to the triplet state dioxygen.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The superoxide attacks the keto group of 2-oxoglutarate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: There is oxidative decarboxylation, resulting in the formation of succinate, CO2 and
+      the ferryl species.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The ferryl oxygen abstracts a proton from leucocyanidin to form a radical intermediate.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: The hydroxide adds to the radical intermediate, reducing Fe(III) to Fe(II) and forming
+      an acetal.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Lys213 acts as a base to deprotonate the acetal intermediate, causing the elimination
+      of the hydroxyl and formation of a carbon-carbon double bond.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: In an inferred step the product of step 6 tautomerises to form the taxifolin product.
+      The succinate product and hydroxyl are released from the Fe(II) centre and the native state of the
+      enzyme is restored.
+  - node_id: step8
+    label: mechanism step 8
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: anthocyanidin synthase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:685
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.60.120.330 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.60.120.330
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: anthocyanidin synthase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.14.20.4
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/685/
+      snippet: The superoxide attacks the keto group of 2-oxoglutarate.
+      notes: M-CSA entry 685, mechanism 1; M-CSA cites PMID:11796114; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/685/
+      snippet: There is oxidative decarboxylation, resulting in the formation of succinate, CO2 and the
+        ferryl species.
+      notes: M-CSA entry 685, mechanism 1; M-CSA cites PMID:11796114; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/685/
+      snippet: The ferryl oxygen abstracts a proton from leucocyanidin to form a radical intermediate.
+      notes: M-CSA entry 685, mechanism 1; M-CSA cites PMID:11796114; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/685/
+      snippet: The hydroxide adds to the radical intermediate, reducing Fe(III) to Fe(II) and forming
+        an acetal.
+      notes: M-CSA entry 685, mechanism 1; M-CSA cites PMID:11796114; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/685/
+      snippet: Lys213 acts as a base to deprotonate the acetal intermediate, causing the elimination of
+        the hydroxyl and formation of a carbon-carbon double bond.
+      notes: M-CSA entry 685, mechanism 1; M-CSA cites PMID:11796114; step 6
+  - subject: lys213
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: Lys213 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/685/
+      snippet: Lys213 acts as a base to deprotonate the acetal intermediate, causing the elimination of
+        the hydroxyl and formation of a carbon-carbon double bond.
+      notes: M-CSA entry 685, mechanism 1; M-CSA cites PMID:11796114; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/685/
+      snippet: In an inferred step the product of step 6 tautomerises to form the taxifolin product. The
+        succinate product and hydroxyl are released from the Fe(II) centre and the native state of the
+        enzyme is restored.
+      notes: M-CSA entry 685, mechanism 1; M-CSA cites PMID:11796114; step 7
+  - subject: step7
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step8
+    description: Step 7 leads to step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/685/
+      snippet: Products.
+      notes: M-CSA entry 685, mechanism 1; M-CSA cites PMID:11796114; step 8
+  - subject: lys213
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys213 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/685/
+      snippet: proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 685, mechanism 1; M-CSA cites PMID:11796114; M-CSA catalytic-residue roles for
+        Lys213
+  - subject: his232
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His232 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/685/
+      snippet: metal ligand
+      notes: M-CSA entry 685, mechanism 1; M-CSA cites PMID:11796114; M-CSA catalytic-residue roles for
+        His232
+  - subject: asp234
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp234 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/685/
+      snippet: metal ligand
+      notes: M-CSA entry 685, mechanism 1; M-CSA cites PMID:11796114; M-CSA catalytic-residue roles for
+        Asp234
+  - subject: his288
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His288 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/685/
+      snippet: metal ligand
+      notes: M-CSA entry 685, mechanism 1; M-CSA cites PMID:11796114; M-CSA catalytic-residue roles for
+        His288
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/685/
+      snippet: In the first stage of the reaction the iron (II) ion acts as a nucleophile to attack molecular
+        oxygen, thus reducing it to a peroxide radical, and oxidising iron (II) to iron (III). The radical
+        then reacts with the 2C of the 2 oxoglutarate to create an unstable intermediate which loses CO2
+        to give iron IV with a double bond formed to oxygen. The reduction of iron to Fe (III) then allows
+        the double
+      notes: M-CSA entry 685, mechanism 1; M-CSA cites PMID:11796114; CATH domain 2.60.120.330 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/685/
+      snippet: In the first stage of the reaction the iron (II) ion acts as a nucleophile to attack molecular
+        oxygen, thus reducing it to a peroxide radical, and oxidising iron (II) to iron (III). The radical
+        then reacts with the 2C of the 2 oxoglutarate to create an unstable intermediate which loses CO2
+        to give iron IV with a double bond formed to oxygen. The reduction of iron to Fe (III) then allows
+        the double
+      notes: M-CSA entry 685, mechanism 1; M-CSA cites PMID:11796114; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/685/
+      snippet: In the first stage of the reaction the iron (II) ion acts as a nucleophile to attack molecular
+        oxygen, thus reducing it to a peroxide radical, and oxidising iron (II) to iron (III). The radical
+        then reacts with the 2C of the 2 oxoglutarate to create an unstable intermediate which loses CO2
+        to give iron IV with a double bond formed to oxygen. The reduction of iron to Fe (III) then allows
+        the double
+      notes: M-CSA entry 685, mechanism 1; M-CSA cites PMID:11796114; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/685/
+      snippet: In the first stage of the reaction the iron (II) ion acts as a nucleophile to attack molecular
+        oxygen, thus reducing it to a peroxide radical, and oxidising iron (II) to iron (III). The radical
+        then reacts with the 2C of the 2 oxoglutarate to create an unstable intermediate which loses CO2
+        to give iron IV with a double bond formed to oxygen. The reduction of iron to Fe (III) then allows
+        the double
+      notes: M-CSA entry 685, mechanism 1; M-CSA cites PMID:11796114; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/685/
+      snippet: In the first stage of the reaction the iron (II) ion acts as a nucleophile to attack molecular
+        oxygen, thus reducing it to a peroxide radical, and oxidising iron (II) to iron (III). The radical
+        then reacts with the 2C of the 2 oxoglutarate to create an unstable intermediate which loses CO2
+        to give iron IV with a double bond formed to oxygen. The reduction of iron to Fe (III) then allows
+        the double
+      notes: M-CSA entry 685, mechanism 1; M-CSA cites PMID:11796114; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/685/
+      snippet: In the first stage of the reaction the iron (II) ion acts as a nucleophile to attack molecular
+        oxygen, thus reducing it to a peroxide radical, and oxidising iron (II) to iron (III). The radical
+        then reacts with the 2C of the 2 oxoglutarate to create an unstable intermediate which loses CO2
+        to give iron IV with a double bond formed to oxygen. The reduction of iron to Fe (III) then allows
+        the double
+      notes: M-CSA entry 685, mechanism 1; M-CSA cites PMID:11796114; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/685/
+      snippet: In the first stage of the reaction the iron (II) ion acts as a nucleophile to attack molecular
+        oxygen, thus reducing it to a peroxide radical, and oxidising iron (II) to iron (III). The radical
+        then reacts with the 2C of the 2 oxoglutarate to create an unstable intermediate which loses CO2
+        to give iron IV with a double bond formed to oxygen. The reduction of iron to Fe (III) then allows
+        the double
+      notes: M-CSA entry 685, mechanism 1; M-CSA cites PMID:11796114; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/685/
+      snippet: In the first stage of the reaction the iron (II) ion acts as a nucleophile to attack molecular
+        oxygen, thus reducing it to a peroxide radical, and oxidising iron (II) to iron (III). The radical
+        then reacts with the 2C of the 2 oxoglutarate to create an unstable intermediate which loses CO2
+        to give iron IV with a double bond formed to oxygen. The reduction of iron to Fe (III) then allows
+        the double
+      notes: M-CSA entry 685, mechanism 1; M-CSA cites PMID:11796114; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product3
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/685/
+      snippet: In the first stage of the reaction the iron (II) ion acts as a nucleophile to attack molecular
+        oxygen, thus reducing it to a peroxide radical, and oxidising iron (II) to iron (III). The radical
+        then reacts with the 2C of the 2 oxoglutarate to create an unstable intermediate which loses CO2
+        to give iron IV with a double bond formed to oxygen. The reduction of iron to Fe (III) then allows
+        the double
+      notes: M-CSA entry 685, mechanism 1; M-CSA cites PMID:11796114; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (21 evidence-backed edges) transcribed from M-CSA entry 685;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

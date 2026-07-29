@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.2.1.2
 - CHEBI:16897
@@ -255,4 +255,452 @@ definitions:
       Transaldolase (TAL) is an enzyme of the pentose phosphate pathway (PPP) found almost ubiquitously in the three domains of life (Archaea, Bacteria, and Eukarya). It is important for the balance of metabolites in the pentose-phosphate pathway, and catalyses the reversible transfer of a three-carbon ketol unit from sedoheptulose 7-phosphate to glyceraldehyde 3-phosphate to form erythrose 4-phosphate and fructose 6-phosphate. This enzyme, together with transketolase, provides a link between the glycolytic and pentose-phosphate pathways.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of transaldolase (type I)
+  description: Stepwise mechanism transcribed from M-CSA entry 148 (10 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: asp17
+    label: catalytic Asp17 (M-CSA/PDB numbering; UniProt residue 17)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A870
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: glu96
+    label: catalytic Glu96 (M-CSA/PDB numbering; UniProt residue 96)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A870
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      proton acceptor, proton donor.'
+  - node_id: lys132
+    label: catalytic Lys132 (M-CSA/PDB numbering; UniProt residue 132)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A870
+    description: 'M-CSA roles: covalently attached, electron pair acceptor, electron pair donor, hydrogen
+      bond acceptor, hydrogen bond donor, nucleofuge, nucleophile, proton acceptor, proton donor.'
+  - node_id: thr156
+    label: catalytic Thr156 (M-CSA/PDB numbering; UniProt residue 156)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A870
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: phe178
+    label: catalytic Phe178 (M-CSA/PDB numbering; UniProt residue 178)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A870
+    description: 'M-CSA roles: steric role.'
+  - node_id: reactant0
+    label: D-erythrose 4-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:16897
+  - node_id: reactant1
+    label: D-fructose 6-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57579
+  - node_id: product0
+    label: D-glyceraldehyde 3-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:59776
+  - node_id: product1
+    label: sedoheptulose 7-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57483
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu96 deprotonatesa water which in turn accepts a proton from Lys132.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Lys132 nucleophilically attacks the carbonyl carbon meanwhile the oxyanion produced is
+      also protonated by Lys132
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: To form the Fructose 6-phosphate Schiff base which elimates the hydroxyl group which
+      will then accept a proton from the catalytic water which will then accepts a proton from Glu96.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Glu96 deprotonates water so that it can act as a base which deprotonates the C4-OH and
+      results in the heterolytic cleavage and the release of the first product, G3P.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: The carbanion undergoes an isomerisation in which the lone pair of electrons migrate
+      to the nitrogen of Lys132.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: The lysine-bound intermediate attacks the carbonyl carbon of the D-erythrose 4-phosphate
+      substrate in a 1,4-nucleophilic addition. The formed oxyanion deprotonates Glu96.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: Glu96 deprotonates a water molecule, which attacks the carbamylated carbon of the intermediate
+      in a nucleophilic addition.
+  - node_id: step8
+    label: mechanism step 8
+    node_type: STATE
+    description: Lys132 deprotonates the bound water, initiating an elimination reaction that releases
+      the D-sedoheptulose 7-phosphate product from the enzyme.
+  - node_id: step9
+    label: mechanism step 9
+    node_type: STATE
+    description: Regeneration of the active site in which the Lys132 deprotonates a bound water that in
+      turn deprotonates Glu96.
+  - node_id: step10
+    label: mechanism step 10
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: transaldolase (type I) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:148
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.70 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.70
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: transaldolase (type I) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.2.1.2
+  edges:
+  - subject: glu96
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu96 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/148/
+      snippet: Glu96 deprotonatesa water which in turn accepts a proton from Lys132.
+      notes: M-CSA entry 148, mechanism 2; M-CSA cites PMID:21857661; step 1
+  - subject: lys132
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys132 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/148/
+      snippet: Glu96 deprotonatesa water which in turn accepts a proton from Lys132.
+      notes: M-CSA entry 148, mechanism 2; M-CSA cites PMID:21857661; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/148/
+      snippet: Lys132 nucleophilically attacks the carbonyl carbon meanwhile the oxyanion produced is
+        also protonated by Lys132
+      notes: M-CSA entry 148, mechanism 2; M-CSA cites PMID:21857661; step 2
+  - subject: lys132
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Lys132 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/148/
+      snippet: Lys132 nucleophilically attacks the carbonyl carbon meanwhile the oxyanion produced is
+        also protonated by Lys132
+      notes: M-CSA entry 148, mechanism 2; M-CSA cites PMID:21857661; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/148/
+      snippet: To form the Fructose 6-phosphate Schiff base which elimates the hydroxyl group which will
+        then accept a proton from the catalytic water which will then accepts a proton from Glu96.
+      notes: M-CSA entry 148, mechanism 2; M-CSA cites PMID:21857661; step 3
+  - subject: glu96
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Glu96 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/148/
+      snippet: To form the Fructose 6-phosphate Schiff base which elimates the hydroxyl group which will
+        then accept a proton from the catalytic water which will then accepts a proton from Glu96.
+      notes: M-CSA entry 148, mechanism 2; M-CSA cites PMID:21857661; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/148/
+      snippet: Glu96 deprotonates water so that it can act as a base which deprotonates the C4-OH and
+        results in the heterolytic cleavage and the release of the first product, G3P.
+      notes: M-CSA entry 148, mechanism 2; M-CSA cites PMID:21857661; step 4
+  - subject: glu96
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Glu96 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/148/
+      snippet: Glu96 deprotonates water so that it can act as a base which deprotonates the C4-OH and
+        results in the heterolytic cleavage and the release of the first product, G3P.
+      notes: M-CSA entry 148, mechanism 2; M-CSA cites PMID:21857661; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/148/
+      snippet: The carbanion undergoes an isomerisation in which the lone pair of electrons migrate to
+        the nitrogen of Lys132.
+      notes: M-CSA entry 148, mechanism 2; M-CSA cites PMID:21857661; step 5
+  - subject: lys132
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Lys132 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/148/
+      snippet: The carbanion undergoes an isomerisation in which the lone pair of electrons migrate to
+        the nitrogen of Lys132.
+      notes: M-CSA entry 148, mechanism 2; M-CSA cites PMID:21857661; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/148/
+      snippet: The lysine-bound intermediate attacks the carbonyl carbon of the D-erythrose 4-phosphate
+        substrate in a 1,4-nucleophilic addition. The formed oxyanion deprotonates Glu96.
+      notes: M-CSA entry 148, mechanism 2; M-CSA cites PMID:21857661; step 6
+  - subject: glu96
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: Glu96 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/148/
+      snippet: The lysine-bound intermediate attacks the carbonyl carbon of the D-erythrose 4-phosphate
+        substrate in a 1,4-nucleophilic addition. The formed oxyanion deprotonates Glu96.
+      notes: M-CSA entry 148, mechanism 2; M-CSA cites PMID:21857661; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/148/
+      snippet: Glu96 deprotonates a water molecule, which attacks the carbamylated carbon of the intermediate
+        in a nucleophilic addition.
+      notes: M-CSA entry 148, mechanism 2; M-CSA cites PMID:21857661; step 7
+  - subject: glu96
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step7
+    description: Glu96 acts in step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/148/
+      snippet: Glu96 deprotonates a water molecule, which attacks the carbamylated carbon of the intermediate
+        in a nucleophilic addition.
+      notes: M-CSA entry 148, mechanism 2; M-CSA cites PMID:21857661; step 7
+  - subject: step7
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step8
+    description: Step 7 leads to step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/148/
+      snippet: Lys132 deprotonates the bound water, initiating an elimination reaction that releases the
+        D-sedoheptulose 7-phosphate product from the enzyme.
+      notes: M-CSA entry 148, mechanism 2; M-CSA cites PMID:21857661; step 8
+  - subject: lys132
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step8
+    description: Lys132 acts in step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/148/
+      snippet: Lys132 deprotonates the bound water, initiating an elimination reaction that releases the
+        D-sedoheptulose 7-phosphate product from the enzyme.
+      notes: M-CSA entry 148, mechanism 2; M-CSA cites PMID:21857661; step 8
+  - subject: step8
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step9
+    description: Step 8 leads to step 9.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/148/
+      snippet: Regeneration of the active site in which the Lys132 deprotonates a bound water that in
+        turn deprotonates Glu96.
+      notes: M-CSA entry 148, mechanism 2; M-CSA cites PMID:21857661; step 9
+  - subject: glu96
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step9
+    description: Glu96 acts in step 9.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/148/
+      snippet: Regeneration of the active site in which the Lys132 deprotonates a bound water that in
+        turn deprotonates Glu96.
+      notes: M-CSA entry 148, mechanism 2; M-CSA cites PMID:21857661; step 9
+  - subject: lys132
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step9
+    description: Lys132 acts in step 9.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/148/
+      snippet: Regeneration of the active site in which the Lys132 deprotonates a bound water that in
+        turn deprotonates Glu96.
+      notes: M-CSA entry 148, mechanism 2; M-CSA cites PMID:21857661; step 9
+  - subject: step9
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step10
+    description: Step 9 leads to step 10.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/148/
+      snippet: Products
+      notes: M-CSA entry 148, mechanism 2; M-CSA cites PMID:21857661; step 10
+  - subject: asp17
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp17 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/148/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 148, mechanism 2; M-CSA cites PMID:21857661; M-CSA catalytic-residue roles for
+        Asp17
+  - subject: glu96
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu96 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/148/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+        proton donor
+      notes: M-CSA entry 148, mechanism 2; M-CSA cites PMID:21857661; M-CSA catalytic-residue roles for
+        Glu96
+  - subject: lys132
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys132 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/148/
+      snippet: covalently attached, electron pair acceptor, electron pair donor, hydrogen bond acceptor,
+        hydrogen bond donor, nucleofuge, nucleophile, proton acceptor, proton donor
+      notes: M-CSA entry 148, mechanism 2; M-CSA cites PMID:21857661; M-CSA catalytic-residue roles for
+        Lys132
+  - subject: thr156
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr156 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/148/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 148, mechanism 2; M-CSA cites PMID:21857661; M-CSA catalytic-residue roles for
+        Thr156
+  - subject: phe178
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Phe178 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/148/
+      snippet: steric role
+      notes: M-CSA entry 148, mechanism 2; M-CSA cites PMID:21857661; M-CSA catalytic-residue roles for
+        Phe178
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/148/
+      snippet: In this proposal the Asp 17 is no longer taking part in the catalytic mechanism, instead
+        Glu 96 takes its role as general acid/base. Firstly Glu96 actS as a general base and deprotonates
+        the conserved Lys132 in TalB via the catalytic water molecule to facilitate the nucleophilic attack
+        of the NH2 group on the carbonyl carbon atom of Fructose 6-phosphate. The nucleophilic attack
+        is followed by a pr
+      notes: M-CSA entry 148, mechanism 2; M-CSA cites PMID:21857661; CATH domain 3.20.20.70 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/148/
+      snippet: In this proposal the Asp 17 is no longer taking part in the catalytic mechanism, instead
+        Glu 96 takes its role as general acid/base. Firstly Glu96 actS as a general base and deprotonates
+        the conserved Lys132 in TalB via the catalytic water molecule to facilitate the nucleophilic attack
+        of the NH2 group on the carbonyl carbon atom of Fructose 6-phosphate. The nucleophilic attack
+        is followed by a pr
+      notes: M-CSA entry 148, mechanism 2; M-CSA cites PMID:21857661; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/148/
+      snippet: In this proposal the Asp 17 is no longer taking part in the catalytic mechanism, instead
+        Glu 96 takes its role as general acid/base. Firstly Glu96 actS as a general base and deprotonates
+        the conserved Lys132 in TalB via the catalytic water molecule to facilitate the nucleophilic attack
+        of the NH2 group on the carbonyl carbon atom of Fructose 6-phosphate. The nucleophilic attack
+        is followed by a pr
+      notes: M-CSA entry 148, mechanism 2; M-CSA cites PMID:21857661; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/148/
+      snippet: In this proposal the Asp 17 is no longer taking part in the catalytic mechanism, instead
+        Glu 96 takes its role as general acid/base. Firstly Glu96 actS as a general base and deprotonates
+        the conserved Lys132 in TalB via the catalytic water molecule to facilitate the nucleophilic attack
+        of the NH2 group on the carbonyl carbon atom of Fructose 6-phosphate. The nucleophilic attack
+        is followed by a pr
+      notes: M-CSA entry 148, mechanism 2; M-CSA cites PMID:21857661; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/148/
+      snippet: In this proposal the Asp 17 is no longer taking part in the catalytic mechanism, instead
+        Glu 96 takes its role as general acid/base. Firstly Glu96 actS as a general base and deprotonates
+        the conserved Lys132 in TalB via the catalytic water molecule to facilitate the nucleophilic attack
+        of the NH2 group on the carbonyl carbon atom of Fructose 6-phosphate. The nucleophilic attack
+        is followed by a pr
+      notes: M-CSA entry 148, mechanism 2; M-CSA cites PMID:21857661; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/148/
+      snippet: In this proposal the Asp 17 is no longer taking part in the catalytic mechanism, instead
+        Glu 96 takes its role as general acid/base. Firstly Glu96 actS as a general base and deprotonates
+        the conserved Lys132 in TalB via the catalytic water molecule to facilitate the nucleophilic attack
+        of the NH2 group on the carbonyl carbon atom of Fructose 6-phosphate. The nucleophilic attack
+        is followed by a pr
+      notes: M-CSA entry 148, mechanism 2; M-CSA cites PMID:21857661; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (31 evidence-backed edges) transcribed from M-CSA entry 148;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

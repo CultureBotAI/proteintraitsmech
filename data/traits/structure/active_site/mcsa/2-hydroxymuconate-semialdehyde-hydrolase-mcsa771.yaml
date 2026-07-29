@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.7.1.9
 - CHEBI:15377
@@ -55,4 +55,395 @@ definitions:
       Meta-cleavage product hydrolases (MCP-hydrolase) are key enzymes involved in the microbial degradation of aromatic compounds. MCP-hydrolase CumD is a dimeric enzyme produced by Pseudomonas fluorescens IP01 and is involved in the pathway for the degradation of cumene. MCP-hydrolase enzymes produce 2-hydroxypenta-2,4-dienoate and various organic acids, depending upon the C6 substituent of the substrate. CumD prefers larger C6 substituents compared to other monoalkylbenzene hydrolases, such as TodF. Hence, when CumD acts on the meta-cleavage product of cumene, 2-hydroxypenta-2,4-dienoate and isobutyric acid are the products. The understanding of the catalytic mechanism of MCP-hydrolases is neccessary to improve biological degradation of environmental pollutant aromatic compounds, which may be carcinogenic, toxic and mutagenic.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 2-hydroxymuconate-semialdehyde hydrolase
+  description: Stepwise mechanism transcribed from M-CSA entry 771 (7 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: ser34
+    label: catalytic Ser34 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P96965
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ala103
+    label: catalytic Ala103 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P96965
+    description: 'M-CSA roles: nucleofuge, nucleophile, proton acceptor, proton donor.'
+  - node_id: phe104
+    label: catalytic Phe104 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P96965
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp224
+    label: catalytic Asp224 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P96965
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his252
+    label: catalytic His252 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P96965
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: (2Z,4E)-2-hydroxy-6-oxohexa-2,4-dienoate
+    node_type: CHEMICAL
+    grounding: CHEBI:71198
+  - node_id: product0
+    label: 2-oxopent-4-enoate
+    node_type: CHEMICAL
+    grounding: CHEBI:11641
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: formate
+    node_type: CHEMICAL
+    grounding: CHEBI:15740
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His252 deprotonates the hydroxyl which cause a rearrangement of double bonds which results
+      in the ketonization of the substrate as there will be rotation around the C4-C5 bond.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: "The ketonization of
+the substrate generates an internal electron sink and the enolate\
+      \ feeds the electrons back, resulting in the C=C that is  bound deprotonating His252."
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: His252 deprotonates Ser103 activating it to nucleophilically attack the carbon of the
+      carbonyl bond to produce the acyl-enzyme intermediate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The oxyanion initiates a collapse which results in the cleavage of the intermediate which
+      releases the 2-oxopent-4-enoate product which is protonated by His252.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: His252 abstracts a proton from water, activating it to nucleophilically attack the carbon
+      of the ester bond.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: The oxyanion initiates an elimination which results in the cleavage of the ester bond
+      and release of Ser103 which is then protonated by His252.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: Product
+  - node_id: active_site
+    label: 2-hydroxymuconate-semialdehyde hydrolase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:771
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1820 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1820
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: 2-hydroxymuconate-semialdehyde hydrolase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.7.1.9
+  edges:
+  - subject: his252
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His252 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/771/
+      snippet: His252 deprotonates the hydroxyl which cause a rearrangement of double bonds which results
+        in the ketonization of the substrate as there will be rotation around the C4-C5 bond.
+      notes: M-CSA entry 771, mechanism 1; M-CSA cites PMID:15784976, PMID:16233251, PMID:18259978; step
+        1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/771/
+      snippet: "The ketonization of
+the substrate generates an internal electron sink and the enolate\
+        \ feeds the electrons back, resulting in the C=C that is  bound deprotonating His252."
+      notes: M-CSA entry 771, mechanism 1; M-CSA cites PMID:15784976, PMID:16233251, PMID:18259978; step
+        2
+  - subject: his252
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His252 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/771/
+      snippet: "The ketonization of
+the substrate generates an internal electron sink and the enolate\
+        \ feeds the electrons back, resulting in the C=C that is  bound deprotonating His252."
+      notes: M-CSA entry 771, mechanism 1; M-CSA cites PMID:15784976, PMID:16233251, PMID:18259978; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/771/
+      snippet: His252 deprotonates Ser103 activating it to nucleophilically attack the carbon of the carbonyl
+        bond to produce the acyl-enzyme intermediate.
+      notes: M-CSA entry 771, mechanism 1; M-CSA cites PMID:15784976, PMID:16233251, PMID:18259978; step
+        3
+  - subject: his252
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His252 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/771/
+      snippet: His252 deprotonates Ser103 activating it to nucleophilically attack the carbon of the carbonyl
+        bond to produce the acyl-enzyme intermediate.
+      notes: M-CSA entry 771, mechanism 1; M-CSA cites PMID:15784976, PMID:16233251, PMID:18259978; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/771/
+      snippet: The oxyanion initiates a collapse which results in the cleavage of the intermediate which
+        releases the 2-oxopent-4-enoate product which is protonated by His252.
+      notes: M-CSA entry 771, mechanism 1; M-CSA cites PMID:15784976, PMID:16233251, PMID:18259978; step
+        4
+  - subject: his252
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: His252 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/771/
+      snippet: The oxyanion initiates a collapse which results in the cleavage of the intermediate which
+        releases the 2-oxopent-4-enoate product which is protonated by His252.
+      notes: M-CSA entry 771, mechanism 1; M-CSA cites PMID:15784976, PMID:16233251, PMID:18259978; step
+        4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/771/
+      snippet: His252 abstracts a proton from water, activating it to nucleophilically attack the carbon
+        of the ester bond.
+      notes: M-CSA entry 771, mechanism 1; M-CSA cites PMID:15784976, PMID:16233251, PMID:18259978; step
+        5
+  - subject: his252
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: His252 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/771/
+      snippet: His252 abstracts a proton from water, activating it to nucleophilically attack the carbon
+        of the ester bond.
+      notes: M-CSA entry 771, mechanism 1; M-CSA cites PMID:15784976, PMID:16233251, PMID:18259978; step
+        5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/771/
+      snippet: The oxyanion initiates an elimination which results in the cleavage of the ester bond and
+        release of Ser103 which is then protonated by His252.
+      notes: M-CSA entry 771, mechanism 1; M-CSA cites PMID:15784976, PMID:16233251, PMID:18259978; step
+        6
+  - subject: his252
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: His252 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/771/
+      snippet: The oxyanion initiates an elimination which results in the cleavage of the ester bond and
+        release of Ser103 which is then protonated by His252.
+      notes: M-CSA entry 771, mechanism 1; M-CSA cites PMID:15784976, PMID:16233251, PMID:18259978; step
+        6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/771/
+      snippet: Product
+      notes: M-CSA entry 771, mechanism 1; M-CSA cites PMID:15784976, PMID:16233251, PMID:18259978; step
+        7
+  - subject: ser34
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser34 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/771/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 771, mechanism 1; M-CSA cites PMID:15784976, PMID:16233251, PMID:18259978; M-CSA
+        catalytic-residue roles for Ser34
+  - subject: ala103
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ala103 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/771/
+      snippet: nucleofuge, nucleophile, proton acceptor, proton donor
+      notes: M-CSA entry 771, mechanism 1; M-CSA cites PMID:15784976, PMID:16233251, PMID:18259978; M-CSA
+        catalytic-residue roles for Ala103
+  - subject: phe104
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Phe104 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/771/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 771, mechanism 1; M-CSA cites PMID:15784976, PMID:16233251, PMID:18259978; M-CSA
+        catalytic-residue roles for Phe104
+  - subject: asp224
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp224 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/771/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 771, mechanism 1; M-CSA cites PMID:15784976, PMID:16233251, PMID:18259978; M-CSA
+        catalytic-residue roles for Asp224
+  - subject: his252
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His252 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/771/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 771, mechanism 1; M-CSA cites PMID:15784976, PMID:16233251, PMID:18259978; M-CSA
+        catalytic-residue roles for His252
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/771/
+      snippet: The active site of CumD contains the Ser103, Asp 224, His 252 catalytic triad. His 252
+        initially deprotonates a hydroxyl which results in the ketonization of the substrate as the keto
+        form is more stable in the active site. His 252 is then deprotonated by the C=C so that the His
+        can then deprotonates Ser 103 which activates it to nucleophilically attack the carbonyl bond
+        to produce the oxyanion in
+      notes: M-CSA entry 771, mechanism 1; M-CSA cites PMID:15784976, PMID:16233251, PMID:18259978; CATH
+        domain 3.40.50.1820 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/771/
+      snippet: The active site of CumD contains the Ser103, Asp 224, His 252 catalytic triad. His 252
+        initially deprotonates a hydroxyl which results in the ketonization of the substrate as the keto
+        form is more stable in the active site. His 252 is then deprotonated by the C=C so that the His
+        can then deprotonates Ser 103 which activates it to nucleophilically attack the carbonyl bond
+        to produce the oxyanion in
+      notes: M-CSA entry 771, mechanism 1; M-CSA cites PMID:15784976, PMID:16233251, PMID:18259978; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/771/
+      snippet: The active site of CumD contains the Ser103, Asp 224, His 252 catalytic triad. His 252
+        initially deprotonates a hydroxyl which results in the ketonization of the substrate as the keto
+        form is more stable in the active site. His 252 is then deprotonated by the C=C so that the His
+        can then deprotonates Ser 103 which activates it to nucleophilically attack the carbonyl bond
+        to produce the oxyanion in
+      notes: M-CSA entry 771, mechanism 1; M-CSA cites PMID:15784976, PMID:16233251, PMID:18259978; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/771/
+      snippet: The active site of CumD contains the Ser103, Asp 224, His 252 catalytic triad. His 252
+        initially deprotonates a hydroxyl which results in the ketonization of the substrate as the keto
+        form is more stable in the active site. His 252 is then deprotonated by the C=C so that the His
+        can then deprotonates Ser 103 which activates it to nucleophilically attack the carbonyl bond
+        to produce the oxyanion in
+      notes: M-CSA entry 771, mechanism 1; M-CSA cites PMID:15784976, PMID:16233251, PMID:18259978; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/771/
+      snippet: The active site of CumD contains the Ser103, Asp 224, His 252 catalytic triad. His 252
+        initially deprotonates a hydroxyl which results in the ketonization of the substrate as the keto
+        form is more stable in the active site. His 252 is then deprotonated by the C=C so that the His
+        can then deprotonates Ser 103 which activates it to nucleophilically attack the carbonyl bond
+        to produce the oxyanion in
+      notes: M-CSA entry 771, mechanism 1; M-CSA cites PMID:15784976, PMID:16233251, PMID:18259978; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/771/
+      snippet: The active site of CumD contains the Ser103, Asp 224, His 252 catalytic triad. His 252
+        initially deprotonates a hydroxyl which results in the ketonization of the substrate as the keto
+        form is more stable in the active site. His 252 is then deprotonated by the C=C so that the His
+        can then deprotonates Ser 103 which activates it to nucleophilically attack the carbonyl bond
+        to produce the oxyanion in
+      notes: M-CSA entry 771, mechanism 1; M-CSA cites PMID:15784976, PMID:16233251, PMID:18259978; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/771/
+      snippet: The active site of CumD contains the Ser103, Asp 224, His 252 catalytic triad. His 252
+        initially deprotonates a hydroxyl which results in the ketonization of the substrate as the keto
+        form is more stable in the active site. His 252 is then deprotonated by the C=C so that the His
+        can then deprotonates Ser 103 which activates it to nucleophilically attack the carbonyl bond
+        to produce the oxyanion in
+      notes: M-CSA entry 771, mechanism 1; M-CSA cites PMID:15784976, PMID:16233251, PMID:18259978; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (24 evidence-backed edges) transcribed from M-CSA entry 771;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

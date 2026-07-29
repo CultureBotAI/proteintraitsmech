@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.3.1.85
 - CHEBI:78827
@@ -1710,4 +1710,312 @@ definitions:
       Fatty acid synthase is a multi-enzyme (i.e. enzyme with multiple catalytic domains) involved in the synthesis of palmitic acid from acetyl-CoA, malonyl-CoA, and NADPH. β-ketoreductase (KR) is one catalytic domain of fatty acid synthetase responsible for reduction of β-ketoacyl moiety of the substrate to β-hydroxyacyl by a NADPH cofactor. Structure alignments of the KR domains have revealed that the main residues that interact with the β-ketoacyl substrate and the nicotinamide ring of the NADPH cofactor are similarly placed and are the same for the different organisms.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of fatty acid synthase - β-ketoreductase (KR)
+  description: Stepwise mechanism transcribed from M-CSA entry 974 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: lys1995
+    label: catalytic Lys1995 (M-CSA/PDB numbering; UniProt residue 1995)
+    node_type: RESIDUE
+    grounding: UniProtKB:P49327
+    description: 'M-CSA roles: proton donor.'
+  - node_id: ser2021
+    label: catalytic Ser2021 (M-CSA/PDB numbering; UniProt residue 2021)
+    node_type: RESIDUE
+    grounding: UniProtKB:P49327
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: tyr2034
+    label: catalytic Tyr2034 (M-CSA/PDB numbering; UniProt residue 2034)
+    node_type: RESIDUE
+    grounding: UniProtKB:P49327
+    description: 'M-CSA roles: electrostatic stabiliser, proton acceptor, proton donor.'
+  - node_id: asn2038
+    label: catalytic Asn2038 (M-CSA/PDB numbering; UniProt residue 2038)
+    node_type: RESIDUE
+    grounding: UniProtKB:P49327
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: O-(S-3-oxoacylpantetheine-4'-phosphoryl)-L-serine(1-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:78776
+  - node_id: reactant1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: reactant2
+    label: NADPH(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+  - node_id: product0
+    label: O-[S-(3R)-3-hydroxyacylpantetheine-4'-phosphoryl]serine(1-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:78827
+  - node_id: product1
+    label: NADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Nucleophilic attack of hydride from the hydrogen of the nicotinamide moiety of NADPH
+      on the Cβ of the substrate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Tyr2034 is deprotonated by the negatively charged Cβ–oxygen atom of β-ketoacyl substrate,
+      forming the hydroxyacyl product.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Deprotonation of the C2-hydroxyl of ribose by the negatively charged Tyr2034.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Deprotonation of Lys1995 by the alkoxide in the ribose ring of NADP+
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Final products.
+  - node_id: active_site
+    label: fatty acid synthase - β-ketoreductase (KR) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:974
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.720 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.720
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: fatty acid synthase - β-ketoreductase (KR) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.3.1.85
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/974/
+      snippet: Tyr2034 is deprotonated by the negatively charged Cβ–oxygen atom of β-ketoacyl substrate,
+        forming the hydroxyacyl product.
+      notes: M-CSA entry 974, mechanism 1; M-CSA cites PMID:25086508, PMID:26863427, PMID:27905606; step
+        2
+  - subject: tyr2034
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Tyr2034 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/974/
+      snippet: Tyr2034 is deprotonated by the negatively charged Cβ–oxygen atom of β-ketoacyl substrate,
+        forming the hydroxyacyl product.
+      notes: M-CSA entry 974, mechanism 1; M-CSA cites PMID:25086508, PMID:26863427, PMID:27905606; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/974/
+      snippet: Deprotonation of the C2-hydroxyl of ribose by the negatively charged Tyr2034.
+      notes: M-CSA entry 974, mechanism 1; M-CSA cites PMID:25086508, PMID:26863427, PMID:27905606; step
+        3
+  - subject: tyr2034
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Tyr2034 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/974/
+      snippet: Deprotonation of the C2-hydroxyl of ribose by the negatively charged Tyr2034.
+      notes: M-CSA entry 974, mechanism 1; M-CSA cites PMID:25086508, PMID:26863427, PMID:27905606; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/974/
+      snippet: Deprotonation of Lys1995 by the alkoxide in the ribose ring of NADP+
+      notes: M-CSA entry 974, mechanism 1; M-CSA cites PMID:25086508, PMID:26863427, PMID:27905606; step
+        4
+  - subject: lys1995
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Lys1995 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/974/
+      snippet: Deprotonation of Lys1995 by the alkoxide in the ribose ring of NADP+
+      notes: M-CSA entry 974, mechanism 1; M-CSA cites PMID:25086508, PMID:26863427, PMID:27905606; step
+        4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/974/
+      snippet: Final products.
+      notes: M-CSA entry 974, mechanism 1; M-CSA cites PMID:25086508, PMID:26863427, PMID:27905606; step
+        5
+  - subject: lys1995
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys1995 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/974/
+      snippet: proton donor
+      notes: M-CSA entry 974, mechanism 1; M-CSA cites PMID:25086508, PMID:26863427, PMID:27905606; M-CSA
+        catalytic-residue roles for Lys1995
+  - subject: ser2021
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser2021 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/974/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 974, mechanism 1; M-CSA cites PMID:25086508, PMID:26863427, PMID:27905606; M-CSA
+        catalytic-residue roles for Ser2021
+  - subject: tyr2034
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr2034 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/974/
+      snippet: electrostatic stabiliser, proton acceptor, proton donor
+      notes: M-CSA entry 974, mechanism 1; M-CSA cites PMID:25086508, PMID:26863427, PMID:27905606; M-CSA
+        catalytic-residue roles for Tyr2034
+  - subject: asn2038
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn2038 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/974/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 974, mechanism 1; M-CSA cites PMID:25086508, PMID:26863427, PMID:27905606; M-CSA
+        catalytic-residue roles for Asn2038
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/974/
+      snippet: "The reaction mechanism of human β-ketoacyl reductase consists of two main stages: (i)\
+        \ a nucleophilic attack of a hydride from NADPH to
+the β-carbon (Cβ) of the substrate and (ii)\
+        \ β-alkoxide moiety of
+the substrate deprotonates a nearby Tyr2034, with its protonation restored\
+        \ by a nearby Lys1995, via the ribose’s hydroxyl in NADP+"
+      notes: M-CSA entry 974, mechanism 1; M-CSA cites PMID:25086508, PMID:26863427, PMID:27905606; CATH
+        domain 3.40.50.720 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/974/
+      snippet: "The reaction mechanism of human β-ketoacyl reductase consists of two main stages: (i)\
+        \ a nucleophilic attack of a hydride from NADPH to
+the β-carbon (Cβ) of the substrate and (ii)\
+        \ β-alkoxide moiety of
+the substrate deprotonates a nearby Tyr2034, with its protonation restored\
+        \ by a nearby Lys1995, via the ribose’s hydroxyl in NADP+"
+      notes: M-CSA entry 974, mechanism 1; M-CSA cites PMID:25086508, PMID:26863427, PMID:27905606; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/974/
+      snippet: "The reaction mechanism of human β-ketoacyl reductase consists of two main stages: (i)\
+        \ a nucleophilic attack of a hydride from NADPH to
+the β-carbon (Cβ) of the substrate and (ii)\
+        \ β-alkoxide moiety of
+the substrate deprotonates a nearby Tyr2034, with its protonation restored\
+        \ by a nearby Lys1995, via the ribose’s hydroxyl in NADP+"
+      notes: M-CSA entry 974, mechanism 1; M-CSA cites PMID:25086508, PMID:26863427, PMID:27905606; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/974/
+      snippet: "The reaction mechanism of human β-ketoacyl reductase consists of two main stages: (i)\
+        \ a nucleophilic attack of a hydride from NADPH to
+the β-carbon (Cβ) of the substrate and (ii)\
+        \ β-alkoxide moiety of
+the substrate deprotonates a nearby Tyr2034, with its protonation restored\
+        \ by a nearby Lys1995, via the ribose’s hydroxyl in NADP+"
+      notes: M-CSA entry 974, mechanism 1; M-CSA cites PMID:25086508, PMID:26863427, PMID:27905606; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/974/
+      snippet: "The reaction mechanism of human β-ketoacyl reductase consists of two main stages: (i)\
+        \ a nucleophilic attack of a hydride from NADPH to
+the β-carbon (Cβ) of the substrate and (ii)\
+        \ β-alkoxide moiety of
+the substrate deprotonates a nearby Tyr2034, with its protonation restored\
+        \ by a nearby Lys1995, via the ribose’s hydroxyl in NADP+"
+      notes: M-CSA entry 974, mechanism 1; M-CSA cites PMID:25086508, PMID:26863427, PMID:27905606; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/974/
+      snippet: "The reaction mechanism of human β-ketoacyl reductase consists of two main stages: (i)\
+        \ a nucleophilic attack of a hydride from NADPH to
+the β-carbon (Cβ) of the substrate and (ii)\
+        \ β-alkoxide moiety of
+the substrate deprotonates a nearby Tyr2034, with its protonation restored\
+        \ by a nearby Lys1995, via the ribose’s hydroxyl in NADP+"
+      notes: M-CSA entry 974, mechanism 1; M-CSA cites PMID:25086508, PMID:26863427, PMID:27905606; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/974/
+      snippet: "The reaction mechanism of human β-ketoacyl reductase consists of two main stages: (i)\
+        \ a nucleophilic attack of a hydride from NADPH to
+the β-carbon (Cβ) of the substrate and (ii)\
+        \ β-alkoxide moiety of
+the substrate deprotonates a nearby Tyr2034, with its protonation restored\
+        \ by a nearby Lys1995, via the ribose’s hydroxyl in NADP+"
+      notes: M-CSA entry 974, mechanism 1; M-CSA cites PMID:25086508, PMID:26863427, PMID:27905606; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (18 evidence-backed edges) transcribed from M-CSA entry 974;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

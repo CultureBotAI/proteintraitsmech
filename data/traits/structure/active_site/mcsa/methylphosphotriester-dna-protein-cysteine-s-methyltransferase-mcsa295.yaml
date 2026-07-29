@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.1.1.-
 - CHEBI:82612
@@ -280,4 +280,234 @@ definitions:
       The Escherichia coli Ada protein is involved in the repair of alkylated DNA. It repairs methylphosphotriesters in DNA by direct, irreversible methyl transfer to one of its own cysteines. Since it reacts stoichiometrically with its substrate rather than catalytically it is referred to as a suicide enzyme. However, when it is methylated, it gains the ability to bind in a sequence-specific manner to DNA, and it can then activate the transcription of a methylation-resistance regulon. This enzyme consists of two domains. The 20-kDa N-terminal domain (N-Ada20) repairs the S-diastereomer of methyl phosphotriesters and in the methylated form binds DNA sequence-specifically, while the 19-kDa C-terminal domain (C-Ada 19) repairs the mutagenic lesion 06-methylguanine by direct methyl transfer to Cys-321. Therefore, each domain has a specific catlytic function. The resting state of the enzyme has the thiolate form of Cys38 coordinated to the zinc N-Ada centre. The N Ada metal coordination sphere sits at the bottom of a well in the active site. The active site environment is specific enough in shape and size to allow the methyl to approach from the Si diastereomeric face of the methylated phosphate DNA backbone group [PMID:8260490, PMID:11284682]. Spectroscopic studies have shown the sulfur to remain coordinated to the zinc centre once the reaction has occurred, even though the ability of the ligand to coordinate is reduced by the presence of the methyl group [PMID:9383376]. The presence of a methyl group within the Zn coordination sphere changes the tertiary structure of the enzyme sufficiently to reveal a specific DNA binding region in the N terminal region. The protein is now activated to bind onto, and increase transcription of the methylation regulon, coding for proteins involved in DNA methylation repair. The methylated form of Ada acts as a chemo-sensor for potentially mutagenic methylation within the cell [PMID:16464003].
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of methylphosphotriester-DNA--protein-cysteine S-methyltransferase
+  description: Stepwise mechanism transcribed from M-CSA entry 295 (2 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: cys38
+    label: catalytic Cys38 (M-CSA/PDB numbering; UniProt residue 38)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06134
+    description: 'M-CSA roles: activator, attractive charge-charge interaction, metal ligand, nucleophile.'
+  - node_id: cys42
+    label: catalytic Cys42 (M-CSA/PDB numbering; UniProt residue 42)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06134
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: cys69
+    label: catalytic Cys69 (M-CSA/PDB numbering; UniProt residue 69)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06134
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: cys72
+    label: catalytic Cys72 (M-CSA/PDB numbering; UniProt residue 72)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06134
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: L-cysteine residue
+    node_type: CHEMICAL
+    grounding: CHEBI:29950
+  - node_id: reactant1
+    label: methylphosphotriester-DNA
+    node_type: CHEMICAL
+    grounding: CHEBI:137177
+  - node_id: product0
+    label: S-methyl-L-cysteine residue
+    node_type: CHEMICAL
+    grounding: CHEBI:82612
+  - node_id: product1
+    label: DNA polyanion
+    node_type: CHEMICAL
+    grounding: CHEBI:83828
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The thiolate anion undergoes nucleophilic substitution at the methyl group, irreversibly
+      methylating the Cys38 residue.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: methylphosphotriester-DNA--protein-cysteine S-methyltransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:295
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.10.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.10.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: methylphosphotriester-DNA--protein-cysteine S-methyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.1.1.-
+  edges:
+  - subject: cys38
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys38 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/295/
+      snippet: The thiolate anion undergoes nucleophilic substitution at the methyl group, irreversibly
+        methylating the Cys38 residue.
+      notes: M-CSA entry 295, mechanism 1; M-CSA cites PMID:11284682, PMID:16209950, PMID:16464003, PMID:8260490,
+        PMID:8395079, PMID:9383376; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/295/
+      snippet: Products.
+      notes: M-CSA entry 295, mechanism 1; M-CSA cites PMID:11284682, PMID:16209950, PMID:16464003, PMID:8260490,
+        PMID:8395079, PMID:9383376; step 2
+  - subject: cys38
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys38 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/295/
+      snippet: activator, attractive charge-charge interaction, metal ligand, nucleophile
+      notes: M-CSA entry 295, mechanism 1; M-CSA cites PMID:11284682, PMID:16209950, PMID:16464003, PMID:8260490,
+        PMID:8395079, PMID:9383376; M-CSA catalytic-residue roles for Cys38
+  - subject: cys42
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys42 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/295/
+      snippet: metal ligand
+      notes: M-CSA entry 295, mechanism 1; M-CSA cites PMID:11284682, PMID:16209950, PMID:16464003, PMID:8260490,
+        PMID:8395079, PMID:9383376; M-CSA catalytic-residue roles for Cys42
+  - subject: cys69
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys69 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/295/
+      snippet: metal ligand
+      notes: M-CSA entry 295, mechanism 1; M-CSA cites PMID:11284682, PMID:16209950, PMID:16464003, PMID:8260490,
+        PMID:8395079, PMID:9383376; M-CSA catalytic-residue roles for Cys69
+  - subject: cys72
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys72 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/295/
+      snippet: metal ligand
+      notes: M-CSA entry 295, mechanism 1; M-CSA cites PMID:11284682, PMID:16209950, PMID:16464003, PMID:8260490,
+        PMID:8395079, PMID:9383376; M-CSA catalytic-residue roles for Cys72
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/295/
+      snippet: The zinc ion is involved not only in stabilisation of the protein structure but also in
+        direct metalloactivation of the methyl acceptor residue. Coordination of Cys38 to the metal destabilises
+        the thiol form and stabilises the corresponding thiolate, encouraging cysteine to be deprotonated
+        and attack the methyl group of the methylphosphotriester in an S<sub>N</sub>2 reaction.
+      notes: M-CSA entry 295, mechanism 1; M-CSA cites PMID:11284682, PMID:16209950, PMID:16464003, PMID:8260490,
+        PMID:8395079, PMID:9383376; CATH domain 3.40.10.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/295/
+      snippet: The zinc ion is involved not only in stabilisation of the protein structure but also in
+        direct metalloactivation of the methyl acceptor residue. Coordination of Cys38 to the metal destabilises
+        the thiol form and stabilises the corresponding thiolate, encouraging cysteine to be deprotonated
+        and attack the methyl group of the methylphosphotriester in an S<sub>N</sub>2 reaction.
+      notes: M-CSA entry 295, mechanism 1; M-CSA cites PMID:11284682, PMID:16209950, PMID:16464003, PMID:8260490,
+        PMID:8395079, PMID:9383376; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/295/
+      snippet: The zinc ion is involved not only in stabilisation of the protein structure but also in
+        direct metalloactivation of the methyl acceptor residue. Coordination of Cys38 to the metal destabilises
+        the thiol form and stabilises the corresponding thiolate, encouraging cysteine to be deprotonated
+        and attack the methyl group of the methylphosphotriester in an S<sub>N</sub>2 reaction.
+      notes: M-CSA entry 295, mechanism 1; M-CSA cites PMID:11284682, PMID:16209950, PMID:16464003, PMID:8260490,
+        PMID:8395079, PMID:9383376; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/295/
+      snippet: The zinc ion is involved not only in stabilisation of the protein structure but also in
+        direct metalloactivation of the methyl acceptor residue. Coordination of Cys38 to the metal destabilises
+        the thiol form and stabilises the corresponding thiolate, encouraging cysteine to be deprotonated
+        and attack the methyl group of the methylphosphotriester in an S<sub>N</sub>2 reaction.
+      notes: M-CSA entry 295, mechanism 1; M-CSA cites PMID:11284682, PMID:16209950, PMID:16464003, PMID:8260490,
+        PMID:8395079, PMID:9383376; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/295/
+      snippet: The zinc ion is involved not only in stabilisation of the protein structure but also in
+        direct metalloactivation of the methyl acceptor residue. Coordination of Cys38 to the metal destabilises
+        the thiol form and stabilises the corresponding thiolate, encouraging cysteine to be deprotonated
+        and attack the methyl group of the methylphosphotriester in an S<sub>N</sub>2 reaction.
+      notes: M-CSA entry 295, mechanism 1; M-CSA cites PMID:11284682, PMID:16209950, PMID:16464003, PMID:8260490,
+        PMID:8395079, PMID:9383376; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/295/
+      snippet: The zinc ion is involved not only in stabilisation of the protein structure but also in
+        direct metalloactivation of the methyl acceptor residue. Coordination of Cys38 to the metal destabilises
+        the thiol form and stabilises the corresponding thiolate, encouraging cysteine to be deprotonated
+        and attack the methyl group of the methylphosphotriester in an S<sub>N</sub>2 reaction.
+      notes: M-CSA entry 295, mechanism 1; M-CSA cites PMID:11284682, PMID:16209950, PMID:16464003, PMID:8260490,
+        PMID:8395079, PMID:9383376; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/295/
+      snippet: The zinc ion is involved not only in stabilisation of the protein structure but also in
+        direct metalloactivation of the methyl acceptor residue. Coordination of Cys38 to the metal destabilises
+        the thiol form and stabilises the corresponding thiolate, encouraging cysteine to be deprotonated
+        and attack the methyl group of the methylphosphotriester in an S<sub>N</sub>2 reaction.
+      notes: M-CSA entry 295, mechanism 1; M-CSA cites PMID:11284682, PMID:16209950, PMID:16464003, PMID:8260490,
+        PMID:8395079, PMID:9383376; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 295;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

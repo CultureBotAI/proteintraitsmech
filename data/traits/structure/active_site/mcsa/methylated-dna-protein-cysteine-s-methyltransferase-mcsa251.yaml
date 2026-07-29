@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.1.1.63
 - CHEBI:29950
@@ -203,4 +203,259 @@ definitions:
       Human O6-alkylguanine-DNA alkyltransferase (AGT) acts to repair cytotoxic lesions in DNA by transfering the O6-alkyl groups to an active site cysteine. This mechanism for preserving genomic integrity limits the effectiveness of certain alkylating anticancer reagents, and therefore AGT is an active anticancer drug target. This enzyme catalyses only one turnover and therefore is not strictly catalytic.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of methylated-DNA--[protein]-cysteine S-methyltransferase
+  description: Stepwise mechanism transcribed from M-CSA entry 251 (2 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: tyr114
+    label: catalytic Tyr114 (M-CSA/PDB numbering; UniProt residue 114)
+    node_type: RESIDUE
+    grounding: UniProtKB:P16455
+    description: 'M-CSA roles: hydrogen bond donor, proton donor.'
+  - node_id: asn137
+    label: catalytic Asn137 (M-CSA/PDB numbering; UniProt residue 137)
+    node_type: RESIDUE
+    grounding: UniProtKB:P16455
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor.'
+  - node_id: cys145
+    label: catalytic Cys145 (M-CSA/PDB numbering; UniProt residue 145)
+    node_type: RESIDUE
+    grounding: UniProtKB:P16455
+    description: 'M-CSA roles: hydrogen bond donor, nucleophile, proton donor.'
+  - node_id: his146
+    label: catalytic His146 (M-CSA/PDB numbering; UniProt residue 146)
+    node_type: RESIDUE
+    grounding: UniProtKB:P16455
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor.'
+  - node_id: glu172
+    label: catalytic Glu172 (M-CSA/PDB numbering; UniProt residue 172)
+    node_type: RESIDUE
+    grounding: UniProtKB:P16455
+    description: 'M-CSA roles: hydrogen bond acceptor, increase basicity.'
+  - node_id: reactant0
+    label: L-cysteine residue
+    node_type: CHEMICAL
+    grounding: CHEBI:29950
+  - node_id: reactant1
+    label: 6-O-methyl dGMP(1-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:85448
+  - node_id: product0
+    label: S-methyl-L-cysteine residue
+    node_type: CHEMICAL
+    grounding: CHEBI:82612
+  - node_id: product1
+    label: 2'-deoxyguanosine 5'-monophosphate(1-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:85445
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His146 deprotonates water, which in turn deprotonates Cys145. Cys145 then initiates a
+      nucleophilic attack upon the methylated DNA in a substitution reaction. The DNA base then undergoes
+      double bond rearrangement, resulting in the deprotonation of Tyr114.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: methylated-DNA--[protein]-cysteine S-methyltransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:251
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.10.10.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.10.10.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: methylated-DNA--[protein]-cysteine S-methyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.1.1.63
+  edges:
+  - subject: tyr114
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr114 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/251/
+      snippet: His146 deprotonates water, which in turn deprotonates Cys145. Cys145 then initiates a nucleophilic
+        attack upon the methylated DNA in a substitution reaction. The DNA base then undergoes double
+        bond rearrangement, resulting in the deprotonation of Tyr114.
+      notes: M-CSA entry 251, mechanism 1; M-CSA cites PMID:10346901, PMID:10747039, PMID:1581309, PMID:23063108,
+        PMID:23564173, PMID:8156986, PMID:9730821; step 1
+  - subject: cys145
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys145 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/251/
+      snippet: His146 deprotonates water, which in turn deprotonates Cys145. Cys145 then initiates a nucleophilic
+        attack upon the methylated DNA in a substitution reaction. The DNA base then undergoes double
+        bond rearrangement, resulting in the deprotonation of Tyr114.
+      notes: M-CSA entry 251, mechanism 1; M-CSA cites PMID:10346901, PMID:10747039, PMID:1581309, PMID:23063108,
+        PMID:23564173, PMID:8156986, PMID:9730821; step 1
+  - subject: his146
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His146 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/251/
+      snippet: His146 deprotonates water, which in turn deprotonates Cys145. Cys145 then initiates a nucleophilic
+        attack upon the methylated DNA in a substitution reaction. The DNA base then undergoes double
+        bond rearrangement, resulting in the deprotonation of Tyr114.
+      notes: M-CSA entry 251, mechanism 1; M-CSA cites PMID:10346901, PMID:10747039, PMID:1581309, PMID:23063108,
+        PMID:23564173, PMID:8156986, PMID:9730821; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/251/
+      snippet: Products.
+      notes: M-CSA entry 251, mechanism 1; M-CSA cites PMID:10346901, PMID:10747039, PMID:1581309, PMID:23063108,
+        PMID:23564173, PMID:8156986, PMID:9730821; step 2
+  - subject: tyr114
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr114 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/251/
+      snippet: hydrogen bond donor, proton donor
+      notes: M-CSA entry 251, mechanism 1; M-CSA cites PMID:10346901, PMID:10747039, PMID:1581309, PMID:23063108,
+        PMID:23564173, PMID:8156986, PMID:9730821; M-CSA catalytic-residue roles for Tyr114
+  - subject: asn137
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn137 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/251/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor
+      notes: M-CSA entry 251, mechanism 1; M-CSA cites PMID:10346901, PMID:10747039, PMID:1581309, PMID:23063108,
+        PMID:23564173, PMID:8156986, PMID:9730821; M-CSA catalytic-residue roles for Asn137
+  - subject: cys145
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys145 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/251/
+      snippet: hydrogen bond donor, nucleophile, proton donor
+      notes: M-CSA entry 251, mechanism 1; M-CSA cites PMID:10346901, PMID:10747039, PMID:1581309, PMID:23063108,
+        PMID:23564173, PMID:8156986, PMID:9730821; M-CSA catalytic-residue roles for Cys145
+  - subject: his146
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His146 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/251/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor
+      notes: M-CSA entry 251, mechanism 1; M-CSA cites PMID:10346901, PMID:10747039, PMID:1581309, PMID:23063108,
+        PMID:23564173, PMID:8156986, PMID:9730821; M-CSA catalytic-residue roles for His146
+  - subject: glu172
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu172 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/251/
+      snippet: hydrogen bond acceptor, increase basicity
+      notes: M-CSA entry 251, mechanism 1; M-CSA cites PMID:10346901, PMID:10747039, PMID:1581309, PMID:23063108,
+        PMID:23564173, PMID:8156986, PMID:9730821; M-CSA catalytic-residue roles for Glu172
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/251/
+      snippet: Initially His146 acts as a water mediated general base towards Cys145, deprotonating the
+        residue to enhance its nucleophilicity, which then attacks the O6-alkyl carbon with concominant
+        protonation of N3 of the substrate by Tyr144. This releases the DNA product, without the O6-alkyllguanine,
+        and protein S-alkyl-L-cysteine.
+      notes: M-CSA entry 251, mechanism 1; M-CSA cites PMID:10346901, PMID:10747039, PMID:1581309, PMID:23063108,
+        PMID:23564173, PMID:8156986, PMID:9730821; CATH domain 1.10.10.10 assigned to the catalytic chain
+        by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/251/
+      snippet: Initially His146 acts as a water mediated general base towards Cys145, deprotonating the
+        residue to enhance its nucleophilicity, which then attacks the O6-alkyl carbon with concominant
+        protonation of N3 of the substrate by Tyr144. This releases the DNA product, without the O6-alkyllguanine,
+        and protein S-alkyl-L-cysteine.
+      notes: M-CSA entry 251, mechanism 1; M-CSA cites PMID:10346901, PMID:10747039, PMID:1581309, PMID:23063108,
+        PMID:23564173, PMID:8156986, PMID:9730821; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/251/
+      snippet: Initially His146 acts as a water mediated general base towards Cys145, deprotonating the
+        residue to enhance its nucleophilicity, which then attacks the O6-alkyl carbon with concominant
+        protonation of N3 of the substrate by Tyr144. This releases the DNA product, without the O6-alkyllguanine,
+        and protein S-alkyl-L-cysteine.
+      notes: M-CSA entry 251, mechanism 1; M-CSA cites PMID:10346901, PMID:10747039, PMID:1581309, PMID:23063108,
+        PMID:23564173, PMID:8156986, PMID:9730821; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/251/
+      snippet: Initially His146 acts as a water mediated general base towards Cys145, deprotonating the
+        residue to enhance its nucleophilicity, which then attacks the O6-alkyl carbon with concominant
+        protonation of N3 of the substrate by Tyr144. This releases the DNA product, without the O6-alkyllguanine,
+        and protein S-alkyl-L-cysteine.
+      notes: M-CSA entry 251, mechanism 1; M-CSA cites PMID:10346901, PMID:10747039, PMID:1581309, PMID:23063108,
+        PMID:23564173, PMID:8156986, PMID:9730821; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/251/
+      snippet: Initially His146 acts as a water mediated general base towards Cys145, deprotonating the
+        residue to enhance its nucleophilicity, which then attacks the O6-alkyl carbon with concominant
+        protonation of N3 of the substrate by Tyr144. This releases the DNA product, without the O6-alkyllguanine,
+        and protein S-alkyl-L-cysteine.
+      notes: M-CSA entry 251, mechanism 1; M-CSA cites PMID:10346901, PMID:10747039, PMID:1581309, PMID:23063108,
+        PMID:23564173, PMID:8156986, PMID:9730821; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/251/
+      snippet: Initially His146 acts as a water mediated general base towards Cys145, deprotonating the
+        residue to enhance its nucleophilicity, which then attacks the O6-alkyl carbon with concominant
+        protonation of N3 of the substrate by Tyr144. This releases the DNA product, without the O6-alkyllguanine,
+        and protein S-alkyl-L-cysteine.
+      notes: M-CSA entry 251, mechanism 1; M-CSA cites PMID:10346901, PMID:10747039, PMID:1581309, PMID:23063108,
+        PMID:23564173, PMID:8156986, PMID:9730821; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 251;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

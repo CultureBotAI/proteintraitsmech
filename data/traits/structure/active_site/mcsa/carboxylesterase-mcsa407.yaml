@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.1.1
 - CHEBI:15377
@@ -234,4 +234,426 @@ definitions:
       Carboxylesterases hydrolyse carboxylic ester bonds with relatively broad substrate specificity and are useful for stereospecific synthesis and hydrolysis of esters.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of carboxylesterase
+  description: Stepwise mechanism transcribed from M-CSA entry 407 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: gly92
+    label: catalytic Gly92 (M-CSA/PDB numbering; UniProt residue 92)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q0ZPV7
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: gly93
+    label: catalytic Gly93 (M-CSA/PDB numbering; UniProt residue 93)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q0ZPV7
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: ser169
+    label: catalytic Ser169 (M-CSA/PDB numbering; UniProt residue 169)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q0ZPV7
+    description: 'M-CSA roles: covalent catalysis, hydrogen bond acceptor, hydrogen bond donor, nucleofuge,
+      nucleophile.'
+  - node_id: ala170
+    label: catalytic Ala170 (M-CSA/PDB numbering; UniProt residue 170)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q0ZPV7
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: asp276
+    label: catalytic Asp276 (M-CSA/PDB numbering; UniProt residue 276)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q0ZPV7
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: met278
+    label: catalytic Met278 (M-CSA/PDB numbering; UniProt residue 278)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q0ZPV7
+    description: 'M-CSA roles: hydrogen bond donor.'
+  - node_id: gln282
+    label: catalytic Gln282 (M-CSA/PDB numbering; UniProt residue 282)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q0ZPV7
+    description: 'M-CSA roles: hydrogen bond donor.'
+  - node_id: his306
+    label: catalytic His306 (M-CSA/PDB numbering; UniProt residue 306)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q0ZPV7
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      increase nucleophilicity, promote heterolysis.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: propyl acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:40116
+  - node_id: product0
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product1
+    label: propan-1-ol
+    node_type: CHEMICAL
+    grounding: CHEBI:28831
+  - node_id: product2
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The carbonyl group forms three hydrogen bonds to the backbone nitrogen atoms of Gly92
+      and Gly93 of the oxyanion hole region and the backbone nitrogen of  two of them with the backbone
+      nitrogen atoms of Ala170. His306 facilitates the nucleophilic attack of Ser169 to the substrate.
+      The first tetrahedral intermediate forms.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Collapse of tetrahedral intermediate to an acyl-enzyme complex and release of alcohol
+      product.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: A water molecule enters the active site. Nucleophilic attack of a water molecule on the
+      acyl-enzyme complex facilitated by His306. A second tetrahedral intermediate forms.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Ser169 disconnects from the acyl complex and the active site is regenerated.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: '-'
+  - node_id: active_site
+    label: carboxylesterase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:407
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1820 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1820
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: carboxylesterase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.1.1
+  edges:
+  - subject: gly92
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Gly92 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/407/
+      snippet: The carbonyl group forms three hydrogen bonds to the backbone nitrogen atoms of Gly92 and
+        Gly93 of the oxyanion hole region and the backbone nitrogen of  two of them with the backbone
+        nitrogen atoms of Ala170. His306 facilitates the nucleophilic attack of Ser169 to the substrate.
+        The first tetrahedral intermediate forms.
+      notes: M-CSA entry 407, mechanism 1; M-CSA cites PMID:25101647, PMID:31717501, PMID:32069744, PMID:9438866;
+        step 1
+  - subject: gly93
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Gly93 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/407/
+      snippet: The carbonyl group forms three hydrogen bonds to the backbone nitrogen atoms of Gly92 and
+        Gly93 of the oxyanion hole region and the backbone nitrogen of  two of them with the backbone
+        nitrogen atoms of Ala170. His306 facilitates the nucleophilic attack of Ser169 to the substrate.
+        The first tetrahedral intermediate forms.
+      notes: M-CSA entry 407, mechanism 1; M-CSA cites PMID:25101647, PMID:31717501, PMID:32069744, PMID:9438866;
+        step 1
+  - subject: ser169
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser169 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/407/
+      snippet: The carbonyl group forms three hydrogen bonds to the backbone nitrogen atoms of Gly92 and
+        Gly93 of the oxyanion hole region and the backbone nitrogen of  two of them with the backbone
+        nitrogen atoms of Ala170. His306 facilitates the nucleophilic attack of Ser169 to the substrate.
+        The first tetrahedral intermediate forms.
+      notes: M-CSA entry 407, mechanism 1; M-CSA cites PMID:25101647, PMID:31717501, PMID:32069744, PMID:9438866;
+        step 1
+  - subject: ala170
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ala170 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/407/
+      snippet: The carbonyl group forms three hydrogen bonds to the backbone nitrogen atoms of Gly92 and
+        Gly93 of the oxyanion hole region and the backbone nitrogen of  two of them with the backbone
+        nitrogen atoms of Ala170. His306 facilitates the nucleophilic attack of Ser169 to the substrate.
+        The first tetrahedral intermediate forms.
+      notes: M-CSA entry 407, mechanism 1; M-CSA cites PMID:25101647, PMID:31717501, PMID:32069744, PMID:9438866;
+        step 1
+  - subject: his306
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His306 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/407/
+      snippet: The carbonyl group forms three hydrogen bonds to the backbone nitrogen atoms of Gly92 and
+        Gly93 of the oxyanion hole region and the backbone nitrogen of  two of them with the backbone
+        nitrogen atoms of Ala170. His306 facilitates the nucleophilic attack of Ser169 to the substrate.
+        The first tetrahedral intermediate forms.
+      notes: M-CSA entry 407, mechanism 1; M-CSA cites PMID:25101647, PMID:31717501, PMID:32069744, PMID:9438866;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/407/
+      snippet: Collapse of tetrahedral intermediate to an acyl-enzyme complex and release of alcohol product.
+      notes: M-CSA entry 407, mechanism 1; M-CSA cites PMID:25101647, PMID:31717501, PMID:32069744, PMID:9438866;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/407/
+      snippet: A water molecule enters the active site. Nucleophilic attack of a water molecule on the
+        acyl-enzyme complex facilitated by His306. A second tetrahedral intermediate forms.
+      notes: M-CSA entry 407, mechanism 1; M-CSA cites PMID:25101647, PMID:31717501, PMID:32069744, PMID:9438866;
+        step 3
+  - subject: his306
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His306 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/407/
+      snippet: A water molecule enters the active site. Nucleophilic attack of a water molecule on the
+        acyl-enzyme complex facilitated by His306. A second tetrahedral intermediate forms.
+      notes: M-CSA entry 407, mechanism 1; M-CSA cites PMID:25101647, PMID:31717501, PMID:32069744, PMID:9438866;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/407/
+      snippet: Ser169 disconnects from the acyl complex and the active site is regenerated.
+      notes: M-CSA entry 407, mechanism 1; M-CSA cites PMID:25101647, PMID:31717501, PMID:32069744, PMID:9438866;
+        step 4
+  - subject: ser169
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Ser169 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/407/
+      snippet: Ser169 disconnects from the acyl complex and the active site is regenerated.
+      notes: M-CSA entry 407, mechanism 1; M-CSA cites PMID:25101647, PMID:31717501, PMID:32069744, PMID:9438866;
+        step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/407/
+      snippet: '-'
+      notes: M-CSA entry 407, mechanism 1; M-CSA cites PMID:25101647, PMID:31717501, PMID:32069744, PMID:9438866;
+        step 5
+  - subject: gly92
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly92 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/407/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 407, mechanism 1; M-CSA cites PMID:25101647, PMID:31717501, PMID:32069744, PMID:9438866;
+        M-CSA catalytic-residue roles for Gly92
+  - subject: gly93
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly93 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/407/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 407, mechanism 1; M-CSA cites PMID:25101647, PMID:31717501, PMID:32069744, PMID:9438866;
+        M-CSA catalytic-residue roles for Gly93
+  - subject: ser169
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser169 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/407/
+      snippet: covalent catalysis, hydrogen bond acceptor, hydrogen bond donor, nucleofuge, nucleophile
+      notes: M-CSA entry 407, mechanism 1; M-CSA cites PMID:25101647, PMID:31717501, PMID:32069744, PMID:9438866;
+        M-CSA catalytic-residue roles for Ser169
+  - subject: ala170
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ala170 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/407/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 407, mechanism 1; M-CSA cites PMID:25101647, PMID:31717501, PMID:32069744, PMID:9438866;
+        M-CSA catalytic-residue roles for Ala170
+  - subject: asp276
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp276 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/407/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 407, mechanism 1; M-CSA cites PMID:25101647, PMID:31717501, PMID:32069744, PMID:9438866;
+        M-CSA catalytic-residue roles for Asp276
+  - subject: met278
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Met278 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/407/
+      snippet: hydrogen bond donor
+      notes: M-CSA entry 407, mechanism 1; M-CSA cites PMID:25101647, PMID:31717501, PMID:32069744, PMID:9438866;
+        M-CSA catalytic-residue roles for Met278
+  - subject: gln282
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln282 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/407/
+      snippet: hydrogen bond donor
+      notes: M-CSA entry 407, mechanism 1; M-CSA cites PMID:25101647, PMID:31717501, PMID:32069744, PMID:9438866;
+        M-CSA catalytic-residue roles for Gln282
+  - subject: his306
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His306 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/407/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, increase nucleophilicity,
+        promote heterolysis
+      notes: M-CSA entry 407, mechanism 1; M-CSA cites PMID:25101647, PMID:31717501, PMID:32069744, PMID:9438866;
+        M-CSA catalytic-residue roles for His306
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/407/
+      snippet: Carboxylesterases use a Ser-His-Asp catalytic triad. Serine, deprotonated by histidine
+        which is stabilised in its charged form by aspartate, carries out a nucleophilic attack on the
+        carbonyl of the substrate. The resulting tetrahedral transition state is stabilised by an oxyanion
+        hole. When it collapses, histidine protonates the leaving group and the result is a covalent enzyme-substrate
+        intermedi
+      notes: M-CSA entry 407, mechanism 1; M-CSA cites PMID:25101647, PMID:31717501, PMID:32069744, PMID:9438866;
+        CATH domain 3.40.50.1820 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/407/
+      snippet: Carboxylesterases use a Ser-His-Asp catalytic triad. Serine, deprotonated by histidine
+        which is stabilised in its charged form by aspartate, carries out a nucleophilic attack on the
+        carbonyl of the substrate. The resulting tetrahedral transition state is stabilised by an oxyanion
+        hole. When it collapses, histidine protonates the leaving group and the result is a covalent enzyme-substrate
+        intermedi
+      notes: M-CSA entry 407, mechanism 1; M-CSA cites PMID:25101647, PMID:31717501, PMID:32069744, PMID:9438866;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/407/
+      snippet: Carboxylesterases use a Ser-His-Asp catalytic triad. Serine, deprotonated by histidine
+        which is stabilised in its charged form by aspartate, carries out a nucleophilic attack on the
+        carbonyl of the substrate. The resulting tetrahedral transition state is stabilised by an oxyanion
+        hole. When it collapses, histidine protonates the leaving group and the result is a covalent enzyme-substrate
+        intermedi
+      notes: M-CSA entry 407, mechanism 1; M-CSA cites PMID:25101647, PMID:31717501, PMID:32069744, PMID:9438866;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/407/
+      snippet: Carboxylesterases use a Ser-His-Asp catalytic triad. Serine, deprotonated by histidine
+        which is stabilised in its charged form by aspartate, carries out a nucleophilic attack on the
+        carbonyl of the substrate. The resulting tetrahedral transition state is stabilised by an oxyanion
+        hole. When it collapses, histidine protonates the leaving group and the result is a covalent enzyme-substrate
+        intermedi
+      notes: M-CSA entry 407, mechanism 1; M-CSA cites PMID:25101647, PMID:31717501, PMID:32069744, PMID:9438866;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/407/
+      snippet: Carboxylesterases use a Ser-His-Asp catalytic triad. Serine, deprotonated by histidine
+        which is stabilised in its charged form by aspartate, carries out a nucleophilic attack on the
+        carbonyl of the substrate. The resulting tetrahedral transition state is stabilised by an oxyanion
+        hole. When it collapses, histidine protonates the leaving group and the result is a covalent enzyme-substrate
+        intermedi
+      notes: M-CSA entry 407, mechanism 1; M-CSA cites PMID:25101647, PMID:31717501, PMID:32069744, PMID:9438866;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/407/
+      snippet: Carboxylesterases use a Ser-His-Asp catalytic triad. Serine, deprotonated by histidine
+        which is stabilised in its charged form by aspartate, carries out a nucleophilic attack on the
+        carbonyl of the substrate. The resulting tetrahedral transition state is stabilised by an oxyanion
+        hole. When it collapses, histidine protonates the leaving group and the result is a covalent enzyme-substrate
+        intermedi
+      notes: M-CSA entry 407, mechanism 1; M-CSA cites PMID:25101647, PMID:31717501, PMID:32069744, PMID:9438866;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/407/
+      snippet: Carboxylesterases use a Ser-His-Asp catalytic triad. Serine, deprotonated by histidine
+        which is stabilised in its charged form by aspartate, carries out a nucleophilic attack on the
+        carbonyl of the substrate. The resulting tetrahedral transition state is stabilised by an oxyanion
+        hole. When it collapses, histidine protonates the leaving group and the result is a covalent enzyme-substrate
+        intermedi
+      notes: M-CSA entry 407, mechanism 1; M-CSA cites PMID:25101647, PMID:31717501, PMID:32069744, PMID:9438866;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (26 evidence-backed edges) transcribed from M-CSA entry 407;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

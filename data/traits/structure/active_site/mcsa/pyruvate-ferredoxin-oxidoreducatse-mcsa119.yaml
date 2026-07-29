@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.2.7.1
 - CHEBI:17908
@@ -881,4 +881,410 @@ definitions:
       Pyruvate:ferrodoxin/flavodoxin reductases (PFORs) catalyse the oxidative decarboxylation of pyruvate to acetyl-CoA in anaerobic organisms. PFORs can occur in both obligately and facultatively anaerobic bacteria and also some eukaryotic microorganisms. PFORs are single-chain enzymes containing a thiamin pyrophosphate cofactor for the cleavage of carbon-carbon bonds next to a carbonyl group, and iron-sulphur clusters for electron transfer. Ferredoxin I and ferredoxin II, which are single 4Fe-4S cluster ferredoxins are the most effective electron carriers for PFORs in Desulfovibrio africanus.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of pyruvate:ferredoxin oxidoreducatse
+  description: Stepwise mechanism transcribed from M-CSA entry 119 (8 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: thr31
+    label: catalytic Thr31 (M-CSA/PDB numbering; UniProt residue 31)
+    node_type: RESIDUE
+    grounding: UniProtKB:P94692
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: glu64
+    label: catalytic Glu64 (M-CSA/PDB numbering; UniProt residue 64)
+    node_type: RESIDUE
+    grounding: UniProtKB:P94692
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: arg114
+    label: catalytic Arg114 (M-CSA/PDB numbering; UniProt residue 114)
+    node_type: RESIDUE
+    grounding: UniProtKB:P94692
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: asn996
+    label: catalytic Asn996 (M-CSA/PDB numbering; UniProt residue 996)
+    node_type: RESIDUE
+    grounding: UniProtKB:P94692
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: reactant0
+    label: oxidized ferredoxin
+    node_type: CHEMICAL
+    grounding: CHEBI:17908
+  - node_id: reactant1
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+  - node_id: reactant2
+    label: coenzyme A(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+  - node_id: product0
+    label: acetyl-CoA(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+  - node_id: product1
+    label: carbon dioxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+  - node_id: product2
+    label: reduced ferredoxin
+    node_type: CHEMICAL
+    grounding: CHEBI:17513
+  - node_id: product3
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: "Glu64 deprotonates the thiamine diphosphate cofactor, which initiates double bond rearrangement\
+      \ that results in the deprotonation of the N=CH-S group, activating the cofactor.
+<br/><br/>\
+      
+The cofactor adopts the V configuration that brings the 4 imino group of the aminopyrimidine ring\
+      \ close to the C2 carbon of the thiazolium ring [PMID:16472741]. Hydrogen bonding of the carboxylate\
+      \ group from Glu"
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The carbanion of thiamine diphosphate initiates a nucleophilic attack on the carbonyl
+      carbon of pyruvate in an addition reaction that results in the cofactor undergoing double bond rearrangement
+      that results in the deprotonation of Glu64.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: "The covalently bound pyruvate undergoes decarboxylation, resulting in double bond rearrangement,\
+      \ a single electron being transferred to ferredoxin via three iron-sulfur clusters and the formation\
+      \ of a one-electron bond between the cofactor and the formyl group.
+<br/><br/>
+The carbon\
+      \ dioxide reaction product remains tightly bound in the active site, consistent with the reversibility\
+      \ of the reacti"
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The C-C one electron bond between the cofator and the formyl group fragments.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Water deprotonates CoA, which initiates a single electron transfer to ferredoxin through
+      three iron-sulfur clusters.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: The CoA thiyl and the acetyl radicals undergo colligation.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: The cofactor is regenerated through the nitrogen donating its lone pair into the ring
+      to satisfy the electron deficient carbon.
+  - node_id: step8
+    label: mechanism step 8
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: pyruvate:ferredoxin oxidoreducatse catalytic site
+    node_type: MOTIF
+    grounding: MCSA:119
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.970 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.970
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: pyruvate:ferredoxin oxidoreducatse activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.2.7.1
+  edges:
+  - subject: glu64
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu64 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/119/
+      snippet: "Glu64 deprotonates the thiamine diphosphate cofactor, which initiates double bond rearrangement\
+        \ that results in the deprotonation of the N=CH-S group, activating the cofactor.
+<br/><br/>\
+        
+The cofactor adopts the V configuration that brings the 4 imino group of the aminopyrimidine\
+        \ ring close to the C2 carbon of the thiazolium ring [PMID:16472741]. Hydrogen bonding of the\
+        \ carboxylate group from Glu64 to N1' of the aminopyrimidine ring increases the basic nature of\
+        \ the 4' position by generating the 4'-imino tautomer [PMID:11752578]. Binding of the substrate\
+        \ triggers the proton transfers [PMID10048931]. The mechanism shown here is supported by crystallographic\
+        \ studies [PMID:16472741]."
+      notes: M-CSA entry 119, mechanism 1; M-CSA cites PMID:10048931, PMID:11752578, PMID:16472741, PMID:16752902,
+        PMID:22178227, PMID:24970182, PMID:7612653; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/119/
+      snippet: The carbanion of thiamine diphosphate initiates a nucleophilic attack on the carbonyl carbon
+        of pyruvate in an addition reaction that results in the cofactor undergoing double bond rearrangement
+        that results in the deprotonation of Glu64.
+      notes: M-CSA entry 119, mechanism 1; M-CSA cites PMID:10048931, PMID:11752578, PMID:16472741, PMID:16752902,
+        PMID:22178227, PMID:24970182, PMID:7612653; step 2
+  - subject: glu64
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu64 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/119/
+      snippet: The carbanion of thiamine diphosphate initiates a nucleophilic attack on the carbonyl carbon
+        of pyruvate in an addition reaction that results in the cofactor undergoing double bond rearrangement
+        that results in the deprotonation of Glu64.
+      notes: M-CSA entry 119, mechanism 1; M-CSA cites PMID:10048931, PMID:11752578, PMID:16472741, PMID:16752902,
+        PMID:22178227, PMID:24970182, PMID:7612653; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/119/
+      snippet: "The covalently bound pyruvate undergoes decarboxylation, resulting in double bond rearrangement,\
+        \ a single electron being transferred to ferredoxin via three iron-sulfur clusters and the formation\
+        \ of a one-electron bond between the cofactor and the formyl group.
+<br/><br/>
+The carbon\
+        \ dioxide reaction product remains tightly bound in the active site, consistent with the reversibility\
+        \ of the reaction [PMID:16472741]. The C2alpha-C2 bond between the acetyl and thiazole moieties\
+        \ is a one-electron unusually long bond PMID:11752578,PMID:16472741] and thus incompatible with\
+        \ enamine formation as postulated for a standard pyruvate decarboxylation cycle [PMID:16472741].\
+        \ The generated intermediate shown here is supported by crystallographic studies [PMID:16472741]."
+      notes: M-CSA entry 119, mechanism 1; M-CSA cites PMID:10048931, PMID:11752578, PMID:16472741, PMID:16752902,
+        PMID:22178227, PMID:24970182, PMID:7612653; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/119/
+      snippet: The C-C one electron bond between the cofator and the formyl group fragments.
+      notes: M-CSA entry 119, mechanism 1; M-CSA cites PMID:10048931, PMID:11752578, PMID:16472741, PMID:16752902,
+        PMID:22178227, PMID:24970182, PMID:7612653; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/119/
+      snippet: Water deprotonates CoA, which initiates a single electron transfer to ferredoxin through
+        three iron-sulfur clusters.
+      notes: M-CSA entry 119, mechanism 1; M-CSA cites PMID:10048931, PMID:11752578, PMID:16472741, PMID:16752902,
+        PMID:22178227, PMID:24970182, PMID:7612653; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/119/
+      snippet: The CoA thiyl and the acetyl radicals undergo colligation.
+      notes: M-CSA entry 119, mechanism 1; M-CSA cites PMID:10048931, PMID:11752578, PMID:16472741, PMID:16752902,
+        PMID:22178227, PMID:24970182, PMID:7612653; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/119/
+      snippet: The cofactor is regenerated through the nitrogen donating its lone pair into the ring to
+        satisfy the electron deficient carbon.
+      notes: M-CSA entry 119, mechanism 1; M-CSA cites PMID:10048931, PMID:11752578, PMID:16472741, PMID:16752902,
+        PMID:22178227, PMID:24970182, PMID:7612653; step 7
+  - subject: step7
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step8
+    description: Step 7 leads to step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/119/
+      snippet: Products.
+      notes: M-CSA entry 119, mechanism 1; M-CSA cites PMID:10048931, PMID:11752578, PMID:16472741, PMID:16752902,
+        PMID:22178227, PMID:24970182, PMID:7612653; step 8
+  - subject: thr31
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr31 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/119/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 119, mechanism 1; M-CSA cites PMID:10048931, PMID:11752578, PMID:16472741, PMID:16752902,
+        PMID:22178227, PMID:24970182, PMID:7612653; M-CSA catalytic-residue roles for Thr31
+  - subject: glu64
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu64 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/119/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 119, mechanism 1; M-CSA cites PMID:10048931, PMID:11752578, PMID:16472741, PMID:16752902,
+        PMID:22178227, PMID:24970182, PMID:7612653; M-CSA catalytic-residue roles for Glu64
+  - subject: arg114
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg114 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/119/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 119, mechanism 1; M-CSA cites PMID:10048931, PMID:11752578, PMID:16472741, PMID:16752902,
+        PMID:22178227, PMID:24970182, PMID:7612653; M-CSA catalytic-residue roles for Arg114
+  - subject: asn996
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn996 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/119/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 119, mechanism 1; M-CSA cites PMID:10048931, PMID:11752578, PMID:16472741, PMID:16752902,
+        PMID:22178227, PMID:24970182, PMID:7612653; M-CSA catalytic-residue roles for Asn996
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/119/
+      snippet: 'The catalytic mechanism of PDC for the most part follows the principles of catalytic mechanisms
+        of other TPP-dependent enzymes: carbonyl addition of pyruvate to the reactive C2 atom of the cofactor
+        thiazolium ring yields the intermediate 2-(2-lactyl)-TDP (LTDP). The subsequent release of carbon
+        dioxide produces resonating carbanion/enamine forms of 2-(1-hydroxyethyl)-TDP (HETDP, also known
+        as hydr'
+      notes: M-CSA entry 119, mechanism 1; M-CSA cites PMID:10048931, PMID:11752578, PMID:16472741, PMID:16752902,
+        PMID:22178227, PMID:24970182, PMID:7612653; CATH domain 3.40.50.970 assigned to the catalytic
+        chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/119/
+      snippet: 'The catalytic mechanism of PDC for the most part follows the principles of catalytic mechanisms
+        of other TPP-dependent enzymes: carbonyl addition of pyruvate to the reactive C2 atom of the cofactor
+        thiazolium ring yields the intermediate 2-(2-lactyl)-TDP (LTDP). The subsequent release of carbon
+        dioxide produces resonating carbanion/enamine forms of 2-(1-hydroxyethyl)-TDP (HETDP, also known
+        as hydr'
+      notes: M-CSA entry 119, mechanism 1; M-CSA cites PMID:10048931, PMID:11752578, PMID:16472741, PMID:16752902,
+        PMID:22178227, PMID:24970182, PMID:7612653; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/119/
+      snippet: 'The catalytic mechanism of PDC for the most part follows the principles of catalytic mechanisms
+        of other TPP-dependent enzymes: carbonyl addition of pyruvate to the reactive C2 atom of the cofactor
+        thiazolium ring yields the intermediate 2-(2-lactyl)-TDP (LTDP). The subsequent release of carbon
+        dioxide produces resonating carbanion/enamine forms of 2-(1-hydroxyethyl)-TDP (HETDP, also known
+        as hydr'
+      notes: M-CSA entry 119, mechanism 1; M-CSA cites PMID:10048931, PMID:11752578, PMID:16472741, PMID:16752902,
+        PMID:22178227, PMID:24970182, PMID:7612653; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/119/
+      snippet: 'The catalytic mechanism of PDC for the most part follows the principles of catalytic mechanisms
+        of other TPP-dependent enzymes: carbonyl addition of pyruvate to the reactive C2 atom of the cofactor
+        thiazolium ring yields the intermediate 2-(2-lactyl)-TDP (LTDP). The subsequent release of carbon
+        dioxide produces resonating carbanion/enamine forms of 2-(1-hydroxyethyl)-TDP (HETDP, also known
+        as hydr'
+      notes: M-CSA entry 119, mechanism 1; M-CSA cites PMID:10048931, PMID:11752578, PMID:16472741, PMID:16752902,
+        PMID:22178227, PMID:24970182, PMID:7612653; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/119/
+      snippet: 'The catalytic mechanism of PDC for the most part follows the principles of catalytic mechanisms
+        of other TPP-dependent enzymes: carbonyl addition of pyruvate to the reactive C2 atom of the cofactor
+        thiazolium ring yields the intermediate 2-(2-lactyl)-TDP (LTDP). The subsequent release of carbon
+        dioxide produces resonating carbanion/enamine forms of 2-(1-hydroxyethyl)-TDP (HETDP, also known
+        as hydr'
+      notes: M-CSA entry 119, mechanism 1; M-CSA cites PMID:10048931, PMID:11752578, PMID:16472741, PMID:16752902,
+        PMID:22178227, PMID:24970182, PMID:7612653; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/119/
+      snippet: 'The catalytic mechanism of PDC for the most part follows the principles of catalytic mechanisms
+        of other TPP-dependent enzymes: carbonyl addition of pyruvate to the reactive C2 atom of the cofactor
+        thiazolium ring yields the intermediate 2-(2-lactyl)-TDP (LTDP). The subsequent release of carbon
+        dioxide produces resonating carbanion/enamine forms of 2-(1-hydroxyethyl)-TDP (HETDP, also known
+        as hydr'
+      notes: M-CSA entry 119, mechanism 1; M-CSA cites PMID:10048931, PMID:11752578, PMID:16472741, PMID:16752902,
+        PMID:22178227, PMID:24970182, PMID:7612653; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/119/
+      snippet: 'The catalytic mechanism of PDC for the most part follows the principles of catalytic mechanisms
+        of other TPP-dependent enzymes: carbonyl addition of pyruvate to the reactive C2 atom of the cofactor
+        thiazolium ring yields the intermediate 2-(2-lactyl)-TDP (LTDP). The subsequent release of carbon
+        dioxide produces resonating carbanion/enamine forms of 2-(1-hydroxyethyl)-TDP (HETDP, also known
+        as hydr'
+      notes: M-CSA entry 119, mechanism 1; M-CSA cites PMID:10048931, PMID:11752578, PMID:16472741, PMID:16752902,
+        PMID:22178227, PMID:24970182, PMID:7612653; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/119/
+      snippet: 'The catalytic mechanism of PDC for the most part follows the principles of catalytic mechanisms
+        of other TPP-dependent enzymes: carbonyl addition of pyruvate to the reactive C2 atom of the cofactor
+        thiazolium ring yields the intermediate 2-(2-lactyl)-TDP (LTDP). The subsequent release of carbon
+        dioxide produces resonating carbanion/enamine forms of 2-(1-hydroxyethyl)-TDP (HETDP, also known
+        as hydr'
+      notes: M-CSA entry 119, mechanism 1; M-CSA cites PMID:10048931, PMID:11752578, PMID:16472741, PMID:16752902,
+        PMID:22178227, PMID:24970182, PMID:7612653; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product3
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/119/
+      snippet: 'The catalytic mechanism of PDC for the most part follows the principles of catalytic mechanisms
+        of other TPP-dependent enzymes: carbonyl addition of pyruvate to the reactive C2 atom of the cofactor
+        thiazolium ring yields the intermediate 2-(2-lactyl)-TDP (LTDP). The subsequent release of carbon
+        dioxide produces resonating carbanion/enamine forms of 2-(1-hydroxyethyl)-TDP (HETDP, also known
+        as hydr'
+      notes: M-CSA entry 119, mechanism 1; M-CSA cites PMID:10048931, PMID:11752578, PMID:16472741, PMID:16752902,
+        PMID:22178227, PMID:24970182, PMID:7612653; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (22 evidence-backed edges) transcribed from M-CSA entry 119;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

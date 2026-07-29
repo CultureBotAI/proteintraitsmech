@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.4.2.11
 - CHEBI:58272
@@ -337,4 +337,185 @@ definitions:
       Phosphoglycerate mutase (EC:5.4.2.11) from vertebrates, platyhelminths, mollusks, annelids, crustaceans, insects, algae, fungi, yeast and some bacteria (particularly Gram-negative) interconverts 2-phosphoglycerate and 3-phosphoglycerate via a transiently phosphorylated active site histidine. This histidine is phosphorylated by a 2,3-diphosphoglyerate cofactor. The enzyme has no requirement for metal ions and also catalyses, slowly, the reactions of EC 5.4.2.4, bisphosphoglycerate mutase.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of phosphoglycerate mutase (2,3-diphosphoglycerate-dependent)
+  description: Stepwise mechanism transcribed from M-CSA entry 504 (1 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +1).
+  nodes:
+  - node_id: his8
+    label: catalytic His8 (M-CSA/PDB numbering; UniProt residue 9)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00950
+    description: 'M-CSA roles: covalent catalysis.'
+  - node_id: arg59
+    label: catalytic Arg59 (M-CSA/PDB numbering; UniProt residue 60)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00950
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu86
+    label: catalytic Glu86 (M-CSA/PDB numbering; UniProt residue 87)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00950
+    description: 'M-CSA roles: proton donor, proton shuttle (general acid/base).'
+  - node_id: his181
+    label: catalytic His181 (M-CSA/PDB numbering; UniProt residue 182)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00950
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: 2-phosphonato-D-glycerate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58289
+  - node_id: product0
+    label: 3-phosphonato-D-glycerate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58272
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His8 initiates a nucleophilic attack on the 2,3-BPG cofactor, which eliminates 2-phosphoglycerate,
+      which is protonated via a proton relay through a water molecule and Glu86.
+  - node_id: active_site
+    label: phosphoglycerate mutase (2,3-diphosphoglycerate-dependent) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:504
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1240 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1240
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: phosphoglycerate mutase (2,3-diphosphoglycerate-dependent) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.4.2.11
+  edges:
+  - subject: his8
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His8 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/504/
+      snippet: His8 initiates a nucleophilic attack on the 2,3-BPG cofactor, which eliminates 2-phosphoglycerate,
+        which is protonated via a proton relay through a water molecule and Glu86.
+      notes: M-CSA entry 504, mechanism 1; M-CSA cites PMID:10064712, PMID:11827481, PMID:11884145, PMID:1386023,
+        PMID:15258155, PMID:15883004, PMID:17052986; step 1
+  - subject: glu86
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu86 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/504/
+      snippet: His8 initiates a nucleophilic attack on the 2,3-BPG cofactor, which eliminates 2-phosphoglycerate,
+        which is protonated via a proton relay through a water molecule and Glu86.
+      notes: M-CSA entry 504, mechanism 1; M-CSA cites PMID:10064712, PMID:11827481, PMID:11884145, PMID:1386023,
+        PMID:15258155, PMID:15883004, PMID:17052986; step 1
+  - subject: his8
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His8 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/504/
+      snippet: covalent catalysis
+      notes: M-CSA entry 504, mechanism 1; M-CSA cites PMID:10064712, PMID:11827481, PMID:11884145, PMID:1386023,
+        PMID:15258155, PMID:15883004, PMID:17052986; M-CSA catalytic-residue roles for His8
+  - subject: arg59
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg59 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/504/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 504, mechanism 1; M-CSA cites PMID:10064712, PMID:11827481, PMID:11884145, PMID:1386023,
+        PMID:15258155, PMID:15883004, PMID:17052986; M-CSA catalytic-residue roles for Arg59
+  - subject: glu86
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu86 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/504/
+      snippet: proton donor, proton shuttle (general acid/base)
+      notes: M-CSA entry 504, mechanism 1; M-CSA cites PMID:10064712, PMID:11827481, PMID:11884145, PMID:1386023,
+        PMID:15258155, PMID:15883004, PMID:17052986; M-CSA catalytic-residue roles for Glu86
+  - subject: his181
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His181 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/504/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 504, mechanism 1; M-CSA cites PMID:10064712, PMID:11827481, PMID:11884145, PMID:1386023,
+        PMID:15258155, PMID:15883004, PMID:17052986; M-CSA catalytic-residue roles for His181
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/504/
+      snippet: The substrate/cofactor initially binds with its phospho group favorably hydrogen bonded
+        by His8, Arg59. The phosphohistidine intermediate would result from the nucleophilic attack of
+        His8 on the phospho group, with accompanying transfer of a proton from Glu86 to the dephosphorylated
+        product. This proton transfer is likely water-mediated. Formation of the catalytically active,
+        protonated form of Gl
+      notes: M-CSA entry 504, mechanism 1; M-CSA cites PMID:10064712, PMID:11827481, PMID:11884145, PMID:1386023,
+        PMID:15258155, PMID:15883004, PMID:17052986; CATH domain 3.40.50.1240 assigned to the catalytic
+        chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/504/
+      snippet: The substrate/cofactor initially binds with its phospho group favorably hydrogen bonded
+        by His8, Arg59. The phosphohistidine intermediate would result from the nucleophilic attack of
+        His8 on the phospho group, with accompanying transfer of a proton from Glu86 to the dephosphorylated
+        product. This proton transfer is likely water-mediated. Formation of the catalytically active,
+        protonated form of Gl
+      notes: M-CSA entry 504, mechanism 1; M-CSA cites PMID:10064712, PMID:11827481, PMID:11884145, PMID:1386023,
+        PMID:15258155, PMID:15883004, PMID:17052986; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/504/
+      snippet: The substrate/cofactor initially binds with its phospho group favorably hydrogen bonded
+        by His8, Arg59. The phosphohistidine intermediate would result from the nucleophilic attack of
+        His8 on the phospho group, with accompanying transfer of a proton from Glu86 to the dephosphorylated
+        product. This proton transfer is likely water-mediated. Formation of the catalytically active,
+        protonated form of Gl
+      notes: M-CSA entry 504, mechanism 1; M-CSA cites PMID:10064712, PMID:11827481, PMID:11884145, PMID:1386023,
+        PMID:15258155, PMID:15883004, PMID:17052986; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/504/
+      snippet: The substrate/cofactor initially binds with its phospho group favorably hydrogen bonded
+        by His8, Arg59. The phosphohistidine intermediate would result from the nucleophilic attack of
+        His8 on the phospho group, with accompanying transfer of a proton from Glu86 to the dephosphorylated
+        product. This proton transfer is likely water-mediated. Formation of the catalytically active,
+        protonated form of Gl
+      notes: M-CSA entry 504, mechanism 1; M-CSA cites PMID:10064712, PMID:11827481, PMID:11884145, PMID:1386023,
+        PMID:15258155, PMID:15883004, PMID:17052986; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (10 evidence-backed edges) transcribed from M-CSA entry 504;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:6.4.1.3
 - CHEBI:30616
@@ -36,4 +36,382 @@ definitions:
       Propionyl-CoA carboxylase (PCC) from Streptomyces coelicolor catalyses the carboxylation of proprionyl-CoA (and, less efficiently, butyryl-CoA) to provide methylmalonyl-CoA (or ethylmalonyl-CoA). This carboxylation reaction provides key extender units for the biosynthesis of fatty acids and polyketide natural products. PCC has three units, pccA, pccB and pccE. The alpha subunit (pccA) contains the BCCP (biotin carboxyl carrier protein) and BC (biotin carboxylase) domains. The beta subunit (pccB) contains the carboxyltransferase (CT) function, which transfers the carboxyl group from biotin to propionyl-CoA [PMID:15518551]. BC catalyses carboxylation of the biotin attached to the biotin carboxyl carrier protein (BCCP) in the first half reaction which requires ATP Mg(II) and bicarbonate [PMID:2673009]. CT catalyses the second half reaction, the carboxyl transfer from biotin to propanoyl-CoA [PMID:2673009, PMID:15518551]. pccE may act to associate pccA and pccB. The pccB unit shows sequence and structure homology with other carboxyltransferases from other organisms. They are all dimers or hexamers, with the monomers comprising two domains; two active sites run between each pair of adjacent monomers, with catalytic residues being contributed from the C-terminal domain from one monomer and the N-terminal domain from the next monomer.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of propionyl-CoA carboxylase
+  description: Stepwise mechanism transcribed from M-CSA entry 201 (8 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: gly182
+    label: catalytic Gly182 (M-CSA/PDB numbering; UniProt residue 182)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9X4K7
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: gly183
+    label: catalytic Gly183 (M-CSA/PDB numbering; UniProt residue 183)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9X4K7
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: gly419
+    label: catalytic Gly419 (M-CSA/PDB numbering; UniProt residue 419)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9X4K7
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: ala420
+    label: catalytic Ala420 (M-CSA/PDB numbering; UniProt residue 420)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9X4K7
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: reactant0
+    label: ATP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+  - node_id: reactant1
+    label: hydrogencarbonate
+    node_type: CHEMICAL
+    grounding: CHEBI:17544
+  - node_id: reactant2
+    label: propionyl-CoA(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57392
+  - node_id: product0
+    label: ADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+  - node_id: product1
+    label: (S)-methylmalonyl-CoA(5-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57327
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product3
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Reaction occurs in the alpha-subunit. The bicarbonate is deprotonated by an unidentified
+      base (shown as water here). The activate bicarbonate then acts as a nucleophile and attacks the
+      gamma-phosphate in a substitution reaction, liberating ADP. Mg(II) stabilises/activates the ATP
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Reaction occurs in the alpha-subunit. The phosphorylated bicarbonate undergoes a decarboxylation
+      reaction (E1cb) to liberate carbon dioxide and phosphate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Reaction occurs in the alpha-subunit. The phosphate deprotonates one of the N-H groups
+      of biotin with concomitant tautomerisation to produce an oxyanion.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Reaction occurs in the alpha-subunit. The oxyanion re-forms the carbonyl group, causing
+      the C=N bond of the activated biotin to add to the carbon dioxide in a nucleophilic manner.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Reaction occurs in the beta-subunit. Once the carboxylated biotin has relocated to the
+      beta-subunit, the biotin undergoes a decarboxylation reaction (E1cb) to liberate carbon dioxide
+      and the activated biotin molecule. the main chain amides of Gly419B and Ala420B stabilise the oxyanion
+      of the activated biotin.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Reaction occurs in the beta-subunit. The oxyanion re-forms the carbonyl group, causing
+      the C=N bond of the activated biotin to deprotonate the propanoyl-CoA with concomitant tautomerisation.
+      The main chain amides of Gly182 and Gly183 stabilise the activated propanoyl-CoA, the main chain
+      amides of Gly419B and Ala420B stabilise the oxyanion of the activated biotin.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: Reaction occurs in the beta-subunit. The oxyanion re-forms the carbonyl group causing
+      the C=C bond of the activated propanoyl-CoA to add to the carbon dioxide molecule in an electrophilic
+      manner.
+  - node_id: step8
+    label: mechanism step 8
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: propionyl-CoA carboxylase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:201
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.226.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.226.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: propionyl-CoA carboxylase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:6.4.1.3
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/201/
+      snippet: Reaction occurs in the alpha-subunit. The phosphorylated bicarbonate undergoes a decarboxylation
+        reaction (E1cb) to liberate carbon dioxide and phosphate.
+      notes: M-CSA entry 201, mechanism 1; M-CSA cites PMID:15518551, PMID:2673009; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/201/
+      snippet: Reaction occurs in the alpha-subunit. The phosphate deprotonates one of the N-H groups
+        of biotin with concomitant tautomerisation to produce an oxyanion.
+      notes: M-CSA entry 201, mechanism 1; M-CSA cites PMID:15518551, PMID:2673009; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/201/
+      snippet: Reaction occurs in the alpha-subunit. The oxyanion re-forms the carbonyl group, causing
+        the C=N bond of the activated biotin to add to the carbon dioxide in a nucleophilic manner.
+      notes: M-CSA entry 201, mechanism 1; M-CSA cites PMID:15518551, PMID:2673009; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/201/
+      snippet: Reaction occurs in the beta-subunit. Once the carboxylated biotin has relocated to the
+        beta-subunit, the biotin undergoes a decarboxylation reaction (E1cb) to liberate carbon dioxide
+        and the activated biotin molecule. the main chain amides of Gly419B and Ala420B stabilise the
+        oxyanion of the activated biotin.
+      notes: M-CSA entry 201, mechanism 1; M-CSA cites PMID:15518551, PMID:2673009; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/201/
+      snippet: Reaction occurs in the beta-subunit. The oxyanion re-forms the carbonyl group, causing
+        the C=N bond of the activated biotin to deprotonate the propanoyl-CoA with concomitant tautomerisation.
+        The main chain amides of Gly182 and Gly183 stabilise the activated propanoyl-CoA, the main chain
+        amides of Gly419B and Ala420B stabilise the oxyanion of the activated biotin.
+      notes: M-CSA entry 201, mechanism 1; M-CSA cites PMID:15518551, PMID:2673009; step 6
+  - subject: gly182
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: Gly182 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/201/
+      snippet: Reaction occurs in the beta-subunit. The oxyanion re-forms the carbonyl group, causing
+        the C=N bond of the activated biotin to deprotonate the propanoyl-CoA with concomitant tautomerisation.
+        The main chain amides of Gly182 and Gly183 stabilise the activated propanoyl-CoA, the main chain
+        amides of Gly419B and Ala420B stabilise the oxyanion of the activated biotin.
+      notes: M-CSA entry 201, mechanism 1; M-CSA cites PMID:15518551, PMID:2673009; step 6
+  - subject: gly183
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: Gly183 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/201/
+      snippet: Reaction occurs in the beta-subunit. The oxyanion re-forms the carbonyl group, causing
+        the C=N bond of the activated biotin to deprotonate the propanoyl-CoA with concomitant tautomerisation.
+        The main chain amides of Gly182 and Gly183 stabilise the activated propanoyl-CoA, the main chain
+        amides of Gly419B and Ala420B stabilise the oxyanion of the activated biotin.
+      notes: M-CSA entry 201, mechanism 1; M-CSA cites PMID:15518551, PMID:2673009; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/201/
+      snippet: Reaction occurs in the beta-subunit. The oxyanion re-forms the carbonyl group causing the
+        C=C bond of the activated propanoyl-CoA to add to the carbon dioxide molecule in an electrophilic
+        manner.
+      notes: M-CSA entry 201, mechanism 1; M-CSA cites PMID:15518551, PMID:2673009; step 7
+  - subject: step7
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step8
+    description: Step 7 leads to step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/201/
+      snippet: Products
+      notes: M-CSA entry 201, mechanism 1; M-CSA cites PMID:15518551, PMID:2673009; step 8
+  - subject: gly182
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly182 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/201/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 201, mechanism 1; M-CSA cites PMID:15518551, PMID:2673009; M-CSA catalytic-residue
+        roles for Gly182
+  - subject: gly183
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly183 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/201/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 201, mechanism 1; M-CSA cites PMID:15518551, PMID:2673009; M-CSA catalytic-residue
+        roles for Gly183
+  - subject: gly419
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly419 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/201/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 201, mechanism 1; M-CSA cites PMID:15518551, PMID:2673009; M-CSA catalytic-residue
+        roles for Gly419
+  - subject: ala420
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ala420 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/201/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 201, mechanism 1; M-CSA cites PMID:15518551, PMID:2673009; M-CSA catalytic-residue
+        roles for Ala420
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/201/
+      snippet: 'The substrate proprionyl-CoA, and cofactor carboxylbiotin (covalently attached to pccA),
+        both have carbonyl groups which hydrogen bond to backbone amides: Gly 182 and Gly 183 for the
+        substrate, Gly 419'' and Ala 420'' for the carboxylbiotin. (The primed numbers indicate residues
+        on a different monomer to the unprimed residues.) These amides serve as oxyanion holes whenever
+        the need arises.  Carboxyl'
+      notes: M-CSA entry 201, mechanism 1; M-CSA cites PMID:15518551, PMID:2673009; CATH domain 3.90.226.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/201/
+      snippet: 'The substrate proprionyl-CoA, and cofactor carboxylbiotin (covalently attached to pccA),
+        both have carbonyl groups which hydrogen bond to backbone amides: Gly 182 and Gly 183 for the
+        substrate, Gly 419'' and Ala 420'' for the carboxylbiotin. (The primed numbers indicate residues
+        on a different monomer to the unprimed residues.) These amides serve as oxyanion holes whenever
+        the need arises.  Carboxyl'
+      notes: M-CSA entry 201, mechanism 1; M-CSA cites PMID:15518551, PMID:2673009; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/201/
+      snippet: 'The substrate proprionyl-CoA, and cofactor carboxylbiotin (covalently attached to pccA),
+        both have carbonyl groups which hydrogen bond to backbone amides: Gly 182 and Gly 183 for the
+        substrate, Gly 419'' and Ala 420'' for the carboxylbiotin. (The primed numbers indicate residues
+        on a different monomer to the unprimed residues.) These amides serve as oxyanion holes whenever
+        the need arises.  Carboxyl'
+      notes: M-CSA entry 201, mechanism 1; M-CSA cites PMID:15518551, PMID:2673009; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/201/
+      snippet: 'The substrate proprionyl-CoA, and cofactor carboxylbiotin (covalently attached to pccA),
+        both have carbonyl groups which hydrogen bond to backbone amides: Gly 182 and Gly 183 for the
+        substrate, Gly 419'' and Ala 420'' for the carboxylbiotin. (The primed numbers indicate residues
+        on a different monomer to the unprimed residues.) These amides serve as oxyanion holes whenever
+        the need arises.  Carboxyl'
+      notes: M-CSA entry 201, mechanism 1; M-CSA cites PMID:15518551, PMID:2673009; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/201/
+      snippet: 'The substrate proprionyl-CoA, and cofactor carboxylbiotin (covalently attached to pccA),
+        both have carbonyl groups which hydrogen bond to backbone amides: Gly 182 and Gly 183 for the
+        substrate, Gly 419'' and Ala 420'' for the carboxylbiotin. (The primed numbers indicate residues
+        on a different monomer to the unprimed residues.) These amides serve as oxyanion holes whenever
+        the need arises.  Carboxyl'
+      notes: M-CSA entry 201, mechanism 1; M-CSA cites PMID:15518551, PMID:2673009; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/201/
+      snippet: 'The substrate proprionyl-CoA, and cofactor carboxylbiotin (covalently attached to pccA),
+        both have carbonyl groups which hydrogen bond to backbone amides: Gly 182 and Gly 183 for the
+        substrate, Gly 419'' and Ala 420'' for the carboxylbiotin. (The primed numbers indicate residues
+        on a different monomer to the unprimed residues.) These amides serve as oxyanion holes whenever
+        the need arises.  Carboxyl'
+      notes: M-CSA entry 201, mechanism 1; M-CSA cites PMID:15518551, PMID:2673009; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/201/
+      snippet: 'The substrate proprionyl-CoA, and cofactor carboxylbiotin (covalently attached to pccA),
+        both have carbonyl groups which hydrogen bond to backbone amides: Gly 182 and Gly 183 for the
+        substrate, Gly 419'' and Ala 420'' for the carboxylbiotin. (The primed numbers indicate residues
+        on a different monomer to the unprimed residues.) These amides serve as oxyanion holes whenever
+        the need arises.  Carboxyl'
+      notes: M-CSA entry 201, mechanism 1; M-CSA cites PMID:15518551, PMID:2673009; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/201/
+      snippet: 'The substrate proprionyl-CoA, and cofactor carboxylbiotin (covalently attached to pccA),
+        both have carbonyl groups which hydrogen bond to backbone amides: Gly 182 and Gly 183 for the
+        substrate, Gly 419'' and Ala 420'' for the carboxylbiotin. (The primed numbers indicate residues
+        on a different monomer to the unprimed residues.) These amides serve as oxyanion holes whenever
+        the need arises.  Carboxyl'
+      notes: M-CSA entry 201, mechanism 1; M-CSA cites PMID:15518551, PMID:2673009; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product3
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/201/
+      snippet: 'The substrate proprionyl-CoA, and cofactor carboxylbiotin (covalently attached to pccA),
+        both have carbonyl groups which hydrogen bond to backbone amides: Gly 182 and Gly 183 for the
+        substrate, Gly 419'' and Ala 420'' for the carboxylbiotin. (The primed numbers indicate residues
+        on a different monomer to the unprimed residues.) These amides serve as oxyanion holes whenever
+        the need arises.  Carboxyl'
+      notes: M-CSA entry 201, mechanism 1; M-CSA cites PMID:15518551, PMID:2673009; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (22 evidence-backed edges) transcribed from M-CSA entry 201;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

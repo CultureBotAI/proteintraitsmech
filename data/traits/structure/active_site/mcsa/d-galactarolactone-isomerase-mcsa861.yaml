@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.4.1.4
 - CHEBI:83383
@@ -191,4 +191,142 @@ definitions:
       Catalyses the isomerisation of D-galactaro-1,5-lactone to D-galactaro-1,4-lactone. This is a step in the oxidative degradation pathway of D-galacturonate, which allows Agrobacterium tumefaciens to utilise D-galacturonate as a sole carbon source. This enzyme belongs to the amidohydrolase superfamily. Unlike many members of the amidohydrolase superfamily, this protein does not require a divalent metal for its lactonase activity
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of D-galactarolactone isomerase
+  description: Stepwise mechanism transcribed from M-CSA entry 861 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: asn240
+    label: catalytic Asn240 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:A9CEQ7
+    description: 'M-CSA roles: electrostatic stabiliser, enhance reactivity.'
+  - node_id: reactant0
+    label: D-galactaro-1,5-lactone(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:83383
+  - node_id: product0
+    label: D-galactaro-1,4-lactone(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:85317
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The hydroxyl group opposite the lactone carbonyl initiates a nucleophilic attack to form
+      the cyclic intermediate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The oxyanion collapses to form the 5-membered ring with deprotonation of the bridging
+      oxygen.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: D-galactarolactone isomerase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:861
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.140 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.140
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: D-galactarolactone isomerase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.4.1.4
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/861/
+      snippet: The oxyanion collapses to form the 5-membered ring with deprotonation of the bridging oxygen.
+      notes: M-CSA entry 861, mechanism 1; M-CSA cites PMID:24450804; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/861/
+      snippet: Products
+      notes: M-CSA entry 861, mechanism 1; M-CSA cites PMID:24450804; step 3
+  - subject: asn240
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn240 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/861/
+      snippet: electrostatic stabiliser, enhance reactivity
+      notes: M-CSA entry 861, mechanism 1; M-CSA cites PMID:24450804; M-CSA catalytic-residue roles for
+        Asn240
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/861/
+      snippet: The substrate undergoes auto-catalytic formation of the oxygen bridge, activated by Asn240.
+        The formed oxyanion then collapses to form the five membered ring. The modest rate enhancement
+        over the non-enzymatic reaction is thought to come from the preferential binding of the boat conformer
+        of the delta-lactone ring to enforce the proximity of the 4-OH group and the lactone carbonyl
+        group.
+      notes: M-CSA entry 861, mechanism 1; M-CSA cites PMID:24450804; CATH domain 3.20.20.140 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/861/
+      snippet: The substrate undergoes auto-catalytic formation of the oxygen bridge, activated by Asn240.
+        The formed oxyanion then collapses to form the five membered ring. The modest rate enhancement
+        over the non-enzymatic reaction is thought to come from the preferential binding of the boat conformer
+        of the delta-lactone ring to enforce the proximity of the 4-OH group and the lactone carbonyl
+        group.
+      notes: M-CSA entry 861, mechanism 1; M-CSA cites PMID:24450804; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/861/
+      snippet: The substrate undergoes auto-catalytic formation of the oxygen bridge, activated by Asn240.
+        The formed oxyanion then collapses to form the five membered ring. The modest rate enhancement
+        over the non-enzymatic reaction is thought to come from the preferential binding of the boat conformer
+        of the delta-lactone ring to enforce the proximity of the 4-OH group and the lactone carbonyl
+        group.
+      notes: M-CSA entry 861, mechanism 1; M-CSA cites PMID:24450804; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/861/
+      snippet: The substrate undergoes auto-catalytic formation of the oxygen bridge, activated by Asn240.
+        The formed oxyanion then collapses to form the five membered ring. The modest rate enhancement
+        over the non-enzymatic reaction is thought to come from the preferential binding of the boat conformer
+        of the delta-lactone ring to enforce the proximity of the 4-OH group and the lactone carbonyl
+        group.
+      notes: M-CSA entry 861, mechanism 1; M-CSA cites PMID:24450804; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (7 evidence-backed edges) transcribed from M-CSA entry 861;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.6.1.18
 - CHEBI:33699
@@ -172,4 +172,297 @@ definitions:
       The RNase 4 family is unique among RNase enzymes, displaying the highest level of sequence similarity and encompassing the shortest polypeptide chain. It is the only one showing high specificity due to unique substrate interactions.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of ribonuclease 4
+  description: Stepwise mechanism transcribed from M-CSA entry 693 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +28).
+  nodes:
+  - node_id: his12
+    label: catalytic His12 (M-CSA/PDB numbering; UniProt residue 40)
+    node_type: RESIDUE
+    grounding: UniProtKB:P34096
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: lys40
+    label: catalytic Lys40 (M-CSA/PDB numbering; UniProt residue 68)
+    node_type: RESIDUE
+    grounding: UniProtKB:P34096
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his116
+    label: catalytic His116 (M-CSA/PDB numbering; UniProt residue 144)
+    node_type: RESIDUE
+    grounding: UniProtKB:P34096
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: messenger RNA
+    node_type: CHEMICAL
+    grounding: CHEBI:33699
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: 3'-end ribonucleotide(1-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:74896
+  - node_id: product1
+    label: 5'-end ribonucleotide(1-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:137923
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His12 deprotonates the 2'OH which activates it to nucleophilically attack the 3' phosphate
+      to form a penta-coordinated intermediate, stabilised by Lys40.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The simultaneous protonation of the 5' OH by His116 and the collapse of the oxyanion
+      intermediate results in the cleavage of the phosphodiester bond.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: His116 abstracts a proton from a water which activates it to attack the 3' phosphate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: His12 then acts as a general acid, donating a proton to the 2' position group as the
+      intermediate collapses forming the 2'OH group and 3' phosphate group.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: ribonuclease 4 catalytic site
+    node_type: MOTIF
+    grounding: MCSA:693
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.10.130.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.10.130.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: ribonuclease 4 activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.6.1.18
+  edges:
+  - subject: his12
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His12 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/693/
+      snippet: His12 deprotonates the 2'OH which activates it to nucleophilically attack the 3' phosphate
+        to form a penta-coordinated intermediate, stabilised by Lys40.
+      notes: M-CSA entry 693, mechanism 1; M-CSA cites PMID:10731423, PMID:2479414, PMID:26748441, PMID:9878400;
+        step 1
+  - subject: lys40
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys40 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/693/
+      snippet: His12 deprotonates the 2'OH which activates it to nucleophilically attack the 3' phosphate
+        to form a penta-coordinated intermediate, stabilised by Lys40.
+      notes: M-CSA entry 693, mechanism 1; M-CSA cites PMID:10731423, PMID:2479414, PMID:26748441, PMID:9878400;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/693/
+      snippet: The simultaneous protonation of the 5' OH by His116 and the collapse of the oxyanion intermediate
+        results in the cleavage of the phosphodiester bond.
+      notes: M-CSA entry 693, mechanism 1; M-CSA cites PMID:10731423, PMID:2479414, PMID:26748441, PMID:9878400;
+        step 2
+  - subject: his116
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His116 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/693/
+      snippet: The simultaneous protonation of the 5' OH by His116 and the collapse of the oxyanion intermediate
+        results in the cleavage of the phosphodiester bond.
+      notes: M-CSA entry 693, mechanism 1; M-CSA cites PMID:10731423, PMID:2479414, PMID:26748441, PMID:9878400;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/693/
+      snippet: His116 abstracts a proton from a water which activates it to attack the 3' phosphate.
+      notes: M-CSA entry 693, mechanism 1; M-CSA cites PMID:10731423, PMID:2479414, PMID:26748441, PMID:9878400;
+        step 3
+  - subject: his116
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His116 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/693/
+      snippet: His116 abstracts a proton from a water which activates it to attack the 3' phosphate.
+      notes: M-CSA entry 693, mechanism 1; M-CSA cites PMID:10731423, PMID:2479414, PMID:26748441, PMID:9878400;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/693/
+      snippet: His12 then acts as a general acid, donating a proton to the 2' position group as the intermediate
+        collapses forming the 2'OH group and 3' phosphate group.
+      notes: M-CSA entry 693, mechanism 1; M-CSA cites PMID:10731423, PMID:2479414, PMID:26748441, PMID:9878400;
+        step 4
+  - subject: his12
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: His12 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/693/
+      snippet: His12 then acts as a general acid, donating a proton to the 2' position group as the intermediate
+        collapses forming the 2'OH group and 3' phosphate group.
+      notes: M-CSA entry 693, mechanism 1; M-CSA cites PMID:10731423, PMID:2479414, PMID:26748441, PMID:9878400;
+        step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/693/
+      snippet: Products
+      notes: M-CSA entry 693, mechanism 1; M-CSA cites PMID:10731423, PMID:2479414, PMID:26748441, PMID:9878400;
+        step 5
+  - subject: his12
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His12 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/693/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 693, mechanism 1; M-CSA cites PMID:10731423, PMID:2479414, PMID:26748441, PMID:9878400;
+        M-CSA catalytic-residue roles for His12
+  - subject: lys40
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys40 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/693/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 693, mechanism 1; M-CSA cites PMID:10731423, PMID:2479414, PMID:26748441, PMID:9878400;
+        M-CSA catalytic-residue roles for Lys40
+  - subject: his116
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His116 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/693/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 693, mechanism 1; M-CSA cites PMID:10731423, PMID:2479414, PMID:26748441, PMID:9878400;
+        M-CSA catalytic-residue roles for His116
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/693/
+      snippet: Rnase 4 uses an extended binding site to increase its specificity for hydrolysis at the
+        phosphate on the 3' side of a uridine nucleotide. Initially His12 deprotonates the uridine 2'OH
+        group which then attacks the 3'phosphate group to form a penta-coordinated intermediate, stabilised
+        by Lys40. Collapse of this high energy intermediate occurs at the same time as the 5'OH group
+        of the following nucle
+      notes: M-CSA entry 693, mechanism 1; M-CSA cites PMID:10731423, PMID:2479414, PMID:26748441, PMID:9878400;
+        CATH domain 3.10.130.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/693/
+      snippet: Rnase 4 uses an extended binding site to increase its specificity for hydrolysis at the
+        phosphate on the 3' side of a uridine nucleotide. Initially His12 deprotonates the uridine 2'OH
+        group which then attacks the 3'phosphate group to form a penta-coordinated intermediate, stabilised
+        by Lys40. Collapse of this high energy intermediate occurs at the same time as the 5'OH group
+        of the following nucle
+      notes: M-CSA entry 693, mechanism 1; M-CSA cites PMID:10731423, PMID:2479414, PMID:26748441, PMID:9878400;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/693/
+      snippet: Rnase 4 uses an extended binding site to increase its specificity for hydrolysis at the
+        phosphate on the 3' side of a uridine nucleotide. Initially His12 deprotonates the uridine 2'OH
+        group which then attacks the 3'phosphate group to form a penta-coordinated intermediate, stabilised
+        by Lys40. Collapse of this high energy intermediate occurs at the same time as the 5'OH group
+        of the following nucle
+      notes: M-CSA entry 693, mechanism 1; M-CSA cites PMID:10731423, PMID:2479414, PMID:26748441, PMID:9878400;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/693/
+      snippet: Rnase 4 uses an extended binding site to increase its specificity for hydrolysis at the
+        phosphate on the 3' side of a uridine nucleotide. Initially His12 deprotonates the uridine 2'OH
+        group which then attacks the 3'phosphate group to form a penta-coordinated intermediate, stabilised
+        by Lys40. Collapse of this high energy intermediate occurs at the same time as the 5'OH group
+        of the following nucle
+      notes: M-CSA entry 693, mechanism 1; M-CSA cites PMID:10731423, PMID:2479414, PMID:26748441, PMID:9878400;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/693/
+      snippet: Rnase 4 uses an extended binding site to increase its specificity for hydrolysis at the
+        phosphate on the 3' side of a uridine nucleotide. Initially His12 deprotonates the uridine 2'OH
+        group which then attacks the 3'phosphate group to form a penta-coordinated intermediate, stabilised
+        by Lys40. Collapse of this high energy intermediate occurs at the same time as the 5'OH group
+        of the following nucle
+      notes: M-CSA entry 693, mechanism 1; M-CSA cites PMID:10731423, PMID:2479414, PMID:26748441, PMID:9878400;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/693/
+      snippet: Rnase 4 uses an extended binding site to increase its specificity for hydrolysis at the
+        phosphate on the 3' side of a uridine nucleotide. Initially His12 deprotonates the uridine 2'OH
+        group which then attacks the 3'phosphate group to form a penta-coordinated intermediate, stabilised
+        by Lys40. Collapse of this high energy intermediate occurs at the same time as the 5'OH group
+        of the following nucle
+      notes: M-CSA entry 693, mechanism 1; M-CSA cites PMID:10731423, PMID:2479414, PMID:26748441, PMID:9878400;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (18 evidence-backed edges) transcribed from M-CSA entry 693;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

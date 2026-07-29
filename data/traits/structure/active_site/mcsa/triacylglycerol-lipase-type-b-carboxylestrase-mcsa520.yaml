@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.1.3
 - CHEBI:18900
@@ -390,4 +390,357 @@ definitions:
       Catalyses the hydrolysis of all ester bonds in triglyceride and displays a high affinity for triolein. Member of the alpha-beta hydrolase superfamily.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of triacylglycerol lipase (type B carboxylestrase)
+  description: Stepwise mechanism transcribed from M-CSA entry 520 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +19).
+  nodes:
+  - node_id: ala132
+    label: catalytic Ala132 (M-CSA/PDB numbering; UniProt residue 151)
+    node_type: RESIDUE
+    grounding: UniProtKB:P22394
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ser217
+    label: catalytic Ser217 (M-CSA/PDB numbering; UniProt residue 236)
+    node_type: RESIDUE
+    grounding: UniProtKB:P22394
+    description: 'M-CSA roles: covalently attached, nucleofuge, nucleophile, proton acceptor, proton donor.'
+  - node_id: ala218
+    label: catalytic Ala218 (M-CSA/PDB numbering; UniProt residue 237)
+    node_type: RESIDUE
+    grounding: UniProtKB:P22394
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu354
+    label: catalytic Glu354 (M-CSA/PDB numbering; UniProt residue 373)
+    node_type: RESIDUE
+    grounding: UniProtKB:P22394
+    description: 'M-CSA roles: electrostatic stabiliser, increase basicity, modifies pKa.'
+  - node_id: his463
+    label: catalytic His463 (M-CSA/PDB numbering; UniProt residue 482)
+    node_type: RESIDUE
+    grounding: UniProtKB:P22394
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: triglyceride
+    node_type: CHEMICAL
+    grounding: CHEBI:17855
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: diacylglycerol
+    node_type: CHEMICAL
+    grounding: CHEBI:18900
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: fatty acid anion
+    node_type: CHEMICAL
+    grounding: CHEBI:28868
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His463 acts as a general base activating the Ser217 hydroxyl group for nucleophilic attack
+      on the carbonyl carbon of the ester bond. The third component of this catalytic triad- Glu354 acts
+      to increase the basicity of the histidine. The oxyanion intermediate formed is stabilized by the
+      amide groups of Ala132 and Ala218.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The tetrahedral intermediate collapses and diacylglycerol is eliminated.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: His463 activates water for nucleophilic attack and another oxyanion intermediate is formed.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The tetrahedral intermediate collapses and Ser217 is eliminated.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: triacylglycerol lipase (type B carboxylestrase) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:520
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1820 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1820
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: triacylglycerol lipase (type B carboxylestrase) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.1.3
+  edges:
+  - subject: ala132
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ala132 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/520/
+      snippet: His463 acts as a general base activating the Ser217 hydroxyl group for nucleophilic attack
+        on the carbonyl carbon of the ester bond. The third component of this catalytic triad- Glu354
+        acts to increase the basicity of the histidine. The oxyanion intermediate formed is stabilized
+        by the amide groups of Ala132 and Ala218.
+      notes: M-CSA entry 520, mechanism 1; M-CSA cites PMID:8464065; step 1
+  - subject: ser217
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser217 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/520/
+      snippet: His463 acts as a general base activating the Ser217 hydroxyl group for nucleophilic attack
+        on the carbonyl carbon of the ester bond. The third component of this catalytic triad- Glu354
+        acts to increase the basicity of the histidine. The oxyanion intermediate formed is stabilized
+        by the amide groups of Ala132 and Ala218.
+      notes: M-CSA entry 520, mechanism 1; M-CSA cites PMID:8464065; step 1
+  - subject: ala218
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ala218 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/520/
+      snippet: His463 acts as a general base activating the Ser217 hydroxyl group for nucleophilic attack
+        on the carbonyl carbon of the ester bond. The third component of this catalytic triad- Glu354
+        acts to increase the basicity of the histidine. The oxyanion intermediate formed is stabilized
+        by the amide groups of Ala132 and Ala218.
+      notes: M-CSA entry 520, mechanism 1; M-CSA cites PMID:8464065; step 1
+  - subject: glu354
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu354 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/520/
+      snippet: His463 acts as a general base activating the Ser217 hydroxyl group for nucleophilic attack
+        on the carbonyl carbon of the ester bond. The third component of this catalytic triad- Glu354
+        acts to increase the basicity of the histidine. The oxyanion intermediate formed is stabilized
+        by the amide groups of Ala132 and Ala218.
+      notes: M-CSA entry 520, mechanism 1; M-CSA cites PMID:8464065; step 1
+  - subject: his463
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His463 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/520/
+      snippet: His463 acts as a general base activating the Ser217 hydroxyl group for nucleophilic attack
+        on the carbonyl carbon of the ester bond. The third component of this catalytic triad- Glu354
+        acts to increase the basicity of the histidine. The oxyanion intermediate formed is stabilized
+        by the amide groups of Ala132 and Ala218.
+      notes: M-CSA entry 520, mechanism 1; M-CSA cites PMID:8464065; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/520/
+      snippet: The tetrahedral intermediate collapses and diacylglycerol is eliminated.
+      notes: M-CSA entry 520, mechanism 1; M-CSA cites PMID:8464065; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/520/
+      snippet: His463 activates water for nucleophilic attack and another oxyanion intermediate is formed.
+      notes: M-CSA entry 520, mechanism 1; M-CSA cites PMID:8464065; step 3
+  - subject: his463
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His463 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/520/
+      snippet: His463 activates water for nucleophilic attack and another oxyanion intermediate is formed.
+      notes: M-CSA entry 520, mechanism 1; M-CSA cites PMID:8464065; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/520/
+      snippet: The tetrahedral intermediate collapses and Ser217 is eliminated.
+      notes: M-CSA entry 520, mechanism 1; M-CSA cites PMID:8464065; step 4
+  - subject: ser217
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Ser217 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/520/
+      snippet: The tetrahedral intermediate collapses and Ser217 is eliminated.
+      notes: M-CSA entry 520, mechanism 1; M-CSA cites PMID:8464065; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/520/
+      snippet: Products.
+      notes: M-CSA entry 520, mechanism 1; M-CSA cites PMID:8464065; step 5
+  - subject: ala132
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ala132 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/520/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 520, mechanism 1; M-CSA cites PMID:8464065; M-CSA catalytic-residue roles for
+        Ala132
+  - subject: ser217
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser217 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/520/
+      snippet: covalently attached, nucleofuge, nucleophile, proton acceptor, proton donor
+      notes: M-CSA entry 520, mechanism 1; M-CSA cites PMID:8464065; M-CSA catalytic-residue roles for
+        Ser217
+  - subject: ala218
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ala218 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/520/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 520, mechanism 1; M-CSA cites PMID:8464065; M-CSA catalytic-residue roles for
+        Ala218
+  - subject: glu354
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu354 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/520/
+      snippet: electrostatic stabiliser, increase basicity, modifies pKa
+      notes: M-CSA entry 520, mechanism 1; M-CSA cites PMID:8464065; M-CSA catalytic-residue roles for
+        Glu354
+  - subject: his463
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His463 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/520/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 520, mechanism 1; M-CSA cites PMID:8464065; M-CSA catalytic-residue roles for
+        His463
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/520/
+      snippet: This protein is a member of the alpha-beta hydrolase superfamily and is known to function
+        via a Ser-His-Glu triad mechanism. Here the histidine of the triad activates the serine, which
+        acts as a nucleophile, forming a covalent intermediate, which then collapses to eliminate the
+        first product. Hydrolysis of the enzyme-substrate bond results in the release of the final product
+        and regeneration of th
+      notes: M-CSA entry 520, mechanism 1; M-CSA cites PMID:8464065; CATH domain 3.40.50.1820 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/520/
+      snippet: This protein is a member of the alpha-beta hydrolase superfamily and is known to function
+        via a Ser-His-Glu triad mechanism. Here the histidine of the triad activates the serine, which
+        acts as a nucleophile, forming a covalent intermediate, which then collapses to eliminate the
+        first product. Hydrolysis of the enzyme-substrate bond results in the release of the final product
+        and regeneration of th
+      notes: M-CSA entry 520, mechanism 1; M-CSA cites PMID:8464065; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/520/
+      snippet: This protein is a member of the alpha-beta hydrolase superfamily and is known to function
+        via a Ser-His-Glu triad mechanism. Here the histidine of the triad activates the serine, which
+        acts as a nucleophile, forming a covalent intermediate, which then collapses to eliminate the
+        first product. Hydrolysis of the enzyme-substrate bond results in the release of the final product
+        and regeneration of th
+      notes: M-CSA entry 520, mechanism 1; M-CSA cites PMID:8464065; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/520/
+      snippet: This protein is a member of the alpha-beta hydrolase superfamily and is known to function
+        via a Ser-His-Glu triad mechanism. Here the histidine of the triad activates the serine, which
+        acts as a nucleophile, forming a covalent intermediate, which then collapses to eliminate the
+        first product. Hydrolysis of the enzyme-substrate bond results in the release of the final product
+        and regeneration of th
+      notes: M-CSA entry 520, mechanism 1; M-CSA cites PMID:8464065; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/520/
+      snippet: This protein is a member of the alpha-beta hydrolase superfamily and is known to function
+        via a Ser-His-Glu triad mechanism. Here the histidine of the triad activates the serine, which
+        acts as a nucleophile, forming a covalent intermediate, which then collapses to eliminate the
+        first product. Hydrolysis of the enzyme-substrate bond results in the release of the final product
+        and regeneration of th
+      notes: M-CSA entry 520, mechanism 1; M-CSA cites PMID:8464065; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/520/
+      snippet: This protein is a member of the alpha-beta hydrolase superfamily and is known to function
+        via a Ser-His-Glu triad mechanism. Here the histidine of the triad activates the serine, which
+        acts as a nucleophile, forming a covalent intermediate, which then collapses to eliminate the
+        first product. Hydrolysis of the enzyme-substrate bond results in the release of the final product
+        and regeneration of th
+      notes: M-CSA entry 520, mechanism 1; M-CSA cites PMID:8464065; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/520/
+      snippet: This protein is a member of the alpha-beta hydrolase superfamily and is known to function
+        via a Ser-His-Glu triad mechanism. Here the histidine of the triad activates the serine, which
+        acts as a nucleophile, forming a covalent intermediate, which then collapses to eliminate the
+        first product. Hydrolysis of the enzyme-substrate bond results in the release of the final product
+        and regeneration of th
+      notes: M-CSA entry 520, mechanism 1; M-CSA cites PMID:8464065; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (23 evidence-backed edges) transcribed from M-CSA entry 520;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

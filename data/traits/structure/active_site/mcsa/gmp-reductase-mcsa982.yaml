@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.7.1.7
 - CHEBI:58053
@@ -323,4 +323,293 @@ definitions:
       Guanosine monophosphate reductase (GMPR) is crucial for catalysis of the irreversible GMP deamination to IMP with the use of NADPH. It converts nucleobase, nucleoside and nucleotide derivatives of G to A nucleotides, and thus maintains the intracellular balance of A and G nucleotides. GMP is a homotetramer with mixed alpha helices and beta sheets.The monomers are stabilised by interactions across their edges and through Cys-Cys bonds. GMPR1 inhibitors are tested for applications is treating Alzheimer's disease and the increase of GMPR expression is linked to suppression of melanoma cancers.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of GMP reductase
+  description: Stepwise mechanism transcribed from M-CSA entry 982 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: cys186
+    label: catalytic Cys186 (M-CSA/PDB numbering; UniProt residue 186)
+    node_type: RESIDUE
+    grounding: UniProtKB:P36959
+    description: 'M-CSA roles: nucleofuge, nucleophile.'
+  - node_id: thr188
+    label: catalytic Thr188 (M-CSA/PDB numbering; UniProt residue 188)
+    node_type: RESIDUE
+    grounding: UniProtKB:P36959
+    description: 'M-CSA roles: proton acceptor, proton donor, proton relay.'
+  - node_id: glu289
+    label: catalytic Glu289 (M-CSA/PDB numbering; UniProt residue 289)
+    node_type: RESIDUE
+    grounding: UniProtKB:P36959
+    description: 'M-CSA roles: proton donor.'
+  - node_id: reactant0
+    label: guanosine 5'-monophosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58115
+  - node_id: reactant1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: reactant2
+    label: NADPH(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+  - node_id: product0
+    label: IMP(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58053
+  - node_id: product1
+    label: NADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+  - node_id: product2
+    label: ammonium
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Cys186 performs a nucleophilic attack on C2 of the GMP. In concert Thr188 acts as a proton
+      relay between Glu289 and the leaving amino group.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: NADPH then donates a hydride to the C2 atom of GMP. This breaks the C-S bond formed by
+      Cys186.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Final product.
+  - node_id: active_site
+    label: GMP reductase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:982
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.70 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.70
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: GMP reductase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.7.1.7
+  edges:
+  - subject: cys186
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys186 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/982/
+      snippet: Cys186 performs a nucleophilic attack on C2 of the GMP. In concert Thr188 acts as a proton
+        relay between Glu289 and the leaving amino group.
+      notes: M-CSA entry 982, mechanism 1; M-CSA cites PMID:16359702, PMID:22037469, PMID:27613871, PMID:29547266;
+        step 1
+  - subject: thr188
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Thr188 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/982/
+      snippet: Cys186 performs a nucleophilic attack on C2 of the GMP. In concert Thr188 acts as a proton
+        relay between Glu289 and the leaving amino group.
+      notes: M-CSA entry 982, mechanism 1; M-CSA cites PMID:16359702, PMID:22037469, PMID:27613871, PMID:29547266;
+        step 1
+  - subject: glu289
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu289 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/982/
+      snippet: Cys186 performs a nucleophilic attack on C2 of the GMP. In concert Thr188 acts as a proton
+        relay between Glu289 and the leaving amino group.
+      notes: M-CSA entry 982, mechanism 1; M-CSA cites PMID:16359702, PMID:22037469, PMID:27613871, PMID:29547266;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/982/
+      snippet: NADPH then donates a hydride to the C2 atom of GMP. This breaks the C-S bond formed by
+        Cys186.
+      notes: M-CSA entry 982, mechanism 1; M-CSA cites PMID:16359702, PMID:22037469, PMID:27613871, PMID:29547266;
+        step 2
+  - subject: cys186
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Cys186 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/982/
+      snippet: NADPH then donates a hydride to the C2 atom of GMP. This breaks the C-S bond formed by
+        Cys186.
+      notes: M-CSA entry 982, mechanism 1; M-CSA cites PMID:16359702, PMID:22037469, PMID:27613871, PMID:29547266;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/982/
+      snippet: Final product.
+      notes: M-CSA entry 982, mechanism 1; M-CSA cites PMID:16359702, PMID:22037469, PMID:27613871, PMID:29547266;
+        step 3
+  - subject: cys186
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys186 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/982/
+      snippet: nucleofuge, nucleophile
+      notes: M-CSA entry 982, mechanism 1; M-CSA cites PMID:16359702, PMID:22037469, PMID:27613871, PMID:29547266;
+        M-CSA catalytic-residue roles for Cys186
+  - subject: thr188
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr188 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/982/
+      snippet: proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 982, mechanism 1; M-CSA cites PMID:16359702, PMID:22037469, PMID:27613871, PMID:29547266;
+        M-CSA catalytic-residue roles for Thr188
+  - subject: glu289
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu289 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/982/
+      snippet: proton donor
+      notes: M-CSA entry 982, mechanism 1; M-CSA cites PMID:16359702, PMID:22037469, PMID:27613871, PMID:29547266;
+        M-CSA catalytic-residue roles for Glu289
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/982/
+      snippet: "The reaction is two step process. The Thr188 and Glu289 dyad activate the amino group\
+        \ by donating a proton to it. In concert Cys186 performs a nucleophilic attack on the C2 atom\
+        \ of GMP resulting in the formation of a C-S bond between the enzyme and substrate. 
+This C-S\
+        \ bond is then cleaved by the addition of a hydride from NADPH to the C2 atom of the substrate."
+      notes: M-CSA entry 982, mechanism 1; M-CSA cites PMID:16359702, PMID:22037469, PMID:27613871, PMID:29547266;
+        CATH domain 3.20.20.70 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/982/
+      snippet: "The reaction is two step process. The Thr188 and Glu289 dyad activate the amino group\
+        \ by donating a proton to it. In concert Cys186 performs a nucleophilic attack on the C2 atom\
+        \ of GMP resulting in the formation of a C-S bond between the enzyme and substrate. 
+This C-S\
+        \ bond is then cleaved by the addition of a hydride from NADPH to the C2 atom of the substrate."
+      notes: M-CSA entry 982, mechanism 1; M-CSA cites PMID:16359702, PMID:22037469, PMID:27613871, PMID:29547266;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/982/
+      snippet: "The reaction is two step process. The Thr188 and Glu289 dyad activate the amino group\
+        \ by donating a proton to it. In concert Cys186 performs a nucleophilic attack on the C2 atom\
+        \ of GMP resulting in the formation of a C-S bond between the enzyme and substrate. 
+This C-S\
+        \ bond is then cleaved by the addition of a hydride from NADPH to the C2 atom of the substrate."
+      notes: M-CSA entry 982, mechanism 1; M-CSA cites PMID:16359702, PMID:22037469, PMID:27613871, PMID:29547266;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/982/
+      snippet: "The reaction is two step process. The Thr188 and Glu289 dyad activate the amino group\
+        \ by donating a proton to it. In concert Cys186 performs a nucleophilic attack on the C2 atom\
+        \ of GMP resulting in the formation of a C-S bond between the enzyme and substrate. 
+This C-S\
+        \ bond is then cleaved by the addition of a hydride from NADPH to the C2 atom of the substrate."
+      notes: M-CSA entry 982, mechanism 1; M-CSA cites PMID:16359702, PMID:22037469, PMID:27613871, PMID:29547266;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/982/
+      snippet: "The reaction is two step process. The Thr188 and Glu289 dyad activate the amino group\
+        \ by donating a proton to it. In concert Cys186 performs a nucleophilic attack on the C2 atom\
+        \ of GMP resulting in the formation of a C-S bond between the enzyme and substrate. 
+This C-S\
+        \ bond is then cleaved by the addition of a hydride from NADPH to the C2 atom of the substrate."
+      notes: M-CSA entry 982, mechanism 1; M-CSA cites PMID:16359702, PMID:22037469, PMID:27613871, PMID:29547266;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/982/
+      snippet: "The reaction is two step process. The Thr188 and Glu289 dyad activate the amino group\
+        \ by donating a proton to it. In concert Cys186 performs a nucleophilic attack on the C2 atom\
+        \ of GMP resulting in the formation of a C-S bond between the enzyme and substrate. 
+This C-S\
+        \ bond is then cleaved by the addition of a hydride from NADPH to the C2 atom of the substrate."
+      notes: M-CSA entry 982, mechanism 1; M-CSA cites PMID:16359702, PMID:22037469, PMID:27613871, PMID:29547266;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/982/
+      snippet: "The reaction is two step process. The Thr188 and Glu289 dyad activate the amino group\
+        \ by donating a proton to it. In concert Cys186 performs a nucleophilic attack on the C2 atom\
+        \ of GMP resulting in the formation of a C-S bond between the enzyme and substrate. 
+This C-S\
+        \ bond is then cleaved by the addition of a hydride from NADPH to the C2 atom of the substrate."
+      notes: M-CSA entry 982, mechanism 1; M-CSA cites PMID:16359702, PMID:22037469, PMID:27613871, PMID:29547266;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/982/
+      snippet: "The reaction is two step process. The Thr188 and Glu289 dyad activate the amino group\
+        \ by donating a proton to it. In concert Cys186 performs a nucleophilic attack on the C2 atom\
+        \ of GMP resulting in the formation of a C-S bond between the enzyme and substrate. 
+This C-S\
+        \ bond is then cleaved by the addition of a hydride from NADPH to the C2 atom of the substrate."
+      notes: M-CSA entry 982, mechanism 1; M-CSA cites PMID:16359702, PMID:22037469, PMID:27613871, PMID:29547266;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (17 evidence-backed edges) transcribed from M-CSA entry 982;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

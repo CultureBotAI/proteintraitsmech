@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.22.-
 - CHEBI:15377
@@ -148,4 +148,283 @@ definitions:
       The intracellular protease from Pyrococcus horikoshii (PH1704) and PfpI from Pyrococcus furiosus are members of a class of intracellular proteases that have no sequence homology to any other known protease family. They have significant similarity with deglycases that catalyse the deglycation of the Maillard adducts formed between amino groups of proteins and reactive carbonyl groups of glyoxals. The protein is a member of the DJ-1 family, mutations of which appear to have a significant role in the cause of recessively transmitted early-onset Parkinson disease (PD), and oxidative damage to DJ-1 has been associated with the pathogenesis of late-onset sporadic PD. However, the precise role of DJ-1 proteins have yet to be fully elucidated.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of intracellular protease
+  description: Stepwise mechanism transcribed from M-CSA entry 964 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: gly70
+    label: catalytic Gly70 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:O59413
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: arg71
+    label: catalytic Arg71 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:O59413
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: cys100
+    label: catalytic Cys100 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:O59413
+    description: 'M-CSA roles: covalently attached, nucleofuge, nucleophile, proton acceptor, proton donor.'
+  - node_id: his101
+    label: catalytic His101 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:O59413
+    description: 'M-CSA roles: electrostatic stabiliser, proton acceptor, proton donor.'
+  - node_id: tyr120
+    label: catalytic Tyr120 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:O59413
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu474
+    label: catalytic Glu474 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:O59413
+    description: 'M-CSA roles: electrostatic stabiliser, modifies pKa.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: dipeptide
+    node_type: CHEMICAL
+    grounding: CHEBI:46761
+  - node_id: product0
+    label: L-alpha-amino acid
+    node_type: CHEMICAL
+    grounding: CHEBI:15705
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His101 activates the catalytic cysteine to act as a nucleophile, which in turn attacks
+      the substrate to form the enzyme-substrate adduct.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The oxyanion collapses and eliminates the first of the products.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: His101 abstracts a proton from the substrate water molecule, which attacks the carbonyl
+      group of the enzyme-intermediate adduct.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The oxyanion collapses, eliminating the cysteine residue and forming the final product
+      of the reaction.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: intracellular protease catalytic site
+    node_type: MOTIF
+    grounding: MCSA:964
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.880 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.880
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: intracellular protease activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.22.-
+  edges:
+  - subject: his101
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His101 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/964/
+      snippet: His101 activates the catalytic cysteine to act as a nucleophile, which in turn attacks
+        the substrate to form the enzyme-substrate adduct.
+      notes: M-CSA entry 964, mechanism 1; M-CSA cites PMID:11114201, PMID:25192005, PMID:27530919; step
+        1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/964/
+      snippet: The oxyanion collapses and eliminates the first of the products.
+      notes: M-CSA entry 964, mechanism 1; M-CSA cites PMID:11114201, PMID:25192005, PMID:27530919; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/964/
+      snippet: His101 abstracts a proton from the substrate water molecule, which attacks the carbonyl
+        group of the enzyme-intermediate adduct.
+      notes: M-CSA entry 964, mechanism 1; M-CSA cites PMID:11114201, PMID:25192005, PMID:27530919; step
+        3
+  - subject: his101
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His101 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/964/
+      snippet: His101 abstracts a proton from the substrate water molecule, which attacks the carbonyl
+        group of the enzyme-intermediate adduct.
+      notes: M-CSA entry 964, mechanism 1; M-CSA cites PMID:11114201, PMID:25192005, PMID:27530919; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/964/
+      snippet: The oxyanion collapses, eliminating the cysteine residue and forming the final product
+        of the reaction.
+      notes: M-CSA entry 964, mechanism 1; M-CSA cites PMID:11114201, PMID:25192005, PMID:27530919; step
+        4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/964/
+      snippet: Products
+      notes: M-CSA entry 964, mechanism 1; M-CSA cites PMID:11114201, PMID:25192005, PMID:27530919; step
+        5
+  - subject: gly70
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly70 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/964/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 964, mechanism 1; M-CSA cites PMID:11114201, PMID:25192005, PMID:27530919; M-CSA
+        catalytic-residue roles for Gly70
+  - subject: arg71
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg71 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/964/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 964, mechanism 1; M-CSA cites PMID:11114201, PMID:25192005, PMID:27530919; M-CSA
+        catalytic-residue roles for Arg71
+  - subject: cys100
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys100 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/964/
+      snippet: covalently attached, nucleofuge, nucleophile, proton acceptor, proton donor
+      notes: M-CSA entry 964, mechanism 1; M-CSA cites PMID:11114201, PMID:25192005, PMID:27530919; M-CSA
+        catalytic-residue roles for Cys100
+  - subject: his101
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His101 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/964/
+      snippet: electrostatic stabiliser, proton acceptor, proton donor
+      notes: M-CSA entry 964, mechanism 1; M-CSA cites PMID:11114201, PMID:25192005, PMID:27530919; M-CSA
+        catalytic-residue roles for His101
+  - subject: tyr120
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr120 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/964/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 964, mechanism 1; M-CSA cites PMID:11114201, PMID:25192005, PMID:27530919; M-CSA
+        catalytic-residue roles for Tyr120
+  - subject: glu474
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu474 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/964/
+      snippet: electrostatic stabiliser, modifies pKa
+      notes: M-CSA entry 964, mechanism 1; M-CSA cites PMID:11114201, PMID:25192005, PMID:27530919; M-CSA
+        catalytic-residue roles for Glu474
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/964/
+      snippet: The nucleophillic cysteine then attacks the carbonyl group adjacent to the amine group
+        in the same manner as other cysteine proteases, with Cys100 acting as a nucleophile and water
+        then cleaving the enzyme-substrate adduct.
+      notes: M-CSA entry 964, mechanism 1; M-CSA cites PMID:11114201, PMID:25192005, PMID:27530919; CATH
+        domain 3.40.50.880 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/964/
+      snippet: The nucleophillic cysteine then attacks the carbonyl group adjacent to the amine group
+        in the same manner as other cysteine proteases, with Cys100 acting as a nucleophile and water
+        then cleaving the enzyme-substrate adduct.
+      notes: M-CSA entry 964, mechanism 1; M-CSA cites PMID:11114201, PMID:25192005, PMID:27530919; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/964/
+      snippet: The nucleophillic cysteine then attacks the carbonyl group adjacent to the amine group
+        in the same manner as other cysteine proteases, with Cys100 acting as a nucleophile and water
+        then cleaving the enzyme-substrate adduct.
+      notes: M-CSA entry 964, mechanism 1; M-CSA cites PMID:11114201, PMID:25192005, PMID:27530919; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/964/
+      snippet: The nucleophillic cysteine then attacks the carbonyl group adjacent to the amine group
+        in the same manner as other cysteine proteases, with Cys100 acting as a nucleophile and water
+        then cleaving the enzyme-substrate adduct.
+      notes: M-CSA entry 964, mechanism 1; M-CSA cites PMID:11114201, PMID:25192005, PMID:27530919; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/964/
+      snippet: The nucleophillic cysteine then attacks the carbonyl group adjacent to the amine group
+        in the same manner as other cysteine proteases, with Cys100 acting as a nucleophile and water
+        then cleaving the enzyme-substrate adduct.
+      notes: M-CSA entry 964, mechanism 1; M-CSA cites PMID:11114201, PMID:25192005, PMID:27530919; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (17 evidence-backed edges) transcribed from M-CSA entry 964;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

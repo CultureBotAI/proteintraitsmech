@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.5.1.93
 - CHEBI:58693
@@ -444,4 +444,303 @@ definitions:
       Glutaryl 7-aminocephalosporanic acid (7-ACA) acylase catalyses the hydrolysis of Glutaryl 7-ACA to Glutaric acid and 7-ACA. It belongs to the family of N-terminal hydrolase (peptidase S45 family). 7-ACA is the starting compound for the synthesis of cephalosporin antibiotics and it is usually obtained industrially by chemical deacylation of cephalosporin C(CPC). Since the chemical production of 7-ACA is expensive and produce toxic chemical wastes, the enzymatic conversion of CPC to 7-ACA by 7-ACA acylase is of great interest. In order for the enzyme to be activated towards catalysing the hydrolysis of the glutaryl form of 7-aminocephalosporanic acid, autoproteolysis must occur at the nucleophilic Ser170, revealing an N terminal nucleophile capable of inducing nucleophilic attack at the substrate's glutaryl carbonyl. The process forms two descrete proteins chains. The crystal structure depicts the non-cleaved, precursor protein, whereas the active protein froms a heterotetramer from the two resulting chains.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of glutaryl-7-aminocephalosporanic-acid acylase
+  description: Stepwise mechanism transcribed from M-CSA entry 288 (7 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: ala170
+    label: catalytic Ala170 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07662
+    description: 'M-CSA roles: proton acceptor, proton donor, steric role.'
+  - node_id: his192
+    label: catalytic His192 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07662
+    description: 'M-CSA roles: activator, electrostatic stabiliser, increase acidity, steric role.'
+  - node_id: val239
+    label: catalytic Val239 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07662
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asn413
+    label: catalytic Asn413 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07662
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu624
+    label: catalytic Glu624 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07662
+    description: 'M-CSA roles: activator, electrostatic stabiliser, increase acidity, steric role.'
+  - node_id: reactant0
+    label: (7R)-7-(4-carboxylatobutanamido)cephalosporanate
+    node_type: CHEMICAL
+    grounding: CHEBI:58693
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: 7beta-aminocephalosporanic acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:58501
+  - node_id: product1
+    label: glutarate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30921
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: A water molecule acts as a proton carrier in the deprotonation of the Ser170A side chain
+      hydroxyl by the N terminal amine group. The presence of low barrier hydrogen bonds between Ser170,
+      His193, Glu525 and the conserved water molecule facilitates proton transfer by lowering the activation
+      energy associated with each step.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The side chain hydroxide of Ser170A attacks the substrate amide carbonyl, forming a tetrahedral
+      intermediate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The tetrahedral intermediate collapses, forming a serine linked glutarate intermediate
+      and eliminating 7-Aminocephalosporanic acid.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Water is activated by the non-protonated terminal amine of Ser170 to attack at the enzyme-substrate
+      intermediate's carbonyl group, forming a second tetrahedral intermediate.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: The tetrahedral anion intermediate collapses, releasing glutarate and the N terminal
+      serine.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: The anionic serine side chain undergoes an intamolecular deprotonation, removing a proton
+      from the terminal amine group via a conserved water molecule.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: glutaryl-7-aminocephalosporanic-acid acylase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:288
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.60.20.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.60.20.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: glutaryl-7-aminocephalosporanic-acid acylase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.5.1.93
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/288/
+      snippet: The side chain hydroxide of Ser170A attacks the substrate amide carbonyl, forming a tetrahedral
+        intermediate.
+      notes: M-CSA entry 288, mechanism 1; M-CSA cites PMID:11080627, PMID:11742126, PMID:11755403, PMID:12680762,
+        PMID:23417342; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/288/
+      snippet: The tetrahedral intermediate collapses, forming a serine linked glutarate intermediate
+        and eliminating 7-Aminocephalosporanic acid.
+      notes: M-CSA entry 288, mechanism 1; M-CSA cites PMID:11080627, PMID:11742126, PMID:11755403, PMID:12680762,
+        PMID:23417342; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/288/
+      snippet: Water is activated by the non-protonated terminal amine of Ser170 to attack at the enzyme-substrate
+        intermediate's carbonyl group, forming a second tetrahedral intermediate.
+      notes: M-CSA entry 288, mechanism 1; M-CSA cites PMID:11080627, PMID:11742126, PMID:11755403, PMID:12680762,
+        PMID:23417342; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/288/
+      snippet: The tetrahedral anion intermediate collapses, releasing glutarate and the N terminal serine.
+      notes: M-CSA entry 288, mechanism 1; M-CSA cites PMID:11080627, PMID:11742126, PMID:11755403, PMID:12680762,
+        PMID:23417342; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/288/
+      snippet: The anionic serine side chain undergoes an intamolecular deprotonation, removing a proton
+        from the terminal amine group via a conserved water molecule.
+      notes: M-CSA entry 288, mechanism 1; M-CSA cites PMID:11080627, PMID:11742126, PMID:11755403, PMID:12680762,
+        PMID:23417342; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/288/
+      snippet: Products
+      notes: M-CSA entry 288, mechanism 1; M-CSA cites PMID:11080627, PMID:11742126, PMID:11755403, PMID:12680762,
+        PMID:23417342; step 7
+  - subject: ala170
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ala170 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/288/
+      snippet: proton acceptor, proton donor, steric role
+      notes: M-CSA entry 288, mechanism 1; M-CSA cites PMID:11080627, PMID:11742126, PMID:11755403, PMID:12680762,
+        PMID:23417342; M-CSA catalytic-residue roles for Ala170
+  - subject: his192
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His192 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/288/
+      snippet: activator, electrostatic stabiliser, increase acidity, steric role
+      notes: M-CSA entry 288, mechanism 1; M-CSA cites PMID:11080627, PMID:11742126, PMID:11755403, PMID:12680762,
+        PMID:23417342; M-CSA catalytic-residue roles for His192
+  - subject: val239
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Val239 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/288/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 288, mechanism 1; M-CSA cites PMID:11080627, PMID:11742126, PMID:11755403, PMID:12680762,
+        PMID:23417342; M-CSA catalytic-residue roles for Val239
+  - subject: asn413
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn413 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/288/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 288, mechanism 1; M-CSA cites PMID:11080627, PMID:11742126, PMID:11755403, PMID:12680762,
+        PMID:23417342; M-CSA catalytic-residue roles for Asn413
+  - subject: glu624
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu624 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/288/
+      snippet: activator, electrostatic stabiliser, increase acidity, steric role
+      notes: M-CSA entry 288, mechanism 1; M-CSA cites PMID:11080627, PMID:11742126, PMID:11755403, PMID:12680762,
+        PMID:23417342; M-CSA catalytic-residue roles for Glu624
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/288/
+      snippet: Ser170 alpha-amino group acts as a base to deprotonate its own hydroxyl group, which nucleophilically
+        attacks the carbonyl group of the substrate. This results in the formation of a covalent enzyme-substrate
+        transition state, stabilised by the oxyanion hole formed by the mainchain nitrogen atom of Val239
+        and the side chain of Asn413. Alpha-amino group of Ser170 then protonates the leaving group an
+      notes: M-CSA entry 288, mechanism 1; M-CSA cites PMID:11080627, PMID:11742126, PMID:11755403, PMID:12680762,
+        PMID:23417342; CATH domain 3.60.20.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/288/
+      snippet: Ser170 alpha-amino group acts as a base to deprotonate its own hydroxyl group, which nucleophilically
+        attacks the carbonyl group of the substrate. This results in the formation of a covalent enzyme-substrate
+        transition state, stabilised by the oxyanion hole formed by the mainchain nitrogen atom of Val239
+        and the side chain of Asn413. Alpha-amino group of Ser170 then protonates the leaving group an
+      notes: M-CSA entry 288, mechanism 1; M-CSA cites PMID:11080627, PMID:11742126, PMID:11755403, PMID:12680762,
+        PMID:23417342; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/288/
+      snippet: Ser170 alpha-amino group acts as a base to deprotonate its own hydroxyl group, which nucleophilically
+        attacks the carbonyl group of the substrate. This results in the formation of a covalent enzyme-substrate
+        transition state, stabilised by the oxyanion hole formed by the mainchain nitrogen atom of Val239
+        and the side chain of Asn413. Alpha-amino group of Ser170 then protonates the leaving group an
+      notes: M-CSA entry 288, mechanism 1; M-CSA cites PMID:11080627, PMID:11742126, PMID:11755403, PMID:12680762,
+        PMID:23417342; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/288/
+      snippet: Ser170 alpha-amino group acts as a base to deprotonate its own hydroxyl group, which nucleophilically
+        attacks the carbonyl group of the substrate. This results in the formation of a covalent enzyme-substrate
+        transition state, stabilised by the oxyanion hole formed by the mainchain nitrogen atom of Val239
+        and the side chain of Asn413. Alpha-amino group of Ser170 then protonates the leaving group an
+      notes: M-CSA entry 288, mechanism 1; M-CSA cites PMID:11080627, PMID:11742126, PMID:11755403, PMID:12680762,
+        PMID:23417342; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/288/
+      snippet: Ser170 alpha-amino group acts as a base to deprotonate its own hydroxyl group, which nucleophilically
+        attacks the carbonyl group of the substrate. This results in the formation of a covalent enzyme-substrate
+        transition state, stabilised by the oxyanion hole formed by the mainchain nitrogen atom of Val239
+        and the side chain of Asn413. Alpha-amino group of Ser170 then protonates the leaving group an
+      notes: M-CSA entry 288, mechanism 1; M-CSA cites PMID:11080627, PMID:11742126, PMID:11755403, PMID:12680762,
+        PMID:23417342; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/288/
+      snippet: Ser170 alpha-amino group acts as a base to deprotonate its own hydroxyl group, which nucleophilically
+        attacks the carbonyl group of the substrate. This results in the formation of a covalent enzyme-substrate
+        transition state, stabilised by the oxyanion hole formed by the mainchain nitrogen atom of Val239
+        and the side chain of Asn413. Alpha-amino group of Ser170 then protonates the leaving group an
+      notes: M-CSA entry 288, mechanism 1; M-CSA cites PMID:11080627, PMID:11742126, PMID:11755403, PMID:12680762,
+        PMID:23417342; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (17 evidence-backed edges) transcribed from M-CSA entry 288;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

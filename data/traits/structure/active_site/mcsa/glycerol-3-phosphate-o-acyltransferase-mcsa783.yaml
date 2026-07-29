@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.3.1.15
 - CHEBI:57597
@@ -259,4 +259,218 @@ definitions:
       Glycerol-3-phosphate (1)-acyltransferase (G3PAT) catalyses the attachment of an acyl group from either acyl-carrier proteins (acyl-ACPs) or acyl-CoAs onto the C1 hydroxyl group of glycerol-3-phosphate to give 1-acylglycerol-3-phosphate. Different G3PAT enzymes have different substrate specificities, with some preferring to add the unsaturated fatty acid oleate and others using both oleate and the saturated fatty acid palmitate. The different substrate specificities within this family has been implicated in the sensitivity of plants to chilling temperatures.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of glycerol-3-phosphate O-acyltransferase
+  description: Stepwise mechanism transcribed from M-CSA entry 783 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: his139
+    label: catalytic His139 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P10349
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: asp144
+    label: catalytic Asp144 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P10349
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: sn-glycerol 3-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57597
+  - node_id: reactant1
+    label: acyl-CoA(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58342
+  - node_id: product0
+    label: 1-acyl-sn-glycerol 3-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57970
+  - node_id: product1
+    label: coenzyme A(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His139 deprotonates the hydroxyl group of C1 of glycerol-3-phosphate
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The C1 hydroxyl of glycerol-3-phosphate acts as a nucleophile to attack the carbonyl
+      acyl-CoA.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: In an inferred step CoA is protonated and His139 is deprotonated to regenerate the native
+      state of the enzyme.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: glycerol-3-phosphate O-acyltransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:783
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.1130.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.1130.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: glycerol-3-phosphate O-acyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.3.1.15
+  edges:
+  - subject: his139
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His139 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/783/
+      snippet: His139 deprotonates the hydroxyl group of C1 of glycerol-3-phosphate
+      notes: M-CSA entry 783, mechanism 1; M-CSA cites PMID:11377195, PMID:9515909; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/783/
+      snippet: The C1 hydroxyl of glycerol-3-phosphate acts as a nucleophile to attack the carbonyl acyl-CoA.
+      notes: M-CSA entry 783, mechanism 1; M-CSA cites PMID:11377195, PMID:9515909; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/783/
+      snippet: In an inferred step CoA is protonated and His139 is deprotonated to regenerate the native
+        state of the enzyme.
+      notes: M-CSA entry 783, mechanism 1; M-CSA cites PMID:11377195, PMID:9515909; step 3
+  - subject: his139
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His139 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/783/
+      snippet: In an inferred step CoA is protonated and His139 is deprotonated to regenerate the native
+        state of the enzyme.
+      notes: M-CSA entry 783, mechanism 1; M-CSA cites PMID:11377195, PMID:9515909; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/783/
+      snippet: Products.
+      notes: M-CSA entry 783, mechanism 1; M-CSA cites PMID:11377195, PMID:9515909; step 4
+  - subject: his139
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His139 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/783/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 783, mechanism 1; M-CSA cites PMID:11377195, PMID:9515909; M-CSA catalytic-residue
+        roles for His139
+  - subject: asp144
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp144 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/783/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 783, mechanism 1; M-CSA cites PMID:11377195, PMID:9515909; M-CSA catalytic-residue
+        roles for Asp144
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/783/
+      snippet: Glycerol-3-phosphate (1)-acyltransferase is thought to employ a His-Asp dyad resembling
+        that of serine proteases. His 139 acts to deprotonate the C1 hydroxyl group of glycerol-3-phosphate,
+        allowing nucleophilic attack by this group on the carbonyl of acyl-ACP or acyl-CoA. Asp 144 serves
+        to modify the pKa of His 139, allowing it to act as a catalytic base.
+      notes: M-CSA entry 783, mechanism 1; M-CSA cites PMID:11377195, PMID:9515909; CATH domain 3.40.1130.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/783/
+      snippet: Glycerol-3-phosphate (1)-acyltransferase is thought to employ a His-Asp dyad resembling
+        that of serine proteases. His 139 acts to deprotonate the C1 hydroxyl group of glycerol-3-phosphate,
+        allowing nucleophilic attack by this group on the carbonyl of acyl-ACP or acyl-CoA. Asp 144 serves
+        to modify the pKa of His 139, allowing it to act as a catalytic base.
+      notes: M-CSA entry 783, mechanism 1; M-CSA cites PMID:11377195, PMID:9515909; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/783/
+      snippet: Glycerol-3-phosphate (1)-acyltransferase is thought to employ a His-Asp dyad resembling
+        that of serine proteases. His 139 acts to deprotonate the C1 hydroxyl group of glycerol-3-phosphate,
+        allowing nucleophilic attack by this group on the carbonyl of acyl-ACP or acyl-CoA. Asp 144 serves
+        to modify the pKa of His 139, allowing it to act as a catalytic base.
+      notes: M-CSA entry 783, mechanism 1; M-CSA cites PMID:11377195, PMID:9515909; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/783/
+      snippet: Glycerol-3-phosphate (1)-acyltransferase is thought to employ a His-Asp dyad resembling
+        that of serine proteases. His 139 acts to deprotonate the C1 hydroxyl group of glycerol-3-phosphate,
+        allowing nucleophilic attack by this group on the carbonyl of acyl-ACP or acyl-CoA. Asp 144 serves
+        to modify the pKa of His 139, allowing it to act as a catalytic base.
+      notes: M-CSA entry 783, mechanism 1; M-CSA cites PMID:11377195, PMID:9515909; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/783/
+      snippet: Glycerol-3-phosphate (1)-acyltransferase is thought to employ a His-Asp dyad resembling
+        that of serine proteases. His 139 acts to deprotonate the C1 hydroxyl group of glycerol-3-phosphate,
+        allowing nucleophilic attack by this group on the carbonyl of acyl-ACP or acyl-CoA. Asp 144 serves
+        to modify the pKa of His 139, allowing it to act as a catalytic base.
+      notes: M-CSA entry 783, mechanism 1; M-CSA cites PMID:11377195, PMID:9515909; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/783/
+      snippet: Glycerol-3-phosphate (1)-acyltransferase is thought to employ a His-Asp dyad resembling
+        that of serine proteases. His 139 acts to deprotonate the C1 hydroxyl group of glycerol-3-phosphate,
+        allowing nucleophilic attack by this group on the carbonyl of acyl-ACP or acyl-CoA. Asp 144 serves
+        to modify the pKa of His 139, allowing it to act as a catalytic base.
+      notes: M-CSA entry 783, mechanism 1; M-CSA cites PMID:11377195, PMID:9515909; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 783;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

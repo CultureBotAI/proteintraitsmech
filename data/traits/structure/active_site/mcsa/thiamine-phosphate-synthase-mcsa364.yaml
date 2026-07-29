@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.5.1.3
 - CHEBI:58296
@@ -215,4 +215,244 @@ definitions:
       Thiamin phosphate synthase catalyses the formation of thiamin phosphate from 4-amino-5-(hydroxymethyl)-2-methylpyrimidine pyrophosphate and 5-(hydroxyethyl-4-methylthiazole phosphate, in the penultimate step of the biosynthesis of thiamin phosphate.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of thiamine phosphate synthase
+  description: Stepwise mechanism transcribed from M-CSA entry 364 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset -13).
+  nodes:
+  - node_id: arg59
+    label: catalytic Arg59 (M-CSA/PDB numbering; UniProt residue 46)
+    node_type: RESIDUE
+    grounding: UniProtKB:P39594
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ser130
+    label: catalytic Ser130 (M-CSA/PDB numbering; UniProt residue 117)
+    node_type: RESIDUE
+    grounding: UniProtKB:P39594
+    description: 'M-CSA roles: electrostatic stabiliser, enhance reactivity.'
+  - node_id: lys159
+    label: catalytic Lys159 (M-CSA/PDB numbering; UniProt residue 146)
+    node_type: RESIDUE
+    grounding: UniProtKB:P39594
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: 4-methyl-5-(2-phosphonatooxyethyl)thiazole(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58296
+  - node_id: reactant1
+    label: 4-amino-2-methyl-5-diphosphonatooxymethylpyrimidine(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57841
+  - node_id: reactant2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product0
+    label: thiamine(1+) monophosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:37575
+  - node_id: product1
+    label: diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Ser130 activates the pyrophosphate as a leaving group and transition state stabilisation
+      is maintained by a magnesium cation.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The ionised carbocation is then able to react with 5-(hydroxyethyl-4-methylthiazole phosphate
+      to give thiamin phosphate. The intermediate is stabilised by a hydrogen bond between the pyrimidine
+      amino group and the pyrophosphate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: thiamine phosphate synthase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:364
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.70 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.70
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: thiamine phosphate synthase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.5.1.3
+  edges:
+  - subject: ser130
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser130 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/364/
+      snippet: Ser130 activates the pyrophosphate as a leaving group and transition state stabilisation
+        is maintained by a magnesium cation.
+      notes: M-CSA entry 364, mechanism 3; M-CSA cites PMID:10350464, PMID:11513588, PMID:11513589, PMID:19348578;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/364/
+      snippet: The ionised carbocation is then able to react with 5-(hydroxyethyl-4-methylthiazole phosphate
+        to give thiamin phosphate. The intermediate is stabilised by a hydrogen bond between the pyrimidine
+        amino group and the pyrophosphate.
+      notes: M-CSA entry 364, mechanism 3; M-CSA cites PMID:10350464, PMID:11513588, PMID:11513589, PMID:19348578;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/364/
+      snippet: Products
+      notes: M-CSA entry 364, mechanism 3; M-CSA cites PMID:10350464, PMID:11513588, PMID:11513589, PMID:19348578;
+        step 3
+  - subject: arg59
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg59 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/364/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 364, mechanism 3; M-CSA cites PMID:10350464, PMID:11513588, PMID:11513589, PMID:19348578;
+        M-CSA catalytic-residue roles for Arg59
+  - subject: ser130
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser130 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/364/
+      snippet: electrostatic stabiliser, enhance reactivity
+      notes: M-CSA entry 364, mechanism 3; M-CSA cites PMID:10350464, PMID:11513588, PMID:11513589, PMID:19348578;
+        M-CSA catalytic-residue roles for Ser130
+  - subject: lys159
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys159 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/364/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 364, mechanism 3; M-CSA cites PMID:10350464, PMID:11513588, PMID:11513589, PMID:19348578;
+        M-CSA catalytic-residue roles for Lys159
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/364/
+      snippet: The reaction of thiamin phosphate synthase occurs by a dissociative SN1 mechanism. Ser
+        130 activates the pyrophosphate as a leaving group and transition state stabilisation is maintained
+        by a magnesium cation. The ionised group is then able to react with 5-(hydroxyethyl-4-methylthiazole
+        phosphate to give thiamin phosphate. The carbocation intermediate is stabilised by the counterion
+        and a hydrogen
+      notes: M-CSA entry 364, mechanism 3; M-CSA cites PMID:10350464, PMID:11513588, PMID:11513589, PMID:19348578;
+        CATH domain 3.20.20.70 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/364/
+      snippet: The reaction of thiamin phosphate synthase occurs by a dissociative SN1 mechanism. Ser
+        130 activates the pyrophosphate as a leaving group and transition state stabilisation is maintained
+        by a magnesium cation. The ionised group is then able to react with 5-(hydroxyethyl-4-methylthiazole
+        phosphate to give thiamin phosphate. The carbocation intermediate is stabilised by the counterion
+        and a hydrogen
+      notes: M-CSA entry 364, mechanism 3; M-CSA cites PMID:10350464, PMID:11513588, PMID:11513589, PMID:19348578;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/364/
+      snippet: The reaction of thiamin phosphate synthase occurs by a dissociative SN1 mechanism. Ser
+        130 activates the pyrophosphate as a leaving group and transition state stabilisation is maintained
+        by a magnesium cation. The ionised group is then able to react with 5-(hydroxyethyl-4-methylthiazole
+        phosphate to give thiamin phosphate. The carbocation intermediate is stabilised by the counterion
+        and a hydrogen
+      notes: M-CSA entry 364, mechanism 3; M-CSA cites PMID:10350464, PMID:11513588, PMID:11513589, PMID:19348578;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/364/
+      snippet: The reaction of thiamin phosphate synthase occurs by a dissociative SN1 mechanism. Ser
+        130 activates the pyrophosphate as a leaving group and transition state stabilisation is maintained
+        by a magnesium cation. The ionised group is then able to react with 5-(hydroxyethyl-4-methylthiazole
+        phosphate to give thiamin phosphate. The carbocation intermediate is stabilised by the counterion
+        and a hydrogen
+      notes: M-CSA entry 364, mechanism 3; M-CSA cites PMID:10350464, PMID:11513588, PMID:11513589, PMID:19348578;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/364/
+      snippet: The reaction of thiamin phosphate synthase occurs by a dissociative SN1 mechanism. Ser
+        130 activates the pyrophosphate as a leaving group and transition state stabilisation is maintained
+        by a magnesium cation. The ionised group is then able to react with 5-(hydroxyethyl-4-methylthiazole
+        phosphate to give thiamin phosphate. The carbocation intermediate is stabilised by the counterion
+        and a hydrogen
+      notes: M-CSA entry 364, mechanism 3; M-CSA cites PMID:10350464, PMID:11513588, PMID:11513589, PMID:19348578;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/364/
+      snippet: The reaction of thiamin phosphate synthase occurs by a dissociative SN1 mechanism. Ser
+        130 activates the pyrophosphate as a leaving group and transition state stabilisation is maintained
+        by a magnesium cation. The ionised group is then able to react with 5-(hydroxyethyl-4-methylthiazole
+        phosphate to give thiamin phosphate. The carbocation intermediate is stabilised by the counterion
+        and a hydrogen
+      notes: M-CSA entry 364, mechanism 3; M-CSA cites PMID:10350464, PMID:11513588, PMID:11513589, PMID:19348578;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/364/
+      snippet: The reaction of thiamin phosphate synthase occurs by a dissociative SN1 mechanism. Ser
+        130 activates the pyrophosphate as a leaving group and transition state stabilisation is maintained
+        by a magnesium cation. The ionised group is then able to react with 5-(hydroxyethyl-4-methylthiazole
+        phosphate to give thiamin phosphate. The carbocation intermediate is stabilised by the counterion
+        and a hydrogen
+      notes: M-CSA entry 364, mechanism 3; M-CSA cites PMID:10350464, PMID:11513588, PMID:11513589, PMID:19348578;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 364;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.3.3.10
 - CHEBI:47961
@@ -115,4 +115,203 @@ definitions:
       5-carboxymethyl-2-hydroxymuconate isomerase (CHMI) transforms 5-carboxymethyl-2-hydroxy-muconic acid into 5-oxo-pent-3-ene-1,2,5-tricarboxylic acid during the third step of the homoprotocatechuate catabolic pathway [PMID:2194841]. CHMI is a member of the tautomerase superfamily many of which utilise a unique N-terminal proline residue as a general acid/base.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 5-carboxymethyl-2-hydroxymuconate Delta-isomerase
+  description: Stepwise mechanism transcribed from M-CSA entry 874 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: pro2
+    label: catalytic Pro2 (M-CSA/PDB numbering; UniProt residue 2)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q05354
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: pro36
+    label: catalytic Pro36 (M-CSA/PDB numbering; UniProt residue 36)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q05354
+    description: 'M-CSA roles: modifies pKa.'
+  - node_id: arg41
+    label: catalytic Arg41 (M-CSA/PDB numbering; UniProt residue 41)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q05354
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: arg72
+    label: catalytic Arg72 (M-CSA/PDB numbering; UniProt residue 72)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q05354
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: (2R,3E)-5-oxopent-3-ene-1,2,5-tricarboxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:87491
+  - node_id: product0
+    label: (2E,4Z)-5-hydroxypenta-2,4-diene-1,2,5-tricarboxylate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:47961
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Pro2 acts as a base which causes a keto-enol tautomerisation.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The ene-diolate intermediate collapses and there is a rearrangement of the double bonds
+      which allows O6 to accept a proton from the proline.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: 5-carboxymethyl-2-hydroxymuconate Delta-isomerase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:874
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.429.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.429.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: 5-carboxymethyl-2-hydroxymuconate Delta-isomerase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.3.3.10
+  edges:
+  - subject: pro2
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Pro2 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/874/
+      snippet: Pro2 acts as a base which causes a keto-enol tautomerisation.
+      notes: M-CSA entry 874, mechanism 1; M-CSA cites PMID:2194841, PMID:8547259; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/874/
+      snippet: The ene-diolate intermediate collapses and there is a rearrangement of the double bonds
+        which allows O6 to accept a proton from the proline.
+      notes: M-CSA entry 874, mechanism 1; M-CSA cites PMID:2194841, PMID:8547259; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/874/
+      snippet: Products.
+      notes: M-CSA entry 874, mechanism 1; M-CSA cites PMID:2194841, PMID:8547259; step 3
+  - subject: pro2
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Pro2 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/874/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 874, mechanism 1; M-CSA cites PMID:2194841, PMID:8547259; M-CSA catalytic-residue
+        roles for Pro2
+  - subject: pro36
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Pro36 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/874/
+      snippet: modifies pKa
+      notes: M-CSA entry 874, mechanism 1; M-CSA cites PMID:2194841, PMID:8547259; M-CSA catalytic-residue
+        roles for Pro36
+  - subject: arg41
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg41 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/874/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 874, mechanism 1; M-CSA cites PMID:2194841, PMID:8547259; M-CSA catalytic-residue
+        roles for Arg41
+  - subject: arg72
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg72 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/874/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 874, mechanism 1; M-CSA cites PMID:2194841, PMID:8547259; M-CSA catalytic-residue
+        roles for Arg72
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/874/
+      snippet: "Pro2 acts as a base abstracting a proton from C3 causing an tautomerisation to occur with\
+        \ a ene-diolate intermediate being formed. The intermediate collapses with a rearrangement of\
+        \ the double bonds and Pro2 protonates O6.
+
+The hydrophobic residue Pro36 modifies the pKa\
+        \ of Pro2 allowing it to acts as an acid-base catalyst. Two arginine residues stabilize the carboxylate\
+        \ side chains of the substr"
+      notes: M-CSA entry 874, mechanism 1; M-CSA cites PMID:2194841, PMID:8547259; CATH domain 3.30.429.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/874/
+      snippet: "Pro2 acts as a base abstracting a proton from C3 causing an tautomerisation to occur with\
+        \ a ene-diolate intermediate being formed. The intermediate collapses with a rearrangement of\
+        \ the double bonds and Pro2 protonates O6.
+
+The hydrophobic residue Pro36 modifies the pKa\
+        \ of Pro2 allowing it to acts as an acid-base catalyst. Two arginine residues stabilize the carboxylate\
+        \ side chains of the substr"
+      notes: M-CSA entry 874, mechanism 1; M-CSA cites PMID:2194841, PMID:8547259; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/874/
+      snippet: "Pro2 acts as a base abstracting a proton from C3 causing an tautomerisation to occur with\
+        \ a ene-diolate intermediate being formed. The intermediate collapses with a rearrangement of\
+        \ the double bonds and Pro2 protonates O6.
+
+The hydrophobic residue Pro36 modifies the pKa\
+        \ of Pro2 allowing it to acts as an acid-base catalyst. Two arginine residues stabilize the carboxylate\
+        \ side chains of the substr"
+      notes: M-CSA entry 874, mechanism 1; M-CSA cites PMID:2194841, PMID:8547259; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/874/
+      snippet: "Pro2 acts as a base abstracting a proton from C3 causing an tautomerisation to occur with\
+        \ a ene-diolate intermediate being formed. The intermediate collapses with a rearrangement of\
+        \ the double bonds and Pro2 protonates O6.
+
+The hydrophobic residue Pro36 modifies the pKa\
+        \ of Pro2 allowing it to acts as an acid-base catalyst. Two arginine residues stabilize the carboxylate\
+        \ side chains of the substr"
+      notes: M-CSA entry 874, mechanism 1; M-CSA cites PMID:2194841, PMID:8547259; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (11 evidence-backed edges) transcribed from M-CSA entry 874;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

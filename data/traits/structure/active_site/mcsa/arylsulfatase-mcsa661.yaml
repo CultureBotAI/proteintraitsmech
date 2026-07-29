@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.6.1
 - CHEBI:15377
@@ -367,4 +367,344 @@ definitions:
       Sulfatase enzymes are a highly homologous enzyme family which catalyse the hydrolysis of sulphate-ester bonds.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of arylsulfatase
+  description: Stepwise mechanism transcribed from M-CSA entry 661 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: asp13
+    label: catalytic Asp13 (M-CSA/PDB numbering; UniProt residue 13)
+    node_type: RESIDUE
+    grounding: UniProtKB:P51691
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp14
+    label: catalytic Asp14 (M-CSA/PDB numbering; UniProt residue 14)
+    node_type: RESIDUE
+    grounding: UniProtKB:P51691
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: arg55
+    label: catalytic Arg55 (M-CSA/PDB numbering; UniProt residue 55)
+    node_type: RESIDUE
+    grounding: UniProtKB:P51691
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: lys113
+    label: catalytic Lys113 (M-CSA/PDB numbering; UniProt residue 113)
+    node_type: RESIDUE
+    grounding: UniProtKB:P51691
+    description: 'M-CSA roles: electrostatic stabiliser, increase electrophilicity.'
+  - node_id: his115
+    label: catalytic His115 (M-CSA/PDB numbering; UniProt residue 115)
+    node_type: RESIDUE
+    grounding: UniProtKB:P51691
+    description: 'M-CSA roles: electrostatic stabiliser, proton acceptor.'
+  - node_id: his211
+    label: catalytic His211 (M-CSA/PDB numbering; UniProt residue 211)
+    node_type: RESIDUE
+    grounding: UniProtKB:P51691
+    description: 'M-CSA roles: electrostatic stabiliser, proton donor.'
+  - node_id: asp317
+    label: catalytic Asp317 (M-CSA/PDB numbering; UniProt residue 317)
+    node_type: RESIDUE
+    grounding: UniProtKB:P51691
+    description: 'M-CSA roles: activator, increase nucleophilicity, metal ligand, proton acceptor.'
+  - node_id: asn318
+    label: catalytic Asn318 (M-CSA/PDB numbering; UniProt residue 318)
+    node_type: RESIDUE
+    grounding: UniProtKB:P51691
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: lys375
+    label: catalytic Lys375 (M-CSA/PDB numbering; UniProt residue 375)
+    node_type: RESIDUE
+    grounding: UniProtKB:P51691
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: phenyl sulfate
+    node_type: CHEMICAL
+    grounding: CHEBI:85289
+  - node_id: product0
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product1
+    label: sulfate
+    node_type: CHEMICAL
+    grounding: CHEBI:16189
+  - node_id: product2
+    label: phenol
+    node_type: CHEMICAL
+    grounding: CHEBI:15882
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp317 activates the hydrate via deprotonation.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The activated hydrate attacks the sulfate group, and the bond between the sulfate and
+      the phenol is cleaved.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The hydrate collapses into an aldehyde and sulfate is released.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: arylsulfatase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:661
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.720.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.720.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: arylsulfatase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.6.1
+  edges:
+  - subject: asp317
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp317 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/661/
+      snippet: Asp317 activates the hydrate via deprotonation.
+      notes: M-CSA entry 661, mechanism 1; M-CSA cites PMID:10212197, PMID:11435113, PMID:23280779; step
+        1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/661/
+      snippet: The activated hydrate attacks the sulfate group, and the bond between the sulfate and the
+        phenol is cleaved.
+      notes: M-CSA entry 661, mechanism 1; M-CSA cites PMID:10212197, PMID:11435113, PMID:23280779; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/661/
+      snippet: The hydrate collapses into an aldehyde and sulfate is released.
+      notes: M-CSA entry 661, mechanism 1; M-CSA cites PMID:10212197, PMID:11435113, PMID:23280779; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/661/
+      snippet: Products.
+      notes: M-CSA entry 661, mechanism 1; M-CSA cites PMID:10212197, PMID:11435113, PMID:23280779; step
+        4
+  - subject: asp13
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp13 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/661/
+      snippet: metal ligand
+      notes: M-CSA entry 661, mechanism 1; M-CSA cites PMID:10212197, PMID:11435113, PMID:23280779; M-CSA
+        catalytic-residue roles for Asp13
+  - subject: asp14
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp14 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/661/
+      snippet: metal ligand
+      notes: M-CSA entry 661, mechanism 1; M-CSA cites PMID:10212197, PMID:11435113, PMID:23280779; M-CSA
+        catalytic-residue roles for Asp14
+  - subject: arg55
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg55 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/661/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 661, mechanism 1; M-CSA cites PMID:10212197, PMID:11435113, PMID:23280779; M-CSA
+        catalytic-residue roles for Arg55
+  - subject: lys113
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys113 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/661/
+      snippet: electrostatic stabiliser, increase electrophilicity
+      notes: M-CSA entry 661, mechanism 1; M-CSA cites PMID:10212197, PMID:11435113, PMID:23280779; M-CSA
+        catalytic-residue roles for Lys113
+  - subject: his115
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His115 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/661/
+      snippet: electrostatic stabiliser, proton acceptor
+      notes: M-CSA entry 661, mechanism 1; M-CSA cites PMID:10212197, PMID:11435113, PMID:23280779; M-CSA
+        catalytic-residue roles for His115
+  - subject: his211
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His211 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/661/
+      snippet: electrostatic stabiliser, proton donor
+      notes: M-CSA entry 661, mechanism 1; M-CSA cites PMID:10212197, PMID:11435113, PMID:23280779; M-CSA
+        catalytic-residue roles for His211
+  - subject: asp317
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp317 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/661/
+      snippet: activator, increase nucleophilicity, metal ligand, proton acceptor
+      notes: M-CSA entry 661, mechanism 1; M-CSA cites PMID:10212197, PMID:11435113, PMID:23280779; M-CSA
+        catalytic-residue roles for Asp317
+  - subject: asn318
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn318 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/661/
+      snippet: metal ligand
+      notes: M-CSA entry 661, mechanism 1; M-CSA cites PMID:10212197, PMID:11435113, PMID:23280779; M-CSA
+        catalytic-residue roles for Asn318
+  - subject: lys375
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys375 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/661/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 661, mechanism 1; M-CSA cites PMID:10212197, PMID:11435113, PMID:23280779; M-CSA
+        catalytic-residue roles for Lys375
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/661/
+      snippet: The sulfate ester cleavage involves an aldehyde hydrate, a modified residue FGly 51, as
+        the functional group that initiates the reaction through a nucleophilic attack on the sulphur
+        atom of the substrate. Lys 113 and FGly 51 contribute to electron density withdrawal from the
+        sulfate oxygen atoms to give increased electrophilicity at the sulphur centre. The nucleophilicity
+        of the oxygen in the alde
+      notes: M-CSA entry 661, mechanism 1; M-CSA cites PMID:10212197, PMID:11435113, PMID:23280779; CATH
+        domain 3.40.720.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/661/
+      snippet: The sulfate ester cleavage involves an aldehyde hydrate, a modified residue FGly 51, as
+        the functional group that initiates the reaction through a nucleophilic attack on the sulphur
+        atom of the substrate. Lys 113 and FGly 51 contribute to electron density withdrawal from the
+        sulfate oxygen atoms to give increased electrophilicity at the sulphur centre. The nucleophilicity
+        of the oxygen in the alde
+      notes: M-CSA entry 661, mechanism 1; M-CSA cites PMID:10212197, PMID:11435113, PMID:23280779; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/661/
+      snippet: The sulfate ester cleavage involves an aldehyde hydrate, a modified residue FGly 51, as
+        the functional group that initiates the reaction through a nucleophilic attack on the sulphur
+        atom of the substrate. Lys 113 and FGly 51 contribute to electron density withdrawal from the
+        sulfate oxygen atoms to give increased electrophilicity at the sulphur centre. The nucleophilicity
+        of the oxygen in the alde
+      notes: M-CSA entry 661, mechanism 1; M-CSA cites PMID:10212197, PMID:11435113, PMID:23280779; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/661/
+      snippet: The sulfate ester cleavage involves an aldehyde hydrate, a modified residue FGly 51, as
+        the functional group that initiates the reaction through a nucleophilic attack on the sulphur
+        atom of the substrate. Lys 113 and FGly 51 contribute to electron density withdrawal from the
+        sulfate oxygen atoms to give increased electrophilicity at the sulphur centre. The nucleophilicity
+        of the oxygen in the alde
+      notes: M-CSA entry 661, mechanism 1; M-CSA cites PMID:10212197, PMID:11435113, PMID:23280779; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/661/
+      snippet: The sulfate ester cleavage involves an aldehyde hydrate, a modified residue FGly 51, as
+        the functional group that initiates the reaction through a nucleophilic attack on the sulphur
+        atom of the substrate. Lys 113 and FGly 51 contribute to electron density withdrawal from the
+        sulfate oxygen atoms to give increased electrophilicity at the sulphur centre. The nucleophilicity
+        of the oxygen in the alde
+      notes: M-CSA entry 661, mechanism 1; M-CSA cites PMID:10212197, PMID:11435113, PMID:23280779; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/661/
+      snippet: The sulfate ester cleavage involves an aldehyde hydrate, a modified residue FGly 51, as
+        the functional group that initiates the reaction through a nucleophilic attack on the sulphur
+        atom of the substrate. Lys 113 and FGly 51 contribute to electron density withdrawal from the
+        sulfate oxygen atoms to give increased electrophilicity at the sulphur centre. The nucleophilicity
+        of the oxygen in the alde
+      notes: M-CSA entry 661, mechanism 1; M-CSA cites PMID:10212197, PMID:11435113, PMID:23280779; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/661/
+      snippet: The sulfate ester cleavage involves an aldehyde hydrate, a modified residue FGly 51, as
+        the functional group that initiates the reaction through a nucleophilic attack on the sulphur
+        atom of the substrate. Lys 113 and FGly 51 contribute to electron density withdrawal from the
+        sulfate oxygen atoms to give increased electrophilicity at the sulphur centre. The nucleophilicity
+        of the oxygen in the alde
+      notes: M-CSA entry 661, mechanism 1; M-CSA cites PMID:10212197, PMID:11435113, PMID:23280779; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (20 evidence-backed edges) transcribed from M-CSA entry 661;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

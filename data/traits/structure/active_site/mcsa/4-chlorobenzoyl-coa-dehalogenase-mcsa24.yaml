@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.8.1.7
 - CHEBI:15377
@@ -201,4 +201,407 @@ definitions:
       Chlorobenzoate dehalogenase catalyses the hydrolysis of chlorobenzoyl-CoA to hydroxybenzoyl-CoA. This reaction is used by bacteria as part of a three enzyme pathway for the utilisation of chlorinated organic compounds as a carbons source. The chlorobenzoate dehalogenase step is the second in the pathway and is structurally related to the crotonase-like superfamily of enzymes found in the beta-oxidation cycle. Since chlorinated organic compounds are thought to have only been present in the biosphere in significant amounts for the latter half of this century due to industrial production. The potential for bacteria to evolve new degradation pathways within decades of exposure to a new compound offers the possibility of bioremediation of environmentally hazardous and toxic substances.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 4-chlorobenzoyl-CoA dehalogenase
+  description: Stepwise mechanism transcribed from M-CSA entry 24 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: phe64
+    label: catalytic Phe64 (M-CSA/PDB numbering; UniProt residue 64)
+    node_type: RESIDUE
+    grounding: UniProtKB:A5JTM5
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: ala86
+    label: catalytic Ala86 (M-CSA/PDB numbering; UniProt residue 86)
+    node_type: RESIDUE
+    grounding: UniProtKB:A5JTM5
+    description: 'M-CSA roles: activator, hydrogen bond acceptor.'
+  - node_id: his90
+    label: catalytic His90 (M-CSA/PDB numbering; UniProt residue 90)
+    node_type: RESIDUE
+    grounding: UniProtKB:A5JTM5
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: gly114
+    label: catalytic Gly114 (M-CSA/PDB numbering; UniProt residue 114)
+    node_type: RESIDUE
+    grounding: UniProtKB:A5JTM5
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: trp137
+    label: catalytic Trp137 (M-CSA/PDB numbering; UniProt residue 137)
+    node_type: RESIDUE
+    grounding: UniProtKB:A5JTM5
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: asp145
+    label: catalytic Asp145 (M-CSA/PDB numbering; UniProt residue 145)
+    node_type: RESIDUE
+    grounding: UniProtKB:A5JTM5
+    description: 'M-CSA roles: covalently attached, electrofuge, electrophile, hydrogen bond acceptor,
+      hydrogen bond donor, nucleophile, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: 4-chlorobenzoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:15498
+  - node_id: product0
+    label: 4-hydroxybenzoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:15500
+  - node_id: product1
+    label: hydrogen chloride
+    node_type: CHEMICAL
+    grounding: CHEBI:17883
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His90 deprotonates Asp145, which initiates a nucleophilic attack on the C4 of the 4-chlorobenzoyl-coenzyme
+      A in an addition reaction. The conjugated double bonds rearrange to form an oxyanion, which is stabilised
+      by the main chain amides of Phe64 and Gly114.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The oxyanion collapses with rearrangement of the conjugated double bonds, eliminating
+      chlorine, which deprotonates the His90.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: His90 deprotonates water, which initiates a nucleophilic attack on the carboxylic carbon
+      of the covalently attached Asp145, forming a new oxyanion, which is stabilised by Trp137.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The oxyanion collapses, eliminating Asp145 as an electrofuge. The newly formed phenolic
+      oxygen deprotonates His90.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: 4-chlorobenzoyl-CoA dehalogenase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:24
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.226.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.226.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: 4-chlorobenzoyl-CoA dehalogenase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.8.1.7
+  edges:
+  - subject: phe64
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Phe64 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/24/
+      snippet: His90 deprotonates Asp145, which initiates a nucleophilic attack on the C4 of the 4-chlorobenzoyl-coenzyme
+        A in an addition reaction. The conjugated double bonds rearrange to form an oxyanion, which is
+        stabilised by the main chain amides of Phe64 and Gly114.
+      notes: M-CSA entry 24, mechanism 1; M-CSA cites PMID:15045116, PMID:16051230, PMID:16863192, PMID:8718880,
+        PMID:9254617; step 1
+  - subject: his90
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His90 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/24/
+      snippet: His90 deprotonates Asp145, which initiates a nucleophilic attack on the C4 of the 4-chlorobenzoyl-coenzyme
+        A in an addition reaction. The conjugated double bonds rearrange to form an oxyanion, which is
+        stabilised by the main chain amides of Phe64 and Gly114.
+      notes: M-CSA entry 24, mechanism 1; M-CSA cites PMID:15045116, PMID:16051230, PMID:16863192, PMID:8718880,
+        PMID:9254617; step 1
+  - subject: gly114
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Gly114 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/24/
+      snippet: His90 deprotonates Asp145, which initiates a nucleophilic attack on the C4 of the 4-chlorobenzoyl-coenzyme
+        A in an addition reaction. The conjugated double bonds rearrange to form an oxyanion, which is
+        stabilised by the main chain amides of Phe64 and Gly114.
+      notes: M-CSA entry 24, mechanism 1; M-CSA cites PMID:15045116, PMID:16051230, PMID:16863192, PMID:8718880,
+        PMID:9254617; step 1
+  - subject: asp145
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp145 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/24/
+      snippet: His90 deprotonates Asp145, which initiates a nucleophilic attack on the C4 of the 4-chlorobenzoyl-coenzyme
+        A in an addition reaction. The conjugated double bonds rearrange to form an oxyanion, which is
+        stabilised by the main chain amides of Phe64 and Gly114.
+      notes: M-CSA entry 24, mechanism 1; M-CSA cites PMID:15045116, PMID:16051230, PMID:16863192, PMID:8718880,
+        PMID:9254617; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/24/
+      snippet: The oxyanion collapses with rearrangement of the conjugated double bonds, eliminating chlorine,
+        which deprotonates the His90.
+      notes: M-CSA entry 24, mechanism 1; M-CSA cites PMID:15045116, PMID:16051230, PMID:16863192, PMID:8718880,
+        PMID:9254617; step 2
+  - subject: his90
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His90 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/24/
+      snippet: The oxyanion collapses with rearrangement of the conjugated double bonds, eliminating chlorine,
+        which deprotonates the His90.
+      notes: M-CSA entry 24, mechanism 1; M-CSA cites PMID:15045116, PMID:16051230, PMID:16863192, PMID:8718880,
+        PMID:9254617; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/24/
+      snippet: His90 deprotonates water, which initiates a nucleophilic attack on the carboxylic carbon
+        of the covalently attached Asp145, forming a new oxyanion, which is stabilised by Trp137.
+      notes: M-CSA entry 24, mechanism 1; M-CSA cites PMID:15045116, PMID:16051230, PMID:16863192, PMID:8718880,
+        PMID:9254617; step 3
+  - subject: his90
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His90 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/24/
+      snippet: His90 deprotonates water, which initiates a nucleophilic attack on the carboxylic carbon
+        of the covalently attached Asp145, forming a new oxyanion, which is stabilised by Trp137.
+      notes: M-CSA entry 24, mechanism 1; M-CSA cites PMID:15045116, PMID:16051230, PMID:16863192, PMID:8718880,
+        PMID:9254617; step 3
+  - subject: trp137
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Trp137 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/24/
+      snippet: His90 deprotonates water, which initiates a nucleophilic attack on the carboxylic carbon
+        of the covalently attached Asp145, forming a new oxyanion, which is stabilised by Trp137.
+      notes: M-CSA entry 24, mechanism 1; M-CSA cites PMID:15045116, PMID:16051230, PMID:16863192, PMID:8718880,
+        PMID:9254617; step 3
+  - subject: asp145
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Asp145 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/24/
+      snippet: His90 deprotonates water, which initiates a nucleophilic attack on the carboxylic carbon
+        of the covalently attached Asp145, forming a new oxyanion, which is stabilised by Trp137.
+      notes: M-CSA entry 24, mechanism 1; M-CSA cites PMID:15045116, PMID:16051230, PMID:16863192, PMID:8718880,
+        PMID:9254617; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/24/
+      snippet: The oxyanion collapses, eliminating Asp145 as an electrofuge. The newly formed phenolic
+        oxygen deprotonates His90.
+      notes: M-CSA entry 24, mechanism 1; M-CSA cites PMID:15045116, PMID:16051230, PMID:16863192, PMID:8718880,
+        PMID:9254617; step 4
+  - subject: his90
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: His90 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/24/
+      snippet: The oxyanion collapses, eliminating Asp145 as an electrofuge. The newly formed phenolic
+        oxygen deprotonates His90.
+      notes: M-CSA entry 24, mechanism 1; M-CSA cites PMID:15045116, PMID:16051230, PMID:16863192, PMID:8718880,
+        PMID:9254617; step 4
+  - subject: asp145
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Asp145 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/24/
+      snippet: The oxyanion collapses, eliminating Asp145 as an electrofuge. The newly formed phenolic
+        oxygen deprotonates His90.
+      notes: M-CSA entry 24, mechanism 1; M-CSA cites PMID:15045116, PMID:16051230, PMID:16863192, PMID:8718880,
+        PMID:9254617; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/24/
+      snippet: Products
+      notes: M-CSA entry 24, mechanism 1; M-CSA cites PMID:15045116, PMID:16051230, PMID:16863192, PMID:8718880,
+        PMID:9254617; step 5
+  - subject: phe64
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Phe64 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/24/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 24, mechanism 1; M-CSA cites PMID:15045116, PMID:16051230, PMID:16863192, PMID:8718880,
+        PMID:9254617; M-CSA catalytic-residue roles for Phe64
+  - subject: ala86
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ala86 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/24/
+      snippet: activator, hydrogen bond acceptor
+      notes: M-CSA entry 24, mechanism 1; M-CSA cites PMID:15045116, PMID:16051230, PMID:16863192, PMID:8718880,
+        PMID:9254617; M-CSA catalytic-residue roles for Ala86
+  - subject: his90
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His90 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/24/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 24, mechanism 1; M-CSA cites PMID:15045116, PMID:16051230, PMID:16863192, PMID:8718880,
+        PMID:9254617; M-CSA catalytic-residue roles for His90
+  - subject: gly114
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly114 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/24/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 24, mechanism 1; M-CSA cites PMID:15045116, PMID:16051230, PMID:16863192, PMID:8718880,
+        PMID:9254617; M-CSA catalytic-residue roles for Gly114
+  - subject: trp137
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Trp137 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/24/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 24, mechanism 1; M-CSA cites PMID:15045116, PMID:16051230, PMID:16863192, PMID:8718880,
+        PMID:9254617; M-CSA catalytic-residue roles for Trp137
+  - subject: asp145
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp145 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/24/
+      snippet: covalently attached, electrofuge, electrophile, hydrogen bond acceptor, hydrogen bond donor,
+        nucleophile, proton acceptor, proton donor
+      notes: M-CSA entry 24, mechanism 1; M-CSA cites PMID:15045116, PMID:16051230, PMID:16863192, PMID:8718880,
+        PMID:9254617; M-CSA catalytic-residue roles for Asp145
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/24/
+      snippet: Aspartate 145 attacks the chlorobenzoate ring at the chlorinated carbon forming an arylated
+        enzyme intermediate (Meisenheimer intermediate). The chloride then leaves and the enzyme returns
+        to the resting state by attack of an activated water on the acyl carbon. Histidine 90 is thought
+        to be the general base which activates the water based on mutagenic studies. The backbone amides
+        of phenylalanine
+      notes: M-CSA entry 24, mechanism 1; M-CSA cites PMID:15045116, PMID:16051230, PMID:16863192, PMID:8718880,
+        PMID:9254617; CATH domain 3.90.226.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/24/
+      snippet: Aspartate 145 attacks the chlorobenzoate ring at the chlorinated carbon forming an arylated
+        enzyme intermediate (Meisenheimer intermediate). The chloride then leaves and the enzyme returns
+        to the resting state by attack of an activated water on the acyl carbon. Histidine 90 is thought
+        to be the general base which activates the water based on mutagenic studies. The backbone amides
+        of phenylalanine
+      notes: M-CSA entry 24, mechanism 1; M-CSA cites PMID:15045116, PMID:16051230, PMID:16863192, PMID:8718880,
+        PMID:9254617; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/24/
+      snippet: Aspartate 145 attacks the chlorobenzoate ring at the chlorinated carbon forming an arylated
+        enzyme intermediate (Meisenheimer intermediate). The chloride then leaves and the enzyme returns
+        to the resting state by attack of an activated water on the acyl carbon. Histidine 90 is thought
+        to be the general base which activates the water based on mutagenic studies. The backbone amides
+        of phenylalanine
+      notes: M-CSA entry 24, mechanism 1; M-CSA cites PMID:15045116, PMID:16051230, PMID:16863192, PMID:8718880,
+        PMID:9254617; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/24/
+      snippet: Aspartate 145 attacks the chlorobenzoate ring at the chlorinated carbon forming an arylated
+        enzyme intermediate (Meisenheimer intermediate). The chloride then leaves and the enzyme returns
+        to the resting state by attack of an activated water on the acyl carbon. Histidine 90 is thought
+        to be the general base which activates the water based on mutagenic studies. The backbone amides
+        of phenylalanine
+      notes: M-CSA entry 24, mechanism 1; M-CSA cites PMID:15045116, PMID:16051230, PMID:16863192, PMID:8718880,
+        PMID:9254617; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/24/
+      snippet: Aspartate 145 attacks the chlorobenzoate ring at the chlorinated carbon forming an arylated
+        enzyme intermediate (Meisenheimer intermediate). The chloride then leaves and the enzyme returns
+        to the resting state by attack of an activated water on the acyl carbon. Histidine 90 is thought
+        to be the general base which activates the water based on mutagenic studies. The backbone amides
+        of phenylalanine
+      notes: M-CSA entry 24, mechanism 1; M-CSA cites PMID:15045116, PMID:16051230, PMID:16863192, PMID:8718880,
+        PMID:9254617; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/24/
+      snippet: Aspartate 145 attacks the chlorobenzoate ring at the chlorinated carbon forming an arylated
+        enzyme intermediate (Meisenheimer intermediate). The chloride then leaves and the enzyme returns
+        to the resting state by attack of an activated water on the acyl carbon. Histidine 90 is thought
+        to be the general base which activates the water based on mutagenic studies. The backbone amides
+        of phenylalanine
+      notes: M-CSA entry 24, mechanism 1; M-CSA cites PMID:15045116, PMID:16051230, PMID:16863192, PMID:8718880,
+        PMID:9254617; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (26 evidence-backed edges) transcribed from M-CSA entry 24;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

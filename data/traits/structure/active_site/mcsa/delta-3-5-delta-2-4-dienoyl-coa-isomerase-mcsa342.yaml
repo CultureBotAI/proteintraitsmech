@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.3.3.-
 - CHEBI:71586
@@ -228,4 +228,230 @@ definitions:
       Fatty acids are metabolised by sequential removal of two-carbon units by oxidation at the beta-carbon. Only saturated fatty acids or unsaturated fatty acids with double bonds extending from even-numbered carbon atoms can enter the main beta-oxidation pathway, so double bonds at odd-numbered carbon atoms in unsaturated fatty acids has to be converted to even-numbered double bonds to enter beta-oxidation. Dienoyl-CoA isomerase catalyses the conversion of 3-trans,5-cis dienoyl-CoA into 2-trans,4-trans dienoyl-CoA. The enzyme is present in mitochondria and peroxisomes. It uses fatty acyl substrates with side-chains ranging at least from C8 to C20. The reaction used as example uses a C8 compund as substrate. This enzyme also exhibits delta(3,5,7)-delta(2,4,6)-trienoyl-CoA isomerase activity [PMID:11278886].
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of delta(3,5)-delta(2,4)-dienoyl-CoA isomerase
+  description: Stepwise mechanism transcribed from M-CSA entry 342 (2 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: ile117
+    label: catalytic Ile117 (M-CSA/PDB numbering; UniProt residue 117)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q62651
+    description: 'M-CSA roles: transition state stabiliser.'
+  - node_id: gly173
+    label: catalytic Gly173 (M-CSA/PDB numbering; UniProt residue 173)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q62651
+    description: 'M-CSA roles: transition state stabiliser.'
+  - node_id: asp176
+    label: catalytic Asp176 (M-CSA/PDB numbering; UniProt residue 176)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q62651
+    description: 'M-CSA roles: activator, electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: glu196
+    label: catalytic Glu196 (M-CSA/PDB numbering; UniProt residue 196)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q62651
+    description: 'M-CSA roles: hydrogen bond acceptor, polar/non-polar interaction, proton acceptor.'
+  - node_id: asp204
+    label: catalytic Asp204 (M-CSA/PDB numbering; UniProt residue 204)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q62651
+    description: 'M-CSA roles: polar/non-polar interaction, proton donor.'
+  - node_id: reactant0
+    label: (3E,5Z)-tetradecadienoyl-CoA(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:71586
+  - node_id: product0
+    label: trans,trans-deca-2,4-dienoyl-CoA(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:62244
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu196 OE2 atom abstracts a proton from C2 of the substrate, initiating a rearrangement
+      of double bonds, causing Asp204 to donate its proton to C6 of the substrate. This is facilitated
+      by the binding of the thioester oxygen atom in the oxyanion hole formed by the peptide nitrogens
+      of Ile117 and of Gly173. At the end of this step, the enzyme is ready to perform the reverse isomerisation
+      reaction.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: delta(3,5)-delta(2,4)-dienoyl-CoA isomerase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:342
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.226.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.226.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: delta(3,5)-delta(2,4)-dienoyl-CoA isomerase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.3.3.-
+  edges:
+  - subject: ile117
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ile117 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/342/
+      snippet: Glu196 OE2 atom abstracts a proton from C2 of the substrate, initiating a rearrangement
+        of double bonds, causing Asp204 to donate its proton to C6 of the substrate. This is facilitated
+        by the binding of the thioester oxygen atom in the oxyanion hole formed by the peptide nitrogens
+        of Ile117 and of Gly173. At the end of this step, the enzyme is ready to perform the reverse isomerisation
+        reaction.
+      notes: M-CSA entry 342, mechanism 1; M-CSA cites PMID:11278886, PMID:9739087; step 1
+  - subject: gly173
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Gly173 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/342/
+      snippet: Glu196 OE2 atom abstracts a proton from C2 of the substrate, initiating a rearrangement
+        of double bonds, causing Asp204 to donate its proton to C6 of the substrate. This is facilitated
+        by the binding of the thioester oxygen atom in the oxyanion hole formed by the peptide nitrogens
+        of Ile117 and of Gly173. At the end of this step, the enzyme is ready to perform the reverse isomerisation
+        reaction.
+      notes: M-CSA entry 342, mechanism 1; M-CSA cites PMID:11278886, PMID:9739087; step 1
+  - subject: glu196
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu196 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/342/
+      snippet: Glu196 OE2 atom abstracts a proton from C2 of the substrate, initiating a rearrangement
+        of double bonds, causing Asp204 to donate its proton to C6 of the substrate. This is facilitated
+        by the binding of the thioester oxygen atom in the oxyanion hole formed by the peptide nitrogens
+        of Ile117 and of Gly173. At the end of this step, the enzyme is ready to perform the reverse isomerisation
+        reaction.
+      notes: M-CSA entry 342, mechanism 1; M-CSA cites PMID:11278886, PMID:9739087; step 1
+  - subject: asp204
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp204 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/342/
+      snippet: Glu196 OE2 atom abstracts a proton from C2 of the substrate, initiating a rearrangement
+        of double bonds, causing Asp204 to donate its proton to C6 of the substrate. This is facilitated
+        by the binding of the thioester oxygen atom in the oxyanion hole formed by the peptide nitrogens
+        of Ile117 and of Gly173. At the end of this step, the enzyme is ready to perform the reverse isomerisation
+        reaction.
+      notes: M-CSA entry 342, mechanism 1; M-CSA cites PMID:11278886, PMID:9739087; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/342/
+      snippet: Products
+      notes: M-CSA entry 342, mechanism 1; M-CSA cites PMID:11278886, PMID:9739087; step 2
+  - subject: ile117
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ile117 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/342/
+      snippet: transition state stabiliser
+      notes: M-CSA entry 342, mechanism 1; M-CSA cites PMID:11278886, PMID:9739087; M-CSA catalytic-residue
+        roles for Ile117
+  - subject: gly173
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly173 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/342/
+      snippet: transition state stabiliser
+      notes: M-CSA entry 342, mechanism 1; M-CSA cites PMID:11278886, PMID:9739087; M-CSA catalytic-residue
+        roles for Gly173
+  - subject: asp176
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp176 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/342/
+      snippet: activator, electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 342, mechanism 1; M-CSA cites PMID:11278886, PMID:9739087; M-CSA catalytic-residue
+        roles for Asp176
+  - subject: glu196
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu196 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/342/
+      snippet: hydrogen bond acceptor, polar/non-polar interaction, proton acceptor
+      notes: M-CSA entry 342, mechanism 1; M-CSA cites PMID:11278886, PMID:9739087; M-CSA catalytic-residue
+        roles for Glu196
+  - subject: asp204
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp204 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/342/
+      snippet: polar/non-polar interaction, proton donor
+      notes: M-CSA entry 342, mechanism 1; M-CSA cites PMID:11278886, PMID:9739087; M-CSA catalytic-residue
+        roles for Asp204
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/342/
+      snippet: Glu196 acts as a base to abstract a proton from C2 to initiate the shifting of the double
+        bonds. Asp204 donates a proton to C6 to complete the reaction.
+      notes: M-CSA entry 342, mechanism 1; M-CSA cites PMID:11278886, PMID:9739087; CATH domain 3.90.226.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/342/
+      snippet: Glu196 acts as a base to abstract a proton from C2 to initiate the shifting of the double
+        bonds. Asp204 donates a proton to C6 to complete the reaction.
+      notes: M-CSA entry 342, mechanism 1; M-CSA cites PMID:11278886, PMID:9739087; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/342/
+      snippet: Glu196 acts as a base to abstract a proton from C2 to initiate the shifting of the double
+        bonds. Asp204 donates a proton to C6 to complete the reaction.
+      notes: M-CSA entry 342, mechanism 1; M-CSA cites PMID:11278886, PMID:9739087; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/342/
+      snippet: Glu196 acts as a base to abstract a proton from C2 to initiate the shifting of the double
+        bonds. Asp204 donates a proton to C6 to complete the reaction.
+      notes: M-CSA entry 342, mechanism 1; M-CSA cites PMID:11278886, PMID:9739087; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (14 evidence-backed edges) transcribed from M-CSA entry 342;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

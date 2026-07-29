@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.13.9
 - CHEBI:70744
@@ -344,4 +344,328 @@ definitions:
       Prolidase is a ubiquitously distributed dipeptidase and the only known metalloenzyme in humans capable of cleaving the peptide bond preceding the amino acids proline (Pro) or hydroxyproline (Hyp) in Xaa-Pro (Xaa: any hydrophobic amino acid) dipeptides. Prolidase plays an important role in the degradation of dietary and endogenous proteins to recycle Pro for protein synthesis. Moreover, it's also involved in hydrolysis of Pro- and hydroxyproline-containing dipeptides in the last step of collagen catabolism. Diminished or absent prolidase activity is related to a rare autosomal disease, referred to as prolidase deficiency.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of Prolidase (Xaa-Pro dipeptidase)
+  description: Stepwise mechanism transcribed from M-CSA entry 1001 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: his255
+    label: catalytic His255 (M-CSA/PDB numbering; UniProt residue 255)
+    node_type: RESIDUE
+    grounding: UniProtKB:P12955
+    description: 'M-CSA roles: hydrogen bond donor.'
+  - node_id: asp276
+    label: catalytic Asp276 (M-CSA/PDB numbering; UniProt residue 276)
+    node_type: RESIDUE
+    grounding: UniProtKB:P12955
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp287
+    label: catalytic Asp287 (M-CSA/PDB numbering; UniProt residue 287)
+    node_type: RESIDUE
+    grounding: UniProtKB:P12955
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his370
+    label: catalytic His370 (M-CSA/PDB numbering; UniProt residue 370)
+    node_type: RESIDUE
+    grounding: UniProtKB:P12955
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his377
+    label: catalytic His377 (M-CSA/PDB numbering; UniProt residue 377)
+    node_type: RESIDUE
+    grounding: UniProtKB:P12955
+    description: 'M-CSA roles: hydrogen bond donor.'
+  - node_id: arg398
+    label: catalytic Arg398 (M-CSA/PDB numbering; UniProt residue 398)
+    node_type: RESIDUE
+    grounding: UniProtKB:P12955
+    description: 'M-CSA roles: hydrogen bond donor.'
+  - node_id: glu412
+    label: catalytic Glu412 (M-CSA/PDB numbering; UniProt residue 412)
+    node_type: RESIDUE
+    grounding: UniProtKB:P12955
+    description: 'M-CSA roles: metal ligand, proton acceptor, proton donor.'
+  - node_id: glu452
+    label: catalytic Glu452 (M-CSA/PDB numbering; UniProt residue 452)
+    node_type: RESIDUE
+    grounding: UniProtKB:P12955
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: Gly-Pro
+    node_type: CHEMICAL
+    grounding: CHEBI:70744
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: glycine
+    node_type: CHEMICAL
+    grounding: CHEBI:15428
+  - node_id: product1
+    label: proline
+    node_type: CHEMICAL
+    grounding: CHEBI:26271
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Two Mn2+ ions are coordinated by the many residues and a water molecule in the active
+      site. Glu412 abstracts a proton from the bridging water molecule, resulting in the OH- -bridged
+      structure
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: "Nucleophilic attack of the hydroxide ion onto the carbonyl
+C-atom, leading to the\
+      \ formation of a tetrahedral intermediate."
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: "The intermediate collapses leading to the formation of the products. The nitrogen of\
+      \ the proline is here inferred to be protonated directly by Glu412.
+The first product (Gly) leaves\
+      \ the active site, then, the return of the protein conformation to the open state kicks the second\
+      \ product (Pro) out of the active
+site. 
+After the products have left, the productive state\
+      \ of the enzyme is reformed by"
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: Prolidase (Xaa-Pro dipeptidase) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:1001
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: activity
+    label: Prolidase (Xaa-Pro dipeptidase) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.13.9
+  edges:
+  - subject: glu412
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu412 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1001/
+      snippet: Two Mn2+ ions are coordinated by the many residues and a water molecule in the active site.
+        Glu412 abstracts a proton from the bridging water molecule, resulting in the OH- -bridged structure
+      notes: M-CSA entry 1001, mechanism 1; M-CSA cites PMID:21425789, PMID:27286447, PMID:28677335; step
+        1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1001/
+      snippet: "Nucleophilic attack of the hydroxide ion onto the carbonyl
+C-atom, leading to the formation\
+        \ of a tetrahedral intermediate."
+      notes: M-CSA entry 1001, mechanism 1; M-CSA cites PMID:21425789, PMID:27286447, PMID:28677335; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1001/
+      snippet: "The intermediate collapses leading to the formation of the products. The nitrogen of the\
+        \ proline is here inferred to be protonated directly by Glu412.
+The first product (Gly) leaves\
+        \ the active site, then, the return of the protein conformation to the open state kicks the second\
+        \ product (Pro) out of the active
+site. 
+After the products have left, the productive state\
+        \ of the enzyme is reformed by taking up a water molecule from bulk solvent."
+      notes: M-CSA entry 1001, mechanism 1; M-CSA cites PMID:21425789, PMID:27286447, PMID:28677335; step
+        3
+  - subject: glu412
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Glu412 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1001/
+      snippet: "The intermediate collapses leading to the formation of the products. The nitrogen of the\
+        \ proline is here inferred to be protonated directly by Glu412.
+The first product (Gly) leaves\
+        \ the active site, then, the return of the protein conformation to the open state kicks the second\
+        \ product (Pro) out of the active
+site. 
+After the products have left, the productive state\
+        \ of the enzyme is reformed by taking up a water molecule from bulk solvent."
+      notes: M-CSA entry 1001, mechanism 1; M-CSA cites PMID:21425789, PMID:27286447, PMID:28677335; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1001/
+      snippet: Products
+      notes: M-CSA entry 1001, mechanism 1; M-CSA cites PMID:21425789, PMID:27286447, PMID:28677335; step
+        4
+  - subject: his255
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His255 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1001/
+      snippet: hydrogen bond donor
+      notes: M-CSA entry 1001, mechanism 1; M-CSA cites PMID:21425789, PMID:27286447, PMID:28677335; M-CSA
+        catalytic-residue roles for His255
+  - subject: asp276
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp276 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1001/
+      snippet: metal ligand
+      notes: M-CSA entry 1001, mechanism 1; M-CSA cites PMID:21425789, PMID:27286447, PMID:28677335; M-CSA
+        catalytic-residue roles for Asp276
+  - subject: asp287
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp287 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1001/
+      snippet: metal ligand
+      notes: M-CSA entry 1001, mechanism 1; M-CSA cites PMID:21425789, PMID:27286447, PMID:28677335; M-CSA
+        catalytic-residue roles for Asp287
+  - subject: his370
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His370 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1001/
+      snippet: metal ligand
+      notes: M-CSA entry 1001, mechanism 1; M-CSA cites PMID:21425789, PMID:27286447, PMID:28677335; M-CSA
+        catalytic-residue roles for His370
+  - subject: his377
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His377 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1001/
+      snippet: hydrogen bond donor
+      notes: M-CSA entry 1001, mechanism 1; M-CSA cites PMID:21425789, PMID:27286447, PMID:28677335; M-CSA
+        catalytic-residue roles for His377
+  - subject: arg398
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg398 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1001/
+      snippet: hydrogen bond donor
+      notes: M-CSA entry 1001, mechanism 1; M-CSA cites PMID:21425789, PMID:27286447, PMID:28677335; M-CSA
+        catalytic-residue roles for Arg398
+  - subject: glu412
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu412 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1001/
+      snippet: metal ligand, proton acceptor, proton donor
+      notes: M-CSA entry 1001, mechanism 1; M-CSA cites PMID:21425789, PMID:27286447, PMID:28677335; M-CSA
+        catalytic-residue roles for Glu412
+  - subject: glu452
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu452 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1001/
+      snippet: metal ligand
+      notes: M-CSA entry 1001, mechanism 1; M-CSA cites PMID:21425789, PMID:27286447, PMID:28677335; M-CSA
+        catalytic-residue roles for Glu452
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1001/
+      snippet: A water molecule bound in the active site between the two Mn2+ ions is activated by the
+        abstraction of a proton resulting in the OH- bridged structure. The substrate GlyPro is then bound
+        and His255 moves toward the active site to coordinate the carboxylate group of the substrate.
+        The amide nitrogen and the carbonyl oxygen of the scissile bond of GlyPro are both coordinated
+        by Mn2+ ions facilitatin
+      notes: M-CSA entry 1001, mechanism 1; M-CSA cites PMID:21425789, PMID:27286447, PMID:28677335; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1001/
+      snippet: A water molecule bound in the active site between the two Mn2+ ions is activated by the
+        abstraction of a proton resulting in the OH- bridged structure. The substrate GlyPro is then bound
+        and His255 moves toward the active site to coordinate the carboxylate group of the substrate.
+        The amide nitrogen and the carbonyl oxygen of the scissile bond of GlyPro are both coordinated
+        by Mn2+ ions facilitatin
+      notes: M-CSA entry 1001, mechanism 1; M-CSA cites PMID:21425789, PMID:27286447, PMID:28677335; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1001/
+      snippet: A water molecule bound in the active site between the two Mn2+ ions is activated by the
+        abstraction of a proton resulting in the OH- bridged structure. The substrate GlyPro is then bound
+        and His255 moves toward the active site to coordinate the carboxylate group of the substrate.
+        The amide nitrogen and the carbonyl oxygen of the scissile bond of GlyPro are both coordinated
+        by Mn2+ ions facilitatin
+      notes: M-CSA entry 1001, mechanism 1; M-CSA cites PMID:21425789, PMID:27286447, PMID:28677335; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1001/
+      snippet: A water molecule bound in the active site between the two Mn2+ ions is activated by the
+        abstraction of a proton resulting in the OH- bridged structure. The substrate GlyPro is then bound
+        and His255 moves toward the active site to coordinate the carboxylate group of the substrate.
+        The amide nitrogen and the carbonyl oxygen of the scissile bond of GlyPro are both coordinated
+        by Mn2+ ions facilitatin
+      notes: M-CSA entry 1001, mechanism 1; M-CSA cites PMID:21425789, PMID:27286447, PMID:28677335; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/1001/
+      snippet: A water molecule bound in the active site between the two Mn2+ ions is activated by the
+        abstraction of a proton resulting in the OH- bridged structure. The substrate GlyPro is then bound
+        and His255 moves toward the active site to coordinate the carboxylate group of the substrate.
+        The amide nitrogen and the carbonyl oxygen of the scissile bond of GlyPro are both coordinated
+        by Mn2+ ions facilitatin
+      notes: M-CSA entry 1001, mechanism 1; M-CSA cites PMID:21425789, PMID:27286447, PMID:28677335; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (18 evidence-backed edges) transcribed from M-CSA entry 1001;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

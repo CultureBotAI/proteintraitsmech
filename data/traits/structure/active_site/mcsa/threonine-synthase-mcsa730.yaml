@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.2.3.1
 - CHEBI:15377
@@ -292,4 +292,365 @@ definitions:
       Threonine synthase (TS) from Saccharomyces cerevisiae catalyses the conversion of O-phospho-L-homoserine (OPHS) into threonine and phosphate. This is the final step in threonine biosynthesis. The enzyme requires a pyridoxal 5'-phosphate (PLP) cofactor which binds at the interface of all three of the protein's domains.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of threonine synthase
+  description: Stepwise mechanism transcribed from M-CSA entry 730 (11 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: lys124
+    label: catalytic Lys124 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P16120
+    description: 'M-CSA roles: covalently attached, electron pair acceptor, electron pair donor, increase
+      nucleophilicity, nucleofuge, nucleophile, proton acceptor, proton donor, proton relay.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: O-phosphonato-L-homoserine(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57590
+  - node_id: product0
+    label: L-threonine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57926
+  - node_id: product1
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The amino group of the serine  performs a nucleophilic attack on the imine carbon of
+      the lys-bound PLP forming a tetrahedral intermediate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Lys124 is cleaved from PLP leaving the substrate bound.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Lys124 abstracts a proton from the alpha carbon of the substrate causing  tautomerization
+      of the imine.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Lys124 abstracts a proton from the beta carbon causing a second tautomerization from
+      imine to enamine.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Phosphate is eliminated from the homoserine and another imine is formed.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Lys124 acts as a proton relay causing another tautomerization reaction to occur.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: Water performs a nucleophilic attack on the C=C bond of the substrate, forming a carboanion.  The
+      water is activated by Lys124.
+  - node_id: step8
+    label: mechanism step 8
+    node_type: STATE
+    description: The carboanion abstracts a proton from Lys124.
+  - node_id: step9
+    label: mechanism step 9
+    node_type: STATE
+    description: The amino group of Lys124 performs a nucleophilic attack on the imine carbon of the thr-bound
+      PLP forming a tetrahedral intermediate.
+  - node_id: step10
+    label: mechanism step 10
+    node_type: STATE
+    description: Threonine is cleaved from PLP leaving Lys124 bound.
+  - node_id: step11
+    label: mechanism step 11
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: threonine synthase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:730
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1100 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1100
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: threonine synthase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.2.3.1
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/730/
+      snippet: Lys124 is cleaved from PLP leaving the substrate bound.
+      notes: M-CSA entry 730, mechanism 1; M-CSA cites PMID:11756443, PMID:28489381; step 2
+  - subject: lys124
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Lys124 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/730/
+      snippet: Lys124 is cleaved from PLP leaving the substrate bound.
+      notes: M-CSA entry 730, mechanism 1; M-CSA cites PMID:11756443, PMID:28489381; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/730/
+      snippet: Lys124 abstracts a proton from the alpha carbon of the substrate causing  tautomerization
+        of the imine.
+      notes: M-CSA entry 730, mechanism 1; M-CSA cites PMID:11756443, PMID:28489381; step 3
+  - subject: lys124
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Lys124 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/730/
+      snippet: Lys124 abstracts a proton from the alpha carbon of the substrate causing  tautomerization
+        of the imine.
+      notes: M-CSA entry 730, mechanism 1; M-CSA cites PMID:11756443, PMID:28489381; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/730/
+      snippet: Lys124 abstracts a proton from the beta carbon causing a second tautomerization from imine
+        to enamine.
+      notes: M-CSA entry 730, mechanism 1; M-CSA cites PMID:11756443, PMID:28489381; step 4
+  - subject: lys124
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Lys124 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/730/
+      snippet: Lys124 abstracts a proton from the beta carbon causing a second tautomerization from imine
+        to enamine.
+      notes: M-CSA entry 730, mechanism 1; M-CSA cites PMID:11756443, PMID:28489381; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/730/
+      snippet: Phosphate is eliminated from the homoserine and another imine is formed.
+      notes: M-CSA entry 730, mechanism 1; M-CSA cites PMID:11756443, PMID:28489381; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/730/
+      snippet: Lys124 acts as a proton relay causing another tautomerization reaction to occur.
+      notes: M-CSA entry 730, mechanism 1; M-CSA cites PMID:11756443, PMID:28489381; step 6
+  - subject: lys124
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: Lys124 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/730/
+      snippet: Lys124 acts as a proton relay causing another tautomerization reaction to occur.
+      notes: M-CSA entry 730, mechanism 1; M-CSA cites PMID:11756443, PMID:28489381; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/730/
+      snippet: Water performs a nucleophilic attack on the C=C bond of the substrate, forming a carboanion.  The
+        water is activated by Lys124.
+      notes: M-CSA entry 730, mechanism 1; M-CSA cites PMID:11756443, PMID:28489381; step 7
+  - subject: lys124
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step7
+    description: Lys124 acts in step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/730/
+      snippet: Water performs a nucleophilic attack on the C=C bond of the substrate, forming a carboanion.  The
+        water is activated by Lys124.
+      notes: M-CSA entry 730, mechanism 1; M-CSA cites PMID:11756443, PMID:28489381; step 7
+  - subject: step7
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step8
+    description: Step 7 leads to step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/730/
+      snippet: The carboanion abstracts a proton from Lys124.
+      notes: M-CSA entry 730, mechanism 1; M-CSA cites PMID:11756443, PMID:28489381; step 8
+  - subject: lys124
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step8
+    description: Lys124 acts in step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/730/
+      snippet: The carboanion abstracts a proton from Lys124.
+      notes: M-CSA entry 730, mechanism 1; M-CSA cites PMID:11756443, PMID:28489381; step 8
+  - subject: step8
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step9
+    description: Step 8 leads to step 9.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/730/
+      snippet: The amino group of Lys124 performs a nucleophilic attack on the imine carbon of the thr-bound
+        PLP forming a tetrahedral intermediate.
+      notes: M-CSA entry 730, mechanism 1; M-CSA cites PMID:11756443, PMID:28489381; step 9
+  - subject: lys124
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step9
+    description: Lys124 acts in step 9.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/730/
+      snippet: The amino group of Lys124 performs a nucleophilic attack on the imine carbon of the thr-bound
+        PLP forming a tetrahedral intermediate.
+      notes: M-CSA entry 730, mechanism 1; M-CSA cites PMID:11756443, PMID:28489381; step 9
+  - subject: step9
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step10
+    description: Step 9 leads to step 10.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/730/
+      snippet: Threonine is cleaved from PLP leaving Lys124 bound.
+      notes: M-CSA entry 730, mechanism 1; M-CSA cites PMID:11756443, PMID:28489381; step 10
+  - subject: lys124
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step10
+    description: Lys124 acts in step 10.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/730/
+      snippet: Threonine is cleaved from PLP leaving Lys124 bound.
+      notes: M-CSA entry 730, mechanism 1; M-CSA cites PMID:11756443, PMID:28489381; step 10
+  - subject: step10
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step11
+    description: Step 10 leads to step 11.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/730/
+      snippet: Products.
+      notes: M-CSA entry 730, mechanism 1; M-CSA cites PMID:11756443, PMID:28489381; step 11
+  - subject: lys124
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys124 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/730/
+      snippet: covalently attached, electron pair acceptor, electron pair donor, increase nucleophilicity,
+        nucleofuge, nucleophile, proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 730, mechanism 1; M-CSA cites PMID:11756443, PMID:28489381; M-CSA catalytic-residue
+        roles for Lys124
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/730/
+      snippet: The catalytic cycle starts with a transaldimination reaction.  Lys124 which is initially
+        bound to the PLP cofactor is replaced by OPHS forming the external aldimine.  Lys124 catalyses
+        the abstraction of the C-alpha proton of the substrate and its transfer to the PLP C4' position.  Next,
+        Lys124 stereospecifically abstracts the beta-pro-S hydrogen leading to the non-hydrolytic elimination
+        of the gam
+      notes: M-CSA entry 730, mechanism 1; M-CSA cites PMID:11756443, PMID:28489381; CATH domain 3.40.50.1100
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/730/
+      snippet: The catalytic cycle starts with a transaldimination reaction.  Lys124 which is initially
+        bound to the PLP cofactor is replaced by OPHS forming the external aldimine.  Lys124 catalyses
+        the abstraction of the C-alpha proton of the substrate and its transfer to the PLP C4' position.  Next,
+        Lys124 stereospecifically abstracts the beta-pro-S hydrogen leading to the non-hydrolytic elimination
+        of the gam
+      notes: M-CSA entry 730, mechanism 1; M-CSA cites PMID:11756443, PMID:28489381; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/730/
+      snippet: The catalytic cycle starts with a transaldimination reaction.  Lys124 which is initially
+        bound to the PLP cofactor is replaced by OPHS forming the external aldimine.  Lys124 catalyses
+        the abstraction of the C-alpha proton of the substrate and its transfer to the PLP C4' position.  Next,
+        Lys124 stereospecifically abstracts the beta-pro-S hydrogen leading to the non-hydrolytic elimination
+        of the gam
+      notes: M-CSA entry 730, mechanism 1; M-CSA cites PMID:11756443, PMID:28489381; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/730/
+      snippet: The catalytic cycle starts with a transaldimination reaction.  Lys124 which is initially
+        bound to the PLP cofactor is replaced by OPHS forming the external aldimine.  Lys124 catalyses
+        the abstraction of the C-alpha proton of the substrate and its transfer to the PLP C4' position.  Next,
+        Lys124 stereospecifically abstracts the beta-pro-S hydrogen leading to the non-hydrolytic elimination
+        of the gam
+      notes: M-CSA entry 730, mechanism 1; M-CSA cites PMID:11756443, PMID:28489381; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/730/
+      snippet: The catalytic cycle starts with a transaldimination reaction.  Lys124 which is initially
+        bound to the PLP cofactor is replaced by OPHS forming the external aldimine.  Lys124 catalyses
+        the abstraction of the C-alpha proton of the substrate and its transfer to the PLP C4' position.  Next,
+        Lys124 stereospecifically abstracts the beta-pro-S hydrogen leading to the non-hydrolytic elimination
+        of the gam
+      notes: M-CSA entry 730, mechanism 1; M-CSA cites PMID:11756443, PMID:28489381; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/730/
+      snippet: The catalytic cycle starts with a transaldimination reaction.  Lys124 which is initially
+        bound to the PLP cofactor is replaced by OPHS forming the external aldimine.  Lys124 catalyses
+        the abstraction of the C-alpha proton of the substrate and its transfer to the PLP C4' position.  Next,
+        Lys124 stereospecifically abstracts the beta-pro-S hydrogen leading to the non-hydrolytic elimination
+        of the gam
+      notes: M-CSA entry 730, mechanism 1; M-CSA cites PMID:11756443, PMID:28489381; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (25 evidence-backed edges) transcribed from M-CSA entry 730;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

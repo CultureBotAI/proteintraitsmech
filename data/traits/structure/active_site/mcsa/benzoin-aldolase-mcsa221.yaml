@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.1.2.38
 - CHEBI:17682
@@ -216,4 +216,262 @@ definitions:
       Thiamine diphosphate dependent benzaldehyde lyase (BAL) from Pseudomonas fluorescens catalyses the cleavage of (R)-benzoin producing two molecules of benzaldehyde. This allows the bacterium to grow on (R)-benzoin as its only carbon and energy source. The reverse reaction is catalysed by benzoylformate decarboxylase (BFD). The X-ray structure of BAL was compared to that of BFD and pyruvate decarboxylase (PDC) in order to determine which residues are likely to have catalytic roles and should be analysed by point mutations. BAL looses its catalytic activity upon treatment with EDTA but activity can be restored by addition of 1millimolar MgCl2, MnSO4 or CaSO4.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of benzoin aldolase
+  description: Stepwise mechanism transcribed from M-CSA entry 221 (7 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: his29
+    label: catalytic His29 (M-CSA/PDB numbering; UniProt residue 29)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9F4L3
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: glu50
+    label: catalytic Glu50 (M-CSA/PDB numbering; UniProt residue 50)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9F4L3
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: gln113
+    label: catalytic Gln113 (M-CSA/PDB numbering; UniProt residue 113)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9F4L3
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: gly419
+    label: catalytic Gly419 (M-CSA/PDB numbering; UniProt residue 419)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9F4L3
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: reactant0
+    label: benzoin
+    node_type: CHEMICAL
+    grounding: CHEBI:17682
+  - node_id: product0
+    label: benzaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:17169
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu50B deprotonates the thiamine diphosphate cofactor, which initiates double bond rearrangement
+      that results in the deprotonation of the N=CH-S group, activating the cofactor.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The carbanion of thiamine diphosphate attacks the carbonyl carbon of benzoin in a nucleophilic
+      addition. Kneen <i>et al.</i> suggest that the protonation event might be mediated through a water
+      molecule and the His29B, with the Gln113B activating the His29B [PMID:16226928].
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: His29B deprotonates one of the hydroxyl groups (again, mediated through a water molecule)
+      of the bound intermediate, initiating an elimination that productes one of the benzaldehyde products.
+      Thiamine diphosphate acts as an electron sink.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Thiamine diphosphate initiates a double bond rearrangement, which results in the intermediate
+      being protonated by His29B.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: His29B deprotonates the second hydroxyl group of the intermediate, initiating an elimination
+      that results in a reformation of the carbanionic activated cofactor and the second benzaldehyde
+      product.)Substrates=(M0221-I3,2ag0-His29B
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: The carbanion of the thiamine diphosphate cofactor deprotonates the adjacent amine, which
+      initiates double bond rearrangement that results in the deprotonation of Glu50B.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: benzoin aldolase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:221
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.970 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.970
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: benzoin aldolase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.1.2.38
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/221/
+      snippet: The carbanion of thiamine diphosphate attacks the carbonyl carbon of benzoin in a nucleophilic
+        addition. Kneen <i>et al.</i> suggest that the protonation event might be mediated through a water
+        molecule and the His29B, with the Gln113B activating the His29B [PMID:16226928].
+      notes: M-CSA entry 221, mechanism 1; M-CSA cites PMID:15157089, PMID:16226928, PMID:16302970, PMID:18314961,
+        PMID:18570438; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/221/
+      snippet: His29B deprotonates one of the hydroxyl groups (again, mediated through a water molecule)
+        of the bound intermediate, initiating an elimination that productes one of the benzaldehyde products.
+        Thiamine diphosphate acts as an electron sink.
+      notes: M-CSA entry 221, mechanism 1; M-CSA cites PMID:15157089, PMID:16226928, PMID:16302970, PMID:18314961,
+        PMID:18570438; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/221/
+      snippet: Thiamine diphosphate initiates a double bond rearrangement, which results in the intermediate
+        being protonated by His29B.
+      notes: M-CSA entry 221, mechanism 1; M-CSA cites PMID:15157089, PMID:16226928, PMID:16302970, PMID:18314961,
+        PMID:18570438; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/221/
+      snippet: His29B deprotonates the second hydroxyl group of the intermediate, initiating an elimination
+        that results in a reformation of the carbanionic activated cofactor and the second benzaldehyde
+        product.)Substrates=(M0221-I3,2ag0-His29B
+      notes: M-CSA entry 221, mechanism 1; M-CSA cites PMID:15157089, PMID:16226928, PMID:16302970, PMID:18314961,
+        PMID:18570438; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/221/
+      snippet: The carbanion of the thiamine diphosphate cofactor deprotonates the adjacent amine, which
+        initiates double bond rearrangement that results in the deprotonation of Glu50B.
+      notes: M-CSA entry 221, mechanism 1; M-CSA cites PMID:15157089, PMID:16226928, PMID:16302970, PMID:18314961,
+        PMID:18570438; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/221/
+      snippet: Products.
+      notes: M-CSA entry 221, mechanism 1; M-CSA cites PMID:15157089, PMID:16226928, PMID:16302970, PMID:18314961,
+        PMID:18570438; step 7
+  - subject: his29
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His29 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/221/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 221, mechanism 1; M-CSA cites PMID:15157089, PMID:16226928, PMID:16302970, PMID:18314961,
+        PMID:18570438; M-CSA catalytic-residue roles for His29
+  - subject: glu50
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu50 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/221/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 221, mechanism 1; M-CSA cites PMID:15157089, PMID:16226928, PMID:16302970, PMID:18314961,
+        PMID:18570438; M-CSA catalytic-residue roles for Glu50
+  - subject: gln113
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln113 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/221/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 221, mechanism 1; M-CSA cites PMID:15157089, PMID:16226928, PMID:16302970, PMID:18314961,
+        PMID:18570438; M-CSA catalytic-residue roles for Gln113
+  - subject: gly419
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly419 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/221/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 221, mechanism 1; M-CSA cites PMID:15157089, PMID:16226928, PMID:16302970, PMID:18314961,
+        PMID:18570438; M-CSA catalytic-residue roles for Gly419
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/221/
+      snippet: <p>(R)-benzoin is cleaved producing two molecules of benzaldehyde. Thiamine diphosphate
+        (ThDP) is activated by the deprotonation of a carbon and the carbanion reacts with (R)-benzoin
+        producing a tetrahedral intermediate. Benzaldehyde is eliminated leaving an enamine. At low benzaldehyde
+        concentration the enamine is protonated via a water molecule attached to His29 and then the other
+        benzaldehyde m
+      notes: M-CSA entry 221, mechanism 1; M-CSA cites PMID:15157089, PMID:16226928, PMID:16302970, PMID:18314961,
+        PMID:18570438; CATH domain 3.40.50.970 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/221/
+      snippet: <p>(R)-benzoin is cleaved producing two molecules of benzaldehyde. Thiamine diphosphate
+        (ThDP) is activated by the deprotonation of a carbon and the carbanion reacts with (R)-benzoin
+        producing a tetrahedral intermediate. Benzaldehyde is eliminated leaving an enamine. At low benzaldehyde
+        concentration the enamine is protonated via a water molecule attached to His29 and then the other
+        benzaldehyde m
+      notes: M-CSA entry 221, mechanism 1; M-CSA cites PMID:15157089, PMID:16226928, PMID:16302970, PMID:18314961,
+        PMID:18570438; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/221/
+      snippet: <p>(R)-benzoin is cleaved producing two molecules of benzaldehyde. Thiamine diphosphate
+        (ThDP) is activated by the deprotonation of a carbon and the carbanion reacts with (R)-benzoin
+        producing a tetrahedral intermediate. Benzaldehyde is eliminated leaving an enamine. At low benzaldehyde
+        concentration the enamine is protonated via a water molecule attached to His29 and then the other
+        benzaldehyde m
+      notes: M-CSA entry 221, mechanism 1; M-CSA cites PMID:15157089, PMID:16226928, PMID:16302970, PMID:18314961,
+        PMID:18570438; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/221/
+      snippet: <p>(R)-benzoin is cleaved producing two molecules of benzaldehyde. Thiamine diphosphate
+        (ThDP) is activated by the deprotonation of a carbon and the carbanion reacts with (R)-benzoin
+        producing a tetrahedral intermediate. Benzaldehyde is eliminated leaving an enamine. At low benzaldehyde
+        concentration the enamine is protonated via a water molecule attached to His29 and then the other
+        benzaldehyde m
+      notes: M-CSA entry 221, mechanism 1; M-CSA cites PMID:15157089, PMID:16226928, PMID:16302970, PMID:18314961,
+        PMID:18570438; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (14 evidence-backed edges) transcribed from M-CSA entry 221;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

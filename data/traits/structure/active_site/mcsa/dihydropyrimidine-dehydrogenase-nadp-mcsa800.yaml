@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.3.1.2
 - CHEBI:15901
@@ -803,4 +803,293 @@ definitions:
       Mammalian dihydropyrimidine dehydrogenase catalyses the reduction of uracil or thymine to dihydrouracil or dihydrothymine respectively. This reaction represents an important step in the pathway of pyrimidine degradation in cells, but is particularly important to medicine because the anticancer drug 5-flourouracil, though shown to be effective, is also a substrate for this enzyme, thus its effectiveness is reduced. The development of specific inhibitors is therefore paramount in order to reduce the cost and side effects of treatment with this drug.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of dihydropyrimidine dehydrogenase (NADP+)
+  description: Stepwise mechanism transcribed from M-CSA entry 800 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: lys574
+    label: catalytic Lys574 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q28943
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ala671
+    label: catalytic Ala671 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q28943
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: lys709
+    label: catalytic Lys709 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q28943
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: uracil
+    node_type: CHEMICAL
+    grounding: CHEBI:17568
+  - node_id: reactant1
+    label: NADPH(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+  - node_id: reactant2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product0
+    label: 5,6-dihydrouracil
+    node_type: CHEMICAL
+    grounding: CHEBI:15901
+  - node_id: product1
+    label: NADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Binding of NADPH results in a conformational change which facilitates the transfer of
+      a hydride from its pro-S position to the re-face of FAD at N5. Following this step two single electron
+      transfers then occur via the FeS clusters to FMN.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The reduction of uracil occurs in two steps with hydride transfer from reduced FMN to
+      C6 first. The reduced FMN is stabilised by Lys709 and Lys574 but it is not know whether a formal
+      proton transfer occurs or just electrostatic interactions used. The intermediate enolate formed
+      is stabilised by delocalisation of electrons.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Cys671 acts as a general acid to protonate C5, forming the product.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: In an inferred reaction step Cys671 is reprotonated to regenerate the native state of
+      the enzyme.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: dihydropyrimidine dehydrogenase (NADP+) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:800
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.70 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.70
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: dihydropyrimidine dehydrogenase (NADP+) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.3.1.2
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/800/
+      snippet: The reduction of uracil occurs in two steps with hydride transfer from reduced FMN to C6
+        first. The reduced FMN is stabilised by Lys709 and Lys574 but it is not know whether a formal
+        proton transfer occurs or just electrostatic interactions used. The intermediate enolate formed
+        is stabilised by delocalisation of electrons.
+      notes: M-CSA entry 800, mechanism 1; M-CSA cites PMID:11179210, PMID:15450176, PMID:9860876; step
+        2
+  - subject: lys574
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Lys574 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/800/
+      snippet: The reduction of uracil occurs in two steps with hydride transfer from reduced FMN to C6
+        first. The reduced FMN is stabilised by Lys709 and Lys574 but it is not know whether a formal
+        proton transfer occurs or just electrostatic interactions used. The intermediate enolate formed
+        is stabilised by delocalisation of electrons.
+      notes: M-CSA entry 800, mechanism 1; M-CSA cites PMID:11179210, PMID:15450176, PMID:9860876; step
+        2
+  - subject: lys709
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Lys709 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/800/
+      snippet: The reduction of uracil occurs in two steps with hydride transfer from reduced FMN to C6
+        first. The reduced FMN is stabilised by Lys709 and Lys574 but it is not know whether a formal
+        proton transfer occurs or just electrostatic interactions used. The intermediate enolate formed
+        is stabilised by delocalisation of electrons.
+      notes: M-CSA entry 800, mechanism 1; M-CSA cites PMID:11179210, PMID:15450176, PMID:9860876; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/800/
+      snippet: Cys671 acts as a general acid to protonate C5, forming the product.
+      notes: M-CSA entry 800, mechanism 1; M-CSA cites PMID:11179210, PMID:15450176, PMID:9860876; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/800/
+      snippet: In an inferred reaction step Cys671 is reprotonated to regenerate the native state of the
+        enzyme.
+      notes: M-CSA entry 800, mechanism 1; M-CSA cites PMID:11179210, PMID:15450176, PMID:9860876; step
+        4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/800/
+      snippet: Products.
+      notes: M-CSA entry 800, mechanism 1; M-CSA cites PMID:11179210, PMID:15450176, PMID:9860876; step
+        5
+  - subject: lys574
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys574 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/800/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 800, mechanism 1; M-CSA cites PMID:11179210, PMID:15450176, PMID:9860876; M-CSA
+        catalytic-residue roles for Lys574
+  - subject: ala671
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ala671 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/800/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 800, mechanism 1; M-CSA cites PMID:11179210, PMID:15450176, PMID:9860876; M-CSA
+        catalytic-residue roles for Ala671
+  - subject: lys709
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys709 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/800/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 800, mechanism 1; M-CSA cites PMID:11179210, PMID:15450176, PMID:9860876; M-CSA
+        catalytic-residue roles for Lys709
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/800/
+      snippet: The enzyme uses electrons from NADPH to reduce the uracil substrate. However, the electrons
+        are not passed directly to uracil but instead are transferred from NADPH to FAD and then from
+        FAD to FMN. Finally the FMN acts as a nucleophile to transfer a hydride ion to the double bond
+        of the uracil. This creates a transient carbanion at the second carbon of the double bond, allowing
+        protonation by Cys
+      notes: M-CSA entry 800, mechanism 1; M-CSA cites PMID:11179210, PMID:15450176, PMID:9860876; CATH
+        domain 3.20.20.70 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/800/
+      snippet: The enzyme uses electrons from NADPH to reduce the uracil substrate. However, the electrons
+        are not passed directly to uracil but instead are transferred from NADPH to FAD and then from
+        FAD to FMN. Finally the FMN acts as a nucleophile to transfer a hydride ion to the double bond
+        of the uracil. This creates a transient carbanion at the second carbon of the double bond, allowing
+        protonation by Cys
+      notes: M-CSA entry 800, mechanism 1; M-CSA cites PMID:11179210, PMID:15450176, PMID:9860876; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/800/
+      snippet: The enzyme uses electrons from NADPH to reduce the uracil substrate. However, the electrons
+        are not passed directly to uracil but instead are transferred from NADPH to FAD and then from
+        FAD to FMN. Finally the FMN acts as a nucleophile to transfer a hydride ion to the double bond
+        of the uracil. This creates a transient carbanion at the second carbon of the double bond, allowing
+        protonation by Cys
+      notes: M-CSA entry 800, mechanism 1; M-CSA cites PMID:11179210, PMID:15450176, PMID:9860876; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/800/
+      snippet: The enzyme uses electrons from NADPH to reduce the uracil substrate. However, the electrons
+        are not passed directly to uracil but instead are transferred from NADPH to FAD and then from
+        FAD to FMN. Finally the FMN acts as a nucleophile to transfer a hydride ion to the double bond
+        of the uracil. This creates a transient carbanion at the second carbon of the double bond, allowing
+        protonation by Cys
+      notes: M-CSA entry 800, mechanism 1; M-CSA cites PMID:11179210, PMID:15450176, PMID:9860876; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/800/
+      snippet: The enzyme uses electrons from NADPH to reduce the uracil substrate. However, the electrons
+        are not passed directly to uracil but instead are transferred from NADPH to FAD and then from
+        FAD to FMN. Finally the FMN acts as a nucleophile to transfer a hydride ion to the double bond
+        of the uracil. This creates a transient carbanion at the second carbon of the double bond, allowing
+        protonation by Cys
+      notes: M-CSA entry 800, mechanism 1; M-CSA cites PMID:11179210, PMID:15450176, PMID:9860876; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/800/
+      snippet: The enzyme uses electrons from NADPH to reduce the uracil substrate. However, the electrons
+        are not passed directly to uracil but instead are transferred from NADPH to FAD and then from
+        FAD to FMN. Finally the FMN acts as a nucleophile to transfer a hydride ion to the double bond
+        of the uracil. This creates a transient carbanion at the second carbon of the double bond, allowing
+        protonation by Cys
+      notes: M-CSA entry 800, mechanism 1; M-CSA cites PMID:11179210, PMID:15450176, PMID:9860876; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/800/
+      snippet: The enzyme uses electrons from NADPH to reduce the uracil substrate. However, the electrons
+        are not passed directly to uracil but instead are transferred from NADPH to FAD and then from
+        FAD to FMN. Finally the FMN acts as a nucleophile to transfer a hydride ion to the double bond
+        of the uracil. This creates a transient carbanion at the second carbon of the double bond, allowing
+        protonation by Cys
+      notes: M-CSA entry 800, mechanism 1; M-CSA cites PMID:11179210, PMID:15450176, PMID:9860876; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (16 evidence-backed edges) transcribed from M-CSA entry 800;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

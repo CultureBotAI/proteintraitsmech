@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.1.3.-
 - CHEBI:58278
@@ -202,4 +202,301 @@ definitions:
       The HisF subunit of Thermotoga maritima imidazole glycerol phosphate (ImGP) synthase catalyses the reaction of N'-((5'-phosphoribulosyl)formimino)-5-aminoimidazole-4-carboxamide-ribonucleotide (PRFAR) with ammonia to form an imine, loss of 5-aminoimidazole-4-carboxamide ribotide (AICAR), and the subsequent cyclisation to form ImGP. This reaction is the second half of the fifth step in histidine biosynthesis. ImGP and AICAR are used in histidine and purine biosynthesis respectively. Ammonia is delivered to the active site directly from an associated subunit, HisH, which hydrolyses glutamine to glutamate.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of imidazole glycerol phosphate synthase
+  description: Stepwise mechanism transcribed from M-CSA entry 753 (7 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: asp11
+    label: catalytic Asp11 (M-CSA/PDB numbering; UniProt residue 11)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9X0C6
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: asp130
+    label: catalytic Asp130 (M-CSA/PDB numbering; UniProt residue 130)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9X0C6
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: 5-[(5-phospho-1-deoxy-D-ribulos-1-ylimino)methylamino]-1-(5-phospho-beta-D-ribosyl)imidazole-4-carboxamide(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58525
+  - node_id: reactant1
+    label: ammonium
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+  - node_id: product0
+    label: D-erythro-1-(imidazol-4-yl)glycerol 3-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58278
+  - node_id: product1
+    label: 5-amino-1-(5-phospho-D-ribosyl)imidazole-4-carboxamide(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58475
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product3
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Ammonia performs a nucleophilic attack on the carbonyl carbon of PRFAR.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Water is eliminated from this carbon and an imine is formed.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The water then attacks the carbon of the other imine.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The ribosephosphate moietie is then cleaved from the carbon and the product AICAR is
+      released.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Asp 130 deprotonates -CH2- as the imine group intramolecularly attacks the electrophilic
+      formamide group through the imine's nitrogen, with a protonated Asp 11 supplying the proton for
+      the carbonyl oxygen atom. This forms a cyclic intermediate.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Water is eliminated from the cyclic intermediate and the product is formed.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: imidazole glycerol phosphate synthase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:753
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.70 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.70
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: imidazole glycerol phosphate synthase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.1.3.-
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/753/
+      snippet: Water is eliminated from this carbon and an imine is formed.
+      notes: M-CSA entry 753, mechanism 1; M-CSA cites PMID:11264293, PMID:12795595; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/753/
+      snippet: The water then attacks the carbon of the other imine.
+      notes: M-CSA entry 753, mechanism 1; M-CSA cites PMID:11264293, PMID:12795595; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/753/
+      snippet: The ribosephosphate moietie is then cleaved from the carbon and the product AICAR is released.
+      notes: M-CSA entry 753, mechanism 1; M-CSA cites PMID:11264293, PMID:12795595; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/753/
+      snippet: Asp 130 deprotonates -CH2- as the imine group intramolecularly attacks the electrophilic
+        formamide group through the imine's nitrogen, with a protonated Asp 11 supplying the proton for
+        the carbonyl oxygen atom. This forms a cyclic intermediate.
+      notes: M-CSA entry 753, mechanism 1; M-CSA cites PMID:11264293, PMID:12795595; step 5
+  - subject: asp11
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Asp11 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/753/
+      snippet: Asp 130 deprotonates -CH2- as the imine group intramolecularly attacks the electrophilic
+        formamide group through the imine's nitrogen, with a protonated Asp 11 supplying the proton for
+        the carbonyl oxygen atom. This forms a cyclic intermediate.
+      notes: M-CSA entry 753, mechanism 1; M-CSA cites PMID:11264293, PMID:12795595; step 5
+  - subject: asp130
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Asp130 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/753/
+      snippet: Asp 130 deprotonates -CH2- as the imine group intramolecularly attacks the electrophilic
+        formamide group through the imine's nitrogen, with a protonated Asp 11 supplying the proton for
+        the carbonyl oxygen atom. This forms a cyclic intermediate.
+      notes: M-CSA entry 753, mechanism 1; M-CSA cites PMID:11264293, PMID:12795595; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/753/
+      snippet: Water is eliminated from the cyclic intermediate and the product is formed.
+      notes: M-CSA entry 753, mechanism 1; M-CSA cites PMID:11264293, PMID:12795595; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/753/
+      snippet: Products.
+      notes: M-CSA entry 753, mechanism 1; M-CSA cites PMID:11264293, PMID:12795595; step 7
+  - subject: asp11
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp11 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/753/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 753, mechanism 1; M-CSA cites PMID:11264293, PMID:12795595; M-CSA catalytic-residue
+        roles for Asp11
+  - subject: asp130
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp130 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/753/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 753, mechanism 1; M-CSA cites PMID:11264293, PMID:12795595; M-CSA catalytic-residue
+        roles for Asp130
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/753/
+      snippet: The reaction of PRFAR and ammonia moves through a series of imine intermediates. A nucleophilic
+        ammonia molecule attacks the carbonyl group next to the phosphoglycerol, with subsequent imine
+        formation. Water then hydrolyses the imine group linking the ribosephosphate and phosphoglycerol
+        moieties, separating the substrate into a formamide and AICAR. These steps may be catalysed solely
+        by enzyme bin
+      notes: M-CSA entry 753, mechanism 1; M-CSA cites PMID:11264293, PMID:12795595; CATH domain 3.20.20.70
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/753/
+      snippet: The reaction of PRFAR and ammonia moves through a series of imine intermediates. A nucleophilic
+        ammonia molecule attacks the carbonyl group next to the phosphoglycerol, with subsequent imine
+        formation. Water then hydrolyses the imine group linking the ribosephosphate and phosphoglycerol
+        moieties, separating the substrate into a formamide and AICAR. These steps may be catalysed solely
+        by enzyme bin
+      notes: M-CSA entry 753, mechanism 1; M-CSA cites PMID:11264293, PMID:12795595; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/753/
+      snippet: The reaction of PRFAR and ammonia moves through a series of imine intermediates. A nucleophilic
+        ammonia molecule attacks the carbonyl group next to the phosphoglycerol, with subsequent imine
+        formation. Water then hydrolyses the imine group linking the ribosephosphate and phosphoglycerol
+        moieties, separating the substrate into a formamide and AICAR. These steps may be catalysed solely
+        by enzyme bin
+      notes: M-CSA entry 753, mechanism 1; M-CSA cites PMID:11264293, PMID:12795595; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/753/
+      snippet: The reaction of PRFAR and ammonia moves through a series of imine intermediates. A nucleophilic
+        ammonia molecule attacks the carbonyl group next to the phosphoglycerol, with subsequent imine
+        formation. Water then hydrolyses the imine group linking the ribosephosphate and phosphoglycerol
+        moieties, separating the substrate into a formamide and AICAR. These steps may be catalysed solely
+        by enzyme bin
+      notes: M-CSA entry 753, mechanism 1; M-CSA cites PMID:11264293, PMID:12795595; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/753/
+      snippet: The reaction of PRFAR and ammonia moves through a series of imine intermediates. A nucleophilic
+        ammonia molecule attacks the carbonyl group next to the phosphoglycerol, with subsequent imine
+        formation. Water then hydrolyses the imine group linking the ribosephosphate and phosphoglycerol
+        moieties, separating the substrate into a formamide and AICAR. These steps may be catalysed solely
+        by enzyme bin
+      notes: M-CSA entry 753, mechanism 1; M-CSA cites PMID:11264293, PMID:12795595; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/753/
+      snippet: The reaction of PRFAR and ammonia moves through a series of imine intermediates. A nucleophilic
+        ammonia molecule attacks the carbonyl group next to the phosphoglycerol, with subsequent imine
+        formation. Water then hydrolyses the imine group linking the ribosephosphate and phosphoglycerol
+        moieties, separating the substrate into a formamide and AICAR. These steps may be catalysed solely
+        by enzyme bin
+      notes: M-CSA entry 753, mechanism 1; M-CSA cites PMID:11264293, PMID:12795595; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/753/
+      snippet: The reaction of PRFAR and ammonia moves through a series of imine intermediates. A nucleophilic
+        ammonia molecule attacks the carbonyl group next to the phosphoglycerol, with subsequent imine
+        formation. Water then hydrolyses the imine group linking the ribosephosphate and phosphoglycerol
+        moieties, separating the substrate into a formamide and AICAR. These steps may be catalysed solely
+        by enzyme bin
+      notes: M-CSA entry 753, mechanism 1; M-CSA cites PMID:11264293, PMID:12795595; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product3
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/753/
+      snippet: The reaction of PRFAR and ammonia moves through a series of imine intermediates. A nucleophilic
+        ammonia molecule attacks the carbonyl group next to the phosphoglycerol, with subsequent imine
+        formation. Water then hydrolyses the imine group linking the ribosephosphate and phosphoglycerol
+        moieties, separating the substrate into a formamide and AICAR. These steps may be catalysed solely
+        by enzyme bin
+      notes: M-CSA entry 753, mechanism 1; M-CSA cites PMID:11264293, PMID:12795595; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (18 evidence-backed edges) transcribed from M-CSA entry 753;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

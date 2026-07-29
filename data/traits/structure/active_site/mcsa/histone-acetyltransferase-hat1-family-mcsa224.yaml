@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.3.1.48
 - CHEBI:57288
@@ -259,4 +259,275 @@ definitions:
       Hat1, isolated from Saccharomyces cerevisiae, is a type B histone acetyltransferase. It catalyses the sequential acetylation of Lys12 and then Lys5 of newly synthesised histone H4 using acetyl-CoA as the source of the acetyl group. Hat1 associates with the accessory protein Hat2 before binding and acetylating H4. The complex is thought to also bind histone H3. The complex is then imported into the nucleus where the histones are deposited onto DNA with the aid of Hif1. Hat1 is unable to acetylate DNA-associated histones.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of histone acetyltransferase (HAT1 family)
+  description: Stepwise mechanism transcribed from M-CSA entry 224 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: phe220
+    label: catalytic Phe220 (M-CSA/PDB numbering; UniProt residue 220)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q12341
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: glu255
+    label: catalytic Glu255 (M-CSA/PDB numbering; UniProt residue 255)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q12341
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: acetyl-CoA(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+  - node_id: reactant1
+    label: L-lysinium residue
+    node_type: CHEMICAL
+    grounding: CHEBI:29969
+  - node_id: product0
+    label: coenzyme A(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: N(6)-acetyl-L-lysine residue
+    node_type: CHEMICAL
+    grounding: CHEBI:61930
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu255 deprotonates the Lys12 of the histone substrate, activating it.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The activated lysine of the histone substrate initiates a nucleophilic addition on acetylCoA.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The tetrahedral intermediate collapses to form the acetylated histone and activated CoA.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: CoA deprotonates Glu255.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: histone acetyltransferase (HAT1 family) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:224
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.630.30 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.630.30
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: histone acetyltransferase (HAT1 family) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.3.1.48
+  edges:
+  - subject: glu255
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu255 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/224/
+      snippet: Glu255 deprotonates the Lys12 of the histone substrate, activating it.
+      notes: M-CSA entry 224, mechanism 1; M-CSA cites PMID:10430873, PMID:17694075, PMID:18373695, PMID:9727486;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/224/
+      snippet: The activated lysine of the histone substrate initiates a nucleophilic addition on acetylCoA.
+      notes: M-CSA entry 224, mechanism 1; M-CSA cites PMID:10430873, PMID:17694075, PMID:18373695, PMID:9727486;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/224/
+      snippet: The tetrahedral intermediate collapses to form the acetylated histone and activated CoA.
+      notes: M-CSA entry 224, mechanism 1; M-CSA cites PMID:10430873, PMID:17694075, PMID:18373695, PMID:9727486;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/224/
+      snippet: CoA deprotonates Glu255.
+      notes: M-CSA entry 224, mechanism 1; M-CSA cites PMID:10430873, PMID:17694075, PMID:18373695, PMID:9727486;
+        step 4
+  - subject: glu255
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Glu255 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/224/
+      snippet: CoA deprotonates Glu255.
+      notes: M-CSA entry 224, mechanism 1; M-CSA cites PMID:10430873, PMID:17694075, PMID:18373695, PMID:9727486;
+        step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/224/
+      snippet: Products
+      notes: M-CSA entry 224, mechanism 1; M-CSA cites PMID:10430873, PMID:17694075, PMID:18373695, PMID:9727486;
+        step 5
+  - subject: phe220
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Phe220 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/224/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 224, mechanism 1; M-CSA cites PMID:10430873, PMID:17694075, PMID:18373695, PMID:9727486;
+        M-CSA catalytic-residue roles for Phe220
+  - subject: glu255
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu255 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/224/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 224, mechanism 1; M-CSA cites PMID:10430873, PMID:17694075, PMID:18373695, PMID:9727486;
+        M-CSA catalytic-residue roles for Glu255
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/224/
+      snippet: "<p>Glu255 deprotonates Lys12 of H4 and the neutral amine is the nucleophile for attack\
+        \ on the carbonyl of acetyl-CoA. The resulting tetrahedral intermediate collapses back and eliminates\
+        \ CoAS-, which is protonated by an as yet unknown acid. The process is then repeated with Lys5\
+        \ of H4.</p>
+
+<p>After the acetylation of Lys12 of histone H4 the substrate reorientates\
+        \ in the active site and Lys5 of"
+      notes: M-CSA entry 224, mechanism 1; M-CSA cites PMID:10430873, PMID:17694075, PMID:18373695, PMID:9727486;
+        CATH domain 3.40.630.30 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/224/
+      snippet: "<p>Glu255 deprotonates Lys12 of H4 and the neutral amine is the nucleophile for attack\
+        \ on the carbonyl of acetyl-CoA. The resulting tetrahedral intermediate collapses back and eliminates\
+        \ CoAS-, which is protonated by an as yet unknown acid. The process is then repeated with Lys5\
+        \ of H4.</p>
+
+<p>After the acetylation of Lys12 of histone H4 the substrate reorientates\
+        \ in the active site and Lys5 of"
+      notes: M-CSA entry 224, mechanism 1; M-CSA cites PMID:10430873, PMID:17694075, PMID:18373695, PMID:9727486;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/224/
+      snippet: "<p>Glu255 deprotonates Lys12 of H4 and the neutral amine is the nucleophile for attack\
+        \ on the carbonyl of acetyl-CoA. The resulting tetrahedral intermediate collapses back and eliminates\
+        \ CoAS-, which is protonated by an as yet unknown acid. The process is then repeated with Lys5\
+        \ of H4.</p>
+
+<p>After the acetylation of Lys12 of histone H4 the substrate reorientates\
+        \ in the active site and Lys5 of"
+      notes: M-CSA entry 224, mechanism 1; M-CSA cites PMID:10430873, PMID:17694075, PMID:18373695, PMID:9727486;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/224/
+      snippet: "<p>Glu255 deprotonates Lys12 of H4 and the neutral amine is the nucleophile for attack\
+        \ on the carbonyl of acetyl-CoA. The resulting tetrahedral intermediate collapses back and eliminates\
+        \ CoAS-, which is protonated by an as yet unknown acid. The process is then repeated with Lys5\
+        \ of H4.</p>
+
+<p>After the acetylation of Lys12 of histone H4 the substrate reorientates\
+        \ in the active site and Lys5 of"
+      notes: M-CSA entry 224, mechanism 1; M-CSA cites PMID:10430873, PMID:17694075, PMID:18373695, PMID:9727486;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/224/
+      snippet: "<p>Glu255 deprotonates Lys12 of H4 and the neutral amine is the nucleophile for attack\
+        \ on the carbonyl of acetyl-CoA. The resulting tetrahedral intermediate collapses back and eliminates\
+        \ CoAS-, which is protonated by an as yet unknown acid. The process is then repeated with Lys5\
+        \ of H4.</p>
+
+<p>After the acetylation of Lys12 of histone H4 the substrate reorientates\
+        \ in the active site and Lys5 of"
+      notes: M-CSA entry 224, mechanism 1; M-CSA cites PMID:10430873, PMID:17694075, PMID:18373695, PMID:9727486;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/224/
+      snippet: "<p>Glu255 deprotonates Lys12 of H4 and the neutral amine is the nucleophile for attack\
+        \ on the carbonyl of acetyl-CoA. The resulting tetrahedral intermediate collapses back and eliminates\
+        \ CoAS-, which is protonated by an as yet unknown acid. The process is then repeated with Lys5\
+        \ of H4.</p>
+
+<p>After the acetylation of Lys12 of histone H4 the substrate reorientates\
+        \ in the active site and Lys5 of"
+      notes: M-CSA entry 224, mechanism 1; M-CSA cites PMID:10430873, PMID:17694075, PMID:18373695, PMID:9727486;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/224/
+      snippet: "<p>Glu255 deprotonates Lys12 of H4 and the neutral amine is the nucleophile for attack\
+        \ on the carbonyl of acetyl-CoA. The resulting tetrahedral intermediate collapses back and eliminates\
+        \ CoAS-, which is protonated by an as yet unknown acid. The process is then repeated with Lys5\
+        \ of H4.</p>
+
+<p>After the acetylation of Lys12 of histone H4 the substrate reorientates\
+        \ in the active site and Lys5 of"
+      notes: M-CSA entry 224, mechanism 1; M-CSA cites PMID:10430873, PMID:17694075, PMID:18373695, PMID:9727486;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 224;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

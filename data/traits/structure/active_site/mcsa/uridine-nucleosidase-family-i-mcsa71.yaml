@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.2.3
 - CHEBI:15377
@@ -217,4 +217,300 @@ definitions:
       Uracil-DNA glycosylase (UDG) are monofunctional glycosylases and initiate the base excision repair (BER) pathway for uracil by hydrolysing the N-C'1 glycosylic bond between a target uracil and an abasic site. The human BER cycle is important for restoring the chemical integrity of DNA. The uracil-DNA glycosylase superfamily consists of 6 smaller families, based on sequence alignments. Both human and E.coli UDG come under Family I and are also called UNGs. The enzyme mechanism has been hotly debated. Classically, an acid/base mechanism has been employed (mechanism proposal 2), but new evidence suggests a steric distortion of the DNA substrate catalyses the reaction in a mechanism similar to SN1 dissociation (mechanism proposal 1).
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of uridine nucleosidase (family I)
+  description: Stepwise mechanism transcribed from M-CSA entry 71 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: asp64
+    label: catalytic Asp64 (M-CSA/PDB numbering; UniProt residue 64)
+    node_type: RESIDUE
+    grounding: UniProtKB:P12295
+    description: 'M-CSA roles: activator, electrostatic stabiliser, increase acidity, proton acceptor,
+      proton donor.'
+  - node_id: tyr66
+    label: catalytic Tyr66 (M-CSA/PDB numbering; UniProt residue 66)
+    node_type: RESIDUE
+    grounding: UniProtKB:P12295
+    description: 'M-CSA roles: activator, steric role.'
+  - node_id: phe77
+    label: catalytic Phe77 (M-CSA/PDB numbering; UniProt residue 77)
+    node_type: RESIDUE
+    grounding: UniProtKB:P12295
+    description: 'M-CSA roles: activator, steric role.'
+  - node_id: his187
+    label: catalytic His187 (M-CSA/PDB numbering; UniProt residue 187)
+    node_type: RESIDUE
+    grounding: UniProtKB:P12295
+    description: 'M-CSA roles: covalently attached, electrostatic stabiliser, hydrogen bond donor, nucleofuge,
+      nucleophile, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: 2'-deoxyuridine
+    node_type: CHEMICAL
+    grounding: CHEBI:16450
+  - node_id: product0
+    label: uracil
+    node_type: CHEMICAL
+    grounding: CHEBI:17568
+  - node_id: product1
+    label: 2-deoxy-D-ribofuranose
+    node_type: CHEMICAL
+    grounding: CHEBI:90761
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The structural constraints imposed upon the uridine deoxyribose ring by Tyr 66 and Phe
+      77 induce unimolecular elimination to form a transient oxonium species and an anionic precursor
+      of uracil
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The transient oxonium species is attacked by water, forming the 1-alpha hydroxy group
+      of the D-ribose product. The anionic intermediate is stabilised though hydrogen bonding to His187,
+      and is then protonated from the attacking water.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The intermediate tautomerises to form the uracil product.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: uridine nucleosidase (family I) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:71
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.470.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.470.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: uridine nucleosidase (family I) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.2.3
+  edges:
+  - subject: tyr66
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr66 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/71/
+      snippet: The structural constraints imposed upon the uridine deoxyribose ring by Tyr 66 and Phe
+        77 induce unimolecular elimination to form a transient oxonium species and an anionic precursor
+        of uracil
+      notes: M-CSA entry 71, mechanism 1; M-CSA cites PMID:10090282, PMID:10805771, PMID:10946228, PMID:11607036,
+        PMID:11716455, PMID:11859082, PMID:12590578, PMID:25181003, PMID:25252105, PMID:7697717, PMID:7845459;
+        step 1
+  - subject: phe77
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Phe77 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/71/
+      snippet: The structural constraints imposed upon the uridine deoxyribose ring by Tyr 66 and Phe
+        77 induce unimolecular elimination to form a transient oxonium species and an anionic precursor
+        of uracil
+      notes: M-CSA entry 71, mechanism 1; M-CSA cites PMID:10090282, PMID:10805771, PMID:10946228, PMID:11607036,
+        PMID:11716455, PMID:11859082, PMID:12590578, PMID:25181003, PMID:25252105, PMID:7697717, PMID:7845459;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/71/
+      snippet: The transient oxonium species is attacked by water, forming the 1-alpha hydroxy group of
+        the D-ribose product. The anionic intermediate is stabilised though hydrogen bonding to His187,
+        and is then protonated from the attacking water.
+      notes: M-CSA entry 71, mechanism 1; M-CSA cites PMID:10090282, PMID:10805771, PMID:10946228, PMID:11607036,
+        PMID:11716455, PMID:11859082, PMID:12590578, PMID:25181003, PMID:25252105, PMID:7697717, PMID:7845459;
+        step 2
+  - subject: his187
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His187 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/71/
+      snippet: The transient oxonium species is attacked by water, forming the 1-alpha hydroxy group of
+        the D-ribose product. The anionic intermediate is stabilised though hydrogen bonding to His187,
+        and is then protonated from the attacking water.
+      notes: M-CSA entry 71, mechanism 1; M-CSA cites PMID:10090282, PMID:10805771, PMID:10946228, PMID:11607036,
+        PMID:11716455, PMID:11859082, PMID:12590578, PMID:25181003, PMID:25252105, PMID:7697717, PMID:7845459;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/71/
+      snippet: The intermediate tautomerises to form the uracil product.
+      notes: M-CSA entry 71, mechanism 1; M-CSA cites PMID:10090282, PMID:10805771, PMID:10946228, PMID:11607036,
+        PMID:11716455, PMID:11859082, PMID:12590578, PMID:25181003, PMID:25252105, PMID:7697717, PMID:7845459;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/71/
+      snippet: Products.
+      notes: M-CSA entry 71, mechanism 1; M-CSA cites PMID:10090282, PMID:10805771, PMID:10946228, PMID:11607036,
+        PMID:11716455, PMID:11859082, PMID:12590578, PMID:25181003, PMID:25252105, PMID:7697717, PMID:7845459;
+        step 4
+  - subject: asp64
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp64 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/71/
+      snippet: activator, electrostatic stabiliser, increase acidity, proton acceptor, proton donor
+      notes: M-CSA entry 71, mechanism 1; M-CSA cites PMID:10090282, PMID:10805771, PMID:10946228, PMID:11607036,
+        PMID:11716455, PMID:11859082, PMID:12590578, PMID:25181003, PMID:25252105, PMID:7697717, PMID:7845459;
+        M-CSA catalytic-residue roles for Asp64
+  - subject: tyr66
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr66 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/71/
+      snippet: activator, steric role
+      notes: M-CSA entry 71, mechanism 1; M-CSA cites PMID:10090282, PMID:10805771, PMID:10946228, PMID:11607036,
+        PMID:11716455, PMID:11859082, PMID:12590578, PMID:25181003, PMID:25252105, PMID:7697717, PMID:7845459;
+        M-CSA catalytic-residue roles for Tyr66
+  - subject: phe77
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Phe77 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/71/
+      snippet: activator, steric role
+      notes: M-CSA entry 71, mechanism 1; M-CSA cites PMID:10090282, PMID:10805771, PMID:10946228, PMID:11607036,
+        PMID:11716455, PMID:11859082, PMID:12590578, PMID:25181003, PMID:25252105, PMID:7697717, PMID:7845459;
+        M-CSA catalytic-residue roles for Phe77
+  - subject: his187
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His187 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/71/
+      snippet: covalently attached, electrostatic stabiliser, hydrogen bond donor, nucleofuge, nucleophile,
+        proton acceptor, proton donor
+      notes: M-CSA entry 71, mechanism 1; M-CSA cites PMID:10090282, PMID:10805771, PMID:10946228, PMID:11607036,
+        PMID:11716455, PMID:11859082, PMID:12590578, PMID:25181003, PMID:25252105, PMID:7697717, PMID:7845459;
+        M-CSA catalytic-residue roles for His187
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/71/
+      snippet: This mechanism represents the steric contortion mechanism. Here the tetrahedral distortion
+        is imposed by the structurally rigid walls of the active site, formed by Tyr and Phe residues.
+        The enzyme centre flattens the pucker ring of the uridine deoxyribose, raising the glycosylic
+        bond to a semi-axial position, allowing pi-sigma* overlap.  This stereoelectronic effect increases
+        in strength as the su
+      notes: M-CSA entry 71, mechanism 1; M-CSA cites PMID:10090282, PMID:10805771, PMID:10946228, PMID:11607036,
+        PMID:11716455, PMID:11859082, PMID:12590578, PMID:25181003, PMID:25252105, PMID:7697717, PMID:7845459;
+        CATH domain 3.40.470.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/71/
+      snippet: This mechanism represents the steric contortion mechanism. Here the tetrahedral distortion
+        is imposed by the structurally rigid walls of the active site, formed by Tyr and Phe residues.
+        The enzyme centre flattens the pucker ring of the uridine deoxyribose, raising the glycosylic
+        bond to a semi-axial position, allowing pi-sigma* overlap.  This stereoelectronic effect increases
+        in strength as the su
+      notes: M-CSA entry 71, mechanism 1; M-CSA cites PMID:10090282, PMID:10805771, PMID:10946228, PMID:11607036,
+        PMID:11716455, PMID:11859082, PMID:12590578, PMID:25181003, PMID:25252105, PMID:7697717, PMID:7845459;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/71/
+      snippet: This mechanism represents the steric contortion mechanism. Here the tetrahedral distortion
+        is imposed by the structurally rigid walls of the active site, formed by Tyr and Phe residues.
+        The enzyme centre flattens the pucker ring of the uridine deoxyribose, raising the glycosylic
+        bond to a semi-axial position, allowing pi-sigma* overlap.  This stereoelectronic effect increases
+        in strength as the su
+      notes: M-CSA entry 71, mechanism 1; M-CSA cites PMID:10090282, PMID:10805771, PMID:10946228, PMID:11607036,
+        PMID:11716455, PMID:11859082, PMID:12590578, PMID:25181003, PMID:25252105, PMID:7697717, PMID:7845459;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/71/
+      snippet: This mechanism represents the steric contortion mechanism. Here the tetrahedral distortion
+        is imposed by the structurally rigid walls of the active site, formed by Tyr and Phe residues.
+        The enzyme centre flattens the pucker ring of the uridine deoxyribose, raising the glycosylic
+        bond to a semi-axial position, allowing pi-sigma* overlap.  This stereoelectronic effect increases
+        in strength as the su
+      notes: M-CSA entry 71, mechanism 1; M-CSA cites PMID:10090282, PMID:10805771, PMID:10946228, PMID:11607036,
+        PMID:11716455, PMID:11859082, PMID:12590578, PMID:25181003, PMID:25252105, PMID:7697717, PMID:7845459;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/71/
+      snippet: This mechanism represents the steric contortion mechanism. Here the tetrahedral distortion
+        is imposed by the structurally rigid walls of the active site, formed by Tyr and Phe residues.
+        The enzyme centre flattens the pucker ring of the uridine deoxyribose, raising the glycosylic
+        bond to a semi-axial position, allowing pi-sigma* overlap.  This stereoelectronic effect increases
+        in strength as the su
+      notes: M-CSA entry 71, mechanism 1; M-CSA cites PMID:10090282, PMID:10805771, PMID:10946228, PMID:11607036,
+        PMID:11716455, PMID:11859082, PMID:12590578, PMID:25181003, PMID:25252105, PMID:7697717, PMID:7845459;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/71/
+      snippet: This mechanism represents the steric contortion mechanism. Here the tetrahedral distortion
+        is imposed by the structurally rigid walls of the active site, formed by Tyr and Phe residues.
+        The enzyme centre flattens the pucker ring of the uridine deoxyribose, raising the glycosylic
+        bond to a semi-axial position, allowing pi-sigma* overlap.  This stereoelectronic effect increases
+        in strength as the su
+      notes: M-CSA entry 71, mechanism 1; M-CSA cites PMID:10090282, PMID:10805771, PMID:10946228, PMID:11607036,
+        PMID:11716455, PMID:11859082, PMID:12590578, PMID:25181003, PMID:25252105, PMID:7697717, PMID:7845459;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (16 evidence-backed edges) transcribed from M-CSA entry 71;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

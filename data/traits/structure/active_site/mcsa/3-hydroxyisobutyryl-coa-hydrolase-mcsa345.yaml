@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.2.4
 - CHEBI:11805
@@ -354,4 +354,307 @@ definitions:
       Hydrolyses 3-hydroxyisobutyryl-CoA (HIBYL-CoA), a saline catabolite. Has high activity toward isobutyryl-CoA. Could be an isobutyryl-CoA dehydrogenase that functions in valine catabolism. Also hydrolyses 3-hydroxypropanoyl-CoA. Involved in the pathway L-valine degradation, which is part of Amino-acid degradation. A member of the crotonase superfamily.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 3-hydroxyisobutyryl-CoA hydrolase
+  description: Stepwise mechanism transcribed from M-CSA entry 345 (6 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: gly98
+    label: catalytic Gly98 (M-CSA/PDB numbering; UniProt residue 98)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q6NVY1
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: gly146
+    label: catalytic Gly146 (M-CSA/PDB numbering; UniProt residue 146)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q6NVY1
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: glu169
+    label: catalytic Glu169 (M-CSA/PDB numbering; UniProt residue 169)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q6NVY1
+    description: 'M-CSA roles: activator, covalently attached, electrofuge, electrophile, hydrogen bond
+      donor, nucleophile, polar interaction, proton donor.'
+  - node_id: asp177
+    label: catalytic Asp177 (M-CSA/PDB numbering; UniProt residue 177)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q6NVY1
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, increase acidity, proton acceptor,
+      proton donor.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: 3-hydroxy-2-methylpropanoyl-CoA(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57340
+  - node_id: product0
+    label: 3-hydroxyisobutyrate
+    node_type: CHEMICAL
+    grounding: CHEBI:11805
+  - node_id: product1
+    label: coenzyme A(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu169 nucleophilicly attacks the carboxylate group on the substrate to generate an anhydride
+      intermediate. This is facilitated by the binding of the thioester oxygen atom to an oxyanion hole
+      formed by the peptide nitrogens of Gly98 and of Gly146.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The anhydride intermediate undergoes internal elimination to produce CoA and an intermediate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: A water molecule, activated by Asp177A, attacks the carbonyl carbon of the covalently
+      attached Glu169A.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The final intermediate undergoes internal elimination to liberate the Glu169A and producing
+      3-hydroxy-2-methylpropanoate.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Inferred return step in which a water molecule deprotonates Glu169.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: 3-hydroxyisobutyryl-CoA hydrolase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:345
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: activity
+    label: 3-hydroxyisobutyryl-CoA hydrolase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.2.4
+  edges:
+  - subject: gly98
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Gly98 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/345/
+      snippet: Glu169 nucleophilicly attacks the carboxylate group on the substrate to generate an anhydride
+        intermediate. This is facilitated by the binding of the thioester oxygen atom to an oxyanion hole
+        formed by the peptide nitrogens of Gly98 and of Gly146.
+      notes: M-CSA entry 345, mechanism 1; M-CSA cites PMID:11404361, PMID:14518977; step 1
+  - subject: gly146
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Gly146 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/345/
+      snippet: Glu169 nucleophilicly attacks the carboxylate group on the substrate to generate an anhydride
+        intermediate. This is facilitated by the binding of the thioester oxygen atom to an oxyanion hole
+        formed by the peptide nitrogens of Gly98 and of Gly146.
+      notes: M-CSA entry 345, mechanism 1; M-CSA cites PMID:11404361, PMID:14518977; step 1
+  - subject: glu169
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu169 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/345/
+      snippet: Glu169 nucleophilicly attacks the carboxylate group on the substrate to generate an anhydride
+        intermediate. This is facilitated by the binding of the thioester oxygen atom to an oxyanion hole
+        formed by the peptide nitrogens of Gly98 and of Gly146.
+      notes: M-CSA entry 345, mechanism 1; M-CSA cites PMID:11404361, PMID:14518977; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/345/
+      snippet: The anhydride intermediate undergoes internal elimination to produce CoA and an intermediate.
+      notes: M-CSA entry 345, mechanism 1; M-CSA cites PMID:11404361, PMID:14518977; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/345/
+      snippet: A water molecule, activated by Asp177A, attacks the carbonyl carbon of the covalently attached
+        Glu169A.
+      notes: M-CSA entry 345, mechanism 1; M-CSA cites PMID:11404361, PMID:14518977; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/345/
+      snippet: The final intermediate undergoes internal elimination to liberate the Glu169A and producing
+        3-hydroxy-2-methylpropanoate.
+      notes: M-CSA entry 345, mechanism 1; M-CSA cites PMID:11404361, PMID:14518977; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/345/
+      snippet: Inferred return step in which a water molecule deprotonates Glu169.
+      notes: M-CSA entry 345, mechanism 1; M-CSA cites PMID:11404361, PMID:14518977; step 5
+  - subject: glu169
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Glu169 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/345/
+      snippet: Inferred return step in which a water molecule deprotonates Glu169.
+      notes: M-CSA entry 345, mechanism 1; M-CSA cites PMID:11404361, PMID:14518977; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/345/
+      snippet: Products.
+      notes: M-CSA entry 345, mechanism 1; M-CSA cites PMID:11404361, PMID:14518977; step 6
+  - subject: gly98
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly98 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/345/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 345, mechanism 1; M-CSA cites PMID:11404361, PMID:14518977; M-CSA catalytic-residue
+        roles for Gly98
+  - subject: gly146
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly146 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/345/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 345, mechanism 1; M-CSA cites PMID:11404361, PMID:14518977; M-CSA catalytic-residue
+        roles for Gly146
+  - subject: glu169
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu169 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/345/
+      snippet: activator, covalently attached, electrofuge, electrophile, hydrogen bond donor, nucleophile,
+        polar interaction, proton donor
+      notes: M-CSA entry 345, mechanism 1; M-CSA cites PMID:11404361, PMID:14518977; M-CSA catalytic-residue
+        roles for Glu169
+  - subject: asp177
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp177 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/345/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, increase acidity, proton acceptor, proton
+        donor
+      notes: M-CSA entry 345, mechanism 1; M-CSA cites PMID:11404361, PMID:14518977; M-CSA catalytic-residue
+        roles for Asp177
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/345/
+      snippet: Glu169 nucleophilicly attacks the carboxylate group on the substrate to generate an anhydride
+        intermediate. This is facilitated by the binding of the thioester oxygen atom to an oxyanion hole
+        formed by the peptide nitrogens of Gly98 and of Gly146. The anhydride intermediate undergoes internal
+        elimination to produce CoA and an intermediate. A water molecule, activated by Asp177A, attacks
+        the carbon
+      notes: M-CSA entry 345, mechanism 1; M-CSA cites PMID:11404361, PMID:14518977; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/345/
+      snippet: Glu169 nucleophilicly attacks the carboxylate group on the substrate to generate an anhydride
+        intermediate. This is facilitated by the binding of the thioester oxygen atom to an oxyanion hole
+        formed by the peptide nitrogens of Gly98 and of Gly146. The anhydride intermediate undergoes internal
+        elimination to produce CoA and an intermediate. A water molecule, activated by Asp177A, attacks
+        the carbon
+      notes: M-CSA entry 345, mechanism 1; M-CSA cites PMID:11404361, PMID:14518977; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/345/
+      snippet: Glu169 nucleophilicly attacks the carboxylate group on the substrate to generate an anhydride
+        intermediate. This is facilitated by the binding of the thioester oxygen atom to an oxyanion hole
+        formed by the peptide nitrogens of Gly98 and of Gly146. The anhydride intermediate undergoes internal
+        elimination to produce CoA and an intermediate. A water molecule, activated by Asp177A, attacks
+        the carbon
+      notes: M-CSA entry 345, mechanism 1; M-CSA cites PMID:11404361, PMID:14518977; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/345/
+      snippet: Glu169 nucleophilicly attacks the carboxylate group on the substrate to generate an anhydride
+        intermediate. This is facilitated by the binding of the thioester oxygen atom to an oxyanion hole
+        formed by the peptide nitrogens of Gly98 and of Gly146. The anhydride intermediate undergoes internal
+        elimination to produce CoA and an intermediate. A water molecule, activated by Asp177A, attacks
+        the carbon
+      notes: M-CSA entry 345, mechanism 1; M-CSA cites PMID:11404361, PMID:14518977; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/345/
+      snippet: Glu169 nucleophilicly attacks the carboxylate group on the substrate to generate an anhydride
+        intermediate. This is facilitated by the binding of the thioester oxygen atom to an oxyanion hole
+        formed by the peptide nitrogens of Gly98 and of Gly146. The anhydride intermediate undergoes internal
+        elimination to produce CoA and an intermediate. A water molecule, activated by Asp177A, attacks
+        the carbon
+      notes: M-CSA entry 345, mechanism 1; M-CSA cites PMID:11404361, PMID:14518977; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/345/
+      snippet: Glu169 nucleophilicly attacks the carboxylate group on the substrate to generate an anhydride
+        intermediate. This is facilitated by the binding of the thioester oxygen atom to an oxyanion hole
+        formed by the peptide nitrogens of Gly98 and of Gly146. The anhydride intermediate undergoes internal
+        elimination to produce CoA and an intermediate. A water molecule, activated by Asp177A, attacks
+        the carbon
+      notes: M-CSA entry 345, mechanism 1; M-CSA cites PMID:11404361, PMID:14518977; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (19 evidence-backed edges) transcribed from M-CSA entry 345;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

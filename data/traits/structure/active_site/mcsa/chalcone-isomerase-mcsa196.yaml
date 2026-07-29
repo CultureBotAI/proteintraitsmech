@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.5.1.6
 - CHEBI:5070
@@ -172,4 +172,194 @@ definitions:
       Chalcone isomerase is required in plant flavonoid biosynthesis, catalysing the cyclisation of chalcone with a 1:100,000 preference for the S-isomer over the R- isomer. This pathway is well characterised, and so the flavonoid biosynthetic enzymes are attractive targets for metabolic engineering.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of chalcone isomerase
+  description: Stepwise mechanism transcribed from M-CSA entry 196 (2 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: arg36
+    label: catalytic Arg36 (M-CSA/PDB numbering; UniProt residue 36)
+    node_type: RESIDUE
+    grounding: UniProtKB:P28012
+  - node_id: thr48
+    label: catalytic Thr48 (M-CSA/PDB numbering; UniProt residue 48)
+    node_type: RESIDUE
+    grounding: UniProtKB:P28012
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: lys97
+    label: catalytic Lys97 (M-CSA/PDB numbering; UniProt residue 97)
+    node_type: RESIDUE
+    grounding: UniProtKB:P28012
+    description: 'M-CSA roles: modifies pKa.'
+  - node_id: tyr106
+    label: catalytic Tyr106 (M-CSA/PDB numbering; UniProt residue 106)
+    node_type: RESIDUE
+    grounding: UniProtKB:P28012
+    description: 'M-CSA roles: activator, hydrogen bond donor.'
+  - node_id: reactant0
+    label: 2'-hydroxychalcone
+    node_type: CHEMICAL
+    grounding: CHEBI:27916
+  - node_id: product0
+    label: flavanone
+    node_type: CHEMICAL
+    grounding: CHEBI:5070
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The chalcone substrate undergoes an intramolecular nucleophilic addition, and deprotonates
+      a water molecule to generate the flavanone product. The cyclisation reaction proceeds through a
+      transition state in which charge delocalisation results in the transient protonation of the transition
+      state enolate by the water molecule hydrogen bonded to Tyr106 [PMID:11955065,PMID:11698411].
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: chalcone isomerase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:196
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.50.70.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.50.70.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: chalcone isomerase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.5.1.6
+  edges:
+  - subject: tyr106
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr106 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/196/
+      snippet: The chalcone substrate undergoes an intramolecular nucleophilic addition, and deprotonates
+        a water molecule to generate the flavanone product. The cyclisation reaction proceeds through
+        a transition state in which charge delocalisation results in the transient protonation of the
+        transition state enolate by the water molecule hydrogen bonded to Tyr106 [PMID:11955065,PMID:11698411].
+      notes: M-CSA entry 196, mechanism 1; M-CSA cites PMID:10966651, PMID:11698411, PMID:11955065, PMID:14978275,
+        PMID:17602559, PMID:29394293; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/196/
+      snippet: Products.
+      notes: M-CSA entry 196, mechanism 1; M-CSA cites PMID:10966651, PMID:11698411, PMID:11955065, PMID:14978275,
+        PMID:17602559, PMID:29394293; step 2
+  - subject: arg36
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg36 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/196/
+      snippet: <p>The overall mechanism is a Michael addition; the intra-molecular nucleophilic attack
+        of a hydroxyl at a carbonyl in the chalcone substrate, through a six member transition state to
+        form (2S)-naringenin. Modelling studies implicate an electron flow towards the C alpha atom, forming
+        a corresponding carbanion transition state. The charge on this carbon atom increases substantially
+        more than the ch
+      notes: M-CSA entry 196, mechanism 1; M-CSA cites PMID:10966651, PMID:11698411, PMID:11955065, PMID:14978275,
+        PMID:17602559, PMID:29394293; M-CSA catalytic-residue roles for Arg36
+  - subject: thr48
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr48 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/196/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 196, mechanism 1; M-CSA cites PMID:10966651, PMID:11698411, PMID:11955065, PMID:14978275,
+        PMID:17602559, PMID:29394293; M-CSA catalytic-residue roles for Thr48
+  - subject: lys97
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys97 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/196/
+      snippet: modifies pKa
+      notes: M-CSA entry 196, mechanism 1; M-CSA cites PMID:10966651, PMID:11698411, PMID:11955065, PMID:14978275,
+        PMID:17602559, PMID:29394293; M-CSA catalytic-residue roles for Lys97
+  - subject: tyr106
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr106 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/196/
+      snippet: activator, hydrogen bond donor
+      notes: M-CSA entry 196, mechanism 1; M-CSA cites PMID:10966651, PMID:11698411, PMID:11955065, PMID:14978275,
+        PMID:17602559, PMID:29394293; M-CSA catalytic-residue roles for Tyr106
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/196/
+      snippet: <p>The overall mechanism is a Michael addition; the intra-molecular nucleophilic attack
+        of a hydroxyl at a carbonyl in the chalcone substrate, through a six member transition state to
+        form (2S)-naringenin. Modelling studies implicate an electron flow towards the C alpha atom, forming
+        a corresponding carbanion transition state. The charge on this carbon atom increases substantially
+        more than the ch
+      notes: M-CSA entry 196, mechanism 1; M-CSA cites PMID:10966651, PMID:11698411, PMID:11955065, PMID:14978275,
+        PMID:17602559, PMID:29394293; CATH domain 3.50.70.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/196/
+      snippet: <p>The overall mechanism is a Michael addition; the intra-molecular nucleophilic attack
+        of a hydroxyl at a carbonyl in the chalcone substrate, through a six member transition state to
+        form (2S)-naringenin. Modelling studies implicate an electron flow towards the C alpha atom, forming
+        a corresponding carbanion transition state. The charge on this carbon atom increases substantially
+        more than the ch
+      notes: M-CSA entry 196, mechanism 1; M-CSA cites PMID:10966651, PMID:11698411, PMID:11955065, PMID:14978275,
+        PMID:17602559, PMID:29394293; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/196/
+      snippet: <p>The overall mechanism is a Michael addition; the intra-molecular nucleophilic attack
+        of a hydroxyl at a carbonyl in the chalcone substrate, through a six member transition state to
+        form (2S)-naringenin. Modelling studies implicate an electron flow towards the C alpha atom, forming
+        a corresponding carbanion transition state. The charge on this carbon atom increases substantially
+        more than the ch
+      notes: M-CSA entry 196, mechanism 1; M-CSA cites PMID:10966651, PMID:11698411, PMID:11955065, PMID:14978275,
+        PMID:17602559, PMID:29394293; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/196/
+      snippet: <p>The overall mechanism is a Michael addition; the intra-molecular nucleophilic attack
+        of a hydroxyl at a carbonyl in the chalcone substrate, through a six member transition state to
+        form (2S)-naringenin. Modelling studies implicate an electron flow towards the C alpha atom, forming
+        a corresponding carbanion transition state. The charge on this carbon atom increases substantially
+        more than the ch
+      notes: M-CSA entry 196, mechanism 1; M-CSA cites PMID:10966651, PMID:11698411, PMID:11955065, PMID:14978275,
+        PMID:17602559, PMID:29394293; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (10 evidence-backed edges) transcribed from M-CSA entry 196;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

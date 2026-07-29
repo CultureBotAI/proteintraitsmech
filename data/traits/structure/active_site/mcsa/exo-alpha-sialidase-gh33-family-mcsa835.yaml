@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.1.18
 - CHEBI:15377
@@ -359,4 +359,282 @@ definitions:
       Exo sialidases (neuraminidases) catalyse the removal of terminal sialic acid residues in oligosaccharides, glycoproteins, glycolipids and synthetic substrates to release free sialic acid. This class function to release sialic acids for use as carbon and energy sources for non-pathogenic bacterium while in pathogenic microorganisms, sialidases have been suggested to be pathogenic factors.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of exo-alpha-sialidase (GH33 Family)
+  description: Stepwise mechanism transcribed from M-CSA entry 835 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: asp92
+    label: catalytic Asp92 (M-CSA/PDB numbering; UniProt residue 92)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q02834
+    description: 'M-CSA roles: activator, increase nucleophilicity, promote heterolysis, proton acceptor,
+      proton donor.'
+  - node_id: glu260
+    label: catalytic Glu260 (M-CSA/PDB numbering; UniProt residue 260)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q02834
+    description: 'M-CSA roles: activator, increase nucleophilicity, promote heterolysis, proton acceptor,
+      proton donor.'
+  - node_id: tyr370
+    label: catalytic Tyr370 (M-CSA/PDB numbering; UniProt residue 370)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q02834
+    description: 'M-CSA roles: covalently attached, nucleofuge, nucleophile, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: alpha-N-acetylneuraminyl-(2->3)-beta-D-galactosyl-(1->4)-beta-D-glucosyl-(1<->1')-ceramide
+    node_type: CHEMICAL
+    grounding: CHEBI:15681
+  - node_id: product0
+    label: N-acetylneuraminic acid
+    node_type: CHEMICAL
+    grounding: CHEBI:17012
+  - node_id: product1
+    label: beta-D-galactosyl-(1->4)-beta-D-glucosyl-(1<->1)-N-acylsphingosine
+    node_type: CHEMICAL
+    grounding: CHEBI:17950
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu260 activates Tyr370 which attacks C1. The sialyl ketal linkage is broken in an SN2
+      reaction with Asp92 protonating the leaving group.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Asp92 activates a water molecule which hydrolyses the tyrosine bound intermediate. Glu260
+      protonates the departing Tyr370.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: products
+  - node_id: active_site
+    label: exo-alpha-sialidase (GH33 Family) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:835
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.120.10.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.120.10.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: exo-alpha-sialidase (GH33 Family) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.1.18
+  edges:
+  - subject: asp92
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp92 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/835/
+      snippet: Glu260 activates Tyr370 which attacks C1. The sialyl ketal linkage is broken in an SN2
+        reaction with Asp92 protonating the leaving group.
+      notes: M-CSA entry 835, mechanism 1; M-CSA cites PMID:12812490, PMID:14580216, PMID:15130470, PMID:15527797,
+        PMID:24194520, PMID:24814976, PMID:8591030; step 1
+  - subject: glu260
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu260 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/835/
+      snippet: Glu260 activates Tyr370 which attacks C1. The sialyl ketal linkage is broken in an SN2
+        reaction with Asp92 protonating the leaving group.
+      notes: M-CSA entry 835, mechanism 1; M-CSA cites PMID:12812490, PMID:14580216, PMID:15130470, PMID:15527797,
+        PMID:24194520, PMID:24814976, PMID:8591030; step 1
+  - subject: tyr370
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr370 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/835/
+      snippet: Glu260 activates Tyr370 which attacks C1. The sialyl ketal linkage is broken in an SN2
+        reaction with Asp92 protonating the leaving group.
+      notes: M-CSA entry 835, mechanism 1; M-CSA cites PMID:12812490, PMID:14580216, PMID:15130470, PMID:15527797,
+        PMID:24194520, PMID:24814976, PMID:8591030; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/835/
+      snippet: Asp92 activates a water molecule which hydrolyses the tyrosine bound intermediate. Glu260
+        protonates the departing Tyr370.
+      notes: M-CSA entry 835, mechanism 1; M-CSA cites PMID:12812490, PMID:14580216, PMID:15130470, PMID:15527797,
+        PMID:24194520, PMID:24814976, PMID:8591030; step 2
+  - subject: asp92
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Asp92 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/835/
+      snippet: Asp92 activates a water molecule which hydrolyses the tyrosine bound intermediate. Glu260
+        protonates the departing Tyr370.
+      notes: M-CSA entry 835, mechanism 1; M-CSA cites PMID:12812490, PMID:14580216, PMID:15130470, PMID:15527797,
+        PMID:24194520, PMID:24814976, PMID:8591030; step 2
+  - subject: glu260
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu260 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/835/
+      snippet: Asp92 activates a water molecule which hydrolyses the tyrosine bound intermediate. Glu260
+        protonates the departing Tyr370.
+      notes: M-CSA entry 835, mechanism 1; M-CSA cites PMID:12812490, PMID:14580216, PMID:15130470, PMID:15527797,
+        PMID:24194520, PMID:24814976, PMID:8591030; step 2
+  - subject: tyr370
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Tyr370 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/835/
+      snippet: Asp92 activates a water molecule which hydrolyses the tyrosine bound intermediate. Glu260
+        protonates the departing Tyr370.
+      notes: M-CSA entry 835, mechanism 1; M-CSA cites PMID:12812490, PMID:14580216, PMID:15130470, PMID:15527797,
+        PMID:24194520, PMID:24814976, PMID:8591030; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/835/
+      snippet: products
+      notes: M-CSA entry 835, mechanism 1; M-CSA cites PMID:12812490, PMID:14580216, PMID:15130470, PMID:15527797,
+        PMID:24194520, PMID:24814976, PMID:8591030; step 3
+  - subject: asp92
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp92 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/835/
+      snippet: activator, increase nucleophilicity, promote heterolysis, proton acceptor, proton donor
+      notes: M-CSA entry 835, mechanism 1; M-CSA cites PMID:12812490, PMID:14580216, PMID:15130470, PMID:15527797,
+        PMID:24194520, PMID:24814976, PMID:8591030; M-CSA catalytic-residue roles for Asp92
+  - subject: glu260
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu260 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/835/
+      snippet: activator, increase nucleophilicity, promote heterolysis, proton acceptor, proton donor
+      notes: M-CSA entry 835, mechanism 1; M-CSA cites PMID:12812490, PMID:14580216, PMID:15130470, PMID:15527797,
+        PMID:24194520, PMID:24814976, PMID:8591030; M-CSA catalytic-residue roles for Glu260
+  - subject: tyr370
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr370 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/835/
+      snippet: covalently attached, nucleofuge, nucleophile, proton acceptor, proton donor
+      notes: M-CSA entry 835, mechanism 1; M-CSA cites PMID:12812490, PMID:14580216, PMID:15130470, PMID:15527797,
+        PMID:24194520, PMID:24814976, PMID:8591030; M-CSA catalytic-residue roles for Tyr370
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/835/
+      snippet: The three catalytic residues are Tyr 370, Glu 260 and Asp 92. Tyr 370 acts as a nucleophile
+        to attack the C1 carbon of sialic acid in an SN2 mechanism, with concerted displacement of the
+        glycoconjagate to which the sialic acid is attached. The departing oxygen atom of the sialyl ketal
+        linkage is protonated by Asp 92. Glu 260 functions to deprotonate Tyr 370 as it attacks the sialic
+        acid. In the se
+      notes: M-CSA entry 835, mechanism 1; M-CSA cites PMID:12812490, PMID:14580216, PMID:15130470, PMID:15527797,
+        PMID:24194520, PMID:24814976, PMID:8591030; CATH domain 2.120.10.10 assigned to the catalytic
+        chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/835/
+      snippet: The three catalytic residues are Tyr 370, Glu 260 and Asp 92. Tyr 370 acts as a nucleophile
+        to attack the C1 carbon of sialic acid in an SN2 mechanism, with concerted displacement of the
+        glycoconjagate to which the sialic acid is attached. The departing oxygen atom of the sialyl ketal
+        linkage is protonated by Asp 92. Glu 260 functions to deprotonate Tyr 370 as it attacks the sialic
+        acid. In the se
+      notes: M-CSA entry 835, mechanism 1; M-CSA cites PMID:12812490, PMID:14580216, PMID:15130470, PMID:15527797,
+        PMID:24194520, PMID:24814976, PMID:8591030; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/835/
+      snippet: The three catalytic residues are Tyr 370, Glu 260 and Asp 92. Tyr 370 acts as a nucleophile
+        to attack the C1 carbon of sialic acid in an SN2 mechanism, with concerted displacement of the
+        glycoconjagate to which the sialic acid is attached. The departing oxygen atom of the sialyl ketal
+        linkage is protonated by Asp 92. Glu 260 functions to deprotonate Tyr 370 as it attacks the sialic
+        acid. In the se
+      notes: M-CSA entry 835, mechanism 1; M-CSA cites PMID:12812490, PMID:14580216, PMID:15130470, PMID:15527797,
+        PMID:24194520, PMID:24814976, PMID:8591030; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/835/
+      snippet: The three catalytic residues are Tyr 370, Glu 260 and Asp 92. Tyr 370 acts as a nucleophile
+        to attack the C1 carbon of sialic acid in an SN2 mechanism, with concerted displacement of the
+        glycoconjagate to which the sialic acid is attached. The departing oxygen atom of the sialyl ketal
+        linkage is protonated by Asp 92. Glu 260 functions to deprotonate Tyr 370 as it attacks the sialic
+        acid. In the se
+      notes: M-CSA entry 835, mechanism 1; M-CSA cites PMID:12812490, PMID:14580216, PMID:15130470, PMID:15527797,
+        PMID:24194520, PMID:24814976, PMID:8591030; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/835/
+      snippet: The three catalytic residues are Tyr 370, Glu 260 and Asp 92. Tyr 370 acts as a nucleophile
+        to attack the C1 carbon of sialic acid in an SN2 mechanism, with concerted displacement of the
+        glycoconjagate to which the sialic acid is attached. The departing oxygen atom of the sialyl ketal
+        linkage is protonated by Asp 92. Glu 260 functions to deprotonate Tyr 370 as it attacks the sialic
+        acid. In the se
+      notes: M-CSA entry 835, mechanism 1; M-CSA cites PMID:12812490, PMID:14580216, PMID:15130470, PMID:15527797,
+        PMID:24194520, PMID:24814976, PMID:8591030; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/835/
+      snippet: The three catalytic residues are Tyr 370, Glu 260 and Asp 92. Tyr 370 acts as a nucleophile
+        to attack the C1 carbon of sialic acid in an SN2 mechanism, with concerted displacement of the
+        glycoconjagate to which the sialic acid is attached. The departing oxygen atom of the sialyl ketal
+        linkage is protonated by Asp 92. Glu 260 functions to deprotonate Tyr 370 as it attacks the sialic
+        acid. In the se
+      notes: M-CSA entry 835, mechanism 1; M-CSA cites PMID:12812490, PMID:14580216, PMID:15130470, PMID:15527797,
+        PMID:24194520, PMID:24814976, PMID:8591030; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (17 evidence-backed edges) transcribed from M-CSA entry 835;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

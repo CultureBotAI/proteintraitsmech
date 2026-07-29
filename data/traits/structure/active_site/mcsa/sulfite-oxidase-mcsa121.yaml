@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.8.3.1
 - CHEBI:17359
@@ -429,4 +429,376 @@ definitions:
       Sulfite oxidase (SO) catalyses the terminal reaction in the oxidative degradation of the sulfur-containing amino acids cysteine and methionine specifically the oxidation of sulfite to sulfate by the transfer of an oxygen to the lone pair of electrons on the substrate. It is a member of the molybdopterin oxidoreductase family of proteins that contain a single pterin cofactor ligated to Mo(VI) and two oxo ligands. SO also contains a heme b molecule which is part of the electron transfer pathway from the molybdenum centre to the final electron acceptor (in this case ferrocytochrome c).
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of sulfite oxidase
+  description: Stepwise mechanism transcribed from M-CSA entry 121 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: his40
+    label: catalytic His40 (M-CSA/PDB numbering; UniProt residue 40)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07850
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his65
+    label: catalytic His65 (M-CSA/PDB numbering; UniProt residue 65)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07850
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: arg138
+    label: catalytic Arg138 (M-CSA/PDB numbering; UniProt residue 138)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07850
+    description: 'M-CSA roles: steric role.'
+  - node_id: cys185
+    label: catalytic Cys185 (M-CSA/PDB numbering; UniProt residue 185)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07850
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: tyr322
+    label: catalytic Tyr322 (M-CSA/PDB numbering; UniProt residue 322)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07850
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor,
+      proton relay.'
+  - node_id: reactant0
+    label: sulfite
+    node_type: CHEMICAL
+    grounding: CHEBI:17359
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant2
+    label: iron(3+)
+    node_type: CHEMICAL
+    grounding: CHEBI:29034
+  - node_id: product0
+    label: sulfate
+    node_type: CHEMICAL
+    grounding: CHEBI:16189
+  - node_id: product1
+    label: iron(2+)
+    node_type: CHEMICAL
+    grounding: CHEBI:29033
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Sulfite initiates a nucleophilic attack upon one of the oxo groups coordinated to the
+      Mo(VI) centre in an addition reaction, resulting in a two electron reduction of the centre to Mo(IV).
+      It seems very likely that only one of the two oxygen ligands is the catalytically labile oxygen,
+      whereas the other oxygen cannot be attacked owing to steric hindrance in the active site of the
+      enzyme [PMID:924290
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Water displaces the sulfate as a ligand to the Mo(IV) centre.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Water deprotonates Tyr322, which deprotonates the Mo-bound water causing a single electron
+      to be transferred from the Mo(IV) centre to Haem and thence to ferricyrochrome C.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Water deprotonates Tyr322, which deprotonates the Mo-bound hydroxide causing a single
+      electron to be transferred from the Mo(V) centre to Haem and thence to ferricyrochrome C and regenerating
+      the cofactor.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: sulfite oxidase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:121
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.10.120.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.10.120.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: sulfite oxidase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.8.3.1
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/121/
+      snippet: Water displaces the sulfate as a ligand to the Mo(IV) centre.
+      notes: M-CSA entry 121, mechanism 1; M-CSA cites PMID:12424234, PMID:12832761, PMID:14567685, PMID:14729666,
+        PMID:16048997, PMID:18496596, PMID:18529001, PMID:18959753, PMID:19226119, PMID:20356030, PMID:20666399,
+        PMID:21322488, PMID:22225516, PMID:22229742, PMID:22975842, PMID:24957901, PMID:24968320, PMID:29549261,
+        PMID:9242907, PMID:9428520; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/121/
+      snippet: Water deprotonates Tyr322, which deprotonates the Mo-bound water causing a single electron
+        to be transferred from the Mo(IV) centre to Haem and thence to ferricyrochrome C.
+      notes: M-CSA entry 121, mechanism 1; M-CSA cites PMID:12424234, PMID:12832761, PMID:14567685, PMID:14729666,
+        PMID:16048997, PMID:18496596, PMID:18529001, PMID:18959753, PMID:19226119, PMID:20356030, PMID:20666399,
+        PMID:21322488, PMID:22225516, PMID:22229742, PMID:22975842, PMID:24957901, PMID:24968320, PMID:29549261,
+        PMID:9242907, PMID:9428520; step 3
+  - subject: tyr322
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Tyr322 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/121/
+      snippet: Water deprotonates Tyr322, which deprotonates the Mo-bound water causing a single electron
+        to be transferred from the Mo(IV) centre to Haem and thence to ferricyrochrome C.
+      notes: M-CSA entry 121, mechanism 1; M-CSA cites PMID:12424234, PMID:12832761, PMID:14567685, PMID:14729666,
+        PMID:16048997, PMID:18496596, PMID:18529001, PMID:18959753, PMID:19226119, PMID:20356030, PMID:20666399,
+        PMID:21322488, PMID:22225516, PMID:22229742, PMID:22975842, PMID:24957901, PMID:24968320, PMID:29549261,
+        PMID:9242907, PMID:9428520; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/121/
+      snippet: Water deprotonates Tyr322, which deprotonates the Mo-bound hydroxide causing a single electron
+        to be transferred from the Mo(V) centre to Haem and thence to ferricyrochrome C and regenerating
+        the cofactor.
+      notes: M-CSA entry 121, mechanism 1; M-CSA cites PMID:12424234, PMID:12832761, PMID:14567685, PMID:14729666,
+        PMID:16048997, PMID:18496596, PMID:18529001, PMID:18959753, PMID:19226119, PMID:20356030, PMID:20666399,
+        PMID:21322488, PMID:22225516, PMID:22229742, PMID:22975842, PMID:24957901, PMID:24968320, PMID:29549261,
+        PMID:9242907, PMID:9428520; step 4
+  - subject: tyr322
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Tyr322 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/121/
+      snippet: Water deprotonates Tyr322, which deprotonates the Mo-bound hydroxide causing a single electron
+        to be transferred from the Mo(V) centre to Haem and thence to ferricyrochrome C and regenerating
+        the cofactor.
+      notes: M-CSA entry 121, mechanism 1; M-CSA cites PMID:12424234, PMID:12832761, PMID:14567685, PMID:14729666,
+        PMID:16048997, PMID:18496596, PMID:18529001, PMID:18959753, PMID:19226119, PMID:20356030, PMID:20666399,
+        PMID:21322488, PMID:22225516, PMID:22229742, PMID:22975842, PMID:24957901, PMID:24968320, PMID:29549261,
+        PMID:9242907, PMID:9428520; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/121/
+      snippet: Products.
+      notes: M-CSA entry 121, mechanism 1; M-CSA cites PMID:12424234, PMID:12832761, PMID:14567685, PMID:14729666,
+        PMID:16048997, PMID:18496596, PMID:18529001, PMID:18959753, PMID:19226119, PMID:20356030, PMID:20666399,
+        PMID:21322488, PMID:22225516, PMID:22229742, PMID:22975842, PMID:24957901, PMID:24968320, PMID:29549261,
+        PMID:9242907, PMID:9428520; step 5
+  - subject: his40
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His40 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/121/
+      snippet: metal ligand
+      notes: M-CSA entry 121, mechanism 1; M-CSA cites PMID:12424234, PMID:12832761, PMID:14567685, PMID:14729666,
+        PMID:16048997, PMID:18496596, PMID:18529001, PMID:18959753, PMID:19226119, PMID:20356030, PMID:20666399,
+        PMID:21322488, PMID:22225516, PMID:22229742, PMID:22975842, PMID:24957901, PMID:24968320, PMID:29549261,
+        PMID:9242907, PMID:9428520; M-CSA catalytic-residue roles for His40
+  - subject: his65
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His65 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/121/
+      snippet: metal ligand
+      notes: M-CSA entry 121, mechanism 1; M-CSA cites PMID:12424234, PMID:12832761, PMID:14567685, PMID:14729666,
+        PMID:16048997, PMID:18496596, PMID:18529001, PMID:18959753, PMID:19226119, PMID:20356030, PMID:20666399,
+        PMID:21322488, PMID:22225516, PMID:22229742, PMID:22975842, PMID:24957901, PMID:24968320, PMID:29549261,
+        PMID:9242907, PMID:9428520; M-CSA catalytic-residue roles for His65
+  - subject: arg138
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg138 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/121/
+      snippet: steric role
+      notes: M-CSA entry 121, mechanism 1; M-CSA cites PMID:12424234, PMID:12832761, PMID:14567685, PMID:14729666,
+        PMID:16048997, PMID:18496596, PMID:18529001, PMID:18959753, PMID:19226119, PMID:20356030, PMID:20666399,
+        PMID:21322488, PMID:22225516, PMID:22229742, PMID:22975842, PMID:24957901, PMID:24968320, PMID:29549261,
+        PMID:9242907, PMID:9428520; M-CSA catalytic-residue roles for Arg138
+  - subject: cys185
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys185 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/121/
+      snippet: metal ligand
+      notes: M-CSA entry 121, mechanism 1; M-CSA cites PMID:12424234, PMID:12832761, PMID:14567685, PMID:14729666,
+        PMID:16048997, PMID:18496596, PMID:18529001, PMID:18959753, PMID:19226119, PMID:20356030, PMID:20666399,
+        PMID:21322488, PMID:22225516, PMID:22229742, PMID:22975842, PMID:24957901, PMID:24968320, PMID:29549261,
+        PMID:9242907, PMID:9428520; M-CSA catalytic-residue roles for Cys185
+  - subject: tyr322
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr322 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/121/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 121, mechanism 1; M-CSA cites PMID:12424234, PMID:12832761, PMID:14567685, PMID:14729666,
+        PMID:16048997, PMID:18496596, PMID:18529001, PMID:18959753, PMID:19226119, PMID:20356030, PMID:20666399,
+        PMID:21322488, PMID:22225516, PMID:22229742, PMID:22975842, PMID:24957901, PMID:24968320, PMID:29549261,
+        PMID:9242907, PMID:9428520; M-CSA catalytic-residue roles for Tyr322
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/121/
+      snippet: This protein requires both Heme and a molybdenum (VI) centre to be catalytically active.
+        The sulfite substrate initiates a nucleophilic attack on one of the oxo ligands of the Mo(VI)
+        centre, reducing the Mo to +4. This forms the sulfate product, which is displaced from the active
+        site by water. Deprotonation of the new water ligand initiates the transfer of a single electron
+        from the Mo centre to
+      notes: M-CSA entry 121, mechanism 1; M-CSA cites PMID:12424234, PMID:12832761, PMID:14567685, PMID:14729666,
+        PMID:16048997, PMID:18496596, PMID:18529001, PMID:18959753, PMID:19226119, PMID:20356030, PMID:20666399,
+        PMID:21322488, PMID:22225516, PMID:22229742, PMID:22975842, PMID:24957901, PMID:24968320, PMID:29549261,
+        PMID:9242907, PMID:9428520; CATH domain 3.10.120.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/121/
+      snippet: This protein requires both Heme and a molybdenum (VI) centre to be catalytically active.
+        The sulfite substrate initiates a nucleophilic attack on one of the oxo ligands of the Mo(VI)
+        centre, reducing the Mo to +4. This forms the sulfate product, which is displaced from the active
+        site by water. Deprotonation of the new water ligand initiates the transfer of a single electron
+        from the Mo centre to
+      notes: M-CSA entry 121, mechanism 1; M-CSA cites PMID:12424234, PMID:12832761, PMID:14567685, PMID:14729666,
+        PMID:16048997, PMID:18496596, PMID:18529001, PMID:18959753, PMID:19226119, PMID:20356030, PMID:20666399,
+        PMID:21322488, PMID:22225516, PMID:22229742, PMID:22975842, PMID:24957901, PMID:24968320, PMID:29549261,
+        PMID:9242907, PMID:9428520; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/121/
+      snippet: This protein requires both Heme and a molybdenum (VI) centre to be catalytically active.
+        The sulfite substrate initiates a nucleophilic attack on one of the oxo ligands of the Mo(VI)
+        centre, reducing the Mo to +4. This forms the sulfate product, which is displaced from the active
+        site by water. Deprotonation of the new water ligand initiates the transfer of a single electron
+        from the Mo centre to
+      notes: M-CSA entry 121, mechanism 1; M-CSA cites PMID:12424234, PMID:12832761, PMID:14567685, PMID:14729666,
+        PMID:16048997, PMID:18496596, PMID:18529001, PMID:18959753, PMID:19226119, PMID:20356030, PMID:20666399,
+        PMID:21322488, PMID:22225516, PMID:22229742, PMID:22975842, PMID:24957901, PMID:24968320, PMID:29549261,
+        PMID:9242907, PMID:9428520; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/121/
+      snippet: This protein requires both Heme and a molybdenum (VI) centre to be catalytically active.
+        The sulfite substrate initiates a nucleophilic attack on one of the oxo ligands of the Mo(VI)
+        centre, reducing the Mo to +4. This forms the sulfate product, which is displaced from the active
+        site by water. Deprotonation of the new water ligand initiates the transfer of a single electron
+        from the Mo centre to
+      notes: M-CSA entry 121, mechanism 1; M-CSA cites PMID:12424234, PMID:12832761, PMID:14567685, PMID:14729666,
+        PMID:16048997, PMID:18496596, PMID:18529001, PMID:18959753, PMID:19226119, PMID:20356030, PMID:20666399,
+        PMID:21322488, PMID:22225516, PMID:22229742, PMID:22975842, PMID:24957901, PMID:24968320, PMID:29549261,
+        PMID:9242907, PMID:9428520; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/121/
+      snippet: This protein requires both Heme and a molybdenum (VI) centre to be catalytically active.
+        The sulfite substrate initiates a nucleophilic attack on one of the oxo ligands of the Mo(VI)
+        centre, reducing the Mo to +4. This forms the sulfate product, which is displaced from the active
+        site by water. Deprotonation of the new water ligand initiates the transfer of a single electron
+        from the Mo centre to
+      notes: M-CSA entry 121, mechanism 1; M-CSA cites PMID:12424234, PMID:12832761, PMID:14567685, PMID:14729666,
+        PMID:16048997, PMID:18496596, PMID:18529001, PMID:18959753, PMID:19226119, PMID:20356030, PMID:20666399,
+        PMID:21322488, PMID:22225516, PMID:22229742, PMID:22975842, PMID:24957901, PMID:24968320, PMID:29549261,
+        PMID:9242907, PMID:9428520; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/121/
+      snippet: This protein requires both Heme and a molybdenum (VI) centre to be catalytically active.
+        The sulfite substrate initiates a nucleophilic attack on one of the oxo ligands of the Mo(VI)
+        centre, reducing the Mo to +4. This forms the sulfate product, which is displaced from the active
+        site by water. Deprotonation of the new water ligand initiates the transfer of a single electron
+        from the Mo centre to
+      notes: M-CSA entry 121, mechanism 1; M-CSA cites PMID:12424234, PMID:12832761, PMID:14567685, PMID:14729666,
+        PMID:16048997, PMID:18496596, PMID:18529001, PMID:18959753, PMID:19226119, PMID:20356030, PMID:20666399,
+        PMID:21322488, PMID:22225516, PMID:22229742, PMID:22975842, PMID:24957901, PMID:24968320, PMID:29549261,
+        PMID:9242907, PMID:9428520; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/121/
+      snippet: This protein requires both Heme and a molybdenum (VI) centre to be catalytically active.
+        The sulfite substrate initiates a nucleophilic attack on one of the oxo ligands of the Mo(VI)
+        centre, reducing the Mo to +4. This forms the sulfate product, which is displaced from the active
+        site by water. Deprotonation of the new water ligand initiates the transfer of a single electron
+        from the Mo centre to
+      notes: M-CSA entry 121, mechanism 1; M-CSA cites PMID:12424234, PMID:12832761, PMID:14567685, PMID:14729666,
+        PMID:16048997, PMID:18496596, PMID:18529001, PMID:18959753, PMID:19226119, PMID:20356030, PMID:20666399,
+        PMID:21322488, PMID:22225516, PMID:22229742, PMID:22975842, PMID:24957901, PMID:24968320, PMID:29549261,
+        PMID:9242907, PMID:9428520; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/121/
+      snippet: This protein requires both Heme and a molybdenum (VI) centre to be catalytically active.
+        The sulfite substrate initiates a nucleophilic attack on one of the oxo ligands of the Mo(VI)
+        centre, reducing the Mo to +4. This forms the sulfate product, which is displaced from the active
+        site by water. Deprotonation of the new water ligand initiates the transfer of a single electron
+        from the Mo centre to
+      notes: M-CSA entry 121, mechanism 1; M-CSA cites PMID:12424234, PMID:12832761, PMID:14567685, PMID:14729666,
+        PMID:16048997, PMID:18496596, PMID:18529001, PMID:18959753, PMID:19226119, PMID:20356030, PMID:20666399,
+        PMID:21322488, PMID:22225516, PMID:22229742, PMID:22975842, PMID:24957901, PMID:24968320, PMID:29549261,
+        PMID:9242907, PMID:9428520; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (19 evidence-backed edges) transcribed from M-CSA entry 121;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

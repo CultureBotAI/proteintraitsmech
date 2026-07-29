@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.4.2.7
 - CHEBI:456215
@@ -52,4 +52,225 @@ definitions:
       Adenine phosphoribosyltransferase (APRTase) catalyses the reversible Mg2+ dependent reaction of adenine with 5-phospho-alpha-D-ribosyl-1-pyrophosphate (PRPP) to produce AMP and pyrophosphate. This reaction is important in adenine salvage and recycling, and the enzyme is present in species ranging from bacteria to mammals. In humans, APRTase has the sole metabolic function of recycling adenine formed in the polyamine pathway, and the effects of APRTase deficiency are relatively mild. Some protozoan parasite, including Giardia lamblia, are deficient in de novo purine synthesis and so purine uptake from the host and the APRTase reaction are especially important in these organisms.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of adenine phosphoribosyltransferase
+  description: Stepwise mechanism transcribed from M-CSA entry 802 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: arg63
+    label: catalytic Arg63 (M-CSA/PDB numbering; UniProt residue 63)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q967M2
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu100
+    label: catalytic Glu100 (M-CSA/PDB numbering; UniProt residue 100)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q967M2
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: 5-O-phosphonato-alpha-D-ribofuranosyl diphosphate(5-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58017
+  - node_id: reactant1
+    label: adenine
+    node_type: CHEMICAL
+    grounding: CHEBI:16708
+  - node_id: product0
+    label: adenosine 5'-monophosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+  - node_id: product1
+    label: diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu100 deprotonates N7 of adenine, increasing the base's nucleophilicity to attack the
+      anomeric carbon on the ribose sugar in an SN1 like reaction with an oxocarbeniom ion like transition
+      state which is stabilised by Arg63.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Glu100 is deprotonated by the pyrophosphate product.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: adenine phosphoribosyltransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:802
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.2020 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.2020
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: adenine phosphoribosyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.4.2.7
+  edges:
+  - subject: arg63
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg63 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/802/
+      snippet: Glu100 deprotonates N7 of adenine, increasing the base's nucleophilicity to attack the
+        anomeric carbon on the ribose sugar in an SN1 like reaction with an oxocarbeniom ion like transition
+        state which is stabilised by Arg63.
+      notes: M-CSA entry 802, mechanism 1; M-CSA cites PMID:11535055, PMID:12171925, PMID:19819904, PMID:29046144;
+        step 1
+  - subject: glu100
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu100 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/802/
+      snippet: Glu100 deprotonates N7 of adenine, increasing the base's nucleophilicity to attack the
+        anomeric carbon on the ribose sugar in an SN1 like reaction with an oxocarbeniom ion like transition
+        state which is stabilised by Arg63.
+      notes: M-CSA entry 802, mechanism 1; M-CSA cites PMID:11535055, PMID:12171925, PMID:19819904, PMID:29046144;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/802/
+      snippet: Glu100 is deprotonated by the pyrophosphate product.
+      notes: M-CSA entry 802, mechanism 1; M-CSA cites PMID:11535055, PMID:12171925, PMID:19819904, PMID:29046144;
+        step 2
+  - subject: glu100
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu100 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/802/
+      snippet: Glu100 is deprotonated by the pyrophosphate product.
+      notes: M-CSA entry 802, mechanism 1; M-CSA cites PMID:11535055, PMID:12171925, PMID:19819904, PMID:29046144;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/802/
+      snippet: Products
+      notes: M-CSA entry 802, mechanism 1; M-CSA cites PMID:11535055, PMID:12171925, PMID:19819904, PMID:29046144;
+        step 3
+  - subject: arg63
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg63 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/802/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 802, mechanism 1; M-CSA cites PMID:11535055, PMID:12171925, PMID:19819904, PMID:29046144;
+        M-CSA catalytic-residue roles for Arg63
+  - subject: glu100
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu100 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/802/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 802, mechanism 1; M-CSA cites PMID:11535055, PMID:12171925, PMID:19819904, PMID:29046144;
+        M-CSA catalytic-residue roles for Glu100
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/802/
+      snippet: In the proposed Sn1 mechanism, Glu100 functions as a general base to deprotonate N7 of
+        adenine. This enables the N7 of adenine to nucleophilically attack the electrophilic carbon. The
+        reaction passes through an oxacarbenium-like transition state in which the Mg2+ ion and Arg 63
+        stabilise accumulation of negative charge on the pyrophosphate leaving group.
+      notes: M-CSA entry 802, mechanism 1; M-CSA cites PMID:11535055, PMID:12171925, PMID:19819904, PMID:29046144;
+        CATH domain 3.40.50.2020 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/802/
+      snippet: In the proposed Sn1 mechanism, Glu100 functions as a general base to deprotonate N7 of
+        adenine. This enables the N7 of adenine to nucleophilically attack the electrophilic carbon. The
+        reaction passes through an oxacarbenium-like transition state in which the Mg2+ ion and Arg 63
+        stabilise accumulation of negative charge on the pyrophosphate leaving group.
+      notes: M-CSA entry 802, mechanism 1; M-CSA cites PMID:11535055, PMID:12171925, PMID:19819904, PMID:29046144;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/802/
+      snippet: In the proposed Sn1 mechanism, Glu100 functions as a general base to deprotonate N7 of
+        adenine. This enables the N7 of adenine to nucleophilically attack the electrophilic carbon. The
+        reaction passes through an oxacarbenium-like transition state in which the Mg2+ ion and Arg 63
+        stabilise accumulation of negative charge on the pyrophosphate leaving group.
+      notes: M-CSA entry 802, mechanism 1; M-CSA cites PMID:11535055, PMID:12171925, PMID:19819904, PMID:29046144;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/802/
+      snippet: In the proposed Sn1 mechanism, Glu100 functions as a general base to deprotonate N7 of
+        adenine. This enables the N7 of adenine to nucleophilically attack the electrophilic carbon. The
+        reaction passes through an oxacarbenium-like transition state in which the Mg2+ ion and Arg 63
+        stabilise accumulation of negative charge on the pyrophosphate leaving group.
+      notes: M-CSA entry 802, mechanism 1; M-CSA cites PMID:11535055, PMID:12171925, PMID:19819904, PMID:29046144;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/802/
+      snippet: In the proposed Sn1 mechanism, Glu100 functions as a general base to deprotonate N7 of
+        adenine. This enables the N7 of adenine to nucleophilically attack the electrophilic carbon. The
+        reaction passes through an oxacarbenium-like transition state in which the Mg2+ ion and Arg 63
+        stabilise accumulation of negative charge on the pyrophosphate leaving group.
+      notes: M-CSA entry 802, mechanism 1; M-CSA cites PMID:11535055, PMID:12171925, PMID:19819904, PMID:29046144;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/802/
+      snippet: In the proposed Sn1 mechanism, Glu100 functions as a general base to deprotonate N7 of
+        adenine. This enables the N7 of adenine to nucleophilically attack the electrophilic carbon. The
+        reaction passes through an oxacarbenium-like transition state in which the Mg2+ ion and Arg 63
+        stabilise accumulation of negative charge on the pyrophosphate leaving group.
+      notes: M-CSA entry 802, mechanism 1; M-CSA cites PMID:11535055, PMID:12171925, PMID:19819904, PMID:29046144;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 802;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

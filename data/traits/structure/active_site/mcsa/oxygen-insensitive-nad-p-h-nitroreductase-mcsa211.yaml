@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.7.1.16
 - CHEBI:57945
@@ -200,4 +200,311 @@ definitions:
       Nitroreductase (NTR) isolated from Escherichia coli catalyses the reduction of nitroaromatics, such as nitrofurazone and nitrofurantoin, to hydroxylamines and quinones, such as menadione, to quinols and has potential uses in chemotherapy and bioremediation. Unusually, it can use either NADPH or NADH as the reducing agent. The enzyme is oxygen-insensitive in that it does not transfers electrons to oxygen to produce superoxide. NTR is part of a family of FMN-containing oxidoreductases that have broadly similar substrate specificities. These enzymes are dimeric and contain two active sites, catalysing nitroaromatic reduction via a ping-pong bi bi mechanism. The substrate binds over the pyrimidine and central rings of the flavin. A portion of helix H6 can flex to accommodate the differently sized inhibitors suggesting a mechanism for accommodating varied substrates. This enzyme was first isolated from bacteria growing in a weapons storage dump, and can reduce trinitrotoluene. Some nitro containing antibiotics depend on activation by bacterial NTR. The native enzyme shows that the principal structural changes occur in the FMN cofactor and indicate that the enzyme itself is a relatively rigid structure that primarily provides a rigid structural framework on which hydride transfer occurs. NTR is of interest in suicide gene therapy, where NTR is used as an activating enzyme for nitroaromatic prodrugs. The hydroxylamines produced can target proteins and DNA, causing strand cleavage in the latter. They can also be further activated to produce DNA cross-linking.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of oxygen insensitive NAD(P)H nitroreductase
+  description: Stepwise mechanism transcribed from M-CSA entry 211 (6 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: lys14
+    label: catalytic Lys14 (M-CSA/PDB numbering; UniProt residue 14)
+    node_type: RESIDUE
+    grounding: UniProtKB:P38489
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: lys74
+    label: catalytic Lys74 (M-CSA/PDB numbering; UniProt residue 74)
+    node_type: RESIDUE
+    grounding: UniProtKB:P38489
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: glu165
+    label: catalytic Glu165 (M-CSA/PDB numbering; UniProt residue 165)
+    node_type: RESIDUE
+    grounding: UniProtKB:P38489
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: reactant0
+    label: NADH(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+  - node_id: reactant1
+    label: 2-nitrobenzoate
+    node_type: CHEMICAL
+    grounding: CHEBI:25619
+  - node_id: reactant2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product1
+    label: NAD(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+  - node_id: product2
+    label: 2-hydroxylaminobenzoic acid
+    node_type: CHEMICAL
+    grounding: CHEBI:25618
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: NAD initiates an elimination of a hydride ion, which attacks the FMN in a nucleophilic
+      addition.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: FMN eliminates the hydride, which attacks the nitro group of the substrate in a nucleophilic
+      addition. The intermediate then deprotonates a water molecule.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The intermediate eliminates water from itself, forming a nitroso intermediate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: NAD initiates an elimination of a hydride ion, which attacks the FMN in a nucleophilic
+      addition.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: FMN eliminates the hydride, which attacks the nitroso group of the intermediate in a
+      nucleophilic addition. The intermediate then deprotonates a water molecule to produce the product.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: oxygen insensitive NAD(P)H nitroreductase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:211
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.109.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.109.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: oxygen insensitive NAD(P)H nitroreductase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.7.1.16
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/211/
+      snippet: FMN eliminates the hydride, which attacks the nitro group of the substrate in a nucleophilic
+        addition. The intermediate then deprotonates a water molecule.
+      notes: M-CSA entry 211, mechanism 1; M-CSA cites PMID:11020276, PMID:11491290, PMID:11805110, PMID:12954054,
+        PMID:15684426, PMID:25917861; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/211/
+      snippet: The intermediate eliminates water from itself, forming a nitroso intermediate.
+      notes: M-CSA entry 211, mechanism 1; M-CSA cites PMID:11020276, PMID:11491290, PMID:11805110, PMID:12954054,
+        PMID:15684426, PMID:25917861; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/211/
+      snippet: NAD initiates an elimination of a hydride ion, which attacks the FMN in a nucleophilic
+        addition.
+      notes: M-CSA entry 211, mechanism 1; M-CSA cites PMID:11020276, PMID:11491290, PMID:11805110, PMID:12954054,
+        PMID:15684426, PMID:25917861; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/211/
+      snippet: FMN eliminates the hydride, which attacks the nitroso group of the intermediate in a nucleophilic
+        addition. The intermediate then deprotonates a water molecule to produce the product.
+      notes: M-CSA entry 211, mechanism 1; M-CSA cites PMID:11020276, PMID:11491290, PMID:11805110, PMID:12954054,
+        PMID:15684426, PMID:25917861; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/211/
+      snippet: Products.
+      notes: M-CSA entry 211, mechanism 1; M-CSA cites PMID:11020276, PMID:11491290, PMID:11805110, PMID:12954054,
+        PMID:15684426, PMID:25917861; step 6
+  - subject: lys14
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys14 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/211/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 211, mechanism 1; M-CSA cites PMID:11020276, PMID:11491290, PMID:11805110, PMID:12954054,
+        PMID:15684426, PMID:25917861; M-CSA catalytic-residue roles for Lys14
+  - subject: lys74
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys74 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/211/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 211, mechanism 1; M-CSA cites PMID:11020276, PMID:11491290, PMID:11805110, PMID:12954054,
+        PMID:15684426, PMID:25917861; M-CSA catalytic-residue roles for Lys74
+  - subject: glu165
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu165 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/211/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 211, mechanism 1; M-CSA cites PMID:11020276, PMID:11491290, PMID:11805110, PMID:12954054,
+        PMID:15684426, PMID:25917861; M-CSA catalytic-residue roles for Glu165
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/211/
+      snippet: "This enzyme derives reducing equivalents from NADH, NADPH, or other nicotinamides by means\
+        \ of a flavin mononucleotide cofactor (FMN). The reaction proceeds by reduction of the nitro group\
+        \ of the prodrug substrate, forming a hydroxylamine product in a ping-pong Bi-Bi reaction pathway.\
+        \ 
+<br/><br/>
+Prior to the substrate binding, FMN accepts a hydride from NAD(P)H onto N1\
+        \ or N5. NAD(P)H then leaves"
+      notes: M-CSA entry 211, mechanism 1; M-CSA cites PMID:11020276, PMID:11491290, PMID:11805110, PMID:12954054,
+        PMID:15684426, PMID:25917861; CATH domain 3.40.109.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/211/
+      snippet: "This enzyme derives reducing equivalents from NADH, NADPH, or other nicotinamides by means\
+        \ of a flavin mononucleotide cofactor (FMN). The reaction proceeds by reduction of the nitro group\
+        \ of the prodrug substrate, forming a hydroxylamine product in a ping-pong Bi-Bi reaction pathway.\
+        \ 
+<br/><br/>
+Prior to the substrate binding, FMN accepts a hydride from NAD(P)H onto N1\
+        \ or N5. NAD(P)H then leaves"
+      notes: M-CSA entry 211, mechanism 1; M-CSA cites PMID:11020276, PMID:11491290, PMID:11805110, PMID:12954054,
+        PMID:15684426, PMID:25917861; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/211/
+      snippet: "This enzyme derives reducing equivalents from NADH, NADPH, or other nicotinamides by means\
+        \ of a flavin mononucleotide cofactor (FMN). The reaction proceeds by reduction of the nitro group\
+        \ of the prodrug substrate, forming a hydroxylamine product in a ping-pong Bi-Bi reaction pathway.\
+        \ 
+<br/><br/>
+Prior to the substrate binding, FMN accepts a hydride from NAD(P)H onto N1\
+        \ or N5. NAD(P)H then leaves"
+      notes: M-CSA entry 211, mechanism 1; M-CSA cites PMID:11020276, PMID:11491290, PMID:11805110, PMID:12954054,
+        PMID:15684426, PMID:25917861; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/211/
+      snippet: "This enzyme derives reducing equivalents from NADH, NADPH, or other nicotinamides by means\
+        \ of a flavin mononucleotide cofactor (FMN). The reaction proceeds by reduction of the nitro group\
+        \ of the prodrug substrate, forming a hydroxylamine product in a ping-pong Bi-Bi reaction pathway.\
+        \ 
+<br/><br/>
+Prior to the substrate binding, FMN accepts a hydride from NAD(P)H onto N1\
+        \ or N5. NAD(P)H then leaves"
+      notes: M-CSA entry 211, mechanism 1; M-CSA cites PMID:11020276, PMID:11491290, PMID:11805110, PMID:12954054,
+        PMID:15684426, PMID:25917861; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/211/
+      snippet: "This enzyme derives reducing equivalents from NADH, NADPH, or other nicotinamides by means\
+        \ of a flavin mononucleotide cofactor (FMN). The reaction proceeds by reduction of the nitro group\
+        \ of the prodrug substrate, forming a hydroxylamine product in a ping-pong Bi-Bi reaction pathway.\
+        \ 
+<br/><br/>
+Prior to the substrate binding, FMN accepts a hydride from NAD(P)H onto N1\
+        \ or N5. NAD(P)H then leaves"
+      notes: M-CSA entry 211, mechanism 1; M-CSA cites PMID:11020276, PMID:11491290, PMID:11805110, PMID:12954054,
+        PMID:15684426, PMID:25917861; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/211/
+      snippet: "This enzyme derives reducing equivalents from NADH, NADPH, or other nicotinamides by means\
+        \ of a flavin mononucleotide cofactor (FMN). The reaction proceeds by reduction of the nitro group\
+        \ of the prodrug substrate, forming a hydroxylamine product in a ping-pong Bi-Bi reaction pathway.\
+        \ 
+<br/><br/>
+Prior to the substrate binding, FMN accepts a hydride from NAD(P)H onto N1\
+        \ or N5. NAD(P)H then leaves"
+      notes: M-CSA entry 211, mechanism 1; M-CSA cites PMID:11020276, PMID:11491290, PMID:11805110, PMID:12954054,
+        PMID:15684426, PMID:25917861; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/211/
+      snippet: "This enzyme derives reducing equivalents from NADH, NADPH, or other nicotinamides by means\
+        \ of a flavin mononucleotide cofactor (FMN). The reaction proceeds by reduction of the nitro group\
+        \ of the prodrug substrate, forming a hydroxylamine product in a ping-pong Bi-Bi reaction pathway.\
+        \ 
+<br/><br/>
+Prior to the substrate binding, FMN accepts a hydride from NAD(P)H onto N1\
+        \ or N5. NAD(P)H then leaves"
+      notes: M-CSA entry 211, mechanism 1; M-CSA cites PMID:11020276, PMID:11491290, PMID:11805110, PMID:12954054,
+        PMID:15684426, PMID:25917861; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/211/
+      snippet: "This enzyme derives reducing equivalents from NADH, NADPH, or other nicotinamides by means\
+        \ of a flavin mononucleotide cofactor (FMN). The reaction proceeds by reduction of the nitro group\
+        \ of the prodrug substrate, forming a hydroxylamine product in a ping-pong Bi-Bi reaction pathway.\
+        \ 
+<br/><br/>
+Prior to the substrate binding, FMN accepts a hydride from NAD(P)H onto N1\
+        \ or N5. NAD(P)H then leaves"
+      notes: M-CSA entry 211, mechanism 1; M-CSA cites PMID:11020276, PMID:11491290, PMID:11805110, PMID:12954054,
+        PMID:15684426, PMID:25917861; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (16 evidence-backed edges) transcribed from M-CSA entry 211;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

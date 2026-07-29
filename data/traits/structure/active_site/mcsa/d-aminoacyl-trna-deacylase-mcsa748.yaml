@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.1.96
 - CHEBI:79333
@@ -101,4 +101,280 @@ definitions:
       YihZ, a D-Tyr-tRNA(Tyr) deacylase from Haemophilus influenzae is an 'editing enzyme'. It removes D-tyrosine and other D-amino acids from charged tRNAs, thereby preventing incorrect incorporation of D-amino acids in proteins. This is important, as the presence of D-amino acids can impair correct folding of proteins. Any incorrectly charged tRNA must be removed, and YihZ catalyses the hydrolysis of the ester link between D-Tyr and tRNA. This enzyme exhibits broad specificity towards D-amino acids, but it is inactive toward L-aminoacylated tRNAs and N-blocked D-aminoacylated tRNAs.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of D-aminoacyl-tRNA deacylase
+  description: Stepwise mechanism transcribed from M-CSA entry 748 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: gln78
+    label: catalytic Gln78 (M-CSA/PDB numbering; UniProt residue 78)
+    node_type: RESIDUE
+    grounding: UniProtKB:P44814
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: phe79
+    label: catalytic Phe79 (M-CSA/PDB numbering; UniProt residue 79)
+    node_type: RESIDUE
+    grounding: UniProtKB:P44814
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: thr80
+    label: catalytic Thr80 (M-CSA/PDB numbering; UniProt residue 80)
+    node_type: RESIDUE
+    grounding: UniProtKB:P44814
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: 3'-(D-alpha-aminoacyl)adenylyl zwitterionic group
+    node_type: CHEMICAL
+    grounding: CHEBI:79333
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: D-alpha-amino acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:59871
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: AMP 3'-end(1-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:78442
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The amino nitrogen of D-Tyr deprotonates Thr80 which can then nucleophilically attack
+      the carbon of the carbonyl.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The amino group of D-tyr protonates the oxygen of the ester bond which initiates an elimination
+      from the oxyanion and results in the cleavage of the t-RNA-Tyr bond.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: D-Tyr's amino group deprotonates a water which activates it to nucleophilically attack
+      the carbonyl carbon.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The amino group protonates the oxygen of Thr80 which initiates another elimination from
+      the oxyanion which results in the cleavage of the acyl-enzyme bond.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: D-aminoacyl-tRNA deacylase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:748
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.50.80.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.50.80.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: D-aminoacyl-tRNA deacylase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.1.96
+  edges:
+  - subject: thr80
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Thr80 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/748/
+      snippet: The amino nitrogen of D-Tyr deprotonates Thr80 which can then nucleophilically attack the
+        carbon of the carbonyl.
+      notes: M-CSA entry 748, mechanism 1; M-CSA cites PMID:12571243, PMID:20007323; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/748/
+      snippet: The amino group of D-tyr protonates the oxygen of the ester bond which initiates an elimination
+        from the oxyanion and results in the cleavage of the t-RNA-Tyr bond.
+      notes: M-CSA entry 748, mechanism 1; M-CSA cites PMID:12571243, PMID:20007323; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/748/
+      snippet: D-Tyr's amino group deprotonates a water which activates it to nucleophilically attack
+        the carbonyl carbon.
+      notes: M-CSA entry 748, mechanism 1; M-CSA cites PMID:12571243, PMID:20007323; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/748/
+      snippet: The amino group protonates the oxygen of Thr80 which initiates another elimination from
+        the oxyanion which results in the cleavage of the acyl-enzyme bond.
+      notes: M-CSA entry 748, mechanism 1; M-CSA cites PMID:12571243, PMID:20007323; step 4
+  - subject: thr80
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Thr80 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/748/
+      snippet: The amino group protonates the oxygen of Thr80 which initiates another elimination from
+        the oxyanion which results in the cleavage of the acyl-enzyme bond.
+      notes: M-CSA entry 748, mechanism 1; M-CSA cites PMID:12571243, PMID:20007323; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/748/
+      snippet: Products
+      notes: M-CSA entry 748, mechanism 1; M-CSA cites PMID:12571243, PMID:20007323; step 5
+  - subject: gln78
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln78 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/748/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 748, mechanism 1; M-CSA cites PMID:12571243, PMID:20007323; M-CSA catalytic-residue
+        roles for Gln78
+  - subject: phe79
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Phe79 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/748/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 748, mechanism 1; M-CSA cites PMID:12571243, PMID:20007323; M-CSA catalytic-residue
+        roles for Phe79
+  - subject: thr80
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr80 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/748/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 748, mechanism 1; M-CSA cites PMID:12571243, PMID:20007323; M-CSA catalytic-residue
+        roles for Thr80
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/748/
+      snippet: "Thr 80 is substrate assisted, its deprotonation by the deprotonated amino nitrogen atom\
+        \ of D-Tyr activates it for nucleophilic attack. The hydroxyl group of Thr 80 nucleophilically\
+        \ attacks the carbonyl carbon of
+D-Tyr, forming a negatively charged, tetrahedral intermediate.\
+        \  This intermediate is stabilised by the oxyanion hole which is composed of the main chain amides\
+        \ of Thr 80 and Phe 79, and t"
+      notes: M-CSA entry 748, mechanism 1; M-CSA cites PMID:12571243, PMID:20007323; CATH domain 3.50.80.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/748/
+      snippet: "Thr 80 is substrate assisted, its deprotonation by the deprotonated amino nitrogen atom\
+        \ of D-Tyr activates it for nucleophilic attack. The hydroxyl group of Thr 80 nucleophilically\
+        \ attacks the carbonyl carbon of
+D-Tyr, forming a negatively charged, tetrahedral intermediate.\
+        \  This intermediate is stabilised by the oxyanion hole which is composed of the main chain amides\
+        \ of Thr 80 and Phe 79, and t"
+      notes: M-CSA entry 748, mechanism 1; M-CSA cites PMID:12571243, PMID:20007323; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/748/
+      snippet: "Thr 80 is substrate assisted, its deprotonation by the deprotonated amino nitrogen atom\
+        \ of D-Tyr activates it for nucleophilic attack. The hydroxyl group of Thr 80 nucleophilically\
+        \ attacks the carbonyl carbon of
+D-Tyr, forming a negatively charged, tetrahedral intermediate.\
+        \  This intermediate is stabilised by the oxyanion hole which is composed of the main chain amides\
+        \ of Thr 80 and Phe 79, and t"
+      notes: M-CSA entry 748, mechanism 1; M-CSA cites PMID:12571243, PMID:20007323; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/748/
+      snippet: "Thr 80 is substrate assisted, its deprotonation by the deprotonated amino nitrogen atom\
+        \ of D-Tyr activates it for nucleophilic attack. The hydroxyl group of Thr 80 nucleophilically\
+        \ attacks the carbonyl carbon of
+D-Tyr, forming a negatively charged, tetrahedral intermediate.\
+        \  This intermediate is stabilised by the oxyanion hole which is composed of the main chain amides\
+        \ of Thr 80 and Phe 79, and t"
+      notes: M-CSA entry 748, mechanism 1; M-CSA cites PMID:12571243, PMID:20007323; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/748/
+      snippet: "Thr 80 is substrate assisted, its deprotonation by the deprotonated amino nitrogen atom\
+        \ of D-Tyr activates it for nucleophilic attack. The hydroxyl group of Thr 80 nucleophilically\
+        \ attacks the carbonyl carbon of
+D-Tyr, forming a negatively charged, tetrahedral intermediate.\
+        \  This intermediate is stabilised by the oxyanion hole which is composed of the main chain amides\
+        \ of Thr 80 and Phe 79, and t"
+      notes: M-CSA entry 748, mechanism 1; M-CSA cites PMID:12571243, PMID:20007323; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/748/
+      snippet: "Thr 80 is substrate assisted, its deprotonation by the deprotonated amino nitrogen atom\
+        \ of D-Tyr activates it for nucleophilic attack. The hydroxyl group of Thr 80 nucleophilically\
+        \ attacks the carbonyl carbon of
+D-Tyr, forming a negatively charged, tetrahedral intermediate.\
+        \  This intermediate is stabilised by the oxyanion hole which is composed of the main chain amides\
+        \ of Thr 80 and Phe 79, and t"
+      notes: M-CSA entry 748, mechanism 1; M-CSA cites PMID:12571243, PMID:20007323; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/748/
+      snippet: "Thr 80 is substrate assisted, its deprotonation by the deprotonated amino nitrogen atom\
+        \ of D-Tyr activates it for nucleophilic attack. The hydroxyl group of Thr 80 nucleophilically\
+        \ attacks the carbonyl carbon of
+D-Tyr, forming a negatively charged, tetrahedral intermediate.\
+        \  This intermediate is stabilised by the oxyanion hole which is composed of the main chain amides\
+        \ of Thr 80 and Phe 79, and t"
+      notes: M-CSA entry 748, mechanism 1; M-CSA cites PMID:12571243, PMID:20007323; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (16 evidence-backed edges) transcribed from M-CSA entry 748;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

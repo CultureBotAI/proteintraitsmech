@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.2.1.9
 - CHEBI:15377
@@ -334,4 +334,313 @@ definitions:
       NADP-dependent glyceraldehyde-3-phosphate dehydrogenase (GAPN) from Streptococcus mutans (GAPN) is a non-phosphorylating, CoA-independent member of the aldehyde dehydrogenase (ALDH) family. It catalyses the irreversible oxidation of glyceraldehyde-3-phosphate (G3P) into 3-phosphoglycerate (3-PGA) in the presence of NADP via a two step mechanism.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of glyceraldehyde-3-phosphate dehydrogenase (NADP+)
+  description: Stepwise mechanism transcribed from M-CSA entry 711 (6 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: asn154
+    label: catalytic Asn154 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q59931
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ala250
+    label: catalytic Ala250 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q59931
+    description: 'M-CSA roles: activator, electrostatic stabiliser, proton acceptor, proton donor.'
+  - node_id: cys284
+    label: catalytic Cys284 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q59931
+    description: 'M-CSA roles: covalently attached, electrostatic stabiliser, nucleofuge, nucleophile,
+      proton acceptor.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: NADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+  - node_id: reactant2
+    label: D-glyceraldehyde 3-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:59776
+  - node_id: product0
+    label: 3-phosphonato-D-glycerate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58272
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: NADPH(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The thiolate of Cys284 attacks G3P in a nucleophilic addition reaction.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The tetrahedral intermediate collapses and a hydride is transferred to NADP.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Glu250 activates a water molecule for nucleophilic attack of the intermediate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The tetrahedral intermediate collapses, eliminating Cys and forming the product.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: In an inferred step the native state of the enzyme is restored when Cys284 is protonated
+      and Glu250 is deprotonated.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: glyceraldehyde-3-phosphate dehydrogenase (NADP+) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:711
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.605.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.605.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: glyceraldehyde-3-phosphate dehydrogenase (NADP+) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.2.1.9
+  edges:
+  - subject: cys284
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys284 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/711/
+      snippet: The thiolate of Cys284 attacks G3P in a nucleophilic addition reaction.
+      notes: M-CSA entry 711, mechanism 1; M-CSA cites PMID:10727225, PMID:10864505, PMID:11306027, PMID:16503652;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/711/
+      snippet: The tetrahedral intermediate collapses and a hydride is transferred to NADP.
+      notes: M-CSA entry 711, mechanism 1; M-CSA cites PMID:10727225, PMID:10864505, PMID:11306027, PMID:16503652;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/711/
+      snippet: Glu250 activates a water molecule for nucleophilic attack of the intermediate.
+      notes: M-CSA entry 711, mechanism 1; M-CSA cites PMID:10727225, PMID:10864505, PMID:11306027, PMID:16503652;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/711/
+      snippet: The tetrahedral intermediate collapses, eliminating Cys and forming the product.
+      notes: M-CSA entry 711, mechanism 1; M-CSA cites PMID:10727225, PMID:10864505, PMID:11306027, PMID:16503652;
+        step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/711/
+      snippet: In an inferred step the native state of the enzyme is restored when Cys284 is protonated
+        and Glu250 is deprotonated.
+      notes: M-CSA entry 711, mechanism 1; M-CSA cites PMID:10727225, PMID:10864505, PMID:11306027, PMID:16503652;
+        step 5
+  - subject: cys284
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Cys284 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/711/
+      snippet: In an inferred step the native state of the enzyme is restored when Cys284 is protonated
+        and Glu250 is deprotonated.
+      notes: M-CSA entry 711, mechanism 1; M-CSA cites PMID:10727225, PMID:10864505, PMID:11306027, PMID:16503652;
+        step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/711/
+      snippet: Products.
+      notes: M-CSA entry 711, mechanism 1; M-CSA cites PMID:10727225, PMID:10864505, PMID:11306027, PMID:16503652;
+        step 6
+  - subject: asn154
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn154 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/711/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 711, mechanism 1; M-CSA cites PMID:10727225, PMID:10864505, PMID:11306027, PMID:16503652;
+        M-CSA catalytic-residue roles for Asn154
+  - subject: ala250
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ala250 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/711/
+      snippet: activator, electrostatic stabiliser, proton acceptor, proton donor
+      notes: M-CSA entry 711, mechanism 1; M-CSA cites PMID:10727225, PMID:10864505, PMID:11306027, PMID:16503652;
+        M-CSA catalytic-residue roles for Ala250
+  - subject: cys284
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys284 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/711/
+      snippet: covalently attached, electrostatic stabiliser, nucleofuge, nucleophile, proton acceptor
+      notes: M-CSA entry 711, mechanism 1; M-CSA cites PMID:10727225, PMID:10864505, PMID:11306027, PMID:16503652;
+        M-CSA catalytic-residue roles for Cys284
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/711/
+      snippet: GAPN uses an ordered sequential two-step mechanism for catalysis - acylation followed by
+        deacylation. First, NADP+ binds to the enzyme, inducing a conformational change in the active
+        site, resulting in the activation of a competent enzyme. The positive charge of the nicotinamide
+        ring of NADP+, the amide peptide nitrogens of residues Cys284 and Thr285, and possibly the involvement
+        of other structur
+      notes: M-CSA entry 711, mechanism 1; M-CSA cites PMID:10727225, PMID:10864505, PMID:11306027, PMID:16503652;
+        CATH domain 3.40.605.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/711/
+      snippet: GAPN uses an ordered sequential two-step mechanism for catalysis - acylation followed by
+        deacylation. First, NADP+ binds to the enzyme, inducing a conformational change in the active
+        site, resulting in the activation of a competent enzyme. The positive charge of the nicotinamide
+        ring of NADP+, the amide peptide nitrogens of residues Cys284 and Thr285, and possibly the involvement
+        of other structur
+      notes: M-CSA entry 711, mechanism 1; M-CSA cites PMID:10727225, PMID:10864505, PMID:11306027, PMID:16503652;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/711/
+      snippet: GAPN uses an ordered sequential two-step mechanism for catalysis - acylation followed by
+        deacylation. First, NADP+ binds to the enzyme, inducing a conformational change in the active
+        site, resulting in the activation of a competent enzyme. The positive charge of the nicotinamide
+        ring of NADP+, the amide peptide nitrogens of residues Cys284 and Thr285, and possibly the involvement
+        of other structur
+      notes: M-CSA entry 711, mechanism 1; M-CSA cites PMID:10727225, PMID:10864505, PMID:11306027, PMID:16503652;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/711/
+      snippet: GAPN uses an ordered sequential two-step mechanism for catalysis - acylation followed by
+        deacylation. First, NADP+ binds to the enzyme, inducing a conformational change in the active
+        site, resulting in the activation of a competent enzyme. The positive charge of the nicotinamide
+        ring of NADP+, the amide peptide nitrogens of residues Cys284 and Thr285, and possibly the involvement
+        of other structur
+      notes: M-CSA entry 711, mechanism 1; M-CSA cites PMID:10727225, PMID:10864505, PMID:11306027, PMID:16503652;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/711/
+      snippet: GAPN uses an ordered sequential two-step mechanism for catalysis - acylation followed by
+        deacylation. First, NADP+ binds to the enzyme, inducing a conformational change in the active
+        site, resulting in the activation of a competent enzyme. The positive charge of the nicotinamide
+        ring of NADP+, the amide peptide nitrogens of residues Cys284 and Thr285, and possibly the involvement
+        of other structur
+      notes: M-CSA entry 711, mechanism 1; M-CSA cites PMID:10727225, PMID:10864505, PMID:11306027, PMID:16503652;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/711/
+      snippet: GAPN uses an ordered sequential two-step mechanism for catalysis - acylation followed by
+        deacylation. First, NADP+ binds to the enzyme, inducing a conformational change in the active
+        site, resulting in the activation of a competent enzyme. The positive charge of the nicotinamide
+        ring of NADP+, the amide peptide nitrogens of residues Cys284 and Thr285, and possibly the involvement
+        of other structur
+      notes: M-CSA entry 711, mechanism 1; M-CSA cites PMID:10727225, PMID:10864505, PMID:11306027, PMID:16503652;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/711/
+      snippet: GAPN uses an ordered sequential two-step mechanism for catalysis - acylation followed by
+        deacylation. First, NADP+ binds to the enzyme, inducing a conformational change in the active
+        site, resulting in the activation of a competent enzyme. The positive charge of the nicotinamide
+        ring of NADP+, the amide peptide nitrogens of residues Cys284 and Thr285, and possibly the involvement
+        of other structur
+      notes: M-CSA entry 711, mechanism 1; M-CSA cites PMID:10727225, PMID:10864505, PMID:11306027, PMID:16503652;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/711/
+      snippet: GAPN uses an ordered sequential two-step mechanism for catalysis - acylation followed by
+        deacylation. First, NADP+ binds to the enzyme, inducing a conformational change in the active
+        site, resulting in the activation of a competent enzyme. The positive charge of the nicotinamide
+        ring of NADP+, the amide peptide nitrogens of residues Cys284 and Thr285, and possibly the involvement
+        of other structur
+      notes: M-CSA entry 711, mechanism 1; M-CSA cites PMID:10727225, PMID:10864505, PMID:11306027, PMID:16503652;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (18 evidence-backed edges) transcribed from M-CSA entry 711;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

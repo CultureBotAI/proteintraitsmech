@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.1.1.7
 - CHEBI:16526
@@ -363,4 +363,414 @@ definitions:
       Benzoylformate decarboxylase is a thiamine diphosphate dependent enzyme. It catalyses the formation of carbon dioxide from bezoylformate and is part of the pathway that synthesises benzoate from (R)-mandelate.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of benzoylformate decarboxylase
+  description: Stepwise mechanism transcribed from M-CSA entry 220 (10 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: gly25
+    label: catalytic Gly25 (M-CSA/PDB numbering; UniProt residue 25)
+    node_type: RESIDUE
+    grounding: UniProtKB:P20906
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: ser26
+    label: catalytic Ser26 (M-CSA/PDB numbering; UniProt residue 26)
+    node_type: RESIDUE
+    grounding: UniProtKB:P20906
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor.'
+  - node_id: glu28
+    label: catalytic Glu28 (M-CSA/PDB numbering; UniProt residue 28)
+    node_type: RESIDUE
+    grounding: UniProtKB:P20906
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      proton acceptor, proton donor.'
+  - node_id: glu47
+    label: catalytic Glu47 (M-CSA/PDB numbering; UniProt residue 47)
+    node_type: RESIDUE
+    grounding: UniProtKB:P20906
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: his70
+    label: catalytic His70 (M-CSA/PDB numbering; UniProt residue 70)
+    node_type: RESIDUE
+    grounding: UniProtKB:P20906
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      proton acceptor, proton donor, proton relay.'
+  - node_id: his281
+    label: catalytic His281 (M-CSA/PDB numbering; UniProt residue 281)
+    node_type: RESIDUE
+    grounding: UniProtKB:P20906
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: gly401
+    label: catalytic Gly401 (M-CSA/PDB numbering; UniProt residue 401)
+    node_type: RESIDUE
+    grounding: UniProtKB:P20906
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: reactant0
+    label: phenylglyoxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:36656
+  - node_id: reactant1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product0
+    label: carbon dioxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+  - node_id: product1
+    label: benzaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:17169
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: There is intramolecular proton transfer within the cofactor, resulting in an ylide being
+      formed.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The carboanion of the ylide performs a nucleophilic attack on the carbonyl carbon resulting
+      in an oxyanion intermediate being formed.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The oxyanion accepts a proton from His70, which accepts a proton from Glu28 in a proton
+      relay.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Carbon dioxide is eliminated from the intermediate, with TDP acting as an electron sink.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: TDP initiates a double bond rearrangement which results in an intramolecular proton transfer
+      within the intermediate.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: The hydroxyl oxygen is deprotonated by the Glu28/His70 proton relay system, resulting
+      in the formation of another oxyanion.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: The imine nitrogen of the cofactor  then accepts a proton from the relay system.
+  - node_id: step8
+    label: mechanism step 8
+    node_type: STATE
+    description: The collapse of the oxyanion leads to the elimination of TDP and the formation of the
+      product.
+  - node_id: step9
+    label: mechanism step 9
+    node_type: STATE
+    description: The cofactor is regenerated in its native state via an intramolecular proton transfer.
+  - node_id: step10
+    label: mechanism step 10
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: benzoylformate decarboxylase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:220
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.970 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.970
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: benzoylformate decarboxylase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.1.1.7
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/220/
+      snippet: The carboanion of the ylide performs a nucleophilic attack on the carbonyl carbon resulting
+        in an oxyanion intermediate being formed.
+      notes: M-CSA entry 220, mechanism 2; M-CSA cites PMID:29998094; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/220/
+      snippet: The oxyanion accepts a proton from His70, which accepts a proton from Glu28 in a proton
+        relay.
+      notes: M-CSA entry 220, mechanism 2; M-CSA cites PMID:29998094; step 3
+  - subject: glu28
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Glu28 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/220/
+      snippet: The oxyanion accepts a proton from His70, which accepts a proton from Glu28 in a proton
+        relay.
+      notes: M-CSA entry 220, mechanism 2; M-CSA cites PMID:29998094; step 3
+  - subject: his70
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His70 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/220/
+      snippet: The oxyanion accepts a proton from His70, which accepts a proton from Glu28 in a proton
+        relay.
+      notes: M-CSA entry 220, mechanism 2; M-CSA cites PMID:29998094; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/220/
+      snippet: Carbon dioxide is eliminated from the intermediate, with TDP acting as an electron sink.
+      notes: M-CSA entry 220, mechanism 2; M-CSA cites PMID:29998094; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/220/
+      snippet: TDP initiates a double bond rearrangement which results in an intramolecular proton transfer
+        within the intermediate.
+      notes: M-CSA entry 220, mechanism 2; M-CSA cites PMID:29998094; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/220/
+      snippet: The hydroxyl oxygen is deprotonated by the Glu28/His70 proton relay system, resulting in
+        the formation of another oxyanion.
+      notes: M-CSA entry 220, mechanism 2; M-CSA cites PMID:29998094; step 6
+  - subject: glu28
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: Glu28 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/220/
+      snippet: The hydroxyl oxygen is deprotonated by the Glu28/His70 proton relay system, resulting in
+        the formation of another oxyanion.
+      notes: M-CSA entry 220, mechanism 2; M-CSA cites PMID:29998094; step 6
+  - subject: his70
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step6
+    description: His70 acts in step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/220/
+      snippet: The hydroxyl oxygen is deprotonated by the Glu28/His70 proton relay system, resulting in
+        the formation of another oxyanion.
+      notes: M-CSA entry 220, mechanism 2; M-CSA cites PMID:29998094; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/220/
+      snippet: The imine nitrogen of the cofactor  then accepts a proton from the relay system.
+      notes: M-CSA entry 220, mechanism 2; M-CSA cites PMID:29998094; step 7
+  - subject: step7
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step8
+    description: Step 7 leads to step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/220/
+      snippet: The collapse of the oxyanion leads to the elimination of TDP and the formation of the product.
+      notes: M-CSA entry 220, mechanism 2; M-CSA cites PMID:29998094; step 8
+  - subject: step8
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step9
+    description: Step 8 leads to step 9.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/220/
+      snippet: The cofactor is regenerated in its native state via an intramolecular proton transfer.
+      notes: M-CSA entry 220, mechanism 2; M-CSA cites PMID:29998094; step 9
+  - subject: step9
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step10
+    description: Step 9 leads to step 10.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/220/
+      snippet: Products.
+      notes: M-CSA entry 220, mechanism 2; M-CSA cites PMID:29998094; step 10
+  - subject: gly25
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly25 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/220/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 220, mechanism 2; M-CSA cites PMID:29998094; M-CSA catalytic-residue roles for
+        Gly25
+  - subject: ser26
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser26 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/220/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor
+      notes: M-CSA entry 220, mechanism 2; M-CSA cites PMID:29998094; M-CSA catalytic-residue roles for
+        Ser26
+  - subject: glu28
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu28 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/220/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+        proton donor
+      notes: M-CSA entry 220, mechanism 2; M-CSA cites PMID:29998094; M-CSA catalytic-residue roles for
+        Glu28
+  - subject: glu47
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu47 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/220/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 220, mechanism 2; M-CSA cites PMID:29998094; M-CSA catalytic-residue roles for
+        Glu47
+  - subject: his70
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His70 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/220/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+        proton donor, proton relay
+      notes: M-CSA entry 220, mechanism 2; M-CSA cites PMID:29998094; M-CSA catalytic-residue roles for
+        His70
+  - subject: his281
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His281 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/220/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 220, mechanism 2; M-CSA cites PMID:29998094; M-CSA catalytic-residue roles for
+        His281
+  - subject: gly401
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly401 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/220/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 220, mechanism 2; M-CSA cites PMID:29998094; M-CSA catalytic-residue roles for
+        Gly401
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/220/
+      snippet: "This alternative mechanism is based off more up to date computational experiments (26/06/2018),\
+        \ which used density functional theory calculations. 
+The mechanism begins with intramolecular\
+        \ proton transfer within the cofactor which activates it for nucleophilic attack on phenylglyoxylate.\
+        \ This results in an oxyanion being formed which can accept a proton from the His70/Glu28 proton\
+        \ relay system. C"
+      notes: M-CSA entry 220, mechanism 2; M-CSA cites PMID:29998094; CATH domain 3.40.50.970 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/220/
+      snippet: "This alternative mechanism is based off more up to date computational experiments (26/06/2018),\
+        \ which used density functional theory calculations. 
+The mechanism begins with intramolecular\
+        \ proton transfer within the cofactor which activates it for nucleophilic attack on phenylglyoxylate.\
+        \ This results in an oxyanion being formed which can accept a proton from the His70/Glu28 proton\
+        \ relay system. C"
+      notes: M-CSA entry 220, mechanism 2; M-CSA cites PMID:29998094; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/220/
+      snippet: "This alternative mechanism is based off more up to date computational experiments (26/06/2018),\
+        \ which used density functional theory calculations. 
+The mechanism begins with intramolecular\
+        \ proton transfer within the cofactor which activates it for nucleophilic attack on phenylglyoxylate.\
+        \ This results in an oxyanion being formed which can accept a proton from the His70/Glu28 proton\
+        \ relay system. C"
+      notes: M-CSA entry 220, mechanism 2; M-CSA cites PMID:29998094; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/220/
+      snippet: "This alternative mechanism is based off more up to date computational experiments (26/06/2018),\
+        \ which used density functional theory calculations. 
+The mechanism begins with intramolecular\
+        \ proton transfer within the cofactor which activates it for nucleophilic attack on phenylglyoxylate.\
+        \ This results in an oxyanion being formed which can accept a proton from the His70/Glu28 proton\
+        \ relay system. C"
+      notes: M-CSA entry 220, mechanism 2; M-CSA cites PMID:29998094; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/220/
+      snippet: "This alternative mechanism is based off more up to date computational experiments (26/06/2018),\
+        \ which used density functional theory calculations. 
+The mechanism begins with intramolecular\
+        \ proton transfer within the cofactor which activates it for nucleophilic attack on phenylglyoxylate.\
+        \ This results in an oxyanion being formed which can accept a proton from the His70/Glu28 proton\
+        \ relay system. C"
+      notes: M-CSA entry 220, mechanism 2; M-CSA cites PMID:29998094; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/220/
+      snippet: "This alternative mechanism is based off more up to date computational experiments (26/06/2018),\
+        \ which used density functional theory calculations. 
+The mechanism begins with intramolecular\
+        \ proton transfer within the cofactor which activates it for nucleophilic attack on phenylglyoxylate.\
+        \ This results in an oxyanion being formed which can accept a proton from the His70/Glu28 proton\
+        \ relay system. C"
+      notes: M-CSA entry 220, mechanism 2; M-CSA cites PMID:29998094; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (26 evidence-backed edges) transcribed from M-CSA entry 220;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

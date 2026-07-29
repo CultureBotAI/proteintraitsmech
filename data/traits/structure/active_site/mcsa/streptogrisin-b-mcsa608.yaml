@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.21.81
 - CHEBI:15377
@@ -358,4 +358,252 @@ definitions:
       Serine protease B extracted from Streptomyces griseus shows similar active site architecture to the well characterised family of human serine proteases and displays trypsin like specificity for its peptide substrates. It has proved especially useful in analysing the effect of peptide inhibitors such as turkey ovomucoid inhibitor.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of streptogrisin B
+  description: Stepwise mechanism transcribed from M-CSA entry 608 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: his57
+    label: catalytic His57 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00777
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: asp102
+    label: catalytic Asp102 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00777
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: gly193
+    label: catalytic Gly193 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00777
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ser195
+    label: catalytic Ser195 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00777
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ser214
+    label: catalytic Ser214 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00777
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: dipeptide zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:90799
+  - node_id: product0
+    label: L-alpha-amino acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:59869
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His147 deprotonates Ser255 which activates it to attack the carbon of the peptide bond
+      in a nucleophilic addition and form the oxyanion intermediate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Collapse of the tetrahedral intermediate with protonation of the departing amine leaving
+      group by His147 generates an acyl-enzyme intermediate and releases one product.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: His147 abstracts a proton from a water which activates it to attack the carbon of the
+      ester bond in a nucleophilic addition.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The tetrahedral intermediate collapses which results in the cleavage of the ester bond
+      releasing Ser255 and the other product. The released Ser255 then accepts a proton from His147 which
+      returns the enzyme to its native state.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Product
+  - node_id: active_site
+    label: streptogrisin B catalytic site
+    node_type: MOTIF
+    grounding: MCSA:608
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.40.10.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.40.10.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: streptogrisin B activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.21.81
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/608/
+      snippet: Collapse of the tetrahedral intermediate with protonation of the departing amine leaving
+        group by His147 generates an acyl-enzyme intermediate and releases one product.
+      notes: M-CSA entry 608, mechanism 1; M-CSA cites PMID:18157955, PMID:6777499; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/608/
+      snippet: His147 abstracts a proton from a water which activates it to attack the carbon of the ester
+        bond in a nucleophilic addition.
+      notes: M-CSA entry 608, mechanism 1; M-CSA cites PMID:18157955, PMID:6777499; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/608/
+      snippet: The tetrahedral intermediate collapses which results in the cleavage of the ester bond
+        releasing Ser255 and the other product. The released Ser255 then accepts a proton from His147
+        which returns the enzyme to its native state.
+      notes: M-CSA entry 608, mechanism 1; M-CSA cites PMID:18157955, PMID:6777499; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/608/
+      snippet: Product
+      notes: M-CSA entry 608, mechanism 1; M-CSA cites PMID:18157955, PMID:6777499; step 5
+  - subject: his57
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His57 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/608/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 608, mechanism 1; M-CSA cites PMID:18157955, PMID:6777499; M-CSA catalytic-residue
+        roles for His57
+  - subject: asp102
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp102 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/608/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 608, mechanism 1; M-CSA cites PMID:18157955, PMID:6777499; M-CSA catalytic-residue
+        roles for Asp102
+  - subject: gly193
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly193 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/608/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 608, mechanism 1; M-CSA cites PMID:18157955, PMID:6777499; M-CSA catalytic-residue
+        roles for Gly193
+  - subject: ser195
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser195 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/608/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 608, mechanism 1; M-CSA cites PMID:18157955, PMID:6777499; M-CSA catalytic-residue
+        roles for Ser195
+  - subject: ser214
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser214 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/608/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 608, mechanism 1; M-CSA cites PMID:18157955, PMID:6777499; M-CSA catalytic-residue
+        roles for Ser214
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/608/
+      snippet: Ser 255 acts as the nucleophile to attack the peptide after deprotonation by His 147, forming
+        the oxyanion intermediate, stabilised by hydrogen bonding of the oxyanion hole which is formed
+        by Ser 255 and Gly 253. Protonation of the leaving group by His 147 results in the collapse of
+        the tetrahedral intermediate and the resulting acyl enzyme intermediate is hydrolysed by an activated
+        water molecule
+      notes: M-CSA entry 608, mechanism 1; M-CSA cites PMID:18157955, PMID:6777499; CATH domain 2.40.10.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/608/
+      snippet: Ser 255 acts as the nucleophile to attack the peptide after deprotonation by His 147, forming
+        the oxyanion intermediate, stabilised by hydrogen bonding of the oxyanion hole which is formed
+        by Ser 255 and Gly 253. Protonation of the leaving group by His 147 results in the collapse of
+        the tetrahedral intermediate and the resulting acyl enzyme intermediate is hydrolysed by an activated
+        water molecule
+      notes: M-CSA entry 608, mechanism 1; M-CSA cites PMID:18157955, PMID:6777499; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/608/
+      snippet: Ser 255 acts as the nucleophile to attack the peptide after deprotonation by His 147, forming
+        the oxyanion intermediate, stabilised by hydrogen bonding of the oxyanion hole which is formed
+        by Ser 255 and Gly 253. Protonation of the leaving group by His 147 results in the collapse of
+        the tetrahedral intermediate and the resulting acyl enzyme intermediate is hydrolysed by an activated
+        water molecule
+      notes: M-CSA entry 608, mechanism 1; M-CSA cites PMID:18157955, PMID:6777499; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/608/
+      snippet: Ser 255 acts as the nucleophile to attack the peptide after deprotonation by His 147, forming
+        the oxyanion intermediate, stabilised by hydrogen bonding of the oxyanion hole which is formed
+        by Ser 255 and Gly 253. Protonation of the leaving group by His 147 results in the collapse of
+        the tetrahedral intermediate and the resulting acyl enzyme intermediate is hydrolysed by an activated
+        water molecule
+      notes: M-CSA entry 608, mechanism 1; M-CSA cites PMID:18157955, PMID:6777499; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/608/
+      snippet: Ser 255 acts as the nucleophile to attack the peptide after deprotonation by His 147, forming
+        the oxyanion intermediate, stabilised by hydrogen bonding of the oxyanion hole which is formed
+        by Ser 255 and Gly 253. Protonation of the leaving group by His 147 results in the collapse of
+        the tetrahedral intermediate and the resulting acyl enzyme intermediate is hydrolysed by an activated
+        water molecule
+      notes: M-CSA entry 608, mechanism 1; M-CSA cites PMID:18157955, PMID:6777499; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (14 evidence-backed edges) transcribed from M-CSA entry 608;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

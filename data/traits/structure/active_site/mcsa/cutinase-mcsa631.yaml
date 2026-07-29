@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.1.74
 - CHEBI:15377
@@ -198,4 +198,282 @@ definitions:
       Cutinase is a serine esterase. It hydrolyses cutin, an insoluble polyester which covers the surface of plants. It is also able to hydrolyse fatty acids esters and emulsified triacylglycerol as efficiently as lipases.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of cutinase
+  description: Stepwise mechanism transcribed from M-CSA entry 631 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +16).
+  nodes:
+  - node_id: ser42
+    label: catalytic Ser42 (M-CSA/PDB numbering; UniProt residue 58)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00590
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ser120
+    label: catalytic Ser120 (M-CSA/PDB numbering; UniProt residue 136)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00590
+    description: 'M-CSA roles: covalently attached, nucleofuge, nucleophile, proton acceptor, proton donor.'
+  - node_id: gln121
+    label: catalytic Gln121 (M-CSA/PDB numbering; UniProt residue 137)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00590
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp175
+    label: catalytic Asp175 (M-CSA/PDB numbering; UniProt residue 191)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00590
+    description: 'M-CSA roles: electrostatic stabiliser, increase basicity.'
+  - node_id: his188
+    label: catalytic His188 (M-CSA/PDB numbering; UniProt residue 204)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00590
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: carboxylic ester
+    node_type: CHEMICAL
+    grounding: CHEBI:33308
+  - node_id: product0
+    label: alcohol
+    node_type: CHEMICAL
+    grounding: CHEBI:30879
+  - node_id: product1
+    label: carboxylic acid anion
+    node_type: CHEMICAL
+    grounding: CHEBI:29067
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His204 acts as a general base activating the Ser136 hydroxyl group for nucleophilic attack
+      on the carbonyl carbon. The third component of this catalytic triad- Asp191 acts to increase the
+      basicity of the histidine. The oxyanion intermediate formed is stabilized by the amide groups of
+      Gln137 and Ser58.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The tetrahedral intermediate collapses and an alcohol is eliminated.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: His204 activates water for nucleophilic attack and another oxyanion intermediate is formed.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The tetrahedral intermediate collapses and Ser136 is eliminated.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: cutinase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:631
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1820 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1820
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: cutinase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.1.74
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/631/
+      snippet: The tetrahedral intermediate collapses and an alcohol is eliminated.
+      notes: M-CSA entry 631, mechanism 1; M-CSA cites PMID:1560844, PMID:18983850, PMID:8286366; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/631/
+      snippet: His204 activates water for nucleophilic attack and another oxyanion intermediate is formed.
+      notes: M-CSA entry 631, mechanism 1; M-CSA cites PMID:1560844, PMID:18983850, PMID:8286366; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/631/
+      snippet: The tetrahedral intermediate collapses and Ser136 is eliminated.
+      notes: M-CSA entry 631, mechanism 1; M-CSA cites PMID:1560844, PMID:18983850, PMID:8286366; step
+        4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/631/
+      snippet: Products.
+      notes: M-CSA entry 631, mechanism 1; M-CSA cites PMID:1560844, PMID:18983850, PMID:8286366; step
+        5
+  - subject: ser42
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser42 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/631/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 631, mechanism 1; M-CSA cites PMID:1560844, PMID:18983850, PMID:8286366; M-CSA
+        catalytic-residue roles for Ser42
+  - subject: ser120
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser120 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/631/
+      snippet: covalently attached, nucleofuge, nucleophile, proton acceptor, proton donor
+      notes: M-CSA entry 631, mechanism 1; M-CSA cites PMID:1560844, PMID:18983850, PMID:8286366; M-CSA
+        catalytic-residue roles for Ser120
+  - subject: gln121
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln121 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/631/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 631, mechanism 1; M-CSA cites PMID:1560844, PMID:18983850, PMID:8286366; M-CSA
+        catalytic-residue roles for Gln121
+  - subject: asp175
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp175 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/631/
+      snippet: electrostatic stabiliser, increase basicity
+      notes: M-CSA entry 631, mechanism 1; M-CSA cites PMID:1560844, PMID:18983850, PMID:8286366; M-CSA
+        catalytic-residue roles for Asp175
+  - subject: his188
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His188 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/631/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 631, mechanism 1; M-CSA cites PMID:1560844, PMID:18983850, PMID:8286366; M-CSA
+        catalytic-residue roles for His188
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/631/
+      snippet: His204 acts as a base to deprotonate Ser136 to allow its nucleophilic attack on the ester
+        bond. His204 donates a proton to the leaving group and then activates a water molecule to allow
+        the hydrolysis of the acylenzyme. Asp191 alters the pKa of the His204 to allow to act as an effective
+        base in the reaction. Gln137 and Ser58 forms the oxyanion hole to stabilise the transition state.
+      notes: M-CSA entry 631, mechanism 1; M-CSA cites PMID:1560844, PMID:18983850, PMID:8286366; CATH
+        domain 3.40.50.1820 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/631/
+      snippet: His204 acts as a base to deprotonate Ser136 to allow its nucleophilic attack on the ester
+        bond. His204 donates a proton to the leaving group and then activates a water molecule to allow
+        the hydrolysis of the acylenzyme. Asp191 alters the pKa of the His204 to allow to act as an effective
+        base in the reaction. Gln137 and Ser58 forms the oxyanion hole to stabilise the transition state.
+      notes: M-CSA entry 631, mechanism 1; M-CSA cites PMID:1560844, PMID:18983850, PMID:8286366; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/631/
+      snippet: His204 acts as a base to deprotonate Ser136 to allow its nucleophilic attack on the ester
+        bond. His204 donates a proton to the leaving group and then activates a water molecule to allow
+        the hydrolysis of the acylenzyme. Asp191 alters the pKa of the His204 to allow to act as an effective
+        base in the reaction. Gln137 and Ser58 forms the oxyanion hole to stabilise the transition state.
+      notes: M-CSA entry 631, mechanism 1; M-CSA cites PMID:1560844, PMID:18983850, PMID:8286366; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/631/
+      snippet: His204 acts as a base to deprotonate Ser136 to allow its nucleophilic attack on the ester
+        bond. His204 donates a proton to the leaving group and then activates a water molecule to allow
+        the hydrolysis of the acylenzyme. Asp191 alters the pKa of the His204 to allow to act as an effective
+        base in the reaction. Gln137 and Ser58 forms the oxyanion hole to stabilise the transition state.
+      notes: M-CSA entry 631, mechanism 1; M-CSA cites PMID:1560844, PMID:18983850, PMID:8286366; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/631/
+      snippet: His204 acts as a base to deprotonate Ser136 to allow its nucleophilic attack on the ester
+        bond. His204 donates a proton to the leaving group and then activates a water molecule to allow
+        the hydrolysis of the acylenzyme. Asp191 alters the pKa of the His204 to allow to act as an effective
+        base in the reaction. Gln137 and Ser58 forms the oxyanion hole to stabilise the transition state.
+      notes: M-CSA entry 631, mechanism 1; M-CSA cites PMID:1560844, PMID:18983850, PMID:8286366; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/631/
+      snippet: His204 acts as a base to deprotonate Ser136 to allow its nucleophilic attack on the ester
+        bond. His204 donates a proton to the leaving group and then activates a water molecule to allow
+        the hydrolysis of the acylenzyme. Asp191 alters the pKa of the His204 to allow to act as an effective
+        base in the reaction. Gln137 and Ser58 forms the oxyanion hole to stabilise the transition state.
+      notes: M-CSA entry 631, mechanism 1; M-CSA cites PMID:1560844, PMID:18983850, PMID:8286366; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/631/
+      snippet: His204 acts as a base to deprotonate Ser136 to allow its nucleophilic attack on the ester
+        bond. His204 donates a proton to the leaving group and then activates a water molecule to allow
+        the hydrolysis of the acylenzyme. Asp191 alters the pKa of the His204 to allow to act as an effective
+        base in the reaction. Gln137 and Ser58 forms the oxyanion hole to stabilise the transition state.
+      notes: M-CSA entry 631, mechanism 1; M-CSA cites PMID:1560844, PMID:18983850, PMID:8286366; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (16 evidence-backed edges) transcribed from M-CSA entry 631;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

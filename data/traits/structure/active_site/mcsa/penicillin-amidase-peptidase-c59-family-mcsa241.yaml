@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.5.1.11
 - CHEBI:27446
@@ -272,4 +272,288 @@ definitions:
       Penicillin V acylase (PVA), isolated from Bacillus sphaericus, catalyses the hydrolysis of penicillin V to 6-aminopenicillanic acid (6-APA) and phenoxyacetic acid. This reaction is commercially important because 6-APA is used in the synthesis of semi-synthetic penicillins. The enzyme undergoes post-translational autocatalytic self-cleavage to produce the mature enzyme. A tripeptide of Met-Leu-Gly is removed to expose the catalytic N-terminal cysteine residue. PVA belongs to the N-terminal nucleophile (Ntn) superfamily.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of penicillin amidase (peptidase C59 family)
+  description: Stepwise mechanism transcribed from M-CSA entry 241 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +3).
+  nodes:
+  - node_id: cys1
+    label: catalytic Cys1 (M-CSA/PDB numbering; UniProt residue 4)
+    node_type: RESIDUE
+    grounding: UniProtKB:P12256
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: tyr82
+    label: catalytic Tyr82 (M-CSA/PDB numbering; UniProt residue 85)
+    node_type: RESIDUE
+    grounding: UniProtKB:P12256
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: asn175
+    label: catalytic Asn175 (M-CSA/PDB numbering; UniProt residue 178)
+    node_type: RESIDUE
+    grounding: UniProtKB:P12256
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: arg228
+    label: catalytic Arg228 (M-CSA/PDB numbering; UniProt residue 231)
+    node_type: RESIDUE
+    grounding: UniProtKB:P12256
+    description: 'M-CSA roles: activator, hydrogen bond donor, increase acidity, increase basicity, repulsive
+      charge-charge interaction.'
+  - node_id: reactant0
+    label: phenoxymethylpenicillin
+    node_type: CHEMICAL
+    grounding: CHEBI:27446
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: phenoxyacetic acid
+    node_type: CHEMICAL
+    grounding: CHEBI:8075
+  - node_id: product1
+    label: 6-aminopenicillanic acid
+    node_type: CHEMICAL
+    grounding: CHEBI:16705
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The alpha-amine of Cys1 deprotonates the thiol group. The resulting thiolate is the nucleophile
+      for attack on the carbonyl carbon. The tetrahedral intermediate is stabilised by the oxyanion hole.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The tetrahedral intermediate collapses and eliminates 6-aminopenicillanate, with proton
+      transfer from the alpha amine to the leaving group. Proton transfer between the alpha-amine and
+      the amine leaving group may be mediated by water.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The alpha amine deprotonates water, which then acts as the nucleophile for attack on
+      the carbonyl carbon. The tetrahedral intermediate is stabilised by the oxyanion hole.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The tetrahedral intermediate collapses and eliminates Cys1 phenoxyacetate. The Cys1 thiolate
+      is protonated by the alpha amine.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Product
+  - node_id: active_site
+    label: penicillin amidase (peptidase C59 family) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:241
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.60.60.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.60.60.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: penicillin amidase (peptidase C59 family) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.5.1.11
+  edges:
+  - subject: cys1
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys1 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/241/
+      snippet: The alpha-amine of Cys1 deprotonates the thiol group. The resulting thiolate is the nucleophile
+        for attack on the carbonyl carbon. The tetrahedral intermediate is stabilised by the oxyanion
+        hole.
+      notes: M-CSA entry 241, mechanism 1; M-CSA cites PMID:10331865, PMID:11601852, PMID:16511127, PMID:25430891,
+        PMID:7477383, PMID:7816145, PMID:9931321; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/241/
+      snippet: The tetrahedral intermediate collapses and eliminates 6-aminopenicillanate, with proton
+        transfer from the alpha amine to the leaving group. Proton transfer between the alpha-amine and
+        the amine leaving group may be mediated by water.
+      notes: M-CSA entry 241, mechanism 1; M-CSA cites PMID:10331865, PMID:11601852, PMID:16511127, PMID:25430891,
+        PMID:7477383, PMID:7816145, PMID:9931321; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/241/
+      snippet: The alpha amine deprotonates water, which then acts as the nucleophile for attack on the
+        carbonyl carbon. The tetrahedral intermediate is stabilised by the oxyanion hole.
+      notes: M-CSA entry 241, mechanism 1; M-CSA cites PMID:10331865, PMID:11601852, PMID:16511127, PMID:25430891,
+        PMID:7477383, PMID:7816145, PMID:9931321; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/241/
+      snippet: The tetrahedral intermediate collapses and eliminates Cys1 phenoxyacetate. The Cys1 thiolate
+        is protonated by the alpha amine.
+      notes: M-CSA entry 241, mechanism 1; M-CSA cites PMID:10331865, PMID:11601852, PMID:16511127, PMID:25430891,
+        PMID:7477383, PMID:7816145, PMID:9931321; step 4
+  - subject: cys1
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Cys1 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/241/
+      snippet: The tetrahedral intermediate collapses and eliminates Cys1 phenoxyacetate. The Cys1 thiolate
+        is protonated by the alpha amine.
+      notes: M-CSA entry 241, mechanism 1; M-CSA cites PMID:10331865, PMID:11601852, PMID:16511127, PMID:25430891,
+        PMID:7477383, PMID:7816145, PMID:9931321; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/241/
+      snippet: Product
+      notes: M-CSA entry 241, mechanism 1; M-CSA cites PMID:10331865, PMID:11601852, PMID:16511127, PMID:25430891,
+        PMID:7477383, PMID:7816145, PMID:9931321; step 5
+  - subject: cys1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys1 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/241/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 241, mechanism 1; M-CSA cites PMID:10331865, PMID:11601852, PMID:16511127, PMID:25430891,
+        PMID:7477383, PMID:7816145, PMID:9931321; M-CSA catalytic-residue roles for Cys1
+  - subject: tyr82
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr82 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/241/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 241, mechanism 1; M-CSA cites PMID:10331865, PMID:11601852, PMID:16511127, PMID:25430891,
+        PMID:7477383, PMID:7816145, PMID:9931321; M-CSA catalytic-residue roles for Tyr82
+  - subject: asn175
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn175 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/241/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 241, mechanism 1; M-CSA cites PMID:10331865, PMID:11601852, PMID:16511127, PMID:25430891,
+        PMID:7477383, PMID:7816145, PMID:9931321; M-CSA catalytic-residue roles for Asn175
+  - subject: arg228
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg228 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/241/
+      snippet: activator, hydrogen bond donor, increase acidity, increase basicity, repulsive charge-charge
+        interaction
+      notes: M-CSA entry 241, mechanism 1; M-CSA cites PMID:10331865, PMID:11601852, PMID:16511127, PMID:25430891,
+        PMID:7477383, PMID:7816145, PMID:9931321; M-CSA catalytic-residue roles for Arg228
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/241/
+      snippet: The alpha-amine of Cys1 deprotonates the thiol group of the residue. The resulting thiolate
+        attacks the amide carbon of penicillin V, forming a tetrahedral intermediate that can be stabilised
+        by the oxyanion hole (Asn175 and Tyr82). The intermediate collapses and eliminates 6-APA, which
+        is protonated by the Cys1 amine, possibly via water. The alpha-amine then deprotonates water,
+        which acts as the
+      notes: M-CSA entry 241, mechanism 1; M-CSA cites PMID:10331865, PMID:11601852, PMID:16511127, PMID:25430891,
+        PMID:7477383, PMID:7816145, PMID:9931321; CATH domain 3.60.60.10 assigned to the catalytic chain
+        by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/241/
+      snippet: The alpha-amine of Cys1 deprotonates the thiol group of the residue. The resulting thiolate
+        attacks the amide carbon of penicillin V, forming a tetrahedral intermediate that can be stabilised
+        by the oxyanion hole (Asn175 and Tyr82). The intermediate collapses and eliminates 6-APA, which
+        is protonated by the Cys1 amine, possibly via water. The alpha-amine then deprotonates water,
+        which acts as the
+      notes: M-CSA entry 241, mechanism 1; M-CSA cites PMID:10331865, PMID:11601852, PMID:16511127, PMID:25430891,
+        PMID:7477383, PMID:7816145, PMID:9931321; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/241/
+      snippet: The alpha-amine of Cys1 deprotonates the thiol group of the residue. The resulting thiolate
+        attacks the amide carbon of penicillin V, forming a tetrahedral intermediate that can be stabilised
+        by the oxyanion hole (Asn175 and Tyr82). The intermediate collapses and eliminates 6-APA, which
+        is protonated by the Cys1 amine, possibly via water. The alpha-amine then deprotonates water,
+        which acts as the
+      notes: M-CSA entry 241, mechanism 1; M-CSA cites PMID:10331865, PMID:11601852, PMID:16511127, PMID:25430891,
+        PMID:7477383, PMID:7816145, PMID:9931321; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/241/
+      snippet: The alpha-amine of Cys1 deprotonates the thiol group of the residue. The resulting thiolate
+        attacks the amide carbon of penicillin V, forming a tetrahedral intermediate that can be stabilised
+        by the oxyanion hole (Asn175 and Tyr82). The intermediate collapses and eliminates 6-APA, which
+        is protonated by the Cys1 amine, possibly via water. The alpha-amine then deprotonates water,
+        which acts as the
+      notes: M-CSA entry 241, mechanism 1; M-CSA cites PMID:10331865, PMID:11601852, PMID:16511127, PMID:25430891,
+        PMID:7477383, PMID:7816145, PMID:9931321; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/241/
+      snippet: The alpha-amine of Cys1 deprotonates the thiol group of the residue. The resulting thiolate
+        attacks the amide carbon of penicillin V, forming a tetrahedral intermediate that can be stabilised
+        by the oxyanion hole (Asn175 and Tyr82). The intermediate collapses and eliminates 6-APA, which
+        is protonated by the Cys1 amine, possibly via water. The alpha-amine then deprotonates water,
+        which acts as the
+      notes: M-CSA entry 241, mechanism 1; M-CSA cites PMID:10331865, PMID:11601852, PMID:16511127, PMID:25430891,
+        PMID:7477383, PMID:7816145, PMID:9931321; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/241/
+      snippet: The alpha-amine of Cys1 deprotonates the thiol group of the residue. The resulting thiolate
+        attacks the amide carbon of penicillin V, forming a tetrahedral intermediate that can be stabilised
+        by the oxyanion hole (Asn175 and Tyr82). The intermediate collapses and eliminates 6-APA, which
+        is protonated by the Cys1 amine, possibly via water. The alpha-amine then deprotonates water,
+        which acts as the
+      notes: M-CSA entry 241, mechanism 1; M-CSA cites PMID:10331865, PMID:11601852, PMID:16511127, PMID:25430891,
+        PMID:7477383, PMID:7816145, PMID:9931321; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (16 evidence-backed edges) transcribed from M-CSA entry 241;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

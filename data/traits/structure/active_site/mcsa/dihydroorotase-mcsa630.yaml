@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.5.2.3
 - CHEBI:15377
@@ -321,4 +321,272 @@ definitions:
       Dihyrdoorotase catalyses the reversible interconversion of carbamoyl aspartate and dihydroorotate. This reaction is an essential part of the pathway for the biosynthesis of pyrimidine nucleotides. Sequence comparisons show that there are two general classes of dihydroorotases. Class II enzymes are all monofunctional proteins from Gram-negative bacteria and yeast. Class I enzymes, found in higher organisms, are much larger and typically contain several enzyme activities as exemplified by CAD, a multifunctional enzyme found in mammals, insects and moulds. This protein combines the first three enzymes of the pyrimidine biosynthesis pathway: carbamoyl phosphate synthetase, aspartate carbamoylase, and dihydroorotase. Sequence homology within each class of enzymes is quite high (>40%) while that between the two classes is much lower. Both classes employ the same mechanism involving a binuclear zinc centre.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of dihydroorotase
+  description: Stepwise mechanism transcribed from M-CSA entry 630 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +1).
+  nodes:
+  - node_id: his16
+    label: catalytic His16 (M-CSA/PDB numbering; UniProt residue 17)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05020
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his18
+    label: catalytic His18 (M-CSA/PDB numbering; UniProt residue 19)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05020
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: lys102
+    label: catalytic Lys102 (M-CSA/PDB numbering; UniProt residue 103)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05020
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his139
+    label: catalytic His139 (M-CSA/PDB numbering; UniProt residue 140)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05020
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his177
+    label: catalytic His177 (M-CSA/PDB numbering; UniProt residue 178)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05020
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp250
+    label: catalytic Asp250 (M-CSA/PDB numbering; UniProt residue 251)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05020
+    description: 'M-CSA roles: metal ligand, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: (S)-dihydroorotate
+    node_type: CHEMICAL
+    grounding: CHEBI:30864
+  - node_id: product0
+    label: N-carbamoyl-L-aspartate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:32814
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The zinc coordinated hydroxide nucleophilically attacks the carbon of the carbonyl group
+      of dihydroorotate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Asp251 deprotonates the hydroxyl group.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The amide group is protonated by Asp51 which initiates an elimination from the oxyanion
+      and results in the cleavage of the amide bond.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: dihydroorotase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:630
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.140 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.140
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: dihydroorotase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.5.2.3
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/630/
+      snippet: Asp251 deprotonates the hydroxyl group.
+      notes: M-CSA entry 630, mechanism 1; M-CSA cites PMID:11401542, PMID:15610022, PMID:18366031; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/630/
+      snippet: The amide group is protonated by Asp51 which initiates an elimination from the oxyanion
+        and results in the cleavage of the amide bond.
+      notes: M-CSA entry 630, mechanism 1; M-CSA cites PMID:11401542, PMID:15610022, PMID:18366031; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/630/
+      snippet: Products
+      notes: M-CSA entry 630, mechanism 1; M-CSA cites PMID:11401542, PMID:15610022, PMID:18366031; step
+        4
+  - subject: his16
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His16 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/630/
+      snippet: metal ligand
+      notes: M-CSA entry 630, mechanism 1; M-CSA cites PMID:11401542, PMID:15610022, PMID:18366031; M-CSA
+        catalytic-residue roles for His16
+  - subject: his18
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His18 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/630/
+      snippet: metal ligand
+      notes: M-CSA entry 630, mechanism 1; M-CSA cites PMID:11401542, PMID:15610022, PMID:18366031; M-CSA
+        catalytic-residue roles for His18
+  - subject: lys102
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys102 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/630/
+      snippet: metal ligand
+      notes: M-CSA entry 630, mechanism 1; M-CSA cites PMID:11401542, PMID:15610022, PMID:18366031; M-CSA
+        catalytic-residue roles for Lys102
+  - subject: his139
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His139 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/630/
+      snippet: metal ligand
+      notes: M-CSA entry 630, mechanism 1; M-CSA cites PMID:11401542, PMID:15610022, PMID:18366031; M-CSA
+        catalytic-residue roles for His139
+  - subject: his177
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His177 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/630/
+      snippet: metal ligand
+      notes: M-CSA entry 630, mechanism 1; M-CSA cites PMID:11401542, PMID:15610022, PMID:18366031; M-CSA
+        catalytic-residue roles for His177
+  - subject: asp250
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp250 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/630/
+      snippet: metal ligand, proton acceptor, proton donor
+      notes: M-CSA entry 630, mechanism 1; M-CSA cites PMID:11401542, PMID:15610022, PMID:18366031; M-CSA
+        catalytic-residue roles for Asp250
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/630/
+      snippet: Dihydroorotase uses a bi-nuclear zinc centre to catalyse the reversible formation and hydrolysis
+        of dihydroorotate. In the hydrolysis reaction, the two zinc ions (alpha and beta) coordinate a
+        bridging hydroxide ion that attacks the substrate carbonyl to form a tetrahedral intermediate.
+        This process is facilitated by Asp 250 acting as a general base to deprotonate the attacking hydroxide,
+        and by po
+      notes: M-CSA entry 630, mechanism 1; M-CSA cites PMID:11401542, PMID:15610022, PMID:18366031; CATH
+        domain 3.20.20.140 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/630/
+      snippet: Dihydroorotase uses a bi-nuclear zinc centre to catalyse the reversible formation and hydrolysis
+        of dihydroorotate. In the hydrolysis reaction, the two zinc ions (alpha and beta) coordinate a
+        bridging hydroxide ion that attacks the substrate carbonyl to form a tetrahedral intermediate.
+        This process is facilitated by Asp 250 acting as a general base to deprotonate the attacking hydroxide,
+        and by po
+      notes: M-CSA entry 630, mechanism 1; M-CSA cites PMID:11401542, PMID:15610022, PMID:18366031; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/630/
+      snippet: Dihydroorotase uses a bi-nuclear zinc centre to catalyse the reversible formation and hydrolysis
+        of dihydroorotate. In the hydrolysis reaction, the two zinc ions (alpha and beta) coordinate a
+        bridging hydroxide ion that attacks the substrate carbonyl to form a tetrahedral intermediate.
+        This process is facilitated by Asp 250 acting as a general base to deprotonate the attacking hydroxide,
+        and by po
+      notes: M-CSA entry 630, mechanism 1; M-CSA cites PMID:11401542, PMID:15610022, PMID:18366031; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/630/
+      snippet: Dihydroorotase uses a bi-nuclear zinc centre to catalyse the reversible formation and hydrolysis
+        of dihydroorotate. In the hydrolysis reaction, the two zinc ions (alpha and beta) coordinate a
+        bridging hydroxide ion that attacks the substrate carbonyl to form a tetrahedral intermediate.
+        This process is facilitated by Asp 250 acting as a general base to deprotonate the attacking hydroxide,
+        and by po
+      notes: M-CSA entry 630, mechanism 1; M-CSA cites PMID:11401542, PMID:15610022, PMID:18366031; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/630/
+      snippet: Dihydroorotase uses a bi-nuclear zinc centre to catalyse the reversible formation and hydrolysis
+        of dihydroorotate. In the hydrolysis reaction, the two zinc ions (alpha and beta) coordinate a
+        bridging hydroxide ion that attacks the substrate carbonyl to form a tetrahedral intermediate.
+        This process is facilitated by Asp 250 acting as a general base to deprotonate the attacking hydroxide,
+        and by po
+      notes: M-CSA entry 630, mechanism 1; M-CSA cites PMID:11401542, PMID:15610022, PMID:18366031; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/630/
+      snippet: Dihydroorotase uses a bi-nuclear zinc centre to catalyse the reversible formation and hydrolysis
+        of dihydroorotate. In the hydrolysis reaction, the two zinc ions (alpha and beta) coordinate a
+        bridging hydroxide ion that attacks the substrate carbonyl to form a tetrahedral intermediate.
+        This process is facilitated by Asp 250 acting as a general base to deprotonate the attacking hydroxide,
+        and by po
+      notes: M-CSA entry 630, mechanism 1; M-CSA cites PMID:11401542, PMID:15610022, PMID:18366031; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 630;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

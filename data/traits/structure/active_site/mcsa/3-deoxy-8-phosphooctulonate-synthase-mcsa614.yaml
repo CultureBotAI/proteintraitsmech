@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.5.1.55
 - CHEBI:85985
@@ -244,4 +244,245 @@ definitions:
       3-deoxy-d-manno-s-octulosonate-8-phosphate synthase from Escherichia coli (KDO8P) is responsible for the synthesis of the named product from Phosphenol Pyruvate (PEP) and arabinose-5-phosphate (A5P). It thus plays a role in the synthesis of complex lipids for the gram negative bacterial cell wall, so is a possible target for antibiotics. It displays homology with many PEP utilising enzymes, particularly the metal dependent enzyme DAHP synthase which works by a similar mechanism where a single amino acid change of non-metallo KDO8P changes it to metallo-KDO8P.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 3-deoxy-8-phosphooctulonate synthase
+  description: Stepwise mechanism transcribed from M-CSA entry 614 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: asn26
+    label: catalytic Asn26 (M-CSA/PDB numbering; UniProt residue 26)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A715
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: lys60
+    label: catalytic Lys60 (M-CSA/PDB numbering; UniProt residue 60)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A715
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: asp250
+    label: catalytic Asp250 (M-CSA/PDB numbering; UniProt residue 250)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A715
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: aldehydo-D-arabinose 5-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57693
+  - node_id: reactant2
+    label: phosphonatoenolpyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:58702
+  - node_id: product0
+    label: 3-deoxy-alpha-D-manno-2-octulosonate-8-phosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:85985
+  - node_id: product1
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Water acts as a nucleophile and attacks C2 on PEP, activating C3 PEP to attack the reducing
+      end of A5P. The step passes through an oxocarbenium ion-like transition state.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Phosphohemiketal intermediate forms. The tetrahedral intermediate collapses to open chain
+      KDO8P.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Sugar condensation to form the ring structure, 3-Deoxy-D-manno-octulosonate phosphate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: 3-deoxy-8-phosphooctulonate synthase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:614
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.70 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.70
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: 3-deoxy-8-phosphooctulonate synthase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.5.1.55
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/614/
+      snippet: Phosphohemiketal intermediate forms. The tetrahedral intermediate collapses to open chain
+        KDO8P.
+      notes: M-CSA entry 614, mechanism 1; M-CSA cites PMID:10734095, PMID:20825995, PMID:22204912; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/614/
+      snippet: Sugar condensation to form the ring structure, 3-Deoxy-D-manno-octulosonate phosphate.
+      notes: M-CSA entry 614, mechanism 1; M-CSA cites PMID:10734095, PMID:20825995, PMID:22204912; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/614/
+      snippet: Products.
+      notes: M-CSA entry 614, mechanism 1; M-CSA cites PMID:10734095, PMID:20825995, PMID:22204912; step
+        4
+  - subject: asn26
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn26 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/614/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 614, mechanism 1; M-CSA cites PMID:10734095, PMID:20825995, PMID:22204912; M-CSA
+        catalytic-residue roles for Asn26
+  - subject: lys60
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys60 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/614/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 614, mechanism 1; M-CSA cites PMID:10734095, PMID:20825995, PMID:22204912; M-CSA
+        catalytic-residue roles for Lys60
+  - subject: asp250
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp250 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/614/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 614, mechanism 1; M-CSA cites PMID:10734095, PMID:20825995, PMID:22204912; M-CSA
+        catalytic-residue roles for Asp250
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/614/
+      snippet: The reaction proceeds through an aldol-like condensation where water activated phosphoenolpyruvate
+        attacks A5P. This forms a bis-phosphorylated tetrahedral intermediate recorded in mass spectrometry
+        experiments. The resulting intermediate then collapses, eliminating a phosphate group. Subsequent
+        sugar cyclisation occurs to form KDO8P. By analogy with the <i> Aquifex aeolicus </i> metallo-KDO8P
+        syn
+      notes: M-CSA entry 614, mechanism 1; M-CSA cites PMID:10734095, PMID:20825995, PMID:22204912; CATH
+        domain 3.20.20.70 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/614/
+      snippet: The reaction proceeds through an aldol-like condensation where water activated phosphoenolpyruvate
+        attacks A5P. This forms a bis-phosphorylated tetrahedral intermediate recorded in mass spectrometry
+        experiments. The resulting intermediate then collapses, eliminating a phosphate group. Subsequent
+        sugar cyclisation occurs to form KDO8P. By analogy with the <i> Aquifex aeolicus </i> metallo-KDO8P
+        syn
+      notes: M-CSA entry 614, mechanism 1; M-CSA cites PMID:10734095, PMID:20825995, PMID:22204912; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/614/
+      snippet: The reaction proceeds through an aldol-like condensation where water activated phosphoenolpyruvate
+        attacks A5P. This forms a bis-phosphorylated tetrahedral intermediate recorded in mass spectrometry
+        experiments. The resulting intermediate then collapses, eliminating a phosphate group. Subsequent
+        sugar cyclisation occurs to form KDO8P. By analogy with the <i> Aquifex aeolicus </i> metallo-KDO8P
+        syn
+      notes: M-CSA entry 614, mechanism 1; M-CSA cites PMID:10734095, PMID:20825995, PMID:22204912; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/614/
+      snippet: The reaction proceeds through an aldol-like condensation where water activated phosphoenolpyruvate
+        attacks A5P. This forms a bis-phosphorylated tetrahedral intermediate recorded in mass spectrometry
+        experiments. The resulting intermediate then collapses, eliminating a phosphate group. Subsequent
+        sugar cyclisation occurs to form KDO8P. By analogy with the <i> Aquifex aeolicus </i> metallo-KDO8P
+        syn
+      notes: M-CSA entry 614, mechanism 1; M-CSA cites PMID:10734095, PMID:20825995, PMID:22204912; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/614/
+      snippet: The reaction proceeds through an aldol-like condensation where water activated phosphoenolpyruvate
+        attacks A5P. This forms a bis-phosphorylated tetrahedral intermediate recorded in mass spectrometry
+        experiments. The resulting intermediate then collapses, eliminating a phosphate group. Subsequent
+        sugar cyclisation occurs to form KDO8P. By analogy with the <i> Aquifex aeolicus </i> metallo-KDO8P
+        syn
+      notes: M-CSA entry 614, mechanism 1; M-CSA cites PMID:10734095, PMID:20825995, PMID:22204912; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/614/
+      snippet: The reaction proceeds through an aldol-like condensation where water activated phosphoenolpyruvate
+        attacks A5P. This forms a bis-phosphorylated tetrahedral intermediate recorded in mass spectrometry
+        experiments. The resulting intermediate then collapses, eliminating a phosphate group. Subsequent
+        sugar cyclisation occurs to form KDO8P. By analogy with the <i> Aquifex aeolicus </i> metallo-KDO8P
+        syn
+      notes: M-CSA entry 614, mechanism 1; M-CSA cites PMID:10734095, PMID:20825995, PMID:22204912; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/614/
+      snippet: The reaction proceeds through an aldol-like condensation where water activated phosphoenolpyruvate
+        attacks A5P. This forms a bis-phosphorylated tetrahedral intermediate recorded in mass spectrometry
+        experiments. The resulting intermediate then collapses, eliminating a phosphate group. Subsequent
+        sugar cyclisation occurs to form KDO8P. By analogy with the <i> Aquifex aeolicus </i> metallo-KDO8P
+        syn
+      notes: M-CSA entry 614, mechanism 1; M-CSA cites PMID:10734095, PMID:20825995, PMID:22204912; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (13 evidence-backed edges) transcribed from M-CSA entry 614;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

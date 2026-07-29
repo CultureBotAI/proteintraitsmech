@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.3.2.6
 - CHEBI:57463
@@ -485,4 +485,296 @@ definitions:
       Leukotriene A4 hydrolase/ Aminopeptidase is involved in the immune response in humans, and is unique in its ability to catalyse two very different reactions at the active site. Not only is it able to catalyse the hydrolysis of the epoxide Leukotriene A4 to produce the potent immune activator Leukotriene B4, it is also able to catalyse the hydrolysis of peptide bonds, acting on the first peptide bond after the N terminal. One active site is enough to confer such variety of function, so the enzyme represents a yardstick of evolutionary efficiency seldom reached in nature. It displays a characteristic Zinc binding motif at the active site (GXMEN) which places it in the family M1 of Zinc metalloproteases.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of leukotriene-A4 hydrolase
+  description: Stepwise mechanism transcribed from M-CSA entry 166 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +1).
+  nodes:
+  - node_id: glu271
+    label: catalytic Glu271 (M-CSA/PDB numbering; UniProt residue 272)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09960
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, nucleofuge, nucleophile.'
+  - node_id: his295
+    label: catalytic His295 (M-CSA/PDB numbering; UniProt residue 296)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09960
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu296
+    label: catalytic Glu296 (M-CSA/PDB numbering; UniProt residue 297)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09960
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his299
+    label: catalytic His299 (M-CSA/PDB numbering; UniProt residue 300)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09960
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu318
+    label: catalytic Glu318 (M-CSA/PDB numbering; UniProt residue 319)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09960
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp375
+    label: catalytic Asp375 (M-CSA/PDB numbering; UniProt residue 376)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09960
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: tyr383
+    label: catalytic Tyr383 (M-CSA/PDB numbering; UniProt residue 384)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09960
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: leukotriene A4(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57463
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: leukotriene B4(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57461
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The oxygen of the oxirane ring in leukotriene A4 deprotonates a water molecule activated
+      by Glu271.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The acidic oxirane ring collapses in a heterolysis.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Asp375 deprotonates a water molecule, which attacks the intermediate in a nucleophilic
+      addition with attendant double bond rearrangement, producing the leukotriene B4 product.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Water deprotonates Asp375, regenerating the enzyme active site.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: leukotriene-A4 hydrolase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:166
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: activity
+    label: leukotriene-A4 hydrolase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.3.2.6
+  edges:
+  - subject: glu271
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu271 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/166/
+      snippet: The oxygen of the oxirane ring in leukotriene A4 deprotonates a water molecule activated
+        by Glu271.
+      notes: M-CSA entry 166, mechanism 1; M-CSA cites PMID:11175901, PMID:11675384, PMID:11917124, PMID:17481555;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/166/
+      snippet: The acidic oxirane ring collapses in a heterolysis.
+      notes: M-CSA entry 166, mechanism 1; M-CSA cites PMID:11175901, PMID:11675384, PMID:11917124, PMID:17481555;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/166/
+      snippet: Asp375 deprotonates a water molecule, which attacks the intermediate in a nucleophilic
+        addition with attendant double bond rearrangement, producing the leukotriene B4 product.
+      notes: M-CSA entry 166, mechanism 1; M-CSA cites PMID:11175901, PMID:11675384, PMID:11917124, PMID:17481555;
+        step 3
+  - subject: asp375
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Asp375 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/166/
+      snippet: Asp375 deprotonates a water molecule, which attacks the intermediate in a nucleophilic
+        addition with attendant double bond rearrangement, producing the leukotriene B4 product.
+      notes: M-CSA entry 166, mechanism 1; M-CSA cites PMID:11175901, PMID:11675384, PMID:11917124, PMID:17481555;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/166/
+      snippet: Water deprotonates Asp375, regenerating the enzyme active site.
+      notes: M-CSA entry 166, mechanism 1; M-CSA cites PMID:11175901, PMID:11675384, PMID:11917124, PMID:17481555;
+        step 4
+  - subject: asp375
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Asp375 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/166/
+      snippet: Water deprotonates Asp375, regenerating the enzyme active site.
+      notes: M-CSA entry 166, mechanism 1; M-CSA cites PMID:11175901, PMID:11675384, PMID:11917124, PMID:17481555;
+        step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/166/
+      snippet: Products
+      notes: M-CSA entry 166, mechanism 1; M-CSA cites PMID:11175901, PMID:11675384, PMID:11917124, PMID:17481555;
+        step 5
+  - subject: glu271
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu271 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/166/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, nucleofuge, nucleophile
+      notes: M-CSA entry 166, mechanism 1; M-CSA cites PMID:11175901, PMID:11675384, PMID:11917124, PMID:17481555;
+        M-CSA catalytic-residue roles for Glu271
+  - subject: his295
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His295 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/166/
+      snippet: metal ligand
+      notes: M-CSA entry 166, mechanism 1; M-CSA cites PMID:11175901, PMID:11675384, PMID:11917124, PMID:17481555;
+        M-CSA catalytic-residue roles for His295
+  - subject: glu296
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu296 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/166/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 166, mechanism 1; M-CSA cites PMID:11175901, PMID:11675384, PMID:11917124, PMID:17481555;
+        M-CSA catalytic-residue roles for Glu296
+  - subject: his299
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His299 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/166/
+      snippet: metal ligand
+      notes: M-CSA entry 166, mechanism 1; M-CSA cites PMID:11175901, PMID:11675384, PMID:11917124, PMID:17481555;
+        M-CSA catalytic-residue roles for His299
+  - subject: glu318
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu318 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/166/
+      snippet: metal ligand
+      notes: M-CSA entry 166, mechanism 1; M-CSA cites PMID:11175901, PMID:11675384, PMID:11917124, PMID:17481555;
+        M-CSA catalytic-residue roles for Glu318
+  - subject: asp375
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp375 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/166/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 166, mechanism 1; M-CSA cites PMID:11175901, PMID:11675384, PMID:11917124, PMID:17481555;
+        M-CSA catalytic-residue roles for Asp375
+  - subject: tyr383
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr383 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/166/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 166, mechanism 1; M-CSA cites PMID:11175901, PMID:11675384, PMID:11917124, PMID:17481555;
+        M-CSA catalytic-residue roles for Tyr383
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/166/
+      snippet: In the hydrolysis of Leukotriene, a water molecule, activated by Zinc acts as an acid to
+        protonate the epoxide, causing ring opening. This leads to a carbocation, stabilised by delocalisation
+        between the three double bonds. Nucleophilic attack by the OH- ion, activated this time by Glu
+        271, on the terminal double bond of the delocalised system leads to the final product Leukotriene
+        B4. In the hydr
+      notes: M-CSA entry 166, mechanism 1; M-CSA cites PMID:11175901, PMID:11675384, PMID:11917124, PMID:17481555;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/166/
+      snippet: In the hydrolysis of Leukotriene, a water molecule, activated by Zinc acts as an acid to
+        protonate the epoxide, causing ring opening. This leads to a carbocation, stabilised by delocalisation
+        between the three double bonds. Nucleophilic attack by the OH- ion, activated this time by Glu
+        271, on the terminal double bond of the delocalised system leads to the final product Leukotriene
+        B4. In the hydr
+      notes: M-CSA entry 166, mechanism 1; M-CSA cites PMID:11175901, PMID:11675384, PMID:11917124, PMID:17481555;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/166/
+      snippet: In the hydrolysis of Leukotriene, a water molecule, activated by Zinc acts as an acid to
+        protonate the epoxide, causing ring opening. This leads to a carbocation, stabilised by delocalisation
+        between the three double bonds. Nucleophilic attack by the OH- ion, activated this time by Glu
+        271, on the terminal double bond of the delocalised system leads to the final product Leukotriene
+        B4. In the hydr
+      notes: M-CSA entry 166, mechanism 1; M-CSA cites PMID:11175901, PMID:11675384, PMID:11917124, PMID:17481555;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/166/
+      snippet: In the hydrolysis of Leukotriene, a water molecule, activated by Zinc acts as an acid to
+        protonate the epoxide, causing ring opening. This leads to a carbocation, stabilised by delocalisation
+        between the three double bonds. Nucleophilic attack by the OH- ion, activated this time by Glu
+        271, on the terminal double bond of the delocalised system leads to the final product Leukotriene
+        B4. In the hydr
+      notes: M-CSA entry 166, mechanism 1; M-CSA cites PMID:11175901, PMID:11675384, PMID:11917124, PMID:17481555;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (18 evidence-backed edges) transcribed from M-CSA entry 166;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

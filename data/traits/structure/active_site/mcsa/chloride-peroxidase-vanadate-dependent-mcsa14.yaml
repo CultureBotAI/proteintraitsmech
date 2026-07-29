@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.11.1.10
 - CHEBI:17996
@@ -347,4 +347,360 @@ definitions:
       Chloride peroxidase oxidises chloride in the presence of hydrogen peroxidase to form hypochlorous acid. This acid is the final product of the reaction in the absence of a suitable nucleophilic acceptor. However, it can go on to form a diversity of halogenated reaction products if a convenient nucleophilic acceptor is present. Hypochlorous acid is strongly bacteriocidal and a powerful oxidising agent. It is secreted by pathogenic fungi e.g. Curvularia inaequalis in a mechanism to oxidise plant cell walls to facilitate penetration of the fungus into the host amongst other uses. It can also act upon Br- and I-.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of chloride peroxidase (vanadate dependent)
+  description: Stepwise mechanism transcribed from M-CSA entry 14 (7 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: lys353
+    label: catalytic Lys353 (M-CSA/PDB numbering; UniProt residue 353)
+    node_type: RESIDUE
+    grounding: UniProtKB:P49053
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: arg360
+    label: catalytic Arg360 (M-CSA/PDB numbering; UniProt residue 360)
+    node_type: RESIDUE
+    grounding: UniProtKB:P49053
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: ser402
+    label: catalytic Ser402 (M-CSA/PDB numbering; UniProt residue 402)
+    node_type: RESIDUE
+    grounding: UniProtKB:P49053
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: gly403
+    label: catalytic Gly403 (M-CSA/PDB numbering; UniProt residue 403)
+    node_type: RESIDUE
+    grounding: UniProtKB:P49053
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: his404
+    label: catalytic His404 (M-CSA/PDB numbering; UniProt residue 404)
+    node_type: RESIDUE
+    grounding: UniProtKB:P49053
+    description: 'M-CSA roles: activator, hydrogen bond acceptor.'
+  - node_id: arg490
+    label: catalytic Arg490 (M-CSA/PDB numbering; UniProt residue 490)
+    node_type: RESIDUE
+    grounding: UniProtKB:P49053
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: his496
+    label: catalytic His496 (M-CSA/PDB numbering; UniProt residue 496)
+    node_type: RESIDUE
+    grounding: UniProtKB:P49053
+    description: 'M-CSA roles: covalently attached, metal ligand.'
+  - node_id: reactant0
+    label: chloride
+    node_type: CHEMICAL
+    grounding: CHEBI:17996
+  - node_id: reactant1
+    label: hydrogen peroxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+  - node_id: reactant2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product1
+    label: hypochlorous acid
+    node_type: CHEMICAL
+    grounding: CHEBI:24757
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The axial hydroxide of the vanadate cofactor deprotonates hydrogen peroxide.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The activated hydrogen peroxide initiates a nucleophilic attack on the vanadate in a
+      substitution reaction, eliminating water.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: One of the equatorial oxo groups deprotonates the attached hydrogen peroxide.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The peroxide initiates a nucleophilic attack on the vanadate in a substitution reaction,
+      eliminating hydroxide and forming a three membered ring.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: A chloride ion adds to the peroxo species.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: The dioxygen bond undergoes rearrangement to eliminate hypochloroate with concomitant
+      deprotonation of water, which initiates a nucleophilic attack on the vanadate in a coordination
+      reaction to regenerate the cofactor.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: chloride peroxidase (vanadate dependent) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:14
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 1.10.606.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:1.10.606.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: chloride peroxidase (vanadate dependent) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.11.1.10
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/14/
+      snippet: The activated hydrogen peroxide initiates a nucleophilic attack on the vanadate in a substitution
+        reaction, eliminating water.
+      notes: M-CSA entry 14, mechanism 1; M-CSA cites PMID:10446144, PMID:15964077, PMID:16933914, PMID:18266364,
+        PMID:19363038, PMID:25261522, PMID:25856001, PMID:27542168, PMID:8552646; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/14/
+      snippet: One of the equatorial oxo groups deprotonates the attached hydrogen peroxide.
+      notes: M-CSA entry 14, mechanism 1; M-CSA cites PMID:10446144, PMID:15964077, PMID:16933914, PMID:18266364,
+        PMID:19363038, PMID:25261522, PMID:25856001, PMID:27542168, PMID:8552646; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/14/
+      snippet: The peroxide initiates a nucleophilic attack on the vanadate in a substitution reaction,
+        eliminating hydroxide and forming a three membered ring.
+      notes: M-CSA entry 14, mechanism 1; M-CSA cites PMID:10446144, PMID:15964077, PMID:16933914, PMID:18266364,
+        PMID:19363038, PMID:25261522, PMID:25856001, PMID:27542168, PMID:8552646; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/14/
+      snippet: A chloride ion adds to the peroxo species.
+      notes: M-CSA entry 14, mechanism 1; M-CSA cites PMID:10446144, PMID:15964077, PMID:16933914, PMID:18266364,
+        PMID:19363038, PMID:25261522, PMID:25856001, PMID:27542168, PMID:8552646; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/14/
+      snippet: The dioxygen bond undergoes rearrangement to eliminate hypochloroate with concomitant deprotonation
+        of water, which initiates a nucleophilic attack on the vanadate in a coordination reaction to
+        regenerate the cofactor.
+      notes: M-CSA entry 14, mechanism 1; M-CSA cites PMID:10446144, PMID:15964077, PMID:16933914, PMID:18266364,
+        PMID:19363038, PMID:25261522, PMID:25856001, PMID:27542168, PMID:8552646; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/14/
+      snippet: Products.
+      notes: M-CSA entry 14, mechanism 1; M-CSA cites PMID:10446144, PMID:15964077, PMID:16933914, PMID:18266364,
+        PMID:19363038, PMID:25261522, PMID:25856001, PMID:27542168, PMID:8552646; step 7
+  - subject: lys353
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys353 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/14/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 14, mechanism 1; M-CSA cites PMID:10446144, PMID:15964077, PMID:16933914, PMID:18266364,
+        PMID:19363038, PMID:25261522, PMID:25856001, PMID:27542168, PMID:8552646; M-CSA catalytic-residue
+        roles for Lys353
+  - subject: arg360
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg360 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/14/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 14, mechanism 1; M-CSA cites PMID:10446144, PMID:15964077, PMID:16933914, PMID:18266364,
+        PMID:19363038, PMID:25261522, PMID:25856001, PMID:27542168, PMID:8552646; M-CSA catalytic-residue
+        roles for Arg360
+  - subject: ser402
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser402 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/14/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 14, mechanism 1; M-CSA cites PMID:10446144, PMID:15964077, PMID:16933914, PMID:18266364,
+        PMID:19363038, PMID:25261522, PMID:25856001, PMID:27542168, PMID:8552646; M-CSA catalytic-residue
+        roles for Ser402
+  - subject: gly403
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly403 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/14/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 14, mechanism 1; M-CSA cites PMID:10446144, PMID:15964077, PMID:16933914, PMID:18266364,
+        PMID:19363038, PMID:25261522, PMID:25856001, PMID:27542168, PMID:8552646; M-CSA catalytic-residue
+        roles for Gly403
+  - subject: his404
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His404 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/14/
+      snippet: activator, hydrogen bond acceptor
+      notes: M-CSA entry 14, mechanism 1; M-CSA cites PMID:10446144, PMID:15964077, PMID:16933914, PMID:18266364,
+        PMID:19363038, PMID:25261522, PMID:25856001, PMID:27542168, PMID:8552646; M-CSA catalytic-residue
+        roles for His404
+  - subject: arg490
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg490 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/14/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 14, mechanism 1; M-CSA cites PMID:10446144, PMID:15964077, PMID:16933914, PMID:18266364,
+        PMID:19363038, PMID:25261522, PMID:25856001, PMID:27542168, PMID:8552646; M-CSA catalytic-residue
+        roles for Arg490
+  - subject: his496
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His496 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/14/
+      snippet: covalently attached, metal ligand
+      notes: M-CSA entry 14, mechanism 1; M-CSA cites PMID:10446144, PMID:15964077, PMID:16933914, PMID:18266364,
+        PMID:19363038, PMID:25261522, PMID:25856001, PMID:27542168, PMID:8552646; M-CSA catalytic-residue
+        roles for His496
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/14/
+      snippet: The enzyme contains vanadium in the active site. Vanadium has a trigonal bipyramid structure
+        and is coordinated by three non protein oxygen ligands, His496 and an exogenous azide ligand.
+        The negative charge is compensated for by hydrogen bonds to Arg360, Arg490, Lys353, Gly403 and
+        Ser402. Catalysis is thought to occur through a ping-pong mechanism. The first step is the binding
+        of the hydrogen per
+      notes: M-CSA entry 14, mechanism 1; M-CSA cites PMID:10446144, PMID:15964077, PMID:16933914, PMID:18266364,
+        PMID:19363038, PMID:25261522, PMID:25856001, PMID:27542168, PMID:8552646; CATH domain 1.10.606.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/14/
+      snippet: The enzyme contains vanadium in the active site. Vanadium has a trigonal bipyramid structure
+        and is coordinated by three non protein oxygen ligands, His496 and an exogenous azide ligand.
+        The negative charge is compensated for by hydrogen bonds to Arg360, Arg490, Lys353, Gly403 and
+        Ser402. Catalysis is thought to occur through a ping-pong mechanism. The first step is the binding
+        of the hydrogen per
+      notes: M-CSA entry 14, mechanism 1; M-CSA cites PMID:10446144, PMID:15964077, PMID:16933914, PMID:18266364,
+        PMID:19363038, PMID:25261522, PMID:25856001, PMID:27542168, PMID:8552646; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/14/
+      snippet: The enzyme contains vanadium in the active site. Vanadium has a trigonal bipyramid structure
+        and is coordinated by three non protein oxygen ligands, His496 and an exogenous azide ligand.
+        The negative charge is compensated for by hydrogen bonds to Arg360, Arg490, Lys353, Gly403 and
+        Ser402. Catalysis is thought to occur through a ping-pong mechanism. The first step is the binding
+        of the hydrogen per
+      notes: M-CSA entry 14, mechanism 1; M-CSA cites PMID:10446144, PMID:15964077, PMID:16933914, PMID:18266364,
+        PMID:19363038, PMID:25261522, PMID:25856001, PMID:27542168, PMID:8552646; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/14/
+      snippet: The enzyme contains vanadium in the active site. Vanadium has a trigonal bipyramid structure
+        and is coordinated by three non protein oxygen ligands, His496 and an exogenous azide ligand.
+        The negative charge is compensated for by hydrogen bonds to Arg360, Arg490, Lys353, Gly403 and
+        Ser402. Catalysis is thought to occur through a ping-pong mechanism. The first step is the binding
+        of the hydrogen per
+      notes: M-CSA entry 14, mechanism 1; M-CSA cites PMID:10446144, PMID:15964077, PMID:16933914, PMID:18266364,
+        PMID:19363038, PMID:25261522, PMID:25856001, PMID:27542168, PMID:8552646; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/14/
+      snippet: The enzyme contains vanadium in the active site. Vanadium has a trigonal bipyramid structure
+        and is coordinated by three non protein oxygen ligands, His496 and an exogenous azide ligand.
+        The negative charge is compensated for by hydrogen bonds to Arg360, Arg490, Lys353, Gly403 and
+        Ser402. Catalysis is thought to occur through a ping-pong mechanism. The first step is the binding
+        of the hydrogen per
+      notes: M-CSA entry 14, mechanism 1; M-CSA cites PMID:10446144, PMID:15964077, PMID:16933914, PMID:18266364,
+        PMID:19363038, PMID:25261522, PMID:25856001, PMID:27542168, PMID:8552646; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/14/
+      snippet: The enzyme contains vanadium in the active site. Vanadium has a trigonal bipyramid structure
+        and is coordinated by three non protein oxygen ligands, His496 and an exogenous azide ligand.
+        The negative charge is compensated for by hydrogen bonds to Arg360, Arg490, Lys353, Gly403 and
+        Ser402. Catalysis is thought to occur through a ping-pong mechanism. The first step is the binding
+        of the hydrogen per
+      notes: M-CSA entry 14, mechanism 1; M-CSA cites PMID:10446144, PMID:15964077, PMID:16933914, PMID:18266364,
+        PMID:19363038, PMID:25261522, PMID:25856001, PMID:27542168, PMID:8552646; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/14/
+      snippet: The enzyme contains vanadium in the active site. Vanadium has a trigonal bipyramid structure
+        and is coordinated by three non protein oxygen ligands, His496 and an exogenous azide ligand.
+        The negative charge is compensated for by hydrogen bonds to Arg360, Arg490, Lys353, Gly403 and
+        Ser402. Catalysis is thought to occur through a ping-pong mechanism. The first step is the binding
+        of the hydrogen per
+      notes: M-CSA entry 14, mechanism 1; M-CSA cites PMID:10446144, PMID:15964077, PMID:16933914, PMID:18266364,
+        PMID:19363038, PMID:25261522, PMID:25856001, PMID:27542168, PMID:8552646; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (20 evidence-backed edges) transcribed from M-CSA entry 14;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

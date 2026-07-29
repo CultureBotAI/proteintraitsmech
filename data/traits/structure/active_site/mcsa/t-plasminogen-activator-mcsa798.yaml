@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.21.68
 - CHEBI:15377
@@ -505,4 +505,316 @@ definitions:
       Tissue-type plasminogen activator is a serine proteinase of the trypsin-family. It catalyses the activation of the zymogen plasminogen to the fibrin-degrading proteinase plasmin in fibrinolysis. Human tissue-type plasminogen activator is being studied for therapeutic use in cases such as myocardial infarctions and other thromboembolic disorders.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of t-plasminogen activator
+  description: Stepwise mechanism transcribed from M-CSA entry 798 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: his57
+    label: catalytic His57 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00750
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: asp102
+    label: catalytic Asp102 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00750
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: gly193
+    label: catalytic Gly193 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00750
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ser195
+    label: catalytic Ser195 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00750
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: Arg-Val
+    node_type: CHEMICAL
+    grounding: CHEBI:73823
+  - node_id: product0
+    label: L-arginine
+    node_type: CHEMICAL
+    grounding: CHEBI:16467
+  - node_id: product1
+    label: L-valine
+    node_type: CHEMICAL
+    grounding: CHEBI:16414
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His57 deprotonates Ser195 which activates it to attack the carbon of the peptide bond
+      in a nucleophilic addition.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Collapse of the tetrahedral intermediate with protonation of the departing amine leaving
+      group by His 57 generates an acyl-enzyme intermediate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: His57 deprotonates a water which activates it to attack the carbon of the ester bond
+      in a nucleophilic addition.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The tetrahedral intermediate collapses which results in the cleavage of the ester bond
+      releasing Ser195 and an Arginine. The released Ser195 then accepts a proton from His57 which returns
+      the enzyme to its native state.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Product
+  - node_id: active_site
+    label: t-plasminogen activator catalytic site
+    node_type: MOTIF
+    grounding: MCSA:798
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.40.10.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.40.10.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: t-plasminogen activator activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.21.68
+  edges:
+  - subject: his57
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His57 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/798/
+      snippet: His57 deprotonates Ser195 which activates it to attack the carbon of the peptide bond in
+        a nucleophilic addition.
+      notes: M-CSA entry 798, mechanism 1; M-CSA cites PMID:26324706, PMID:8613982; step 1
+  - subject: ser195
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser195 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/798/
+      snippet: His57 deprotonates Ser195 which activates it to attack the carbon of the peptide bond in
+        a nucleophilic addition.
+      notes: M-CSA entry 798, mechanism 1; M-CSA cites PMID:26324706, PMID:8613982; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/798/
+      snippet: Collapse of the tetrahedral intermediate with protonation of the departing amine leaving
+        group by His 57 generates an acyl-enzyme intermediate.
+      notes: M-CSA entry 798, mechanism 1; M-CSA cites PMID:26324706, PMID:8613982; step 2
+  - subject: his57
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His57 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/798/
+      snippet: Collapse of the tetrahedral intermediate with protonation of the departing amine leaving
+        group by His 57 generates an acyl-enzyme intermediate.
+      notes: M-CSA entry 798, mechanism 1; M-CSA cites PMID:26324706, PMID:8613982; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/798/
+      snippet: His57 deprotonates a water which activates it to attack the carbon of the ester bond in
+        a nucleophilic addition.
+      notes: M-CSA entry 798, mechanism 1; M-CSA cites PMID:26324706, PMID:8613982; step 3
+  - subject: his57
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His57 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/798/
+      snippet: His57 deprotonates a water which activates it to attack the carbon of the ester bond in
+        a nucleophilic addition.
+      notes: M-CSA entry 798, mechanism 1; M-CSA cites PMID:26324706, PMID:8613982; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/798/
+      snippet: The tetrahedral intermediate collapses which results in the cleavage of the ester bond
+        releasing Ser195 and an Arginine. The released Ser195 then accepts a proton from His57 which returns
+        the enzyme to its native state.
+      notes: M-CSA entry 798, mechanism 1; M-CSA cites PMID:26324706, PMID:8613982; step 4
+  - subject: his57
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: His57 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/798/
+      snippet: The tetrahedral intermediate collapses which results in the cleavage of the ester bond
+        releasing Ser195 and an Arginine. The released Ser195 then accepts a proton from His57 which returns
+        the enzyme to its native state.
+      notes: M-CSA entry 798, mechanism 1; M-CSA cites PMID:26324706, PMID:8613982; step 4
+  - subject: ser195
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Ser195 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/798/
+      snippet: The tetrahedral intermediate collapses which results in the cleavage of the ester bond
+        releasing Ser195 and an Arginine. The released Ser195 then accepts a proton from His57 which returns
+        the enzyme to its native state.
+      notes: M-CSA entry 798, mechanism 1; M-CSA cites PMID:26324706, PMID:8613982; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/798/
+      snippet: Product
+      notes: M-CSA entry 798, mechanism 1; M-CSA cites PMID:26324706, PMID:8613982; step 5
+  - subject: his57
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His57 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/798/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 798, mechanism 1; M-CSA cites PMID:26324706, PMID:8613982; M-CSA catalytic-residue
+        roles for His57
+  - subject: asp102
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp102 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/798/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 798, mechanism 1; M-CSA cites PMID:26324706, PMID:8613982; M-CSA catalytic-residue
+        roles for Asp102
+  - subject: gly193
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly193 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/798/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 798, mechanism 1; M-CSA cites PMID:26324706, PMID:8613982; M-CSA catalytic-residue
+        roles for Gly193
+  - subject: ser195
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser195 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/798/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 798, mechanism 1; M-CSA cites PMID:26324706, PMID:8613982; M-CSA catalytic-residue
+        roles for Ser195
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/798/
+      snippet: Tissue-type plasminogen activator employs a classical serine protease mechanism. Ser 195
+        acts as a nucleophile to attack the peptide bond and form a tetrahedral intermediate that is stabilised
+        by the backbone NH of Ser 195 and Gly 193. His 57 promotes the nucleophilic attack by deprotonating
+        Ser 195, while Asp 102 functions to modify the pKa of His 57. Collapse of the tetrahedral intermediate
+        with
+      notes: M-CSA entry 798, mechanism 1; M-CSA cites PMID:26324706, PMID:8613982; CATH domain 2.40.10.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/798/
+      snippet: Tissue-type plasminogen activator employs a classical serine protease mechanism. Ser 195
+        acts as a nucleophile to attack the peptide bond and form a tetrahedral intermediate that is stabilised
+        by the backbone NH of Ser 195 and Gly 193. His 57 promotes the nucleophilic attack by deprotonating
+        Ser 195, while Asp 102 functions to modify the pKa of His 57. Collapse of the tetrahedral intermediate
+        with
+      notes: M-CSA entry 798, mechanism 1; M-CSA cites PMID:26324706, PMID:8613982; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/798/
+      snippet: Tissue-type plasminogen activator employs a classical serine protease mechanism. Ser 195
+        acts as a nucleophile to attack the peptide bond and form a tetrahedral intermediate that is stabilised
+        by the backbone NH of Ser 195 and Gly 193. His 57 promotes the nucleophilic attack by deprotonating
+        Ser 195, while Asp 102 functions to modify the pKa of His 57. Collapse of the tetrahedral intermediate
+        with
+      notes: M-CSA entry 798, mechanism 1; M-CSA cites PMID:26324706, PMID:8613982; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/798/
+      snippet: Tissue-type plasminogen activator employs a classical serine protease mechanism. Ser 195
+        acts as a nucleophile to attack the peptide bond and form a tetrahedral intermediate that is stabilised
+        by the backbone NH of Ser 195 and Gly 193. His 57 promotes the nucleophilic attack by deprotonating
+        Ser 195, while Asp 102 functions to modify the pKa of His 57. Collapse of the tetrahedral intermediate
+        with
+      notes: M-CSA entry 798, mechanism 1; M-CSA cites PMID:26324706, PMID:8613982; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/798/
+      snippet: Tissue-type plasminogen activator employs a classical serine protease mechanism. Ser 195
+        acts as a nucleophile to attack the peptide bond and form a tetrahedral intermediate that is stabilised
+        by the backbone NH of Ser 195 and Gly 193. His 57 promotes the nucleophilic attack by deprotonating
+        Ser 195, while Asp 102 functions to modify the pKa of His 57. Collapse of the tetrahedral intermediate
+        with
+      notes: M-CSA entry 798, mechanism 1; M-CSA cites PMID:26324706, PMID:8613982; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/798/
+      snippet: Tissue-type plasminogen activator employs a classical serine protease mechanism. Ser 195
+        acts as a nucleophile to attack the peptide bond and form a tetrahedral intermediate that is stabilised
+        by the backbone NH of Ser 195 and Gly 193. His 57 promotes the nucleophilic attack by deprotonating
+        Ser 195, while Asp 102 functions to modify the pKa of His 57. Collapse of the tetrahedral intermediate
+        with
+      notes: M-CSA entry 798, mechanism 1; M-CSA cites PMID:26324706, PMID:8613982; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (20 evidence-backed edges) transcribed from M-CSA entry 798;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

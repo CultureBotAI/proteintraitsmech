@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.2.1.10
 - CHEBI:15377
@@ -194,4 +194,417 @@ definitions:
       3-Dehydroquinate dehydratase catalyses the dehydration of 3-dehydroquinate to 3-dehydroshikimate. This reaction is part of both the biosynthetic shikimate pathway for organic compound synthesis and the catabolic quinate pathway using quinate as an energy and carbon source. These pathways are both absent in animals. Type I and type II dehydroquinases exist, with completely different mechanisms and sequences, and this enzyme in question is part of the latter class. The existence of two types allows the targeting of drugs for type II to be developed.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of 3-dehydroquinate dehydratase (type II)
+  description: Stepwise mechanism transcribed from M-CSA entry 55 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +1).
+  nodes:
+  - node_id: pro15
+    label: catalytic Pro15 (M-CSA/PDB numbering; UniProt residue 16)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15474
+    description: 'M-CSA roles: activator, hydrogen bond acceptor, steric role.'
+  - node_id: asn16
+    label: catalytic Asn16 (M-CSA/PDB numbering; UniProt residue 17)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15474
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: arg23
+    label: catalytic Arg23 (M-CSA/PDB numbering; UniProt residue 24)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15474
+    description: 'M-CSA roles: activator, attractive charge-charge interaction, electrostatic stabiliser,
+      polar interaction.'
+  - node_id: tyr28
+    label: catalytic Tyr28 (M-CSA/PDB numbering; UniProt residue 29)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15474
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: asn79
+    label: catalytic Asn79 (M-CSA/PDB numbering; UniProt residue 80)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15474
+    description: 'M-CSA roles: hydrogen bond acceptor, steric role.'
+  - node_id: ala82
+    label: catalytic Ala82 (M-CSA/PDB numbering; UniProt residue 83)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15474
+    description: 'M-CSA roles: activator, hydrogen bond donor, steric role.'
+  - node_id: glu104
+    label: catalytic Glu104 (M-CSA/PDB numbering; UniProt residue 105)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15474
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: his106
+    label: catalytic His106 (M-CSA/PDB numbering; UniProt residue 107)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15474
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor,
+      proton relay.'
+  - node_id: arg113
+    label: catalytic Arg113 (M-CSA/PDB numbering; UniProt residue 114)
+    node_type: RESIDUE
+    grounding: UniProtKB:P15474
+    description: 'M-CSA roles: activator, attractive charge-charge interaction, electrostatic stabiliser,
+      polar interaction.'
+  - node_id: reactant0
+    label: 3-dehydroquinate
+    node_type: CHEMICAL
+    grounding: CHEBI:32364
+  - node_id: product0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product1
+    label: 3-dehydroshikimate
+    node_type: CHEMICAL
+    grounding: CHEBI:16630
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Tyr28 deprotonates the substrate, forming a double bond and causing the ketone group
+      to reduce and deprotonate water, which in turn deprotonates Asn16.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Asn16 deprotonates water, which deprotonates the C1-hydroxy, causing a double bond rearrangement
+      that eliminates water with deprotonation of His106, which in turn deprotonates Glu104.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Glu104 deprotonates His106, which deprotonates water, which in turn deprotonates Tyr28
+      in an inferred step.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: 3-dehydroquinate dehydratase (type II) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:55
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.9100 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.9100
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: 3-dehydroquinate dehydratase (type II) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.2.1.10
+  edges:
+  - subject: asn16
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asn16 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/55/
+      snippet: Tyr28 deprotonates the substrate, forming a double bond and causing the ketone group to
+        reduce and deprotonate water, which in turn deprotonates Asn16.
+      notes: M-CSA entry 55, mechanism 1; M-CSA cites PMID:10360352, PMID:11937054, PMID:12784220, PMID:14993670,
+        PMID:15162210, PMID:16106291, PMID:16480265, PMID:17004270, PMID:17487901, PMID:25372814; step
+        1
+  - subject: tyr28
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr28 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/55/
+      snippet: Tyr28 deprotonates the substrate, forming a double bond and causing the ketone group to
+        reduce and deprotonate water, which in turn deprotonates Asn16.
+      notes: M-CSA entry 55, mechanism 1; M-CSA cites PMID:10360352, PMID:11937054, PMID:12784220, PMID:14993670,
+        PMID:15162210, PMID:16106291, PMID:16480265, PMID:17004270, PMID:17487901, PMID:25372814; step
+        1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/55/
+      snippet: Asn16 deprotonates water, which deprotonates the C1-hydroxy, causing a double bond rearrangement
+        that eliminates water with deprotonation of His106, which in turn deprotonates Glu104.
+      notes: M-CSA entry 55, mechanism 1; M-CSA cites PMID:10360352, PMID:11937054, PMID:12784220, PMID:14993670,
+        PMID:15162210, PMID:16106291, PMID:16480265, PMID:17004270, PMID:17487901, PMID:25372814; step
+        2
+  - subject: asn16
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Asn16 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/55/
+      snippet: Asn16 deprotonates water, which deprotonates the C1-hydroxy, causing a double bond rearrangement
+        that eliminates water with deprotonation of His106, which in turn deprotonates Glu104.
+      notes: M-CSA entry 55, mechanism 1; M-CSA cites PMID:10360352, PMID:11937054, PMID:12784220, PMID:14993670,
+        PMID:15162210, PMID:16106291, PMID:16480265, PMID:17004270, PMID:17487901, PMID:25372814; step
+        2
+  - subject: glu104
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu104 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/55/
+      snippet: Asn16 deprotonates water, which deprotonates the C1-hydroxy, causing a double bond rearrangement
+        that eliminates water with deprotonation of His106, which in turn deprotonates Glu104.
+      notes: M-CSA entry 55, mechanism 1; M-CSA cites PMID:10360352, PMID:11937054, PMID:12784220, PMID:14993670,
+        PMID:15162210, PMID:16106291, PMID:16480265, PMID:17004270, PMID:17487901, PMID:25372814; step
+        2
+  - subject: his106
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His106 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/55/
+      snippet: Asn16 deprotonates water, which deprotonates the C1-hydroxy, causing a double bond rearrangement
+        that eliminates water with deprotonation of His106, which in turn deprotonates Glu104.
+      notes: M-CSA entry 55, mechanism 1; M-CSA cites PMID:10360352, PMID:11937054, PMID:12784220, PMID:14993670,
+        PMID:15162210, PMID:16106291, PMID:16480265, PMID:17004270, PMID:17487901, PMID:25372814; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/55/
+      snippet: Glu104 deprotonates His106, which deprotonates water, which in turn deprotonates Tyr28
+        in an inferred step.
+      notes: M-CSA entry 55, mechanism 1; M-CSA cites PMID:10360352, PMID:11937054, PMID:12784220, PMID:14993670,
+        PMID:15162210, PMID:16106291, PMID:16480265, PMID:17004270, PMID:17487901, PMID:25372814; step
+        3
+  - subject: tyr28
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Tyr28 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/55/
+      snippet: Glu104 deprotonates His106, which deprotonates water, which in turn deprotonates Tyr28
+        in an inferred step.
+      notes: M-CSA entry 55, mechanism 1; M-CSA cites PMID:10360352, PMID:11937054, PMID:12784220, PMID:14993670,
+        PMID:15162210, PMID:16106291, PMID:16480265, PMID:17004270, PMID:17487901, PMID:25372814; step
+        3
+  - subject: glu104
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Glu104 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/55/
+      snippet: Glu104 deprotonates His106, which deprotonates water, which in turn deprotonates Tyr28
+        in an inferred step.
+      notes: M-CSA entry 55, mechanism 1; M-CSA cites PMID:10360352, PMID:11937054, PMID:12784220, PMID:14993670,
+        PMID:15162210, PMID:16106291, PMID:16480265, PMID:17004270, PMID:17487901, PMID:25372814; step
+        3
+  - subject: his106
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His106 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/55/
+      snippet: Glu104 deprotonates His106, which deprotonates water, which in turn deprotonates Tyr28
+        in an inferred step.
+      notes: M-CSA entry 55, mechanism 1; M-CSA cites PMID:10360352, PMID:11937054, PMID:12784220, PMID:14993670,
+        PMID:15162210, PMID:16106291, PMID:16480265, PMID:17004270, PMID:17487901, PMID:25372814; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/55/
+      snippet: Products
+      notes: M-CSA entry 55, mechanism 1; M-CSA cites PMID:10360352, PMID:11937054, PMID:12784220, PMID:14993670,
+        PMID:15162210, PMID:16106291, PMID:16480265, PMID:17004270, PMID:17487901, PMID:25372814; step
+        4
+  - subject: pro15
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Pro15 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/55/
+      snippet: activator, hydrogen bond acceptor, steric role
+      notes: M-CSA entry 55, mechanism 1; M-CSA cites PMID:10360352, PMID:11937054, PMID:12784220, PMID:14993670,
+        PMID:15162210, PMID:16106291, PMID:16480265, PMID:17004270, PMID:17487901, PMID:25372814; M-CSA
+        catalytic-residue roles for Pro15
+  - subject: asn16
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn16 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/55/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 55, mechanism 1; M-CSA cites PMID:10360352, PMID:11937054, PMID:12784220, PMID:14993670,
+        PMID:15162210, PMID:16106291, PMID:16480265, PMID:17004270, PMID:17487901, PMID:25372814; M-CSA
+        catalytic-residue roles for Asn16
+  - subject: arg23
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg23 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/55/
+      snippet: activator, attractive charge-charge interaction, electrostatic stabiliser, polar interaction
+      notes: M-CSA entry 55, mechanism 1; M-CSA cites PMID:10360352, PMID:11937054, PMID:12784220, PMID:14993670,
+        PMID:15162210, PMID:16106291, PMID:16480265, PMID:17004270, PMID:17487901, PMID:25372814; M-CSA
+        catalytic-residue roles for Arg23
+  - subject: tyr28
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr28 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/55/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 55, mechanism 1; M-CSA cites PMID:10360352, PMID:11937054, PMID:12784220, PMID:14993670,
+        PMID:15162210, PMID:16106291, PMID:16480265, PMID:17004270, PMID:17487901, PMID:25372814; M-CSA
+        catalytic-residue roles for Tyr28
+  - subject: asn79
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn79 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/55/
+      snippet: hydrogen bond acceptor, steric role
+      notes: M-CSA entry 55, mechanism 1; M-CSA cites PMID:10360352, PMID:11937054, PMID:12784220, PMID:14993670,
+        PMID:15162210, PMID:16106291, PMID:16480265, PMID:17004270, PMID:17487901, PMID:25372814; M-CSA
+        catalytic-residue roles for Asn79
+  - subject: ala82
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ala82 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/55/
+      snippet: activator, hydrogen bond donor, steric role
+      notes: M-CSA entry 55, mechanism 1; M-CSA cites PMID:10360352, PMID:11937054, PMID:12784220, PMID:14993670,
+        PMID:15162210, PMID:16106291, PMID:16480265, PMID:17004270, PMID:17487901, PMID:25372814; M-CSA
+        catalytic-residue roles for Ala82
+  - subject: glu104
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu104 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/55/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 55, mechanism 1; M-CSA cites PMID:10360352, PMID:11937054, PMID:12784220, PMID:14993670,
+        PMID:15162210, PMID:16106291, PMID:16480265, PMID:17004270, PMID:17487901, PMID:25372814; M-CSA
+        catalytic-residue roles for Glu104
+  - subject: his106
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His106 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/55/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 55, mechanism 1; M-CSA cites PMID:10360352, PMID:11937054, PMID:12784220, PMID:14993670,
+        PMID:15162210, PMID:16106291, PMID:16480265, PMID:17004270, PMID:17487901, PMID:25372814; M-CSA
+        catalytic-residue roles for His106
+  - subject: arg113
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg113 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/55/
+      snippet: activator, attractive charge-charge interaction, electrostatic stabiliser, polar interaction
+      notes: M-CSA entry 55, mechanism 1; M-CSA cites PMID:10360352, PMID:11937054, PMID:12784220, PMID:14993670,
+        PMID:15162210, PMID:16106291, PMID:16480265, PMID:17004270, PMID:17487901, PMID:25372814; M-CSA
+        catalytic-residue roles for Arg113
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/55/
+      snippet: 3-Dehydroquinate dehydratase catalyses a trans-dehydration via an enolate intermediate.
+        Tyr 28 acts as a general base catalyst in abstracting a proton from C2, and is assisted by having
+        its pKa lowered by Arg 23 and Arg 113. A water molecule activated by Asn 16 is deprotonated, and
+        protonated by Asn 16 acting as a general acid catalyst. A water molecule is then activated by
+        Asn 16 acting as a gene
+      notes: M-CSA entry 55, mechanism 1; M-CSA cites PMID:10360352, PMID:11937054, PMID:12784220, PMID:14993670,
+        PMID:15162210, PMID:16106291, PMID:16480265, PMID:17004270, PMID:17487901, PMID:25372814; CATH
+        domain 3.40.50.9100 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/55/
+      snippet: 3-Dehydroquinate dehydratase catalyses a trans-dehydration via an enolate intermediate.
+        Tyr 28 acts as a general base catalyst in abstracting a proton from C2, and is assisted by having
+        its pKa lowered by Arg 23 and Arg 113. A water molecule activated by Asn 16 is deprotonated, and
+        protonated by Asn 16 acting as a general acid catalyst. A water molecule is then activated by
+        Asn 16 acting as a gene
+      notes: M-CSA entry 55, mechanism 1; M-CSA cites PMID:10360352, PMID:11937054, PMID:12784220, PMID:14993670,
+        PMID:15162210, PMID:16106291, PMID:16480265, PMID:17004270, PMID:17487901, PMID:25372814; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/55/
+      snippet: 3-Dehydroquinate dehydratase catalyses a trans-dehydration via an enolate intermediate.
+        Tyr 28 acts as a general base catalyst in abstracting a proton from C2, and is assisted by having
+        its pKa lowered by Arg 23 and Arg 113. A water molecule activated by Asn 16 is deprotonated, and
+        protonated by Asn 16 acting as a general acid catalyst. A water molecule is then activated by
+        Asn 16 acting as a gene
+      notes: M-CSA entry 55, mechanism 1; M-CSA cites PMID:10360352, PMID:11937054, PMID:12784220, PMID:14993670,
+        PMID:15162210, PMID:16106291, PMID:16480265, PMID:17004270, PMID:17487901, PMID:25372814; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/55/
+      snippet: 3-Dehydroquinate dehydratase catalyses a trans-dehydration via an enolate intermediate.
+        Tyr 28 acts as a general base catalyst in abstracting a proton from C2, and is assisted by having
+        its pKa lowered by Arg 23 and Arg 113. A water molecule activated by Asn 16 is deprotonated, and
+        protonated by Asn 16 acting as a general acid catalyst. A water molecule is then activated by
+        Asn 16 acting as a gene
+      notes: M-CSA entry 55, mechanism 1; M-CSA cites PMID:10360352, PMID:11937054, PMID:12784220, PMID:14993670,
+        PMID:15162210, PMID:16106291, PMID:16480265, PMID:17004270, PMID:17487901, PMID:25372814; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/55/
+      snippet: 3-Dehydroquinate dehydratase catalyses a trans-dehydration via an enolate intermediate.
+        Tyr 28 acts as a general base catalyst in abstracting a proton from C2, and is assisted by having
+        its pKa lowered by Arg 23 and Arg 113. A water molecule activated by Asn 16 is deprotonated, and
+        protonated by Asn 16 acting as a general acid catalyst. A water molecule is then activated by
+        Asn 16 acting as a gene
+      notes: M-CSA entry 55, mechanism 1; M-CSA cites PMID:10360352, PMID:11937054, PMID:12784220, PMID:14993670,
+        PMID:15162210, PMID:16106291, PMID:16480265, PMID:17004270, PMID:17487901, PMID:25372814; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (25 evidence-backed edges) transcribed from M-CSA entry 55;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

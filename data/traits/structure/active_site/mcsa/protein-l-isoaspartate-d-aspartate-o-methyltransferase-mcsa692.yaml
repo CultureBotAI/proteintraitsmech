@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.1.1.77
 - CHEBI:90596
@@ -222,4 +222,168 @@ definitions:
       Formation of isoaspartyl residues is one of several processes that damage proteins as they age. Protein L-isoaspartate (D-aspartate) O-methyltransferase (PIMT) is a conserved and nearly ubiquitous enzyme that catalyzes the repair of proteins damaged by isoaspartyl formation.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of protein-L-isoaspartate(D-aspartate) O-methyltransferase
+  description: Stepwise mechanism transcribed from M-CSA entry 692 (2 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: ser59
+    label: catalytic Ser59 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q56308
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: L-beta-isoaspartate residue
+    node_type: CHEMICAL
+    grounding: CHEBI:90596
+  - node_id: reactant1
+    label: S-adenosyl-L-methionine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+  - node_id: product0
+    label: S-adenosyl-L-homocysteine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+  - node_id: product1
+    label: L-aspartic acid alpha-methyl ester residue
+    node_type: CHEMICAL
+    grounding: CHEBI:90598
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: In an SN2 reaction the carboxylate oxygen of the isoaspartyl group attacks the methyl
+      of SAM. This forms the product and SAH.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: protein-L-isoaspartate(D-aspartate) O-methyltransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:692
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.150 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.150
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: protein-L-isoaspartate(D-aspartate) O-methyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.1.1.77
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/692/
+      snippet: Products.
+      notes: M-CSA entry 692, mechanism 1; M-CSA cites PMID:11080641, PMID:11700066, PMID:14596598; step
+        2
+  - subject: ser59
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser59 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/692/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 692, mechanism 1; M-CSA cites PMID:11080641, PMID:11700066, PMID:14596598; M-CSA
+        catalytic-residue roles for Ser59
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/692/
+      snippet: PIMT catalyses the transfer of a methyl group from S-adenosyl-L-methionine (SAM) to the
+        alpha-carboxylate side chain of the isoaspartyl residue. Through this transfer, the isoaspartyl
+        group becomes activated for conversion back to the succinimide via a nonenzymatic attack of the
+        nitrogen lone pair of the beta-peptide group on the alpha-carboxylate group. Once back in the
+        succinimide form, hydrolys
+      notes: M-CSA entry 692, mechanism 1; M-CSA cites PMID:11080641, PMID:11700066, PMID:14596598; CATH
+        domain 3.40.50.150 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/692/
+      snippet: PIMT catalyses the transfer of a methyl group from S-adenosyl-L-methionine (SAM) to the
+        alpha-carboxylate side chain of the isoaspartyl residue. Through this transfer, the isoaspartyl
+        group becomes activated for conversion back to the succinimide via a nonenzymatic attack of the
+        nitrogen lone pair of the beta-peptide group on the alpha-carboxylate group. Once back in the
+        succinimide form, hydrolys
+      notes: M-CSA entry 692, mechanism 1; M-CSA cites PMID:11080641, PMID:11700066, PMID:14596598; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/692/
+      snippet: PIMT catalyses the transfer of a methyl group from S-adenosyl-L-methionine (SAM) to the
+        alpha-carboxylate side chain of the isoaspartyl residue. Through this transfer, the isoaspartyl
+        group becomes activated for conversion back to the succinimide via a nonenzymatic attack of the
+        nitrogen lone pair of the beta-peptide group on the alpha-carboxylate group. Once back in the
+        succinimide form, hydrolys
+      notes: M-CSA entry 692, mechanism 1; M-CSA cites PMID:11080641, PMID:11700066, PMID:14596598; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/692/
+      snippet: PIMT catalyses the transfer of a methyl group from S-adenosyl-L-methionine (SAM) to the
+        alpha-carboxylate side chain of the isoaspartyl residue. Through this transfer, the isoaspartyl
+        group becomes activated for conversion back to the succinimide via a nonenzymatic attack of the
+        nitrogen lone pair of the beta-peptide group on the alpha-carboxylate group. Once back in the
+        succinimide form, hydrolys
+      notes: M-CSA entry 692, mechanism 1; M-CSA cites PMID:11080641, PMID:11700066, PMID:14596598; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/692/
+      snippet: PIMT catalyses the transfer of a methyl group from S-adenosyl-L-methionine (SAM) to the
+        alpha-carboxylate side chain of the isoaspartyl residue. Through this transfer, the isoaspartyl
+        group becomes activated for conversion back to the succinimide via a nonenzymatic attack of the
+        nitrogen lone pair of the beta-peptide group on the alpha-carboxylate group. Once back in the
+        succinimide form, hydrolys
+      notes: M-CSA entry 692, mechanism 1; M-CSA cites PMID:11080641, PMID:11700066, PMID:14596598; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/692/
+      snippet: PIMT catalyses the transfer of a methyl group from S-adenosyl-L-methionine (SAM) to the
+        alpha-carboxylate side chain of the isoaspartyl residue. Through this transfer, the isoaspartyl
+        group becomes activated for conversion back to the succinimide via a nonenzymatic attack of the
+        nitrogen lone pair of the beta-peptide group on the alpha-carboxylate group. Once back in the
+        succinimide form, hydrolys
+      notes: M-CSA entry 692, mechanism 1; M-CSA cites PMID:11080641, PMID:11700066, PMID:14596598; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (8 evidence-backed edges) transcribed from M-CSA entry 692;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

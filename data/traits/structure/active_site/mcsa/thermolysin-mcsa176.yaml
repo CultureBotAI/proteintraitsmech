@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.24.27
 - CHEBI:15377
@@ -318,4 +318,312 @@ definitions:
       This entry covers the metalloproteinase family M4, which contains thermolysin (EC3.4.24.27), bacillolysins (EC 3.4.24.28), pseudolysins (EC 3.4.24.26), Vibriolysin (EC3.4.24.25) and several other proteases which do not have EC numbers. Family M4 are the only members of clan MA to have structures within the PDB. The active site lies between the two domains and contains a catalytic zinc ion.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of thermolysin
+  description: Stepwise mechanism transcribed from M-CSA entry 176 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: his142
+    label: catalytic His142 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00800
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu143
+    label: catalytic Glu143 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00800
+    description: 'M-CSA roles: electrostatic stabiliser, metal ligand.'
+  - node_id: his146
+    label: catalytic His146 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00800
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: tyr157
+    label: catalytic Tyr157 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00800
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor, steric role.'
+  - node_id: glu166
+    label: catalytic Glu166 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00800
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp226
+    label: catalytic Asp226 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00800
+    description: 'M-CSA roles: activator, electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: his231
+    label: catalytic His231 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00800
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: dipeptide zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:90799
+  - node_id: product0
+    label: L-alpha-amino acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:59869
+  - node_id: product1
+    label: L-alpha-amino acid zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:59869
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His231 deprotonates water, which attacks the peptide bond in a nucleophilic addition,
+      resulting in the coordination of the oxyanion to the zinc cofactor.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The oxyanion initiates an elimination that cleaves the peptide bond. The N-terminal product
+      deprotonates His231.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The N-terminal product then deprotonates the C-terminal product to form the kinetically
+      favoured products.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: thermolysin catalytic site
+    node_type: MOTIF
+    grounding: MCSA:176
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.10.170.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.10.170.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: thermolysin activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.24.27
+  edges:
+  - subject: his231
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His231 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/176/
+      snippet: His231 deprotonates water, which attacks the peptide bond in a nucleophilic addition, resulting
+        in the coordination of the oxyanion to the zinc cofactor.
+      notes: M-CSA entry 176, mechanism 1; M-CSA cites PMID:16342943, PMID:26627626, PMID:7674922, PMID:8652513,
+        PMID:9827548; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/176/
+      snippet: The oxyanion initiates an elimination that cleaves the peptide bond. The N-terminal product
+        deprotonates His231.
+      notes: M-CSA entry 176, mechanism 1; M-CSA cites PMID:16342943, PMID:26627626, PMID:7674922, PMID:8652513,
+        PMID:9827548; step 2
+  - subject: his231
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His231 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/176/
+      snippet: The oxyanion initiates an elimination that cleaves the peptide bond. The N-terminal product
+        deprotonates His231.
+      notes: M-CSA entry 176, mechanism 1; M-CSA cites PMID:16342943, PMID:26627626, PMID:7674922, PMID:8652513,
+        PMID:9827548; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/176/
+      snippet: The N-terminal product then deprotonates the C-terminal product to form the kinetically
+        favoured products.
+      notes: M-CSA entry 176, mechanism 1; M-CSA cites PMID:16342943, PMID:26627626, PMID:7674922, PMID:8652513,
+        PMID:9827548; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/176/
+      snippet: Products
+      notes: M-CSA entry 176, mechanism 1; M-CSA cites PMID:16342943, PMID:26627626, PMID:7674922, PMID:8652513,
+        PMID:9827548; step 4
+  - subject: his142
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His142 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/176/
+      snippet: metal ligand
+      notes: M-CSA entry 176, mechanism 1; M-CSA cites PMID:16342943, PMID:26627626, PMID:7674922, PMID:8652513,
+        PMID:9827548; M-CSA catalytic-residue roles for His142
+  - subject: glu143
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu143 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/176/
+      snippet: electrostatic stabiliser, metal ligand
+      notes: M-CSA entry 176, mechanism 1; M-CSA cites PMID:16342943, PMID:26627626, PMID:7674922, PMID:8652513,
+        PMID:9827548; M-CSA catalytic-residue roles for Glu143
+  - subject: his146
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His146 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/176/
+      snippet: metal ligand
+      notes: M-CSA entry 176, mechanism 1; M-CSA cites PMID:16342943, PMID:26627626, PMID:7674922, PMID:8652513,
+        PMID:9827548; M-CSA catalytic-residue roles for His146
+  - subject: tyr157
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr157 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/176/
+      snippet: electrostatic stabiliser, hydrogen bond donor, steric role
+      notes: M-CSA entry 176, mechanism 1; M-CSA cites PMID:16342943, PMID:26627626, PMID:7674922, PMID:8652513,
+        PMID:9827548; M-CSA catalytic-residue roles for Tyr157
+  - subject: glu166
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu166 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/176/
+      snippet: metal ligand
+      notes: M-CSA entry 176, mechanism 1; M-CSA cites PMID:16342943, PMID:26627626, PMID:7674922, PMID:8652513,
+        PMID:9827548; M-CSA catalytic-residue roles for Glu166
+  - subject: asp226
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp226 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/176/
+      snippet: activator, electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 176, mechanism 1; M-CSA cites PMID:16342943, PMID:26627626, PMID:7674922, PMID:8652513,
+        PMID:9827548; M-CSA catalytic-residue roles for Asp226
+  - subject: his231
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His231 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/176/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 176, mechanism 1; M-CSA cites PMID:16342943, PMID:26627626, PMID:7674922, PMID:8652513,
+        PMID:9827548; M-CSA catalytic-residue roles for His231
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/176/
+      snippet: His231 is activated by Asp226 to act as a general acid/base. In the first step, His231
+        deprotonates water, which attacks the peptide bond in a nucleophilic addition, resulting in the
+        coordination of the oxyanion to the zinc cofactor. The oxyanion collapses, eliminating the neutral
+        terminal products. The kinetically favoured products of this reaction are the carboxyanion and
+        the amine cation, thus
+      notes: M-CSA entry 176, mechanism 1; M-CSA cites PMID:16342943, PMID:26627626, PMID:7674922, PMID:8652513,
+        PMID:9827548; CATH domain 3.10.170.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/176/
+      snippet: His231 is activated by Asp226 to act as a general acid/base. In the first step, His231
+        deprotonates water, which attacks the peptide bond in a nucleophilic addition, resulting in the
+        coordination of the oxyanion to the zinc cofactor. The oxyanion collapses, eliminating the neutral
+        terminal products. The kinetically favoured products of this reaction are the carboxyanion and
+        the amine cation, thus
+      notes: M-CSA entry 176, mechanism 1; M-CSA cites PMID:16342943, PMID:26627626, PMID:7674922, PMID:8652513,
+        PMID:9827548; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/176/
+      snippet: His231 is activated by Asp226 to act as a general acid/base. In the first step, His231
+        deprotonates water, which attacks the peptide bond in a nucleophilic addition, resulting in the
+        coordination of the oxyanion to the zinc cofactor. The oxyanion collapses, eliminating the neutral
+        terminal products. The kinetically favoured products of this reaction are the carboxyanion and
+        the amine cation, thus
+      notes: M-CSA entry 176, mechanism 1; M-CSA cites PMID:16342943, PMID:26627626, PMID:7674922, PMID:8652513,
+        PMID:9827548; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/176/
+      snippet: His231 is activated by Asp226 to act as a general acid/base. In the first step, His231
+        deprotonates water, which attacks the peptide bond in a nucleophilic addition, resulting in the
+        coordination of the oxyanion to the zinc cofactor. The oxyanion collapses, eliminating the neutral
+        terminal products. The kinetically favoured products of this reaction are the carboxyanion and
+        the amine cation, thus
+      notes: M-CSA entry 176, mechanism 1; M-CSA cites PMID:16342943, PMID:26627626, PMID:7674922, PMID:8652513,
+        PMID:9827548; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/176/
+      snippet: His231 is activated by Asp226 to act as a general acid/base. In the first step, His231
+        deprotonates water, which attacks the peptide bond in a nucleophilic addition, resulting in the
+        coordination of the oxyanion to the zinc cofactor. The oxyanion collapses, eliminating the neutral
+        terminal products. The kinetically favoured products of this reaction are the carboxyanion and
+        the amine cation, thus
+      notes: M-CSA entry 176, mechanism 1; M-CSA cites PMID:16342943, PMID:26627626, PMID:7674922, PMID:8652513,
+        PMID:9827548; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/176/
+      snippet: His231 is activated by Asp226 to act as a general acid/base. In the first step, His231
+        deprotonates water, which attacks the peptide bond in a nucleophilic addition, resulting in the
+        coordination of the oxyanion to the zinc cofactor. The oxyanion collapses, eliminating the neutral
+        terminal products. The kinetically favoured products of this reaction are the carboxyanion and
+        the amine cation, thus
+      notes: M-CSA entry 176, mechanism 1; M-CSA cites PMID:16342943, PMID:26627626, PMID:7674922, PMID:8652513,
+        PMID:9827548; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (18 evidence-backed edges) transcribed from M-CSA entry 176;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.4.22.56
 - CHEBI:46761
@@ -239,4 +239,258 @@ definitions:
       Caspase-3 from Homo sapiens is a member of a family of intracellular cysteine proteases that cleave substrates specifically at an aspartic acid residue. Caspases share a high degree of homology, not only within caspases from the same species but also across various species. Caspases control the proteolytic cascade central to the initiation and regulation of apoptosis. Caspase-3 is known as the executioner protease. The inactive form of caspase-3 is procaspase-3. This is activated when the procaspase is cleaved at an aspartate residue in the subunit linker, followed by one or more cleavages that remove the pro-domain.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of caspase-3
+  description: Stepwise mechanism transcribed from M-CSA entry 815 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: thr177
+    label: catalytic Thr177 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P42574
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: ser178
+    label: catalytic Ser178 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P42574
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his237
+    label: catalytic His237 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P42574
+    description: 'M-CSA roles: electrostatic stabiliser, proton acceptor, proton donor.'
+  - node_id: gly238
+    label: catalytic Gly238 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P42574
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: cys285
+    label: catalytic Cys285 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P42574
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: dipeptide
+    node_type: CHEMICAL
+    grounding: CHEBI:46761
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: L-alpha-amino acid
+    node_type: CHEMICAL
+    grounding: CHEBI:15705
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His121 deprotonates Cys163 thus activating it to nucleophilically attack the carbon of
+      the carbonyl of the peptide bond which produces the oxyanion intermediate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The oxyanion initiates an elimantion resulting in the cleavage of the peptide bond. The
+      N-terminal product accepts a proton from His121.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: His121 deprotonates water activating it so that it can attack the carbon of the thioester
+      bond in a nucleophilic addition.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The oxyanion initiates an elimantion resulting in the cleavage of the thioester bond
+      and Sulfur of Cys163 can then accept a proton from His121.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Product
+  - node_id: active_site
+    label: caspase-3 catalytic site
+    node_type: MOTIF
+    grounding: MCSA:815
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1460 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1460
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: caspase-3 activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.4.22.56
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/815/
+      snippet: The oxyanion initiates an elimantion resulting in the cleavage of the peptide bond. The
+        N-terminal product accepts a proton from His121.
+      notes: M-CSA entry 815, mechanism 1; M-CSA cites PMID:10353641, PMID:10578173, PMID:12680769, PMID:12833545;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/815/
+      snippet: His121 deprotonates water activating it so that it can attack the carbon of the thioester
+        bond in a nucleophilic addition.
+      notes: M-CSA entry 815, mechanism 1; M-CSA cites PMID:10353641, PMID:10578173, PMID:12680769, PMID:12833545;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/815/
+      snippet: The oxyanion initiates an elimantion resulting in the cleavage of the thioester bond and
+        Sulfur of Cys163 can then accept a proton from His121.
+      notes: M-CSA entry 815, mechanism 1; M-CSA cites PMID:10353641, PMID:10578173, PMID:12680769, PMID:12833545;
+        step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/815/
+      snippet: Product
+      notes: M-CSA entry 815, mechanism 1; M-CSA cites PMID:10353641, PMID:10578173, PMID:12680769, PMID:12833545;
+        step 5
+  - subject: thr177
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr177 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/815/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 815, mechanism 1; M-CSA cites PMID:10353641, PMID:10578173, PMID:12680769, PMID:12833545;
+        M-CSA catalytic-residue roles for Thr177
+  - subject: ser178
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser178 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/815/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 815, mechanism 1; M-CSA cites PMID:10353641, PMID:10578173, PMID:12680769, PMID:12833545;
+        M-CSA catalytic-residue roles for Ser178
+  - subject: his237
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His237 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/815/
+      snippet: electrostatic stabiliser, proton acceptor, proton donor
+      notes: M-CSA entry 815, mechanism 1; M-CSA cites PMID:10353641, PMID:10578173, PMID:12680769, PMID:12833545;
+        M-CSA catalytic-residue roles for His237
+  - subject: gly238
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly238 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/815/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 815, mechanism 1; M-CSA cites PMID:10353641, PMID:10578173, PMID:12680769, PMID:12833545;
+        M-CSA catalytic-residue roles for Gly238
+  - subject: cys285
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys285 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/815/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 815, mechanism 1; M-CSA cites PMID:10353641, PMID:10578173, PMID:12680769, PMID:12833545;
+        M-CSA catalytic-residue roles for Cys285
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/815/
+      snippet: Cys163 and His121 are thought to exist as a thiolate/imidazolium ion-pair.   Upon binding
+        the substrate, protonated His121 deprotonates Cys163. This enables Cys163 to perform nucleophilic
+        attack upon the carbonyl carbon. The tetrahedral oxyanion intermediate is stabilised by the  hydrogen
+        bonding to the backbone amide group of Gly122 and Cys163 the oxyanion initiates an elimination
+        resulting in th
+      notes: M-CSA entry 815, mechanism 1; M-CSA cites PMID:10353641, PMID:10578173, PMID:12680769, PMID:12833545;
+        CATH domain 3.40.50.1460 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/815/
+      snippet: Cys163 and His121 are thought to exist as a thiolate/imidazolium ion-pair.   Upon binding
+        the substrate, protonated His121 deprotonates Cys163. This enables Cys163 to perform nucleophilic
+        attack upon the carbonyl carbon. The tetrahedral oxyanion intermediate is stabilised by the  hydrogen
+        bonding to the backbone amide group of Gly122 and Cys163 the oxyanion initiates an elimination
+        resulting in th
+      notes: M-CSA entry 815, mechanism 1; M-CSA cites PMID:10353641, PMID:10578173, PMID:12680769, PMID:12833545;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/815/
+      snippet: Cys163 and His121 are thought to exist as a thiolate/imidazolium ion-pair.   Upon binding
+        the substrate, protonated His121 deprotonates Cys163. This enables Cys163 to perform nucleophilic
+        attack upon the carbonyl carbon. The tetrahedral oxyanion intermediate is stabilised by the  hydrogen
+        bonding to the backbone amide group of Gly122 and Cys163 the oxyanion initiates an elimination
+        resulting in th
+      notes: M-CSA entry 815, mechanism 1; M-CSA cites PMID:10353641, PMID:10578173, PMID:12680769, PMID:12833545;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/815/
+      snippet: Cys163 and His121 are thought to exist as a thiolate/imidazolium ion-pair.   Upon binding
+        the substrate, protonated His121 deprotonates Cys163. This enables Cys163 to perform nucleophilic
+        attack upon the carbonyl carbon. The tetrahedral oxyanion intermediate is stabilised by the  hydrogen
+        bonding to the backbone amide group of Gly122 and Cys163 the oxyanion initiates an elimination
+        resulting in th
+      notes: M-CSA entry 815, mechanism 1; M-CSA cites PMID:10353641, PMID:10578173, PMID:12680769, PMID:12833545;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/815/
+      snippet: Cys163 and His121 are thought to exist as a thiolate/imidazolium ion-pair.   Upon binding
+        the substrate, protonated His121 deprotonates Cys163. This enables Cys163 to perform nucleophilic
+        attack upon the carbonyl carbon. The tetrahedral oxyanion intermediate is stabilised by the  hydrogen
+        bonding to the backbone amide group of Gly122 and Cys163 the oxyanion initiates an elimination
+        resulting in th
+      notes: M-CSA entry 815, mechanism 1; M-CSA cites PMID:10353641, PMID:10578173, PMID:12680769, PMID:12833545;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (14 evidence-backed edges) transcribed from M-CSA entry 815;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

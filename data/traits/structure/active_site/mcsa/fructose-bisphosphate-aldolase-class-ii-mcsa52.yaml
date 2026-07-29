@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.1.2.13
 - CHEBI:59776
@@ -313,4 +313,321 @@ definitions:
       Fructose-1,6-bisphosphate aldolase (FBP-aldolase, EC 4.1.2.13) participates in two major metabolic pathways. In gluconeogenesis, they catalyse the aldol condensation of a ketose, dihydroxyacetone phosphate (DHAP) and an aldose, glyceraldehyde 3-phosphate (G3P) to form the acylic form of fructose 1,6-bisphosphate (FBP). In glycolysis, they catalyse the reverse cleavage reaction. In each pathway, the enzyme-catalysed reaction represents a distinctive stage, a switch between six and three carbon units. The aldol condensation is a key reaction in synthetic chemistry that aldolases catalyse with exquisite control of the stereochemistry. Aldolases have been divided into two groups, class I and class II, depending primarily on the reaction mechanism. This annotation refers to class II aldolases, which are alpha/beta(8) barrel structures. The class II enzymes are not found in mammals, and have an absolute requirement for a divalent cation, usually Zn(II), and are activated by monovalent cations.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of fructose-bisphosphate aldolase (Class II)
+  description: Stepwise mechanism transcribed from M-CSA entry 52 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +1).
+  nodes:
+  - node_id: asp109
+    label: catalytic Asp109 (M-CSA/PDB numbering; UniProt residue 110)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AB71
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: his110
+    label: catalytic His110 (M-CSA/PDB numbering; UniProt residue 111)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AB71
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu182
+    label: catalytic Glu182 (M-CSA/PDB numbering; UniProt residue 183)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AB71
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: his226
+    label: catalytic His226 (M-CSA/PDB numbering; UniProt residue 227)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AB71
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his264
+    label: catalytic His264 (M-CSA/PDB numbering; UniProt residue 265)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AB71
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asn286
+    label: catalytic Asn286 (M-CSA/PDB numbering; UniProt residue 287)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AB71
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor, steric role.'
+  - node_id: reactant0
+    label: D-glyceraldehyde 3-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:59776
+  - node_id: reactant1
+    label: glycerone phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57642
+  - node_id: product0
+    label: D-fructofuranose 1,6-bisphosphate(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:49299
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu182 deprotonates the C1 carbon of the substrate, which initiates double bond rearrangement
+      to form the enol-intermediate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The oxyanion collapses, initiating nucleophilic addition of the intermediate to the glyceraldehyde-3-phosphate
+      at the carbonyl carbon. The oxyanion formed deprotonates Asp109.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Asp109 deprotonates water which deprotonates Glu182 in an inferred step.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The sugar cyclises outside the enzyme active site.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: fructose-bisphosphate aldolase (Class II) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:52
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.70 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.70
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: fructose-bisphosphate aldolase (Class II) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.1.2.13
+  edges:
+  - subject: glu182
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu182 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/52/
+      snippet: Glu182 deprotonates the C1 carbon of the substrate, which initiates double bond rearrangement
+        to form the enol-intermediate.
+      notes: M-CSA entry 52, mechanism 1; M-CSA cites PMID:10080900, PMID:10712619, PMID:20929256, PMID:22014167,
+        PMID:25399608, PMID:8836102, PMID:8939754, PMID:9878448; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/52/
+      snippet: The oxyanion collapses, initiating nucleophilic addition of the intermediate to the glyceraldehyde-3-phosphate
+        at the carbonyl carbon. The oxyanion formed deprotonates Asp109.
+      notes: M-CSA entry 52, mechanism 1; M-CSA cites PMID:10080900, PMID:10712619, PMID:20929256, PMID:22014167,
+        PMID:25399608, PMID:8836102, PMID:8939754, PMID:9878448; step 2
+  - subject: asp109
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Asp109 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/52/
+      snippet: The oxyanion collapses, initiating nucleophilic addition of the intermediate to the glyceraldehyde-3-phosphate
+        at the carbonyl carbon. The oxyanion formed deprotonates Asp109.
+      notes: M-CSA entry 52, mechanism 1; M-CSA cites PMID:10080900, PMID:10712619, PMID:20929256, PMID:22014167,
+        PMID:25399608, PMID:8836102, PMID:8939754, PMID:9878448; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/52/
+      snippet: Asp109 deprotonates water which deprotonates Glu182 in an inferred step.
+      notes: M-CSA entry 52, mechanism 1; M-CSA cites PMID:10080900, PMID:10712619, PMID:20929256, PMID:22014167,
+        PMID:25399608, PMID:8836102, PMID:8939754, PMID:9878448; step 3
+  - subject: asp109
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Asp109 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/52/
+      snippet: Asp109 deprotonates water which deprotonates Glu182 in an inferred step.
+      notes: M-CSA entry 52, mechanism 1; M-CSA cites PMID:10080900, PMID:10712619, PMID:20929256, PMID:22014167,
+        PMID:25399608, PMID:8836102, PMID:8939754, PMID:9878448; step 3
+  - subject: glu182
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Glu182 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/52/
+      snippet: Asp109 deprotonates water which deprotonates Glu182 in an inferred step.
+      notes: M-CSA entry 52, mechanism 1; M-CSA cites PMID:10080900, PMID:10712619, PMID:20929256, PMID:22014167,
+        PMID:25399608, PMID:8836102, PMID:8939754, PMID:9878448; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/52/
+      snippet: The sugar cyclises outside the enzyme active site.
+      notes: M-CSA entry 52, mechanism 1; M-CSA cites PMID:10080900, PMID:10712619, PMID:20929256, PMID:22014167,
+        PMID:25399608, PMID:8836102, PMID:8939754, PMID:9878448; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/52/
+      snippet: Products
+      notes: M-CSA entry 52, mechanism 1; M-CSA cites PMID:10080900, PMID:10712619, PMID:20929256, PMID:22014167,
+        PMID:25399608, PMID:8836102, PMID:8939754, PMID:9878448; step 5
+  - subject: asp109
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp109 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/52/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 52, mechanism 1; M-CSA cites PMID:10080900, PMID:10712619, PMID:20929256, PMID:22014167,
+        PMID:25399608, PMID:8836102, PMID:8939754, PMID:9878448; M-CSA catalytic-residue roles for Asp109
+  - subject: his110
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His110 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/52/
+      snippet: metal ligand
+      notes: M-CSA entry 52, mechanism 1; M-CSA cites PMID:10080900, PMID:10712619, PMID:20929256, PMID:22014167,
+        PMID:25399608, PMID:8836102, PMID:8939754, PMID:9878448; M-CSA catalytic-residue roles for His110
+  - subject: glu182
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu182 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/52/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 52, mechanism 1; M-CSA cites PMID:10080900, PMID:10712619, PMID:20929256, PMID:22014167,
+        PMID:25399608, PMID:8836102, PMID:8939754, PMID:9878448; M-CSA catalytic-residue roles for Glu182
+  - subject: his226
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His226 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/52/
+      snippet: metal ligand
+      notes: M-CSA entry 52, mechanism 1; M-CSA cites PMID:10080900, PMID:10712619, PMID:20929256, PMID:22014167,
+        PMID:25399608, PMID:8836102, PMID:8939754, PMID:9878448; M-CSA catalytic-residue roles for His226
+  - subject: his264
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His264 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/52/
+      snippet: metal ligand
+      notes: M-CSA entry 52, mechanism 1; M-CSA cites PMID:10080900, PMID:10712619, PMID:20929256, PMID:22014167,
+        PMID:25399608, PMID:8836102, PMID:8939754, PMID:9878448; M-CSA catalytic-residue roles for His264
+  - subject: asn286
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn286 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/52/
+      snippet: electrostatic stabiliser, hydrogen bond donor, steric role
+      notes: M-CSA entry 52, mechanism 1; M-CSA cites PMID:10080900, PMID:10712619, PMID:20929256, PMID:22014167,
+        PMID:25399608, PMID:8836102, PMID:8939754, PMID:9878448; M-CSA catalytic-residue roles for Asn286
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/52/
+      snippet: "The aldol condensation carried out by FBP aldolases involves three major covalency changes.\
+        \ (1) Abstraction of the 1-proS proton, DHAP C1-H to produce the ene-diolate. (2) Carbon-carbon\
+        \ bond formation to covalently link DHAP C1 with G3P C1 and so form the FBP C3-C4 bond. (3) A\
+        \ second proton transfer converts C4=O to C4-O-H to complete the synthesis of FBP.   
+<br/><br/>\
+        
+A mechanism could be prop"
+      notes: M-CSA entry 52, mechanism 1; M-CSA cites PMID:10080900, PMID:10712619, PMID:20929256, PMID:22014167,
+        PMID:25399608, PMID:8836102, PMID:8939754, PMID:9878448; CATH domain 3.20.20.70 assigned to the
+        catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/52/
+      snippet: "The aldol condensation carried out by FBP aldolases involves three major covalency changes.\
+        \ (1) Abstraction of the 1-proS proton, DHAP C1-H to produce the ene-diolate. (2) Carbon-carbon\
+        \ bond formation to covalently link DHAP C1 with G3P C1 and so form the FBP C3-C4 bond. (3) A\
+        \ second proton transfer converts C4=O to C4-O-H to complete the synthesis of FBP.   
+<br/><br/>\
+        
+A mechanism could be prop"
+      notes: M-CSA entry 52, mechanism 1; M-CSA cites PMID:10080900, PMID:10712619, PMID:20929256, PMID:22014167,
+        PMID:25399608, PMID:8836102, PMID:8939754, PMID:9878448; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/52/
+      snippet: "The aldol condensation carried out by FBP aldolases involves three major covalency changes.\
+        \ (1) Abstraction of the 1-proS proton, DHAP C1-H to produce the ene-diolate. (2) Carbon-carbon\
+        \ bond formation to covalently link DHAP C1 with G3P C1 and so form the FBP C3-C4 bond. (3) A\
+        \ second proton transfer converts C4=O to C4-O-H to complete the synthesis of FBP.   
+<br/><br/>\
+        
+A mechanism could be prop"
+      notes: M-CSA entry 52, mechanism 1; M-CSA cites PMID:10080900, PMID:10712619, PMID:20929256, PMID:22014167,
+        PMID:25399608, PMID:8836102, PMID:8939754, PMID:9878448; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/52/
+      snippet: "The aldol condensation carried out by FBP aldolases involves three major covalency changes.\
+        \ (1) Abstraction of the 1-proS proton, DHAP C1-H to produce the ene-diolate. (2) Carbon-carbon\
+        \ bond formation to covalently link DHAP C1 with G3P C1 and so form the FBP C3-C4 bond. (3) A\
+        \ second proton transfer converts C4=O to C4-O-H to complete the synthesis of FBP.   
+<br/><br/>\
+        
+A mechanism could be prop"
+      notes: M-CSA entry 52, mechanism 1; M-CSA cites PMID:10080900, PMID:10712619, PMID:20929256, PMID:22014167,
+        PMID:25399608, PMID:8836102, PMID:8939754, PMID:9878448; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/52/
+      snippet: "The aldol condensation carried out by FBP aldolases involves three major covalency changes.\
+        \ (1) Abstraction of the 1-proS proton, DHAP C1-H to produce the ene-diolate. (2) Carbon-carbon\
+        \ bond formation to covalently link DHAP C1 with G3P C1 and so form the FBP C3-C4 bond. (3) A\
+        \ second proton transfer converts C4=O to C4-O-H to complete the synthesis of FBP.   
+<br/><br/>\
+        
+A mechanism could be prop"
+      notes: M-CSA entry 52, mechanism 1; M-CSA cites PMID:10080900, PMID:10712619, PMID:20929256, PMID:22014167,
+        PMID:25399608, PMID:8836102, PMID:8939754, PMID:9878448; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (19 evidence-backed edges) transcribed from M-CSA entry 52;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

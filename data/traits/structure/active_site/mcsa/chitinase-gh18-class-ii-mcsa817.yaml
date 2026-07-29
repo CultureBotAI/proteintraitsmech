@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.2.1.14
 - CHEBI:50670
@@ -393,4 +393,294 @@ definitions:
       Chitinase A1 from Bacillus circulans catalyses the hydrolysis of the 1,4-beta linkages of N-acetyl-D glucosamine polymers of chitin. For bacteria, this hydrolysis is utilised primarily as carbon and energy sources. Chitinase A1 is proposed to be very similar to hen egg-white lysozyme, differing only in that it undergoes a 'substrate assisted' mechanism.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of chitinase (GH18, class II)
+  description: Stepwise mechanism transcribed from M-CSA entry 817 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: asp200
+    label: catalytic Asp200 (M-CSA/PDB numbering; UniProt residue 200)
+    node_type: RESIDUE
+    grounding: UniProtKB:P20533
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp202
+    label: catalytic Asp202 (M-CSA/PDB numbering; UniProt residue 202)
+    node_type: RESIDUE
+    grounding: UniProtKB:P20533
+    description: 'M-CSA roles: electrostatic stabiliser, steric role.'
+  - node_id: glu204
+    label: catalytic Glu204 (M-CSA/PDB numbering; UniProt residue 204)
+    node_type: RESIDUE
+    grounding: UniProtKB:P20533
+    description: 'M-CSA roles: activator, increase nucleophilicity, promote heterolysis, proton acceptor,
+      proton donor.'
+  - node_id: tyr279
+    label: catalytic Tyr279 (M-CSA/PDB numbering; UniProt residue 279)
+    node_type: RESIDUE
+    grounding: UniProtKB:P20533
+    description: 'M-CSA roles: electrostatic stabiliser, steric role.'
+  - node_id: reactant0
+    label: N-acetyl-beta-D-glucosaminyl-(1->4)-N-acetyl-beta-D-glucosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:50670
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: N-acetyl-D-glucosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:506227
+  - node_id: product1
+    label: N-acetyl-D-glucosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:506227
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The substrate is distorted in the active site this causes the nitrogen of the N-acetyl
+      group to push electrons into the carbonyl oxygen which then attacks C1 of the glycosidic bond. This
+      causes the bond to be broken upon protonation from Glu204 and a cyclic oxazolinium ion to be formed.
+      This is stabilized by Asp200, Asp202 and Tyr279.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Glu204 activates a water molecule which hydrolyses the cyclic intermediate and the product
+      is formed.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: chitinase (GH18, class II) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:817
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.20.20.80 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.20.20.80
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: chitinase (GH18, class II) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.2.1.14
+  edges:
+  - subject: asp200
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp200 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/817/
+      snippet: The substrate is distorted in the active site this causes the nitrogen of the N-acetyl
+        group to push electrons into the carbonyl oxygen which then attacks C1 of the glycosidic bond.
+        This causes the bond to be broken upon protonation from Glu204 and a cyclic oxazolinium ion to
+        be formed. This is stabilized by Asp200, Asp202 and Tyr279.
+      notes: M-CSA entry 817, mechanism 1; M-CSA cites PMID:8103047; step 1
+  - subject: asp202
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp202 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/817/
+      snippet: The substrate is distorted in the active site this causes the nitrogen of the N-acetyl
+        group to push electrons into the carbonyl oxygen which then attacks C1 of the glycosidic bond.
+        This causes the bond to be broken upon protonation from Glu204 and a cyclic oxazolinium ion to
+        be formed. This is stabilized by Asp200, Asp202 and Tyr279.
+      notes: M-CSA entry 817, mechanism 1; M-CSA cites PMID:8103047; step 1
+  - subject: glu204
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu204 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/817/
+      snippet: The substrate is distorted in the active site this causes the nitrogen of the N-acetyl
+        group to push electrons into the carbonyl oxygen which then attacks C1 of the glycosidic bond.
+        This causes the bond to be broken upon protonation from Glu204 and a cyclic oxazolinium ion to
+        be formed. This is stabilized by Asp200, Asp202 and Tyr279.
+      notes: M-CSA entry 817, mechanism 1; M-CSA cites PMID:8103047; step 1
+  - subject: tyr279
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr279 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/817/
+      snippet: The substrate is distorted in the active site this causes the nitrogen of the N-acetyl
+        group to push electrons into the carbonyl oxygen which then attacks C1 of the glycosidic bond.
+        This causes the bond to be broken upon protonation from Glu204 and a cyclic oxazolinium ion to
+        be formed. This is stabilized by Asp200, Asp202 and Tyr279.
+      notes: M-CSA entry 817, mechanism 1; M-CSA cites PMID:8103047; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/817/
+      snippet: Glu204 activates a water molecule which hydrolyses the cyclic intermediate and the product
+        is formed.
+      notes: M-CSA entry 817, mechanism 1; M-CSA cites PMID:8103047; step 2
+  - subject: glu204
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Glu204 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/817/
+      snippet: Glu204 activates a water molecule which hydrolyses the cyclic intermediate and the product
+        is formed.
+      notes: M-CSA entry 817, mechanism 1; M-CSA cites PMID:8103047; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/817/
+      snippet: Products.
+      notes: M-CSA entry 817, mechanism 1; M-CSA cites PMID:8103047; step 3
+  - subject: asp200
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp200 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/817/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 817, mechanism 1; M-CSA cites PMID:8103047; M-CSA catalytic-residue roles for
+        Asp200
+  - subject: asp202
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp202 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/817/
+      snippet: electrostatic stabiliser, steric role
+      notes: M-CSA entry 817, mechanism 1; M-CSA cites PMID:8103047; M-CSA catalytic-residue roles for
+        Asp202
+  - subject: glu204
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu204 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/817/
+      snippet: activator, increase nucleophilicity, promote heterolysis, proton acceptor, proton donor
+      notes: M-CSA entry 817, mechanism 1; M-CSA cites PMID:8103047; M-CSA catalytic-residue roles for
+        Glu204
+  - subject: tyr279
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr279 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/817/
+      snippet: electrostatic stabiliser, steric role
+      notes: M-CSA entry 817, mechanism 1; M-CSA cites PMID:8103047; M-CSA catalytic-residue roles for
+        Tyr279
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/817/
+      snippet: "The nitrogen atom of the substrate pushes electrons up toward the acetyl group, causing\
+        \ the oxygen atom of the acetyl to nucleophilically attack the C1 atom of the substrate. This\
+        \ breaks the C1-O bond, and the leaving group oxygen atom is protonated by Glu 204.
+Asp 202\
+        \ and Tyr 279 distort the substrate to encourage the intiatial nucleophilic attack. 
+ Asp 200,\
+        \ Asp202 and Tyr279 stabilise the pos"
+      notes: M-CSA entry 817, mechanism 1; M-CSA cites PMID:8103047; CATH domain 3.20.20.80 assigned to
+        the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/817/
+      snippet: "The nitrogen atom of the substrate pushes electrons up toward the acetyl group, causing\
+        \ the oxygen atom of the acetyl to nucleophilically attack the C1 atom of the substrate. This\
+        \ breaks the C1-O bond, and the leaving group oxygen atom is protonated by Glu 204.
+Asp 202\
+        \ and Tyr 279 distort the substrate to encourage the intiatial nucleophilic attack. 
+ Asp 200,\
+        \ Asp202 and Tyr279 stabilise the pos"
+      notes: M-CSA entry 817, mechanism 1; M-CSA cites PMID:8103047; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/817/
+      snippet: "The nitrogen atom of the substrate pushes electrons up toward the acetyl group, causing\
+        \ the oxygen atom of the acetyl to nucleophilically attack the C1 atom of the substrate. This\
+        \ breaks the C1-O bond, and the leaving group oxygen atom is protonated by Glu 204.
+Asp 202\
+        \ and Tyr 279 distort the substrate to encourage the intiatial nucleophilic attack. 
+ Asp 200,\
+        \ Asp202 and Tyr279 stabilise the pos"
+      notes: M-CSA entry 817, mechanism 1; M-CSA cites PMID:8103047; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/817/
+      snippet: "The nitrogen atom of the substrate pushes electrons up toward the acetyl group, causing\
+        \ the oxygen atom of the acetyl to nucleophilically attack the C1 atom of the substrate. This\
+        \ breaks the C1-O bond, and the leaving group oxygen atom is protonated by Glu 204.
+Asp 202\
+        \ and Tyr 279 distort the substrate to encourage the intiatial nucleophilic attack. 
+ Asp 200,\
+        \ Asp202 and Tyr279 stabilise the pos"
+      notes: M-CSA entry 817, mechanism 1; M-CSA cites PMID:8103047; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/817/
+      snippet: "The nitrogen atom of the substrate pushes electrons up toward the acetyl group, causing\
+        \ the oxygen atom of the acetyl to nucleophilically attack the C1 atom of the substrate. This\
+        \ breaks the C1-O bond, and the leaving group oxygen atom is protonated by Glu 204.
+Asp 202\
+        \ and Tyr 279 distort the substrate to encourage the intiatial nucleophilic attack. 
+ Asp 200,\
+        \ Asp202 and Tyr279 stabilise the pos"
+      notes: M-CSA entry 817, mechanism 1; M-CSA cites PMID:8103047; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/817/
+      snippet: "The nitrogen atom of the substrate pushes electrons up toward the acetyl group, causing\
+        \ the oxygen atom of the acetyl to nucleophilically attack the C1 atom of the substrate. This\
+        \ breaks the C1-O bond, and the leaving group oxygen atom is protonated by Glu 204.
+Asp 202\
+        \ and Tyr 279 distort the substrate to encourage the intiatial nucleophilic attack. 
+ Asp 200,\
+        \ Asp202 and Tyr279 stabilise the pos"
+      notes: M-CSA entry 817, mechanism 1; M-CSA cites PMID:8103047; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (17 evidence-backed edges) transcribed from M-CSA entry 817;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

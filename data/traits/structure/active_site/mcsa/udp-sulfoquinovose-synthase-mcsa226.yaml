@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.13.1.1
 - CHEBI:58885
@@ -348,4 +348,343 @@ definitions:
       The SQD1 enzyme from Arabidopsis thaliana catalyses the addition of sulphite to UDP-glucose to form UDP-6-sulphoquinovose and a molecule of water. This is involved in the biosynthesis of the unique sulpholipid SQDG, found in plants and many photosynthetic bacteria.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of UDP-sulfoquinovose synthase
+  description: Stepwise mechanism transcribed from M-CSA entry 226 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: thr145
+    label: catalytic Thr145 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:O48917
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      steric role.'
+  - node_id: ser180
+    label: catalytic Ser180 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:O48917
+    description: 'M-CSA roles: hydrogen bond acceptor, steric role.'
+  - node_id: tyr182
+    label: catalytic Tyr182 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:O48917
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor,
+      steric role.'
+  - node_id: his183
+    label: catalytic His183 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:O48917
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.'
+  - node_id: lys186
+    label: catalytic Lys186 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:O48917
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor, increase acidity.'
+  - node_id: reactant0
+    label: UDP-alpha-D-glucose(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58885
+  - node_id: reactant1
+    label: sulfite
+    node_type: CHEMICAL
+    grounding: CHEBI:17359
+  - node_id: reactant2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product0
+    label: UDP-6-sulfoquinovose(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:60009
+  - node_id: product1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Tyr182 deprotonates the 4'-hydroxyl of UDP-glucose causing the formation of a ketone
+      with concomitant hydride transfer from C4' of the substrate to C4 of NAD<sup>+</sup>.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: His183 deprotonates C5' of the intermediate and causes the elimination of the O6' hydroxyl
+      group to form a C5'=C6' double bond. Due to lack of evidence it has been inferred that protonated
+      water acts as the proton donor for the O6' hydroxyl leaving group.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Sulfite is added across the double bond by electrophilic addition with His183 protonating
+      the C5' position.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: NADH transfers a hydride from C4 of NADH to C4' of the intermediate. The resulting alkoxide
+      is protonated by Tyr182.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Product
+  - node_id: active_site
+    label: UDP-sulfoquinovose synthase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:226
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.720 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.720
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: UDP-sulfoquinovose synthase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.13.1.1
+  edges:
+  - subject: tyr182
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr182 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/226/
+      snippet: Tyr182 deprotonates the 4'-hydroxyl of UDP-glucose causing the formation of a ketone with
+        concomitant hydride transfer from C4' of the substrate to C4 of NAD<sup>+</sup>.
+      notes: M-CSA entry 226, mechanism 1; M-CSA cites PMID:10557279, PMID:25605538, PMID:9271498, PMID:9748211;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/226/
+      snippet: His183 deprotonates C5' of the intermediate and causes the elimination of the O6' hydroxyl
+        group to form a C5'=C6' double bond. Due to lack of evidence it has been inferred that protonated
+        water acts as the proton donor for the O6' hydroxyl leaving group.
+      notes: M-CSA entry 226, mechanism 1; M-CSA cites PMID:10557279, PMID:25605538, PMID:9271498, PMID:9748211;
+        step 2
+  - subject: his183
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His183 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/226/
+      snippet: His183 deprotonates C5' of the intermediate and causes the elimination of the O6' hydroxyl
+        group to form a C5'=C6' double bond. Due to lack of evidence it has been inferred that protonated
+        water acts as the proton donor for the O6' hydroxyl leaving group.
+      notes: M-CSA entry 226, mechanism 1; M-CSA cites PMID:10557279, PMID:25605538, PMID:9271498, PMID:9748211;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/226/
+      snippet: Sulfite is added across the double bond by electrophilic addition with His183 protonating
+        the C5' position.
+      notes: M-CSA entry 226, mechanism 1; M-CSA cites PMID:10557279, PMID:25605538, PMID:9271498, PMID:9748211;
+        step 3
+  - subject: his183
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: His183 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/226/
+      snippet: Sulfite is added across the double bond by electrophilic addition with His183 protonating
+        the C5' position.
+      notes: M-CSA entry 226, mechanism 1; M-CSA cites PMID:10557279, PMID:25605538, PMID:9271498, PMID:9748211;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/226/
+      snippet: NADH transfers a hydride from C4 of NADH to C4' of the intermediate. The resulting alkoxide
+        is protonated by Tyr182.
+      notes: M-CSA entry 226, mechanism 1; M-CSA cites PMID:10557279, PMID:25605538, PMID:9271498, PMID:9748211;
+        step 4
+  - subject: tyr182
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Tyr182 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/226/
+      snippet: NADH transfers a hydride from C4 of NADH to C4' of the intermediate. The resulting alkoxide
+        is protonated by Tyr182.
+      notes: M-CSA entry 226, mechanism 1; M-CSA cites PMID:10557279, PMID:25605538, PMID:9271498, PMID:9748211;
+        step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/226/
+      snippet: Product
+      notes: M-CSA entry 226, mechanism 1; M-CSA cites PMID:10557279, PMID:25605538, PMID:9271498, PMID:9748211;
+        step 5
+  - subject: thr145
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr145 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/226/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, steric role
+      notes: M-CSA entry 226, mechanism 1; M-CSA cites PMID:10557279, PMID:25605538, PMID:9271498, PMID:9748211;
+        M-CSA catalytic-residue roles for Thr145
+  - subject: ser180
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser180 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/226/
+      snippet: hydrogen bond acceptor, steric role
+      notes: M-CSA entry 226, mechanism 1; M-CSA cites PMID:10557279, PMID:25605538, PMID:9271498, PMID:9748211;
+        M-CSA catalytic-residue roles for Ser180
+  - subject: tyr182
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr182 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/226/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor, steric role
+      notes: M-CSA entry 226, mechanism 1; M-CSA cites PMID:10557279, PMID:25605538, PMID:9271498, PMID:9748211;
+        M-CSA catalytic-residue roles for Tyr182
+  - subject: his183
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His183 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/226/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 226, mechanism 1; M-CSA cites PMID:10557279, PMID:25605538, PMID:9271498, PMID:9748211;
+        M-CSA catalytic-residue roles for His183
+  - subject: lys186
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys186 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/226/
+      snippet: electrostatic stabiliser, hydrogen bond donor, increase acidity
+      notes: M-CSA entry 226, mechanism 1; M-CSA cites PMID:10557279, PMID:25605538, PMID:9271498, PMID:9748211;
+        M-CSA catalytic-residue roles for Lys186
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/226/
+      snippet: The 4' hydroxyl is deprotonated by the negatively charged tyrosinate 182. Tyr 182 is stabilised
+        by Lys 186. NAD+ accepts a hydride from the C4' atom, reducing the hydroxyl group to a ketone.
+        This intermediate is stabilised by low barrier hydrogen bonds to Thr 145, which also promote the
+        removal of the O6' hydroxyl, along with a deprotonation of C5' by His 183, to form a water molecule.
+        This forms
+      notes: M-CSA entry 226, mechanism 1; M-CSA cites PMID:10557279, PMID:25605538, PMID:9271498, PMID:9748211;
+        CATH domain 3.40.50.720 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/226/
+      snippet: The 4' hydroxyl is deprotonated by the negatively charged tyrosinate 182. Tyr 182 is stabilised
+        by Lys 186. NAD+ accepts a hydride from the C4' atom, reducing the hydroxyl group to a ketone.
+        This intermediate is stabilised by low barrier hydrogen bonds to Thr 145, which also promote the
+        removal of the O6' hydroxyl, along with a deprotonation of C5' by His 183, to form a water molecule.
+        This forms
+      notes: M-CSA entry 226, mechanism 1; M-CSA cites PMID:10557279, PMID:25605538, PMID:9271498, PMID:9748211;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/226/
+      snippet: The 4' hydroxyl is deprotonated by the negatively charged tyrosinate 182. Tyr 182 is stabilised
+        by Lys 186. NAD+ accepts a hydride from the C4' atom, reducing the hydroxyl group to a ketone.
+        This intermediate is stabilised by low barrier hydrogen bonds to Thr 145, which also promote the
+        removal of the O6' hydroxyl, along with a deprotonation of C5' by His 183, to form a water molecule.
+        This forms
+      notes: M-CSA entry 226, mechanism 1; M-CSA cites PMID:10557279, PMID:25605538, PMID:9271498, PMID:9748211;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/226/
+      snippet: The 4' hydroxyl is deprotonated by the negatively charged tyrosinate 182. Tyr 182 is stabilised
+        by Lys 186. NAD+ accepts a hydride from the C4' atom, reducing the hydroxyl group to a ketone.
+        This intermediate is stabilised by low barrier hydrogen bonds to Thr 145, which also promote the
+        removal of the O6' hydroxyl, along with a deprotonation of C5' by His 183, to form a water molecule.
+        This forms
+      notes: M-CSA entry 226, mechanism 1; M-CSA cites PMID:10557279, PMID:25605538, PMID:9271498, PMID:9748211;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/226/
+      snippet: The 4' hydroxyl is deprotonated by the negatively charged tyrosinate 182. Tyr 182 is stabilised
+        by Lys 186. NAD+ accepts a hydride from the C4' atom, reducing the hydroxyl group to a ketone.
+        This intermediate is stabilised by low barrier hydrogen bonds to Thr 145, which also promote the
+        removal of the O6' hydroxyl, along with a deprotonation of C5' by His 183, to form a water molecule.
+        This forms
+      notes: M-CSA entry 226, mechanism 1; M-CSA cites PMID:10557279, PMID:25605538, PMID:9271498, PMID:9748211;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/226/
+      snippet: The 4' hydroxyl is deprotonated by the negatively charged tyrosinate 182. Tyr 182 is stabilised
+        by Lys 186. NAD+ accepts a hydride from the C4' atom, reducing the hydroxyl group to a ketone.
+        This intermediate is stabilised by low barrier hydrogen bonds to Thr 145, which also promote the
+        removal of the O6' hydroxyl, along with a deprotonation of C5' by His 183, to form a water molecule.
+        This forms
+      notes: M-CSA entry 226, mechanism 1; M-CSA cites PMID:10557279, PMID:25605538, PMID:9271498, PMID:9748211;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/226/
+      snippet: The 4' hydroxyl is deprotonated by the negatively charged tyrosinate 182. Tyr 182 is stabilised
+        by Lys 186. NAD+ accepts a hydride from the C4' atom, reducing the hydroxyl group to a ketone.
+        This intermediate is stabilised by low barrier hydrogen bonds to Thr 145, which also promote the
+        removal of the O6' hydroxyl, along with a deprotonation of C5' by His 183, to form a water molecule.
+        This forms
+      notes: M-CSA entry 226, mechanism 1; M-CSA cites PMID:10557279, PMID:25605538, PMID:9271498, PMID:9748211;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (20 evidence-backed edges) transcribed from M-CSA entry 226;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

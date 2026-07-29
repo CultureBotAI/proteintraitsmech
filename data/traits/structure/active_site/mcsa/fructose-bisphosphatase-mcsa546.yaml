@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.3.11
 - CHEBI:15377
@@ -384,4 +384,360 @@ definitions:
       Fructose 1,6-bisphosphatase (FBPase) hydrolyses fructose 1,6-bis-phosphate to fructose 6-phosphate and phosphate. The enzyme plays a crucial role in gluconeogenesis, the formation of glucose from non-carbohydrate carbon containing substrates. The enzyme is only capable of catalysing the forward reaction, while phosphofructokinase catalyses the reverse reaction. Regulation of the two enzyme is performed by metabolites such as fructose 2,6 bis-phosphate, ensuring that enhances reactivity of one enzyme is accompanied by suppressed reactivity of the other.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of fructose-bisphosphatase
+  description: Stepwise mechanism transcribed from M-CSA entry 546 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +1).
+  nodes:
+  - node_id: asp68
+    label: catalytic Asp68 (M-CSA/PDB numbering; UniProt residue 69)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00636
+    description: 'M-CSA roles: metal ligand, proton acceptor, proton donor.'
+  - node_id: asp74
+    label: catalytic Asp74 (M-CSA/PDB numbering; UniProt residue 75)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00636
+    description: 'M-CSA roles: electrostatic stabiliser, proton acceptor, proton donor.'
+  - node_id: glu97
+    label: catalytic Glu97 (M-CSA/PDB numbering; UniProt residue 98)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00636
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu98
+    label: catalytic Glu98 (M-CSA/PDB numbering; UniProt residue 99)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00636
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asp118
+    label: catalytic Asp118 (M-CSA/PDB numbering; UniProt residue 119)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00636
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: leu120
+    label: catalytic Leu120 (M-CSA/PDB numbering; UniProt residue 121)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00636
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp121
+    label: catalytic Asp121 (M-CSA/PDB numbering; UniProt residue 122)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00636
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu280
+    label: catalytic Glu280 (M-CSA/PDB numbering; UniProt residue 281)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00636
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: D-fructofuranose 1,6-bisphosphate(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:49299
+  - node_id: product0
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: product1
+    label: beta-D-fructofuranose 6-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57634
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp74 abstracts a proton from the catalytic water, which attacks the metal bound phosphate
+      and eliminates the F6P as a negatively charged intermediate in an S<sub>N</sub>2-type reaction.
+      It is likely that the reaction proceeds via a pentavalent transition state.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Asp68 abstracts the proton from the phosphate group,
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: F6P abstracts the proton from Asp68 to generate the final product.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Inferred return step. Asp74 returns a proton to water, which is then transferred to bulk
+      solvent.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: fructose-bisphosphatase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:546
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.540.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.540.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: fructose-bisphosphatase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.3.11
+  edges:
+  - subject: asp74
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp74 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/546/
+      snippet: Asp74 abstracts a proton from the catalytic water, which attacks the metal bound phosphate
+        and eliminates the F6P as a negatively charged intermediate in an S<sub>N</sub>2-type reaction.
+        It is likely that the reaction proceeds via a pentavalent transition state.
+      notes: M-CSA entry 546, mechanism 1; M-CSA cites PMID:10913263, PMID:12595528, PMID:12595529, PMID:15767255,
+        PMID:23844654; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/546/
+      snippet: Asp68 abstracts the proton from the phosphate group,
+      notes: M-CSA entry 546, mechanism 1; M-CSA cites PMID:10913263, PMID:12595528, PMID:12595529, PMID:15767255,
+        PMID:23844654; step 2
+  - subject: asp68
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Asp68 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/546/
+      snippet: Asp68 abstracts the proton from the phosphate group,
+      notes: M-CSA entry 546, mechanism 1; M-CSA cites PMID:10913263, PMID:12595528, PMID:12595529, PMID:15767255,
+        PMID:23844654; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/546/
+      snippet: F6P abstracts the proton from Asp68 to generate the final product.
+      notes: M-CSA entry 546, mechanism 1; M-CSA cites PMID:10913263, PMID:12595528, PMID:12595529, PMID:15767255,
+        PMID:23844654; step 3
+  - subject: asp68
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Asp68 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/546/
+      snippet: F6P abstracts the proton from Asp68 to generate the final product.
+      notes: M-CSA entry 546, mechanism 1; M-CSA cites PMID:10913263, PMID:12595528, PMID:12595529, PMID:15767255,
+        PMID:23844654; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/546/
+      snippet: Inferred return step. Asp74 returns a proton to water, which is then transferred to bulk
+        solvent.
+      notes: M-CSA entry 546, mechanism 1; M-CSA cites PMID:10913263, PMID:12595528, PMID:12595529, PMID:15767255,
+        PMID:23844654; step 4
+  - subject: asp74
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Asp74 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/546/
+      snippet: Inferred return step. Asp74 returns a proton to water, which is then transferred to bulk
+        solvent.
+      notes: M-CSA entry 546, mechanism 1; M-CSA cites PMID:10913263, PMID:12595528, PMID:12595529, PMID:15767255,
+        PMID:23844654; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/546/
+      snippet: Products
+      notes: M-CSA entry 546, mechanism 1; M-CSA cites PMID:10913263, PMID:12595528, PMID:12595529, PMID:15767255,
+        PMID:23844654; step 5
+  - subject: asp68
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp68 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/546/
+      snippet: metal ligand, proton acceptor, proton donor
+      notes: M-CSA entry 546, mechanism 1; M-CSA cites PMID:10913263, PMID:12595528, PMID:12595529, PMID:15767255,
+        PMID:23844654; M-CSA catalytic-residue roles for Asp68
+  - subject: asp74
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp74 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/546/
+      snippet: electrostatic stabiliser, proton acceptor, proton donor
+      notes: M-CSA entry 546, mechanism 1; M-CSA cites PMID:10913263, PMID:12595528, PMID:12595529, PMID:15767255,
+        PMID:23844654; M-CSA catalytic-residue roles for Asp74
+  - subject: glu97
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu97 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/546/
+      snippet: metal ligand
+      notes: M-CSA entry 546, mechanism 1; M-CSA cites PMID:10913263, PMID:12595528, PMID:12595529, PMID:15767255,
+        PMID:23844654; M-CSA catalytic-residue roles for Glu97
+  - subject: glu98
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu98 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/546/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 546, mechanism 1; M-CSA cites PMID:10913263, PMID:12595528, PMID:12595529, PMID:15767255,
+        PMID:23844654; M-CSA catalytic-residue roles for Glu98
+  - subject: asp118
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp118 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/546/
+      snippet: metal ligand
+      notes: M-CSA entry 546, mechanism 1; M-CSA cites PMID:10913263, PMID:12595528, PMID:12595529, PMID:15767255,
+        PMID:23844654; M-CSA catalytic-residue roles for Asp118
+  - subject: leu120
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Leu120 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/546/
+      snippet: metal ligand
+      notes: M-CSA entry 546, mechanism 1; M-CSA cites PMID:10913263, PMID:12595528, PMID:12595529, PMID:15767255,
+        PMID:23844654; M-CSA catalytic-residue roles for Leu120
+  - subject: asp121
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp121 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/546/
+      snippet: metal ligand
+      notes: M-CSA entry 546, mechanism 1; M-CSA cites PMID:10913263, PMID:12595528, PMID:12595529, PMID:15767255,
+        PMID:23844654; M-CSA catalytic-residue roles for Asp121
+  - subject: glu280
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu280 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/546/
+      snippet: metal ligand
+      notes: M-CSA entry 546, mechanism 1; M-CSA cites PMID:10913263, PMID:12595528, PMID:12595529, PMID:15767255,
+        PMID:23844654; M-CSA catalytic-residue roles for Glu280
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/546/
+      snippet: There are three divalent metal cations present within the catalytic site. Mg(2+) at site
+        one is directly coordinated to the 1-(OH) of the 6 fructose phosphate product as a fifth coordinating
+        ligand. The cation is thought to stabilise the negative charge of the hydroxide group before the
+        transfer of a proton from Asp68, which relays a proton from the substrate neutralises the product.
+        The second me
+      notes: M-CSA entry 546, mechanism 1; M-CSA cites PMID:10913263, PMID:12595528, PMID:12595529, PMID:15767255,
+        PMID:23844654; CATH domain 3.30.540.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/546/
+      snippet: There are three divalent metal cations present within the catalytic site. Mg(2+) at site
+        one is directly coordinated to the 1-(OH) of the 6 fructose phosphate product as a fifth coordinating
+        ligand. The cation is thought to stabilise the negative charge of the hydroxide group before the
+        transfer of a proton from Asp68, which relays a proton from the substrate neutralises the product.
+        The second me
+      notes: M-CSA entry 546, mechanism 1; M-CSA cites PMID:10913263, PMID:12595528, PMID:12595529, PMID:15767255,
+        PMID:23844654; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/546/
+      snippet: There are three divalent metal cations present within the catalytic site. Mg(2+) at site
+        one is directly coordinated to the 1-(OH) of the 6 fructose phosphate product as a fifth coordinating
+        ligand. The cation is thought to stabilise the negative charge of the hydroxide group before the
+        transfer of a proton from Asp68, which relays a proton from the substrate neutralises the product.
+        The second me
+      notes: M-CSA entry 546, mechanism 1; M-CSA cites PMID:10913263, PMID:12595528, PMID:12595529, PMID:15767255,
+        PMID:23844654; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/546/
+      snippet: There are three divalent metal cations present within the catalytic site. Mg(2+) at site
+        one is directly coordinated to the 1-(OH) of the 6 fructose phosphate product as a fifth coordinating
+        ligand. The cation is thought to stabilise the negative charge of the hydroxide group before the
+        transfer of a proton from Asp68, which relays a proton from the substrate neutralises the product.
+        The second me
+      notes: M-CSA entry 546, mechanism 1; M-CSA cites PMID:10913263, PMID:12595528, PMID:12595529, PMID:15767255,
+        PMID:23844654; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/546/
+      snippet: There are three divalent metal cations present within the catalytic site. Mg(2+) at site
+        one is directly coordinated to the 1-(OH) of the 6 fructose phosphate product as a fifth coordinating
+        ligand. The cation is thought to stabilise the negative charge of the hydroxide group before the
+        transfer of a proton from Asp68, which relays a proton from the substrate neutralises the product.
+        The second me
+      notes: M-CSA entry 546, mechanism 1; M-CSA cites PMID:10913263, PMID:12595528, PMID:12595529, PMID:15767255,
+        PMID:23844654; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/546/
+      snippet: There are three divalent metal cations present within the catalytic site. Mg(2+) at site
+        one is directly coordinated to the 1-(OH) of the 6 fructose phosphate product as a fifth coordinating
+        ligand. The cation is thought to stabilise the negative charge of the hydroxide group before the
+        transfer of a proton from Asp68, which relays a proton from the substrate neutralises the product.
+        The second me
+      notes: M-CSA entry 546, mechanism 1; M-CSA cites PMID:10913263, PMID:12595528, PMID:12595529, PMID:15767255,
+        PMID:23844654; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (22 evidence-backed edges) transcribed from M-CSA entry 546;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

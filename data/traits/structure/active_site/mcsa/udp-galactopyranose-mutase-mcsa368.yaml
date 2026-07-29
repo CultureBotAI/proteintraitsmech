@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:5.4.99.9
 - CHEBI:66914
@@ -342,4 +342,282 @@ definitions:
       UDP-galactopyranose mutase catalyses the ring contraction of a non-reducing sugar via a redox-reaction, transforming UDP-D-galactopyranose to UDP-D-galacto-1,4-furanose. This product (UDP-Galf) is the precursor of the D-galactofuranose (Galf) residues found in bacterial and parasitic cell walls, including those of many pathogens such as Mycobacterium tuberculosis and Trypanosoma cruzi. The mutase enzyme is essential for the viability of mycobacteria and is not found in humans, making it a potential therapeutic target. A novel mechanism involving reduced FAD acting as a nucleophile has been proposed.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of UDP-galactopyranose mutase
+  description: Stepwise mechanism transcribed from M-CSA entry 368 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: arg170
+    label: catalytic Arg170 (M-CSA/PDB numbering; UniProt residue 170)
+    node_type: RESIDUE
+    grounding: UniProtKB:P37747
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: arg174
+    label: catalytic Arg174 (M-CSA/PDB numbering; UniProt residue 174)
+    node_type: RESIDUE
+    grounding: UniProtKB:P37747
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: arg247
+    label: catalytic Arg247 (M-CSA/PDB numbering; UniProt residue 247)
+    node_type: RESIDUE
+    grounding: UniProtKB:P37747
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor, proton acceptor, proton
+      donor.'
+  - node_id: arg278
+    label: catalytic Arg278 (M-CSA/PDB numbering; UniProt residue 278)
+    node_type: RESIDUE
+    grounding: UniProtKB:P37747
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: glu298
+    label: catalytic Glu298 (M-CSA/PDB numbering; UniProt residue 298)
+    node_type: RESIDUE
+    grounding: UniProtKB:P37747
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, steric role.'
+  - node_id: tyr346
+    label: catalytic Tyr346 (M-CSA/PDB numbering; UniProt residue 346)
+    node_type: RESIDUE
+    grounding: UniProtKB:P37747
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor, steric role.'
+  - node_id: asp348
+    label: catalytic Asp348 (M-CSA/PDB numbering; UniProt residue 348)
+    node_type: RESIDUE
+    grounding: UniProtKB:P37747
+    description: 'M-CSA roles: electrostatic stabiliser, steric role.'
+  - node_id: reactant0
+    label: UDP-alpha-D-galactose(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:66914
+  - node_id: product0
+    label: UDP-alpha-D-galactofuranose(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:66915
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The lone pair of electrons present on the reduced FAD attack the anomeric carbon, forming
+      a substrate-cofactor covalent complex.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The FAD N5 atom uses electron density accumulating from the cleavage of the N-H bond
+      to initiate an internal elimination reaction, resulting in the cleavage of the sugar ring while
+      covalently attached to the cofactor. The rearrangements of protonation states have been inferred.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The opened ring now undergoes a five exo-tet cyclisation reaction with the C4-OH, which
+      is enthalpically more favourable to the six exo-tet attack, which would give the original six-membered
+      ring. The rearrangements of protonation states have been inferred.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The phosphate group then attacks the intermediate anomeric carbon to eliminate the FAD
+      cofactor and generate the final product.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: UDP-galactopyranose mutase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:368
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.720 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.720
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: UDP-galactopyranose mutase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:5.4.99.9
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/368/
+      snippet: The FAD N5 atom uses electron density accumulating from the cleavage of the N-H bond to
+        initiate an internal elimination reaction, resulting in the cleavage of the sugar ring while covalently
+        attached to the cofactor. The rearrangements of protonation states have been inferred.
+      notes: M-CSA entry 368, mechanism 4; M-CSA cites PMID:19719175, PMID:22187430, PMID:22334662, PMID:22448231,
+        PMID:24096172, PMID:25299056, PMID:25412209, PMID:26836146, PMID:27384425; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/368/
+      snippet: The opened ring now undergoes a five exo-tet cyclisation reaction with the C4-OH, which
+        is enthalpically more favourable to the six exo-tet attack, which would give the original six-membered
+        ring. The rearrangements of protonation states have been inferred.
+      notes: M-CSA entry 368, mechanism 4; M-CSA cites PMID:19719175, PMID:22187430, PMID:22334662, PMID:22448231,
+        PMID:24096172, PMID:25299056, PMID:25412209, PMID:26836146, PMID:27384425; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/368/
+      snippet: The phosphate group then attacks the intermediate anomeric carbon to eliminate the FAD
+        cofactor and generate the final product.
+      notes: M-CSA entry 368, mechanism 4; M-CSA cites PMID:19719175, PMID:22187430, PMID:22334662, PMID:22448231,
+        PMID:24096172, PMID:25299056, PMID:25412209, PMID:26836146, PMID:27384425; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/368/
+      snippet: Products
+      notes: M-CSA entry 368, mechanism 4; M-CSA cites PMID:19719175, PMID:22187430, PMID:22334662, PMID:22448231,
+        PMID:24096172, PMID:25299056, PMID:25412209, PMID:26836146, PMID:27384425; step 5
+  - subject: arg170
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg170 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/368/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 368, mechanism 4; M-CSA cites PMID:19719175, PMID:22187430, PMID:22334662, PMID:22448231,
+        PMID:24096172, PMID:25299056, PMID:25412209, PMID:26836146, PMID:27384425; M-CSA catalytic-residue
+        roles for Arg170
+  - subject: arg174
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg174 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/368/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 368, mechanism 4; M-CSA cites PMID:19719175, PMID:22187430, PMID:22334662, PMID:22448231,
+        PMID:24096172, PMID:25299056, PMID:25412209, PMID:26836146, PMID:27384425; M-CSA catalytic-residue
+        roles for Arg174
+  - subject: arg247
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg247 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/368/
+      snippet: electrostatic stabiliser, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 368, mechanism 4; M-CSA cites PMID:19719175, PMID:22187430, PMID:22334662, PMID:22448231,
+        PMID:24096172, PMID:25299056, PMID:25412209, PMID:26836146, PMID:27384425; M-CSA catalytic-residue
+        roles for Arg247
+  - subject: arg278
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg278 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/368/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 368, mechanism 4; M-CSA cites PMID:19719175, PMID:22187430, PMID:22334662, PMID:22448231,
+        PMID:24096172, PMID:25299056, PMID:25412209, PMID:26836146, PMID:27384425; M-CSA catalytic-residue
+        roles for Arg278
+  - subject: glu298
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu298 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/368/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, steric role
+      notes: M-CSA entry 368, mechanism 4; M-CSA cites PMID:19719175, PMID:22187430, PMID:22334662, PMID:22448231,
+        PMID:24096172, PMID:25299056, PMID:25412209, PMID:26836146, PMID:27384425; M-CSA catalytic-residue
+        roles for Glu298
+  - subject: tyr346
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr346 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/368/
+      snippet: electrostatic stabiliser, hydrogen bond donor, steric role
+      notes: M-CSA entry 368, mechanism 4; M-CSA cites PMID:19719175, PMID:22187430, PMID:22334662, PMID:22448231,
+        PMID:24096172, PMID:25299056, PMID:25412209, PMID:26836146, PMID:27384425; M-CSA catalytic-residue
+        roles for Tyr346
+  - subject: asp348
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp348 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/368/
+      snippet: electrostatic stabiliser, steric role
+      notes: M-CSA entry 368, mechanism 4; M-CSA cites PMID:19719175, PMID:22187430, PMID:22334662, PMID:22448231,
+        PMID:24096172, PMID:25299056, PMID:25412209, PMID:26836146, PMID:27384425; M-CSA catalytic-residue
+        roles for Asp348
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/368/
+      snippet: <p>Nucleophilic attack by N5 of reduced FAD on C1 of UDP-Galp via an SN2 type mechanism
+        that results in the loss of UDP. The charged leaving group is stabilised by electrostatic and
+        hydrogen bonding interactions with Arg170 and Arg278. The imminium intermediate is formed by a
+        second attack of FAD N5 lone pair on C1 of the sugar. This results in the opening of the ring
+        at the OH6 position. The nega
+      notes: M-CSA entry 368, mechanism 4; M-CSA cites PMID:19719175, PMID:22187430, PMID:22334662, PMID:22448231,
+        PMID:24096172, PMID:25299056, PMID:25412209, PMID:26836146, PMID:27384425; CATH domain 3.40.50.720
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/368/
+      snippet: <p>Nucleophilic attack by N5 of reduced FAD on C1 of UDP-Galp via an SN2 type mechanism
+        that results in the loss of UDP. The charged leaving group is stabilised by electrostatic and
+        hydrogen bonding interactions with Arg170 and Arg278. The imminium intermediate is formed by a
+        second attack of FAD N5 lone pair on C1 of the sugar. This results in the opening of the ring
+        at the OH6 position. The nega
+      notes: M-CSA entry 368, mechanism 4; M-CSA cites PMID:19719175, PMID:22187430, PMID:22334662, PMID:22448231,
+        PMID:24096172, PMID:25299056, PMID:25412209, PMID:26836146, PMID:27384425; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/368/
+      snippet: <p>Nucleophilic attack by N5 of reduced FAD on C1 of UDP-Galp via an SN2 type mechanism
+        that results in the loss of UDP. The charged leaving group is stabilised by electrostatic and
+        hydrogen bonding interactions with Arg170 and Arg278. The imminium intermediate is formed by a
+        second attack of FAD N5 lone pair on C1 of the sugar. This results in the opening of the ring
+        at the OH6 position. The nega
+      notes: M-CSA entry 368, mechanism 4; M-CSA cites PMID:19719175, PMID:22187430, PMID:22334662, PMID:22448231,
+        PMID:24096172, PMID:25299056, PMID:25412209, PMID:26836146, PMID:27384425; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/368/
+      snippet: <p>Nucleophilic attack by N5 of reduced FAD on C1 of UDP-Galp via an SN2 type mechanism
+        that results in the loss of UDP. The charged leaving group is stabilised by electrostatic and
+        hydrogen bonding interactions with Arg170 and Arg278. The imminium intermediate is formed by a
+        second attack of FAD N5 lone pair on C1 of the sugar. This results in the opening of the ring
+        at the OH6 position. The nega
+      notes: M-CSA entry 368, mechanism 4; M-CSA cites PMID:19719175, PMID:22187430, PMID:22334662, PMID:22448231,
+        PMID:24096172, PMID:25299056, PMID:25412209, PMID:26836146, PMID:27384425; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 368;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

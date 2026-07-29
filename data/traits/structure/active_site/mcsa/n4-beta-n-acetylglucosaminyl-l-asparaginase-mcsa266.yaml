@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.5.1.26
 - CHEBI:58080
@@ -265,4 +265,308 @@ definitions:
       Aspartylglucosylaminidase hydrolyses the bonds connecting N-linked oligosaccharides to free (not peptide bonded) asparagine residues. This is an important lysosomal function. Aspartylglucosylaminidase is synthesised as a precursor protein which is activated by proteolytic cleavage between Asp 182 and Thr 183 to generate the required N-terminal threonine residue. The cleavage generates the alpha and beta subunits of the (alpha)2(beta)2 heterotetramer. The cleavage event is thought to be autocatalytic, and many of the residues involved in the normal glucosylaminidase are believed to be involved in the autocatalytic reaction. The Thr 183 side chain, for example, functions as a nucleophile in both [PMID:14616088].
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of N4-(beta-N-acetylglucosaminyl)-L-asparaginase
+  description: Stepwise mechanism transcribed from M-CSA entry 266 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +23).
+  nodes:
+  - node_id: ser49
+    label: catalytic Ser49 (M-CSA/PDB numbering; UniProt residue 72)
+    node_type: RESIDUE
+    grounding: UniProtKB:P20933
+    description: 'M-CSA roles: activator, hydrogen bond acceptor.'
+  - node_id: thr183
+    label: catalytic Thr183 (M-CSA/PDB numbering; UniProt residue 206)
+    node_type: RESIDUE
+    grounding: UniProtKB:P20933
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: thr201
+    label: catalytic Thr201 (M-CSA/PDB numbering; UniProt residue 224)
+    node_type: RESIDUE
+    grounding: UniProtKB:P20933
+    description: 'M-CSA roles: activator, hydrogen bond donor.'
+  - node_id: arg211
+    label: catalytic Arg211 (M-CSA/PDB numbering; UniProt residue 234)
+    node_type: RESIDUE
+    grounding: UniProtKB:P20933
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor.'
+  - node_id: thr234
+    label: catalytic Thr234 (M-CSA/PDB numbering; UniProt residue 257)
+    node_type: RESIDUE
+    grounding: UniProtKB:P20933
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: gly235
+    label: catalytic Gly235 (M-CSA/PDB numbering; UniProt residue 258)
+    node_type: RESIDUE
+    grounding: UniProtKB:P20933
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: reactant0
+    label: N(4)-(beta-N-acetyl-D-glucosaminyl)-L-asparagine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:58080
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: product0
+    label: N-acetyl-beta-D-glucosaminylamine
+    node_type: CHEMICAL
+    grounding: CHEBI:15947
+  - node_id: product1
+    label: L-aspartate(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:29991
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The N-terminus of Thr206 deprotonates the alcohol group of Thr206, which attacks the
+      carbonyl of the substrate in a nucleophilic addition.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The oxyanion initiates an elimination that cleaves the C-N bond, the sugar product deprotonates
+      the N-terminus of Thr206
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The N-terminus of Thr206 deprotonates water, which attacks the carbonyl carbon of the
+      covalently bound aspartate intermediate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The oxyanion initiates an elimination that cleaves the bond to the enzyme, the alcoholate
+      of Thr206  deprotonates the N-terminus of Thr206
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: N4-(beta-N-acetylglucosaminyl)-L-asparaginase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:266
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.60.20.30 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.60.20.30
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: N4-(beta-N-acetylglucosaminyl)-L-asparaginase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.5.1.26
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/266/
+      snippet: The oxyanion initiates an elimination that cleaves the C-N bond, the sugar product deprotonates
+        the N-terminus of Thr206
+      notes: M-CSA entry 266, mechanism 1; M-CSA cites PMID:14616088, PMID:8500622, PMID:8670796, PMID:8846222;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/266/
+      snippet: The N-terminus of Thr206 deprotonates water, which attacks the carbonyl carbon of the covalently
+        bound aspartate intermediate.
+      notes: M-CSA entry 266, mechanism 1; M-CSA cites PMID:14616088, PMID:8500622, PMID:8670796, PMID:8846222;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/266/
+      snippet: The oxyanion initiates an elimination that cleaves the bond to the enzyme, the alcoholate
+        of Thr206  deprotonates the N-terminus of Thr206
+      notes: M-CSA entry 266, mechanism 1; M-CSA cites PMID:14616088, PMID:8500622, PMID:8670796, PMID:8846222;
+        step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/266/
+      snippet: Products
+      notes: M-CSA entry 266, mechanism 1; M-CSA cites PMID:14616088, PMID:8500622, PMID:8670796, PMID:8846222;
+        step 5
+  - subject: ser49
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser49 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/266/
+      snippet: activator, hydrogen bond acceptor
+      notes: M-CSA entry 266, mechanism 1; M-CSA cites PMID:14616088, PMID:8500622, PMID:8670796, PMID:8846222;
+        M-CSA catalytic-residue roles for Ser49
+  - subject: thr183
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr183 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/266/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 266, mechanism 1; M-CSA cites PMID:14616088, PMID:8500622, PMID:8670796, PMID:8846222;
+        M-CSA catalytic-residue roles for Thr183
+  - subject: thr201
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr201 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/266/
+      snippet: activator, hydrogen bond donor
+      notes: M-CSA entry 266, mechanism 1; M-CSA cites PMID:14616088, PMID:8500622, PMID:8670796, PMID:8846222;
+        M-CSA catalytic-residue roles for Thr201
+  - subject: arg211
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg211 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/266/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor
+      notes: M-CSA entry 266, mechanism 1; M-CSA cites PMID:14616088, PMID:8500622, PMID:8670796, PMID:8846222;
+        M-CSA catalytic-residue roles for Arg211
+  - subject: thr234
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr234 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/266/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 266, mechanism 1; M-CSA cites PMID:14616088, PMID:8500622, PMID:8670796, PMID:8846222;
+        M-CSA catalytic-residue roles for Thr234
+  - subject: gly235
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly235 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/266/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 266, mechanism 1; M-CSA cites PMID:14616088, PMID:8500622, PMID:8670796, PMID:8846222;
+        M-CSA catalytic-residue roles for Gly235
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/266/
+      snippet: The sugar-asparagine substrate binds in the active site pocket, and is attacked by the
+        hydroxyl group of an N-terminal threonine, Thr 206. The N-terminal amino group acts as a base
+        in extracting the threonine's O-gamma proton allowing it to attack the substrate carbonyl group.
+        The catalytic properties of Thr 206 are modified by Thr 224, which interacts with the Thr 206
+        O-gamma, and by Ser 72, whic
+      notes: M-CSA entry 266, mechanism 1; M-CSA cites PMID:14616088, PMID:8500622, PMID:8670796, PMID:8846222;
+        CATH domain 3.60.20.30 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/266/
+      snippet: The sugar-asparagine substrate binds in the active site pocket, and is attacked by the
+        hydroxyl group of an N-terminal threonine, Thr 206. The N-terminal amino group acts as a base
+        in extracting the threonine's O-gamma proton allowing it to attack the substrate carbonyl group.
+        The catalytic properties of Thr 206 are modified by Thr 224, which interacts with the Thr 206
+        O-gamma, and by Ser 72, whic
+      notes: M-CSA entry 266, mechanism 1; M-CSA cites PMID:14616088, PMID:8500622, PMID:8670796, PMID:8846222;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/266/
+      snippet: The sugar-asparagine substrate binds in the active site pocket, and is attacked by the
+        hydroxyl group of an N-terminal threonine, Thr 206. The N-terminal amino group acts as a base
+        in extracting the threonine's O-gamma proton allowing it to attack the substrate carbonyl group.
+        The catalytic properties of Thr 206 are modified by Thr 224, which interacts with the Thr 206
+        O-gamma, and by Ser 72, whic
+      notes: M-CSA entry 266, mechanism 1; M-CSA cites PMID:14616088, PMID:8500622, PMID:8670796, PMID:8846222;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/266/
+      snippet: The sugar-asparagine substrate binds in the active site pocket, and is attacked by the
+        hydroxyl group of an N-terminal threonine, Thr 206. The N-terminal amino group acts as a base
+        in extracting the threonine's O-gamma proton allowing it to attack the substrate carbonyl group.
+        The catalytic properties of Thr 206 are modified by Thr 224, which interacts with the Thr 206
+        O-gamma, and by Ser 72, whic
+      notes: M-CSA entry 266, mechanism 1; M-CSA cites PMID:14616088, PMID:8500622, PMID:8670796, PMID:8846222;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/266/
+      snippet: The sugar-asparagine substrate binds in the active site pocket, and is attacked by the
+        hydroxyl group of an N-terminal threonine, Thr 206. The N-terminal amino group acts as a base
+        in extracting the threonine's O-gamma proton allowing it to attack the substrate carbonyl group.
+        The catalytic properties of Thr 206 are modified by Thr 224, which interacts with the Thr 206
+        O-gamma, and by Ser 72, whic
+      notes: M-CSA entry 266, mechanism 1; M-CSA cites PMID:14616088, PMID:8500622, PMID:8670796, PMID:8846222;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/266/
+      snippet: The sugar-asparagine substrate binds in the active site pocket, and is attacked by the
+        hydroxyl group of an N-terminal threonine, Thr 206. The N-terminal amino group acts as a base
+        in extracting the threonine's O-gamma proton allowing it to attack the substrate carbonyl group.
+        The catalytic properties of Thr 206 are modified by Thr 224, which interacts with the Thr 206
+        O-gamma, and by Ser 72, whic
+      notes: M-CSA entry 266, mechanism 1; M-CSA cites PMID:14616088, PMID:8500622, PMID:8670796, PMID:8846222;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/266/
+      snippet: The sugar-asparagine substrate binds in the active site pocket, and is attacked by the
+        hydroxyl group of an N-terminal threonine, Thr 206. The N-terminal amino group acts as a base
+        in extracting the threonine's O-gamma proton allowing it to attack the substrate carbonyl group.
+        The catalytic properties of Thr 206 are modified by Thr 224, which interacts with the Thr 206
+        O-gamma, and by Ser 72, whic
+      notes: M-CSA entry 266, mechanism 1; M-CSA cites PMID:14616088, PMID:8500622, PMID:8670796, PMID:8846222;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (17 evidence-backed edges) transcribed from M-CSA entry 266;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

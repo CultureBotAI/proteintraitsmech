@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.4.1.1
 - CHEBI:57972
@@ -177,4 +177,389 @@ definitions:
       Alanine dehydrogenase catalyses the NADH-dependent reversible reductive amination of pyruvate to L-alanine. The enzyme plays an important role in the carbon and nitrogen metabolism of micro-organisms and is a key factor in the assimilation of L-alanine as an energy source through the tricarboxylic acid cycle during sporulation.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of alanine dehydrogenase
+  description: Stepwise mechanism transcribed from M-CSA entry 67 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: arg15
+    label: catalytic Arg15 (M-CSA/PDB numbering; UniProt residue 15)
+    node_type: RESIDUE
+    grounding: UniProtKB:O52942
+    description: 'M-CSA roles: activator.'
+  - node_id: lys74
+    label: catalytic Lys74 (M-CSA/PDB numbering; UniProt residue 74)
+    node_type: RESIDUE
+    grounding: UniProtKB:O52942
+    description: 'M-CSA roles: activator, electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: tyr93
+    label: catalytic Tyr93 (M-CSA/PDB numbering; UniProt residue 93)
+    node_type: RESIDUE
+    grounding: UniProtKB:O52942
+    description: 'M-CSA roles: polar/non-polar interaction, steric role.'
+  - node_id: his95
+    label: catalytic His95 (M-CSA/PDB numbering; UniProt residue 95)
+    node_type: RESIDUE
+    grounding: UniProtKB:O52942
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor,
+      proton relay.'
+  - node_id: glu117
+    label: catalytic Glu117 (M-CSA/PDB numbering; UniProt residue 117)
+    node_type: RESIDUE
+    grounding: UniProtKB:O52942
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor.'
+  - node_id: asp269
+    label: catalytic Asp269 (M-CSA/PDB numbering; UniProt residue 269)
+    node_type: RESIDUE
+    grounding: UniProtKB:O52942
+    description: 'M-CSA roles: proton acceptor, proton donor.'
+  - node_id: reactant0
+    label: L-alanine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57972
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant2
+    label: NAD(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+  - node_id: product0
+    label: ammonium
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+  - node_id: product1
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product3
+    label: NADH(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: pH profile studies suggest that the alanine binds as the monoanion. The amine of alanine
+      initiates the elimination of the hydride ion, which adds to NAD. Subsequently, a conformational
+      change occurs that allows a water molecule to enter the active site.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Asp269 deprotonates His95, which undergoes double bond rearrangement and deprotonates
+      water, which initiates a nucleophilic attack on the carbinolamine carbon in an addition reaction.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The amine deprotonates the hydroxide added, which initiates an elimination of ammoina.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Ammonia deprotonates His95, which undergoes double bond rearrangement and deprotonates
+      Asp269 in an inferred return step.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: alanine dehydrogenase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:67
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.720 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.720
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: alanine dehydrogenase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.4.1.1
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/67/
+      snippet: Asp269 deprotonates His95, which undergoes double bond rearrangement and deprotonates water,
+        which initiates a nucleophilic attack on the carbinolamine carbon in an addition reaction.
+      notes: M-CSA entry 67, mechanism 1; M-CSA cites PMID:18304579, PMID:18491387, PMID:22459692, PMID:24763245,
+        PMID:26202482, PMID:26690143, PMID:9665169; step 2
+  - subject: his95
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His95 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/67/
+      snippet: Asp269 deprotonates His95, which undergoes double bond rearrangement and deprotonates water,
+        which initiates a nucleophilic attack on the carbinolamine carbon in an addition reaction.
+      notes: M-CSA entry 67, mechanism 1; M-CSA cites PMID:18304579, PMID:18491387, PMID:22459692, PMID:24763245,
+        PMID:26202482, PMID:26690143, PMID:9665169; step 2
+  - subject: asp269
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Asp269 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/67/
+      snippet: Asp269 deprotonates His95, which undergoes double bond rearrangement and deprotonates water,
+        which initiates a nucleophilic attack on the carbinolamine carbon in an addition reaction.
+      notes: M-CSA entry 67, mechanism 1; M-CSA cites PMID:18304579, PMID:18491387, PMID:22459692, PMID:24763245,
+        PMID:26202482, PMID:26690143, PMID:9665169; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/67/
+      snippet: The amine deprotonates the hydroxide added, which initiates an elimination of ammoina.
+      notes: M-CSA entry 67, mechanism 1; M-CSA cites PMID:18304579, PMID:18491387, PMID:22459692, PMID:24763245,
+        PMID:26202482, PMID:26690143, PMID:9665169; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/67/
+      snippet: Ammonia deprotonates His95, which undergoes double bond rearrangement and deprotonates
+        Asp269 in an inferred return step.
+      notes: M-CSA entry 67, mechanism 1; M-CSA cites PMID:18304579, PMID:18491387, PMID:22459692, PMID:24763245,
+        PMID:26202482, PMID:26690143, PMID:9665169; step 4
+  - subject: his95
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: His95 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/67/
+      snippet: Ammonia deprotonates His95, which undergoes double bond rearrangement and deprotonates
+        Asp269 in an inferred return step.
+      notes: M-CSA entry 67, mechanism 1; M-CSA cites PMID:18304579, PMID:18491387, PMID:22459692, PMID:24763245,
+        PMID:26202482, PMID:26690143, PMID:9665169; step 4
+  - subject: asp269
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Asp269 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/67/
+      snippet: Ammonia deprotonates His95, which undergoes double bond rearrangement and deprotonates
+        Asp269 in an inferred return step.
+      notes: M-CSA entry 67, mechanism 1; M-CSA cites PMID:18304579, PMID:18491387, PMID:22459692, PMID:24763245,
+        PMID:26202482, PMID:26690143, PMID:9665169; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/67/
+      snippet: Products.
+      notes: M-CSA entry 67, mechanism 1; M-CSA cites PMID:18304579, PMID:18491387, PMID:22459692, PMID:24763245,
+        PMID:26202482, PMID:26690143, PMID:9665169; step 5
+  - subject: arg15
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg15 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/67/
+      snippet: activator
+      notes: M-CSA entry 67, mechanism 1; M-CSA cites PMID:18304579, PMID:18491387, PMID:22459692, PMID:24763245,
+        PMID:26202482, PMID:26690143, PMID:9665169; M-CSA catalytic-residue roles for Arg15
+  - subject: lys74
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys74 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/67/
+      snippet: activator, electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 67, mechanism 1; M-CSA cites PMID:18304579, PMID:18491387, PMID:22459692, PMID:24763245,
+        PMID:26202482, PMID:26690143, PMID:9665169; M-CSA catalytic-residue roles for Lys74
+  - subject: tyr93
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr93 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/67/
+      snippet: polar/non-polar interaction, steric role
+      notes: M-CSA entry 67, mechanism 1; M-CSA cites PMID:18304579, PMID:18491387, PMID:22459692, PMID:24763245,
+        PMID:26202482, PMID:26690143, PMID:9665169; M-CSA catalytic-residue roles for Tyr93
+  - subject: his95
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His95 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/67/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 67, mechanism 1; M-CSA cites PMID:18304579, PMID:18491387, PMID:22459692, PMID:24763245,
+        PMID:26202482, PMID:26690143, PMID:9665169; M-CSA catalytic-residue roles for His95
+  - subject: glu117
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu117 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/67/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor
+      notes: M-CSA entry 67, mechanism 1; M-CSA cites PMID:18304579, PMID:18491387, PMID:22459692, PMID:24763245,
+        PMID:26202482, PMID:26690143, PMID:9665169; M-CSA catalytic-residue roles for Glu117
+  - subject: asp269
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp269 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/67/
+      snippet: proton acceptor, proton donor
+      notes: M-CSA entry 67, mechanism 1; M-CSA cites PMID:18304579, PMID:18491387, PMID:22459692, PMID:24763245,
+        PMID:26202482, PMID:26690143, PMID:9665169; M-CSA catalytic-residue roles for Asp269
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/67/
+      snippet: Biochemical data suggests that the mechanism proceeds through iminopyruvate and carbinolamine
+        intermediates. The scheme proposes that the substrate carboxyl group is bound by both Lys74 and
+        Arg15. These polarise the carbonyl in order to activate the substrate. The first step of the reaction
+        in the direction of oxidative deamination involves hydride transfer between the C-alpha of alanine
+        and the n
+      notes: M-CSA entry 67, mechanism 1; M-CSA cites PMID:18304579, PMID:18491387, PMID:22459692, PMID:24763245,
+        PMID:26202482, PMID:26690143, PMID:9665169; CATH domain 3.40.50.720 assigned to the catalytic
+        chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/67/
+      snippet: Biochemical data suggests that the mechanism proceeds through iminopyruvate and carbinolamine
+        intermediates. The scheme proposes that the substrate carboxyl group is bound by both Lys74 and
+        Arg15. These polarise the carbonyl in order to activate the substrate. The first step of the reaction
+        in the direction of oxidative deamination involves hydride transfer between the C-alpha of alanine
+        and the n
+      notes: M-CSA entry 67, mechanism 1; M-CSA cites PMID:18304579, PMID:18491387, PMID:22459692, PMID:24763245,
+        PMID:26202482, PMID:26690143, PMID:9665169; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/67/
+      snippet: Biochemical data suggests that the mechanism proceeds through iminopyruvate and carbinolamine
+        intermediates. The scheme proposes that the substrate carboxyl group is bound by both Lys74 and
+        Arg15. These polarise the carbonyl in order to activate the substrate. The first step of the reaction
+        in the direction of oxidative deamination involves hydride transfer between the C-alpha of alanine
+        and the n
+      notes: M-CSA entry 67, mechanism 1; M-CSA cites PMID:18304579, PMID:18491387, PMID:22459692, PMID:24763245,
+        PMID:26202482, PMID:26690143, PMID:9665169; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/67/
+      snippet: Biochemical data suggests that the mechanism proceeds through iminopyruvate and carbinolamine
+        intermediates. The scheme proposes that the substrate carboxyl group is bound by both Lys74 and
+        Arg15. These polarise the carbonyl in order to activate the substrate. The first step of the reaction
+        in the direction of oxidative deamination involves hydride transfer between the C-alpha of alanine
+        and the n
+      notes: M-CSA entry 67, mechanism 1; M-CSA cites PMID:18304579, PMID:18491387, PMID:22459692, PMID:24763245,
+        PMID:26202482, PMID:26690143, PMID:9665169; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/67/
+      snippet: Biochemical data suggests that the mechanism proceeds through iminopyruvate and carbinolamine
+        intermediates. The scheme proposes that the substrate carboxyl group is bound by both Lys74 and
+        Arg15. These polarise the carbonyl in order to activate the substrate. The first step of the reaction
+        in the direction of oxidative deamination involves hydride transfer between the C-alpha of alanine
+        and the n
+      notes: M-CSA entry 67, mechanism 1; M-CSA cites PMID:18304579, PMID:18491387, PMID:22459692, PMID:24763245,
+        PMID:26202482, PMID:26690143, PMID:9665169; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/67/
+      snippet: Biochemical data suggests that the mechanism proceeds through iminopyruvate and carbinolamine
+        intermediates. The scheme proposes that the substrate carboxyl group is bound by both Lys74 and
+        Arg15. These polarise the carbonyl in order to activate the substrate. The first step of the reaction
+        in the direction of oxidative deamination involves hydride transfer between the C-alpha of alanine
+        and the n
+      notes: M-CSA entry 67, mechanism 1; M-CSA cites PMID:18304579, PMID:18491387, PMID:22459692, PMID:24763245,
+        PMID:26202482, PMID:26690143, PMID:9665169; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/67/
+      snippet: Biochemical data suggests that the mechanism proceeds through iminopyruvate and carbinolamine
+        intermediates. The scheme proposes that the substrate carboxyl group is bound by both Lys74 and
+        Arg15. These polarise the carbonyl in order to activate the substrate. The first step of the reaction
+        in the direction of oxidative deamination involves hydride transfer between the C-alpha of alanine
+        and the n
+      notes: M-CSA entry 67, mechanism 1; M-CSA cites PMID:18304579, PMID:18491387, PMID:22459692, PMID:24763245,
+        PMID:26202482, PMID:26690143, PMID:9665169; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/67/
+      snippet: Biochemical data suggests that the mechanism proceeds through iminopyruvate and carbinolamine
+        intermediates. The scheme proposes that the substrate carboxyl group is bound by both Lys74 and
+        Arg15. These polarise the carbonyl in order to activate the substrate. The first step of the reaction
+        in the direction of oxidative deamination involves hydride transfer between the C-alpha of alanine
+        and the n
+      notes: M-CSA entry 67, mechanism 1; M-CSA cites PMID:18304579, PMID:18491387, PMID:22459692, PMID:24763245,
+        PMID:26202482, PMID:26690143, PMID:9665169; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product3
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/67/
+      snippet: Biochemical data suggests that the mechanism proceeds through iminopyruvate and carbinolamine
+        intermediates. The scheme proposes that the substrate carboxyl group is bound by both Lys74 and
+        Arg15. These polarise the carbonyl in order to activate the substrate. The first step of the reaction
+        in the direction of oxidative deamination involves hydride transfer between the C-alpha of alanine
+        and the n
+      notes: M-CSA entry 67, mechanism 1; M-CSA cites PMID:18304579, PMID:18491387, PMID:22459692, PMID:24763245,
+        PMID:26202482, PMID:26690143, PMID:9665169; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (23 evidence-backed edges) transcribed from M-CSA entry 67;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

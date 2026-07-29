@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.1.1.37
 - CHEBI:59789
@@ -269,4 +269,334 @@ definitions:
       Methyl transferase (MTase) M. Hhal is an m5C-MTase that forms part of a type II restriction-modification system from Haemophilus haemolyticus. The enzyme recognises the specific tetranucleotide sequence, 5-GCGC-3. DNA methylation is found in diverse organisms ranging from bacteria to mammals and plants. Cytosine-5-methyltransferases (m5CMTases) are involved in a variety of biological processes in prokaryotes and eukaryotes by catalysing the transfer of a methyl group from S-adenosyl- L-methionine (AdoMet) to the C5 position of cytosine. MTases exist as a component of restriction and modification systems in bacteria.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of DNA (cytosine-5-)-methyltransferase (HhaI)
+  description: Stepwise mechanism transcribed from M-CSA entry 293 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: cys81
+    label: catalytic Cys81 (M-CSA/PDB numbering; UniProt residue 81)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05102
+    description: 'M-CSA roles: covalently attached, hydrogen bond acceptor, nucleofuge, nucleophile, polar
+      interaction, proton acceptor, proton donor.'
+  - node_id: glu119
+    label: catalytic Glu119 (M-CSA/PDB numbering; UniProt residue 119)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05102
+    description: 'M-CSA roles: attractive charge-charge interaction, electrostatic stabiliser, hydrogen
+      bond acceptor, increase electrophilicity.'
+  - node_id: arg163
+    label: catalytic Arg163 (M-CSA/PDB numbering; UniProt residue 163)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05102
+    description: 'M-CSA roles: attractive charge-charge interaction, electrostatic stabiliser, hydrogen
+      bond donor, increase electrophilicity.'
+  - node_id: arg165
+    label: catalytic Arg165 (M-CSA/PDB numbering; UniProt residue 165)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05102
+    description: 'M-CSA roles: attractive charge-charge interaction, electrostatic stabiliser, hydrogen
+      bond donor, increase electrophilicity.'
+  - node_id: reactant0
+    label: S-adenosyl-L-methionine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+  - node_id: reactant1
+    label: 2'-deoxycytidine 5'-monophosphate(1-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:85452
+  - node_id: product0
+    label: S-adenosyl-L-homocysteine zwitterion
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+  - node_id: product1
+    label: 5-methyl dCMP(1-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:85454
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: The cytosine ring is thought to exist in the N4 amine, O3 enol tautomer [PMID:20471982].
+      The catalytic Cys81 is deprotonated by the substrate-cofactor DNA phosphate group.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The cysteine thiolate attacks at the C6 position of the cytosine ring. The electrophilicity
+      of this carbon is increased through interactions with Arg163 and Arg165, as shown by computational
+      calculations [PMID:20471982].
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The carbanion residing on C5 attacks the methyl group of SAM. This results in methylation
+      of the cytosine ring.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Elimination of the Cys81 side chain involves interactions with a bridging water molecule
+      which facilitates the elimination of the syn related proton, leaving a double bond.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: DNA (cytosine-5-)-methyltransferase (HhaI) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:293
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.150 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.150
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: DNA (cytosine-5-)-methyltransferase (HhaI) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.1.1.37
+  edges:
+  - subject: cys81
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Cys81 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/293/
+      snippet: The cytosine ring is thought to exist in the N4 amine, O3 enol tautomer [PMID:20471982].
+        The catalytic Cys81 is deprotonated by the substrate-cofactor DNA phosphate group.
+      notes: M-CSA entry 293, mechanism 1; M-CSA cites PMID:11283006, PMID:20471982, PMID:8293469; step
+        1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/293/
+      snippet: The cysteine thiolate attacks at the C6 position of the cytosine ring. The electrophilicity
+        of this carbon is increased through interactions with Arg163 and Arg165, as shown by computational
+        calculations [PMID:20471982].
+      notes: M-CSA entry 293, mechanism 1; M-CSA cites PMID:11283006, PMID:20471982, PMID:8293469; step
+        2
+  - subject: arg163
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Arg163 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/293/
+      snippet: The cysteine thiolate attacks at the C6 position of the cytosine ring. The electrophilicity
+        of this carbon is increased through interactions with Arg163 and Arg165, as shown by computational
+        calculations [PMID:20471982].
+      notes: M-CSA entry 293, mechanism 1; M-CSA cites PMID:11283006, PMID:20471982, PMID:8293469; step
+        2
+  - subject: arg165
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Arg165 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/293/
+      snippet: The cysteine thiolate attacks at the C6 position of the cytosine ring. The electrophilicity
+        of this carbon is increased through interactions with Arg163 and Arg165, as shown by computational
+        calculations [PMID:20471982].
+      notes: M-CSA entry 293, mechanism 1; M-CSA cites PMID:11283006, PMID:20471982, PMID:8293469; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/293/
+      snippet: The carbanion residing on C5 attacks the methyl group of SAM. This results in methylation
+        of the cytosine ring.
+      notes: M-CSA entry 293, mechanism 1; M-CSA cites PMID:11283006, PMID:20471982, PMID:8293469; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/293/
+      snippet: Elimination of the Cys81 side chain involves interactions with a bridging water molecule
+        which facilitates the elimination of the syn related proton, leaving a double bond.
+      notes: M-CSA entry 293, mechanism 1; M-CSA cites PMID:11283006, PMID:20471982, PMID:8293469; step
+        4
+  - subject: cys81
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Cys81 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/293/
+      snippet: Elimination of the Cys81 side chain involves interactions with a bridging water molecule
+        which facilitates the elimination of the syn related proton, leaving a double bond.
+      notes: M-CSA entry 293, mechanism 1; M-CSA cites PMID:11283006, PMID:20471982, PMID:8293469; step
+        4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/293/
+      snippet: Products.
+      notes: M-CSA entry 293, mechanism 1; M-CSA cites PMID:11283006, PMID:20471982, PMID:8293469; step
+        5
+  - subject: cys81
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys81 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/293/
+      snippet: covalently attached, hydrogen bond acceptor, nucleofuge, nucleophile, polar interaction,
+        proton acceptor, proton donor
+      notes: M-CSA entry 293, mechanism 1; M-CSA cites PMID:11283006, PMID:20471982, PMID:8293469; M-CSA
+        catalytic-residue roles for Cys81
+  - subject: glu119
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu119 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/293/
+      snippet: attractive charge-charge interaction, electrostatic stabiliser, hydrogen bond acceptor,
+        increase electrophilicity
+      notes: M-CSA entry 293, mechanism 1; M-CSA cites PMID:11283006, PMID:20471982, PMID:8293469; M-CSA
+        catalytic-residue roles for Glu119
+  - subject: arg163
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg163 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/293/
+      snippet: attractive charge-charge interaction, electrostatic stabiliser, hydrogen bond donor, increase
+        electrophilicity
+      notes: M-CSA entry 293, mechanism 1; M-CSA cites PMID:11283006, PMID:20471982, PMID:8293469; M-CSA
+        catalytic-residue roles for Arg163
+  - subject: arg165
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg165 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/293/
+      snippet: attractive charge-charge interaction, electrostatic stabiliser, hydrogen bond donor, increase
+        electrophilicity
+      notes: M-CSA entry 293, mechanism 1; M-CSA cites PMID:11283006, PMID:20471982, PMID:8293469; M-CSA
+        catalytic-residue roles for Arg165
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/293/
+      snippet: The ring of cytosine is delivered to the active site by "flipping" the base out of the
+        helix and replacing inter-helix hydrogen bond interactions with protein-helix interactions [PMID:8293469,
+        DOI:10.1021/ja00079a047]. The nucleophile deprotonated Cys81 attacks the C6 position of the cytosine.
+        The negative charge on C5 then demethylates S-adenosyl-L-methionine, subsequent deprotonation
+        of the C po
+      notes: M-CSA entry 293, mechanism 1; M-CSA cites PMID:11283006, PMID:20471982, PMID:8293469; CATH
+        domain 3.40.50.150 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/293/
+      snippet: The ring of cytosine is delivered to the active site by "flipping" the base out of the
+        helix and replacing inter-helix hydrogen bond interactions with protein-helix interactions [PMID:8293469,
+        DOI:10.1021/ja00079a047]. The nucleophile deprotonated Cys81 attacks the C6 position of the cytosine.
+        The negative charge on C5 then demethylates S-adenosyl-L-methionine, subsequent deprotonation
+        of the C po
+      notes: M-CSA entry 293, mechanism 1; M-CSA cites PMID:11283006, PMID:20471982, PMID:8293469; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/293/
+      snippet: The ring of cytosine is delivered to the active site by "flipping" the base out of the
+        helix and replacing inter-helix hydrogen bond interactions with protein-helix interactions [PMID:8293469,
+        DOI:10.1021/ja00079a047]. The nucleophile deprotonated Cys81 attacks the C6 position of the cytosine.
+        The negative charge on C5 then demethylates S-adenosyl-L-methionine, subsequent deprotonation
+        of the C po
+      notes: M-CSA entry 293, mechanism 1; M-CSA cites PMID:11283006, PMID:20471982, PMID:8293469; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/293/
+      snippet: The ring of cytosine is delivered to the active site by "flipping" the base out of the
+        helix and replacing inter-helix hydrogen bond interactions with protein-helix interactions [PMID:8293469,
+        DOI:10.1021/ja00079a047]. The nucleophile deprotonated Cys81 attacks the C6 position of the cytosine.
+        The negative charge on C5 then demethylates S-adenosyl-L-methionine, subsequent deprotonation
+        of the C po
+      notes: M-CSA entry 293, mechanism 1; M-CSA cites PMID:11283006, PMID:20471982, PMID:8293469; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/293/
+      snippet: The ring of cytosine is delivered to the active site by "flipping" the base out of the
+        helix and replacing inter-helix hydrogen bond interactions with protein-helix interactions [PMID:8293469,
+        DOI:10.1021/ja00079a047]. The nucleophile deprotonated Cys81 attacks the C6 position of the cytosine.
+        The negative charge on C5 then demethylates S-adenosyl-L-methionine, subsequent deprotonation
+        of the C po
+      notes: M-CSA entry 293, mechanism 1; M-CSA cites PMID:11283006, PMID:20471982, PMID:8293469; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/293/
+      snippet: The ring of cytosine is delivered to the active site by "flipping" the base out of the
+        helix and replacing inter-helix hydrogen bond interactions with protein-helix interactions [PMID:8293469,
+        DOI:10.1021/ja00079a047]. The nucleophile deprotonated Cys81 attacks the C6 position of the cytosine.
+        The negative charge on C5 then demethylates S-adenosyl-L-methionine, subsequent deprotonation
+        of the C po
+      notes: M-CSA entry 293, mechanism 1; M-CSA cites PMID:11283006, PMID:20471982, PMID:8293469; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/293/
+      snippet: The ring of cytosine is delivered to the active site by "flipping" the base out of the
+        helix and replacing inter-helix hydrogen bond interactions with protein-helix interactions [PMID:8293469,
+        DOI:10.1021/ja00079a047]. The nucleophile deprotonated Cys81 attacks the C6 position of the cytosine.
+        The negative charge on C5 then demethylates S-adenosyl-L-methionine, subsequent deprotonation
+        of the C po
+      notes: M-CSA entry 293, mechanism 1; M-CSA cites PMID:11283006, PMID:20471982, PMID:8293469; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (19 evidence-backed edges) transcribed from M-CSA entry 293;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

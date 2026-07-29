@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.1.1.1
 - CHEBI:15378
@@ -406,4 +406,272 @@ definitions:
       Alcohol dehydrogenase is the enzyme responsible for the conversion of alcohol to acetaldehyde that occurs in the cytoplasm, one of the three routes whereby acetaldehyde can be formed from alcohol before it passes into the mitochondria for the completion of the breakdown process. As a result the enzyme plays a vital role in alcohol metabolism, and inability to process alcohol is most commonly caused by deficiency. This alcohol dehydrogenase is zinc-dependent and belongs to the class I zinc-containing ADH superfamily. Whilst this enzyme binds two zinc ions, only one of these is actively involved in catalysis. It has been noted that that many ADHs that lack a His at position 51 often have an analogous histidine at position 47 which can perform the same function (PMID:10970744), i.e. activating the Ser/Thr 48 for its catalytic function, also that the residue at position 48 is interchangeable between serine and threonine (acts as a general base to deprotonate the OH group of the alcohol substrate).
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of alcohol dehydrogenase (class I)
+  description: Stepwise mechanism transcribed from M-CSA entry 256 (2 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +1).
+  nodes:
+  - node_id: cys46
+    label: catalytic Cys46 (M-CSA/PDB numbering; UniProt residue 47)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00327
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: ser48
+    label: catalytic Ser48 (M-CSA/PDB numbering; UniProt residue 49)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00327
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor,
+      proton relay.'
+  - node_id: his51
+    label: catalytic His51 (M-CSA/PDB numbering; UniProt residue 52)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00327
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor,
+      proton relay.'
+  - node_id: his67
+    label: catalytic His67 (M-CSA/PDB numbering; UniProt residue 68)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00327
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: cys174
+    label: catalytic Cys174 (M-CSA/PDB numbering; UniProt residue 175)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00327
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15846
+  - node_id: reactant1
+    label: primary alcohol
+    node_type: CHEMICAL
+    grounding: CHEBI:15734
+  - node_id: product0
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product1
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:16908
+  - node_id: product2
+    label: aldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:17478
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Bulk water initiates the deprotonation of Ser48 <i>via</i> His51, the ribose ring of
+      NAD377. Ser48 deprotonates the alcohol group, which is activated by Zn(II), initiating hydride transfer
+      to NAD377.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: alcohol dehydrogenase (class I) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:256
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.180.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.180.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: alcohol dehydrogenase (class I) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.1.1.1
+  edges:
+  - subject: ser48
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Ser48 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/256/
+      snippet: Bulk water initiates the deprotonation of Ser48 <i>via</i> His51, the ribose ring of NAD377.
+        Ser48 deprotonates the alcohol group, which is activated by Zn(II), initiating hydride transfer
+        to NAD377.
+      notes: M-CSA entry 256, mechanism 1; M-CSA cites PMID:10529241, PMID:10970744, PMID:15299346, PMID:16714351,
+        PMID:19583966, PMID:6754727; step 1
+  - subject: his51
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His51 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/256/
+      snippet: Bulk water initiates the deprotonation of Ser48 <i>via</i> His51, the ribose ring of NAD377.
+        Ser48 deprotonates the alcohol group, which is activated by Zn(II), initiating hydride transfer
+        to NAD377.
+      notes: M-CSA entry 256, mechanism 1; M-CSA cites PMID:10529241, PMID:10970744, PMID:15299346, PMID:16714351,
+        PMID:19583966, PMID:6754727; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/256/
+      snippet: Products.
+      notes: M-CSA entry 256, mechanism 1; M-CSA cites PMID:10529241, PMID:10970744, PMID:15299346, PMID:16714351,
+        PMID:19583966, PMID:6754727; step 2
+  - subject: cys46
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys46 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/256/
+      snippet: metal ligand
+      notes: M-CSA entry 256, mechanism 1; M-CSA cites PMID:10529241, PMID:10970744, PMID:15299346, PMID:16714351,
+        PMID:19583966, PMID:6754727; M-CSA catalytic-residue roles for Cys46
+  - subject: ser48
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser48 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/256/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 256, mechanism 1; M-CSA cites PMID:10529241, PMID:10970744, PMID:15299346, PMID:16714351,
+        PMID:19583966, PMID:6754727; M-CSA catalytic-residue roles for Ser48
+  - subject: his51
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His51 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/256/
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor, proton relay
+      notes: M-CSA entry 256, mechanism 1; M-CSA cites PMID:10529241, PMID:10970744, PMID:15299346, PMID:16714351,
+        PMID:19583966, PMID:6754727; M-CSA catalytic-residue roles for His51
+  - subject: his67
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His67 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/256/
+      snippet: metal ligand
+      notes: M-CSA entry 256, mechanism 1; M-CSA cites PMID:10529241, PMID:10970744, PMID:15299346, PMID:16714351,
+        PMID:19583966, PMID:6754727; M-CSA catalytic-residue roles for His67
+  - subject: cys174
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys174 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/256/
+      snippet: metal ligand
+      notes: M-CSA entry 256, mechanism 1; M-CSA cites PMID:10529241, PMID:10970744, PMID:15299346, PMID:16714351,
+        PMID:19583966, PMID:6754727; M-CSA catalytic-residue roles for Cys174
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/256/
+      snippet: The enzyme is able to oxidise alcohol using concomitant reduction of NAD<sup>+</sup>. The
+        substrate binds to a zinc ion at the active site, which allows deprotonation of the OH group by
+        Ser 48 and His 51 in a proton relay system, because the zinc ion stabilises the oxyanion thus
+        reducing the pKa of the OH to around 8.4. This allows hydride transfer from C2 to the NAD<sup>+</sup>
+        with the oxygen lo
+      notes: M-CSA entry 256, mechanism 1; M-CSA cites PMID:10529241, PMID:10970744, PMID:15299346, PMID:16714351,
+        PMID:19583966, PMID:6754727; CATH domain 3.90.180.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/256/
+      snippet: The enzyme is able to oxidise alcohol using concomitant reduction of NAD<sup>+</sup>. The
+        substrate binds to a zinc ion at the active site, which allows deprotonation of the OH group by
+        Ser 48 and His 51 in a proton relay system, because the zinc ion stabilises the oxyanion thus
+        reducing the pKa of the OH to around 8.4. This allows hydride transfer from C2 to the NAD<sup>+</sup>
+        with the oxygen lo
+      notes: M-CSA entry 256, mechanism 1; M-CSA cites PMID:10529241, PMID:10970744, PMID:15299346, PMID:16714351,
+        PMID:19583966, PMID:6754727; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/256/
+      snippet: The enzyme is able to oxidise alcohol using concomitant reduction of NAD<sup>+</sup>. The
+        substrate binds to a zinc ion at the active site, which allows deprotonation of the OH group by
+        Ser 48 and His 51 in a proton relay system, because the zinc ion stabilises the oxyanion thus
+        reducing the pKa of the OH to around 8.4. This allows hydride transfer from C2 to the NAD<sup>+</sup>
+        with the oxygen lo
+      notes: M-CSA entry 256, mechanism 1; M-CSA cites PMID:10529241, PMID:10970744, PMID:15299346, PMID:16714351,
+        PMID:19583966, PMID:6754727; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/256/
+      snippet: The enzyme is able to oxidise alcohol using concomitant reduction of NAD<sup>+</sup>. The
+        substrate binds to a zinc ion at the active site, which allows deprotonation of the OH group by
+        Ser 48 and His 51 in a proton relay system, because the zinc ion stabilises the oxyanion thus
+        reducing the pKa of the OH to around 8.4. This allows hydride transfer from C2 to the NAD<sup>+</sup>
+        with the oxygen lo
+      notes: M-CSA entry 256, mechanism 1; M-CSA cites PMID:10529241, PMID:10970744, PMID:15299346, PMID:16714351,
+        PMID:19583966, PMID:6754727; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/256/
+      snippet: The enzyme is able to oxidise alcohol using concomitant reduction of NAD<sup>+</sup>. The
+        substrate binds to a zinc ion at the active site, which allows deprotonation of the OH group by
+        Ser 48 and His 51 in a proton relay system, because the zinc ion stabilises the oxyanion thus
+        reducing the pKa of the OH to around 8.4. This allows hydride transfer from C2 to the NAD<sup>+</sup>
+        with the oxygen lo
+      notes: M-CSA entry 256, mechanism 1; M-CSA cites PMID:10529241, PMID:10970744, PMID:15299346, PMID:16714351,
+        PMID:19583966, PMID:6754727; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/256/
+      snippet: The enzyme is able to oxidise alcohol using concomitant reduction of NAD<sup>+</sup>. The
+        substrate binds to a zinc ion at the active site, which allows deprotonation of the OH group by
+        Ser 48 and His 51 in a proton relay system, because the zinc ion stabilises the oxyanion thus
+        reducing the pKa of the OH to around 8.4. This allows hydride transfer from C2 to the NAD<sup>+</sup>
+        with the oxygen lo
+      notes: M-CSA entry 256, mechanism 1; M-CSA cites PMID:10529241, PMID:10970744, PMID:15299346, PMID:16714351,
+        PMID:19583966, PMID:6754727; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/256/
+      snippet: The enzyme is able to oxidise alcohol using concomitant reduction of NAD<sup>+</sup>. The
+        substrate binds to a zinc ion at the active site, which allows deprotonation of the OH group by
+        Ser 48 and His 51 in a proton relay system, because the zinc ion stabilises the oxyanion thus
+        reducing the pKa of the OH to around 8.4. This allows hydride transfer from C2 to the NAD<sup>+</sup>
+        with the oxygen lo
+      notes: M-CSA entry 256, mechanism 1; M-CSA cites PMID:10529241, PMID:10970744, PMID:15299346, PMID:16714351,
+        PMID:19583966, PMID:6754727; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 256;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

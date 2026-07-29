@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.7.7.12
 - CHEBI:58336
@@ -310,4 +310,298 @@ definitions:
       Nucleotidyltransferases catalyse the covalent modification of a variety of biological molecules. These reactions are crucial for the synthesis of coenzymes, cyclic nucleotides, polynucleotides, and nucleotide sugars. These reactions involve substitutions at the R -phosphorus of a nucleotidyl donor substrate and result in displacement of a phosphoryl ester or pyrophosphate. Substrates for such reactions may include nucleoside di- or triphosphates, as well as nucleotide sugars, such as UDP-Glc. Galactose-1-phosphate uridylyltransferase (hexose-1-phosphate uridylyltransferase) catalyses the exchange of the UMP moiety between the hexose 1-phosphates of Glc and Gal and their corresponding UDP-sugar. The enzyme is distinct among nucleotidyl transferases that use phosphates as acceptor groups in that it is the only one that does not utilise nucleoside di- or triphosphates as the nucleotidyl donor substrate. The reaction is part of the Leloir pathway of galactose metabolism required for the normal equilibration of UDP-hexoses among most organisms. Deficiencies in uridylyltransferase activity culminate in the metabolic disease galactosemia, which occurs as an autosomal recessive trait.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of UDP-glucose-hexose-1-phosphate uridylyltransferase
+  description: Stepwise mechanism transcribed from M-CSA entry 88 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: cys52
+    label: catalytic Cys52 (M-CSA/PDB numbering; UniProt residue 52)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09148
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: cys55
+    label: catalytic Cys55 (M-CSA/PDB numbering; UniProt residue 55)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09148
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his115
+    label: catalytic His115 (M-CSA/PDB numbering; UniProt residue 115)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09148
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asn153
+    label: catalytic Asn153 (M-CSA/PDB numbering; UniProt residue 153)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09148
+    description: 'M-CSA roles: activator, hydrogen bond donor.'
+  - node_id: ser161
+    label: catalytic Ser161 (M-CSA/PDB numbering; UniProt residue 161)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09148
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor, steric role.'
+  - node_id: his164
+    label: catalytic His164 (M-CSA/PDB numbering; UniProt residue 164)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09148
+    description: 'M-CSA roles: activator.'
+  - node_id: his166
+    label: catalytic His166 (M-CSA/PDB numbering; UniProt residue 166)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09148
+    description: 'M-CSA roles: hydrogen bond donor, nucleofuge, nucleophile.'
+  - node_id: gln168
+    label: catalytic Gln168 (M-CSA/PDB numbering; UniProt residue 168)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09148
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: reactant0
+    label: alpha-D-galactose 1-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58336
+  - node_id: reactant1
+    label: UDP-alpha-D-glucose(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58885
+  - node_id: product0
+    label: alpha-D-glucose 1-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58601
+  - node_id: product1
+    label: UDP-alpha-D-galactose(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:66914
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His166 initiates a nucleophilic attack on the alpha-phosphate of the UDP-glucose substrate
+      in a substitution reaction, eliminating glucose phosphate.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Galactose phosphate initiates a nucleophilic attack on the alpha-phosphate of the covalently
+      bound UDP in a substitution reaction, eliminating His166.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: UDP-glucose-hexose-1-phosphate uridylyltransferase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:88
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.428.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.428.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: UDP-glucose-hexose-1-phosphate uridylyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.7.7.12
+  edges:
+  - subject: his166
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His166 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/88/
+      snippet: His166 initiates a nucleophilic attack on the alpha-phosphate of the UDP-glucose substrate
+        in a substitution reaction, eliminating glucose phosphate.
+      notes: M-CSA entry 88, mechanism 1; M-CSA cites PMID:10529216, PMID:10820011, PMID:12119013, PMID:21793161,
+        PMID:8794735, PMID:9063869; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/88/
+      snippet: Galactose phosphate initiates a nucleophilic attack on the alpha-phosphate of the covalently
+        bound UDP in a substitution reaction, eliminating His166.
+      notes: M-CSA entry 88, mechanism 1; M-CSA cites PMID:10529216, PMID:10820011, PMID:12119013, PMID:21793161,
+        PMID:8794735, PMID:9063869; step 2
+  - subject: his166
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His166 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/88/
+      snippet: Galactose phosphate initiates a nucleophilic attack on the alpha-phosphate of the covalently
+        bound UDP in a substitution reaction, eliminating His166.
+      notes: M-CSA entry 88, mechanism 1; M-CSA cites PMID:10529216, PMID:10820011, PMID:12119013, PMID:21793161,
+        PMID:8794735, PMID:9063869; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/88/
+      snippet: Products.
+      notes: M-CSA entry 88, mechanism 1; M-CSA cites PMID:10529216, PMID:10820011, PMID:12119013, PMID:21793161,
+        PMID:8794735, PMID:9063869; step 3
+  - subject: cys52
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys52 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/88/
+      snippet: metal ligand
+      notes: M-CSA entry 88, mechanism 1; M-CSA cites PMID:10529216, PMID:10820011, PMID:12119013, PMID:21793161,
+        PMID:8794735, PMID:9063869; M-CSA catalytic-residue roles for Cys52
+  - subject: cys55
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Cys55 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/88/
+      snippet: metal ligand
+      notes: M-CSA entry 88, mechanism 1; M-CSA cites PMID:10529216, PMID:10820011, PMID:12119013, PMID:21793161,
+        PMID:8794735, PMID:9063869; M-CSA catalytic-residue roles for Cys55
+  - subject: his115
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His115 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/88/
+      snippet: metal ligand
+      notes: M-CSA entry 88, mechanism 1; M-CSA cites PMID:10529216, PMID:10820011, PMID:12119013, PMID:21793161,
+        PMID:8794735, PMID:9063869; M-CSA catalytic-residue roles for His115
+  - subject: asn153
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn153 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/88/
+      snippet: activator, hydrogen bond donor
+      notes: M-CSA entry 88, mechanism 1; M-CSA cites PMID:10529216, PMID:10820011, PMID:12119013, PMID:21793161,
+        PMID:8794735, PMID:9063869; M-CSA catalytic-residue roles for Asn153
+  - subject: ser161
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser161 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/88/
+      snippet: electrostatic stabiliser, hydrogen bond donor, steric role
+      notes: M-CSA entry 88, mechanism 1; M-CSA cites PMID:10529216, PMID:10820011, PMID:12119013, PMID:21793161,
+        PMID:8794735, PMID:9063869; M-CSA catalytic-residue roles for Ser161
+  - subject: his164
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His164 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/88/
+      snippet: activator
+      notes: M-CSA entry 88, mechanism 1; M-CSA cites PMID:10529216, PMID:10820011, PMID:12119013, PMID:21793161,
+        PMID:8794735, PMID:9063869; M-CSA catalytic-residue roles for His164
+  - subject: his166
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His166 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/88/
+      snippet: hydrogen bond donor, nucleofuge, nucleophile
+      notes: M-CSA entry 88, mechanism 1; M-CSA cites PMID:10529216, PMID:10820011, PMID:12119013, PMID:21793161,
+        PMID:8794735, PMID:9063869; M-CSA catalytic-residue roles for His166
+  - subject: gln168
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln168 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/88/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 88, mechanism 1; M-CSA cites PMID:10529216, PMID:10820011, PMID:12119013, PMID:21793161,
+        PMID:8794735, PMID:9063869; M-CSA catalytic-residue roles for Gln168
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/88/
+      snippet: His166 in the active site of the the enzyme in Escherichia coli attacks the alpha-phosphorus
+        of UDP--Glc, displaces Glc-1-P, and forms the high energy covalent uridylyl-enzyme (UMP-enzyme)
+        intermediate, which then reacts with Gal-1-P to produce UDP-Gal.
+      notes: M-CSA entry 88, mechanism 1; M-CSA cites PMID:10529216, PMID:10820011, PMID:12119013, PMID:21793161,
+        PMID:8794735, PMID:9063869; CATH domain 3.30.428.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/88/
+      snippet: His166 in the active site of the the enzyme in Escherichia coli attacks the alpha-phosphorus
+        of UDP--Glc, displaces Glc-1-P, and forms the high energy covalent uridylyl-enzyme (UMP-enzyme)
+        intermediate, which then reacts with Gal-1-P to produce UDP-Gal.
+      notes: M-CSA entry 88, mechanism 1; M-CSA cites PMID:10529216, PMID:10820011, PMID:12119013, PMID:21793161,
+        PMID:8794735, PMID:9063869; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/88/
+      snippet: His166 in the active site of the the enzyme in Escherichia coli attacks the alpha-phosphorus
+        of UDP--Glc, displaces Glc-1-P, and forms the high energy covalent uridylyl-enzyme (UMP-enzyme)
+        intermediate, which then reacts with Gal-1-P to produce UDP-Gal.
+      notes: M-CSA entry 88, mechanism 1; M-CSA cites PMID:10529216, PMID:10820011, PMID:12119013, PMID:21793161,
+        PMID:8794735, PMID:9063869; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/88/
+      snippet: His166 in the active site of the the enzyme in Escherichia coli attacks the alpha-phosphorus
+        of UDP--Glc, displaces Glc-1-P, and forms the high energy covalent uridylyl-enzyme (UMP-enzyme)
+        intermediate, which then reacts with Gal-1-P to produce UDP-Gal.
+      notes: M-CSA entry 88, mechanism 1; M-CSA cites PMID:10529216, PMID:10820011, PMID:12119013, PMID:21793161,
+        PMID:8794735, PMID:9063869; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/88/
+      snippet: His166 in the active site of the the enzyme in Escherichia coli attacks the alpha-phosphorus
+        of UDP--Glc, displaces Glc-1-P, and forms the high energy covalent uridylyl-enzyme (UMP-enzyme)
+        intermediate, which then reacts with Gal-1-P to produce UDP-Gal.
+      notes: M-CSA entry 88, mechanism 1; M-CSA cites PMID:10529216, PMID:10820011, PMID:12119013, PMID:21793161,
+        PMID:8794735, PMID:9063869; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/88/
+      snippet: His166 in the active site of the the enzyme in Escherichia coli attacks the alpha-phosphorus
+        of UDP--Glc, displaces Glc-1-P, and forms the high energy covalent uridylyl-enzyme (UMP-enzyme)
+        intermediate, which then reacts with Gal-1-P to produce UDP-Gal.
+      notes: M-CSA entry 88, mechanism 1; M-CSA cites PMID:10529216, PMID:10820011, PMID:12119013, PMID:21793161,
+        PMID:8794735, PMID:9063869; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (18 evidence-backed edges) transcribed from M-CSA entry 88;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

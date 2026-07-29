@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:4.1.1.36
 - CHEBI:59458
@@ -201,4 +201,256 @@ definitions:
       The Arabidopsis thaliana flavoprotein AtHAL3a catalyses the oxidative decarboxylation of 4'-phosphopantothenoylcysteine to 4'-phosphopantetheine, a step in coenzyme A biosynthesis. It belongs to the family of homo-oligomeric flavin-containing cysteine decarboxylases (HFCD) family.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of phosphopantothenoylcysteine decarboxylase
+  description: Stepwise mechanism transcribed from M-CSA entry 639 (5 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: his90
+    label: catalytic His90 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9SWE5
+    description: 'M-CSA roles: electrostatic stabiliser, proton acceptor.'
+  - node_id: ser175
+    label: catalytic Ser175 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9SWE5
+    description: 'M-CSA roles: proton donor.'
+  - node_id: reactant0
+    label: N-[(R)-4-phosphonatopantothenoyl]-L-cysteinate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:59458
+  - node_id: reactant1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product0
+    label: carbon dioxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+  - node_id: product1
+    label: D-pantetheine 4'-phosphate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:61723
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: "The thiolate performs a nucleophilic attack onto the FMN cofactor. 
+His90 acts to\
+      \ stabilize the thiolate."
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: "His90 acts as a base deprotonating the beta carbon of the reactant.
+This leads to\
+      \ the formation of a thioaldehyde."
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The thioaldehyde is then spontaneously decarboxylated forming a cis-ene-thiolate.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Hydride transfer from FMNH2 to the beta-carbon and the concomitant protonation of the
+      alpha-carbon by Cys175 leads to the formation of the final product.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: phosphopantothenoylcysteine decarboxylase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:639
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1950 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1950
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: phosphopantothenoylcysteine decarboxylase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:4.1.1.36
+  edges:
+  - subject: his90
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His90 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/639/
+      snippet: "The thiolate performs a nucleophilic attack onto the FMN cofactor. 
+His90 acts to stabilize\
+        \ the thiolate."
+      notes: M-CSA entry 639, mechanism 1; M-CSA cites PMID:11279129, PMID:12614618, PMID:15581364, PMID:7922027,
+        PMID:8245022, PMID:8648644; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/639/
+      snippet: "His90 acts as a base deprotonating the beta carbon of the reactant.
+This leads to the\
+        \ formation of a thioaldehyde."
+      notes: M-CSA entry 639, mechanism 1; M-CSA cites PMID:11279129, PMID:12614618, PMID:15581364, PMID:7922027,
+        PMID:8245022, PMID:8648644; step 2
+  - subject: his90
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His90 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/639/
+      snippet: "His90 acts as a base deprotonating the beta carbon of the reactant.
+This leads to the\
+        \ formation of a thioaldehyde."
+      notes: M-CSA entry 639, mechanism 1; M-CSA cites PMID:11279129, PMID:12614618, PMID:15581364, PMID:7922027,
+        PMID:8245022, PMID:8648644; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/639/
+      snippet: The thioaldehyde is then spontaneously decarboxylated forming a cis-ene-thiolate.
+      notes: M-CSA entry 639, mechanism 1; M-CSA cites PMID:11279129, PMID:12614618, PMID:15581364, PMID:7922027,
+        PMID:8245022, PMID:8648644; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/639/
+      snippet: Hydride transfer from FMNH2 to the beta-carbon and the concomitant protonation of the alpha-carbon
+        by Cys175 leads to the formation of the final product.
+      notes: M-CSA entry 639, mechanism 1; M-CSA cites PMID:11279129, PMID:12614618, PMID:15581364, PMID:7922027,
+        PMID:8245022, PMID:8648644; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/639/
+      snippet: Products.
+      notes: M-CSA entry 639, mechanism 1; M-CSA cites PMID:11279129, PMID:12614618, PMID:15581364, PMID:7922027,
+        PMID:8245022, PMID:8648644; step 5
+  - subject: his90
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His90 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/639/
+      snippet: electrostatic stabiliser, proton acceptor
+      notes: M-CSA entry 639, mechanism 1; M-CSA cites PMID:11279129, PMID:12614618, PMID:15581364, PMID:7922027,
+        PMID:8245022, PMID:8648644; M-CSA catalytic-residue roles for His90
+  - subject: ser175
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser175 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/639/
+      snippet: proton donor
+      notes: M-CSA entry 639, mechanism 1; M-CSA cites PMID:11279129, PMID:12614618, PMID:15581364, PMID:7922027,
+        PMID:8245022, PMID:8648644; M-CSA catalytic-residue roles for Ser175
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/639/
+      snippet: The mechanism involves 2 reaction steps:oxidative decarboxylation to form a thioaldehyde
+        intermediate and the reduction of the intermediate. First, a thiolate ion is stabilised by His90,
+        which acts as a base to deprotonate the thio-group of the substrate cysteine. Electrons are transferred
+        by an SET mechanism from the thiolate to FMN together with the deprotonation of the beta-carbon
+        of the substr
+      notes: M-CSA entry 639, mechanism 1; M-CSA cites PMID:11279129, PMID:12614618, PMID:15581364, PMID:7922027,
+        PMID:8245022, PMID:8648644; CATH domain 3.40.50.1950 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/639/
+      snippet: The mechanism involves 2 reaction steps:oxidative decarboxylation to form a thioaldehyde
+        intermediate and the reduction of the intermediate. First, a thiolate ion is stabilised by His90,
+        which acts as a base to deprotonate the thio-group of the substrate cysteine. Electrons are transferred
+        by an SET mechanism from the thiolate to FMN together with the deprotonation of the beta-carbon
+        of the substr
+      notes: M-CSA entry 639, mechanism 1; M-CSA cites PMID:11279129, PMID:12614618, PMID:15581364, PMID:7922027,
+        PMID:8245022, PMID:8648644; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/639/
+      snippet: The mechanism involves 2 reaction steps:oxidative decarboxylation to form a thioaldehyde
+        intermediate and the reduction of the intermediate. First, a thiolate ion is stabilised by His90,
+        which acts as a base to deprotonate the thio-group of the substrate cysteine. Electrons are transferred
+        by an SET mechanism from the thiolate to FMN together with the deprotonation of the beta-carbon
+        of the substr
+      notes: M-CSA entry 639, mechanism 1; M-CSA cites PMID:11279129, PMID:12614618, PMID:15581364, PMID:7922027,
+        PMID:8245022, PMID:8648644; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/639/
+      snippet: The mechanism involves 2 reaction steps:oxidative decarboxylation to form a thioaldehyde
+        intermediate and the reduction of the intermediate. First, a thiolate ion is stabilised by His90,
+        which acts as a base to deprotonate the thio-group of the substrate cysteine. Electrons are transferred
+        by an SET mechanism from the thiolate to FMN together with the deprotonation of the beta-carbon
+        of the substr
+      notes: M-CSA entry 639, mechanism 1; M-CSA cites PMID:11279129, PMID:12614618, PMID:15581364, PMID:7922027,
+        PMID:8245022, PMID:8648644; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/639/
+      snippet: The mechanism involves 2 reaction steps:oxidative decarboxylation to form a thioaldehyde
+        intermediate and the reduction of the intermediate. First, a thiolate ion is stabilised by His90,
+        which acts as a base to deprotonate the thio-group of the substrate cysteine. Electrons are transferred
+        by an SET mechanism from the thiolate to FMN together with the deprotonation of the beta-carbon
+        of the substr
+      notes: M-CSA entry 639, mechanism 1; M-CSA cites PMID:11279129, PMID:12614618, PMID:15581364, PMID:7922027,
+        PMID:8245022, PMID:8648644; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/639/
+      snippet: The mechanism involves 2 reaction steps:oxidative decarboxylation to form a thioaldehyde
+        intermediate and the reduction of the intermediate. First, a thiolate ion is stabilised by His90,
+        which acts as a base to deprotonate the thio-group of the substrate cysteine. Electrons are transferred
+        by an SET mechanism from the thiolate to FMN together with the deprotonation of the beta-carbon
+        of the substr
+      notes: M-CSA entry 639, mechanism 1; M-CSA cites PMID:11279129, PMID:12614618, PMID:15581364, PMID:7922027,
+        PMID:8245022, PMID:8648644; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (14 evidence-backed edges) transcribed from M-CSA entry 639;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

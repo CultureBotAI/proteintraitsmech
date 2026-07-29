@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.14.12.12
 - CHEBI:15378
@@ -468,4 +468,413 @@ definitions:
       The naphthalene dioxygenase (NDO) multicomponent enzyme system catalyses the incorporation of both atoms of molecular oxygen into naphthalene to form cis-naphthalene dihydrodiol. The enzyme comprises an NADH binding reductase, a Rieske feredoxin, and a oxygenase component. All three units contain [2Fe-2S] clusters. NDO is a member of the ring-hydroxylating dioxygenase (RHD) family of bacterial enzymes that play a critical role in the degradation of aromatic compounds.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of naphthalene 1,2-dioxygenase
+  description: Stepwise mechanism transcribed from M-CSA entry 130 (10 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: his104
+    label: catalytic His104 (M-CSA/PDB numbering; UniProt residue 104)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A110
+    description: 'M-CSA roles: single electron acceptor, single electron donor, single electron relay.'
+  - node_id: asp205
+    label: catalytic Asp205 (M-CSA/PDB numbering; UniProt residue 205)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A110
+    description: 'M-CSA roles: single electron acceptor, single electron donor, single electron relay.'
+  - node_id: his208
+    label: catalytic His208 (M-CSA/PDB numbering; UniProt residue 208)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A110
+    description: 'M-CSA roles: metal ligand, single electron acceptor, single electron donor, single electron
+      relay.'
+  - node_id: his213
+    label: catalytic His213 (M-CSA/PDB numbering; UniProt residue 213)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A110
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: asp362
+    label: catalytic Asp362 (M-CSA/PDB numbering; UniProt residue 362)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A110
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: reactant0
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: reactant1
+    label: NADH(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+  - node_id: reactant2
+    label: naphthalene
+    node_type: CHEMICAL
+    grounding: CHEBI:16482
+  - node_id: reactant3
+    label: dioxygen
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+  - node_id: product0
+    label: (1R,2S)-1,2-dihydronaphthalene-1,2-diol
+    node_type: CHEMICAL
+    grounding: CHEBI:44343
+  - node_id: product1
+    label: NAD(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: NAD initiates a hydride transfer to the FAD cofactor.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: FAD undergoes a double bond rearrangement that results in the transfer of a single electron
+      from the FAD to one of the iron-sulfur clusters. This then initiates an electron relay through a
+      second iron-sulfur cluster to a third.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The electron is transferred from the final iron-sulfur cluster to a dioxygen molecule,
+      which also accepts a second electron from another Fe(II) centre, and deprotonates a water molecule.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: The peroxo group attacks the naphthalene substrate in a nucleophilic addition that causes
+      the double bond to attack the peroxo group, cleaving the O-O bond and forming the epoxide intermediate.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: The epoxide intermediate collapses in a heterolysis resulting in a carbocation and anioinc
+      oxygen bound to the Fe(III) centre.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: The iron-bound hydroxide group attacks the carbocation in a coordination reaction.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: An unidentified base deprotonates the FAD, initiating a single electron transfer to the
+      one of the iron-sulfur clusters. This then initiates an electron relay through a second iron-sulfur
+      cluster to a third.
+  - node_id: step8
+    label: mechanism step 8
+    node_type: STATE
+    description: The electron is transferred from the final iron-sulfur cluster to the Fe(III) centre
+  - node_id: step9
+    label: mechanism step 9
+    node_type: STATE
+    description: The cis-1,2-dihydronaphthalene-1,2-diol product deprotonates a water molecule and de-coordinates
+      from the Fe(II) centre.
+  - node_id: step10
+    label: mechanism step 10
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: naphthalene 1,2-dioxygenase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:130
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.102.10.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.102.10.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: naphthalene 1,2-dioxygenase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.14.12.12
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/130/
+      snippet: FAD undergoes a double bond rearrangement that results in the transfer of a single electron
+        from the FAD to one of the iron-sulfur clusters. This then initiates an electron relay through
+        a second iron-sulfur cluster to a third.
+      notes: M-CSA entry 130, mechanism 2; M-CSA cites PMID:10074076, PMID:10669618, PMID:12403773, PMID:12586937,
+        PMID:15042436, PMID:22727022, PMID:24244885, PMID:27015291, PMID:27656882, PMID:9634695; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/130/
+      snippet: The electron is transferred from the final iron-sulfur cluster to a dioxygen molecule,
+        which also accepts a second electron from another Fe(II) centre, and deprotonates a water molecule.
+      notes: M-CSA entry 130, mechanism 2; M-CSA cites PMID:10074076, PMID:10669618, PMID:12403773, PMID:12586937,
+        PMID:15042436, PMID:22727022, PMID:24244885, PMID:27015291, PMID:27656882, PMID:9634695; step
+        3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/130/
+      snippet: The peroxo group attacks the naphthalene substrate in a nucleophilic addition that causes
+        the double bond to attack the peroxo group, cleaving the O-O bond and forming the epoxide intermediate.
+      notes: M-CSA entry 130, mechanism 2; M-CSA cites PMID:10074076, PMID:10669618, PMID:12403773, PMID:12586937,
+        PMID:15042436, PMID:22727022, PMID:24244885, PMID:27015291, PMID:27656882, PMID:9634695; step
+        4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/130/
+      snippet: The epoxide intermediate collapses in a heterolysis resulting in a carbocation and anioinc
+        oxygen bound to the Fe(III) centre.
+      notes: M-CSA entry 130, mechanism 2; M-CSA cites PMID:10074076, PMID:10669618, PMID:12403773, PMID:12586937,
+        PMID:15042436, PMID:22727022, PMID:24244885, PMID:27015291, PMID:27656882, PMID:9634695; step
+        5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/130/
+      snippet: The iron-bound hydroxide group attacks the carbocation in a coordination reaction.
+      notes: M-CSA entry 130, mechanism 2; M-CSA cites PMID:10074076, PMID:10669618, PMID:12403773, PMID:12586937,
+        PMID:15042436, PMID:22727022, PMID:24244885, PMID:27015291, PMID:27656882, PMID:9634695; step
+        6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/130/
+      snippet: An unidentified base deprotonates the FAD, initiating a single electron transfer to the
+        one of the iron-sulfur clusters. This then initiates an electron relay through a second iron-sulfur
+        cluster to a third.
+      notes: M-CSA entry 130, mechanism 2; M-CSA cites PMID:10074076, PMID:10669618, PMID:12403773, PMID:12586937,
+        PMID:15042436, PMID:22727022, PMID:24244885, PMID:27015291, PMID:27656882, PMID:9634695; step
+        7
+  - subject: step7
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step8
+    description: Step 7 leads to step 8.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/130/
+      snippet: The electron is transferred from the final iron-sulfur cluster to the Fe(III) centre
+      notes: M-CSA entry 130, mechanism 2; M-CSA cites PMID:10074076, PMID:10669618, PMID:12403773, PMID:12586937,
+        PMID:15042436, PMID:22727022, PMID:24244885, PMID:27015291, PMID:27656882, PMID:9634695; step
+        8
+  - subject: step8
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step9
+    description: Step 8 leads to step 9.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/130/
+      snippet: The cis-1,2-dihydronaphthalene-1,2-diol product deprotonates a water molecule and de-coordinates
+        from the Fe(II) centre.
+      notes: M-CSA entry 130, mechanism 2; M-CSA cites PMID:10074076, PMID:10669618, PMID:12403773, PMID:12586937,
+        PMID:15042436, PMID:22727022, PMID:24244885, PMID:27015291, PMID:27656882, PMID:9634695; step
+        9
+  - subject: step9
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step10
+    description: Step 9 leads to step 10.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/130/
+      snippet: Products.
+      notes: M-CSA entry 130, mechanism 2; M-CSA cites PMID:10074076, PMID:10669618, PMID:12403773, PMID:12586937,
+        PMID:15042436, PMID:22727022, PMID:24244885, PMID:27015291, PMID:27656882, PMID:9634695; step
+        10
+  - subject: his104
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His104 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/130/
+      snippet: single electron acceptor, single electron donor, single electron relay
+      notes: M-CSA entry 130, mechanism 2; M-CSA cites PMID:10074076, PMID:10669618, PMID:12403773, PMID:12586937,
+        PMID:15042436, PMID:22727022, PMID:24244885, PMID:27015291, PMID:27656882, PMID:9634695; M-CSA
+        catalytic-residue roles for His104
+  - subject: asp205
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp205 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/130/
+      snippet: single electron acceptor, single electron donor, single electron relay
+      notes: M-CSA entry 130, mechanism 2; M-CSA cites PMID:10074076, PMID:10669618, PMID:12403773, PMID:12586937,
+        PMID:15042436, PMID:22727022, PMID:24244885, PMID:27015291, PMID:27656882, PMID:9634695; M-CSA
+        catalytic-residue roles for Asp205
+  - subject: his208
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His208 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/130/
+      snippet: metal ligand, single electron acceptor, single electron donor, single electron relay
+      notes: M-CSA entry 130, mechanism 2; M-CSA cites PMID:10074076, PMID:10669618, PMID:12403773, PMID:12586937,
+        PMID:15042436, PMID:22727022, PMID:24244885, PMID:27015291, PMID:27656882, PMID:9634695; M-CSA
+        catalytic-residue roles for His208
+  - subject: his213
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His213 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/130/
+      snippet: metal ligand
+      notes: M-CSA entry 130, mechanism 2; M-CSA cites PMID:10074076, PMID:10669618, PMID:12403773, PMID:12586937,
+        PMID:15042436, PMID:22727022, PMID:24244885, PMID:27015291, PMID:27656882, PMID:9634695; M-CSA
+        catalytic-residue roles for His213
+  - subject: asp362
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp362 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/130/
+      snippet: metal ligand
+      notes: M-CSA entry 130, mechanism 2; M-CSA cites PMID:10074076, PMID:10669618, PMID:12403773, PMID:12586937,
+        PMID:15042436, PMID:22727022, PMID:24244885, PMID:27015291, PMID:27656882, PMID:9634695; M-CSA
+        catalytic-residue roles for Asp362
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/130/
+      snippet: NAD initiates a hydride transfer to the FAD cofactor, which then undergoes a rearrangement
+        to transfer a single electron to the final of three iron-sulfur clusters. This electron is then
+        transferred to a dixygen molecule via a three residue relay (His104, Asp205 and His208). The peroxo
+        group formed then attacks the naphthalene substrate in a nucleophilic addition that causes the
+        double bond to att
+      notes: M-CSA entry 130, mechanism 2; M-CSA cites PMID:10074076, PMID:10669618, PMID:12403773, PMID:12586937,
+        PMID:15042436, PMID:22727022, PMID:24244885, PMID:27015291, PMID:27656882, PMID:9634695; CATH
+        domain 2.102.10.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/130/
+      snippet: NAD initiates a hydride transfer to the FAD cofactor, which then undergoes a rearrangement
+        to transfer a single electron to the final of three iron-sulfur clusters. This electron is then
+        transferred to a dixygen molecule via a three residue relay (His104, Asp205 and His208). The peroxo
+        group formed then attacks the naphthalene substrate in a nucleophilic addition that causes the
+        double bond to att
+      notes: M-CSA entry 130, mechanism 2; M-CSA cites PMID:10074076, PMID:10669618, PMID:12403773, PMID:12586937,
+        PMID:15042436, PMID:22727022, PMID:24244885, PMID:27015291, PMID:27656882, PMID:9634695; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/130/
+      snippet: NAD initiates a hydride transfer to the FAD cofactor, which then undergoes a rearrangement
+        to transfer a single electron to the final of three iron-sulfur clusters. This electron is then
+        transferred to a dixygen molecule via a three residue relay (His104, Asp205 and His208). The peroxo
+        group formed then attacks the naphthalene substrate in a nucleophilic addition that causes the
+        double bond to att
+      notes: M-CSA entry 130, mechanism 2; M-CSA cites PMID:10074076, PMID:10669618, PMID:12403773, PMID:12586937,
+        PMID:15042436, PMID:22727022, PMID:24244885, PMID:27015291, PMID:27656882, PMID:9634695; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/130/
+      snippet: NAD initiates a hydride transfer to the FAD cofactor, which then undergoes a rearrangement
+        to transfer a single electron to the final of three iron-sulfur clusters. This electron is then
+        transferred to a dixygen molecule via a three residue relay (His104, Asp205 and His208). The peroxo
+        group formed then attacks the naphthalene substrate in a nucleophilic addition that causes the
+        double bond to att
+      notes: M-CSA entry 130, mechanism 2; M-CSA cites PMID:10074076, PMID:10669618, PMID:12403773, PMID:12586937,
+        PMID:15042436, PMID:22727022, PMID:24244885, PMID:27015291, PMID:27656882, PMID:9634695; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/130/
+      snippet: NAD initiates a hydride transfer to the FAD cofactor, which then undergoes a rearrangement
+        to transfer a single electron to the final of three iron-sulfur clusters. This electron is then
+        transferred to a dixygen molecule via a three residue relay (His104, Asp205 and His208). The peroxo
+        group formed then attacks the naphthalene substrate in a nucleophilic addition that causes the
+        double bond to att
+      notes: M-CSA entry 130, mechanism 2; M-CSA cites PMID:10074076, PMID:10669618, PMID:12403773, PMID:12586937,
+        PMID:15042436, PMID:22727022, PMID:24244885, PMID:27015291, PMID:27656882, PMID:9634695; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant3
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/130/
+      snippet: NAD initiates a hydride transfer to the FAD cofactor, which then undergoes a rearrangement
+        to transfer a single electron to the final of three iron-sulfur clusters. This electron is then
+        transferred to a dixygen molecule via a three residue relay (His104, Asp205 and His208). The peroxo
+        group formed then attacks the naphthalene substrate in a nucleophilic addition that causes the
+        double bond to att
+      notes: M-CSA entry 130, mechanism 2; M-CSA cites PMID:10074076, PMID:10669618, PMID:12403773, PMID:12586937,
+        PMID:15042436, PMID:22727022, PMID:24244885, PMID:27015291, PMID:27656882, PMID:9634695; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/130/
+      snippet: NAD initiates a hydride transfer to the FAD cofactor, which then undergoes a rearrangement
+        to transfer a single electron to the final of three iron-sulfur clusters. This electron is then
+        transferred to a dixygen molecule via a three residue relay (His104, Asp205 and His208). The peroxo
+        group formed then attacks the naphthalene substrate in a nucleophilic addition that causes the
+        double bond to att
+      notes: M-CSA entry 130, mechanism 2; M-CSA cites PMID:10074076, PMID:10669618, PMID:12403773, PMID:12586937,
+        PMID:15042436, PMID:22727022, PMID:24244885, PMID:27015291, PMID:27656882, PMID:9634695; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/130/
+      snippet: NAD initiates a hydride transfer to the FAD cofactor, which then undergoes a rearrangement
+        to transfer a single electron to the final of three iron-sulfur clusters. This electron is then
+        transferred to a dixygen molecule via a three residue relay (His104, Asp205 and His208). The peroxo
+        group formed then attacks the naphthalene substrate in a nucleophilic addition that causes the
+        double bond to att
+      notes: M-CSA entry 130, mechanism 2; M-CSA cites PMID:10074076, PMID:10669618, PMID:12403773, PMID:12586937,
+        PMID:15042436, PMID:22727022, PMID:24244885, PMID:27015291, PMID:27656882, PMID:9634695; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (22 evidence-backed edges) transcribed from M-CSA entry 130;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

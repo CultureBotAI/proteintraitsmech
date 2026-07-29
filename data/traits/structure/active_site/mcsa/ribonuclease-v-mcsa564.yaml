@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.1.27.8
 - CHEBI:60880
@@ -439,4 +439,265 @@ definitions:
       Angiogenin is a ribonuclease which induces neovascularisation. It binds specifically to endothelial cells in culture and elicits second-messenger responses. It also binds heparin and can serve as a substratum for endothelial cell adhesion. Its amino acid sequence is 33% identical to that of bovine pancreatic ribonuclease RNase A and it has the same general catalytic properties as RNase A, however, it differs markedly both in magnitude and in specificity with RNase A. Angiogenin was first isolated from culture medium conditioned by adenocarcinoma cells, and has since been shown to be critical for the establishment and/or metastatic spread of a wide variety of human tumours in athymic mice, most likely by supporting the growth of tumour vasculature. Moreover, clinical studies have revealed increased Angiogenin expression to be associated with progression of several human cancers. These findings identify Angiogenin as a promising target for new anticancer drugs.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of ribonuclease V
+  description: Stepwise mechanism transcribed from M-CSA entry 564 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: his13
+    label: catalytic His13 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P13489
+    description: 'M-CSA roles: increase nucleophilicity, promote heterolysis, proton acceptor, proton
+      donor.'
+  - node_id: lys40
+    label: catalytic Lys40 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P13489
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: his114
+    label: catalytic His114 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P13489
+    description: 'M-CSA roles: increase nucleophilicity, promote heterolysis, proton acceptor, proton
+      donor.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: poly[(GA)]
+    node_type: CHEMICAL
+    grounding: CHEBI:137464
+  - node_id: product0
+    label: 3'-AMP(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:60880
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: His13 deprotonates the 2' hydroxyl group this promotes its nucleophilic attack on the
+      phosphate group forming a cyclic intermediate. His114 protonates the the 5' hydroxyl leaving group
+      promoting the cleavage.This SN2 reaction proceeds via a penta-coordinate transition state stabilized
+      by Lys40.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: His114 now acting as a base deprotonates a water molecule allowing it to perform a nucleophillic
+      attack on the phosphate group. This leads to the cleavage of the 2' hydroxyl- phosphate bond upon
+      protonation by His13.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: ribonuclease V catalytic site
+    node_type: MOTIF
+    grounding: MCSA:564
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.10.130.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.10.130.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: ribonuclease V activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.1.27.8
+  edges:
+  - subject: his13
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His13 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/564/
+      snippet: His13 deprotonates the 2' hydroxyl group this promotes its nucleophilic attack on the phosphate
+        group forming a cyclic intermediate. His114 protonates the the 5' hydroxyl leaving group promoting
+        the cleavage.This SN2 reaction proceeds via a penta-coordinate transition state stabilized by
+        Lys40.
+      notes: M-CSA entry 564, mechanism 1; M-CSA cites PMID:11468363, PMID:2479414, PMID:2497770, PMID:27483019;
+        step 1
+  - subject: lys40
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Lys40 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/564/
+      snippet: His13 deprotonates the 2' hydroxyl group this promotes its nucleophilic attack on the phosphate
+        group forming a cyclic intermediate. His114 protonates the the 5' hydroxyl leaving group promoting
+        the cleavage.This SN2 reaction proceeds via a penta-coordinate transition state stabilized by
+        Lys40.
+      notes: M-CSA entry 564, mechanism 1; M-CSA cites PMID:11468363, PMID:2479414, PMID:2497770, PMID:27483019;
+        step 1
+  - subject: his114
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His114 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/564/
+      snippet: His13 deprotonates the 2' hydroxyl group this promotes its nucleophilic attack on the phosphate
+        group forming a cyclic intermediate. His114 protonates the the 5' hydroxyl leaving group promoting
+        the cleavage.This SN2 reaction proceeds via a penta-coordinate transition state stabilized by
+        Lys40.
+      notes: M-CSA entry 564, mechanism 1; M-CSA cites PMID:11468363, PMID:2479414, PMID:2497770, PMID:27483019;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/564/
+      snippet: His114 now acting as a base deprotonates a water molecule allowing it to perform a nucleophillic
+        attack on the phosphate group. This leads to the cleavage of the 2' hydroxyl- phosphate bond upon
+        protonation by His13.
+      notes: M-CSA entry 564, mechanism 1; M-CSA cites PMID:11468363, PMID:2479414, PMID:2497770, PMID:27483019;
+        step 2
+  - subject: his13
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His13 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/564/
+      snippet: His114 now acting as a base deprotonates a water molecule allowing it to perform a nucleophillic
+        attack on the phosphate group. This leads to the cleavage of the 2' hydroxyl- phosphate bond upon
+        protonation by His13.
+      notes: M-CSA entry 564, mechanism 1; M-CSA cites PMID:11468363, PMID:2479414, PMID:2497770, PMID:27483019;
+        step 2
+  - subject: his114
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: His114 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/564/
+      snippet: His114 now acting as a base deprotonates a water molecule allowing it to perform a nucleophillic
+        attack on the phosphate group. This leads to the cleavage of the 2' hydroxyl- phosphate bond upon
+        protonation by His13.
+      notes: M-CSA entry 564, mechanism 1; M-CSA cites PMID:11468363, PMID:2479414, PMID:2497770, PMID:27483019;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/564/
+      snippet: Products.
+      notes: M-CSA entry 564, mechanism 1; M-CSA cites PMID:11468363, PMID:2479414, PMID:2497770, PMID:27483019;
+        step 3
+  - subject: his13
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His13 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/564/
+      snippet: increase nucleophilicity, promote heterolysis, proton acceptor, proton donor
+      notes: M-CSA entry 564, mechanism 1; M-CSA cites PMID:11468363, PMID:2479414, PMID:2497770, PMID:27483019;
+        M-CSA catalytic-residue roles for His13
+  - subject: lys40
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys40 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/564/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 564, mechanism 1; M-CSA cites PMID:11468363, PMID:2479414, PMID:2497770, PMID:27483019;
+        M-CSA catalytic-residue roles for Lys40
+  - subject: his114
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His114 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/564/
+      snippet: increase nucleophilicity, promote heterolysis, proton acceptor, proton donor
+      notes: M-CSA entry 564, mechanism 1; M-CSA cites PMID:11468363, PMID:2479414, PMID:2497770, PMID:27483019;
+        M-CSA catalytic-residue roles for His114
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/564/
+      snippet: 'The cleavage of substrate by ribonucleases is a two-step reaction: the first step is a
+        transesterification of which a nucleophilic displacement at the phosphorus atom of the 5'' leaving
+        group by the 2'' entering oxygen atom takes place, forming a nucleoside 2'',3''-cyclophosphate
+        intermediate, which is hydrolysed in the second step to yield the product. His13 acts as a base
+        to abstract a proton from 2'
+      notes: M-CSA entry 564, mechanism 1; M-CSA cites PMID:11468363, PMID:2479414, PMID:2497770, PMID:27483019;
+        CATH domain 3.10.130.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/564/
+      snippet: 'The cleavage of substrate by ribonucleases is a two-step reaction: the first step is a
+        transesterification of which a nucleophilic displacement at the phosphorus atom of the 5'' leaving
+        group by the 2'' entering oxygen atom takes place, forming a nucleoside 2'',3''-cyclophosphate
+        intermediate, which is hydrolysed in the second step to yield the product. His13 acts as a base
+        to abstract a proton from 2'
+      notes: M-CSA entry 564, mechanism 1; M-CSA cites PMID:11468363, PMID:2479414, PMID:2497770, PMID:27483019;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/564/
+      snippet: 'The cleavage of substrate by ribonucleases is a two-step reaction: the first step is a
+        transesterification of which a nucleophilic displacement at the phosphorus atom of the 5'' leaving
+        group by the 2'' entering oxygen atom takes place, forming a nucleoside 2'',3''-cyclophosphate
+        intermediate, which is hydrolysed in the second step to yield the product. His13 acts as a base
+        to abstract a proton from 2'
+      notes: M-CSA entry 564, mechanism 1; M-CSA cites PMID:11468363, PMID:2479414, PMID:2497770, PMID:27483019;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/564/
+      snippet: 'The cleavage of substrate by ribonucleases is a two-step reaction: the first step is a
+        transesterification of which a nucleophilic displacement at the phosphorus atom of the 5'' leaving
+        group by the 2'' entering oxygen atom takes place, forming a nucleoside 2'',3''-cyclophosphate
+        intermediate, which is hydrolysed in the second step to yield the product. His13 acts as a base
+        to abstract a proton from 2'
+      notes: M-CSA entry 564, mechanism 1; M-CSA cites PMID:11468363, PMID:2479414, PMID:2497770, PMID:27483019;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/564/
+      snippet: 'The cleavage of substrate by ribonucleases is a two-step reaction: the first step is a
+        transesterification of which a nucleophilic displacement at the phosphorus atom of the 5'' leaving
+        group by the 2'' entering oxygen atom takes place, forming a nucleoside 2'',3''-cyclophosphate
+        intermediate, which is hydrolysed in the second step to yield the product. His13 acts as a base
+        to abstract a proton from 2'
+      notes: M-CSA entry 564, mechanism 1; M-CSA cites PMID:11468363, PMID:2479414, PMID:2497770, PMID:27483019;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 564;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

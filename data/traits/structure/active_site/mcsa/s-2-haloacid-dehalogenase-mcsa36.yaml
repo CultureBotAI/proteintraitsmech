@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.8.1.2
 - CHEBI:15377
@@ -219,4 +219,398 @@ definitions:
       (S)-2-haloacid dehalogenase catalyses the hydrolytic dehalogenation of L-2-haloacid to the corresponding D-2-hydroxyacid with the inversion of the configuration at the C2 atom. The degradation of halogenated hydrocarbons used in large quantities to make solvents and plastics. The stereospecificity of this enzyme is of interest for its potential use in the biosynthesis of chiral compounds. It is a member of the haloacid dehalogenase superfamily.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of (S)-2-haloacid dehalogenase
+  description: Stepwise mechanism transcribed from M-CSA entry 36 (4 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: asp8
+    label: catalytic Asp8 (M-CSA/PDB numbering; UniProt residue 8)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q60099
+    description: 'M-CSA roles: hydrogen bond acceptor, nucleofuge, nucleophile.'
+  - node_id: thr12
+    label: catalytic Thr12 (M-CSA/PDB numbering; UniProt residue 12)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q60099
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: arg39
+    label: catalytic Arg39 (M-CSA/PDB numbering; UniProt residue 39)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q60099
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: ser114
+    label: catalytic Ser114 (M-CSA/PDB numbering; UniProt residue 114)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q60099
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: asn115
+    label: catalytic Asn115 (M-CSA/PDB numbering; UniProt residue 115)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q60099
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor.'
+  - node_id: lys147
+    label: catalytic Lys147 (M-CSA/PDB numbering; UniProt residue 147)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q60099
+    description: 'M-CSA roles: activator, hydrogen bond donor.'
+  - node_id: ser171
+    label: catalytic Ser171 (M-CSA/PDB numbering; UniProt residue 171)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q60099
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: asn173
+    label: catalytic Asn173 (M-CSA/PDB numbering; UniProt residue 173)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q60099
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: phe175
+    label: catalytic Phe175 (M-CSA/PDB numbering; UniProt residue 175)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q60099
+    description: 'M-CSA roles: electrostatic stabiliser, polar/non-polar interaction.'
+  - node_id: asp176
+    label: catalytic Asp176 (M-CSA/PDB numbering; UniProt residue 176)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q60099
+    description: 'M-CSA roles: activator, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+      proton donor.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: (S)-2-chloropropanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:73934
+  - node_id: product0
+    label: chloride
+    node_type: CHEMICAL
+    grounding: CHEBI:17996
+  - node_id: product1
+    label: (R)-lactate
+    node_type: CHEMICAL
+    grounding: CHEBI:16004
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Asp8 initiates a nucleophilic attack upon the chlorinated carbon of the substrate in
+      a substitution reaction, eliminating chloride.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Asp176 deprotonates water, which initiates a nucleophilic attack on the carbonyl of Asp8,
+      as demonstrated by isotope studies, eliminating Asp8 while maintaining R stereochemistry, which
+      is inverted to that of the S-haloacid substrate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: In an inferred return step, water deprotonates Asp176.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: (S)-2-haloacid dehalogenase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:36
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.50.1000 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.50.1000
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: (S)-2-haloacid dehalogenase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.8.1.2
+  edges:
+  - subject: asp8
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Asp8 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/36/
+      snippet: Asp8 initiates a nucleophilic attack upon the chlorinated carbon of the substrate in a
+        substitution reaction, eliminating chloride.
+      notes: M-CSA entry 36, mechanism 1; M-CSA cites PMID:10521454, PMID:11006296, PMID:12589697, PMID:26645146,
+        PMID:7490277, PMID:9614112; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/36/
+      snippet: Asp176 deprotonates water, which initiates a nucleophilic attack on the carbonyl of Asp8,
+        as demonstrated by isotope studies, eliminating Asp8 while maintaining R stereochemistry, which
+        is inverted to that of the S-haloacid substrate.
+      notes: M-CSA entry 36, mechanism 1; M-CSA cites PMID:10521454, PMID:11006296, PMID:12589697, PMID:26645146,
+        PMID:7490277, PMID:9614112; step 2
+  - subject: asp8
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Asp8 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/36/
+      snippet: Asp176 deprotonates water, which initiates a nucleophilic attack on the carbonyl of Asp8,
+        as demonstrated by isotope studies, eliminating Asp8 while maintaining R stereochemistry, which
+        is inverted to that of the S-haloacid substrate.
+      notes: M-CSA entry 36, mechanism 1; M-CSA cites PMID:10521454, PMID:11006296, PMID:12589697, PMID:26645146,
+        PMID:7490277, PMID:9614112; step 2
+  - subject: asp176
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step2
+    description: Asp176 acts in step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/36/
+      snippet: Asp176 deprotonates water, which initiates a nucleophilic attack on the carbonyl of Asp8,
+        as demonstrated by isotope studies, eliminating Asp8 while maintaining R stereochemistry, which
+        is inverted to that of the S-haloacid substrate.
+      notes: M-CSA entry 36, mechanism 1; M-CSA cites PMID:10521454, PMID:11006296, PMID:12589697, PMID:26645146,
+        PMID:7490277, PMID:9614112; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/36/
+      snippet: In an inferred return step, water deprotonates Asp176.
+      notes: M-CSA entry 36, mechanism 1; M-CSA cites PMID:10521454, PMID:11006296, PMID:12589697, PMID:26645146,
+        PMID:7490277, PMID:9614112; step 3
+  - subject: asp176
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step3
+    description: Asp176 acts in step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/36/
+      snippet: In an inferred return step, water deprotonates Asp176.
+      notes: M-CSA entry 36, mechanism 1; M-CSA cites PMID:10521454, PMID:11006296, PMID:12589697, PMID:26645146,
+        PMID:7490277, PMID:9614112; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/36/
+      snippet: Products
+      notes: M-CSA entry 36, mechanism 1; M-CSA cites PMID:10521454, PMID:11006296, PMID:12589697, PMID:26645146,
+        PMID:7490277, PMID:9614112; step 4
+  - subject: asp8
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp8 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/36/
+      snippet: hydrogen bond acceptor, nucleofuge, nucleophile
+      notes: M-CSA entry 36, mechanism 1; M-CSA cites PMID:10521454, PMID:11006296, PMID:12589697, PMID:26645146,
+        PMID:7490277, PMID:9614112; M-CSA catalytic-residue roles for Asp8
+  - subject: thr12
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Thr12 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/36/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 36, mechanism 1; M-CSA cites PMID:10521454, PMID:11006296, PMID:12589697, PMID:26645146,
+        PMID:7490277, PMID:9614112; M-CSA catalytic-residue roles for Thr12
+  - subject: arg39
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg39 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/36/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 36, mechanism 1; M-CSA cites PMID:10521454, PMID:11006296, PMID:12589697, PMID:26645146,
+        PMID:7490277, PMID:9614112; M-CSA catalytic-residue roles for Arg39
+  - subject: ser114
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser114 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/36/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 36, mechanism 1; M-CSA cites PMID:10521454, PMID:11006296, PMID:12589697, PMID:26645146,
+        PMID:7490277, PMID:9614112; M-CSA catalytic-residue roles for Ser114
+  - subject: asn115
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn115 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/36/
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor
+      notes: M-CSA entry 36, mechanism 1; M-CSA cites PMID:10521454, PMID:11006296, PMID:12589697, PMID:26645146,
+        PMID:7490277, PMID:9614112; M-CSA catalytic-residue roles for Asn115
+  - subject: lys147
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys147 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/36/
+      snippet: activator, hydrogen bond donor
+      notes: M-CSA entry 36, mechanism 1; M-CSA cites PMID:10521454, PMID:11006296, PMID:12589697, PMID:26645146,
+        PMID:7490277, PMID:9614112; M-CSA catalytic-residue roles for Lys147
+  - subject: ser171
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser171 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/36/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 36, mechanism 1; M-CSA cites PMID:10521454, PMID:11006296, PMID:12589697, PMID:26645146,
+        PMID:7490277, PMID:9614112; M-CSA catalytic-residue roles for Ser171
+  - subject: asn173
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn173 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/36/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 36, mechanism 1; M-CSA cites PMID:10521454, PMID:11006296, PMID:12589697, PMID:26645146,
+        PMID:7490277, PMID:9614112; M-CSA catalytic-residue roles for Asn173
+  - subject: phe175
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Phe175 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/36/
+      snippet: electrostatic stabiliser, polar/non-polar interaction
+      notes: M-CSA entry 36, mechanism 1; M-CSA cites PMID:10521454, PMID:11006296, PMID:12589697, PMID:26645146,
+        PMID:7490277, PMID:9614112; M-CSA catalytic-residue roles for Phe175
+  - subject: asp176
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asp176 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/36/
+      snippet: activator, hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: M-CSA entry 36, mechanism 1; M-CSA cites PMID:10521454, PMID:11006296, PMID:12589697, PMID:26645146,
+        PMID:7490277, PMID:9614112; M-CSA catalytic-residue roles for Asp176
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/36/
+      snippet: When the L-2-haloacid is taken into the active site its carboxyl group is recognised by
+        Arg41 before forming a Michaelis compound with the enzyme. The substrate binding drives out a
+        water molecule freeing Asp10's nucleophilic oxygen allowing attack on the C2 carbon via an SN2
+        mechanism. Asp10 is stabilised by hydrogen bonding to Lys151, Thr14 and Ser175. Arg41 is thought
+        to abstract the halide ion
+      notes: M-CSA entry 36, mechanism 1; M-CSA cites PMID:10521454, PMID:11006296, PMID:12589697, PMID:26645146,
+        PMID:7490277, PMID:9614112; CATH domain 3.40.50.1000 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/36/
+      snippet: When the L-2-haloacid is taken into the active site its carboxyl group is recognised by
+        Arg41 before forming a Michaelis compound with the enzyme. The substrate binding drives out a
+        water molecule freeing Asp10's nucleophilic oxygen allowing attack on the C2 carbon via an SN2
+        mechanism. Asp10 is stabilised by hydrogen bonding to Lys151, Thr14 and Ser175. Arg41 is thought
+        to abstract the halide ion
+      notes: M-CSA entry 36, mechanism 1; M-CSA cites PMID:10521454, PMID:11006296, PMID:12589697, PMID:26645146,
+        PMID:7490277, PMID:9614112; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/36/
+      snippet: When the L-2-haloacid is taken into the active site its carboxyl group is recognised by
+        Arg41 before forming a Michaelis compound with the enzyme. The substrate binding drives out a
+        water molecule freeing Asp10's nucleophilic oxygen allowing attack on the C2 carbon via an SN2
+        mechanism. Asp10 is stabilised by hydrogen bonding to Lys151, Thr14 and Ser175. Arg41 is thought
+        to abstract the halide ion
+      notes: M-CSA entry 36, mechanism 1; M-CSA cites PMID:10521454, PMID:11006296, PMID:12589697, PMID:26645146,
+        PMID:7490277, PMID:9614112; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/36/
+      snippet: When the L-2-haloacid is taken into the active site its carboxyl group is recognised by
+        Arg41 before forming a Michaelis compound with the enzyme. The substrate binding drives out a
+        water molecule freeing Asp10's nucleophilic oxygen allowing attack on the C2 carbon via an SN2
+        mechanism. Asp10 is stabilised by hydrogen bonding to Lys151, Thr14 and Ser175. Arg41 is thought
+        to abstract the halide ion
+      notes: M-CSA entry 36, mechanism 1; M-CSA cites PMID:10521454, PMID:11006296, PMID:12589697, PMID:26645146,
+        PMID:7490277, PMID:9614112; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/36/
+      snippet: When the L-2-haloacid is taken into the active site its carboxyl group is recognised by
+        Arg41 before forming a Michaelis compound with the enzyme. The substrate binding drives out a
+        water molecule freeing Asp10's nucleophilic oxygen allowing attack on the C2 carbon via an SN2
+        mechanism. Asp10 is stabilised by hydrogen bonding to Lys151, Thr14 and Ser175. Arg41 is thought
+        to abstract the halide ion
+      notes: M-CSA entry 36, mechanism 1; M-CSA cites PMID:10521454, PMID:11006296, PMID:12589697, PMID:26645146,
+        PMID:7490277, PMID:9614112; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/36/
+      snippet: When the L-2-haloacid is taken into the active site its carboxyl group is recognised by
+        Arg41 before forming a Michaelis compound with the enzyme. The substrate binding drives out a
+        water molecule freeing Asp10's nucleophilic oxygen allowing attack on the C2 carbon via an SN2
+        mechanism. Asp10 is stabilised by hydrogen bonding to Lys151, Thr14 and Ser175. Arg41 is thought
+        to abstract the halide ion
+      notes: M-CSA entry 36, mechanism 1; M-CSA cites PMID:10521454, PMID:11006296, PMID:12589697, PMID:26645146,
+        PMID:7490277, PMID:9614112; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/36/
+      snippet: When the L-2-haloacid is taken into the active site its carboxyl group is recognised by
+        Arg41 before forming a Michaelis compound with the enzyme. The substrate binding drives out a
+        water molecule freeing Asp10's nucleophilic oxygen allowing attack on the C2 carbon via an SN2
+        mechanism. Asp10 is stabilised by hydrogen bonding to Lys151, Thr14 and Ser175. Arg41 is thought
+        to abstract the halide ion
+      notes: M-CSA entry 36, mechanism 1; M-CSA cites PMID:10521454, PMID:11006296, PMID:12589697, PMID:26645146,
+        PMID:7490277, PMID:9614112; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (24 evidence-backed edges) transcribed from M-CSA entry 36;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

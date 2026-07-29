@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.2.3.4
 - CHEBI:15378
@@ -202,4 +202,368 @@ definitions:
       Oxalate oxidase (OXO) catalyses the conversion of oxalate and dioxygen to hydrogen peroxide and carbon dioxide. The enzyme is widespread in nature but is most abundant in higher plant tissues, particularly germinating seeds. It is a member of a functionally diverse superfamily known at the cupins or double stranded β-helix proteins containing a mononuclear manganese centre in each subunit. The mechanism for OXO remains unclear. It is closely related to the bicupin oxalate decarboxylase which also contains manganese but produces carbon dioxide and formate.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of oxalate oxidase
+  description: Stepwise mechanism transcribed from M-CSA entry 995 (7 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: asn75
+    label: catalytic Asn75 (M-CSA/PDB numbering; UniProt residue 75)
+    node_type: RESIDUE
+    grounding: UniProtKB:P45850
+    description: 'M-CSA roles: hydrogen bond acceptor.'
+  - node_id: val77
+    label: catalytic Val77 (M-CSA/PDB numbering; UniProt residue 77)
+    node_type: RESIDUE
+    grounding: UniProtKB:P45850
+    description: 'M-CSA roles: steric role.'
+  - node_id: asn85
+    label: catalytic Asn85 (M-CSA/PDB numbering; UniProt residue 85)
+    node_type: RESIDUE
+    grounding: UniProtKB:P45850
+    description: 'M-CSA roles: hydrogen bond donor.'
+  - node_id: his88
+    label: catalytic His88 (M-CSA/PDB numbering; UniProt residue 88)
+    node_type: RESIDUE
+    grounding: UniProtKB:P45850
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his90
+    label: catalytic His90 (M-CSA/PDB numbering; UniProt residue 90)
+    node_type: RESIDUE
+    grounding: UniProtKB:P45850
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu95
+    label: catalytic Glu95 (M-CSA/PDB numbering; UniProt residue 95)
+    node_type: RESIDUE
+    grounding: UniProtKB:P45850
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: his137
+    label: catalytic His137 (M-CSA/PDB numbering; UniProt residue 137)
+    node_type: RESIDUE
+    grounding: UniProtKB:P45850
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: gln139
+    label: catalytic Gln139 (M-CSA/PDB numbering; UniProt residue 139)
+    node_type: RESIDUE
+    grounding: UniProtKB:P45850
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor.'
+  - node_id: met149
+    label: catalytic Met149 (M-CSA/PDB numbering; UniProt residue 149)
+    node_type: RESIDUE
+    grounding: UniProtKB:P45850
+    description: 'M-CSA roles: steric role.'
+  - node_id: reactant0
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: reactant1
+    label: dioxygen
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+  - node_id: reactant2
+    label: oxalate(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30623
+  - node_id: product0
+    label: hydrogen peroxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+  - node_id: product1
+    label: carbon dioxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Monodentate coordination of oxalate monoanion, displacing one solvent molecule from the
+      Mn(II) centre.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Dioxygen binding to Mn(II) displaces another solvent molecule, and forms an Mn(III) superoxide
+      metalloradical complex.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Activation of the Mn(III)-bound oxalate through deprotonation (inferred by curator).
+      This causes the oxalate bridging oxygen to transfer an electron to the Mn(III) centre.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Decarboxylation of the radical oxalyl anion.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: The superoxide radical binds to the the radical carbonyl group.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: A second decarboxylation occurs and along with two proton transfers, to form hydrogen
+      peroxide.
+  - node_id: step7
+    label: mechanism step 7
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: oxalate oxidase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:995
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 2.60.120.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:2.60.120.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: oxalate oxidase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.2.3.4
+  edges:
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/995/
+      snippet: Dioxygen binding to Mn(II) displaces another solvent molecule, and forms an Mn(III) superoxide
+        metalloradical complex.
+      notes: M-CSA entry 995, mechanism 3; M-CSA cites PMID:17924657, PMID:27014926; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/995/
+      snippet: Activation of the Mn(III)-bound oxalate through deprotonation (inferred by curator). This
+        causes the oxalate bridging oxygen to transfer an electron to the Mn(III) centre.
+      notes: M-CSA entry 995, mechanism 3; M-CSA cites PMID:17924657, PMID:27014926; step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/995/
+      snippet: Decarboxylation of the radical oxalyl anion.
+      notes: M-CSA entry 995, mechanism 3; M-CSA cites PMID:17924657, PMID:27014926; step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/995/
+      snippet: The superoxide radical binds to the the radical carbonyl group.
+      notes: M-CSA entry 995, mechanism 3; M-CSA cites PMID:17924657, PMID:27014926; step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/995/
+      snippet: A second decarboxylation occurs and along with two proton transfers, to form hydrogen peroxide.
+      notes: M-CSA entry 995, mechanism 3; M-CSA cites PMID:17924657, PMID:27014926; step 6
+  - subject: step6
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step7
+    description: Step 6 leads to step 7.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/995/
+      snippet: Products
+      notes: M-CSA entry 995, mechanism 3; M-CSA cites PMID:17924657, PMID:27014926; step 7
+  - subject: asn75
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn75 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/995/
+      snippet: hydrogen bond acceptor
+      notes: M-CSA entry 995, mechanism 3; M-CSA cites PMID:17924657, PMID:27014926; M-CSA catalytic-residue
+        roles for Asn75
+  - subject: val77
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Val77 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/995/
+      snippet: steric role
+      notes: M-CSA entry 995, mechanism 3; M-CSA cites PMID:17924657, PMID:27014926; M-CSA catalytic-residue
+        roles for Val77
+  - subject: asn85
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn85 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/995/
+      snippet: hydrogen bond donor
+      notes: M-CSA entry 995, mechanism 3; M-CSA cites PMID:17924657, PMID:27014926; M-CSA catalytic-residue
+        roles for Asn85
+  - subject: his88
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His88 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/995/
+      snippet: metal ligand
+      notes: M-CSA entry 995, mechanism 3; M-CSA cites PMID:17924657, PMID:27014926; M-CSA catalytic-residue
+        roles for His88
+  - subject: his90
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His90 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/995/
+      snippet: metal ligand
+      notes: M-CSA entry 995, mechanism 3; M-CSA cites PMID:17924657, PMID:27014926; M-CSA catalytic-residue
+        roles for His90
+  - subject: glu95
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu95 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/995/
+      snippet: metal ligand
+      notes: M-CSA entry 995, mechanism 3; M-CSA cites PMID:17924657, PMID:27014926; M-CSA catalytic-residue
+        roles for Glu95
+  - subject: his137
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His137 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/995/
+      snippet: metal ligand
+      notes: M-CSA entry 995, mechanism 3; M-CSA cites PMID:17924657, PMID:27014926; M-CSA catalytic-residue
+        roles for His137
+  - subject: gln139
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gln139 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/995/
+      snippet: hydrogen bond acceptor, hydrogen bond donor
+      notes: M-CSA entry 995, mechanism 3; M-CSA cites PMID:17924657, PMID:27014926; M-CSA catalytic-residue
+        roles for Gln139
+  - subject: met149
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Met149 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/995/
+      snippet: steric role
+      notes: M-CSA entry 995, mechanism 3; M-CSA cites PMID:17924657, PMID:27014926; M-CSA catalytic-residue
+        roles for Met149
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/995/
+      snippet: This mechanism is consistent with the results from a study demonstrating that oxalate oxidase
+        and oxalate decarboxylase activities can be interchanged by mutating an active site lid. Oxalate
+        binds to Mn(II), which then undergoes oxidation to Mn(III) upon binding of dioxygen. Reduction
+        of Mn(III) to Mn(II) and decarboxylation occur, which is followed by insertion of the superoxide
+        radical into oxal
+      notes: M-CSA entry 995, mechanism 3; M-CSA cites PMID:17924657, PMID:27014926; CATH domain 2.60.120.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/995/
+      snippet: This mechanism is consistent with the results from a study demonstrating that oxalate oxidase
+        and oxalate decarboxylase activities can be interchanged by mutating an active site lid. Oxalate
+        binds to Mn(II), which then undergoes oxidation to Mn(III) upon binding of dioxygen. Reduction
+        of Mn(III) to Mn(II) and decarboxylation occur, which is followed by insertion of the superoxide
+        radical into oxal
+      notes: M-CSA entry 995, mechanism 3; M-CSA cites PMID:17924657, PMID:27014926; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/995/
+      snippet: This mechanism is consistent with the results from a study demonstrating that oxalate oxidase
+        and oxalate decarboxylase activities can be interchanged by mutating an active site lid. Oxalate
+        binds to Mn(II), which then undergoes oxidation to Mn(III) upon binding of dioxygen. Reduction
+        of Mn(III) to Mn(II) and decarboxylation occur, which is followed by insertion of the superoxide
+        radical into oxal
+      notes: M-CSA entry 995, mechanism 3; M-CSA cites PMID:17924657, PMID:27014926; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/995/
+      snippet: This mechanism is consistent with the results from a study demonstrating that oxalate oxidase
+        and oxalate decarboxylase activities can be interchanged by mutating an active site lid. Oxalate
+        binds to Mn(II), which then undergoes oxidation to Mn(III) upon binding of dioxygen. Reduction
+        of Mn(III) to Mn(II) and decarboxylation occur, which is followed by insertion of the superoxide
+        radical into oxal
+      notes: M-CSA entry 995, mechanism 3; M-CSA cites PMID:17924657, PMID:27014926; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/995/
+      snippet: This mechanism is consistent with the results from a study demonstrating that oxalate oxidase
+        and oxalate decarboxylase activities can be interchanged by mutating an active site lid. Oxalate
+        binds to Mn(II), which then undergoes oxidation to Mn(III) upon binding of dioxygen. Reduction
+        of Mn(III) to Mn(II) and decarboxylation occur, which is followed by insertion of the superoxide
+        radical into oxal
+      notes: M-CSA entry 995, mechanism 3; M-CSA cites PMID:17924657, PMID:27014926; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/995/
+      snippet: This mechanism is consistent with the results from a study demonstrating that oxalate oxidase
+        and oxalate decarboxylase activities can be interchanged by mutating an active site lid. Oxalate
+        binds to Mn(II), which then undergoes oxidation to Mn(III) upon binding of dioxygen. Reduction
+        of Mn(III) to Mn(II) and decarboxylation occur, which is followed by insertion of the superoxide
+        radical into oxal
+      notes: M-CSA entry 995, mechanism 3; M-CSA cites PMID:17924657, PMID:27014926; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/995/
+      snippet: This mechanism is consistent with the results from a study demonstrating that oxalate oxidase
+        and oxalate decarboxylase activities can be interchanged by mutating an active site lid. Oxalate
+        binds to Mn(II), which then undergoes oxidation to Mn(III) upon binding of dioxygen. Reduction
+        of Mn(III) to Mn(II) and decarboxylation occur, which is followed by insertion of the superoxide
+        radical into oxal
+      notes: M-CSA entry 995, mechanism 3; M-CSA cites PMID:17924657, PMID:27014926; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (22 evidence-backed edges) transcribed from M-CSA entry 995;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

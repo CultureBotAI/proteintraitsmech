@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:2.7.11.1
 - CHEBI:456216
@@ -124,4 +124,218 @@ definitions:
       The control of sporulation in some bacteria is controlled by sigma factors, one of which is sigma-F which triggers the cascade of gene expression in the forespore compartment of the sporulating cell. Control of sigma-F is by the SpoII proteins: SpoIIAB, which binds to sigma-F and thereby inactivates it; SpoIIAA, a non-enzymatic protein which is phosphorylated by SpoIIAB, thus inducing release of sigma-F; and SpoIIE, a phosphatase which returns SpoII-P to the dephosphorylated state. SpoIIAB has the same ATP-binding domain as other members of the GHKL superfamily. It phosphorylates the Ser 58 residue of SpoIIAA, using up ATP.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of non-specific serine/threonine protein kinase
+  description: Stepwise mechanism transcribed from M-CSA entry 760 (2 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: glu46
+    label: catalytic Glu46 (M-CSA/PDB numbering; UniProt residue 46)
+    node_type: RESIDUE
+    grounding: UniProtKB:O32727
+    description: 'M-CSA roles: activator, electrostatic stabiliser, proton acceptor.'
+  - node_id: asn50
+    label: catalytic Asn50 (M-CSA/PDB numbering; UniProt residue 50)
+    node_type: RESIDUE
+    grounding: UniProtKB:O32727
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: arg105
+    label: catalytic Arg105 (M-CSA/PDB numbering; UniProt residue 105)
+    node_type: RESIDUE
+    grounding: UniProtKB:O32727
+    description: 'M-CSA roles: electrostatic stabiliser, polar interaction.'
+  - node_id: reactant0
+    label: L-serine residue
+    node_type: CHEMICAL
+    grounding: CHEBI:29999
+  - node_id: reactant1
+    label: ATP(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+  - node_id: product0
+    label: ADP(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+  - node_id: product1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product2
+    label: O-phospho-L-serine(2-) residue
+    node_type: CHEMICAL
+    grounding: CHEBI:83421
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu46 activates the Ser substrate by accepting a proton from it. Serine then attacks
+      the gamma phosphate group from ATP, which gets displaced.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: non-specific serine/threonine protein kinase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:760
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.30.565.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.30.565.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: non-specific serine/threonine protein kinase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:2.7.11.1
+  edges:
+  - subject: glu46
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu46 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/760/
+      snippet: Glu46 activates the Ser substrate by accepting a proton from it. Serine then attacks the
+        gamma phosphate group from ATP, which gets displaced.
+      notes: M-CSA entry 760, mechanism 1; M-CSA cites PMID:11955433, PMID:15236958; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/760/
+      snippet: Products.
+      notes: M-CSA entry 760, mechanism 1; M-CSA cites PMID:11955433, PMID:15236958; step 2
+  - subject: glu46
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu46 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/760/
+      snippet: activator, electrostatic stabiliser, proton acceptor
+      notes: M-CSA entry 760, mechanism 1; M-CSA cites PMID:11955433, PMID:15236958; M-CSA catalytic-residue
+        roles for Glu46
+  - subject: asn50
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Asn50 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/760/
+      snippet: metal ligand
+      notes: M-CSA entry 760, mechanism 1; M-CSA cites PMID:11955433, PMID:15236958; M-CSA catalytic-residue
+        roles for Asn50
+  - subject: arg105
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg105 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/760/
+      snippet: electrostatic stabiliser, polar interaction
+      notes: M-CSA entry 760, mechanism 1; M-CSA cites PMID:11955433, PMID:15236958; M-CSA catalytic-residue
+        roles for Arg105
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/760/
+      snippet: 'The basic mechanism is the inline displacement of ADP, by nucleophilic attack of the SpoIIAA
+        Ser 58 on the gamma-phosphate of ATP. Various residues and an Mg cofactor aid the reaction: Mg2+,
+        bound by Asn 50 coordinates all three phosphate groups of ATP. This stabilises the transition
+        state by reducing charge build-up. Arg 105 is in the correct position to stabilise the transition
+        state by hydrogen'
+      notes: M-CSA entry 760, mechanism 1; M-CSA cites PMID:11955433, PMID:15236958; CATH domain 3.30.565.10
+        assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/760/
+      snippet: 'The basic mechanism is the inline displacement of ADP, by nucleophilic attack of the SpoIIAA
+        Ser 58 on the gamma-phosphate of ATP. Various residues and an Mg cofactor aid the reaction: Mg2+,
+        bound by Asn 50 coordinates all three phosphate groups of ATP. This stabilises the transition
+        state by reducing charge build-up. Arg 105 is in the correct position to stabilise the transition
+        state by hydrogen'
+      notes: M-CSA entry 760, mechanism 1; M-CSA cites PMID:11955433, PMID:15236958; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/760/
+      snippet: 'The basic mechanism is the inline displacement of ADP, by nucleophilic attack of the SpoIIAA
+        Ser 58 on the gamma-phosphate of ATP. Various residues and an Mg cofactor aid the reaction: Mg2+,
+        bound by Asn 50 coordinates all three phosphate groups of ATP. This stabilises the transition
+        state by reducing charge build-up. Arg 105 is in the correct position to stabilise the transition
+        state by hydrogen'
+      notes: M-CSA entry 760, mechanism 1; M-CSA cites PMID:11955433, PMID:15236958; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/760/
+      snippet: 'The basic mechanism is the inline displacement of ADP, by nucleophilic attack of the SpoIIAA
+        Ser 58 on the gamma-phosphate of ATP. Various residues and an Mg cofactor aid the reaction: Mg2+,
+        bound by Asn 50 coordinates all three phosphate groups of ATP. This stabilises the transition
+        state by reducing charge build-up. Arg 105 is in the correct position to stabilise the transition
+        state by hydrogen'
+      notes: M-CSA entry 760, mechanism 1; M-CSA cites PMID:11955433, PMID:15236958; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/760/
+      snippet: 'The basic mechanism is the inline displacement of ADP, by nucleophilic attack of the SpoIIAA
+        Ser 58 on the gamma-phosphate of ATP. Various residues and an Mg cofactor aid the reaction: Mg2+,
+        bound by Asn 50 coordinates all three phosphate groups of ATP. This stabilises the transition
+        state by reducing charge build-up. Arg 105 is in the correct position to stabilise the transition
+        state by hydrogen'
+      notes: M-CSA entry 760, mechanism 1; M-CSA cites PMID:11955433, PMID:15236958; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/760/
+      snippet: 'The basic mechanism is the inline displacement of ADP, by nucleophilic attack of the SpoIIAA
+        Ser 58 on the gamma-phosphate of ATP. Various residues and an Mg cofactor aid the reaction: Mg2+,
+        bound by Asn 50 coordinates all three phosphate groups of ATP. This stabilises the transition
+        state by reducing charge build-up. Arg 105 is in the correct position to stabilise the transition
+        state by hydrogen'
+      notes: M-CSA entry 760, mechanism 1; M-CSA cites PMID:11955433, PMID:15236958; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/760/
+      snippet: 'The basic mechanism is the inline displacement of ADP, by nucleophilic attack of the SpoIIAA
+        Ser 58 on the gamma-phosphate of ATP. Various residues and an Mg cofactor aid the reaction: Mg2+,
+        bound by Asn 50 coordinates all three phosphate groups of ATP. This stabilises the transition
+        state by reducing charge build-up. Arg 105 is in the correct position to stabilise the transition
+        state by hydrogen'
+      notes: M-CSA entry 760, mechanism 1; M-CSA cites PMID:11955433, PMID:15236958; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (12 evidence-backed edges) transcribed from M-CSA entry 760;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

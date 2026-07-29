@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:7.2.4.3
 - CHEBI:16526
@@ -187,4 +187,250 @@ definitions:
       Methylmalonyl-CoA decarboxylase (MMCD) is a member of the cronotase super family, a collection of enzymes characterised by the presence of oxy anion intermediates or transition states with a significant localisation of negative charge in their reactions. The breadth of catalytic action within this family is demonstrated by the spread of associated enzymes across all six of the Enzyme Commission classes.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of methylmalonyl-CoA decarboxylase
+  description: Stepwise mechanism transcribed from M-CSA entry 70 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: his66
+    label: catalytic His66 (M-CSA/PDB numbering; UniProt residue 66)
+    node_type: RESIDUE
+    grounding: UniProtKB:P52045
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: gly110
+    label: catalytic Gly110 (M-CSA/PDB numbering; UniProt residue 110)
+    node_type: RESIDUE
+    grounding: UniProtKB:P52045
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor.'
+  - node_id: tyr140
+    label: catalytic Tyr140 (M-CSA/PDB numbering; UniProt residue 140)
+    node_type: RESIDUE
+    grounding: UniProtKB:P52045
+    description: 'M-CSA roles: hydrogen bond donor, steric role.'
+  - node_id: reactant0
+    label: (S)-methylmalonyl-CoA(5-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57327
+  - node_id: reactant1
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product0
+    label: carbon dioxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+  - node_id: product1
+    label: propionyl-CoA(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57392
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Tyr140 draws carboxylate out of the plane. The substrate undergoes decarboxylation, with
+      concomitant double bond rearrangement. The newly formed oxyanion is stabilised by the backbone amides
+      of His66 and Gly110
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: The oxyanion collapses, initiating double bond rearrangement. The substrate deprotonates
+      an unidentified base (shown here as water) to form the final product.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: methylmalonyl-CoA decarboxylase catalytic site
+    node_type: MOTIF
+    grounding: MCSA:70
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.226.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.226.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: methylmalonyl-CoA decarboxylase activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:7.2.4.3
+  edges:
+  - subject: his66
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: His66 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/70/
+      snippet: Tyr140 draws carboxylate out of the plane. The substrate undergoes decarboxylation, with
+        concomitant double bond rearrangement. The newly formed oxyanion is stabilised by the backbone
+        amides of His66 and Gly110
+      notes: M-CSA entry 70, mechanism 1; M-CSA cites PMID:10769117, PMID:10769118, PMID:18470480; step
+        1
+  - subject: gly110
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Gly110 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/70/
+      snippet: Tyr140 draws carboxylate out of the plane. The substrate undergoes decarboxylation, with
+        concomitant double bond rearrangement. The newly formed oxyanion is stabilised by the backbone
+        amides of His66 and Gly110
+      notes: M-CSA entry 70, mechanism 1; M-CSA cites PMID:10769117, PMID:10769118, PMID:18470480; step
+        1
+  - subject: tyr140
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Tyr140 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/70/
+      snippet: Tyr140 draws carboxylate out of the plane. The substrate undergoes decarboxylation, with
+        concomitant double bond rearrangement. The newly formed oxyanion is stabilised by the backbone
+        amides of His66 and Gly110
+      notes: M-CSA entry 70, mechanism 1; M-CSA cites PMID:10769117, PMID:10769118, PMID:18470480; step
+        1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/70/
+      snippet: The oxyanion collapses, initiating double bond rearrangement. The substrate deprotonates
+        an unidentified base (shown here as water) to form the final product.
+      notes: M-CSA entry 70, mechanism 1; M-CSA cites PMID:10769117, PMID:10769118, PMID:18470480; step
+        2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/70/
+      snippet: Products
+      notes: M-CSA entry 70, mechanism 1; M-CSA cites PMID:10769117, PMID:10769118, PMID:18470480; step
+        3
+  - subject: his66
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: His66 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/70/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 70, mechanism 1; M-CSA cites PMID:10769117, PMID:10769118, PMID:18470480; M-CSA
+        catalytic-residue roles for His66
+  - subject: gly110
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Gly110 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/70/
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: M-CSA entry 70, mechanism 1; M-CSA cites PMID:10769117, PMID:10769118, PMID:18470480; M-CSA
+        catalytic-residue roles for Gly110
+  - subject: tyr140
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Tyr140 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/70/
+      snippet: hydrogen bond donor, steric role
+      notes: M-CSA entry 70, mechanism 1; M-CSA cites PMID:10769117, PMID:10769118, PMID:18470480; M-CSA
+        catalytic-residue roles for Tyr140
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/70/
+      snippet: MMCD catalyses the decarboxylation of (S)-methylmalonyl-CoA, forming propionyl-CoA and
+        provides a pathway for the decarboxylation of succinate in E. Coli. The Tyr 140 residue binds
+        to the anionic malonyl substrate through hydrogen bonding, and has been implicated in assisting
+        decarboxylation. The sp2 anionic enolate oxygen points towards an oxyanion hole created by the
+        backbone amide groups of His
+      notes: M-CSA entry 70, mechanism 1; M-CSA cites PMID:10769117, PMID:10769118, PMID:18470480; CATH
+        domain 3.90.226.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/70/
+      snippet: MMCD catalyses the decarboxylation of (S)-methylmalonyl-CoA, forming propionyl-CoA and
+        provides a pathway for the decarboxylation of succinate in E. Coli. The Tyr 140 residue binds
+        to the anionic malonyl substrate through hydrogen bonding, and has been implicated in assisting
+        decarboxylation. The sp2 anionic enolate oxygen points towards an oxyanion hole created by the
+        backbone amide groups of His
+      notes: M-CSA entry 70, mechanism 1; M-CSA cites PMID:10769117, PMID:10769118, PMID:18470480; overall
+        mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/70/
+      snippet: MMCD catalyses the decarboxylation of (S)-methylmalonyl-CoA, forming propionyl-CoA and
+        provides a pathway for the decarboxylation of succinate in E. Coli. The Tyr 140 residue binds
+        to the anionic malonyl substrate through hydrogen bonding, and has been implicated in assisting
+        decarboxylation. The sp2 anionic enolate oxygen points towards an oxyanion hole created by the
+        backbone amide groups of His
+      notes: M-CSA entry 70, mechanism 1; M-CSA cites PMID:10769117, PMID:10769118, PMID:18470480; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/70/
+      snippet: MMCD catalyses the decarboxylation of (S)-methylmalonyl-CoA, forming propionyl-CoA and
+        provides a pathway for the decarboxylation of succinate in E. Coli. The Tyr 140 residue binds
+        to the anionic malonyl substrate through hydrogen bonding, and has been implicated in assisting
+        decarboxylation. The sp2 anionic enolate oxygen points towards an oxyanion hole created by the
+        backbone amide groups of His
+      notes: M-CSA entry 70, mechanism 1; M-CSA cites PMID:10769117, PMID:10769118, PMID:18470480; M-CSA
+        reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/70/
+      snippet: MMCD catalyses the decarboxylation of (S)-methylmalonyl-CoA, forming propionyl-CoA and
+        provides a pathway for the decarboxylation of succinate in E. Coli. The Tyr 140 residue binds
+        to the anionic malonyl substrate through hydrogen bonding, and has been implicated in assisting
+        decarboxylation. The sp2 anionic enolate oxygen points towards an oxyanion hole created by the
+        backbone amide groups of His
+      notes: M-CSA entry 70, mechanism 1; M-CSA cites PMID:10769117, PMID:10769118, PMID:18470480; M-CSA
+        reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/70/
+      snippet: MMCD catalyses the decarboxylation of (S)-methylmalonyl-CoA, forming propionyl-CoA and
+        provides a pathway for the decarboxylation of succinate in E. Coli. The Tyr 140 residue binds
+        to the anionic malonyl substrate through hydrogen bonding, and has been implicated in assisting
+        decarboxylation. The sp2 anionic enolate oxygen points towards an oxyanion hole created by the
+        backbone amide groups of His
+      notes: M-CSA entry 70, mechanism 1; M-CSA cites PMID:10769117, PMID:10769118, PMID:18470480; M-CSA
+        reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (14 evidence-backed edges) transcribed from M-CSA entry 70;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

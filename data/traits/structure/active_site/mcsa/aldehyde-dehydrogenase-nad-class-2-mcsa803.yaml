@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:1.2.1.3
 - CHEBI:17478
@@ -391,4 +391,345 @@ definitions:
       Aldehyde dehydrogenase (ALDH) catalyses the oxidation of toxic aldehydes to their corresponding acids, using NAD. The human mitochondrial form of ALDH is called class 2 ALDH.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of aldehyde dehydrogenase (NAD+) (class 2)
+  description: Stepwise mechanism transcribed from M-CSA entry 803 (6 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering
+    only — no unique offset to the record's reference sequence could be verified, so no UniProt position
+    is asserted.
+  nodes:
+  - node_id: lys192
+    label: catalytic Lys192 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05091
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu268
+    label: catalytic Glu268 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05091
+    description: 'M-CSA roles: electrostatic stabiliser, proton acceptor, proton donor.'
+  - node_id: ser302
+    label: catalytic Ser302 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05091
+    description: 'M-CSA roles: covalently attached, electrostatic stabiliser, nucleofuge, nucleophile,
+      proton acceptor, proton donor.'
+  - node_id: glu399
+    label: catalytic Glu399 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05091
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: aldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:17478
+  - node_id: reactant1
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant2
+    label: NAD(1-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+  - node_id: product0
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: product1
+    label: NADH(2-)
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+  - node_id: product2
+    label: carboxylic acid
+    node_type: CHEMICAL
+    grounding: CHEBI:33575
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: Glu268 acts as a base to abstract a proton from a water molecule which then activates
+      Cys302.
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: There is nucleophilic attack on the electrophilic aldehyde by the thiolate group of Cys302,
+      forming a tetrahedral intermediate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: The tetrahedral intermediate collapses and a hydride is transferred to NAD, forming NADH.
+  - node_id: step4
+    label: mechanism step 4
+    node_type: STATE
+    description: Glu268 activates a water molecule for nucleophilic attack on the aldehyde intermediate,
+      eliminating Cys302 and forming the product.
+  - node_id: step5
+    label: mechanism step 5
+    node_type: STATE
+    description: In an inferred reaction step Cys302 is reprotonated and Glu268 is protonated to regenerate
+      the native state of the enzyme.
+  - node_id: step6
+    label: mechanism step 6
+    node_type: STATE
+    description: Products.
+  - node_id: active_site
+    label: aldehyde dehydrogenase (NAD+) (class 2) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:803
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.40.605.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.40.605.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: aldehyde dehydrogenase (NAD+) (class 2) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:1.2.1.3
+  edges:
+  - subject: glu268
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu268 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/803/
+      snippet: Glu268 acts as a base to abstract a proton from a water molecule which then activates Cys302.
+      notes: M-CSA entry 803, mechanism 1; M-CSA cites PMID:7819202, PMID:7873540, PMID:9228056, PMID:9228057;
+        step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/803/
+      snippet: There is nucleophilic attack on the electrophilic aldehyde by the thiolate group of Cys302,
+        forming a tetrahedral intermediate.
+      notes: M-CSA entry 803, mechanism 1; M-CSA cites PMID:7819202, PMID:7873540, PMID:9228056, PMID:9228057;
+        step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/803/
+      snippet: The tetrahedral intermediate collapses and a hydride is transferred to NAD, forming NADH.
+      notes: M-CSA entry 803, mechanism 1; M-CSA cites PMID:7819202, PMID:7873540, PMID:9228056, PMID:9228057;
+        step 3
+  - subject: step3
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step4
+    description: Step 3 leads to step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/803/
+      snippet: Glu268 activates a water molecule for nucleophilic attack on the aldehyde intermediate,
+        eliminating Cys302 and forming the product.
+      notes: M-CSA entry 803, mechanism 1; M-CSA cites PMID:7819202, PMID:7873540, PMID:9228056, PMID:9228057;
+        step 4
+  - subject: glu268
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step4
+    description: Glu268 acts in step 4.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/803/
+      snippet: Glu268 activates a water molecule for nucleophilic attack on the aldehyde intermediate,
+        eliminating Cys302 and forming the product.
+      notes: M-CSA entry 803, mechanism 1; M-CSA cites PMID:7819202, PMID:7873540, PMID:9228056, PMID:9228057;
+        step 4
+  - subject: step4
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step5
+    description: Step 4 leads to step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/803/
+      snippet: In an inferred reaction step Cys302 is reprotonated and Glu268 is protonated to regenerate
+        the native state of the enzyme.
+      notes: M-CSA entry 803, mechanism 1; M-CSA cites PMID:7819202, PMID:7873540, PMID:9228056, PMID:9228057;
+        step 5
+  - subject: glu268
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step5
+    description: Glu268 acts in step 5.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/803/
+      snippet: In an inferred reaction step Cys302 is reprotonated and Glu268 is protonated to regenerate
+        the native state of the enzyme.
+      notes: M-CSA entry 803, mechanism 1; M-CSA cites PMID:7819202, PMID:7873540, PMID:9228056, PMID:9228057;
+        step 5
+  - subject: step5
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step6
+    description: Step 5 leads to step 6.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/803/
+      snippet: Products.
+      notes: M-CSA entry 803, mechanism 1; M-CSA cites PMID:7819202, PMID:7873540, PMID:9228056, PMID:9228057;
+        step 6
+  - subject: lys192
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Lys192 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/803/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 803, mechanism 1; M-CSA cites PMID:7819202, PMID:7873540, PMID:9228056, PMID:9228057;
+        M-CSA catalytic-residue roles for Lys192
+  - subject: glu268
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu268 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/803/
+      snippet: electrostatic stabiliser, proton acceptor, proton donor
+      notes: M-CSA entry 803, mechanism 1; M-CSA cites PMID:7819202, PMID:7873540, PMID:9228056, PMID:9228057;
+        M-CSA catalytic-residue roles for Glu268
+  - subject: ser302
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Ser302 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/803/
+      snippet: covalently attached, electrostatic stabiliser, nucleofuge, nucleophile, proton acceptor,
+        proton donor
+      notes: M-CSA entry 803, mechanism 1; M-CSA cites PMID:7819202, PMID:7873540, PMID:9228056, PMID:9228057;
+        M-CSA catalytic-residue roles for Ser302
+  - subject: glu399
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu399 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/803/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 803, mechanism 1; M-CSA cites PMID:7819202, PMID:7873540, PMID:9228056, PMID:9228057;
+        M-CSA catalytic-residue roles for Glu399
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/803/
+      snippet: The catalysis follows a sequential mechanism in which NAD+ binds prior to aldehyde. The
+        aldehyde then undergoes nucleophilic attack by Cys302, forming a covalent intermediate. Next,
+        the carbonyl hydride is transferred to the A-side of the nicotinamide ring. In the rate-limiting
+        step, Glu268 activates a water molecule for nucleophilic attack at the acyl-sulphur bond, releasing
+        the acid product prio
+      notes: M-CSA entry 803, mechanism 1; M-CSA cites PMID:7819202, PMID:7873540, PMID:9228056, PMID:9228057;
+        CATH domain 3.40.605.10 assigned to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/803/
+      snippet: The catalysis follows a sequential mechanism in which NAD+ binds prior to aldehyde. The
+        aldehyde then undergoes nucleophilic attack by Cys302, forming a covalent intermediate. Next,
+        the carbonyl hydride is transferred to the A-side of the nicotinamide ring. In the rate-limiting
+        step, Glu268 activates a water molecule for nucleophilic attack at the acyl-sulphur bond, releasing
+        the acid product prio
+      notes: M-CSA entry 803, mechanism 1; M-CSA cites PMID:7819202, PMID:7873540, PMID:9228056, PMID:9228057;
+        overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/803/
+      snippet: The catalysis follows a sequential mechanism in which NAD+ binds prior to aldehyde. The
+        aldehyde then undergoes nucleophilic attack by Cys302, forming a covalent intermediate. Next,
+        the carbonyl hydride is transferred to the A-side of the nicotinamide ring. In the rate-limiting
+        step, Glu268 activates a water molecule for nucleophilic attack at the acyl-sulphur bond, releasing
+        the acid product prio
+      notes: M-CSA entry 803, mechanism 1; M-CSA cites PMID:7819202, PMID:7873540, PMID:9228056, PMID:9228057;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/803/
+      snippet: The catalysis follows a sequential mechanism in which NAD+ binds prior to aldehyde. The
+        aldehyde then undergoes nucleophilic attack by Cys302, forming a covalent intermediate. Next,
+        the carbonyl hydride is transferred to the A-side of the nicotinamide ring. In the rate-limiting
+        step, Glu268 activates a water molecule for nucleophilic attack at the acyl-sulphur bond, releasing
+        the acid product prio
+      notes: M-CSA entry 803, mechanism 1; M-CSA cites PMID:7819202, PMID:7873540, PMID:9228056, PMID:9228057;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant2
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/803/
+      snippet: The catalysis follows a sequential mechanism in which NAD+ binds prior to aldehyde. The
+        aldehyde then undergoes nucleophilic attack by Cys302, forming a covalent intermediate. Next,
+        the carbonyl hydride is transferred to the A-side of the nicotinamide ring. In the rate-limiting
+        step, Glu268 activates a water molecule for nucleophilic attack at the acyl-sulphur bond, releasing
+        the acid product prio
+      notes: M-CSA entry 803, mechanism 1; M-CSA cites PMID:7819202, PMID:7873540, PMID:9228056, PMID:9228057;
+        M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/803/
+      snippet: The catalysis follows a sequential mechanism in which NAD+ binds prior to aldehyde. The
+        aldehyde then undergoes nucleophilic attack by Cys302, forming a covalent intermediate. Next,
+        the carbonyl hydride is transferred to the A-side of the nicotinamide ring. In the rate-limiting
+        step, Glu268 activates a water molecule for nucleophilic attack at the acyl-sulphur bond, releasing
+        the acid product prio
+      notes: M-CSA entry 803, mechanism 1; M-CSA cites PMID:7819202, PMID:7873540, PMID:9228056, PMID:9228057;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/803/
+      snippet: The catalysis follows a sequential mechanism in which NAD+ binds prior to aldehyde. The
+        aldehyde then undergoes nucleophilic attack by Cys302, forming a covalent intermediate. Next,
+        the carbonyl hydride is transferred to the A-side of the nicotinamide ring. In the rate-limiting
+        step, Glu268 activates a water molecule for nucleophilic attack at the acyl-sulphur bond, releasing
+        the acid product prio
+      notes: M-CSA entry 803, mechanism 1; M-CSA cites PMID:7819202, PMID:7873540, PMID:9228056, PMID:9228057;
+        M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/803/
+      snippet: The catalysis follows a sequential mechanism in which NAD+ binds prior to aldehyde. The
+        aldehyde then undergoes nucleophilic attack by Cys302, forming a covalent intermediate. Next,
+        the carbonyl hydride is transferred to the A-side of the nicotinamide ring. In the rate-limiting
+        step, Glu268 activates a water molecule for nucleophilic attack at the acyl-sulphur bond, releasing
+        the acid product prio
+      notes: M-CSA entry 803, mechanism 1; M-CSA cites PMID:7819202, PMID:7873540, PMID:9228056, PMID:9228057;
+        M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (20 evidence-backed edges) transcribed from M-CSA entry 803;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0

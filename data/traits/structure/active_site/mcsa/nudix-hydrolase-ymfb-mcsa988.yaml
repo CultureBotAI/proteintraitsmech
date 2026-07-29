@@ -6,7 +6,7 @@ definition_source: M-CSA (Thornton lab, EBI; fetched via REST API)
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
 - EC:3.6.1.28
 - CHEBI:15377
@@ -116,4 +116,261 @@ definitions:
       Nudix hydrolases are enzymes that turn triphosphate nucleotides into monophosphate nucleotides in a stepwise manner which is crucial for the metabolism of thiamine pyrophosphate and important for several metabolic processes. In addition, they hydrolyse a wide range of organic pyrophosphates, including nucleotide sugars, dinucleoside polyphosphates, dinucleotide coenzymes and capped RNAs. They do this with a highly conserved 23-amino acid sequence called the Nudix motif. These proteins are present across the natural world from bacteria to humans.
     source: "M-CSA"
     method: SOURCED
+causal_graphs:
+- graph_id: catalysis
+  title: Catalytic mechanism of Nudix hydrolase (YmfB)
+  description: Stepwise mechanism transcribed from M-CSA entry 988 (3 steps). Every edge quotes the M-CSA
+    entry; M-CSA's primary references are in the edge notes. Residue nodes carry M-CSA/PDB author numbering;
+    the UniProt position in each label was verified against the reference sequence (offset +0).
+  nodes:
+  - node_id: glu23
+    label: catalytic Glu23 (M-CSA/PDB numbering; UniProt residue 23)
+    node_type: RESIDUE
+    grounding: UniProtKB:A1AA28
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: glu51
+    label: catalytic Glu51 (M-CSA/PDB numbering; UniProt residue 51)
+    node_type: RESIDUE
+    grounding: UniProtKB:A1AA28
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: glu55
+    label: catalytic Glu55 (M-CSA/PDB numbering; UniProt residue 55)
+    node_type: RESIDUE
+    grounding: UniProtKB:A1AA28
+    description: 'M-CSA roles: metal ligand.'
+  - node_id: arg119
+    label: catalytic Arg119 (M-CSA/PDB numbering; UniProt residue 119)
+    node_type: RESIDUE
+    grounding: UniProtKB:A1AA28
+    description: 'M-CSA roles: electrostatic stabiliser.'
+  - node_id: reactant0
+    label: water
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+  - node_id: reactant1
+    label: thiamine(1+) triphosphate(4-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58938
+  - node_id: product0
+    label: hydrogenphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+  - node_id: product1
+    label: thiamine(1+) diphosphate(3-)
+    node_type: CHEMICAL
+    grounding: CHEBI:58937
+  - node_id: product2
+    label: hydron
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+  - node_id: step1
+    label: mechanism step 1
+    node_type: STATE
+    description: "The Mg<sup>2+</sup> ions lower the pKa of water to allow a hydroxide to form and attack\
+      \ the terminal phosphate group.
+Glu23 and Arg119 stabilise the charges on the substrates phosphates."
+  - node_id: step2
+    label: mechanism step 2
+    node_type: STATE
+    description: A second hydroxide binds the two metal ion and the reaction is repeated, this time on
+      the Beta phosphate, which leads to the formation of thiamine phosphate.
+  - node_id: step3
+    label: mechanism step 3
+    node_type: STATE
+    description: Products
+  - node_id: active_site
+    label: Nudix hydrolase (YmfB) catalytic site
+    node_type: MOTIF
+    grounding: MCSA:988
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the catalytic site this mechanism runs in.
+  - node_id: fold
+    label: 3.90.79.10 superfamily fold
+    node_type: DOMAIN
+    grounding: CATH:3.90.79.10
+    description: KB trait record; CATH domain assigned by M-CSA to the catalytic chain.
+  - node_id: activity
+    label: Nudix hydrolase (YmfB) activity
+    node_type: MOLECULAR_FUNCTION
+    xrefs:
+    - EC:3.6.1.28
+  edges:
+  - subject: glu23
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Glu23 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/988/
+      snippet: "The Mg<sup>2+</sup> ions lower the pKa of water to allow a hydroxide to form and attack\
+        \ the terminal phosphate group.
+Glu23 and Arg119 stabilise the charges on the substrates phosphates."
+      notes: M-CSA entry 988, mechanism 1; M-CSA cites PMID:16766526; step 1
+  - subject: arg119
+    predicate: participates in (chemical step)
+    predicate_id: RO:0002436
+    object: step1
+    description: Arg119 acts in step 1.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/988/
+      snippet: "The Mg<sup>2+</sup> ions lower the pKa of water to allow a hydroxide to form and attack\
+        \ the terminal phosphate group.
+Glu23 and Arg119 stabilise the charges on the substrates phosphates."
+      notes: M-CSA entry 988, mechanism 1; M-CSA cites PMID:16766526; step 1
+  - subject: step1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step2
+    description: Step 1 leads to step 2.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/988/
+      snippet: A second hydroxide binds the two metal ion and the reaction is repeated, this time on the
+        Beta phosphate, which leads to the formation of thiamine phosphate.
+      notes: M-CSA entry 988, mechanism 1; M-CSA cites PMID:16766526; step 2
+  - subject: step2
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: step3
+    description: Step 2 leads to step 3.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/988/
+      snippet: Products
+      notes: M-CSA entry 988, mechanism 1; M-CSA cites PMID:16766526; step 3
+  - subject: glu23
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu23 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/988/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 988, mechanism 1; M-CSA cites PMID:16766526; M-CSA catalytic-residue roles for
+        Glu23
+  - subject: glu51
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu51 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/988/
+      snippet: metal ligand
+      notes: M-CSA entry 988, mechanism 1; M-CSA cites PMID:16766526; M-CSA catalytic-residue roles for
+        Glu51
+  - subject: glu55
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Glu55 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/988/
+      snippet: metal ligand
+      notes: M-CSA entry 988, mechanism 1; M-CSA cites PMID:16766526; M-CSA catalytic-residue roles for
+        Glu55
+  - subject: arg119
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: active_site
+    description: Arg119 is a catalytic residue of the site.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/988/
+      snippet: electrostatic stabiliser
+      notes: M-CSA entry 988, mechanism 1; M-CSA cites PMID:16766526; M-CSA catalytic-residue roles for
+        Arg119
+  - subject: active_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: fold
+    description: The catalytic site lies within this fold.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/988/
+      snippet: The divalent metal ions (here represented as Mg<sup>2+</sup>) lower the pKa of water to
+        5.2 and allow a hydroxide to form and attack a phosphate molecule. Glu23 and Arg119 stabilise
+        the charges on the phosphates of the substrate. Although the EC:3.6.1.28 only shows one hydrolysis
+        reaction (to form thiamine diphosphate) the mechanism depicted shows a second hydrolysis reaction
+        to form thiamine mono
+      notes: M-CSA entry 988, mechanism 1; M-CSA cites PMID:16766526; CATH domain 3.90.79.10 assigned
+        to the catalytic chain by M-CSA
+  - subject: active_site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The catalytic site carries out the activity.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/988/
+      snippet: The divalent metal ions (here represented as Mg<sup>2+</sup>) lower the pKa of water to
+        5.2 and allow a hydroxide to form and attack a phosphate molecule. Glu23 and Arg119 stabilise
+        the charges on the phosphates of the substrate. Although the EC:3.6.1.28 only shows one hydrolysis
+        reaction (to form thiamine diphosphate) the mechanism depicted shows a second hydrolysis reaction
+        to form thiamine mono
+      notes: M-CSA entry 988, mechanism 1; M-CSA cites PMID:16766526; overall mechanism
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant0
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/988/
+      snippet: The divalent metal ions (here represented as Mg<sup>2+</sup>) lower the pKa of water to
+        5.2 and allow a hydroxide to form and attack a phosphate molecule. Glu23 and Arg119 stabilise
+        the charges on the phosphates of the substrate. Although the EC:3.6.1.28 only shows one hydrolysis
+        reaction (to form thiamine diphosphate) the mechanism depicted shows a second hydrolysis reaction
+        to form thiamine mono
+      notes: M-CSA entry 988, mechanism 1; M-CSA cites PMID:16766526; M-CSA reaction reactants
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: reactant1
+    description: Substrate consumed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/988/
+      snippet: The divalent metal ions (here represented as Mg<sup>2+</sup>) lower the pKa of water to
+        5.2 and allow a hydroxide to form and attack a phosphate molecule. Glu23 and Arg119 stabilise
+        the charges on the phosphates of the substrate. Although the EC:3.6.1.28 only shows one hydrolysis
+        reaction (to form thiamine diphosphate) the mechanism depicted shows a second hydrolysis reaction
+        to form thiamine mono
+      notes: M-CSA entry 988, mechanism 1; M-CSA cites PMID:16766526; M-CSA reaction reactants
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product0
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/988/
+      snippet: The divalent metal ions (here represented as Mg<sup>2+</sup>) lower the pKa of water to
+        5.2 and allow a hydroxide to form and attack a phosphate molecule. Glu23 and Arg119 stabilise
+        the charges on the phosphates of the substrate. Although the EC:3.6.1.28 only shows one hydrolysis
+        reaction (to form thiamine diphosphate) the mechanism depicted shows a second hydrolysis reaction
+        to form thiamine mono
+      notes: M-CSA entry 988, mechanism 1; M-CSA cites PMID:16766526; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product1
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/988/
+      snippet: The divalent metal ions (here represented as Mg<sup>2+</sup>) lower the pKa of water to
+        5.2 and allow a hydroxide to form and attack a phosphate molecule. Glu23 and Arg119 stabilise
+        the charges on the phosphates of the substrate. Although the EC:3.6.1.28 only shows one hydrolysis
+        reaction (to form thiamine diphosphate) the mechanism depicted shows a second hydrolysis reaction
+        to form thiamine mono
+      notes: M-CSA entry 988, mechanism 1; M-CSA cites PMID:16766526; M-CSA reaction products
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: product2
+    description: Product formed by the reaction.
+    evidence:
+    - reference: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/988/
+      snippet: The divalent metal ions (here represented as Mg<sup>2+</sup>) lower the pKa of water to
+        5.2 and allow a hydroxide to form and attack a phosphate molecule. Glu23 and Arg119 stabilise
+        the charges on the phosphates of the substrate. Although the EC:3.6.1.28 only shows one hydrolysis
+        reaction (to form thiamine diphosphate) the mechanism depicted shows a second hydrolysis reaction
+        to form thiamine mono
+      notes: M-CSA entry 988, mechanism 1; M-CSA cites PMID:16766526; M-CSA reaction products
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalysis' (15 evidence-backed edges) transcribed from M-CSA entry 988;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY-4.0
