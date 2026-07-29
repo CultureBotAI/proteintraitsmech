@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:2DA
 synonyms:
@@ -18,4 +18,116 @@ canonical_examples:
     protein_label: "7AE9 chain G (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 7ae9 chain G (resolution 2.9 Å); binding residues: L96 F100"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of 2',3'-DIDEOXYADENOSINE-5'-MONOPHOSPHATE at the 2',3'-DIDEOXYADENOSINE-5'-MONOPHOSPHATE-binding
+    site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 7ae9 chain G. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: 2',3'-DIDEOXYADENOSINE-5'-MONOPHOSPHATE
+    node_type: LIGAND
+    grounding: CHEBI:39730
+    xrefs:
+    - pdb.ligand:2DA
+  - node_id: site
+    label: 2',3'-DIDEOXYADENOSINE-5'-MONOPHOSPHATE-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_2DA
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 7AE9 chain G (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:A0A0B0QJN8
+  - node_id: resL96
+    label: binding residue L96 (PDB 7ae9 chain G author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:A0A0B0QJN8
+  - node_id: resF100
+    label: binding residue F100 (PDB 7ae9 chain G author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:A0A0B0QJN8
+  - node_id: activity
+    label: enzymatic activity EC 2.7.7.108
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0070733
+    description: GO molecular function for EC:2.7.7.108, via GO's own ec2go mapping.
+    xrefs:
+    - EC:2.7.7.108
+  edges:
+  - subject: resL96
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: L96 contacts the bound 2',3'-DIDEOXYADENOSINE-5'-MONOPHOSPHATE.
+    evidence:
+    - reference: PDB:7ae9
+      snippet: L96 F100
+      notes: 'BioLiP2 record line for PDB 7ae9 chain G, ligand 2DA: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:33290744 for this structure.'
+  - subject: resL96
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: L96 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:7ae9
+      snippet: L96 F100
+      notes: 'BioLiP2 record line for PDB 7ae9 chain G, ligand 2DA: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:33290744 for this structure.'
+  - subject: resF100
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: F100 contacts the bound 2',3'-DIDEOXYADENOSINE-5'-MONOPHOSPHATE.
+    evidence:
+    - reference: PDB:7ae9
+      snippet: L96 F100
+      notes: 'BioLiP2 record line for PDB 7ae9 chain G, ligand 2DA: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:33290744 for this structure.'
+  - subject: resF100
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: F100 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:7ae9
+      snippet: L96 F100
+      notes: 'BioLiP2 record line for PDB 7ae9 chain G, ligand 2DA: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:33290744 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:7ae9
+      snippet: L96 F100
+      notes: 'BioLiP2 record line for PDB 7ae9 chain G, ligand 2DA: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:33290744 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:A0A0B0QJN8.'
+  - subject: site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The site participates in this activity.
+    evidence:
+    - reference: PDB:7ae9
+      snippet: L96 F100
+      notes: 'BioLiP2 record line for PDB 7ae9 chain G, ligand 2DA: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:33290744 for this structure. EC 2.7.7.108 recorded
+        by BioLiP for this receptor.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (6 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:VYW
 synonyms:
@@ -22,4 +22,96 @@ canonical_examples:
     protein_label: "8OLU chain L (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 8olu chain L (resolution 2.59 Å); binding residues: G146 M196 G197 Y212 F225 S226 V227 G228 S231 Y235"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of ligand VYW at the ligand VYW-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 8olu chain K. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: ligand VYW
+    node_type: LIGAND
+    grounding: pdb.ligand:VYW
+    xrefs:
+    - pdb.ligand:VYW
+  - node_id: site
+    label: ligand VYW-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_VYW
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 8OLU chain K (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:A0A640KTY7
+  - node_id: resF24
+    label: binding residue F24 (PDB 8olu chain K author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:A0A640KTY7
+  - node_id: resI29
+    label: binding residue I29 (PDB 8olu chain K author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:A0A640KTY7
+  edges:
+  - subject: resF24
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: F24 contacts the bound ligand VYW.
+    evidence:
+    - reference: PDB:8olu
+      snippet: F24 I29
+      notes: 'BioLiP2 record line for PDB 8olu chain K, ligand VYW: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:37506194 for this structure.'
+  - subject: resF24
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: F24 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:8olu
+      snippet: F24 I29
+      notes: 'BioLiP2 record line for PDB 8olu chain K, ligand VYW: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:37506194 for this structure.'
+  - subject: resI29
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: I29 contacts the bound ligand VYW.
+    evidence:
+    - reference: PDB:8olu
+      snippet: F24 I29
+      notes: 'BioLiP2 record line for PDB 8olu chain K, ligand VYW: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:37506194 for this structure.'
+  - subject: resI29
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: I29 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:8olu
+      snippet: F24 I29
+      notes: 'BioLiP2 record line for PDB 8olu chain K, ligand VYW: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:37506194 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:8olu
+      snippet: F24 I29
+      notes: 'BioLiP2 record line for PDB 8olu chain K, ligand VYW: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:37506194 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:A0A640KTY7.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (5 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

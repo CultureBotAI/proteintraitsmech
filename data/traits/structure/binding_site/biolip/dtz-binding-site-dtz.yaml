@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:DTZ
 synonyms:
@@ -22,4 +22,116 @@ canonical_examples:
     protein_label: "4OMF chain G (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 4omf chain G (resolution 1.71 Å); binding residues: C206 C208"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of zinc(II)hydrogensulfide at the zinc(II)hydrogensulfide-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 2zu2 chain B. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: zinc(II)hydrogensulfide
+    node_type: LIGAND
+    grounding: pdb.ligand:DTZ
+    xrefs:
+    - pdb.ligand:DTZ
+  - node_id: site
+    label: zinc(II)hydrogensulfide-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_DTZ
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 2ZU2 chain B (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:P0C6U2
+  - node_id: resH41
+    label: binding residue H41 (PDB 2zu2 chain B author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0C6U2
+  - node_id: resC144
+    label: binding residue C144 (PDB 2zu2 chain B author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0C6U2
+  - node_id: activity
+    label: enzymatic activity EC 3.4.19.12, 3.4.22.-
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0004843
+    description: GO molecular function for EC:3.4.19.12, via GO's own ec2go mapping.
+    xrefs:
+    - EC:3.4.19.12
+    - EC:3.4.22.-
+  edges:
+  - subject: resH41
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: H41 contacts the bound zinc(II)hydrogensulfide.
+    evidence:
+    - reference: PDB:2zu2
+      snippet: H41 C144
+      notes: 'BioLiP2 record line for PDB 2zu2 chain B, ligand DTZ: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:19144641 for this structure.'
+  - subject: resH41
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: H41 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:2zu2
+      snippet: H41 C144
+      notes: 'BioLiP2 record line for PDB 2zu2 chain B, ligand DTZ: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:19144641 for this structure.'
+  - subject: resC144
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: C144 contacts the bound zinc(II)hydrogensulfide.
+    evidence:
+    - reference: PDB:2zu2
+      snippet: H41 C144
+      notes: 'BioLiP2 record line for PDB 2zu2 chain B, ligand DTZ: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:19144641 for this structure.'
+  - subject: resC144
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: C144 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:2zu2
+      snippet: H41 C144
+      notes: 'BioLiP2 record line for PDB 2zu2 chain B, ligand DTZ: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:19144641 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:2zu2
+      snippet: H41 C144
+      notes: 'BioLiP2 record line for PDB 2zu2 chain B, ligand DTZ: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:19144641 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:P0C6U2.'
+  - subject: site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The site participates in this activity.
+    evidence:
+    - reference: PDB:2zu2
+      snippet: H41 C144
+      notes: 'BioLiP2 record line for PDB 2zu2 chain B, ligand DTZ: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:19144641 for this structure. EC 3.4.19.12, 3.4.22.-
+        recorded by BioLiP for this receptor.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (6 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

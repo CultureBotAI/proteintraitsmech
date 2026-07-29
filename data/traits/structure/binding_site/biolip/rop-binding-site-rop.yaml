@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:ROP
 synonyms:
@@ -26,4 +26,96 @@ canonical_examples:
     protein_label: "4WGF chain A (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 4wgf chain A (resolution 2.34021 Å); binding residues: S59 V113 C118"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of PROPIONAMIDE at the PROPIONAMIDE-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 1i8n chain A. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: PROPIONAMIDE
+    node_type: LIGAND
+    grounding: CHEBI:45422
+    xrefs:
+    - pdb.ligand:ROP
+  - node_id: site
+    label: PROPIONAMIDE-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_ROP
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 1I8N chain A (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:Q01747
+  - node_id: resD69
+    label: binding residue D69 (PDB 1i8n chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q01747
+  - node_id: resR72
+    label: binding residue R72 (PDB 1i8n chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q01747
+  edges:
+  - subject: resD69
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: D69 contacts the bound PROPIONAMIDE.
+    evidence:
+    - reference: PDB:1i8n
+      snippet: D69 R72
+      notes: 'BioLiP2 record line for PDB 1i8n chain A, ligand ROP: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:11468390 for this structure.'
+  - subject: resD69
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: D69 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:1i8n
+      snippet: D69 R72
+      notes: 'BioLiP2 record line for PDB 1i8n chain A, ligand ROP: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:11468390 for this structure.'
+  - subject: resR72
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: R72 contacts the bound PROPIONAMIDE.
+    evidence:
+    - reference: PDB:1i8n
+      snippet: D69 R72
+      notes: 'BioLiP2 record line for PDB 1i8n chain A, ligand ROP: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:11468390 for this structure.'
+  - subject: resR72
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: R72 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:1i8n
+      snippet: D69 R72
+      notes: 'BioLiP2 record line for PDB 1i8n chain A, ligand ROP: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:11468390 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:1i8n
+      snippet: D69 R72
+      notes: 'BioLiP2 record line for PDB 1i8n chain A, ligand ROP: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:11468390 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:Q01747.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (5 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

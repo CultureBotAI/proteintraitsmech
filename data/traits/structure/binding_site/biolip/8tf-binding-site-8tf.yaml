@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:8TF
 synonyms:
@@ -18,4 +18,95 @@ canonical_examples:
     protein_label: "7Q34 chain D (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 7q34 chain D (resolution 2.6 Å); binding residues: W96 D100"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of ligand 8TF at the ligand 8TF-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 7q34 chain D. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: ligand 8TF
+    node_type: LIGAND
+    grounding: pdb.ligand:8TF
+    xrefs:
+    - pdb.ligand:8TF
+  - node_id: site
+    label: ligand 8TF-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_8TF
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 7Q34 chain D (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:A0A0A7SZD7
+  - node_id: resW96
+    label: binding residue W96 (PDB 7q34 chain D author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:A0A0A7SZD7
+  - node_id: resD100
+    label: binding residue D100 (PDB 7q34 chain D author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:A0A0A7SZD7
+  edges:
+  - subject: resW96
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: W96 contacts the bound ligand 8TF.
+    evidence:
+    - reference: PDB:7q34
+      snippet: W96 D100
+      notes: 'BioLiP2 record line for PDB 7q34 chain D, ligand 8TF: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: resW96
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: W96 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:7q34
+      snippet: W96 D100
+      notes: 'BioLiP2 record line for PDB 7q34 chain D, ligand 8TF: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: resD100
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: D100 contacts the bound ligand 8TF.
+    evidence:
+    - reference: PDB:7q34
+      snippet: W96 D100
+      notes: 'BioLiP2 record line for PDB 7q34 chain D, ligand 8TF: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: resD100
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: D100 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:7q34
+      snippet: W96 D100
+      notes: 'BioLiP2 record line for PDB 7q34 chain D, ligand 8TF: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:7q34
+      snippet: W96 D100
+      notes: 'BioLiP2 record line for PDB 7q34 chain D, ligand 8TF: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. Receptor mapped by BioLiP to UniProtKB:A0A0A7SZD7.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (5 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

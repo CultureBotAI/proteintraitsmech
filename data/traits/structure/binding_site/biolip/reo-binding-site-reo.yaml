@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:REO
 synonyms:
@@ -22,4 +22,115 @@ canonical_examples:
     protein_label: "7UUZ chain A (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 7uuz chain A (resolution 3.2 Å); binding residues: Q72 M90 Q94 W255 V293 F417"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of PERRHENATE at the PERRHENATE-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 1k4j chain A. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: PERRHENATE
+    node_type: LIGAND
+    grounding: CHEBI:49858
+    xrefs:
+    - pdb.ligand:REO
+  - node_id: site
+    label: PERRHENATE-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_REO
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 1K4J chain A (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:P54656
+  - node_id: resP117
+    label: binding residue P117 (PDB 1k4j chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P54656
+  - node_id: resS119
+    label: binding residue S119 (PDB 1k4j chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P54656
+  - node_id: activity
+    label: enzymatic activity EC 2.3.1.184
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0061579
+    description: GO molecular function for EC:2.3.1.184, via GO's own ec2go mapping.
+    xrefs:
+    - EC:2.3.1.184
+  edges:
+  - subject: resP117
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: P117 contacts the bound PERRHENATE.
+    evidence:
+    - reference: PDB:1k4j
+      snippet: P117 S119
+      notes: 'BioLiP2 record line for PDB 1k4j chain A, ligand REO: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:11931774 for this structure.'
+  - subject: resP117
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: P117 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:1k4j
+      snippet: P117 S119
+      notes: 'BioLiP2 record line for PDB 1k4j chain A, ligand REO: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:11931774 for this structure.'
+  - subject: resS119
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: S119 contacts the bound PERRHENATE.
+    evidence:
+    - reference: PDB:1k4j
+      snippet: P117 S119
+      notes: 'BioLiP2 record line for PDB 1k4j chain A, ligand REO: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:11931774 for this structure.'
+  - subject: resS119
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: S119 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:1k4j
+      snippet: P117 S119
+      notes: 'BioLiP2 record line for PDB 1k4j chain A, ligand REO: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:11931774 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:1k4j
+      snippet: P117 S119
+      notes: 'BioLiP2 record line for PDB 1k4j chain A, ligand REO: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:11931774 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:P54656.'
+  - subject: site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The site participates in this activity.
+    evidence:
+    - reference: PDB:1k4j
+      snippet: P117 S119
+      notes: 'BioLiP2 record line for PDB 1k4j chain A, ligand REO: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:11931774 for this structure. EC 2.3.1.184 recorded
+        by BioLiP for this receptor.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (6 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

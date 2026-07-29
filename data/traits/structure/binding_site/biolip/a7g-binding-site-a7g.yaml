@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:A7G
 synonyms:
@@ -18,4 +18,96 @@ canonical_examples:
     protein_label: "7KP8 chain A (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 7kp8 chain A (resolution 3.15 Å); binding residues: L57 L156"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of ligand A7G at the ligand A7G-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 7kp8 chain A. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: ligand A7G
+    node_type: LIGAND
+    grounding: pdb.ligand:A7G
+    xrefs:
+    - pdb.ligand:A7G
+  - node_id: site
+    label: ligand A7G-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_A7G
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 7KP8 chain A (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:P06804
+  - node_id: resL57
+    label: binding residue L57 (PDB 7kp8 chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06804
+  - node_id: resL156
+    label: binding residue L156 (PDB 7kp8 chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P06804
+  edges:
+  - subject: resL57
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: L57 contacts the bound ligand A7G.
+    evidence:
+    - reference: PDB:7kp8
+      snippet: L57 L156
+      notes: 'BioLiP2 record line for PDB 7kp8 chain A, ligand A7G: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:33495441 for this structure.'
+  - subject: resL57
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: L57 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:7kp8
+      snippet: L57 L156
+      notes: 'BioLiP2 record line for PDB 7kp8 chain A, ligand A7G: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:33495441 for this structure.'
+  - subject: resL156
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: L156 contacts the bound ligand A7G.
+    evidence:
+    - reference: PDB:7kp8
+      snippet: L57 L156
+      notes: 'BioLiP2 record line for PDB 7kp8 chain A, ligand A7G: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:33495441 for this structure.'
+  - subject: resL156
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: L156 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:7kp8
+      snippet: L57 L156
+      notes: 'BioLiP2 record line for PDB 7kp8 chain A, ligand A7G: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:33495441 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:7kp8
+      snippet: L57 L156
+      notes: 'BioLiP2 record line for PDB 7kp8 chain A, ligand A7G: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:33495441 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:P06804.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (5 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

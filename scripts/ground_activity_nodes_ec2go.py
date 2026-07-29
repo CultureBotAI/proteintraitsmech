@@ -32,7 +32,10 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 EC2GO = REPO / "data" / "raw" / "ec" / "ec2go"
-MCSA_DIR = REPO / "data" / "traits" / "structure" / "active_site" / "mcsa"
+# M-CSA catalytic sites and BioLiP binding sites both emit an `activity` node
+# carrying EC xrefs and no grounding; the same lookup serves both.
+DIRS = [REPO / "data" / "traits" / "structure" / "active_site" / "mcsa",
+        REPO / "data" / "traits" / "structure" / "binding_site" / "biolip"]
 
 
 def load_ec2go() -> dict:
@@ -69,7 +72,7 @@ def main() -> int:
     table = load_ec2go()
     stat = collections.Counter()
 
-    for f in sorted(MCSA_DIR.glob("*.yaml")):
+    for f in sorted(p for d in DIRS for p in d.glob("*.yaml")):
         text = f.read_text(encoding="utf-8")
         # the activity node is the only one with `node_id: activity`; edit it in
         # place so the rest of the record stays byte-identical

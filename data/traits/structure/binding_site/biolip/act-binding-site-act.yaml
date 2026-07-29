@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:ACT
 synonyms:
@@ -34,4 +34,117 @@ canonical_examples:
     protein_label: "1BIN chain A (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 1bin chain A (resolution 2.2 Å); binding residues: F44 H61 L65"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of ACETATE ION at the ACETATE ION-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 1agn chain A. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: ACETATE ION
+    node_type: LIGAND
+    grounding: CHEBI:30089
+    xrefs:
+    - pdb.ligand:ACT
+  - node_id: site
+    label: ACETATE ION-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_ACT
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 1AGN chain A (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:P40394
+  - node_id: resE357
+    label: binding residue E357 (PDB 1agn chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P40394
+  - node_id: resE360
+    label: binding residue E360 (PDB 1agn chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P40394
+  - node_id: activity
+    label: enzymatic activity EC 1.1.1.1, 1.1.1.105, 1.1.1.66
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0004022
+    description: GO molecular function for EC:1.1.1.1, via GO's own ec2go mapping.
+    xrefs:
+    - EC:1.1.1.1
+    - EC:1.1.1.105
+    - EC:1.1.1.66
+  edges:
+  - subject: resE357
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: E357 contacts the bound ACETATE ION.
+    evidence:
+    - reference: PDB:1agn
+      snippet: E357 E360
+      notes: 'BioLiP2 record line for PDB 1agn chain A, ligand ACT: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:9228021 for this structure.'
+  - subject: resE357
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: E357 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:1agn
+      snippet: E357 E360
+      notes: 'BioLiP2 record line for PDB 1agn chain A, ligand ACT: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:9228021 for this structure.'
+  - subject: resE360
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: E360 contacts the bound ACETATE ION.
+    evidence:
+    - reference: PDB:1agn
+      snippet: E357 E360
+      notes: 'BioLiP2 record line for PDB 1agn chain A, ligand ACT: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:9228021 for this structure.'
+  - subject: resE360
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: E360 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:1agn
+      snippet: E357 E360
+      notes: 'BioLiP2 record line for PDB 1agn chain A, ligand ACT: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:9228021 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:1agn
+      snippet: E357 E360
+      notes: 'BioLiP2 record line for PDB 1agn chain A, ligand ACT: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:9228021 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:P40394.'
+  - subject: site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The site participates in this activity.
+    evidence:
+    - reference: PDB:1agn
+      snippet: E357 E360
+      notes: 'BioLiP2 record line for PDB 1agn chain A, ligand ACT: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:9228021 for this structure. EC 1.1.1.1, 1.1.1.105,
+        1.1.1.66 recorded by BioLiP for this receptor.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (6 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

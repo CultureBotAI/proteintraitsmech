@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:S17
 synonyms:
@@ -18,4 +18,115 @@ canonical_examples:
     protein_label: "2VCG chain D (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 2vcg chain D (resolution 1.9 Å); binding residues: E346 F347"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of ligand S17 at the ligand S17-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 2vcg chain D. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: ligand S17
+    node_type: LIGAND
+    grounding: pdb.ligand:S17
+    xrefs:
+    - pdb.ligand:S17
+  - node_id: site
+    label: ligand S17-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_S17
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 2VCG chain D (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:Q70I53
+  - node_id: resE346
+    label: binding residue E346 (PDB 2vcg chain D author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q70I53
+  - node_id: resF347
+    label: binding residue F347 (PDB 2vcg chain D author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q70I53
+  - node_id: activity
+    label: enzymatic activity EC 3.5.1.-
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0016811
+    description: GO molecular function for EC:3.5.1.-, via GO's own ec2go mapping.
+    xrefs:
+    - EC:3.5.1.-
+  edges:
+  - subject: resE346
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: E346 contacts the bound ligand S17.
+    evidence:
+    - reference: PDB:2vcg
+      snippet: E346 F347
+      notes: 'BioLiP2 record line for PDB 2vcg chain D, ligand S17: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:18054239 for this structure.'
+  - subject: resE346
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: E346 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:2vcg
+      snippet: E346 F347
+      notes: 'BioLiP2 record line for PDB 2vcg chain D, ligand S17: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:18054239 for this structure.'
+  - subject: resF347
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: F347 contacts the bound ligand S17.
+    evidence:
+    - reference: PDB:2vcg
+      snippet: E346 F347
+      notes: 'BioLiP2 record line for PDB 2vcg chain D, ligand S17: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:18054239 for this structure.'
+  - subject: resF347
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: F347 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:2vcg
+      snippet: E346 F347
+      notes: 'BioLiP2 record line for PDB 2vcg chain D, ligand S17: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:18054239 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:2vcg
+      snippet: E346 F347
+      notes: 'BioLiP2 record line for PDB 2vcg chain D, ligand S17: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:18054239 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:Q70I53.'
+  - subject: site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The site participates in this activity.
+    evidence:
+    - reference: PDB:2vcg
+      snippet: E346 F347
+      notes: 'BioLiP2 record line for PDB 2vcg chain D, ligand S17: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:18054239 for this structure. EC 3.5.1.- recorded by
+        BioLiP for this receptor.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (6 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

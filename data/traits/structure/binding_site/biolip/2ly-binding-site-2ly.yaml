@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:2LY
 synonyms:
@@ -18,4 +18,96 @@ canonical_examples:
     protein_label: "4NRC chain A (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 4nrc chain A (resolution 1.86 Å); binding residues: P1888 F1889"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of ligand 2LY at the ligand 2LY-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 4nrc chain A. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: ligand 2LY
+    node_type: LIGAND
+    grounding: pdb.ligand:2LY
+    xrefs:
+    - pdb.ligand:2LY
+  - node_id: site
+    label: ligand 2LY-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_2LY
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 4NRC chain A (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:Q9UIF8
+  - node_id: resP1888
+    label: binding residue P1888 (PDB 4nrc chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9UIF8
+  - node_id: resF1889
+    label: binding residue F1889 (PDB 4nrc chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9UIF8
+  edges:
+  - subject: resP1888
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: P1888 contacts the bound ligand 2LY.
+    evidence:
+    - reference: PDB:4nrc
+      snippet: P1888 F1889
+      notes: 'BioLiP2 record line for PDB 4nrc chain A, ligand 2LY: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:24304323 for this structure.'
+  - subject: resP1888
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: P1888 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:4nrc
+      snippet: P1888 F1889
+      notes: 'BioLiP2 record line for PDB 4nrc chain A, ligand 2LY: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:24304323 for this structure.'
+  - subject: resF1889
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: F1889 contacts the bound ligand 2LY.
+    evidence:
+    - reference: PDB:4nrc
+      snippet: P1888 F1889
+      notes: 'BioLiP2 record line for PDB 4nrc chain A, ligand 2LY: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:24304323 for this structure.'
+  - subject: resF1889
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: F1889 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:4nrc
+      snippet: P1888 F1889
+      notes: 'BioLiP2 record line for PDB 4nrc chain A, ligand 2LY: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:24304323 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:4nrc
+      snippet: P1888 F1889
+      notes: 'BioLiP2 record line for PDB 4nrc chain A, ligand 2LY: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:24304323 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:Q9UIF8.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (5 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

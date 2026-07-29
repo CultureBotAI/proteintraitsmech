@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:G1V
 synonyms:
@@ -18,4 +18,121 @@ canonical_examples:
     protein_label: "8PVY chain D (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 8pvy chain D (resolution 3.02 Å); binding residues: I133 S134 T135"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of ligand G1V at the ligand G1V-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 8pvy chain D. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 3 binding residues.
+  nodes:
+  - node_id: ligand
+    label: ligand G1V
+    node_type: LIGAND
+    grounding: pdb.ligand:G1V
+    xrefs:
+    - pdb.ligand:G1V
+  - node_id: site
+    label: ligand G1V-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_G1V
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 8PVY chain D (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:Q15018
+  - node_id: resI133
+    label: binding residue I133 (PDB 8pvy chain D author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q15018
+  - node_id: resS134
+    label: binding residue S134 (PDB 8pvy chain D author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q15018
+  - node_id: resT135
+    label: binding residue T135 (PDB 8pvy chain D author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q15018
+  edges:
+  - subject: resI133
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: I133 contacts the bound ligand G1V.
+    evidence:
+    - reference: PDB:8pvy
+      snippet: I133 S134 T135
+      notes: 'BioLiP2 record line for PDB 8pvy chain D, ligand G1V: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: resI133
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: I133 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:8pvy
+      snippet: I133 S134 T135
+      notes: 'BioLiP2 record line for PDB 8pvy chain D, ligand G1V: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: resS134
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: S134 contacts the bound ligand G1V.
+    evidence:
+    - reference: PDB:8pvy
+      snippet: I133 S134 T135
+      notes: 'BioLiP2 record line for PDB 8pvy chain D, ligand G1V: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: resS134
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: S134 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:8pvy
+      snippet: I133 S134 T135
+      notes: 'BioLiP2 record line for PDB 8pvy chain D, ligand G1V: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: resT135
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: T135 contacts the bound ligand G1V.
+    evidence:
+    - reference: PDB:8pvy
+      snippet: I133 S134 T135
+      notes: 'BioLiP2 record line for PDB 8pvy chain D, ligand G1V: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: resT135
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: T135 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:8pvy
+      snippet: I133 S134 T135
+      notes: 'BioLiP2 record line for PDB 8pvy chain D, ligand G1V: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:8pvy
+      snippet: I133 S134 T135
+      notes: 'BioLiP2 record line for PDB 8pvy chain D, ligand G1V: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. Receptor mapped by BioLiP to UniProtKB:Q15018.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (7 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

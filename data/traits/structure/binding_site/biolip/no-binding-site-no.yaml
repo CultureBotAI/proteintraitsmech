@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:NO
 synonyms:
@@ -26,4 +26,116 @@ canonical_examples:
     protein_label: "5Y5F chain A (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 5y5f chain A (resolution 1.5 Å); binding residues: A239 G240"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of NITRIC OXIDE at the NITRIC OXIDE-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 1aom chain B. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: NITRIC OXIDE
+    node_type: LIGAND
+    grounding: CHEBI:84879
+    xrefs:
+    - pdb.ligand:NO
+  - node_id: site
+    label: NITRIC OXIDE-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_NO
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 1AOM chain B (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:P72181
+  - node_id: resY25
+    label: binding residue Y25 (PDB 1aom chain B author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P72181
+  - node_id: resH388
+    label: binding residue H388 (PDB 1aom chain B author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P72181
+  - node_id: activity
+    label: enzymatic activity EC 1.7.2.1, 1.7.99.1
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0050421
+    description: GO molecular function for EC:1.7.2.1, via GO's own ec2go mapping.
+    xrefs:
+    - EC:1.7.2.1
+    - EC:1.7.99.1
+  edges:
+  - subject: resY25
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: Y25 contacts the bound NITRIC OXIDE.
+    evidence:
+    - reference: PDB:1aom
+      snippet: Y25 H388
+      notes: 'BioLiP2 record line for PDB 1aom chain B, ligand NO: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:9311786 for this structure.'
+  - subject: resY25
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: Y25 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:1aom
+      snippet: Y25 H388
+      notes: 'BioLiP2 record line for PDB 1aom chain B, ligand NO: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:9311786 for this structure.'
+  - subject: resH388
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: H388 contacts the bound NITRIC OXIDE.
+    evidence:
+    - reference: PDB:1aom
+      snippet: Y25 H388
+      notes: 'BioLiP2 record line for PDB 1aom chain B, ligand NO: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:9311786 for this structure.'
+  - subject: resH388
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: H388 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:1aom
+      snippet: Y25 H388
+      notes: 'BioLiP2 record line for PDB 1aom chain B, ligand NO: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:9311786 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:1aom
+      snippet: Y25 H388
+      notes: 'BioLiP2 record line for PDB 1aom chain B, ligand NO: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:9311786 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:P72181.'
+  - subject: site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The site participates in this activity.
+    evidence:
+    - reference: PDB:1aom
+      snippet: Y25 H388
+      notes: 'BioLiP2 record line for PDB 1aom chain B, ligand NO: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:9311786 for this structure. EC 1.7.2.1, 1.7.99.1 recorded
+        by BioLiP for this receptor.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (6 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

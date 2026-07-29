@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:FWN
 synonyms:
@@ -18,4 +18,96 @@ canonical_examples:
     protein_label: "8CHA chain A (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 8cha chain A (resolution 1.81 Å); binding residues: K120 N157"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of 2-[2-(2-ethoxyethoxy)ethoxy]ethanol at the 2-[2-(2-ethoxyethoxy)ethoxy]ethanol-binding
+    site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 8cha chain A. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: 2-[2-(2-ethoxyethoxy)ethoxy]ethanol
+    node_type: LIGAND
+    grounding: pdb.ligand:FWN
+    xrefs:
+    - pdb.ligand:FWN
+  - node_id: site
+    label: 2-[2-(2-ethoxyethoxy)ethoxy]ethanol-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_FWN
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 8CHA chain A (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:P12318
+  - node_id: resK120
+    label: binding residue K120 (PDB 8cha chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P12318
+  - node_id: resN157
+    label: binding residue N157 (PDB 8cha chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P12318
+  edges:
+  - subject: resK120
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: K120 contacts the bound 2-[2-(2-ethoxyethoxy)ethoxy]ethanol.
+    evidence:
+    - reference: PDB:8cha
+      snippet: K120 N157
+      notes: 'BioLiP2 record line for PDB 8cha chain A, ligand FWN: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: resK120
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: K120 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:8cha
+      snippet: K120 N157
+      notes: 'BioLiP2 record line for PDB 8cha chain A, ligand FWN: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: resN157
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: N157 contacts the bound 2-[2-(2-ethoxyethoxy)ethoxy]ethanol.
+    evidence:
+    - reference: PDB:8cha
+      snippet: K120 N157
+      notes: 'BioLiP2 record line for PDB 8cha chain A, ligand FWN: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: resN157
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: N157 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:8cha
+      snippet: K120 N157
+      notes: 'BioLiP2 record line for PDB 8cha chain A, ligand FWN: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:8cha
+      snippet: K120 N157
+      notes: 'BioLiP2 record line for PDB 8cha chain A, ligand FWN: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. Receptor mapped by BioLiP to UniProtKB:P12318.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (5 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

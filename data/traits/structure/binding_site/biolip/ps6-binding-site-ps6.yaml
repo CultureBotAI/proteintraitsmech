@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:PS6
 synonyms:
@@ -18,4 +18,96 @@ canonical_examples:
     protein_label: "5DYE chain D (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 5dye chain D (resolution 3.5 Å); binding residues: G159 S160"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of ligand PS6 at the ligand PS6-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 5dye chain D. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: ligand PS6
+    node_type: LIGAND
+    grounding: pdb.ligand:PS6
+    xrefs:
+    - pdb.ligand:PS6
+  - node_id: site
+    label: ligand PS6-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_PS6
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 5DYE chain D (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:P55064
+  - node_id: resG159
+    label: binding residue G159 (PDB 5dye chain D author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P55064
+  - node_id: resS160
+    label: binding residue S160 (PDB 5dye chain D author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P55064
+  edges:
+  - subject: resG159
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: G159 contacts the bound ligand PS6.
+    evidence:
+    - reference: PDB:5dye
+      snippet: G159 S160
+      notes: 'BioLiP2 record line for PDB 5dye chain D, ligand PS6: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:26569106 for this structure.'
+  - subject: resG159
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: G159 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:5dye
+      snippet: G159 S160
+      notes: 'BioLiP2 record line for PDB 5dye chain D, ligand PS6: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:26569106 for this structure.'
+  - subject: resS160
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: S160 contacts the bound ligand PS6.
+    evidence:
+    - reference: PDB:5dye
+      snippet: G159 S160
+      notes: 'BioLiP2 record line for PDB 5dye chain D, ligand PS6: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:26569106 for this structure.'
+  - subject: resS160
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: S160 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:5dye
+      snippet: G159 S160
+      notes: 'BioLiP2 record line for PDB 5dye chain D, ligand PS6: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:26569106 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:5dye
+      snippet: G159 S160
+      notes: 'BioLiP2 record line for PDB 5dye chain D, ligand PS6: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:26569106 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:P55064.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (5 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

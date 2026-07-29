@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:F66
 synonyms:
@@ -18,4 +18,116 @@ canonical_examples:
     protein_label: "8WKL chain G (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 8wkl chain G (resolution 2.67 Å); binding residues: F226 E309"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of 2-(2-methyl-1H-indol-3-yl)ethanamine at the 2-(2-methyl-1H-indol-3-yl)ethanamine-binding
+    site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 8wkl chain G. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: 2-(2-methyl-1H-indol-3-yl)ethanamine
+    node_type: LIGAND
+    grounding: pdb.ligand:F66
+    xrefs:
+    - pdb.ligand:F66
+  - node_id: site
+    label: 2-(2-methyl-1H-indol-3-yl)ethanamine-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_F66
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 8WKL chain G (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:P68175
+  - node_id: resF226
+    label: binding residue F226 (PDB 8wkl chain G author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P68175
+  - node_id: resE309
+    label: binding residue E309 (PDB 8wkl chain G author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P68175
+  - node_id: activity
+    label: enzymatic activity EC 4.3.3.2
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0016843
+    description: Grounded to the EC *class*-level GO term (amine-lyase activity); GO's ec2go has no term for the exact EC:4.3.3.2, so this is broader than the enzyme's specific activity.
+    xrefs:
+    - EC:4.3.3.2
+  edges:
+  - subject: resF226
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: F226 contacts the bound 2-(2-methyl-1H-indol-3-yl)ethanamine.
+    evidence:
+    - reference: PDB:8wkl
+      snippet: F226 E309
+      notes: 'BioLiP2 record line for PDB 8wkl chain G, ligand F66: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:38354931 for this structure.'
+  - subject: resF226
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: F226 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:8wkl
+      snippet: F226 E309
+      notes: 'BioLiP2 record line for PDB 8wkl chain G, ligand F66: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:38354931 for this structure.'
+  - subject: resE309
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: E309 contacts the bound 2-(2-methyl-1H-indol-3-yl)ethanamine.
+    evidence:
+    - reference: PDB:8wkl
+      snippet: F226 E309
+      notes: 'BioLiP2 record line for PDB 8wkl chain G, ligand F66: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:38354931 for this structure.'
+  - subject: resE309
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: E309 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:8wkl
+      snippet: F226 E309
+      notes: 'BioLiP2 record line for PDB 8wkl chain G, ligand F66: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:38354931 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:8wkl
+      snippet: F226 E309
+      notes: 'BioLiP2 record line for PDB 8wkl chain G, ligand F66: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:38354931 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:P68175.'
+  - subject: site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The site participates in this activity.
+    evidence:
+    - reference: PDB:8wkl
+      snippet: F226 E309
+      notes: 'BioLiP2 record line for PDB 8wkl chain G, ligand F66: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:38354931 for this structure. EC 4.3.3.2 recorded by
+        BioLiP for this receptor.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (6 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

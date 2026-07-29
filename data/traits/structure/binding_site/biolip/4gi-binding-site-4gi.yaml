@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:4GI
 synonyms:
@@ -18,4 +18,106 @@ canonical_examples:
     protein_label: "4GIV chain A (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 4giv chain A (resolution 2.45 Å); binding residues: W66 Y89"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of ligand 4GI at the ligand 4GI-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 4giv chain A. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: ligand 4GI
+    node_type: LIGAND
+    grounding: pdb.ligand:4GI
+    xrefs:
+    - pdb.ligand:4GI
+  - node_id: site
+    label: ligand 4GI-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_4GI
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: resW66
+    label: binding residue W66 (PDB 4giv chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+  - node_id: resY89
+    label: binding residue Y89 (PDB 4giv chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+  - node_id: activity
+    label: enzymatic activity EC 5.2.1.8
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0003755
+    description: GO molecular function for EC:5.2.1.8, via GO's own ec2go mapping.
+    xrefs:
+    - EC:5.2.1.8
+  edges:
+  - subject: resW66
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: W66 contacts the bound ligand 4GI.
+    evidence:
+    - reference: PDB:4giv
+      snippet: W66 Y89
+      notes: 'BioLiP2 record line for PDB 4giv chain A, ligand 4GI: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:24366729 for this structure. BioLiP maps this chain
+        to several accessions (Q12306,Q3JK38), a chimeric or fusion construct, so no single protein is
+        asserted for these residues.'
+  - subject: resW66
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: W66 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:4giv
+      snippet: W66 Y89
+      notes: 'BioLiP2 record line for PDB 4giv chain A, ligand 4GI: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:24366729 for this structure. BioLiP maps this chain
+        to several accessions (Q12306,Q3JK38), a chimeric or fusion construct, so no single protein is
+        asserted for these residues.'
+  - subject: resY89
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: Y89 contacts the bound ligand 4GI.
+    evidence:
+    - reference: PDB:4giv
+      snippet: W66 Y89
+      notes: 'BioLiP2 record line for PDB 4giv chain A, ligand 4GI: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:24366729 for this structure. BioLiP maps this chain
+        to several accessions (Q12306,Q3JK38), a chimeric or fusion construct, so no single protein is
+        asserted for these residues.'
+  - subject: resY89
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: Y89 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:4giv
+      snippet: W66 Y89
+      notes: 'BioLiP2 record line for PDB 4giv chain A, ligand 4GI: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:24366729 for this structure. BioLiP maps this chain
+        to several accessions (Q12306,Q3JK38), a chimeric or fusion construct, so no single protein is
+        asserted for these residues.'
+  - subject: site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The site participates in this activity.
+    evidence:
+    - reference: PDB:4giv
+      snippet: W66 Y89
+      notes: 'BioLiP2 record line for PDB 4giv chain A, ligand 4GI: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:24366729 for this structure. BioLiP maps this chain
+        to several accessions (Q12306,Q3JK38), a chimeric or fusion construct, so no single protein is
+        asserted for these residues. EC 5.2.1.8 recorded by BioLiP for this receptor.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (5 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:HLG
 synonyms:
@@ -18,4 +18,114 @@ canonical_examples:
     protein_label: "6E1X chain C (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 6e1x chain C (resolution 1.35 Å); binding residues: W31 Q86"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of N-{3-[(4-aminobutyl)amino]propyl}acetamide at the N-{3-[(4-aminobutyl)amino]propyl}acetamide-binding
+    site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 6e1x chain C. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: N-{3-[(4-aminobutyl)amino]propyl}acetamide
+    node_type: LIGAND
+    grounding: CHEBI:17927
+    xrefs:
+    - pdb.ligand:HLG
+  - node_id: site
+    label: N-{3-[(4-aminobutyl)amino]propyl}acetamide-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_HLG
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 6E1X chain C (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:Q9KL03
+  - node_id: resW31
+    label: binding residue W31 (PDB 6e1x chain C author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9KL03
+  - node_id: resQ86
+    label: binding residue Q86 (PDB 6e1x chain C author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q9KL03
+  - node_id: activity
+    label: enzymatic activity EC 2.3.1.57
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0004145
+    description: GO molecular function for EC:2.3.1.57, via GO's own ec2go mapping.
+    xrefs:
+    - EC:2.3.1.57
+  edges:
+  - subject: resW31
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: W31 contacts the bound N-{3-[(4-aminobutyl)amino]propyl}acetamide.
+    evidence:
+    - reference: PDB:6e1x
+      snippet: W31 Q86
+      notes: 'BioLiP2 record line for PDB 6e1x chain C, ligand HLG: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: resW31
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: W31 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:6e1x
+      snippet: W31 Q86
+      notes: 'BioLiP2 record line for PDB 6e1x chain C, ligand HLG: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: resQ86
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: Q86 contacts the bound N-{3-[(4-aminobutyl)amino]propyl}acetamide.
+    evidence:
+    - reference: PDB:6e1x
+      snippet: W31 Q86
+      notes: 'BioLiP2 record line for PDB 6e1x chain C, ligand HLG: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: resQ86
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: Q86 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:6e1x
+      snippet: W31 Q86
+      notes: 'BioLiP2 record line for PDB 6e1x chain C, ligand HLG: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:6e1x
+      snippet: W31 Q86
+      notes: 'BioLiP2 record line for PDB 6e1x chain C, ligand HLG: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. Receptor mapped by BioLiP to UniProtKB:Q9KL03.'
+  - subject: site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The site participates in this activity.
+    evidence:
+    - reference: PDB:6e1x
+      snippet: W31 Q86
+      notes: 'BioLiP2 record line for PDB 6e1x chain C, ligand HLG: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. EC 2.3.1.57 recorded by BioLiP for this receptor.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (6 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

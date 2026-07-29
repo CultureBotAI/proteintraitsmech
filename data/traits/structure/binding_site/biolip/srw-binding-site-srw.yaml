@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:SRW
 synonyms:
@@ -18,4 +18,115 @@ canonical_examples:
     protein_label: "8JPB chain G (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 8jpb chain G (resolution 3.07 Å); binding residues: L4 E5"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of ligand SRW at the ligand SRW-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 8jpb chain G. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: ligand SRW
+    node_type: LIGAND
+    grounding: pdb.ligand:SRW
+    xrefs:
+    - pdb.ligand:SRW
+  - node_id: site
+    label: ligand SRW-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_SRW
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 8JPB chain G (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:P21146
+  - node_id: resL4
+    label: binding residue L4 (PDB 8jpb chain G author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P21146
+  - node_id: resE5
+    label: binding residue E5 (PDB 8jpb chain G author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P21146
+  - node_id: activity
+    label: enzymatic activity EC 2.7.11.15
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0047696
+    description: GO molecular function for EC:2.7.11.15, via GO's own ec2go mapping.
+    xrefs:
+    - EC:2.7.11.15
+  edges:
+  - subject: resL4
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: L4 contacts the bound ligand SRW.
+    evidence:
+    - reference: PDB:8jpb
+      snippet: L4 E5
+      notes: 'BioLiP2 record line for PDB 8jpb chain G, ligand SRW: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:37532940 for this structure.'
+  - subject: resL4
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: L4 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:8jpb
+      snippet: L4 E5
+      notes: 'BioLiP2 record line for PDB 8jpb chain G, ligand SRW: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:37532940 for this structure.'
+  - subject: resE5
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: E5 contacts the bound ligand SRW.
+    evidence:
+    - reference: PDB:8jpb
+      snippet: L4 E5
+      notes: 'BioLiP2 record line for PDB 8jpb chain G, ligand SRW: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:37532940 for this structure.'
+  - subject: resE5
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: E5 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:8jpb
+      snippet: L4 E5
+      notes: 'BioLiP2 record line for PDB 8jpb chain G, ligand SRW: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:37532940 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:8jpb
+      snippet: L4 E5
+      notes: 'BioLiP2 record line for PDB 8jpb chain G, ligand SRW: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:37532940 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:P21146.'
+  - subject: site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The site participates in this activity.
+    evidence:
+    - reference: PDB:8jpb
+      snippet: L4 E5
+      notes: 'BioLiP2 record line for PDB 8jpb chain G, ligand SRW: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:37532940 for this structure. EC 2.7.11.15 recorded
+        by BioLiP for this receptor.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (6 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

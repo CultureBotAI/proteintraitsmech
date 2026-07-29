@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:CGQ
 synonyms:
@@ -18,4 +18,115 @@ canonical_examples:
     protein_label: "5TVF chain A (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 5tvf chain A (resolution 2.42 Å); binding residues: F28 L83"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of ligand CGQ at the ligand CGQ-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 5tvf chain A. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: ligand CGQ
+    node_type: LIGAND
+    grounding: pdb.ligand:CGQ
+    xrefs:
+    - pdb.ligand:CGQ
+  - node_id: site
+    label: ligand CGQ-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_CGQ
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 5TVF chain A (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:Q587A7
+  - node_id: resF28
+    label: binding residue F28 (PDB 5tvf chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q587A7
+  - node_id: resL83
+    label: binding residue L83 (PDB 5tvf chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q587A7
+  - node_id: activity
+    label: enzymatic activity EC 4.1.1.50
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0004014
+    description: GO molecular function for EC:4.1.1.50, via GO's own ec2go mapping.
+    xrefs:
+    - EC:4.1.1.50
+  edges:
+  - subject: resF28
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: F28 contacts the bound ligand CGQ.
+    evidence:
+    - reference: PDB:5tvf
+      snippet: F28 L83
+      notes: 'BioLiP2 record line for PDB 5tvf chain A, ligand CGQ: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:27977001 for this structure.'
+  - subject: resF28
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: F28 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:5tvf
+      snippet: F28 L83
+      notes: 'BioLiP2 record line for PDB 5tvf chain A, ligand CGQ: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:27977001 for this structure.'
+  - subject: resL83
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: L83 contacts the bound ligand CGQ.
+    evidence:
+    - reference: PDB:5tvf
+      snippet: F28 L83
+      notes: 'BioLiP2 record line for PDB 5tvf chain A, ligand CGQ: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:27977001 for this structure.'
+  - subject: resL83
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: L83 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:5tvf
+      snippet: F28 L83
+      notes: 'BioLiP2 record line for PDB 5tvf chain A, ligand CGQ: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:27977001 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:5tvf
+      snippet: F28 L83
+      notes: 'BioLiP2 record line for PDB 5tvf chain A, ligand CGQ: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:27977001 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:Q587A7.'
+  - subject: site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The site participates in this activity.
+    evidence:
+    - reference: PDB:5tvf
+      snippet: F28 L83
+      notes: 'BioLiP2 record line for PDB 5tvf chain A, ligand CGQ: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:27977001 for this structure. EC 4.1.1.50 recorded by
+        BioLiP for this receptor.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (6 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

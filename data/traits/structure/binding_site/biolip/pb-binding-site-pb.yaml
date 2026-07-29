@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:PB
 synonyms:
@@ -18,4 +18,96 @@ canonical_examples:
     protein_label: "5GPE chain D (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 5gpe chain D (resolution 2.01 Å); binding residues: C113 C122"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of LEAD (II) ION at the LEAD (II) ION-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 5gpe chain D. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: LEAD (II) ION
+    node_type: LIGAND
+    grounding: CHEBI:49807
+    xrefs:
+    - pdb.ligand:PB
+  - node_id: site
+    label: LEAD (II) ION-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_PB
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 5GPE chain D (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:Q1LKZ5
+  - node_id: resC113
+    label: binding residue C113 (PDB 5gpe chain D author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q1LKZ5
+  - node_id: resC122
+    label: binding residue C122 (PDB 5gpe chain D author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q1LKZ5
+  edges:
+  - subject: resC113
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: C113 contacts the bound LEAD (II) ION.
+    evidence:
+    - reference: PDB:5gpe
+      snippet: C113 C122
+      notes: 'BioLiP2 record line for PDB 5gpe chain D, ligand PB: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:27989185 for this structure.'
+  - subject: resC113
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: C113 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:5gpe
+      snippet: C113 C122
+      notes: 'BioLiP2 record line for PDB 5gpe chain D, ligand PB: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:27989185 for this structure.'
+  - subject: resC122
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: C122 contacts the bound LEAD (II) ION.
+    evidence:
+    - reference: PDB:5gpe
+      snippet: C113 C122
+      notes: 'BioLiP2 record line for PDB 5gpe chain D, ligand PB: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:27989185 for this structure.'
+  - subject: resC122
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: C122 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:5gpe
+      snippet: C113 C122
+      notes: 'BioLiP2 record line for PDB 5gpe chain D, ligand PB: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:27989185 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:5gpe
+      snippet: C113 C122
+      notes: 'BioLiP2 record line for PDB 5gpe chain D, ligand PB: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:27989185 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:Q1LKZ5.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (5 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

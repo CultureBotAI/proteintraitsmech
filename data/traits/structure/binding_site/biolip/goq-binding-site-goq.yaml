@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:GOQ
 synonyms:
@@ -22,4 +22,96 @@ canonical_examples:
     protein_label: "8XQP chain R (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 8xqp chain R (resolution 3.29 Å); binding residues: A100 S194 F198 F237 Y272 H276"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of ligand GOQ at the ligand GOQ-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 8xql chain A. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: ligand GOQ
+    node_type: LIGAND
+    grounding: CHEBI:2825
+    xrefs:
+    - pdb.ligand:GOQ
+  - node_id: site
+    label: ligand GOQ-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_GOQ
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 8XQL chain A (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:P63092
+  - node_id: resI239
+    label: binding residue I239 (PDB 8xql chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P63092
+  - node_id: resL243
+    label: binding residue L243 (PDB 8xql chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P63092
+  edges:
+  - subject: resI239
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: I239 contacts the bound ligand GOQ.
+    evidence:
+    - reference: PDB:8xql
+      snippet: I239 L243
+      notes: 'BioLiP2 record line for PDB 8xql chain A, ligand GOQ: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:38776963 for this structure.'
+  - subject: resI239
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: I239 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:8xql
+      snippet: I239 L243
+      notes: 'BioLiP2 record line for PDB 8xql chain A, ligand GOQ: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:38776963 for this structure.'
+  - subject: resL243
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: L243 contacts the bound ligand GOQ.
+    evidence:
+    - reference: PDB:8xql
+      snippet: I239 L243
+      notes: 'BioLiP2 record line for PDB 8xql chain A, ligand GOQ: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:38776963 for this structure.'
+  - subject: resL243
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: L243 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:8xql
+      snippet: I239 L243
+      notes: 'BioLiP2 record line for PDB 8xql chain A, ligand GOQ: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:38776963 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:8xql
+      snippet: I239 L243
+      notes: 'BioLiP2 record line for PDB 8xql chain A, ligand GOQ: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:38776963 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:P63092.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (5 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

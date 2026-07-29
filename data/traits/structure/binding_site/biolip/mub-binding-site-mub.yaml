@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:MUB
 synonyms:
@@ -34,4 +34,96 @@ canonical_examples:
     protein_label: "7Q4T chain AAA (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 7q4t chain AAA (resolution 1.27 Å); binding residues: R93 Q121"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of N-acetyl-alpha-muramic acid at the N-acetyl-alpha-muramic acid-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 1wco chain N. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: N-acetyl-alpha-muramic acid
+    node_type: LIGAND
+    grounding: CHEBI:47571
+    xrefs:
+    - pdb.ligand:MUB
+  - node_id: site
+    label: N-acetyl-alpha-muramic acid-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_MUB
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 1WCO chain N (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:P29559
+  - node_id: resI1
+    label: binding residue I1 (PDB 1wco chain N author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P29559
+  - node_id: resI4
+    label: binding residue I4 (PDB 1wco chain N author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P29559
+  edges:
+  - subject: resI1
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: I1 contacts the bound N-acetyl-alpha-muramic acid.
+    evidence:
+    - reference: PDB:1wco
+      snippet: I1 I4
+      notes: 'BioLiP2 record line for PDB 1wco chain N, ligand MUB: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:15361862 for this structure.'
+  - subject: resI1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: I1 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:1wco
+      snippet: I1 I4
+      notes: 'BioLiP2 record line for PDB 1wco chain N, ligand MUB: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:15361862 for this structure.'
+  - subject: resI4
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: I4 contacts the bound N-acetyl-alpha-muramic acid.
+    evidence:
+    - reference: PDB:1wco
+      snippet: I1 I4
+      notes: 'BioLiP2 record line for PDB 1wco chain N, ligand MUB: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:15361862 for this structure.'
+  - subject: resI4
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: I4 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:1wco
+      snippet: I1 I4
+      notes: 'BioLiP2 record line for PDB 1wco chain N, ligand MUB: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:15361862 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:1wco
+      snippet: I1 I4
+      notes: 'BioLiP2 record line for PDB 1wco chain N, ligand MUB: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:15361862 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:P29559.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (5 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

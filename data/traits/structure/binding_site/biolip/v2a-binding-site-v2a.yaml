@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:V2A
 synonyms:
@@ -18,4 +18,106 @@ canonical_examples:
     protein_label: "5IJC chain B (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 5ijc chain B (resolution 2.57 Å); binding residues: S413 F438"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of neoseptin 3 at the neoseptin 3-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 5ijc chain B. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: neoseptin 3
+    node_type: LIGAND
+    grounding: pdb.ligand:V2A
+    xrefs:
+    - pdb.ligand:V2A
+  - node_id: site
+    label: neoseptin 3-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_V2A
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: resS413
+    label: binding residue S413 (PDB 5ijc chain B author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+  - node_id: resF438
+    label: binding residue F438 (PDB 5ijc chain B author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+  - node_id: activity
+    label: enzymatic activity EC 3.2.2.6
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0061809
+    description: GO molecular function for EC:3.2.2.6, via GO's own ec2go mapping.
+    xrefs:
+    - EC:3.2.2.6
+  edges:
+  - subject: resS413
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: S413 contacts the bound neoseptin 3.
+    evidence:
+    - reference: PDB:5ijc
+      snippet: S413 F438
+      notes: 'BioLiP2 record line for PDB 5ijc chain B, ligand V2A: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:26831104 for this structure. BioLiP maps this chain
+        to several accessions (Q4G1L2,Q9QUK6), a chimeric or fusion construct, so no single protein is
+        asserted for these residues.'
+  - subject: resS413
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: S413 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:5ijc
+      snippet: S413 F438
+      notes: 'BioLiP2 record line for PDB 5ijc chain B, ligand V2A: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:26831104 for this structure. BioLiP maps this chain
+        to several accessions (Q4G1L2,Q9QUK6), a chimeric or fusion construct, so no single protein is
+        asserted for these residues.'
+  - subject: resF438
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: F438 contacts the bound neoseptin 3.
+    evidence:
+    - reference: PDB:5ijc
+      snippet: S413 F438
+      notes: 'BioLiP2 record line for PDB 5ijc chain B, ligand V2A: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:26831104 for this structure. BioLiP maps this chain
+        to several accessions (Q4G1L2,Q9QUK6), a chimeric or fusion construct, so no single protein is
+        asserted for these residues.'
+  - subject: resF438
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: F438 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:5ijc
+      snippet: S413 F438
+      notes: 'BioLiP2 record line for PDB 5ijc chain B, ligand V2A: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:26831104 for this structure. BioLiP maps this chain
+        to several accessions (Q4G1L2,Q9QUK6), a chimeric or fusion construct, so no single protein is
+        asserted for these residues.'
+  - subject: site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The site participates in this activity.
+    evidence:
+    - reference: PDB:5ijc
+      snippet: S413 F438
+      notes: 'BioLiP2 record line for PDB 5ijc chain B, ligand V2A: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:26831104 for this structure. BioLiP maps this chain
+        to several accessions (Q4G1L2,Q9QUK6), a chimeric or fusion construct, so no single protein is
+        asserted for these residues. EC 3.2.2.6 recorded by BioLiP for this receptor.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (5 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

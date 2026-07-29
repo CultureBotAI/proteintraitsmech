@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:TME
 synonyms:
@@ -22,4 +22,113 @@ canonical_examples:
     protein_label: "4ZDR chain A (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 4zdr chain A (resolution 2.899 Å); binding residues: K3 Q32"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of PROPANE at the PROPANE-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 4xg1 chain A. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: PROPANE
+    node_type: LIGAND
+    grounding: CHEBI:32879
+    xrefs:
+    - pdb.ligand:TME
+  - node_id: site
+    label: PROPANE-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_TME
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 4XG1 chain A (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:A1SR00
+  - node_id: resS127
+    label: binding residue S127 (PDB 4xg1 chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:A1SR00
+  - node_id: resI128
+    label: binding residue I128 (PDB 4xg1 chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:A1SR00
+  - node_id: activity
+    label: enzymatic activity EC 4.1.1.20
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0008836
+    description: GO molecular function for EC:4.1.1.20, via GO's own ec2go mapping.
+    xrefs:
+    - EC:4.1.1.20
+  edges:
+  - subject: resS127
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: S127 contacts the bound PROPANE.
+    evidence:
+    - reference: PDB:4xg1
+      snippet: S127 I128
+      notes: 'BioLiP2 record line for PDB 4xg1 chain A, ligand TME: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: resS127
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: S127 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:4xg1
+      snippet: S127 I128
+      notes: 'BioLiP2 record line for PDB 4xg1 chain A, ligand TME: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: resI128
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: I128 contacts the bound PROPANE.
+    evidence:
+    - reference: PDB:4xg1
+      snippet: S127 I128
+      notes: 'BioLiP2 record line for PDB 4xg1 chain A, ligand TME: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: resI128
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: I128 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:4xg1
+      snippet: S127 I128
+      notes: 'BioLiP2 record line for PDB 4xg1 chain A, ligand TME: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:4xg1
+      snippet: S127 I128
+      notes: 'BioLiP2 record line for PDB 4xg1 chain A, ligand TME: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. Receptor mapped by BioLiP to UniProtKB:A1SR00.'
+  - subject: site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The site participates in this activity.
+    evidence:
+    - reference: PDB:4xg1
+      snippet: S127 I128
+      notes: 'BioLiP2 record line for PDB 4xg1 chain A, ligand TME: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. EC 4.1.1.20 recorded by BioLiP for this receptor.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (6 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

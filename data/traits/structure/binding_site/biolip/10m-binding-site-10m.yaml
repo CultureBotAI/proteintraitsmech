@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:10M
 synonyms:
@@ -22,4 +22,96 @@ canonical_examples:
     protein_label: "5GUW chain B (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 5guw chain B (resolution 3.2 Å); binding residues: L270 W271 Y337"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of ligand 10M at the ligand 10M-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 5guw chain A. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: ligand 10M
+    node_type: LIGAND
+    grounding: pdb.ligand:10M
+    xrefs:
+    - pdb.ligand:10M
+  - node_id: site
+    label: ligand 10M-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_10M
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 5GUW chain A (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:Q59646
+  - node_id: resQ139
+    label: binding residue Q139 (PDB 5guw chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q59646
+  - node_id: resP142
+    label: binding residue P142 (PDB 5guw chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q59646
+  edges:
+  - subject: resQ139
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: Q139 contacts the bound ligand 10M.
+    evidence:
+    - reference: PDB:5guw
+      snippet: Q139 P142
+      notes: 'BioLiP2 record line for PDB 5guw chain A, ligand 10M: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:28847930 for this structure.'
+  - subject: resQ139
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: Q139 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:5guw
+      snippet: Q139 P142
+      notes: 'BioLiP2 record line for PDB 5guw chain A, ligand 10M: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:28847930 for this structure.'
+  - subject: resP142
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: P142 contacts the bound ligand 10M.
+    evidence:
+    - reference: PDB:5guw
+      snippet: Q139 P142
+      notes: 'BioLiP2 record line for PDB 5guw chain A, ligand 10M: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:28847930 for this structure.'
+  - subject: resP142
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: P142 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:5guw
+      snippet: Q139 P142
+      notes: 'BioLiP2 record line for PDB 5guw chain A, ligand 10M: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:28847930 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:5guw
+      snippet: Q139 P142
+      notes: 'BioLiP2 record line for PDB 5guw chain A, ligand 10M: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:28847930 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:Q59646.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (5 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

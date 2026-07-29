@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:3PK
 synonyms:
@@ -18,4 +18,97 @@ canonical_examples:
     protein_label: "4K7R chain A (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 4k7r chain A (resolution 2.094 Å); binding residues: C1 F119"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of (2S)-1-(pentanoyloxy)propan-2-yl hexanoate at the (2S)-1-(pentanoyloxy)propan-2-yl
+    hexanoate-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 4k7r chain A. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: (2S)-1-(pentanoyloxy)propan-2-yl hexanoate
+    node_type: LIGAND
+    grounding: pdb.ligand:3PK
+    xrefs:
+    - pdb.ligand:3PK
+  - node_id: site
+    label: (2S)-1-(pentanoyloxy)propan-2-yl hexanoate-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_3PK
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 4K7R chain A (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:P77211
+  - node_id: resC1
+    label: binding residue C1 (PDB 4k7r chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P77211
+  - node_id: resF119
+    label: binding residue F119 (PDB 4k7r chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P77211
+  edges:
+  - subject: resC1
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: C1 contacts the bound (2S)-1-(pentanoyloxy)propan-2-yl hexanoate.
+    evidence:
+    - reference: PDB:4k7r
+      snippet: C1 F119
+      notes: 'BioLiP2 record line for PDB 4k7r chain A, ligand 3PK: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:24099674 for this structure.'
+  - subject: resC1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: C1 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:4k7r
+      snippet: C1 F119
+      notes: 'BioLiP2 record line for PDB 4k7r chain A, ligand 3PK: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:24099674 for this structure.'
+  - subject: resF119
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: F119 contacts the bound (2S)-1-(pentanoyloxy)propan-2-yl hexanoate.
+    evidence:
+    - reference: PDB:4k7r
+      snippet: C1 F119
+      notes: 'BioLiP2 record line for PDB 4k7r chain A, ligand 3PK: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:24099674 for this structure.'
+  - subject: resF119
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: F119 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:4k7r
+      snippet: C1 F119
+      notes: 'BioLiP2 record line for PDB 4k7r chain A, ligand 3PK: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:24099674 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:4k7r
+      snippet: C1 F119
+      notes: 'BioLiP2 record line for PDB 4k7r chain A, ligand 3PK: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:24099674 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:P77211.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (5 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"
