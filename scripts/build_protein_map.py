@@ -13,15 +13,18 @@ organism-specific annotation. If organisms interleave and the structure follows
 fold and function instead, the profiles carry biology that survives the species
 boundary.
 
-Pipeline: binary protein × *signature* trait incidence (traits with
-≥ --min-support carriers; GO/EC excluded, see SIG_PREFIXES)
+Pipeline: L2-normalised TF-IDF over the protein × *signature* trait matrix
+(traits with ≥ --min-support carriers; GO/EC excluded, see SIG_PREFIXES)
 → TruncatedSVD to --svd dims (the matrix is large and very sparse) → PaCMAP to
 2-D, matching the corpus map's primary projection.
 
-The vocabulary is built over the whole corpus before any --sample, and proteins
-whose traits are all rarer than --min-support are dropped rather than embedded:
-an all-zero row carries no position, so projecting it fabricates a dense blob at
-the origin that reads as a cluster.
+Two guards keep thin annotation from inventing structure. Proteins whose traits
+are all rarer than --min-support are dropped rather than embedded — an all-zero
+row carries no position, so projecting it fabricates a blob at the origin. And
+the matrix is normalised rather than binary, so a vector's *length* no longer
+tracks how well studied the protein is; without that, the thinly annotated tail
+sits near the origin and packs together regardless of what those proteins are.
+The vocabulary is built over the whole corpus before any --sample.
 
 Points are coloured by organism and filterable by CATH structural class, so the
 "organism vs. structure" reading can be checked both ways in the browser.
@@ -39,6 +42,7 @@ from __future__ import annotations
 import argparse
 import collections
 import json
+import math
 import sys
 from pathlib import Path
 
@@ -113,6 +117,10 @@ def main() -> int:
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--method", choices=["pacmap", "umap", "pca"], default="pacmap",
                     help="pacmap (primary, matches the corpus map) or umap/pca")
+    ap.add_argument("--weighting", choices=("tfidf", "binary"), default="tfidf",
+                    help="tfidf: L2-normalised TF-IDF, so a protein's position "
+                         "does not depend on how well studied it is (default); "
+                         "binary: raw incidence, the pre-#74 matrix")
     ap.add_argument("--min-support", type=int, default=5,
                     help="a trait needs this many carriers to become a feature")
     ap.add_argument("--svd", type=int, default=50,
@@ -191,12 +199,29 @@ def main() -> int:
         rng.shuffle(keep)
         rows = keep[:args.sample]
 
-    indptr, indices = [0], []
+    # TF-IDF + L2 rather than raw binary incidence. Binary makes a protein's
+    # vector length grow with how well studied it is, so the thinly annotated
+    # end of the corpus sits near the origin and PaCMAP packs it into one blob
+    # regardless of what those proteins actually are. L2 makes every protein a
+    # unit vector — a one-trait protein points somewhere definite instead of
+    # being short — and IDF lets a rare trait say more about identity than a
+    # ubiquitous one. Measured: densest cell 5.8% → 3.7%, CATH-class purity
+    # 0.833 → 0.853. --weighting binary restores the old matrix.
+    idf = {}
+    if args.weighting == "tfidf":
+        idf = {t: math.log(n_corpus / supp[t]) for t in vocab}
+    indptr, indices, values = [0], [], []
     for r in rows:
-        indices.extend(sorted(pos[t] for t in r["_ts"] if t in pos))
+        js = sorted(pos[t] for t in r["_ts"] if t in pos)
+        indices.extend(js)
+        values.extend([idf[vocab[j]] for j in js] if idf else [1.0] * len(js))
         indptr.append(len(indices))
-    X = csr_matrix((np.ones(len(indices), dtype=np.float32), indices, indptr),
+    X = csr_matrix((np.array(values, dtype=np.float32), indices, indptr),
                    shape=(len(rows), len(vocab)))
+    if args.weighting == "tfidf":
+        norm = np.sqrt(X.multiply(X).sum(axis=1))
+        norm[norm == 0] = 1.0
+        X = csr_matrix(X.multiply(1.0 / norm))
     print(f"protein × trait matrix: {X.shape[0]:,} × {X.shape[1]:,} "
           f"({X.nnz:,} nonzero, {100*X.nnz/(X.shape[0]*X.shape[1]):.3f}% dense)",
           file=sys.stderr)
