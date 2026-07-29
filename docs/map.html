@@ -67,6 +67,10 @@
       <label>Filter category
         <select id="cat-filter"><option value="">All categories</option></select>
       </label>
+      <!-- Only the protein map ships `depths`; hidden for the corpus maps. -->
+      <label id="depth-wrap" hidden>Annotation depth
+        <select id="depth-filter"><option value="">All</option></select>
+      </label>
       <label>Search
         <input type="search" id="search" placeholder="identifier / CURIE…" autocomplete="off">
       </label>
@@ -116,7 +120,7 @@
   const tip=document.getElementById("tip");
   let DATA=null, CURRENT_MAP=null;
   const activeAxes=new Set();      // axis names currently shown (legend toggles)
-  let catFilter="", query="";      // dropdown + search
+  let catFilter="", depthFilter="", query="";   // dropdowns + search
   let VF=new Uint8Array(0);        // per-point: passes all filters
 
   const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -144,6 +148,22 @@
         o.value=c; o.textContent=`${c} (${fmt(catCount[c])})`;
         sel.appendChild(o);
       });
+      // Annotation depth: present on the protein map only. Kept in the source
+      // order rather than sorted, because the bins are a scale.
+      depthFilter="";
+      const dWrap=document.getElementById("depth-wrap");
+      const dSel=document.getElementById("depth-filter");
+      if(d.depths){
+        const dc={}; for(const p of d.points){const k=d.depths[p[6]]; dc[k]=(dc[k]||0)+1;}
+        dSel.innerHTML=`<option value="">All ${esc(d.depth_label||"depths")}</option>`;
+        d.depths.forEach(k=>{
+          if(!dc[k]) return;
+          const o=document.createElement("option");
+          o.value=k; o.textContent=`${k} (${fmt(dc[k])})`;
+          dSel.appendChild(o);
+        });
+        dWrap.hidden=false;
+      } else { dWrap.hidden=true; dSel.innerHTML=""; }
       buildLegend();
       const coverage=(d.n_total && d.n_shown<d.n_total)
         ? `${fmt(d.n_shown)} of ${fmt(d.n_total)} ${UNIT} (stratified sample)`
@@ -165,6 +185,7 @@
   }
   // Wire the controls once; loadMap rebuilds the data each switch.
   document.getElementById("cat-filter").addEventListener("change",e=>{catFilter=e.target.value; update();});
+  document.getElementById("depth-filter").addEventListener("change",e=>{depthFilter=e.target.value; update();});
   {let t; document.getElementById("search").addEventListener("input",e=>{clearTimeout(t); t=setTimeout(()=>{query=e.target.value.trim().toLowerCase(); update();},120);});}
   document.querySelectorAll(".seg-btn").forEach(b=>b.addEventListener("click",()=>{
     if(b.classList.contains("active")) return;
@@ -201,11 +222,14 @@
   function buildCsv(){
     const q=v=>{const s=String(v);return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;};
     const hasOrg=!!DATA.orgs;
-    const lines=[`identifier,${(DATA.group_label||"trait_axis").replace(/ /g,"_")}${hasOrg?",organism":""},${(DATA.cat_label||"trait_category").replace(/ /g,"_")},x,y`];
+    const hasDepth=!!DATA.depths;
+    const lines=[`identifier,${(DATA.group_label||"trait_axis").replace(/ /g,"_")}${hasOrg?",organism":""},${(DATA.cat_label||"trait_category").replace(/ /g,"_")}${hasDepth?","+(DATA.depth_label||"depth").replace(/ /g,"_"):""},x,y`];
     for(const p of DATA.points){
       const row=[p[3], DATA.axes[p[2]]];
       if(hasOrg) row.push(p[5]!==undefined ? DATA.orgs[p[5]] : "");
-      row.push(DATA.cats[p[4]], p[0], p[1]);
+      row.push(DATA.cats[p[4]]);
+      if(hasDepth) row.push(p[6]!==undefined ? DATA.depths[p[6]] : "");
+      row.push(p[0], p[1]);
       lines.push(row.map(q).join(","));
     }
     const blob=new Blob([lines.join("\n")],{type:"text/csv"});
@@ -236,6 +260,7 @@
       const p=pts[i];
       const ok = activeAxes.has(DATA.axes[p[2]])
         && (!catFilter || DATA.cats[p[4]]===catFilter)
+        && (!depthFilter || (DATA.depths && DATA.depths[p[6]]===depthFilter))
         && (!query || p[3].toLowerCase().includes(query));
       VF[i]=ok?1:0; if(ok) vis++;
     }
@@ -309,7 +334,9 @@
         const org=(DATA.orgs && p[5]!==undefined) ? DATA.orgs[p[5]] : null;
         tip.innerHTML=`<b>${esc(p[3])}</b><br><span class="t-sub">`
           + (org ? esc(org)+" · " : "")
-          + `${esc(DATA.axes[p[2]])} · ${esc(DATA.cats[p[4]])}</span>`;
+          + `${esc(DATA.axes[p[2]])} · ${esc(DATA.cats[p[4]])}`
+          + (DATA.depths && p[6]!==undefined ? ` · ${esc(DATA.depths[p[6]])}` : "")
+          + `</span>`;
         tip.style.left=(mx/sx)+"px"; tip.style.top=(my/sy)+"px"; tip.style.opacity=1;
       } else tip.style.opacity=0;
     });
