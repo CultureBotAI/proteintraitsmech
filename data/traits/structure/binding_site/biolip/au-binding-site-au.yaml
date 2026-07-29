@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:AU
 synonyms:
@@ -18,4 +18,96 @@ canonical_examples:
     protein_label: "4Y2I chain A (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 4y2i chain A (resolution 2.0 Å); binding residues: C10 C13"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of GOLD ION at the GOLD ION-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 4y2i chain A. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: GOLD ION
+    node_type: LIGAND
+    grounding: CHEBI:49482
+    xrefs:
+    - pdb.ligand:AU
+  - node_id: site
+    label: GOLD ION-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_AU
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 4Y2I chain A (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:A0A140UHB4
+  - node_id: resC10
+    label: binding residue C10 (PDB 4y2i chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:A0A140UHB4
+  - node_id: resC13
+    label: binding residue C13 (PDB 4y2i chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:A0A140UHB4
+  edges:
+  - subject: resC10
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: C10 contacts the bound GOLD ION.
+    evidence:
+    - reference: PDB:4y2i
+      snippet: C10 C13
+      notes: 'BioLiP2 record line for PDB 4y2i chain A, ligand AU: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:26636614 for this structure.'
+  - subject: resC10
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: C10 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:4y2i
+      snippet: C10 C13
+      notes: 'BioLiP2 record line for PDB 4y2i chain A, ligand AU: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:26636614 for this structure.'
+  - subject: resC13
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: C13 contacts the bound GOLD ION.
+    evidence:
+    - reference: PDB:4y2i
+      snippet: C10 C13
+      notes: 'BioLiP2 record line for PDB 4y2i chain A, ligand AU: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:26636614 for this structure.'
+  - subject: resC13
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: C13 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:4y2i
+      snippet: C10 C13
+      notes: 'BioLiP2 record line for PDB 4y2i chain A, ligand AU: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:26636614 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:4y2i
+      snippet: C10 C13
+      notes: 'BioLiP2 record line for PDB 4y2i chain A, ligand AU: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:26636614 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:A0A140UHB4.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (5 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

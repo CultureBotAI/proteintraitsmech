@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:PUT
 synonyms:
@@ -34,4 +34,115 @@ canonical_examples:
     protein_label: "6F9G chain D (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 6f9g chain D (resolution 2.388 Å); binding residues: Y120 M166 W186 Y202 D204 D233"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of 1,4-DIAMINOBUTANE at the 1,4-DIAMINOBUTANE-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 1f3t chain B. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: 1,4-DIAMINOBUTANE
+    node_type: LIGAND
+    grounding: CHEBI:17148
+    xrefs:
+    - pdb.ligand:PUT
+  - node_id: site
+    label: 1,4-DIAMINOBUTANE-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_PUT
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 1F3T chain B (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:P07805
+  - node_id: resD332
+    label: binding residue D332 (PDB 1f3t chain B author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07805
+  - node_id: resY389
+    label: binding residue Y389 (PDB 1f3t chain B author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07805
+  - node_id: activity
+    label: enzymatic activity EC 4.1.1.17
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0004586
+    description: GO molecular function for EC:4.1.1.17, via GO's own ec2go mapping.
+    xrefs:
+    - EC:4.1.1.17
+  edges:
+  - subject: resD332
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: D332 contacts the bound 1,4-DIAMINOBUTANE.
+    evidence:
+    - reference: PDB:1f3t
+      snippet: D332 Y389
+      notes: 'BioLiP2 record line for PDB 1f3t chain B, ligand PUT: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:10985770 for this structure.'
+  - subject: resD332
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: D332 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:1f3t
+      snippet: D332 Y389
+      notes: 'BioLiP2 record line for PDB 1f3t chain B, ligand PUT: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:10985770 for this structure.'
+  - subject: resY389
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: Y389 contacts the bound 1,4-DIAMINOBUTANE.
+    evidence:
+    - reference: PDB:1f3t
+      snippet: D332 Y389
+      notes: 'BioLiP2 record line for PDB 1f3t chain B, ligand PUT: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:10985770 for this structure.'
+  - subject: resY389
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: Y389 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:1f3t
+      snippet: D332 Y389
+      notes: 'BioLiP2 record line for PDB 1f3t chain B, ligand PUT: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:10985770 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:1f3t
+      snippet: D332 Y389
+      notes: 'BioLiP2 record line for PDB 1f3t chain B, ligand PUT: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:10985770 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:P07805.'
+  - subject: site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The site participates in this activity.
+    evidence:
+    - reference: PDB:1f3t
+      snippet: D332 Y389
+      notes: 'BioLiP2 record line for PDB 1f3t chain B, ligand PUT: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:10985770 for this structure. EC 4.1.1.17 recorded by
+        BioLiP for this receptor.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (6 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

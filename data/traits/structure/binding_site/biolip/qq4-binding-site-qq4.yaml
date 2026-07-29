@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:QQ4
 synonyms:
@@ -18,4 +18,95 @@ canonical_examples:
     protein_label: "7KOP chain A (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 7kop chain A (resolution 2.33 Å); binding residues: M12 G81"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of Hexa Vinylpyrrolidone K15 at the Hexa Vinylpyrrolidone K15-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 7kop chain A. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: Hexa Vinylpyrrolidone K15
+    node_type: LIGAND
+    grounding: pdb.ligand:QQ4
+    xrefs:
+    - pdb.ligand:QQ4
+  - node_id: site
+    label: Hexa Vinylpyrrolidone K15-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_QQ4
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 7KOP chain A (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:C6H0Y9
+  - node_id: resM12
+    label: binding residue M12 (PDB 7kop chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:C6H0Y9
+  - node_id: resG81
+    label: binding residue G81 (PDB 7kop chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:C6H0Y9
+  edges:
+  - subject: resM12
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: M12 contacts the bound Hexa Vinylpyrrolidone K15.
+    evidence:
+    - reference: PDB:7kop
+      snippet: M12 G81
+      notes: 'BioLiP2 record line for PDB 7kop chain A, ligand QQ4: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: resM12
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: M12 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:7kop
+      snippet: M12 G81
+      notes: 'BioLiP2 record line for PDB 7kop chain A, ligand QQ4: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: resG81
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: G81 contacts the bound Hexa Vinylpyrrolidone K15.
+    evidence:
+    - reference: PDB:7kop
+      snippet: M12 G81
+      notes: 'BioLiP2 record line for PDB 7kop chain A, ligand QQ4: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: resG81
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: G81 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:7kop
+      snippet: M12 G81
+      notes: 'BioLiP2 record line for PDB 7kop chain A, ligand QQ4: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:7kop
+      snippet: M12 G81
+      notes: 'BioLiP2 record line for PDB 7kop chain A, ligand QQ4: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. Receptor mapped by BioLiP to UniProtKB:C6H0Y9.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (5 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

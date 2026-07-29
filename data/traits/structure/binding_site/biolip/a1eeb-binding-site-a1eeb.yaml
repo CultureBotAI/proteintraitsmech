@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:A1EEB
 synonyms:
@@ -18,4 +18,96 @@ canonical_examples:
     protein_label: "9K1J chain B (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 9k1j chain B (resolution 2.09 Å); binding residues: R15 F94"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of 6-fluoranyl-1,2-benzothiazol-3-one at the 6-fluoranyl-1,2-benzothiazol-3-one-binding
+    site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 9k1j chain B. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: 6-fluoranyl-1,2-benzothiazol-3-one
+    node_type: LIGAND
+    grounding: pdb.ligand:A1EEB
+    xrefs:
+    - pdb.ligand:A1EEB
+  - node_id: site
+    label: 6-fluoranyl-1,2-benzothiazol-3-one-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_A1EEB
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 9K1J chain B (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:Q5DQT1
+  - node_id: resR15
+    label: binding residue R15 (PDB 9k1j chain B author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q5DQT1
+  - node_id: resF94
+    label: binding residue F94 (PDB 9k1j chain B author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q5DQT1
+  edges:
+  - subject: resR15
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: R15 contacts the bound 6-fluoranyl-1,2-benzothiazol-3-one.
+    evidence:
+    - reference: PDB:9k1j
+      snippet: R15 F94
+      notes: 'BioLiP2 record line for PDB 9k1j chain B, ligand A1EEB: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: resR15
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: R15 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:9k1j
+      snippet: R15 F94
+      notes: 'BioLiP2 record line for PDB 9k1j chain B, ligand A1EEB: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: resF94
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: F94 contacts the bound 6-fluoranyl-1,2-benzothiazol-3-one.
+    evidence:
+    - reference: PDB:9k1j
+      snippet: R15 F94
+      notes: 'BioLiP2 record line for PDB 9k1j chain B, ligand A1EEB: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: resF94
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: F94 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:9k1j
+      snippet: R15 F94
+      notes: 'BioLiP2 record line for PDB 9k1j chain B, ligand A1EEB: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:9k1j
+      snippet: R15 F94
+      notes: 'BioLiP2 record line for PDB 9k1j chain B, ligand A1EEB: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. Receptor mapped by BioLiP to UniProtKB:Q5DQT1.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (5 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

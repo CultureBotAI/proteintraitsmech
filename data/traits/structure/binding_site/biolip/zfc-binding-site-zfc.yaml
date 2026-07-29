@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:ZFC
 synonyms:
@@ -18,4 +18,96 @@ canonical_examples:
     protein_label: "7USW chain A (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 7usw chain A (resolution 3.1 Å); binding residues: S784 N786"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of undecan-1-ol at the undecan-1-ol-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 7usw chain A. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: undecan-1-ol
+    node_type: LIGAND
+    grounding: CHEBI:87499
+    xrefs:
+    - pdb.ligand:ZFC
+  - node_id: site
+    label: undecan-1-ol-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_ZFC
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 7USW chain A (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:D3KZG3
+  - node_id: resS784
+    label: binding residue S784 (PDB 7usw chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:D3KZG3
+  - node_id: resN786
+    label: binding residue N786 (PDB 7usw chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:D3KZG3
+  edges:
+  - subject: resS784
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: S784 contacts the bound undecan-1-ol.
+    evidence:
+    - reference: PDB:7usw
+      snippet: S784 N786
+      notes: 'BioLiP2 record line for PDB 7usw chain A, ligand ZFC: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:36224384 for this structure.'
+  - subject: resS784
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: S784 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:7usw
+      snippet: S784 N786
+      notes: 'BioLiP2 record line for PDB 7usw chain A, ligand ZFC: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:36224384 for this structure.'
+  - subject: resN786
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: N786 contacts the bound undecan-1-ol.
+    evidence:
+    - reference: PDB:7usw
+      snippet: S784 N786
+      notes: 'BioLiP2 record line for PDB 7usw chain A, ligand ZFC: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:36224384 for this structure.'
+  - subject: resN786
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: N786 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:7usw
+      snippet: S784 N786
+      notes: 'BioLiP2 record line for PDB 7usw chain A, ligand ZFC: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:36224384 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:7usw
+      snippet: S784 N786
+      notes: 'BioLiP2 record line for PDB 7usw chain A, ligand ZFC: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:36224384 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:D3KZG3.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (5 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

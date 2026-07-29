@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:SO3
 synonyms:
@@ -34,4 +34,141 @@ canonical_examples:
     protein_label: "1YT8 chain A (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 1yt8 chain A (resolution 1.9 Å); binding residues: C193 A194 G195 R196 T197 R198"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of SULFITE ION at the SULFITE ION-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 1eaf chain A. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 3 binding residues.
+  nodes:
+  - node_id: ligand
+    label: SULFITE ION
+    node_type: LIGAND
+    grounding: CHEBI:17359
+    xrefs:
+    - pdb.ligand:SO3
+  - node_id: site
+    label: SULFITE ION-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_SO3
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 1EAF chain A (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:P10802
+  - node_id: resH610
+    label: binding residue H610 (PDB 1eaf chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P10802
+  - node_id: resN614
+    label: binding residue N614 (PDB 1eaf chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P10802
+  - node_id: resG615
+    label: binding residue G615 (PDB 1eaf chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P10802
+  - node_id: activity
+    label: enzymatic activity EC 2.3.1.12
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0004742
+    description: GO molecular function for EC:2.3.1.12, via GO's own ec2go mapping.
+    xrefs:
+    - EC:2.3.1.12
+  edges:
+  - subject: resH610
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: H610 contacts the bound SULFITE ION.
+    evidence:
+    - reference: PDB:1eaf
+      snippet: H610 N614 G615
+      notes: 'BioLiP2 record line for PDB 1eaf chain A, ligand SO3: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:8471601 for this structure.'
+  - subject: resH610
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: H610 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:1eaf
+      snippet: H610 N614 G615
+      notes: 'BioLiP2 record line for PDB 1eaf chain A, ligand SO3: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:8471601 for this structure.'
+  - subject: resN614
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: N614 contacts the bound SULFITE ION.
+    evidence:
+    - reference: PDB:1eaf
+      snippet: H610 N614 G615
+      notes: 'BioLiP2 record line for PDB 1eaf chain A, ligand SO3: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:8471601 for this structure.'
+  - subject: resN614
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: N614 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:1eaf
+      snippet: H610 N614 G615
+      notes: 'BioLiP2 record line for PDB 1eaf chain A, ligand SO3: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:8471601 for this structure.'
+  - subject: resG615
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: G615 contacts the bound SULFITE ION.
+    evidence:
+    - reference: PDB:1eaf
+      snippet: H610 N614 G615
+      notes: 'BioLiP2 record line for PDB 1eaf chain A, ligand SO3: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:8471601 for this structure.'
+  - subject: resG615
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: G615 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:1eaf
+      snippet: H610 N614 G615
+      notes: 'BioLiP2 record line for PDB 1eaf chain A, ligand SO3: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:8471601 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:1eaf
+      snippet: H610 N614 G615
+      notes: 'BioLiP2 record line for PDB 1eaf chain A, ligand SO3: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:8471601 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:P10802.'
+  - subject: site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The site participates in this activity.
+    evidence:
+    - reference: PDB:1eaf
+      snippet: H610 N614 G615
+      notes: 'BioLiP2 record line for PDB 1eaf chain A, ligand SO3: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:8471601 for this structure. EC 2.3.1.12 recorded by
+        BioLiP for this receptor.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (8 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

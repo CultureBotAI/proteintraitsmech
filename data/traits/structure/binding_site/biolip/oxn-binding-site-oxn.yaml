@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:OXN
 synonyms:
@@ -22,4 +22,117 @@ canonical_examples:
     protein_label: "7VUD chain A (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 7vud chain A (resolution 2.8 Å); binding residues: F98 E189 Y238 F336 D401 F526"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of OXTOXYNOL-10 at the OXTOXYNOL-10-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 4tpl chain A. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: OXTOXYNOL-10
+    node_type: LIGAND
+    grounding: pdb.ligand:OXN
+    xrefs:
+    - pdb.ligand:OXN
+  - node_id: site
+    label: OXTOXYNOL-10-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_OXN
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 4TPL chain A (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:Q5SBG8
+  - node_id: resT2
+    label: binding residue T2 (PDB 4tpl chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q5SBG8
+  - node_id: resC15
+    label: binding residue C15 (PDB 4tpl chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q5SBG8
+  - node_id: activity
+    label: enzymatic activity EC 3.4.21.91, 3.6.1.15, 3.6.4.13
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0017111
+    description: GO molecular function for EC:3.4.21.91, via GO's own ec2go mapping.
+    xrefs:
+    - EC:3.4.21.91
+    - EC:3.6.1.15
+    - EC:3.6.4.13
+  edges:
+  - subject: resT2
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: T2 contacts the bound OXTOXYNOL-10.
+    evidence:
+    - reference: PDB:4tpl
+      snippet: T2 C15
+      notes: 'BioLiP2 record line for PDB 4tpl chain A, ligand OXN: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:25286855 for this structure.'
+  - subject: resT2
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: T2 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:4tpl
+      snippet: T2 C15
+      notes: 'BioLiP2 record line for PDB 4tpl chain A, ligand OXN: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:25286855 for this structure.'
+  - subject: resC15
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: C15 contacts the bound OXTOXYNOL-10.
+    evidence:
+    - reference: PDB:4tpl
+      snippet: T2 C15
+      notes: 'BioLiP2 record line for PDB 4tpl chain A, ligand OXN: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:25286855 for this structure.'
+  - subject: resC15
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: C15 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:4tpl
+      snippet: T2 C15
+      notes: 'BioLiP2 record line for PDB 4tpl chain A, ligand OXN: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:25286855 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:4tpl
+      snippet: T2 C15
+      notes: 'BioLiP2 record line for PDB 4tpl chain A, ligand OXN: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:25286855 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:Q5SBG8.'
+  - subject: site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The site participates in this activity.
+    evidence:
+    - reference: PDB:4tpl
+      snippet: T2 C15
+      notes: 'BioLiP2 record line for PDB 4tpl chain A, ligand OXN: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:25286855 for this structure. EC 3.4.21.91, 3.6.1.15,
+        3.6.4.13 recorded by BioLiP for this receptor.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (6 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

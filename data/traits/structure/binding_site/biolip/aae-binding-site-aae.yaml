@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:AAE
 synonyms:
@@ -30,4 +30,117 @@ canonical_examples:
     protein_label: "6ZZO chain C (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 6zzo chain C (resolution 1.28 Å); binding residues: Q99 H150 K158 F193 Q202"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of ACETOACETIC ACID at the ACETOACETIC ACID-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 1e3w chain D. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: ACETOACETIC ACID
+    node_type: LIGAND
+    grounding: CHEBI:15344
+    xrefs:
+    - pdb.ligand:AAE
+  - node_id: site
+    label: ACETOACETIC ACID-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_AAE
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 1E3W chain D (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:O70351
+  - node_id: resY168
+    label: binding residue Y168 (PDB 1e3w chain D author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:O70351
+  - node_id: resT208
+    label: binding residue T208 (PDB 1e3w chain D author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:O70351
+  - node_id: activity
+    label: enzymatic activity EC 1.1.1.159, 1.1.1.178, 1.1.1.239
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0008709
+    description: GO molecular function for EC:1.1.1.159, via GO's own ec2go mapping.
+    xrefs:
+    - EC:1.1.1.159
+    - EC:1.1.1.178
+    - EC:1.1.1.239
+  edges:
+  - subject: resY168
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: Y168 contacts the bound ACETOACETIC ACID.
+    evidence:
+    - reference: PDB:1e3w
+      snippet: Y168 T208
+      notes: 'BioLiP2 record line for PDB 1e3w chain D, ligand AAE: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:11023795 for this structure.'
+  - subject: resY168
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: Y168 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:1e3w
+      snippet: Y168 T208
+      notes: 'BioLiP2 record line for PDB 1e3w chain D, ligand AAE: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:11023795 for this structure.'
+  - subject: resT208
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: T208 contacts the bound ACETOACETIC ACID.
+    evidence:
+    - reference: PDB:1e3w
+      snippet: Y168 T208
+      notes: 'BioLiP2 record line for PDB 1e3w chain D, ligand AAE: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:11023795 for this structure.'
+  - subject: resT208
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: T208 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:1e3w
+      snippet: Y168 T208
+      notes: 'BioLiP2 record line for PDB 1e3w chain D, ligand AAE: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:11023795 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:1e3w
+      snippet: Y168 T208
+      notes: 'BioLiP2 record line for PDB 1e3w chain D, ligand AAE: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:11023795 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:O70351.'
+  - subject: site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The site participates in this activity.
+    evidence:
+    - reference: PDB:1e3w
+      snippet: Y168 T208
+      notes: 'BioLiP2 record line for PDB 1e3w chain D, ligand AAE: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:11023795 for this structure. EC 1.1.1.159, 1.1.1.178,
+        1.1.1.239 recorded by BioLiP for this receptor.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (6 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

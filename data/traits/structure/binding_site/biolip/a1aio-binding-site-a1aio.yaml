@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:A1AIO
 synonyms:
@@ -18,4 +18,96 @@ canonical_examples:
     protein_label: "9B4H chain A (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 9b4h chain A (resolution 3.1 Å); binding residues: Q1853 P1855"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of beta-L-glucofuranose at the beta-L-glucofuranose-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 9b4h chain A. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: beta-L-glucofuranose
+    node_type: LIGAND
+    grounding: CHEBI:149114
+    xrefs:
+    - pdb.ligand:A1AIO
+  - node_id: site
+    label: beta-L-glucofuranose-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_A1AIO
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 9B4H chain A (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:A8J9H7
+  - node_id: resQ1853
+    label: binding residue Q1853 (PDB 9b4h chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:A8J9H7
+  - node_id: resP1855
+    label: binding residue P1855 (PDB 9b4h chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:A8J9H7
+  edges:
+  - subject: resQ1853
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: Q1853 contacts the bound beta-L-glucofuranose.
+    evidence:
+    - reference: PDB:9b4h
+      snippet: Q1853 P1855
+      notes: 'BioLiP2 record line for PDB 9b4h chain A, ligand A1AIO: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:38552624 for this structure.'
+  - subject: resQ1853
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: Q1853 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:9b4h
+      snippet: Q1853 P1855
+      notes: 'BioLiP2 record line for PDB 9b4h chain A, ligand A1AIO: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:38552624 for this structure.'
+  - subject: resP1855
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: P1855 contacts the bound beta-L-glucofuranose.
+    evidence:
+    - reference: PDB:9b4h
+      snippet: Q1853 P1855
+      notes: 'BioLiP2 record line for PDB 9b4h chain A, ligand A1AIO: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:38552624 for this structure.'
+  - subject: resP1855
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: P1855 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:9b4h
+      snippet: Q1853 P1855
+      notes: 'BioLiP2 record line for PDB 9b4h chain A, ligand A1AIO: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:38552624 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:9b4h
+      snippet: Q1853 P1855
+      notes: 'BioLiP2 record line for PDB 9b4h chain A, ligand A1AIO: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:38552624 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:A8J9H7.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (5 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

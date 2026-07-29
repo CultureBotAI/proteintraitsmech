@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:ZZ1
 synonyms:
@@ -18,4 +18,115 @@ canonical_examples:
     protein_label: "5GZA chain A (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 5gza chain A (resolution 2.0 Å); binding residues: G88 A89"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of 4-METHYL-2H-CHROMEN-2-ONE at the 4-METHYL-2H-CHROMEN-2-ONE-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 5gza chain A. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: 4-METHYL-2H-CHROMEN-2-ONE
+    node_type: LIGAND
+    grounding: pdb.ligand:ZZ1
+    xrefs:
+    - pdb.ligand:ZZ1
+  - node_id: site
+    label: 4-METHYL-2H-CHROMEN-2-ONE-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_ZZ1
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 5GZA chain A (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:Q5U3W1
+  - node_id: resG88
+    label: binding residue G88 (PDB 5gza chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q5U3W1
+  - node_id: resA89
+    label: binding residue A89 (PDB 5gza chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q5U3W1
+  - node_id: activity
+    label: enzymatic activity EC 2.7.1.183
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0016773
+    description: Grounded to the EC *class*-level GO term (phosphotransferase activity, alcohol group as acceptor); GO's ec2go has no term for the exact EC:2.7.1.183, so this is broader than the enzyme's specific activity.
+    xrefs:
+    - EC:2.7.1.183
+  edges:
+  - subject: resG88
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: G88 contacts the bound 4-METHYL-2H-CHROMEN-2-ONE.
+    evidence:
+    - reference: PDB:5gza
+      snippet: G88 A89
+      notes: 'BioLiP2 record line for PDB 5gza chain A, ligand ZZ1: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:27879205 for this structure.'
+  - subject: resG88
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: G88 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:5gza
+      snippet: G88 A89
+      notes: 'BioLiP2 record line for PDB 5gza chain A, ligand ZZ1: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:27879205 for this structure.'
+  - subject: resA89
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: A89 contacts the bound 4-METHYL-2H-CHROMEN-2-ONE.
+    evidence:
+    - reference: PDB:5gza
+      snippet: G88 A89
+      notes: 'BioLiP2 record line for PDB 5gza chain A, ligand ZZ1: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:27879205 for this structure.'
+  - subject: resA89
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A89 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:5gza
+      snippet: G88 A89
+      notes: 'BioLiP2 record line for PDB 5gza chain A, ligand ZZ1: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:27879205 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:5gza
+      snippet: G88 A89
+      notes: 'BioLiP2 record line for PDB 5gza chain A, ligand ZZ1: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:27879205 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:Q5U3W1.'
+  - subject: site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The site participates in this activity.
+    evidence:
+    - reference: PDB:5gza
+      snippet: G88 A89
+      notes: 'BioLiP2 record line for PDB 5gza chain A, ligand ZZ1: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:27879205 for this structure. EC 2.7.1.183 recorded
+        by BioLiP for this receptor.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (6 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

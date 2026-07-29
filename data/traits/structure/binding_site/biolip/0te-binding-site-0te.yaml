@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:0TE
 synonyms:
@@ -18,4 +18,115 @@ canonical_examples:
     protein_label: "4FEA chain A (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 4fea chain A (resolution 3.79 Å); binding residues: V292 M294"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of ligand 0TE at the ligand 0TE-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 4fea chain A. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: ligand 0TE
+    node_type: LIGAND
+    grounding: pdb.ligand:0TE
+    xrefs:
+    - pdb.ligand:0TE
+  - node_id: site
+    label: ligand 0TE-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_0TE
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 4FEA chain A (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:P55210
+  - node_id: resV292
+    label: binding residue V292 (PDB 4fea chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P55210
+  - node_id: resM294
+    label: binding residue M294 (PDB 4fea chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P55210
+  - node_id: activity
+    label: enzymatic activity EC 3.4.22.60
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0004197
+    description: Grounded to the EC *class*-level GO term (cysteine-type endopeptidase activity); GO's ec2go has no term for the exact EC:3.4.22.60, so this is broader than the enzyme's specific activity.
+    xrefs:
+    - EC:3.4.22.60
+  edges:
+  - subject: resV292
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: V292 contacts the bound ligand 0TE.
+    evidence:
+    - reference: PDB:4fea
+      snippet: V292 M294
+      notes: 'BioLiP2 record line for PDB 4fea chain A, ligand 0TE: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:22795132 for this structure.'
+  - subject: resV292
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: V292 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:4fea
+      snippet: V292 M294
+      notes: 'BioLiP2 record line for PDB 4fea chain A, ligand 0TE: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:22795132 for this structure.'
+  - subject: resM294
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: M294 contacts the bound ligand 0TE.
+    evidence:
+    - reference: PDB:4fea
+      snippet: V292 M294
+      notes: 'BioLiP2 record line for PDB 4fea chain A, ligand 0TE: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:22795132 for this structure.'
+  - subject: resM294
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: M294 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:4fea
+      snippet: V292 M294
+      notes: 'BioLiP2 record line for PDB 4fea chain A, ligand 0TE: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:22795132 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:4fea
+      snippet: V292 M294
+      notes: 'BioLiP2 record line for PDB 4fea chain A, ligand 0TE: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:22795132 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:P55210.'
+  - subject: site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The site participates in this activity.
+    evidence:
+    - reference: PDB:4fea
+      snippet: V292 M294
+      notes: 'BioLiP2 record line for PDB 4fea chain A, ligand 0TE: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:22795132 for this structure. EC 3.4.22.60 recorded
+        by BioLiP for this receptor.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (6 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

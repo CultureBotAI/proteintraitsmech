@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:BOG
 synonyms:
@@ -26,4 +26,115 @@ canonical_examples:
     protein_label: "1XEZ chain A (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 1xez chain A (resolution 2.3 Å); binding residues: G613 A614 A615 D617 G631 G632 Y654"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of octyl beta-D-glucopyranoside at the octyl beta-D-glucopyranoside-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 1b4w chain A. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: octyl beta-D-glucopyranoside
+    node_type: LIGAND
+    grounding: CHEBI:41128
+    xrefs:
+    - pdb.ligand:BOG
+  - node_id: site
+    label: octyl beta-D-glucopyranoside-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_BOG
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 1B4W chain A (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:O42187
+  - node_id: resA23
+    label: binding residue A23 (PDB 1b4w chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:O42187
+  - node_id: resS31
+    label: binding residue S31 (PDB 1b4w chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:O42187
+  - node_id: activity
+    label: enzymatic activity EC 3.1.1.4
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0004623
+    description: GO molecular function for EC:3.1.1.4, via GO's own ec2go mapping.
+    xrefs:
+    - EC:3.1.1.4
+  edges:
+  - subject: resA23
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: A23 contacts the bound octyl beta-D-glucopyranoside.
+    evidence:
+    - reference: PDB:1b4w
+      snippet: A23 S31
+      notes: 'BioLiP2 record line for PDB 1b4w chain A, ligand BOG: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:10728829 for this structure.'
+  - subject: resA23
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A23 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:1b4w
+      snippet: A23 S31
+      notes: 'BioLiP2 record line for PDB 1b4w chain A, ligand BOG: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:10728829 for this structure.'
+  - subject: resS31
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: S31 contacts the bound octyl beta-D-glucopyranoside.
+    evidence:
+    - reference: PDB:1b4w
+      snippet: A23 S31
+      notes: 'BioLiP2 record line for PDB 1b4w chain A, ligand BOG: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:10728829 for this structure.'
+  - subject: resS31
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: S31 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:1b4w
+      snippet: A23 S31
+      notes: 'BioLiP2 record line for PDB 1b4w chain A, ligand BOG: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:10728829 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:1b4w
+      snippet: A23 S31
+      notes: 'BioLiP2 record line for PDB 1b4w chain A, ligand BOG: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:10728829 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:O42187.'
+  - subject: site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The site participates in this activity.
+    evidence:
+    - reference: PDB:1b4w
+      snippet: A23 S31
+      notes: 'BioLiP2 record line for PDB 1b4w chain A, ligand BOG: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:10728829 for this structure. EC 3.1.1.4 recorded by
+        BioLiP for this receptor.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (6 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

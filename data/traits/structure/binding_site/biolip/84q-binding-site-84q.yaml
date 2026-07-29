@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:84Q
 synonyms:
@@ -22,4 +22,96 @@ canonical_examples:
     protein_label: "7VZG chain E (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 7vzg chain E (resolution 2.61 Å); binding residues: M1 T2"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of ligand 84Q at the ligand 84Q-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 7vzg chain a. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: ligand 84Q
+    node_type: LIGAND
+    grounding: pdb.ligand:84Q
+    xrefs:
+    - pdb.ligand:84Q
+  - node_id: site
+    label: ligand 84Q-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_84Q
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 7VZG chain a (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:G2LDR8
+  - node_id: resM260
+    label: binding residue M260 (PDB 7vzg chain a author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:G2LDR8
+  - node_id: resN261
+    label: binding residue N261 (PDB 7vzg chain a author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:G2LDR8
+  edges:
+  - subject: resM260
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: M260 contacts the bound ligand 84Q.
+    evidence:
+    - reference: PDB:7vzg
+      snippet: M260 N261
+      notes: 'BioLiP2 record line for PDB 7vzg chain a, ligand 84Q: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:36517472 for this structure.'
+  - subject: resM260
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: M260 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:7vzg
+      snippet: M260 N261
+      notes: 'BioLiP2 record line for PDB 7vzg chain a, ligand 84Q: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:36517472 for this structure.'
+  - subject: resN261
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: N261 contacts the bound ligand 84Q.
+    evidence:
+    - reference: PDB:7vzg
+      snippet: M260 N261
+      notes: 'BioLiP2 record line for PDB 7vzg chain a, ligand 84Q: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:36517472 for this structure.'
+  - subject: resN261
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: N261 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:7vzg
+      snippet: M260 N261
+      notes: 'BioLiP2 record line for PDB 7vzg chain a, ligand 84Q: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:36517472 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:7vzg
+      snippet: M260 N261
+      notes: 'BioLiP2 record line for PDB 7vzg chain a, ligand 84Q: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:36517472 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:G2LDR8.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (5 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

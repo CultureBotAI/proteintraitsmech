@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:A1AHE
 synonyms:
@@ -22,4 +22,115 @@ canonical_examples:
     protein_label: "9AY7 chain B (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 9ay7 chain B (resolution 2.41 Å); binding residues: L118 V127 I141 R189 D190 D208 F209 G210 V211 S212 L215 I216 M219 M230 R234"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of ligand A1AHE at the ligand A1AHE-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 9axm chain B. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: ligand A1AHE
+    node_type: LIGAND
+    grounding: pdb.ligand:A1AHE
+    xrefs:
+    - pdb.ligand:A1AHE
+  - node_id: site
+    label: ligand A1AHE-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_A1AHE
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 9AXM chain B (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:P10398
+  - node_id: resC514
+    label: binding residue C514 (PDB 9axm chain B author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P10398
+  - node_id: resR515
+    label: binding residue R515 (PDB 9axm chain B author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P10398
+  - node_id: activity
+    label: enzymatic activity EC 2.7.11.1
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0004674
+    description: GO molecular function for EC:2.7.11.1, via GO's own ec2go mapping.
+    xrefs:
+    - EC:2.7.11.1
+  edges:
+  - subject: resC514
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: C514 contacts the bound ligand A1AHE.
+    evidence:
+    - reference: PDB:9axm
+      snippet: C514 R515
+      notes: 'BioLiP2 record line for PDB 9axm chain B, ligand A1AHE: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:38588399 for this structure.'
+  - subject: resC514
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: C514 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:9axm
+      snippet: C514 R515
+      notes: 'BioLiP2 record line for PDB 9axm chain B, ligand A1AHE: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:38588399 for this structure.'
+  - subject: resR515
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: R515 contacts the bound ligand A1AHE.
+    evidence:
+    - reference: PDB:9axm
+      snippet: C514 R515
+      notes: 'BioLiP2 record line for PDB 9axm chain B, ligand A1AHE: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:38588399 for this structure.'
+  - subject: resR515
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: R515 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:9axm
+      snippet: C514 R515
+      notes: 'BioLiP2 record line for PDB 9axm chain B, ligand A1AHE: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:38588399 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:9axm
+      snippet: C514 R515
+      notes: 'BioLiP2 record line for PDB 9axm chain B, ligand A1AHE: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:38588399 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:P10398.'
+  - subject: site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The site participates in this activity.
+    evidence:
+    - reference: PDB:9axm
+      snippet: C514 R515
+      notes: 'BioLiP2 record line for PDB 9axm chain B, ligand A1AHE: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:38588399 for this structure. EC 2.7.11.1 recorded by
+        BioLiP for this receptor.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (6 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

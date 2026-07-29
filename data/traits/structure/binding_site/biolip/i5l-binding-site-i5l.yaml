@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:I5L
 synonyms:
@@ -18,4 +18,121 @@ canonical_examples:
     protein_label: "7Y1P chain B (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 7y1p chain B (resolution 2.602 Å); binding residues: R146 K147 Y148"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of ligand I5L at the ligand I5L-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 7y1p chain B. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 3 binding residues.
+  nodes:
+  - node_id: ligand
+    label: ligand I5L
+    node_type: LIGAND
+    grounding: pdb.ligand:I5L
+    xrefs:
+    - pdb.ligand:I5L
+  - node_id: site
+    label: ligand I5L-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_I5L
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 7Y1P chain B (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:O15169
+  - node_id: resR146
+    label: binding residue R146 (PDB 7y1p chain B author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:O15169
+  - node_id: resK147
+    label: binding residue K147 (PDB 7y1p chain B author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:O15169
+  - node_id: resY148
+    label: binding residue Y148 (PDB 7y1p chain B author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:O15169
+  edges:
+  - subject: resR146
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: R146 contacts the bound ligand I5L.
+    evidence:
+    - reference: PDB:7y1p
+      snippet: R146 K147 Y148
+      notes: 'BioLiP2 record line for PDB 7y1p chain B, ligand I5L: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: resR146
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: R146 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:7y1p
+      snippet: R146 K147 Y148
+      notes: 'BioLiP2 record line for PDB 7y1p chain B, ligand I5L: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: resK147
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: K147 contacts the bound ligand I5L.
+    evidence:
+    - reference: PDB:7y1p
+      snippet: R146 K147 Y148
+      notes: 'BioLiP2 record line for PDB 7y1p chain B, ligand I5L: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: resK147
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: K147 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:7y1p
+      snippet: R146 K147 Y148
+      notes: 'BioLiP2 record line for PDB 7y1p chain B, ligand I5L: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: resY148
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: Y148 contacts the bound ligand I5L.
+    evidence:
+    - reference: PDB:7y1p
+      snippet: R146 K147 Y148
+      notes: 'BioLiP2 record line for PDB 7y1p chain B, ligand I5L: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: resY148
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: Y148 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:7y1p
+      snippet: R146 K147 Y148
+      notes: 'BioLiP2 record line for PDB 7y1p chain B, ligand I5L: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:7y1p
+      snippet: R146 K147 Y148
+      notes: 'BioLiP2 record line for PDB 7y1p chain B, ligand I5L: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. Receptor mapped by BioLiP to UniProtKB:O15169.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (7 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

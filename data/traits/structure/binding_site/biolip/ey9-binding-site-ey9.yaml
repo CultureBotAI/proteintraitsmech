@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:EY9
 synonyms:
@@ -18,4 +18,96 @@ canonical_examples:
     protein_label: "6LZ8 chain B (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 6lz8 chain B (resolution 2.59 Å); binding residues: N141 N142"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of 5-(2-methoxyethoxy)-1H-indole at the 5-(2-methoxyethoxy)-1H-indole-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 6lz8 chain B. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: 5-(2-methoxyethoxy)-1H-indole
+    node_type: LIGAND
+    grounding: pdb.ligand:EY9
+    xrefs:
+    - pdb.ligand:EY9
+  - node_id: site
+    label: 5-(2-methoxyethoxy)-1H-indole-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_EY9
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 6LZ8 chain B (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:K9N4V7
+  - node_id: resN141
+    label: binding residue N141 (PDB 6lz8 chain B author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:K9N4V7
+  - node_id: resN142
+    label: binding residue N142 (PDB 6lz8 chain B author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:K9N4V7
+  edges:
+  - subject: resN141
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: N141 contacts the bound 5-(2-methoxyethoxy)-1H-indole.
+    evidence:
+    - reference: PDB:6lz8
+      snippet: N141 N142
+      notes: 'BioLiP2 record line for PDB 6lz8 chain B, ligand EY9: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:35517857 for this structure.'
+  - subject: resN141
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: N141 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:6lz8
+      snippet: N141 N142
+      notes: 'BioLiP2 record line for PDB 6lz8 chain B, ligand EY9: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:35517857 for this structure.'
+  - subject: resN142
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: N142 contacts the bound 5-(2-methoxyethoxy)-1H-indole.
+    evidence:
+    - reference: PDB:6lz8
+      snippet: N141 N142
+      notes: 'BioLiP2 record line for PDB 6lz8 chain B, ligand EY9: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:35517857 for this structure.'
+  - subject: resN142
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: N142 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:6lz8
+      snippet: N141 N142
+      notes: 'BioLiP2 record line for PDB 6lz8 chain B, ligand EY9: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:35517857 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:6lz8
+      snippet: N141 N142
+      notes: 'BioLiP2 record line for PDB 6lz8 chain B, ligand EY9: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:35517857 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:K9N4V7.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (5 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

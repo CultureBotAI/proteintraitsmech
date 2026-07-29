@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:A8W
 synonyms:
@@ -18,4 +18,96 @@ canonical_examples:
     protein_label: "9B2A chain A (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 9b2a chain A (resolution 3.82 Å); binding residues: N890 Y891"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of Pregnenolone sulfate at the Pregnenolone sulfate-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 9b2a chain A. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: Pregnenolone sulfate
+    node_type: LIGAND
+    grounding: CHEBI:35420
+    xrefs:
+    - pdb.ligand:A8W
+  - node_id: site
+    label: Pregnenolone sulfate-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_A8W
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 9B2A chain A (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:J9SQF3
+  - node_id: resN890
+    label: binding residue N890 (PDB 9b2a chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:J9SQF3
+  - node_id: resY891
+    label: binding residue Y891 (PDB 9b2a chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:J9SQF3
+  edges:
+  - subject: resN890
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: N890 contacts the bound Pregnenolone sulfate.
+    evidence:
+    - reference: PDB:9b2a
+      snippet: N890 Y891
+      notes: 'BioLiP2 record line for PDB 9b2a chain A, ligand A8W: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:39809942 for this structure.'
+  - subject: resN890
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: N890 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:9b2a
+      snippet: N890 Y891
+      notes: 'BioLiP2 record line for PDB 9b2a chain A, ligand A8W: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:39809942 for this structure.'
+  - subject: resY891
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: Y891 contacts the bound Pregnenolone sulfate.
+    evidence:
+    - reference: PDB:9b2a
+      snippet: N890 Y891
+      notes: 'BioLiP2 record line for PDB 9b2a chain A, ligand A8W: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:39809942 for this structure.'
+  - subject: resY891
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: Y891 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:9b2a
+      snippet: N890 Y891
+      notes: 'BioLiP2 record line for PDB 9b2a chain A, ligand A8W: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:39809942 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:9b2a
+      snippet: N890 Y891
+      notes: 'BioLiP2 record line for PDB 9b2a chain A, ligand A8W: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:39809942 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:J9SQF3.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (5 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

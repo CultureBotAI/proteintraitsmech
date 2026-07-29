@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:TFA
 synonyms:
@@ -34,4 +34,113 @@ canonical_examples:
     protein_label: "4WPY chain A (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 4wpy chain A (resolution 1.5 Å); binding residues: L44 R46"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of trifluoroacetic acid at the trifluoroacetic acid-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 2i0u chain E. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: trifluoroacetic acid
+    node_type: LIGAND
+    grounding: CHEBI:45892
+    xrefs:
+    - pdb.ligand:TFA
+  - node_id: site
+    label: trifluoroacetic acid-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_TFA
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 2I0U chain E (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:Q1RP79
+  - node_id: resF17
+    label: binding residue F17 (PDB 2i0u chain E author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q1RP79
+  - node_id: resW20
+    label: binding residue W20 (PDB 2i0u chain E author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q1RP79
+  - node_id: activity
+    label: enzymatic activity EC 3.1.1.4
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0004623
+    description: GO molecular function for EC:3.1.1.4, via GO's own ec2go mapping.
+    xrefs:
+    - EC:3.1.1.4
+  edges:
+  - subject: resF17
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: F17 contacts the bound trifluoroacetic acid.
+    evidence:
+    - reference: PDB:2i0u
+      snippet: F17 W20
+      notes: 'BioLiP2 record line for PDB 2i0u chain E, ligand TFA: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: resF17
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: F17 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:2i0u
+      snippet: F17 W20
+      notes: 'BioLiP2 record line for PDB 2i0u chain E, ligand TFA: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: resW20
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: W20 contacts the bound trifluoroacetic acid.
+    evidence:
+    - reference: PDB:2i0u
+      snippet: F17 W20
+      notes: 'BioLiP2 record line for PDB 2i0u chain E, ligand TFA: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: resW20
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: W20 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:2i0u
+      snippet: F17 W20
+      notes: 'BioLiP2 record line for PDB 2i0u chain E, ligand TFA: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:2i0u
+      snippet: F17 W20
+      notes: 'BioLiP2 record line for PDB 2i0u chain E, ligand TFA: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. Receptor mapped by BioLiP to UniProtKB:Q1RP79.'
+  - subject: site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The site participates in this activity.
+    evidence:
+    - reference: PDB:2i0u
+      snippet: F17 W20
+      notes: 'BioLiP2 record line for PDB 2i0u chain E, ligand TFA: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. EC 3.1.1.4 recorded by BioLiP for this receptor.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (6 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

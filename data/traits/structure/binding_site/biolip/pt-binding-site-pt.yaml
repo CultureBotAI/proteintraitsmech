@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:PT
 synonyms:
@@ -18,4 +18,96 @@ canonical_examples:
     protein_label: "5T7L chain A (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 5t7l chain A (resolution 2.83 Å); binding residues: K3 C41"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of PLATINUM (II) ION at the PLATINUM (II) ION-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 5t7l chain A. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: PLATINUM (II) ION
+    node_type: LIGAND
+    grounding: CHEBI:49832
+    xrefs:
+    - pdb.ligand:PT
+  - node_id: site
+    label: PLATINUM (II) ION-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_PT
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 5T7L chain A (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:O00244
+  - node_id: resK3
+    label: binding residue K3 (PDB 5t7l chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:O00244
+  - node_id: resC41
+    label: binding residue C41 (PDB 5t7l chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:O00244
+  edges:
+  - subject: resK3
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: K3 contacts the bound PLATINUM (II) ION.
+    evidence:
+    - reference: PDB:5t7l
+      snippet: K3 C41
+      notes: 'BioLiP2 record line for PDB 5t7l chain A, ligand PT: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:31283225 for this structure.'
+  - subject: resK3
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: K3 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:5t7l
+      snippet: K3 C41
+      notes: 'BioLiP2 record line for PDB 5t7l chain A, ligand PT: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:31283225 for this structure.'
+  - subject: resC41
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: C41 contacts the bound PLATINUM (II) ION.
+    evidence:
+    - reference: PDB:5t7l
+      snippet: K3 C41
+      notes: 'BioLiP2 record line for PDB 5t7l chain A, ligand PT: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:31283225 for this structure.'
+  - subject: resC41
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: C41 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:5t7l
+      snippet: K3 C41
+      notes: 'BioLiP2 record line for PDB 5t7l chain A, ligand PT: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:31283225 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:5t7l
+      snippet: K3 C41
+      notes: 'BioLiP2 record line for PDB 5t7l chain A, ligand PT: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:31283225 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:O00244.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (5 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

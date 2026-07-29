@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:APO
 synonyms:
@@ -18,4 +18,116 @@ canonical_examples:
     protein_label: "7LUB chain B (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 7lub chain B (resolution 2.15 Å); binding residues: T234 H235"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of D-2-AMINO-3-PHOSPHONO-PROPIONIC ACID at the D-2-AMINO-3-PHOSPHONO-PROPIONIC ACID-binding
+    site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 7lub chain B. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: D-2-AMINO-3-PHOSPHONO-PROPIONIC ACID
+    node_type: LIGAND
+    grounding: pdb.ligand:APO
+    xrefs:
+    - pdb.ligand:APO
+  - node_id: site
+    label: D-2-AMINO-3-PHOSPHONO-PROPIONIC ACID-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_APO
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 7LUB chain B (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:P07954
+  - node_id: resT234
+    label: binding residue T234 (PDB 7lub chain B author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07954
+  - node_id: resH235
+    label: binding residue H235 (PDB 7lub chain B author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P07954
+  - node_id: activity
+    label: enzymatic activity EC 4.2.1.2
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0004333
+    description: GO molecular function for EC:4.2.1.2, via GO's own ec2go mapping.
+    xrefs:
+    - EC:4.2.1.2
+  edges:
+  - subject: resT234
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: T234 contacts the bound D-2-AMINO-3-PHOSPHONO-PROPIONIC ACID.
+    evidence:
+    - reference: PDB:7lub
+      snippet: T234 H235
+      notes: 'BioLiP2 record line for PDB 7lub chain B, ligand APO: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:36893255 for this structure.'
+  - subject: resT234
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: T234 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:7lub
+      snippet: T234 H235
+      notes: 'BioLiP2 record line for PDB 7lub chain B, ligand APO: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:36893255 for this structure.'
+  - subject: resH235
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: H235 contacts the bound D-2-AMINO-3-PHOSPHONO-PROPIONIC ACID.
+    evidence:
+    - reference: PDB:7lub
+      snippet: T234 H235
+      notes: 'BioLiP2 record line for PDB 7lub chain B, ligand APO: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:36893255 for this structure.'
+  - subject: resH235
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: H235 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:7lub
+      snippet: T234 H235
+      notes: 'BioLiP2 record line for PDB 7lub chain B, ligand APO: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:36893255 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:7lub
+      snippet: T234 H235
+      notes: 'BioLiP2 record line for PDB 7lub chain B, ligand APO: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:36893255 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:P07954.'
+  - subject: site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The site participates in this activity.
+    evidence:
+    - reference: PDB:7lub
+      snippet: T234 H235
+      notes: 'BioLiP2 record line for PDB 7lub chain B, ligand APO: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:36893255 for this structure. EC 4.2.1.2 recorded by
+        BioLiP for this receptor.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (6 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

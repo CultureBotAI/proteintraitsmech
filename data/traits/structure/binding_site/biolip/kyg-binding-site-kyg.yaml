@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:KYG
 synonyms:
@@ -18,4 +18,121 @@ canonical_examples:
     protein_label: "6NR7 chain A (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 6nr7 chain A (resolution 3.0 Å); binding residues: Q18 H22 K952"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of ligand KYG at the ligand KYG-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 6nr7 chain A. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 3 binding residues.
+  nodes:
+  - node_id: ligand
+    label: ligand KYG
+    node_type: LIGAND
+    grounding: pdb.ligand:KYG
+    xrefs:
+    - pdb.ligand:KYG
+  - node_id: site
+    label: ligand KYG-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_KYG
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 6NR7 chain A (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:P12003
+  - node_id: resQ18
+    label: binding residue Q18 (PDB 6nr7 chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P12003
+  - node_id: resH22
+    label: binding residue H22 (PDB 6nr7 chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P12003
+  - node_id: resK952
+    label: binding residue K952 (PDB 6nr7 chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P12003
+  edges:
+  - subject: resQ18
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: Q18 contacts the bound ligand KYG.
+    evidence:
+    - reference: PDB:6nr7
+      snippet: Q18 H22 K952
+      notes: 'BioLiP2 record line for PDB 6nr7 chain A, ligand KYG: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: resQ18
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: Q18 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:6nr7
+      snippet: Q18 H22 K952
+      notes: 'BioLiP2 record line for PDB 6nr7 chain A, ligand KYG: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: resH22
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: H22 contacts the bound ligand KYG.
+    evidence:
+    - reference: PDB:6nr7
+      snippet: Q18 H22 K952
+      notes: 'BioLiP2 record line for PDB 6nr7 chain A, ligand KYG: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: resH22
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: H22 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:6nr7
+      snippet: Q18 H22 K952
+      notes: 'BioLiP2 record line for PDB 6nr7 chain A, ligand KYG: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: resK952
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: K952 contacts the bound ligand KYG.
+    evidence:
+    - reference: PDB:6nr7
+      snippet: Q18 H22 K952
+      notes: 'BioLiP2 record line for PDB 6nr7 chain A, ligand KYG: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: resK952
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: K952 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:6nr7
+      snippet: Q18 H22 K952
+      notes: 'BioLiP2 record line for PDB 6nr7 chain A, ligand KYG: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:6nr7
+      snippet: Q18 H22 K952
+      notes: 'BioLiP2 record line for PDB 6nr7 chain A, ligand KYG: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. Receptor mapped by BioLiP to UniProtKB:P12003.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (7 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

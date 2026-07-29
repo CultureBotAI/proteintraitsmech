@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:LPE
 synonyms:
@@ -34,4 +34,97 @@ canonical_examples:
     protein_label: "8G1A chain B (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 8g1a chain B (resolution 2.8 Å); binding residues: W173 L174 E177"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of 1-O-OCTADECYL-SN-GLYCERO-3-PHOSPHOCHOLINE at the 1-O-OCTADECYL-SN-GLYCERO-3-PHOSPHOCHOLINE-binding
+    site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 7drt chain B. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: 1-O-OCTADECYL-SN-GLYCERO-3-PHOSPHOCHOLINE
+    node_type: LIGAND
+    grounding: pdb.ligand:LPE
+    xrefs:
+    - pdb.ligand:LPE
+  - node_id: site
+    label: 1-O-OCTADECYL-SN-GLYCERO-3-PHOSPHOCHOLINE-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_LPE
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 7DRT chain B (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:Q5T9L3
+  - node_id: resR261
+    label: binding residue R261 (PDB 7drt chain B author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q5T9L3
+  - node_id: resA272
+    label: binding residue A272 (PDB 7drt chain B author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q5T9L3
+  edges:
+  - subject: resR261
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: R261 contacts the bound 1-O-OCTADECYL-SN-GLYCERO-3-PHOSPHOCHOLINE.
+    evidence:
+    - reference: PDB:7drt
+      snippet: R261 A272
+      notes: 'BioLiP2 record line for PDB 7drt chain B, ligand LPE: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:34315898 for this structure.'
+  - subject: resR261
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: R261 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:7drt
+      snippet: R261 A272
+      notes: 'BioLiP2 record line for PDB 7drt chain B, ligand LPE: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:34315898 for this structure.'
+  - subject: resA272
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: A272 contacts the bound 1-O-OCTADECYL-SN-GLYCERO-3-PHOSPHOCHOLINE.
+    evidence:
+    - reference: PDB:7drt
+      snippet: R261 A272
+      notes: 'BioLiP2 record line for PDB 7drt chain B, ligand LPE: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:34315898 for this structure.'
+  - subject: resA272
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A272 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:7drt
+      snippet: R261 A272
+      notes: 'BioLiP2 record line for PDB 7drt chain B, ligand LPE: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:34315898 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:7drt
+      snippet: R261 A272
+      notes: 'BioLiP2 record line for PDB 7drt chain B, ligand LPE: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:34315898 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:Q5T9L3.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (5 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

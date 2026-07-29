@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:MUN
 synonyms:
@@ -18,4 +18,96 @@ canonical_examples:
     protein_label: "6EYU chain A (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 6eyu chain A (resolution 2.5 Å); binding residues: F67 Y71"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of ligand MUN at the ligand MUN-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 6eyu chain A. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: ligand MUN
+    node_type: LIGAND
+    grounding: pdb.ligand:MUN
+    xrefs:
+    - pdb.ligand:MUN
+  - node_id: site
+    label: ligand MUN-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_MUN
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 6EYU chain A (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:G0QG75
+  - node_id: resF67
+    label: binding residue F67 (PDB 6eyu chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:G0QG75
+  - node_id: resY71
+    label: binding residue Y71 (PDB 6eyu chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:G0QG75
+  edges:
+  - subject: resF67
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: F67 contacts the bound ligand MUN.
+    evidence:
+    - reference: PDB:6eyu
+      snippet: F67 Y71
+      notes: 'BioLiP2 record line for PDB 6eyu chain A, ligand MUN: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:28948217 for this structure.'
+  - subject: resF67
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: F67 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:6eyu
+      snippet: F67 Y71
+      notes: 'BioLiP2 record line for PDB 6eyu chain A, ligand MUN: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:28948217 for this structure.'
+  - subject: resY71
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: Y71 contacts the bound ligand MUN.
+    evidence:
+    - reference: PDB:6eyu
+      snippet: F67 Y71
+      notes: 'BioLiP2 record line for PDB 6eyu chain A, ligand MUN: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:28948217 for this structure.'
+  - subject: resY71
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: Y71 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:6eyu
+      snippet: F67 Y71
+      notes: 'BioLiP2 record line for PDB 6eyu chain A, ligand MUN: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:28948217 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:6eyu
+      snippet: F67 Y71
+      notes: 'BioLiP2 record line for PDB 6eyu chain A, ligand MUN: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:28948217 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:G0QG75.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (5 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

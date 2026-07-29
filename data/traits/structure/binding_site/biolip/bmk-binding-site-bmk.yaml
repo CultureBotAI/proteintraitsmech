@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:BMK
 synonyms:
@@ -18,4 +18,96 @@ canonical_examples:
     protein_label: "5UOW chain B (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 5uow chain B (resolution 4.5 Å); binding residues: L630 T634"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of ligand BMK at the ligand BMK-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 5uow chain B. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: ligand BMK
+    node_type: LIGAND
+    grounding: CHEBI:34725
+    xrefs:
+    - pdb.ligand:BMK
+  - node_id: site
+    label: ligand BMK-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_BMK
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 5UOW chain B (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:B7ZSK1
+  - node_id: resL630
+    label: binding residue L630 (PDB 5uow chain B author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:B7ZSK1
+  - node_id: resT634
+    label: binding residue T634 (PDB 5uow chain B author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:B7ZSK1
+  edges:
+  - subject: resL630
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: L630 contacts the bound ligand BMK.
+    evidence:
+    - reference: PDB:5uow
+      snippet: L630 T634
+      notes: 'BioLiP2 record line for PDB 5uow chain B, ligand BMK: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:28232581 for this structure.'
+  - subject: resL630
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: L630 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:5uow
+      snippet: L630 T634
+      notes: 'BioLiP2 record line for PDB 5uow chain B, ligand BMK: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:28232581 for this structure.'
+  - subject: resT634
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: T634 contacts the bound ligand BMK.
+    evidence:
+    - reference: PDB:5uow
+      snippet: L630 T634
+      notes: 'BioLiP2 record line for PDB 5uow chain B, ligand BMK: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:28232581 for this structure.'
+  - subject: resT634
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: T634 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:5uow
+      snippet: L630 T634
+      notes: 'BioLiP2 record line for PDB 5uow chain B, ligand BMK: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:28232581 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:5uow
+      snippet: L630 T634
+      notes: 'BioLiP2 record line for PDB 5uow chain B, ligand BMK: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:28232581 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:B7ZSK1.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (5 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

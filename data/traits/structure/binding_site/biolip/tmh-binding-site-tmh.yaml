@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:TMH
 synonyms:
@@ -18,4 +18,115 @@ canonical_examples:
     protein_label: "4I91 chain A (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 4i91 chain A (resolution 2.0 Å); binding residues: F297 A298"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of (+)-alpha-Pinene at the (+)-alpha-Pinene-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 4i91 chain A. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: (+)-alpha-Pinene
+    node_type: LIGAND
+    grounding: CHEBI:28261
+    xrefs:
+    - pdb.ligand:TMH
+  - node_id: site
+    label: (+)-alpha-Pinene-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_TMH
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 4I91 chain A (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:P20813
+  - node_id: resF297
+    label: binding residue F297 (PDB 4i91 chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P20813
+  - node_id: resA298
+    label: binding residue A298 (PDB 4i91 chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P20813
+  - node_id: activity
+    label: enzymatic activity EC 1.14.13.-
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0016709
+    description: GO molecular function for EC:1.14.13.-, via GO's own ec2go mapping.
+    xrefs:
+    - EC:1.14.13.-
+  edges:
+  - subject: resF297
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: F297 contacts the bound (+)-alpha-Pinene.
+    evidence:
+    - reference: PDB:4i91
+      snippet: F297 A298
+      notes: 'BioLiP2 record line for PDB 4i91 chain A, ligand TMH: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:23786449 for this structure.'
+  - subject: resF297
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: F297 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:4i91
+      snippet: F297 A298
+      notes: 'BioLiP2 record line for PDB 4i91 chain A, ligand TMH: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:23786449 for this structure.'
+  - subject: resA298
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: A298 contacts the bound (+)-alpha-Pinene.
+    evidence:
+    - reference: PDB:4i91
+      snippet: F297 A298
+      notes: 'BioLiP2 record line for PDB 4i91 chain A, ligand TMH: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:23786449 for this structure.'
+  - subject: resA298
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A298 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:4i91
+      snippet: F297 A298
+      notes: 'BioLiP2 record line for PDB 4i91 chain A, ligand TMH: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:23786449 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:4i91
+      snippet: F297 A298
+      notes: 'BioLiP2 record line for PDB 4i91 chain A, ligand TMH: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:23786449 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:P20813.'
+  - subject: site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The site participates in this activity.
+    evidence:
+    - reference: PDB:4i91
+      snippet: F297 A298
+      notes: 'BioLiP2 record line for PDB 4i91 chain A, ligand TMH: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:23786449 for this structure. EC 1.14.13.- recorded
+        by BioLiP for this receptor.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (6 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

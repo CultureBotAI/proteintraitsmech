@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:VIR
 synonyms:
@@ -22,4 +22,115 @@ canonical_examples:
     protein_label: "4HUS chain A (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 4hus chain A (resolution 2.36 Å); binding residues: L23 Y42 D44"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of VIRGINIAMYCIN M1 at the VIRGINIAMYCIN M1-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 1khr chain A. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: VIRGINIAMYCIN M1
+    node_type: LIGAND
+    grounding: CHEBI:9997
+    xrefs:
+    - pdb.ligand:VIR
+  - node_id: site
+    label: VIRGINIAMYCIN M1-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_VIR
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 1KHR chain A (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:P50870
+  - node_id: resY37
+    label: binding residue Y37 (PDB 1khr chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P50870
+  - node_id: resD39
+    label: binding residue D39 (PDB 1khr chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P50870
+  - node_id: activity
+    label: enzymatic activity EC 2.3.1.-
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0016747
+    description: GO molecular function for EC:2.3.1.-, via GO's own ec2go mapping.
+    xrefs:
+    - EC:2.3.1.-
+  edges:
+  - subject: resY37
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: Y37 contacts the bound VIRGINIAMYCIN M1.
+    evidence:
+    - reference: PDB:1khr
+      snippet: Y37 D39
+      notes: 'BioLiP2 record line for PDB 1khr chain A, ligand VIR: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:11841212 for this structure.'
+  - subject: resY37
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: Y37 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:1khr
+      snippet: Y37 D39
+      notes: 'BioLiP2 record line for PDB 1khr chain A, ligand VIR: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:11841212 for this structure.'
+  - subject: resD39
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: D39 contacts the bound VIRGINIAMYCIN M1.
+    evidence:
+    - reference: PDB:1khr
+      snippet: Y37 D39
+      notes: 'BioLiP2 record line for PDB 1khr chain A, ligand VIR: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:11841212 for this structure.'
+  - subject: resD39
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: D39 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:1khr
+      snippet: Y37 D39
+      notes: 'BioLiP2 record line for PDB 1khr chain A, ligand VIR: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:11841212 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:1khr
+      snippet: Y37 D39
+      notes: 'BioLiP2 record line for PDB 1khr chain A, ligand VIR: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:11841212 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:P50870.'
+  - subject: site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The site participates in this activity.
+    evidence:
+    - reference: PDB:1khr
+      snippet: Y37 D39
+      notes: 'BioLiP2 record line for PDB 1khr chain A, ligand VIR: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:11841212 for this structure. EC 2.3.1.- recorded by
+        BioLiP for this receptor.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (6 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

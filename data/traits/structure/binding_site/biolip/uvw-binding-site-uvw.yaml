@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:UVW
 synonyms:
@@ -22,4 +22,115 @@ canonical_examples:
     protein_label: "5IBZ chain B (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 5ibz chain B (resolution 1.611 Å); binding residues: R87 H137 H286 E299"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of ACETYLPHOSPHATE at the ACETYLPHOSPHATE-binding site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 1xco chain D. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: ACETYLPHOSPHATE
+    node_type: LIGAND
+    grounding: CHEBI:15350
+    xrefs:
+    - pdb.ligand:UVW
+  - node_id: site
+    label: ACETYLPHOSPHATE-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_UVW
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 1XCO chain D (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:P39646
+  - node_id: resY276
+    label: binding residue Y276 (PDB 1xco chain D author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P39646
+  - node_id: resK277
+    label: binding residue K277 (PDB 1xco chain D author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P39646
+  - node_id: activity
+    label: enzymatic activity EC 2.3.1.8
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0008959
+    description: GO molecular function for EC:2.3.1.8, via GO's own ec2go mapping.
+    xrefs:
+    - EC:2.3.1.8
+  edges:
+  - subject: resY276
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: Y276 contacts the bound ACETYLPHOSPHATE.
+    evidence:
+    - reference: PDB:1xco
+      snippet: Y276 K277
+      notes: 'BioLiP2 record line for PDB 1xco chain D, ligand UVW: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:16283428 for this structure.'
+  - subject: resY276
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: Y276 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:1xco
+      snippet: Y276 K277
+      notes: 'BioLiP2 record line for PDB 1xco chain D, ligand UVW: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:16283428 for this structure.'
+  - subject: resK277
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: K277 contacts the bound ACETYLPHOSPHATE.
+    evidence:
+    - reference: PDB:1xco
+      snippet: Y276 K277
+      notes: 'BioLiP2 record line for PDB 1xco chain D, ligand UVW: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:16283428 for this structure.'
+  - subject: resK277
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: K277 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:1xco
+      snippet: Y276 K277
+      notes: 'BioLiP2 record line for PDB 1xco chain D, ligand UVW: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:16283428 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:1xco
+      snippet: Y276 K277
+      notes: 'BioLiP2 record line for PDB 1xco chain D, ligand UVW: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:16283428 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:P39646.'
+  - subject: site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The site participates in this activity.
+    evidence:
+    - reference: PDB:1xco
+      snippet: Y276 K277
+      notes: 'BioLiP2 record line for PDB 1xco chain D, ligand UVW: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:16283428 for this structure. EC 2.3.1.8 recorded by
+        BioLiP for this receptor.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (6 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"

@@ -6,7 +6,7 @@ definition_source: "BioLiP2 (Yang/Zhang group)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 xrefs:
   - pdb.ligand:FU0
 synonyms:
@@ -18,4 +18,116 @@ canonical_examples:
     protein_label: "4CS3 chain A (BioLiP receptor)"
     note: "BioLiP2 binding-site occurrence in PDB 4cs3 chain A (resolution 1.499 Å); binding residues: I413 W417"
     source: CURATOR
+causal_graphs:
+- graph_id: ligand_binding
+  title: Binding of 2-(furan-2-yl)ethyl hydrogen carbonate at the 2-(furan-2-yl)ethyl hydrogen carbonate-binding
+    site
+  description: Residue-level ligand contact transcribed from BioLiP2 for PDB 4cs3 chain A. Residue numbering
+    is the PDB author frame BioLiP reports; each residue's identity was checked against BioLiP's own receptor
+    sequence. 2 binding residues.
+  nodes:
+  - node_id: ligand
+    label: 2-(furan-2-yl)ethyl hydrogen carbonate
+    node_type: LIGAND
+    grounding: pdb.ligand:FU0
+    xrefs:
+    - pdb.ligand:FU0
+  - node_id: site
+    label: 2-(furan-2-yl)ethyl hydrogen carbonate-binding site
+    node_type: MOTIF
+    grounding: proteintraitsmech:BIOLIP_FU0
+    description: KB trait record (STRUCT_BINDING_SITE) — the site this interaction defines.
+  - node_id: protein
+    label: 4CS3 chain A (BioLiP receptor)
+    node_type: PROTEIN
+    grounding: UniProtKB:Q8PWY1
+  - node_id: resI413
+    label: binding residue I413 (PDB 4cs3 chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8PWY1
+  - node_id: resW417
+    label: binding residue W417 (PDB 4cs3 chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q8PWY1
+  - node_id: activity
+    label: enzymatic activity EC 6.1.1.26
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0043767
+    description: GO molecular function for EC:6.1.1.26, via GO's own ec2go mapping.
+    xrefs:
+    - EC:6.1.1.26
+  edges:
+  - subject: resI413
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: I413 contacts the bound 2-(furan-2-yl)ethyl hydrogen carbonate.
+    evidence:
+    - reference: PDB:4cs3
+      snippet: I413 W417
+      notes: 'BioLiP2 record line for PDB 4cs3 chain A, ligand FU0: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:24737732 for this structure.'
+  - subject: resI413
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: I413 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:4cs3
+      snippet: I413 W417
+      notes: 'BioLiP2 record line for PDB 4cs3 chain A, ligand FU0: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:24737732 for this structure.'
+  - subject: resW417
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: W417 contacts the bound 2-(furan-2-yl)ethyl hydrogen carbonate.
+    evidence:
+    - reference: PDB:4cs3
+      snippet: I413 W417
+      notes: 'BioLiP2 record line for PDB 4cs3 chain A, ligand FU0: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:24737732 for this structure.'
+  - subject: resW417
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: W417 is one of the site's binding residues.
+    evidence:
+    - reference: PDB:4cs3
+      snippet: I413 W417
+      notes: 'BioLiP2 record line for PDB 4cs3 chain A, ligand FU0: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:24737732 for this structure.'
+  - subject: site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: protein
+    description: The binding site lies in this receptor chain.
+    evidence:
+    - reference: PDB:4cs3
+      snippet: I413 W417
+      notes: 'BioLiP2 record line for PDB 4cs3 chain A, ligand FU0: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:24737732 for this structure. Receptor mapped by BioLiP
+        to UniProtKB:Q8PWY1.'
+  - subject: site
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The site participates in this activity.
+    evidence:
+    - reference: PDB:4cs3
+      snippet: I413 W417
+      notes: 'BioLiP2 record line for PDB 4cs3 chain A, ligand FU0: binding-site residues in PDB author
+        numbering (column 8 of BioLiP_nr.txt), cross-checked against BioLiP''s own receptor sequence via
+        its renumbered column 9. BioLiP cites PMID:24737732 for this structure. EC 6.1.1.26 recorded by
+        BioLiP for this receptor.'
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'ligand_binding' (6 evidence-backed edges) from BioLiP2; SEEDED -> REVIEWED
+  llm_assisted: true
 license: "BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)"
