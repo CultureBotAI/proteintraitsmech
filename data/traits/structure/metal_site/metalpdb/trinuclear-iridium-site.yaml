@@ -6,7 +6,7 @@ definition_source: "MetalPDB (CERM, University of Florence)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_METAL_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - proteintraitsmech:METAL_BINDING_SITE
 chemical_participants:
@@ -22,4 +22,87 @@ canonical_examples:
     protein_label: "Ferritin light chain"
     taxon_label: "Equus caballus"
     note: "MetalPDB trinuclear iridium site occurrence in PDB 5e2d"
+causal_graphs:
+- graph_id: metal_coordination
+  title: Coordination of iridium at the trinuclear iridium site
+  description: Protein residues coordinating the metal, transcribed from MetalPDB across 2 exemplar site(s).
+    Residue numbering is the PDB author frame MetalPDB reports; no UniProt position is asserted.
+  nodes:
+  - node_id: metal
+    label: iridium
+    node_type: CHEMICAL
+    grounding: CHEBI:49666
+  - node_id: site
+    label: trinuclear iridium site
+    node_type: MOTIF
+    grounding: proteintraitsmech:METALPDB_IR_TRINUCLEAR
+    description: KB trait record (STRUCT_METAL_SITE) — the coordination class this site belongs to.
+  - node_id: res5od5THR226B
+    label: coordinating THR226 (PDB 5od5 chain B author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:A0A1E7P069
+  - node_id: res5e2dHIS49A
+    label: coordinating HIS49 (PDB 5e2d chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P02791
+  edges:
+  - subject: res5od5THR226B
+    predicate: molecularly interacts with (coordinates)
+    predicate_id: RO:0002436
+    object: metal
+    description: THR226 donates a donor atom to the coordinated iridium.
+    evidence:
+    - reference: PDB:5od5
+      snippet: residue_name THR; residue_pdb_number 226; chain_letter B
+      notes: MetalPDB site 5od5_2 (PDB 5od5, trinuclear Iridium, coordination number 1; geometry n/a).
+        Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating ligands
+        (water, nucleotides) that are not written as nodes here.
+  - subject: res5od5THR226B
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A coordinating residue of this metal site.
+    evidence:
+    - reference: PDB:5od5
+      snippet: residue_name THR; residue_pdb_number 226; chain_letter B
+      notes: MetalPDB site 5od5_2 (PDB 5od5, trinuclear Iridium, coordination number 1; geometry n/a).
+        Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating ligands
+        (water, nucleotides) that are not written as nodes here.
+  - subject: res5e2dHIS49A
+    predicate: molecularly interacts with (coordinates)
+    predicate_id: RO:0002436
+    object: metal
+    description: HIS49 donates a donor atom to the coordinated iridium.
+    evidence:
+    - reference: PDB:5e2d
+      snippet: residue_name HIS; residue_pdb_number 49; chain_letter A
+      notes: MetalPDB site 5e2d_3 (PDB 5e2d, trinuclear Iridium, coordination number 1; geometry n/a).
+        Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating ligands
+        (water, nucleotides) that are not written as nodes here.
+  - subject: res5e2dHIS49A
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A coordinating residue of this metal site.
+    evidence:
+    - reference: PDB:5e2d
+      snippet: residue_name HIS; residue_pdb_number 49; chain_letter A
+      notes: MetalPDB site 5e2d_3 (PDB 5e2d, trinuclear Iridium, coordination number 1; geometry n/a).
+        Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating ligands
+        (water, nucleotides) that are not written as nodes here.
+  - subject: metal
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: The coordinated metal ion of this site.
+    evidence:
+    - reference: PDB:5od5
+      snippet: periodic_symbol Ir; coordination_number 1
+      notes: MetalPDB site 5od5_2 metal record.
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'metal_coordination' (5 evidence-backed edges) from MetalPDB; SEEDED ->
+    REVIEWED
+  llm_assisted: true
 license: "MetalPDB (CERM, Univ. Florence) — no explicit license published; reuse terms unconfirmed (confirm with CERM before redistribution)"

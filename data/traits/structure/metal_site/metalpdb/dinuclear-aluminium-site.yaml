@@ -6,7 +6,7 @@ definition_source: "MetalPDB (CERM, University of Florence)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_METAL_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - proteintraitsmech:METAL_BINDING_SITE
 chemical_participants:
@@ -34,4 +34,113 @@ canonical_examples:
     protein_label: protein
     taxon_label: "Ovis aries"
     note: "MetalPDB dinuclear aluminium site occurrence in PDB 4hna"
+causal_graphs:
+- graph_id: metal_coordination
+  title: Coordination of aluminium at the dinuclear aluminium site
+  description: Protein residues coordinating the metal, transcribed from MetalPDB across 3 exemplar site(s).
+    Residue numbering is the PDB author frame MetalPDB reports; no UniProt position is asserted.
+  nodes:
+  - node_id: metal
+    label: aluminium
+    node_type: CHEMICAL
+    grounding: CHEBI:28984
+  - node_id: site
+    label: dinuclear aluminium site
+    node_type: MOTIF
+    grounding: proteintraitsmech:METALPDB_AL_DINUCLEAR
+    description: KB trait record (STRUCT_METAL_SITE) — the coordination class this site belongs to.
+  - node_id: res5y6mTHR201A
+    label: coordinating THR201 (PDB 5y6m chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:A0A024B7W1
+  - node_id: res4iynASN134A
+    label: coordinating ASN134 (PDB 4iyn chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:A8WFV1
+  - node_id: res6njoSER184D
+    label: coordinating SER184 (PDB 6njo chain D author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:B7UMA6
+  edges:
+  - subject: res5y6mTHR201A
+    predicate: molecularly interacts with (coordinates)
+    predicate_id: RO:0002436
+    object: metal
+    description: THR201 donates a donor atom to the coordinated aluminium.
+    evidence:
+    - reference: PDB:5y6m
+      snippet: residue_name THR; residue_pdb_number 201; chain_letter A
+      notes: MetalPDB site 5y6m_1 (PDB 5y6m, dinuclear Aluminium, coordination number 5; geometry irregular
+        (n/a)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating
+        ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res5y6mTHR201A
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A coordinating residue of this metal site.
+    evidence:
+    - reference: PDB:5y6m
+      snippet: residue_name THR; residue_pdb_number 201; chain_letter A
+      notes: MetalPDB site 5y6m_1 (PDB 5y6m, dinuclear Aluminium, coordination number 5; geometry irregular
+        (n/a)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating
+        ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res4iynASN134A
+    predicate: molecularly interacts with (coordinates)
+    predicate_id: RO:0002436
+    object: metal
+    description: ASN134 donates a donor atom to the coordinated aluminium.
+    evidence:
+    - reference: PDB:4iyn
+      snippet: residue_name ASN; residue_pdb_number 134; chain_letter A
+      notes: MetalPDB site 4iyn_1 (PDB 4iyn, dinuclear Aluminium, coordination number 6; geometry octahedron
+        (regular)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating
+        ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res4iynASN134A
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A coordinating residue of this metal site.
+    evidence:
+    - reference: PDB:4iyn
+      snippet: residue_name ASN; residue_pdb_number 134; chain_letter A
+      notes: MetalPDB site 4iyn_1 (PDB 4iyn, dinuclear Aluminium, coordination number 6; geometry octahedron
+        (regular)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating
+        ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res6njoSER184D
+    predicate: molecularly interacts with (coordinates)
+    predicate_id: RO:0002436
+    object: metal
+    description: SER184 donates a donor atom to the coordinated aluminium.
+    evidence:
+    - reference: PDB:6njo
+      snippet: residue_name SER; residue_pdb_number 184; chain_letter D
+      notes: MetalPDB site 6njo_1 (PDB 6njo, dinuclear Aluminium, coordination number 5; geometry trigonal
+        bipyramid (regular)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein
+        coordinating ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res6njoSER184D
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A coordinating residue of this metal site.
+    evidence:
+    - reference: PDB:6njo
+      snippet: residue_name SER; residue_pdb_number 184; chain_letter D
+      notes: MetalPDB site 6njo_1 (PDB 6njo, dinuclear Aluminium, coordination number 5; geometry trigonal
+        bipyramid (regular)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein
+        coordinating ligands (water, nucleotides) that are not written as nodes here.
+  - subject: metal
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: The coordinated metal ion of this site.
+    evidence:
+    - reference: PDB:5y6m
+      snippet: periodic_symbol Al; coordination_number 5
+      notes: MetalPDB site 5y6m_1 metal record.
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'metal_coordination' (7 evidence-backed edges) from MetalPDB; SEEDED ->
+    REVIEWED
+  llm_assisted: true
 license: "MetalPDB (CERM, Univ. Florence) — no explicit license published; reuse terms unconfirmed (confirm with CERM before redistribution)"

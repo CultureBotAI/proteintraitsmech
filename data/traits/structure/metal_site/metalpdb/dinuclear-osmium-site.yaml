@@ -6,7 +6,7 @@ definition_source: "MetalPDB (CERM, University of Florence)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_METAL_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - proteintraitsmech:METAL_BINDING_SITE
 chemical_participants:
@@ -22,4 +22,113 @@ canonical_examples:
     protein_label: "30S ribosomal protein S2"
     taxon_label: "Thermus thermophilus HB8"
     note: "MetalPDB dinuclear osmium site occurrence in PDB 3uzg"
+causal_graphs:
+- graph_id: metal_coordination
+  title: Coordination of osmium at the dinuclear osmium site
+  description: Protein residues coordinating the metal, transcribed from MetalPDB across 1 exemplar site(s).
+    Residue numbering is the PDB author frame MetalPDB reports; no UniProt position is asserted.
+  nodes:
+  - node_id: metal
+    label: osmium
+    node_type: CHEMICAL
+    grounding: CHEBI:30687
+  - node_id: site
+    label: dinuclear osmium site
+    node_type: MOTIF
+    grounding: proteintraitsmech:METALPDB_OS_DINUCLEAR
+    description: KB trait record (STRUCT_METAL_SITE) — the coordination class this site belongs to.
+  - node_id: res1rmqASP44B
+    label: coordinating ASP44 (PDB 1rmq chain B author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AE22
+  - node_id: res1rmqASP46B
+    label: coordinating ASP46 (PDB 1rmq chain B author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AE22
+  - node_id: res1rmqASP167B
+    label: coordinating ASP167 (PDB 1rmq chain B author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AE22
+  edges:
+  - subject: res1rmqASP44B
+    predicate: molecularly interacts with (coordinates)
+    predicate_id: RO:0002436
+    object: metal
+    description: ASP44 donates a donor atom to the coordinated osmium.
+    evidence:
+    - reference: PDB:1rmq
+      snippet: residue_name ASP; residue_pdb_number 44; chain_letter B
+      notes: MetalPDB site 1rmq_2 (PDB 1rmq, dinuclear Osmium, coordination number 3; geometry square
+        plane with a vacancy (regular)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists
+        non-protein coordinating ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res1rmqASP44B
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A coordinating residue of this metal site.
+    evidence:
+    - reference: PDB:1rmq
+      snippet: residue_name ASP; residue_pdb_number 44; chain_letter B
+      notes: MetalPDB site 1rmq_2 (PDB 1rmq, dinuclear Osmium, coordination number 3; geometry square
+        plane with a vacancy (regular)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists
+        non-protein coordinating ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res1rmqASP46B
+    predicate: molecularly interacts with (coordinates)
+    predicate_id: RO:0002436
+    object: metal
+    description: ASP46 donates a donor atom to the coordinated osmium.
+    evidence:
+    - reference: PDB:1rmq
+      snippet: residue_name ASP; residue_pdb_number 46; chain_letter B
+      notes: MetalPDB site 1rmq_2 (PDB 1rmq, dinuclear Osmium, coordination number 3; geometry square
+        plane with a vacancy (regular)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists
+        non-protein coordinating ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res1rmqASP46B
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A coordinating residue of this metal site.
+    evidence:
+    - reference: PDB:1rmq
+      snippet: residue_name ASP; residue_pdb_number 46; chain_letter B
+      notes: MetalPDB site 1rmq_2 (PDB 1rmq, dinuclear Osmium, coordination number 3; geometry square
+        plane with a vacancy (regular)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists
+        non-protein coordinating ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res1rmqASP167B
+    predicate: molecularly interacts with (coordinates)
+    predicate_id: RO:0002436
+    object: metal
+    description: ASP167 donates a donor atom to the coordinated osmium.
+    evidence:
+    - reference: PDB:1rmq
+      snippet: residue_name ASP; residue_pdb_number 167; chain_letter B
+      notes: MetalPDB site 1rmq_2 (PDB 1rmq, dinuclear Osmium, coordination number 3; geometry square
+        plane with a vacancy (regular)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists
+        non-protein coordinating ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res1rmqASP167B
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A coordinating residue of this metal site.
+    evidence:
+    - reference: PDB:1rmq
+      snippet: residue_name ASP; residue_pdb_number 167; chain_letter B
+      notes: MetalPDB site 1rmq_2 (PDB 1rmq, dinuclear Osmium, coordination number 3; geometry square
+        plane with a vacancy (regular)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists
+        non-protein coordinating ligands (water, nucleotides) that are not written as nodes here.
+  - subject: metal
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: The coordinated metal ion of this site.
+    evidence:
+    - reference: PDB:1rmq
+      snippet: periodic_symbol Os; coordination_number 3
+      notes: MetalPDB site 1rmq_2 metal record.
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'metal_coordination' (7 evidence-backed edges) from MetalPDB; SEEDED ->
+    REVIEWED
+  llm_assisted: true
 license: "MetalPDB (CERM, Univ. Florence) — no explicit license published; reuse terms unconfirmed (confirm with CERM before redistribution)"

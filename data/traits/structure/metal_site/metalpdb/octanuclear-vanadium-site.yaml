@@ -6,7 +6,7 @@ definition_source: "MetalPDB (CERM, University of Florence)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_METAL_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - proteintraitsmech:METAL_BINDING_SITE
 chemical_participants:
@@ -18,4 +18,87 @@ canonical_examples:
     protein_label: "Nitrogenase vanadium-iron protein alpha chain"
     taxon_label: "Azotobacter vinelandii"
     note: "MetalPDB octanuclear vanadium site occurrence in PDB 5n6y"
+causal_graphs:
+- graph_id: metal_coordination
+  title: Coordination of vanadium at the octanuclear vanadium site
+  description: Protein residues coordinating the metal, transcribed from MetalPDB across 1 exemplar site(s).
+    Residue numbering is the PDB author frame MetalPDB reports; no UniProt position is asserted.
+  nodes:
+  - node_id: metal
+    label: vanadium
+    node_type: CHEMICAL
+    grounding: CHEBI:27698
+  - node_id: site
+    label: octanuclear vanadium site
+    node_type: MOTIF
+    grounding: proteintraitsmech:METALPDB_V_OCTANUCLEAR
+    description: KB trait record (STRUCT_METAL_SITE) — the coordination class this site belongs to.
+  - node_id: res5n6yHIS423D
+    label: coordinating HIS423 (PDB 5n6y chain D author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P16855
+  - node_id: res5n6yCYS257D
+    label: coordinating CYS257 (PDB 5n6y chain D author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P16855
+  edges:
+  - subject: res5n6yHIS423D
+    predicate: molecularly interacts with (coordinates)
+    predicate_id: RO:0002436
+    object: metal
+    description: HIS423 donates a donor atom to the coordinated vanadium.
+    evidence:
+    - reference: PDB:5n6y
+      snippet: residue_name HIS; residue_pdb_number 423; chain_letter D
+      notes: MetalPDB site 5n6y_3 (PDB 5n6y, octanuclear Vanadium, coordination number 6; geometry octahedron
+        (distorted)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating
+        ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res5n6yHIS423D
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A coordinating residue of this metal site.
+    evidence:
+    - reference: PDB:5n6y
+      snippet: residue_name HIS; residue_pdb_number 423; chain_letter D
+      notes: MetalPDB site 5n6y_3 (PDB 5n6y, octanuclear Vanadium, coordination number 6; geometry octahedron
+        (distorted)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating
+        ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res5n6yCYS257D
+    predicate: molecularly interacts with (coordinates)
+    predicate_id: RO:0002436
+    object: metal
+    description: CYS257 donates a donor atom to the coordinated vanadium.
+    evidence:
+    - reference: PDB:5n6y
+      snippet: residue_name CYS; residue_pdb_number 257; chain_letter D
+      notes: MetalPDB site 5n6y_3 (PDB 5n6y, octanuclear Vanadium, coordination number 6; geometry octahedron
+        (distorted)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating
+        ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res5n6yCYS257D
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A coordinating residue of this metal site.
+    evidence:
+    - reference: PDB:5n6y
+      snippet: residue_name CYS; residue_pdb_number 257; chain_letter D
+      notes: MetalPDB site 5n6y_3 (PDB 5n6y, octanuclear Vanadium, coordination number 6; geometry octahedron
+        (distorted)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating
+        ligands (water, nucleotides) that are not written as nodes here.
+  - subject: metal
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: The coordinated metal ion of this site.
+    evidence:
+    - reference: PDB:5n6y
+      snippet: periodic_symbol V; coordination_number 6
+      notes: MetalPDB site 5n6y_3 metal record.
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'metal_coordination' (5 evidence-backed edges) from MetalPDB; SEEDED ->
+    REVIEWED
+  llm_assisted: true
 license: "MetalPDB (CERM, Univ. Florence) — no explicit license published; reuse terms unconfirmed (confirm with CERM before redistribution)"

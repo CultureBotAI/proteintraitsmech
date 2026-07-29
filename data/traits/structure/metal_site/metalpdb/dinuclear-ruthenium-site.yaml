@@ -6,7 +6,7 @@ definition_source: "MetalPDB (CERM, University of Florence)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_METAL_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - proteintraitsmech:METAL_BINDING_SITE
 chemical_participants:
@@ -34,4 +34,89 @@ canonical_examples:
     protein_label: "Phenylethylamine oxidase"
     taxon_label: "Arthrobacter globiformis"
     note: "MetalPDB dinuclear ruthenium site occurrence in PDB 2cfk"
+causal_graphs:
+- graph_id: metal_coordination
+  title: Coordination of ruthenium at the dinuclear ruthenium site
+  description: Protein residues coordinating the metal, transcribed from MetalPDB across 2 exemplar site(s).
+    Residue numbering is the PDB author frame MetalPDB reports; no UniProt position is asserted.
+  nodes:
+  - node_id: metal
+    label: ruthenium
+    node_type: CHEMICAL
+    grounding: CHEBI:30682
+  - node_id: site
+    label: dinuclear ruthenium site
+    node_type: MOTIF
+    grounding: proteintraitsmech:METALPDB_RU_DINUCLEAR
+    description: KB trait record (STRUCT_METAL_SITE) — the coordination class this site belongs to.
+  - node_id: res4oooASP101A
+    label: coordinating ASP101 (PDB 4ooo chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00698
+  - node_id: res3o7sASP38A
+    label: coordinating ASP38 (PDB 3o7s chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P02791
+  edges:
+  - subject: res4oooASP101A
+    predicate: molecularly interacts with (coordinates)
+    predicate_id: RO:0002436
+    object: metal
+    description: ASP101 donates a donor atom to the coordinated ruthenium.
+    evidence:
+    - reference: PDB:4ooo
+      snippet: residue_name ASP; residue_pdb_number 101; chain_letter A
+      notes: MetalPDB site 4ooo_1 (PDB 4ooo, dinuclear Ruthenium, coordination number 7; geometry hexagonal
+        bipyramid with a vacancy (equatorial) (distorted)). Field values quoted from flat_db_file.xml.gz;
+        MetalPDB also lists non-protein coordinating ligands (water, nucleotides) that are not written
+        as nodes here.
+  - subject: res4oooASP101A
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A coordinating residue of this metal site.
+    evidence:
+    - reference: PDB:4ooo
+      snippet: residue_name ASP; residue_pdb_number 101; chain_letter A
+      notes: MetalPDB site 4ooo_1 (PDB 4ooo, dinuclear Ruthenium, coordination number 7; geometry hexagonal
+        bipyramid with a vacancy (equatorial) (distorted)). Field values quoted from flat_db_file.xml.gz;
+        MetalPDB also lists non-protein coordinating ligands (water, nucleotides) that are not written
+        as nodes here.
+  - subject: res3o7sASP38A
+    predicate: molecularly interacts with (coordinates)
+    predicate_id: RO:0002436
+    object: metal
+    description: ASP38 donates a donor atom to the coordinated ruthenium.
+    evidence:
+    - reference: PDB:3o7s
+      snippet: residue_name ASP; residue_pdb_number 38; chain_letter A
+      notes: MetalPDB site 3o7s_2 (PDB 3o7s, dinuclear Ruthenium, coordination number 1; geometry n/a).
+        Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating ligands
+        (water, nucleotides) that are not written as nodes here.
+  - subject: res3o7sASP38A
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A coordinating residue of this metal site.
+    evidence:
+    - reference: PDB:3o7s
+      snippet: residue_name ASP; residue_pdb_number 38; chain_letter A
+      notes: MetalPDB site 3o7s_2 (PDB 3o7s, dinuclear Ruthenium, coordination number 1; geometry n/a).
+        Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating ligands
+        (water, nucleotides) that are not written as nodes here.
+  - subject: metal
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: The coordinated metal ion of this site.
+    evidence:
+    - reference: PDB:4ooo
+      snippet: periodic_symbol Ru; coordination_number 7
+      notes: MetalPDB site 4ooo_1 metal record.
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'metal_coordination' (5 evidence-backed edges) from MetalPDB; SEEDED ->
+    REVIEWED
+  llm_assisted: true
 license: "MetalPDB (CERM, Univ. Florence) — no explicit license published; reuse terms unconfirmed (confirm with CERM before redistribution)"

@@ -6,7 +6,7 @@ definition_source: "MetalPDB (CERM, University of Florence)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_METAL_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - proteintraitsmech:METAL_BINDING_SITE
 chemical_participants:
@@ -18,4 +18,87 @@ canonical_examples:
     protein_label: "Major ferric iron-binding protein"
     taxon_label: "Neisseria gonorrhoeae"
     note: "MetalPDB trinuclear zirconium site occurrence in PDB 1xc1"
+causal_graphs:
+- graph_id: metal_coordination
+  title: Coordination of zirconium at the trinuclear zirconium site
+  description: Protein residues coordinating the metal, transcribed from MetalPDB across 1 exemplar site(s).
+    Residue numbering is the PDB author frame MetalPDB reports; no UniProt position is asserted.
+  nodes:
+  - node_id: metal
+    label: zirconium
+    node_type: CHEMICAL
+    grounding: CHEBI:33342
+  - node_id: site
+    label: trinuclear zirconium site
+    node_type: MOTIF
+    grounding: proteintraitsmech:METALPDB_ZR_TRINUCLEAR
+    description: KB trait record (STRUCT_METAL_SITE) — the coordination class this site belongs to.
+  - node_id: res1xc1TYR195B
+    label: coordinating TYR195 (PDB 1xc1 chain B author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P17259
+  - node_id: res1xc1TYR196B
+    label: coordinating TYR196 (PDB 1xc1 chain B author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P17259
+  edges:
+  - subject: res1xc1TYR195B
+    predicate: molecularly interacts with (coordinates)
+    predicate_id: RO:0002436
+    object: metal
+    description: TYR195 donates a donor atom to the coordinated zirconium.
+    evidence:
+    - reference: PDB:1xc1
+      snippet: residue_name TYR; residue_pdb_number 195; chain_letter B
+      notes: MetalPDB site 1xc1_1 (PDB 1xc1, trinuclear Zirconium, coordination number 7; geometry pentagonal
+        bipyramid (regular)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein
+        coordinating ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res1xc1TYR195B
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A coordinating residue of this metal site.
+    evidence:
+    - reference: PDB:1xc1
+      snippet: residue_name TYR; residue_pdb_number 195; chain_letter B
+      notes: MetalPDB site 1xc1_1 (PDB 1xc1, trinuclear Zirconium, coordination number 7; geometry pentagonal
+        bipyramid (regular)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein
+        coordinating ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res1xc1TYR196B
+    predicate: molecularly interacts with (coordinates)
+    predicate_id: RO:0002436
+    object: metal
+    description: TYR196 donates a donor atom to the coordinated zirconium.
+    evidence:
+    - reference: PDB:1xc1
+      snippet: residue_name TYR; residue_pdb_number 196; chain_letter B
+      notes: MetalPDB site 1xc1_1 (PDB 1xc1, trinuclear Zirconium, coordination number 7; geometry pentagonal
+        bipyramid (regular)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein
+        coordinating ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res1xc1TYR196B
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A coordinating residue of this metal site.
+    evidence:
+    - reference: PDB:1xc1
+      snippet: residue_name TYR; residue_pdb_number 196; chain_letter B
+      notes: MetalPDB site 1xc1_1 (PDB 1xc1, trinuclear Zirconium, coordination number 7; geometry pentagonal
+        bipyramid (regular)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein
+        coordinating ligands (water, nucleotides) that are not written as nodes here.
+  - subject: metal
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: The coordinated metal ion of this site.
+    evidence:
+    - reference: PDB:1xc1
+      snippet: periodic_symbol Zr; coordination_number 7
+      notes: MetalPDB site 1xc1_1 metal record.
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'metal_coordination' (5 evidence-backed edges) from MetalPDB; SEEDED ->
+    REVIEWED
+  llm_assisted: true
 license: "MetalPDB (CERM, Univ. Florence) — no explicit license published; reuse terms unconfirmed (confirm with CERM before redistribution)"

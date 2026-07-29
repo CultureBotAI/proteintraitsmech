@@ -6,7 +6,7 @@ definition_source: "MetalPDB (CERM, University of Florence)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_METAL_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - proteintraitsmech:METAL_BINDING_SITE
 chemical_participants:
@@ -34,4 +34,113 @@ canonical_examples:
     protein_label: "Synaptosomal-associated protein 25"
     taxon_label: "Rattus norvegicus"
     note: "MetalPDB trinuclear strontium site occurrence in PDB 1sfc"
+causal_graphs:
+- graph_id: metal_coordination
+  title: Coordination of strontium at the trinuclear strontium site
+  description: Protein residues coordinating the metal, transcribed from MetalPDB across 3 exemplar site(s).
+    Residue numbering is the PDB author frame MetalPDB reports; no UniProt position is asserted.
+  nodes:
+  - node_id: metal
+    label: strontium
+    node_type: CHEMICAL
+    grounding: CHEBI:33324
+  - node_id: site
+    label: trinuclear strontium site
+    node_type: MOTIF
+    grounding: proteintraitsmech:METALPDB_SR_TRINUCLEAR
+    description: KB trait record (STRUCT_METAL_SITE) — the coordination class this site belongs to.
+  - node_id: res1vq9ARG423
+    label: coordinating ARG42 (PDB 1vq9 chain 3 author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P20276
+  - node_id: res3g6eGLN230B
+    label: coordinating GLN230 (PDB 3g6e chain B author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P20279
+  - node_id: res1vqlARG423
+    label: coordinating ARG42 (PDB 1vql chain 3 author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P32411
+  edges:
+  - subject: res1vq9ARG423
+    predicate: molecularly interacts with (coordinates)
+    predicate_id: RO:0002436
+    object: metal
+    description: ARG42 donates a donor atom to the coordinated strontium.
+    evidence:
+    - reference: PDB:1vq9
+      snippet: residue_name ARG; residue_pdb_number 42; chain_letter 3
+      notes: MetalPDB site 1vq9_53 (PDB 1vq9, trinuclear Strontium, coordination number 3; geometry irregular
+        (n/a)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating
+        ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res1vq9ARG423
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A coordinating residue of this metal site.
+    evidence:
+    - reference: PDB:1vq9
+      snippet: residue_name ARG; residue_pdb_number 42; chain_letter 3
+      notes: MetalPDB site 1vq9_53 (PDB 1vq9, trinuclear Strontium, coordination number 3; geometry irregular
+        (n/a)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating
+        ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res3g6eGLN230B
+    predicate: molecularly interacts with (coordinates)
+    predicate_id: RO:0002436
+    object: metal
+    description: GLN230 donates a donor atom to the coordinated strontium.
+    evidence:
+    - reference: PDB:3g6e
+      snippet: residue_name GLN; residue_pdb_number 230; chain_letter B
+      notes: MetalPDB site 3g6e_66 (PDB 3g6e, trinuclear Strontium, coordination number 4; geometry irregular
+        (n/a)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating
+        ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res3g6eGLN230B
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A coordinating residue of this metal site.
+    evidence:
+    - reference: PDB:3g6e
+      snippet: residue_name GLN; residue_pdb_number 230; chain_letter B
+      notes: MetalPDB site 3g6e_66 (PDB 3g6e, trinuclear Strontium, coordination number 4; geometry irregular
+        (n/a)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating
+        ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res1vqlARG423
+    predicate: molecularly interacts with (coordinates)
+    predicate_id: RO:0002436
+    object: metal
+    description: ARG42 donates a donor atom to the coordinated strontium.
+    evidence:
+    - reference: PDB:1vql
+      snippet: residue_name ARG; residue_pdb_number 42; chain_letter 3
+      notes: MetalPDB site 1vql_133 (PDB 1vql, trinuclear Strontium, coordination number 3; geometry irregular
+        (n/a)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating
+        ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res1vqlARG423
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A coordinating residue of this metal site.
+    evidence:
+    - reference: PDB:1vql
+      snippet: residue_name ARG; residue_pdb_number 42; chain_letter 3
+      notes: MetalPDB site 1vql_133 (PDB 1vql, trinuclear Strontium, coordination number 3; geometry irregular
+        (n/a)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating
+        ligands (water, nucleotides) that are not written as nodes here.
+  - subject: metal
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: The coordinated metal ion of this site.
+    evidence:
+    - reference: PDB:1vq9
+      snippet: periodic_symbol Sr; coordination_number 3
+      notes: MetalPDB site 1vq9_53 metal record.
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'metal_coordination' (7 evidence-backed edges) from MetalPDB; SEEDED ->
+    REVIEWED
+  llm_assisted: true
 license: "MetalPDB (CERM, Univ. Florence) — no explicit license published; reuse terms unconfirmed (confirm with CERM before redistribution)"

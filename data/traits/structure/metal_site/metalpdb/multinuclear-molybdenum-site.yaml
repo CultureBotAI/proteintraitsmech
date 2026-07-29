@@ -6,7 +6,7 @@ definition_source: "MetalPDB (CERM, University of Florence)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_METAL_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - proteintraitsmech:METAL_BINDING_SITE
 chemical_participants:
@@ -18,4 +18,87 @@ canonical_examples:
     protein_label: "Molybdenum storage protein subunit beta"
     taxon_label: "Azotobacter vinelandii"
     note: "MetalPDB multinuclear molybdenum site occurrence in PDB 4f6t"
+causal_graphs:
+- graph_id: metal_coordination
+  title: Coordination of molybdenum at the multinuclear molybdenum site
+  description: Protein residues coordinating the metal, transcribed from MetalPDB across 1 exemplar site(s).
+    Residue numbering is the PDB author frame MetalPDB reports; no UniProt position is asserted.
+  nodes:
+  - node_id: metal
+    label: molybdenum
+    node_type: CHEMICAL
+    grounding: CHEBI:28685
+  - node_id: site
+    label: multinuclear molybdenum site
+    node_type: MOTIF
+    grounding: proteintraitsmech:METALPDB_MO_MULTINUCLEAR
+    description: KB trait record (STRUCT_METAL_SITE) — the coordination class this site belongs to.
+  - node_id: res4f6tSER147B
+    label: coordinating SER147 (PDB 4f6t chain B author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P84253
+  - node_id: res4f6tMET149B
+    label: coordinating MET149 (PDB 4f6t chain B author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P84253
+  edges:
+  - subject: res4f6tSER147B
+    predicate: molecularly interacts with (coordinates)
+    predicate_id: RO:0002436
+    object: metal
+    description: SER147 donates a donor atom to the coordinated molybdenum.
+    evidence:
+    - reference: PDB:4f6t
+      snippet: residue_name SER; residue_pdb_number 147; chain_letter B
+      notes: MetalPDB site 4f6t_2 (PDB 4f6t, multinuclear Molybdenum, coordination number 6; geometry
+        octahedron (distorted)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein
+        coordinating ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res4f6tSER147B
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A coordinating residue of this metal site.
+    evidence:
+    - reference: PDB:4f6t
+      snippet: residue_name SER; residue_pdb_number 147; chain_letter B
+      notes: MetalPDB site 4f6t_2 (PDB 4f6t, multinuclear Molybdenum, coordination number 6; geometry
+        octahedron (distorted)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein
+        coordinating ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res4f6tMET149B
+    predicate: molecularly interacts with (coordinates)
+    predicate_id: RO:0002436
+    object: metal
+    description: MET149 donates a donor atom to the coordinated molybdenum.
+    evidence:
+    - reference: PDB:4f6t
+      snippet: residue_name MET; residue_pdb_number 149; chain_letter B
+      notes: MetalPDB site 4f6t_2 (PDB 4f6t, multinuclear Molybdenum, coordination number 6; geometry
+        octahedron (distorted)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein
+        coordinating ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res4f6tMET149B
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A coordinating residue of this metal site.
+    evidence:
+    - reference: PDB:4f6t
+      snippet: residue_name MET; residue_pdb_number 149; chain_letter B
+      notes: MetalPDB site 4f6t_2 (PDB 4f6t, multinuclear Molybdenum, coordination number 6; geometry
+        octahedron (distorted)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein
+        coordinating ligands (water, nucleotides) that are not written as nodes here.
+  - subject: metal
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: The coordinated metal ion of this site.
+    evidence:
+    - reference: PDB:4f6t
+      snippet: periodic_symbol Mo; coordination_number 6
+      notes: MetalPDB site 4f6t_2 metal record.
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'metal_coordination' (5 evidence-backed edges) from MetalPDB; SEEDED ->
+    REVIEWED
+  llm_assisted: true
 license: "MetalPDB (CERM, Univ. Florence) — no explicit license published; reuse terms unconfirmed (confirm with CERM before redistribution)"

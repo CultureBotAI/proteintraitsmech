@@ -6,7 +6,7 @@ definition_source: "MetalPDB (CERM, University of Florence)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_METAL_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - proteintraitsmech:METAL_BINDING_SITE
 chemical_participants:
@@ -18,4 +18,87 @@ canonical_examples:
     protein_label: "Potassium channel protein"
     taxon_label: "Bacillus cereus"
     note: "MetalPDB tetranuclear rubidium site occurrence in PDB 3e8b"
+causal_graphs:
+- graph_id: metal_coordination
+  title: Coordination of rubidium at the tetranuclear rubidium site
+  description: Protein residues coordinating the metal, transcribed from MetalPDB across 1 exemplar site(s).
+    Residue numbering is the PDB author frame MetalPDB reports; no UniProt position is asserted.
+  nodes:
+  - node_id: metal
+    label: rubidium
+    node_type: CHEMICAL
+    grounding: CHEBI:33322
+  - node_id: site
+    label: tetranuclear rubidium site
+    node_type: MOTIF
+    grounding: proteintraitsmech:METALPDB_RB_TETRANUCLEAR
+    description: KB trait record (STRUCT_METAL_SITE) — the coordination class this site belongs to.
+  - node_id: res3e8bVAL64A
+    label: coordinating VAL64 (PDB 3e8b chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q81HW2
+  - node_id: res3e8bTHR63A
+    label: coordinating THR63 (PDB 3e8b chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q81HW2
+  edges:
+  - subject: res3e8bVAL64A
+    predicate: molecularly interacts with (coordinates)
+    predicate_id: RO:0002436
+    object: metal
+    description: VAL64 donates a donor atom to the coordinated rubidium.
+    evidence:
+    - reference: PDB:3e8b
+      snippet: residue_name VAL; residue_pdb_number 64; chain_letter A
+      notes: MetalPDB site 3e8b_1 (PDB 3e8b, tetranuclear Rubidium, coordination number 2; geometry irregular
+        (n/a)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating
+        ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res3e8bVAL64A
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A coordinating residue of this metal site.
+    evidence:
+    - reference: PDB:3e8b
+      snippet: residue_name VAL; residue_pdb_number 64; chain_letter A
+      notes: MetalPDB site 3e8b_1 (PDB 3e8b, tetranuclear Rubidium, coordination number 2; geometry irregular
+        (n/a)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating
+        ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res3e8bTHR63A
+    predicate: molecularly interacts with (coordinates)
+    predicate_id: RO:0002436
+    object: metal
+    description: THR63 donates a donor atom to the coordinated rubidium.
+    evidence:
+    - reference: PDB:3e8b
+      snippet: residue_name THR; residue_pdb_number 63; chain_letter A
+      notes: MetalPDB site 3e8b_1 (PDB 3e8b, tetranuclear Rubidium, coordination number 2; geometry irregular
+        (n/a)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating
+        ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res3e8bTHR63A
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A coordinating residue of this metal site.
+    evidence:
+    - reference: PDB:3e8b
+      snippet: residue_name THR; residue_pdb_number 63; chain_letter A
+      notes: MetalPDB site 3e8b_1 (PDB 3e8b, tetranuclear Rubidium, coordination number 2; geometry irregular
+        (n/a)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating
+        ligands (water, nucleotides) that are not written as nodes here.
+  - subject: metal
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: The coordinated metal ion of this site.
+    evidence:
+    - reference: PDB:3e8b
+      snippet: periodic_symbol Rb; coordination_number 2
+      notes: MetalPDB site 3e8b_1 metal record.
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'metal_coordination' (5 evidence-backed edges) from MetalPDB; SEEDED ->
+    REVIEWED
+  llm_assisted: true
 license: "MetalPDB (CERM, Univ. Florence) — no explicit license published; reuse terms unconfirmed (confirm with CERM before redistribution)"

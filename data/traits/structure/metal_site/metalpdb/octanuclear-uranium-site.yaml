@@ -6,7 +6,7 @@ definition_source: "MetalPDB (CERM, University of Florence)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_METAL_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - proteintraitsmech:METAL_BINDING_SITE
 chemical_participants:
@@ -18,4 +18,91 @@ canonical_examples:
     protein_label: "Probable GTPase engC"
     taxon_label: "Bacillus subtilis"
     note: "MetalPDB octanuclear uranium site occurrence in PDB 1t9h"
+causal_graphs:
+- graph_id: metal_coordination
+  title: Coordination of uranium at the octanuclear uranium site
+  description: Protein residues coordinating the metal, transcribed from MetalPDB across 1 exemplar site(s).
+    Residue numbering is the PDB author frame MetalPDB reports; no UniProt position is asserted.
+  nodes:
+  - node_id: metal
+    label: uranium
+    node_type: CHEMICAL
+    grounding: CHEBI:27214
+  - node_id: site
+    label: octanuclear uranium site
+    node_type: MOTIF
+    grounding: proteintraitsmech:METALPDB_U_OCTANUCLEAR
+    description: KB trait record (STRUCT_METAL_SITE) — the coordination class this site belongs to.
+  - node_id: res1t9hGLU105A
+    label: coordinating GLU105 (PDB 1t9h chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:O34530
+  - node_id: res1t9hASP108A
+    label: coordinating ASP108 (PDB 1t9h chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:O34530
+  edges:
+  - subject: res1t9hGLU105A
+    predicate: molecularly interacts with (coordinates)
+    predicate_id: RO:0002436
+    object: metal
+    description: GLU105 donates a donor atom to the coordinated uranium.
+    evidence:
+    - reference: PDB:1t9h
+      snippet: residue_name GLU; residue_pdb_number 105; chain_letter A
+      notes: MetalPDB site 1t9h_4 (PDB 1t9h, octanuclear Uranium, coordination number 6; geometry octahedron,
+        face monocapped with a vacancy (non-capped face) (distorted)). Field values quoted from flat_db_file.xml.gz;
+        MetalPDB also lists non-protein coordinating ligands (water, nucleotides) that are not written
+        as nodes here.
+  - subject: res1t9hGLU105A
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A coordinating residue of this metal site.
+    evidence:
+    - reference: PDB:1t9h
+      snippet: residue_name GLU; residue_pdb_number 105; chain_letter A
+      notes: MetalPDB site 1t9h_4 (PDB 1t9h, octanuclear Uranium, coordination number 6; geometry octahedron,
+        face monocapped with a vacancy (non-capped face) (distorted)). Field values quoted from flat_db_file.xml.gz;
+        MetalPDB also lists non-protein coordinating ligands (water, nucleotides) that are not written
+        as nodes here.
+  - subject: res1t9hASP108A
+    predicate: molecularly interacts with (coordinates)
+    predicate_id: RO:0002436
+    object: metal
+    description: ASP108 donates a donor atom to the coordinated uranium.
+    evidence:
+    - reference: PDB:1t9h
+      snippet: residue_name ASP; residue_pdb_number 108; chain_letter A
+      notes: MetalPDB site 1t9h_4 (PDB 1t9h, octanuclear Uranium, coordination number 6; geometry octahedron,
+        face monocapped with a vacancy (non-capped face) (distorted)). Field values quoted from flat_db_file.xml.gz;
+        MetalPDB also lists non-protein coordinating ligands (water, nucleotides) that are not written
+        as nodes here.
+  - subject: res1t9hASP108A
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A coordinating residue of this metal site.
+    evidence:
+    - reference: PDB:1t9h
+      snippet: residue_name ASP; residue_pdb_number 108; chain_letter A
+      notes: MetalPDB site 1t9h_4 (PDB 1t9h, octanuclear Uranium, coordination number 6; geometry octahedron,
+        face monocapped with a vacancy (non-capped face) (distorted)). Field values quoted from flat_db_file.xml.gz;
+        MetalPDB also lists non-protein coordinating ligands (water, nucleotides) that are not written
+        as nodes here.
+  - subject: metal
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: The coordinated metal ion of this site.
+    evidence:
+    - reference: PDB:1t9h
+      snippet: periodic_symbol U; coordination_number 6
+      notes: MetalPDB site 1t9h_4 metal record.
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'metal_coordination' (5 evidence-backed edges) from MetalPDB; SEEDED ->
+    REVIEWED
+  llm_assisted: true
 license: "MetalPDB (CERM, Univ. Florence) — no explicit license published; reuse terms unconfirmed (confirm with CERM before redistribution)"

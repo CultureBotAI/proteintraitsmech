@@ -6,7 +6,7 @@ definition_source: "MetalPDB (CERM, University of Florence)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_METAL_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - proteintraitsmech:METAL_BINDING_SITE
 chemical_participants:
@@ -18,4 +18,87 @@ canonical_examples:
     protein_label: Serotransferrin
     taxon_label: "Homo sapiens"
     note: "MetalPDB mononuclear titanium site occurrence in PDB 5dyh"
+causal_graphs:
+- graph_id: metal_coordination
+  title: Coordination of titanium at the mononuclear titanium site
+  description: Protein residues coordinating the metal, transcribed from MetalPDB across 1 exemplar site(s).
+    Residue numbering is the PDB author frame MetalPDB reports; no UniProt position is asserted.
+  nodes:
+  - node_id: metal
+    label: titanium
+    node_type: CHEMICAL
+    grounding: CHEBI:33341
+  - node_id: site
+    label: mononuclear titanium site
+    node_type: MOTIF
+    grounding: proteintraitsmech:METALPDB_TI_MONONUCLEAR
+    description: KB trait record (STRUCT_METAL_SITE) — the coordination class this site belongs to.
+  - node_id: res5dyhTYR426A
+    label: coordinating TYR426 (PDB 5dyh chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P02787
+  - node_id: res5dyhTYR517A
+    label: coordinating TYR517 (PDB 5dyh chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:P02787
+  edges:
+  - subject: res5dyhTYR426A
+    predicate: molecularly interacts with (coordinates)
+    predicate_id: RO:0002436
+    object: metal
+    description: TYR426 donates a donor atom to the coordinated titanium.
+    evidence:
+    - reference: PDB:5dyh
+      snippet: residue_name TYR; residue_pdb_number 426; chain_letter A
+      notes: MetalPDB site 5dyh_1 (PDB 5dyh, mononuclear Titanium, coordination number 6; geometry irregular
+        (n/a)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating
+        ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res5dyhTYR426A
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A coordinating residue of this metal site.
+    evidence:
+    - reference: PDB:5dyh
+      snippet: residue_name TYR; residue_pdb_number 426; chain_letter A
+      notes: MetalPDB site 5dyh_1 (PDB 5dyh, mononuclear Titanium, coordination number 6; geometry irregular
+        (n/a)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating
+        ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res5dyhTYR517A
+    predicate: molecularly interacts with (coordinates)
+    predicate_id: RO:0002436
+    object: metal
+    description: TYR517 donates a donor atom to the coordinated titanium.
+    evidence:
+    - reference: PDB:5dyh
+      snippet: residue_name TYR; residue_pdb_number 517; chain_letter A
+      notes: MetalPDB site 5dyh_1 (PDB 5dyh, mononuclear Titanium, coordination number 6; geometry irregular
+        (n/a)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating
+        ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res5dyhTYR517A
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A coordinating residue of this metal site.
+    evidence:
+    - reference: PDB:5dyh
+      snippet: residue_name TYR; residue_pdb_number 517; chain_letter A
+      notes: MetalPDB site 5dyh_1 (PDB 5dyh, mononuclear Titanium, coordination number 6; geometry irregular
+        (n/a)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating
+        ligands (water, nucleotides) that are not written as nodes here.
+  - subject: metal
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: The coordinated metal ion of this site.
+    evidence:
+    - reference: PDB:5dyh
+      snippet: periodic_symbol Ti; coordination_number 6
+      notes: MetalPDB site 5dyh_1 metal record.
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'metal_coordination' (5 evidence-backed edges) from MetalPDB; SEEDED ->
+    REVIEWED
+  llm_assisted: true
 license: "MetalPDB (CERM, Univ. Florence) — no explicit license published; reuse terms unconfirmed (confirm with CERM before redistribution)"

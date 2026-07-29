@@ -6,7 +6,7 @@ definition_source: "MetalPDB (CERM, University of Florence)"
 trait_axis: STRUCTURE
 trait_category: STRUCT_METAL_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - proteintraitsmech:METAL_BINDING_SITE
 chemical_participants:
@@ -34,4 +34,113 @@ canonical_examples:
     protein_label: "Elongation factor Ts"
     taxon_label: "Escherichia coli"
     note: "MetalPDB mononuclear lead site occurrence in PDB 4pc1"
+causal_graphs:
+- graph_id: metal_coordination
+  title: Coordination of lead at the mononuclear lead site
+  description: Protein residues coordinating the metal, transcribed from MetalPDB across 3 exemplar site(s).
+    Residue numbering is the PDB author frame MetalPDB reports; no UniProt position is asserted.
+  nodes:
+  - node_id: metal
+    label: lead
+    node_type: CHEMICAL
+    grounding: CHEBI:25016
+  - node_id: site
+    label: mononuclear lead site
+    node_type: MOTIF
+    grounding: proteintraitsmech:METALPDB_PB_MONONUCLEAR
+    description: KB trait record (STRUCT_METAL_SITE) — the coordination class this site belongs to.
+  - node_id: res2o3cASP63B
+    label: coordinating ASP63 (PDB 2o3c chain B author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:A0MTA1
+  - node_id: res4v0oHIS327B
+    label: coordinating HIS327 (PDB 4v0o chain B author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:A8JEA1
+  - node_id: res4v0oCYS321B
+    label: coordinating CYS321 (PDB 4v0o chain B author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+    grounding: UniProtKB:A8JEA1
+  edges:
+  - subject: res2o3cASP63B
+    predicate: molecularly interacts with (coordinates)
+    predicate_id: RO:0002436
+    object: metal
+    description: ASP63 donates a donor atom to the coordinated lead.
+    evidence:
+    - reference: PDB:2o3c
+      snippet: residue_name ASP; residue_pdb_number 63; chain_letter B
+      notes: MetalPDB site 2o3c_1 (PDB 2o3c, mononuclear Lead, coordination number 3; geometry square
+        plane with a vacancy (distorted)). Field values quoted from flat_db_file.xml.gz; MetalPDB also
+        lists non-protein coordinating ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res2o3cASP63B
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A coordinating residue of this metal site.
+    evidence:
+    - reference: PDB:2o3c
+      snippet: residue_name ASP; residue_pdb_number 63; chain_letter B
+      notes: MetalPDB site 2o3c_1 (PDB 2o3c, mononuclear Lead, coordination number 3; geometry square
+        plane with a vacancy (distorted)). Field values quoted from flat_db_file.xml.gz; MetalPDB also
+        lists non-protein coordinating ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res4v0oHIS327B
+    predicate: molecularly interacts with (coordinates)
+    predicate_id: RO:0002436
+    object: metal
+    description: HIS327 donates a donor atom to the coordinated lead.
+    evidence:
+    - reference: PDB:4v0o
+      snippet: residue_name HIS; residue_pdb_number 327; chain_letter B
+      notes: MetalPDB site 4v0o_1 (PDB 4v0o, mononuclear Lead, coordination number 2; geometry linear
+        (regular)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating
+        ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res4v0oHIS327B
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A coordinating residue of this metal site.
+    evidence:
+    - reference: PDB:4v0o
+      snippet: residue_name HIS; residue_pdb_number 327; chain_letter B
+      notes: MetalPDB site 4v0o_1 (PDB 4v0o, mononuclear Lead, coordination number 2; geometry linear
+        (regular)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating
+        ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res4v0oCYS321B
+    predicate: molecularly interacts with (coordinates)
+    predicate_id: RO:0002436
+    object: metal
+    description: CYS321 donates a donor atom to the coordinated lead.
+    evidence:
+    - reference: PDB:4v0o
+      snippet: residue_name CYS; residue_pdb_number 321; chain_letter B
+      notes: MetalPDB site 4v0o_1 (PDB 4v0o, mononuclear Lead, coordination number 2; geometry linear
+        (regular)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating
+        ligands (water, nucleotides) that are not written as nodes here.
+  - subject: res4v0oCYS321B
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: A coordinating residue of this metal site.
+    evidence:
+    - reference: PDB:4v0o
+      snippet: residue_name CYS; residue_pdb_number 321; chain_letter B
+      notes: MetalPDB site 4v0o_1 (PDB 4v0o, mononuclear Lead, coordination number 2; geometry linear
+        (regular)). Field values quoted from flat_db_file.xml.gz; MetalPDB also lists non-protein coordinating
+        ligands (water, nucleotides) that are not written as nodes here.
+  - subject: metal
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: site
+    description: The coordinated metal ion of this site.
+    evidence:
+    - reference: PDB:2o3c
+      snippet: periodic_symbol Pb; coordination_number 3
+      notes: MetalPDB site 2o3c_1 metal record.
+curation_history:
+- timestamp: '2026-07-29T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'metal_coordination' (7 evidence-backed edges) from MetalPDB; SEEDED ->
+    REVIEWED
+  llm_assisted: true
 license: "MetalPDB (CERM, Univ. Florence) — no explicit license published; reuse terms unconfirmed (confirm with CERM before redistribution)"
