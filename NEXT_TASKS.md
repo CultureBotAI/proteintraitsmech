@@ -6,7 +6,8 @@ convention:** update an item when work on it starts or ships (mark
 section with enough context to pick it up cold; keep absolute dates. Reconcile
 against merged PRs + `git log` before trusting it.
 
-_Last reconciled: 2026-07-30 (against `git log` + `just audit-graphs`; counts below
+_Last reconciled: 2026-07-31 (against `git log`, `just audit-graphs` and UniProt's
+database registry; counts below
 were re-measured, not carried forward)._
 
 ---
@@ -92,7 +93,10 @@ cleared._
    `data/raw/chebi/`. Keep set equality as the strict tier and report any looser tier
    separately; do not merge the tiers.
 
-5. **Swiss-Prot trait profiles (issue #7) — phases 1–14 shipped; issue NOT complete.**
+5. **UniProt family/domain source coverage — 7 of 18 resources absent.** See the
+   dedicated section below; ranked ingestion thread, PANTHER first.
+
+6. **Swiss-Prot trait profiles (issue #7) — phases 1–14 shipped; issue NOT complete.**
    Delivered: protein×trait matrix over 10 proteomes, trait↔GO correlation,
    trait→function decision trees (held-out-organism validated), cross-axis feature
    correlations, residue-frame alignment. See "Recently shipped" and
@@ -144,7 +148,7 @@ cleared._
    do) rather than minting 570k tiny files. This is the `scalability-check`
    skill's tier D. Nothing else blocks closing #7.
 
-6. **Web design review — dataviz / artifact-design findings (issue #5).**
+7. **Web design review — dataviz / artifact-design findings (issue #5).**
    **Mostly cleared (2026-07-27, PR #68.)** CVD-unsafe palettes fixed via the
    `dataviz` validator: blue↔purple was ΔE 2.6 (protan), green↔teal ΔE 10.8
    (normal vision). Axis pills → reference slots 1–5, worst adjacent CVD ΔE 9.1
@@ -160,6 +164,82 @@ cleared._
    78k points that is a solid blob, and the hover hit radius is already far
    larger than the mark). The Cayman→teal/amber rebrand stays **deferred by
    request**, and is all that remains on #5.
+
+## UniProt family/domain source coverage — ranked ingestion thread
+
+_Assessed 2026-07-31 against UniProt's own database registry
+(`rest.uniprot.org/database`, category **"Family and domain databases"** — 18
+entries), `download.yaml`, and a corpus-wide identifier census._
+
+**6 of 18 are ingested as first-class trait records; 7 are not in `download.yaml`
+at all.**
+
+| UniProt DB | PTM status | records |
+|---|---|--:|
+| InterPro | seeded | 26,264 |
+| Pfam | seeded | 31,025 |
+| CDD | seeded | 38,218 |
+| NCBIfam | seeded | 38,394 |
+| PROSITE | seeded (patterns + profiles) | 6,174 |
+| Gene3D | seeded as CATH-Gene3D | 8,151 |
+| DisProt | seeded, but as the IDPO disorder *vocabulary*, not DisProt entries | 37 |
+| IDEAL | "seeded" — exactly one concept (`proteintraitsmech:IDEAL_PROS`) | 1 |
+| HAMAP · SFLD · MobiDB | `candidate`, no seeder | 0 |
+| PANTHER · PIRSF · PRINTS · SMART · SUPERFAMILY · AntiFam · CATH-FunFam | **absent from the manifest** | 0 |
+
+### Why "InterPro already integrates them" does not close this
+
+InterPro 109.0 integrates them heavily (HAMAP 99.8%, PIRSF 98%, SMART 97%,
+PRINTS 92%, SUPERFAMILY 82%). But `seed_interpro.py` **excludes InterPro's
+`Family` type by design** (27,926 of 54,190 entries — and 54,190 − 27,926 =
+26,264, exactly PTM's InterPro count), and that is precisely where the
+family-oriented member databases live:
+
+| member DB | integrated | of those, in `Family` entries | conceptually reachable in PTM |
+|---|--:|--:|--:|
+| PANTHER | 10,460 | 10,411 | **49** |
+| PIRSF | 3,221 | 3,215 | **6** |
+| HAMAP | 2,389 | 2,370 | **19** |
+| SFLD | 163 | 159 | **4** |
+| PRINTS | 1,937 | 1,773 | 164 |
+| SMART | 1,276 | 157 | 1,119 |
+| SUPERFAMILY | 1,649 | 0 | 1,649 |
+
+And "reachable" is generous: `seed_interpro.py` parses no `member_list`, so a PTM
+InterPro record carries **no** PANTHER/PIRSF/SMART accession. The member database's
+own identifiers and hierarchy are not queryable in PTM even where the concept is
+covered.
+
+### Ranked
+
+1. **PANTHER** — 143,695 entries, effectively zero representation (49 signatures
+   reachable). By far the largest hole, and a hierarchical family classification →
+   `FUNC_PROTEIN_FAMILY` / `SEQ_FAMILY`. **Check the licence first** — PANTHER is
+   not obviously CC-BY like most of the corpus. Skill: `ingest-source`.
+2. **HAMAP (2,394)** and **SFLD (303)** — already `candidate` blocks in
+   `download.yaml`, so cheapest to promote; both are curated family/superfamily
+   classifications with real definitions.
+3. **PIRSF (3,285)** and **PRINTS (2,106)** — small, sequence-signature
+   classifications → `SEQ_DOMAIN` / `SEQ_FAMILY` per axis-follows-representation.
+4. **SMART (1,322)** and **SUPERFAMILY (2,019)** — lowest urgency: largely reachable
+   through InterPro `Domain` entries already in PTM, and SCOPe (22,810) already
+   carries SUPERFAMILY's parent classification.
+5. **CATH-FunFam** — deepens the existing CATH hierarchy rather than adding a source.
+6. **AntiFam (278)** — a *negative* resource (spurious protein predictions).
+   Arguably out of scope as a trait; possible QC filter instead. Decide before
+   ingesting.
+7. **MobiDB** — instance-level per-protein disorder predictions; the trait-*class*
+   analogue is IDPO, which is already seeded. Probably leave as `candidate`.
+
+### The bigger lever, which is a decision and not an ingestion
+
+Re-seeding InterPro's 27,926 `Family` entries with the seeder's existing
+`--include-families` flag would do more for family coverage than ingesting PANTHER.
+The flag exists and the docstring calls it **"not recommended"** — the exclusion was
+a deliberate modelling call (a whole-protein family "does not localise to a
+sequence/structure element"). Re-open that decision explicitly rather than quietly
+flipping the flag; it interacts with `FUNC_PROTEIN_FAMILY`, which was added later
+and may now be the right home for them.
 
 ## Open threads from rounds 15–16 (context, ranked within themselves)
 
