@@ -435,6 +435,13 @@ fetch-ncbifam:
 seed-ncbifam *args:
     python3 scripts/seed_ncbifam.py {{args}}
 
+fetch-panther:
+    mkdir -p data/raw/panther
+    curl -sSLf --max-time 900 -o data/raw/panther/PANTHER19.0_HMM_classifications http://data.pantherdb.org/ftp/hmm_classifications/current_release/PANTHER19.0_HMM_classifications
+
+seed-panther *args:
+    python3 scripts/seed_panther.py {{args}}
+
 fetch-cdd:
     mkdir -p data/raw/cdd
     curl -sSLf --max-time 120 -o data/raw/cdd/cddid_all.tbl.gz https://ftp.ncbi.nlm.nih.gov/pub/mmdb/cdd/cddid_all.tbl.gz

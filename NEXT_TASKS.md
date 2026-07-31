@@ -7,8 +7,7 @@ section with enough context to pick it up cold; keep absolute dates. Reconcile
 against merged PRs + `git log` before trusting it.
 
 _Last reconciled: 2026-07-31 (against `git log`, `just audit-graphs` and UniProt's
-database registry; counts below
-were re-measured, not carried forward)._
+database registry; counts below were re-measured, not carried forward)._
 
 ---
 
