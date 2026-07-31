@@ -13,9 +13,9 @@ were re-measured, not carried forward)._
 
 ## Where the mechanism layer stands (2026-07-30)
 
-**Every mechanism-rich source now carries causal graphs.** Rounds 12–16 took the
-corpus from 0 to **39,647 records with graphs · 344,134 nodes · 366,049 edges**,
-audit **0 errors**, **366,049/366,049 edges snippet-cited**.
+**Every mechanism-rich source now carries causal graphs.** Rounds 12–17 took the
+corpus from 0 to **39,647 records · 40,115 graphs · 347,473 nodes · 368,920 edges**,
+audit **0 errors**, **368,920/368,920 edges snippet-cited**.
 
 | source | records w/ graph | round | PR |
 |---|--:|--:|---|
@@ -26,10 +26,14 @@ audit **0 errors**, **366,049/366,049 edges snippet-cited**.
 | M-CSA | 1,003 | 12–13 | #77, #81, #82 |
 | MetalPDB | 228 | 15 | #87 |
 
-All 5,845 audit warnings are now **ungrounded-node** warnings (5,845 = 344,134 −
-338,289 grounded). There are **zero** missing-snippet and zero missing-`predicate_id`
-warnings left, so `--strict` is now purely a grounding gate — a change from when the
-Refinements note below was written.
+Round 17 added no new records — it **cross-linked** two existing sources: 427 Rhea
+records gained 468 `catalytic_residues` graphs carrying the M-CSA residues that
+perform them, joined on exact ChEBI set equality.
+
+All 5,845 audit warnings are **ungrounded-node** warnings (5,845 = 347,473 −
+341,628 grounded), unchanged across rounds 16 and 17. There are **zero**
+missing-snippet and zero missing-`predicate_id` warnings left, so `--strict` is now
+purely a grounding gate — a change from when the Refinements note below was written.
 
 ---
 
@@ -53,30 +57,42 @@ cleared._
    Skill: `edison-causal-graphs`; promoter: `promote_family_drafts.py`
    (`FAMILY_SNIPPETS`).
 
-2. **Join Rhea reaction chemistry to the M-CSA catalytic residues that perform it
-   (candidate round 17).** The successor thread now that source coverage is done:
-   the frontier is **depth, not breadth**. Today a Rhea graph says *these substrates
-   become those products* and an M-CSA graph says *these residues do the chemistry*,
-   and nothing connects them — so no graph in the corpus answers "which residue
-   attacks which substrate", which is the question the two sources jointly can.
+2. ~~**Join Rhea reaction chemistry to the M-CSA catalytic residues that perform
+   it.**~~ **DONE (2026-07-30, round 17, PR #89)** — 427 Rhea records gained 468
+   `catalytic_residues` graphs / 2,871 edges, joined on **exact ChEBI set equality**
+   (M-CSA reactant set == one Rhea side, product set == the other). Residue nodes are
+   reused verbatim from the M-CSA records' SIFTS-resolved graphs.
+   `scripts/build_rhea_mcsa_residue_graphs.py`; `research/causal-graphs-round17.md`.
 
-   **The join is checkable on chemistry, not just inferable through EC** (verified
-   2026-07-30 against `data/raw/mcsa.entries.jsonl`): all 1,003 M-CSA entries carry
-   both `reaction.ec` **and** `reaction.compounds` with `chebi_id` plus a
-   `type: reactant|product` tag. So an M-CSA entry's ChEBI reactant/product sets can
-   be matched directly against a Rhea reaction's `_L`/`_R` sides — a verifiable
-   overlap rather than a name match, and the same shape of internal-redundancy check
-   rounds 15 and 16 both relied on. `scripts/rhea_rdf.py` already exposes the Rhea
-   side (`participants_of`, `lr_child`).
+   **This item's stated premise was wrong and the round corrected it.** It claimed
+   the join would answer *"which residue attacks which substrate"*. **M-CSA cannot
+   support that**: residue `roles` give a function, a `function_type`
+   (reactant/interaction/spectator) and an EMO id but **never a target compound**;
+   `marvin_xml` is a *filename* (max 107 chars), not atom-mapped arrow-pushing; and
+   the only place a residue and a compound co-occur is free-text step prose that
+   names compounds as jargon rather than by ChEBI. What was written instead is what
+   M-CSA does assert: *this residue is causally responsible for this reaction*.
 
-   Note M-CSA states a direction (`reactant`/`product`) where the Rhea master does
-   not; if they disagree, Rhea's directional child is the citable authority for Rhea
-   records and M-CSA's own tag for M-CSA records — do not silently reconcile them.
-   Where the ChEBI sets do not overlap, fall back to EC and apply the round-16
-   soundness rule: only join where the EC class maps to exactly one Rhea reaction
-   (5,136 classes), otherwise a residue cannot be attributed to a specific reaction.
+   **The residue→substrate edge is therefore still unwritten and still wanted** —
+   see the follow-ups below. Do not re-attempt it from M-CSA.
 
-3. **Swiss-Prot trait profiles (issue #7) — phases 1–14 shipped; issue NOT complete.**
+3. **Close the residue→substrate gap from a source that actually states it.**
+   The corpus still has **no `RESIDUE → CHEMICAL` edge**. Candidates, none yet
+   assessed: UniProt `ACT_SITE` comments that name the attacked bond; MACiE / EzCatDB;
+   Rhea's `rh:reactivePart` (used in round 16, but it describes generic
+   `[protein]-…` participants, not catalytic residues). **First step is a source
+   assessment, not a build** — the round-17 lesson is to check that the field exists
+   before writing the task.
+
+4. **Recover some of the 289 EC-agreeing M-CSA↔Rhea pairs whose ChEBI sets differ.**
+   Round 17 dropped them deliberately (38% of EC-agreeing pairs do not share
+   chemistry, which is why EC alone is not a join key). Some are genuine granularity
+   differences — protonation state, conjugate acid/base, cofactor inclusion — that a
+   ChEBI-hierarchy-aware comparison could close. The ChEBI ontology is already in
+   `data/raw/chebi/`. Keep set equality as the strict tier and report any looser tier
+   separately; do not merge the tiers.
+
+5. **Swiss-Prot trait profiles (issue #7) — phases 1–14 shipped; issue NOT complete.**
    Delivered: protein×trait matrix over 10 proteomes, trait↔GO correlation,
    trait→function decision trees (held-out-organism validated), cross-axis feature
    correlations, residue-frame alignment. See "Recently shipped" and
@@ -128,7 +144,7 @@ cleared._
    do) rather than minting 570k tiny files. This is the `scalability-check`
    skill's tier D. Nothing else blocks closing #7.
 
-4. **Web design review — dataviz / artifact-design findings (issue #5).**
+6. **Web design review — dataviz / artifact-design findings (issue #5).**
    **Mostly cleared (2026-07-27, PR #68.)** CVD-unsafe palettes fixed via the
    `dataviz` validator: blue↔purple was ΔE 2.6 (protan), green↔teal ΔE 10.8
    (normal vision). Axis pills → reference slots 1–5, worst adjacent CVD ΔE 9.1

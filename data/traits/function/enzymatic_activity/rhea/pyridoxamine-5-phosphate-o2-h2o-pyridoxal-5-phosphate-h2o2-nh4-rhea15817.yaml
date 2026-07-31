@@ -190,7 +190,71 @@ causal_graphs:
     - reference: RHEA:15817
       snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.4.3.5"/>
       notes: The rh:ec triple on RHEA:15817 in rhea.rdf. EC 1.4.3.5 is itself a record in this KB.
+- graph_id: catalytic_residues_mcsa677
+  title: Catalytic residues of RHEA:15817 (from MCSA:677)
+  description: 'The catalytic residues that carry out RHEA:15817, joined from M-CSA entry 677. 1 residues,
+    reused verbatim from the MCSA:677 record rather than re-derived. M-CSA annotates each residue''s role
+    (proton donor, electrostatic stabiliser, …) and whether it is a chemical reactant, an interaction
+    partner or a spectator, but does not say which compound a residue acts on — so this graph asserts
+    residue-to-reaction causation, not residue-to-substrate. Join verified on chemistry, not inferred
+    from EC: M-CSA entry 677''s reactant set (CHEBI:15377, CHEBI:15379, CHEBI:58451) equals Rhea side
+    15817_L exactly, and its product set (CHEBI:16240, CHEBI:28938, CHEBI:597326) equals side 15817_R
+    exactly. EC agreement bounded the candidates but was not sufficient on its own.'
+  nodes:
+  - node_id: activity
+    label: catalysis of pyridoxamine 5'-phosphate + O2 + H2O = pyridoxal 5'-phosphate + H2O2 + NH4(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:15817
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the reaction these residues carry out. Full
+      equation: pyridoxamine 5''-phosphate + O2 + H2O = pyridoxal 5''-phosphate + H2O2 + NH4(+)'
+  - node_id: mcsa
+    label: pyridoxal 5'-phosphate synthase
+    node_type: MOTIF
+    grounding: MCSA:677
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the curated catalytic site whose stepwise mechanism
+      this reaction's chemistry is.
+  - node_id: arg197
+    label: catalytic Arg197 (M-CSA/PDB numbering; UniProt residue 197)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AFI7
+    description: 'M-CSA roles: steric role. Reused verbatim from the MCSA:677 record''s catalysis graph,
+      where the UniProt position was resolved through SIFTS.'
+  edges:
+  - subject: activity
+    predicate: has its catalytic mechanism curated by
+    predicate_id: skos:closeMatch
+    object: mcsa
+    description: M-CSA entry 677 curates the catalytic mechanism of this reaction.
+    evidence:
+    - reference: MCSA:677
+      snippet: dioxygen [reactant]; hydrogen peroxide [product]; water [reactant]; pyridoxamine 5'-phosphate(1-)
+        [reactant]; ammonium [product]; pyridoxal 5'-phosphate(2-) [product]
+      notes: 'The `reaction.compounds` field of M-CSA entry 677, each compound with the reactant/product
+        type M-CSA assigns it. Join verified on chemistry, not inferred from EC: M-CSA entry 677''s reactant
+        set (CHEBI:15377, CHEBI:15379, CHEBI:58451) equals Rhea side 15817_L exactly, and its product
+        set (CHEBI:16240, CHEBI:28938, CHEBI:597326) equals side 15817_R exactly. EC agreement bounded
+        the candidates but was not sufficient on its own.'
+  - subject: arg197
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:677
+      snippet: steric role
+      notes: 'M-CSA entry 677 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 1 spectator. M-CSA states which residues are catalytic and what role each
+        plays, but never which compound a residue acts on, so no residue-to-substrate edge is asserted.
+        Join verified on chemistry, not inferred from EC: M-CSA entry 677''s reactant set (CHEBI:15377,
+        CHEBI:15379, CHEBI:58451) equals Rhea side 15817_L exactly, and its product set (CHEBI:16240,
+        CHEBI:28938, CHEBI:597326) equals side 15817_R exactly. EC agreement bounded the candidates but
+        was not sufficient on its own.'
 curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalytic_residues_mcsa677' (2 evidence-backed edges) joining MCSA:677
+    on exact ChEBI set equality
+  llm_assisted: true
 - timestamp: '2026-07-30T00:00:00Z'
   curator: edison-causal-graphs
   action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;

@@ -219,7 +219,117 @@ causal_graphs:
       notes: Rhea assigns RHEA:23620 to EC 6.3.3.4, and EC 6.3.3.4 maps to exactly one Rhea master reaction
         (RHEA:23620), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
         reactions no exemplar protein is written.
+- graph_id: catalytic_residues_mcsa303
+  title: Catalytic residues of RHEA:23620 (from MCSA:303)
+  description: 'The catalytic residues that carry out RHEA:23620, joined from M-CSA entry 303. 3 residues,
+    reused verbatim from the MCSA:303 record rather than re-derived. M-CSA annotates each residue''s role
+    (proton donor, electrostatic stabiliser, …) and whether it is a chemical reactant, an interaction
+    partner or a spectator, but does not say which compound a residue acts on — so this graph asserts
+    residue-to-reaction causation, not residue-to-substrate. Join verified on chemistry, not inferred
+    from EC: M-CSA entry 303''s reactant set (CHEBI:30616, CHEBI:57304) equals Rhea side 23620_L exactly,
+    and its product set (CHEBI:15378, CHEBI:33019, CHEBI:456215, CHEBI:57303) equals side 23620_R exactly.
+    EC agreement bounded the candidates but was not sufficient on its own.'
+  nodes:
+  - node_id: activity
+    label: N(2)-(2-carboxyethyl)-L-arginine + ATP = deoxyamidinoproclavaminate + AMP + diphosphate +…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:23620
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the reaction these residues carry out. Full
+      equation: N(2)-(2-carboxyethyl)-L-arginine + ATP = deoxyamidinoproclavaminate + AMP + diphosphate
+      + H(+)'
+  - node_id: mcsa
+    label: (carboxyethyl)arginine beta-lactam-synthase
+    node_type: MOTIF
+    grounding: MCSA:303
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the curated catalytic site whose stepwise mechanism
+      this reaction's chemistry is.
+  - node_id: tyr348
+    label: catalytic Tyr348 (M-CSA/PDB numbering; UniProt residue 348)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0DJQ7
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.
+      Reused verbatim from the MCSA:303 record''s catalysis graph, where the UniProt position was resolved
+      through SIFTS.'
+  - node_id: glu382
+    label: catalytic Glu382 (M-CSA/PDB numbering; UniProt residue 382)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0DJQ7
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor, increase acidity, increase
+      basicity. Reused verbatim from the MCSA:303 record''s catalysis graph, where the UniProt position
+      was resolved through SIFTS.'
+  - node_id: lys443
+    label: catalytic Lys443 (M-CSA/PDB numbering; UniProt residue 443)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0DJQ7
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor. Reused verbatim from the
+      MCSA:303 record''s catalysis graph, where the UniProt position was resolved through SIFTS.'
+  edges:
+  - subject: activity
+    predicate: has its catalytic mechanism curated by
+    predicate_id: skos:closeMatch
+    object: mcsa
+    description: M-CSA entry 303 curates the catalytic mechanism of this reaction.
+    evidence:
+    - reference: MCSA:303
+      snippet: ATP(4-) [reactant]; N(2)-(2-carboxyethyl)-L-arginine dizwitterion [reactant]; adenosine
+        5'-monophosphate(2-) [product]; deoxyamidinoproclavaminic acid zwitterion [product]; hydron [product];
+        diphosphate(3-) [product]
+      notes: 'The `reaction.compounds` field of M-CSA entry 303, each compound with the reactant/product
+        type M-CSA assigns it. Join verified on chemistry, not inferred from EC: M-CSA entry 303''s reactant
+        set (CHEBI:30616, CHEBI:57304) equals Rhea side 23620_L exactly, and its product set (CHEBI:15378,
+        CHEBI:33019, CHEBI:456215, CHEBI:57303) equals side 23620_R exactly. EC agreement bounded the
+        candidates but was not sufficient on its own.'
+  - subject: tyr348
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:303
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: 'M-CSA entry 303 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 8 interaction, 6 spectator, 2 reactant. M-CSA states which residues are catalytic
+        and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 303''s reactant
+        set (CHEBI:30616, CHEBI:57304) equals Rhea side 23620_L exactly, and its product set (CHEBI:15378,
+        CHEBI:33019, CHEBI:456215, CHEBI:57303) equals side 23620_R exactly. EC agreement bounded the
+        candidates but was not sufficient on its own.'
+  - subject: glu382
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:303
+      snippet: electrostatic stabiliser, hydrogen bond donor, increase acidity, increase basicity
+      notes: 'M-CSA entry 303 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 8 interaction, 6 spectator, 2 reactant. M-CSA states which residues are catalytic
+        and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 303''s reactant
+        set (CHEBI:30616, CHEBI:57304) equals Rhea side 23620_L exactly, and its product set (CHEBI:15378,
+        CHEBI:33019, CHEBI:456215, CHEBI:57303) equals side 23620_R exactly. EC agreement bounded the
+        candidates but was not sufficient on its own.'
+  - subject: lys443
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:303
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: 'M-CSA entry 303 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 8 interaction, 6 spectator, 2 reactant. M-CSA states which residues are catalytic
+        and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 303''s reactant
+        set (CHEBI:30616, CHEBI:57304) equals Rhea side 23620_L exactly, and its product set (CHEBI:15378,
+        CHEBI:33019, CHEBI:456215, CHEBI:57303) equals side 23620_R exactly. EC agreement bounded the
+        candidates but was not sufficient on its own.'
 curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalytic_residues_mcsa303' (4 evidence-backed edges) joining MCSA:303
+    on exact ChEBI set equality
+  llm_assisted: true
 - timestamp: '2026-07-30T00:00:00Z'
   curator: edison-causal-graphs
   action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;

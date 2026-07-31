@@ -203,7 +203,152 @@ causal_graphs:
       notes: Rhea assigns RHEA:11844 to EC 2.3.1.54, and EC 2.3.1.54 maps to exactly one Rhea master reaction
         (RHEA:11844), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
         reactions no exemplar protein is written.
+- graph_id: catalytic_residues_mcsa30
+  title: Catalytic residues of RHEA:11844 (from MCSA:30)
+  description: 'The catalytic residues that carry out RHEA:11844, joined from M-CSA entry 30. 4 residues,
+    reused verbatim from the MCSA:30 record rather than re-derived. M-CSA annotates each residue''s role
+    (proton donor, electrostatic stabiliser, …) and whether it is a chemical reactant, an interaction
+    partner or a spectator, but does not say which compound a residue acts on — so this graph asserts
+    residue-to-reaction causation, not residue-to-substrate. Join verified on chemistry, not inferred
+    from EC: M-CSA entry 30''s reactant set (CHEBI:15361, CHEBI:57287) equals Rhea side 11844_R exactly,
+    and its product set (CHEBI:15740, CHEBI:57288) equals side 11844_L exactly. EC agreement bounded the
+    candidates but was not sufficient on its own. NOTE: M-CSA curates this reaction in the direction opposite
+    to Rhea''s left-hand side — M-CSA''s reactants are Rhea''s 11844_R. Both are correct: a Rhea master
+    reaction is undirected, and M-CSA records the physiological direction. The disagreement is recorded,
+    not reconciled.'
+  nodes:
+  - node_id: activity
+    label: catalysis of formate + acetyl-CoA = pyruvate + CoA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:11844
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the reaction these residues carry out. Full
+      equation: formate + acetyl-CoA = pyruvate + CoA'
+  - node_id: mcsa
+    label: formate C-acetyltransferase
+    node_type: MOTIF
+    grounding: MCSA:30
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the curated catalytic site whose stepwise mechanism
+      this reaction's chemistry is.
+  - node_id: trp333
+    label: catalytic Trp333 (M-CSA/PDB numbering; UniProt residue 334)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09373
+    description: 'M-CSA roles: hydrogen bond donor, radical stabiliser. Reused verbatim from the MCSA:30
+      record''s catalysis graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: cys418
+    label: catalytic Cys418 (M-CSA/PDB numbering; UniProt residue 419)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09373
+    description: 'M-CSA roles: covalently attached, hydrogen bond acceptor, hydrogen bond donor, hydrogen
+      radical acceptor, hydrogen radical donor, leaving group (radical), radical combinant. Reused verbatim
+      from the MCSA:30 record''s catalysis graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: cys419
+    label: catalytic Cys419 (M-CSA/PDB numbering; UniProt residue 420)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09373
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, hydrogen radical acceptor,
+      hydrogen radical donor, hydrogen radical relay. Reused verbatim from the MCSA:30 record''s catalysis
+      graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: gly734
+    label: catalytic Gly734 (M-CSA/PDB numbering; UniProt residue 735)
+    node_type: RESIDUE
+    grounding: UniProtKB:P09373
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, hydrogen radical acceptor,
+      hydrogen radical donor. Reused verbatim from the MCSA:30 record''s catalysis graph, where the UniProt
+      position was resolved through SIFTS.'
+  edges:
+  - subject: activity
+    predicate: has its catalytic mechanism curated by
+    predicate_id: skos:closeMatch
+    object: mcsa
+    description: M-CSA entry 30 curates the catalytic mechanism of this reaction.
+    evidence:
+    - reference: MCSA:30
+      snippet: pyruvate [reactant]; coenzyme A(4-) [reactant]; acetyl-CoA(4-) [product]; formate [product]
+      notes: 'The `reaction.compounds` field of M-CSA entry 30, each compound with the reactant/product
+        type M-CSA assigns it. Join verified on chemistry, not inferred from EC: M-CSA entry 30''s reactant
+        set (CHEBI:15361, CHEBI:57287) equals Rhea side 11844_R exactly, and its product set (CHEBI:15740,
+        CHEBI:57288) equals side 11844_L exactly. EC agreement bounded the candidates but was not sufficient
+        on its own. NOTE: M-CSA curates this reaction in the direction opposite to Rhea''s left-hand side
+        — M-CSA''s reactants are Rhea''s 11844_R. Both are correct: a Rhea master reaction is undirected,
+        and M-CSA records the physiological direction. The disagreement is recorded, not reconciled.'
+  - subject: trp333
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:30
+      snippet: hydrogen bond donor, radical stabiliser
+      notes: 'M-CSA entry 30 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 36 interaction, 13 reactant, 3 spectator. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 30''s reactant
+        set (CHEBI:15361, CHEBI:57287) equals Rhea side 11844_R exactly, and its product set (CHEBI:15740,
+        CHEBI:57288) equals side 11844_L exactly. EC agreement bounded the candidates but was not sufficient
+        on its own. NOTE: M-CSA curates this reaction in the direction opposite to Rhea''s left-hand side
+        — M-CSA''s reactants are Rhea''s 11844_R. Both are correct: a Rhea master reaction is undirected,
+        and M-CSA records the physiological direction. The disagreement is recorded, not reconciled.'
+  - subject: cys418
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:30
+      snippet: covalently attached, hydrogen bond acceptor, hydrogen bond donor, hydrogen radical acceptor,
+        hydrogen radical donor, leaving group (radical), radical combinant
+      notes: 'M-CSA entry 30 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 36 interaction, 13 reactant, 3 spectator. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 30''s reactant
+        set (CHEBI:15361, CHEBI:57287) equals Rhea side 11844_R exactly, and its product set (CHEBI:15740,
+        CHEBI:57288) equals side 11844_L exactly. EC agreement bounded the candidates but was not sufficient
+        on its own. NOTE: M-CSA curates this reaction in the direction opposite to Rhea''s left-hand side
+        — M-CSA''s reactants are Rhea''s 11844_R. Both are correct: a Rhea master reaction is undirected,
+        and M-CSA records the physiological direction. The disagreement is recorded, not reconciled.'
+  - subject: cys419
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:30
+      snippet: hydrogen bond acceptor, hydrogen bond donor, hydrogen radical acceptor, hydrogen radical
+        donor, hydrogen radical relay
+      notes: 'M-CSA entry 30 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 36 interaction, 13 reactant, 3 spectator. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 30''s reactant
+        set (CHEBI:15361, CHEBI:57287) equals Rhea side 11844_R exactly, and its product set (CHEBI:15740,
+        CHEBI:57288) equals side 11844_L exactly. EC agreement bounded the candidates but was not sufficient
+        on its own. NOTE: M-CSA curates this reaction in the direction opposite to Rhea''s left-hand side
+        — M-CSA''s reactants are Rhea''s 11844_R. Both are correct: a Rhea master reaction is undirected,
+        and M-CSA records the physiological direction. The disagreement is recorded, not reconciled.'
+  - subject: gly734
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:30
+      snippet: hydrogen bond acceptor, hydrogen bond donor, hydrogen radical acceptor, hydrogen radical
+        donor
+      notes: 'M-CSA entry 30 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 36 interaction, 13 reactant, 3 spectator. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 30''s reactant
+        set (CHEBI:15361, CHEBI:57287) equals Rhea side 11844_R exactly, and its product set (CHEBI:15740,
+        CHEBI:57288) equals side 11844_L exactly. EC agreement bounded the candidates but was not sufficient
+        on its own. NOTE: M-CSA curates this reaction in the direction opposite to Rhea''s left-hand side
+        — M-CSA''s reactants are Rhea''s 11844_R. Both are correct: a Rhea master reaction is undirected,
+        and M-CSA records the physiological direction. The disagreement is recorded, not reconciled.'
 curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalytic_residues_mcsa30' (5 evidence-backed edges) joining MCSA:30 on
+    exact ChEBI set equality
+  llm_assisted: true
 - timestamp: '2026-07-30T00:00:00Z'
   curator: edison-causal-graphs
   action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;

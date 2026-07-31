@@ -210,7 +210,113 @@ causal_graphs:
       notes: Rhea assigns RHEA:16833 to EC 1.11.1.9, and EC 1.11.1.9 maps to exactly one Rhea master reaction
         (RHEA:16833), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
         reactions no exemplar protein is written.
+- graph_id: catalytic_residues_mcsa851
+  title: Catalytic residues of RHEA:16833 (from MCSA:851)
+  description: 'The catalytic residues that carry out RHEA:16833, joined from M-CSA entry 851. 3 residues,
+    reused verbatim from the MCSA:851 record rather than re-derived. M-CSA annotates each residue''s role
+    (proton donor, electrostatic stabiliser, …) and whether it is a chemical reactant, an interaction
+    partner or a spectator, but does not say which compound a residue acts on — so this graph asserts
+    residue-to-reaction causation, not residue-to-substrate. Join verified on chemistry, not inferred
+    from EC: M-CSA entry 851''s reactant set (CHEBI:16240, CHEBI:57925) equals Rhea side 16833_L exactly,
+    and its product set (CHEBI:15377, CHEBI:58297) equals side 16833_R exactly. EC agreement bounded the
+    candidates but was not sufficient on its own.'
+  nodes:
+  - node_id: activity
+    label: catalysis of 2 glutathione + H2O2 = glutathione disulfide + 2 H2O
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:16833
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the reaction these residues carry out. Full
+      equation: 2 glutathione + H2O2 = glutathione disulfide + 2 H2O'
+  - node_id: mcsa
+    label: glutathione peroxidase
+    node_type: MOTIF
+    grounding: MCSA:851
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the curated catalytic site whose stepwise mechanism
+      this reaction's chemistry is.
+  - node_id: ala45
+    label: catalytic Ala45 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00435
+    description: 'M-CSA roles: covalent catalysis, proton shuttle (general acid/base). Reused verbatim
+      from the MCSA:851 record''s catalysis graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: gln80
+    label: catalytic Gln80 (M-CSA/PDB numbering; UniProt residue 87)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00435
+    description: 'M-CSA roles: electrostatic stabiliser. Reused verbatim from the MCSA:851 record''s catalysis
+      graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: trp158
+    label: catalytic Trp158 (M-CSA/PDB numbering; UniProt residue 165)
+    node_type: RESIDUE
+    grounding: UniProtKB:P00435
+    description: 'M-CSA roles: proton shuttle (general acid/base). Reused verbatim from the MCSA:851 record''s
+      catalysis graph, where the UniProt position was resolved through SIFTS.'
+  edges:
+  - subject: activity
+    predicate: has its catalytic mechanism curated by
+    predicate_id: skos:closeMatch
+    object: mcsa
+    description: M-CSA entry 851 curates the catalytic mechanism of this reaction.
+    evidence:
+    - reference: MCSA:851
+      snippet: glutathionate(1-) [reactant]; water [product]; hydrogen peroxide [reactant]; glutathione
+        disulfide(2-) [product]
+      notes: 'The `reaction.compounds` field of M-CSA entry 851, each compound with the reactant/product
+        type M-CSA assigns it. Join verified on chemistry, not inferred from EC: M-CSA entry 851''s reactant
+        set (CHEBI:16240, CHEBI:57925) equals Rhea side 16833_L exactly, and its product set (CHEBI:15377,
+        CHEBI:58297) equals side 16833_R exactly. EC agreement bounded the candidates but was not sufficient
+        on its own.'
+  - subject: ala45
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:851
+      snippet: covalent catalysis, proton shuttle (general acid/base)
+      notes: 'M-CSA entry 851 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 3 reactant, 1 spectator. M-CSA states which residues are catalytic and what
+        role each plays, but never which compound a residue acts on, so no residue-to-substrate edge is
+        asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 851''s reactant set (CHEBI:16240,
+        CHEBI:57925) equals Rhea side 16833_L exactly, and its product set (CHEBI:15377, CHEBI:58297)
+        equals side 16833_R exactly. EC agreement bounded the candidates but was not sufficient on its
+        own.'
+  - subject: gln80
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:851
+      snippet: electrostatic stabiliser
+      notes: 'M-CSA entry 851 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 3 reactant, 1 spectator. M-CSA states which residues are catalytic and what
+        role each plays, but never which compound a residue acts on, so no residue-to-substrate edge is
+        asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 851''s reactant set (CHEBI:16240,
+        CHEBI:57925) equals Rhea side 16833_L exactly, and its product set (CHEBI:15377, CHEBI:58297)
+        equals side 16833_R exactly. EC agreement bounded the candidates but was not sufficient on its
+        own.'
+  - subject: trp158
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:851
+      snippet: proton shuttle (general acid/base)
+      notes: 'M-CSA entry 851 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 3 reactant, 1 spectator. M-CSA states which residues are catalytic and what
+        role each plays, but never which compound a residue acts on, so no residue-to-substrate edge is
+        asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 851''s reactant set (CHEBI:16240,
+        CHEBI:57925) equals Rhea side 16833_L exactly, and its product set (CHEBI:15377, CHEBI:58297)
+        equals side 16833_R exactly. EC agreement bounded the candidates but was not sufficient on its
+        own.'
 curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalytic_residues_mcsa851' (4 evidence-backed edges) joining MCSA:851
+    on exact ChEBI set equality
+  llm_assisted: true
 - timestamp: '2026-07-30T00:00:00Z'
   curator: edison-causal-graphs
   action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;

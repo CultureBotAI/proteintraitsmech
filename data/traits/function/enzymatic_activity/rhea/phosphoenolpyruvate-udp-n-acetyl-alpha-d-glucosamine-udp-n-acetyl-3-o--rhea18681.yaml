@@ -217,7 +217,182 @@ causal_graphs:
       notes: Rhea assigns RHEA:18681 to EC 2.5.1.7, and EC 2.5.1.7 maps to exactly one Rhea master reaction
         (RHEA:18681), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
         reactions no exemplar protein is written.
+- graph_id: catalytic_residues_mcsa369
+  title: Catalytic residues of RHEA:18681 (from MCSA:369)
+  description: 'The catalytic residues that carry out RHEA:18681, joined from M-CSA entry 369. 6 residues,
+    reused verbatim from the MCSA:369 record rather than re-derived. M-CSA annotates each residue''s role
+    (proton donor, electrostatic stabiliser, …) and whether it is a chemical reactant, an interaction
+    partner or a spectator, but does not say which compound a residue acts on — so this graph asserts
+    residue-to-reaction causation, not residue-to-substrate. Join verified on chemistry, not inferred
+    from EC: M-CSA entry 369''s reactant set (CHEBI:57705, CHEBI:58702) equals Rhea side 18681_L exactly,
+    and its product set (CHEBI:43474, CHEBI:68483) equals side 18681_R exactly. EC agreement bounded the
+    candidates but was not sufficient on its own.'
+  nodes:
+  - node_id: activity
+    label: phosphoenolpyruvate + UDP-N-acetyl-alpha-D-glucosamine = UDP-N-acetyl-3-O-(1-carboxyvinyl…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:18681
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the reaction these residues carry out. Full
+      equation: phosphoenolpyruvate + UDP-N-acetyl-alpha-D-glucosamine = UDP-N-acetyl-3-O-(1-carboxyvinyl)-alpha-D-glucosamine
+      + phosphate'
+  - node_id: mcsa
+    label: UDP-N-acetylglucosamine enolpyruvyl transferase
+    node_type: MOTIF
+    grounding: MCSA:369
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the curated catalytic site whose stepwise mechanism
+      this reaction's chemistry is.
+  - node_id: lys22
+    label: catalytic Lys22 (M-CSA/PDB numbering; UniProt residue 22)
+    node_type: RESIDUE
+    grounding: UniProtKB:P33038
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor, proton acceptor, proton
+      donor. Reused verbatim from the MCSA:369 record''s catalysis graph, where the UniProt position was
+      resolved through SIFTS.'
+  - node_id: asn23
+    label: catalytic Asn23 (M-CSA/PDB numbering; UniProt residue 23)
+    node_type: RESIDUE
+    grounding: UniProtKB:P33038
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor. Reused verbatim from the
+      MCSA:369 record''s catalysis graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: ser115
+    label: catalytic Ser115 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:P33038
+    description: 'M-CSA roles: activator, hydrogen bond acceptor, hydrogen bond donor, nucleofuge, nucleophile,
+      proton acceptor, proton donor, proton relay. Reused verbatim from the MCSA:369 record''s catalysis
+      graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: arg120
+    label: catalytic Arg120 (M-CSA/PDB numbering; UniProt residue 120)
+    node_type: RESIDUE
+    grounding: UniProtKB:P33038
+    description: 'M-CSA roles: electrostatic stabiliser, proton acceptor, proton donor. Reused verbatim
+      from the MCSA:369 record''s catalysis graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: asp305
+    label: catalytic Asp305 (M-CSA/PDB numbering; UniProt residue 305)
+    node_type: RESIDUE
+    grounding: UniProtKB:P33038
+    description: 'M-CSA roles: activator, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+      proton donor. Reused verbatim from the MCSA:369 record''s catalysis graph, where the UniProt position
+      was resolved through SIFTS.'
+  - node_id: arg397
+    label: catalytic Arg397 (M-CSA/PDB numbering; UniProt residue 397)
+    node_type: RESIDUE
+    grounding: UniProtKB:P33038
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor, proton acceptor, proton
+      donor. Reused verbatim from the MCSA:369 record''s catalysis graph, where the UniProt position was
+      resolved through SIFTS.'
+  edges:
+  - subject: activity
+    predicate: has its catalytic mechanism curated by
+    predicate_id: skos:closeMatch
+    object: mcsa
+    description: M-CSA entry 369 curates the catalytic mechanism of this reaction.
+    evidence:
+    - reference: MCSA:369
+      snippet: phosphonatoenolpyruvate [reactant]; UDP-N-acetyl-alpha-D-glucosamine(2-) [reactant]; hydrogenphosphate
+        [product]; UDP-N-acetyl-3-O-(1-carboxylatovinyl)-alpha-D-glucosamine(3-) [product]
+      notes: 'The `reaction.compounds` field of M-CSA entry 369, each compound with the reactant/product
+        type M-CSA assigns it. Join verified on chemistry, not inferred from EC: M-CSA entry 369''s reactant
+        set (CHEBI:57705, CHEBI:58702) equals Rhea side 18681_L exactly, and its product set (CHEBI:43474,
+        CHEBI:68483) equals side 18681_R exactly. EC agreement bounded the candidates but was not sufficient
+        on its own.'
+  - subject: lys22
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:369
+      snippet: electrostatic stabiliser, hydrogen bond donor, proton acceptor, proton donor
+      notes: 'M-CSA entry 369 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 19 reactant, 13 spectator, 10 interaction. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 369''s reactant
+        set (CHEBI:57705, CHEBI:58702) equals Rhea side 18681_L exactly, and its product set (CHEBI:43474,
+        CHEBI:68483) equals side 18681_R exactly. EC agreement bounded the candidates but was not sufficient
+        on its own.'
+  - subject: asn23
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:369
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: 'M-CSA entry 369 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 19 reactant, 13 spectator, 10 interaction. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 369''s reactant
+        set (CHEBI:57705, CHEBI:58702) equals Rhea side 18681_L exactly, and its product set (CHEBI:43474,
+        CHEBI:68483) equals side 18681_R exactly. EC agreement bounded the candidates but was not sufficient
+        on its own.'
+  - subject: ser115
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:369
+      snippet: activator, hydrogen bond acceptor, hydrogen bond donor, nucleofuge, nucleophile, proton
+        acceptor, proton donor, proton relay
+      notes: 'M-CSA entry 369 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 19 reactant, 13 spectator, 10 interaction. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 369''s reactant
+        set (CHEBI:57705, CHEBI:58702) equals Rhea side 18681_L exactly, and its product set (CHEBI:43474,
+        CHEBI:68483) equals side 18681_R exactly. EC agreement bounded the candidates but was not sufficient
+        on its own.'
+  - subject: arg120
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:369
+      snippet: electrostatic stabiliser, proton acceptor, proton donor
+      notes: 'M-CSA entry 369 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 19 reactant, 13 spectator, 10 interaction. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 369''s reactant
+        set (CHEBI:57705, CHEBI:58702) equals Rhea side 18681_L exactly, and its product set (CHEBI:43474,
+        CHEBI:68483) equals side 18681_R exactly. EC agreement bounded the candidates but was not sufficient
+        on its own.'
+  - subject: asp305
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:369
+      snippet: activator, hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: 'M-CSA entry 369 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 19 reactant, 13 spectator, 10 interaction. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 369''s reactant
+        set (CHEBI:57705, CHEBI:58702) equals Rhea side 18681_L exactly, and its product set (CHEBI:43474,
+        CHEBI:68483) equals side 18681_R exactly. EC agreement bounded the candidates but was not sufficient
+        on its own.'
+  - subject: arg397
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:369
+      snippet: electrostatic stabiliser, hydrogen bond donor, proton acceptor, proton donor
+      notes: 'M-CSA entry 369 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 19 reactant, 13 spectator, 10 interaction. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 369''s reactant
+        set (CHEBI:57705, CHEBI:58702) equals Rhea side 18681_L exactly, and its product set (CHEBI:43474,
+        CHEBI:68483) equals side 18681_R exactly. EC agreement bounded the candidates but was not sufficient
+        on its own.'
 curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalytic_residues_mcsa369' (7 evidence-backed edges) joining MCSA:369
+    on exact ChEBI set equality
+  llm_assisted: true
 - timestamp: '2026-07-30T00:00:00Z'
   curator: edison-causal-graphs
   action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;

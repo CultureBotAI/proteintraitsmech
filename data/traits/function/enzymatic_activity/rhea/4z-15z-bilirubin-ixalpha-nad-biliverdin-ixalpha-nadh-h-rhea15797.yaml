@@ -159,7 +159,194 @@ causal_graphs:
     - reference: RHEA:15797
       snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.3.1.24"/>
       notes: The rh:ec triple on RHEA:15797 in rhea.rdf. EC 1.3.1.24 is itself a record in this KB.
+- graph_id: catalytic_residues_mcsa566
+  title: Catalytic residues of RHEA:15797 (from MCSA:566)
+  description: 'The catalytic residues that carry out RHEA:15797, joined from M-CSA entry 566. 6 residues,
+    reused verbatim from the MCSA:566 record rather than re-derived. M-CSA annotates each residue''s role
+    (proton donor, electrostatic stabiliser, …) and whether it is a chemical reactant, an interaction
+    partner or a spectator, but does not say which compound a residue acts on — so this graph asserts
+    residue-to-reaction causation, not residue-to-substrate. Join verified on chemistry, not inferred
+    from EC: M-CSA entry 566''s reactant set (CHEBI:15378, CHEBI:57945, CHEBI:57991) equals Rhea side
+    15797_R exactly, and its product set (CHEBI:57540, CHEBI:57977) equals side 15797_L exactly. EC agreement
+    bounded the candidates but was not sufficient on its own. NOTE: M-CSA curates this reaction in the
+    direction opposite to Rhea''s left-hand side — M-CSA''s reactants are Rhea''s 15797_R. Both are correct:
+    a Rhea master reaction is undirected, and M-CSA records the physiological direction. The disagreement
+    is recorded, not reconciled.'
+  nodes:
+  - node_id: activity
+    label: catalysis of (4Z,15Z)-bilirubin IXalpha + NAD(+) = biliverdin IXalpha + NADH + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:15797
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the reaction these residues carry out. Full
+      equation: (4Z,15Z)-bilirubin IXalpha + NAD(+) = biliverdin IXalpha + NADH + H(+)'
+  - node_id: mcsa
+    label: biliverdin reductase
+    node_type: MOTIF
+    grounding: MCSA:566
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the curated catalytic site whose stepwise mechanism
+      this reaction's chemistry is.
+  - node_id: glu96
+    label: catalytic Glu96 (M-CSA/PDB numbering; UniProt residue 96)
+    node_type: RESIDUE
+    grounding: UniProtKB:P46844
+    description: 'M-CSA roles: electrostatic stabiliser. Reused verbatim from the MCSA:566 record''s catalysis
+      graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: tyr97
+    label: catalytic Tyr97 (M-CSA/PDB numbering; UniProt residue 97)
+    node_type: RESIDUE
+    grounding: UniProtKB:P46844
+    description: 'M-CSA roles: electrostatic stabiliser, proton acceptor, proton donor. Reused verbatim
+      from the MCSA:566 record''s catalysis graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: glu123
+    label: catalytic Glu123 (M-CSA/PDB numbering; UniProt residue 123)
+    node_type: RESIDUE
+    grounding: UniProtKB:P46844
+    description: 'M-CSA roles: electrostatic stabiliser. Reused verbatim from the MCSA:566 record''s catalysis
+      graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: glu126
+    label: catalytic Glu126 (M-CSA/PDB numbering; UniProt residue 126)
+    node_type: RESIDUE
+    grounding: UniProtKB:P46844
+    description: 'M-CSA roles: electrostatic stabiliser. Reused verbatim from the MCSA:566 record''s catalysis
+      graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: ser170
+    label: catalytic Ser170 (M-CSA/PDB numbering; UniProt residue 170)
+    node_type: RESIDUE
+    grounding: UniProtKB:P46844
+    description: 'M-CSA roles: electrostatic stabiliser. Reused verbatim from the MCSA:566 record''s catalysis
+      graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: arg171
+    label: catalytic Arg171 (M-CSA/PDB numbering; UniProt residue 171)
+    node_type: RESIDUE
+    grounding: UniProtKB:P46844
+    description: 'M-CSA roles: electrostatic stabiliser. Reused verbatim from the MCSA:566 record''s catalysis
+      graph, where the UniProt position was resolved through SIFTS.'
+  edges:
+  - subject: activity
+    predicate: has its catalytic mechanism curated by
+    predicate_id: skos:closeMatch
+    object: mcsa
+    description: M-CSA entry 566 curates the catalytic mechanism of this reaction.
+    evidence:
+    - reference: MCSA:566
+      snippet: bilirubin(2-) [product]; NAD(1-) [product]; hydron [reactant]; NADH(2-) [reactant]; biliverdin(2-)
+        [reactant]
+      notes: 'The `reaction.compounds` field of M-CSA entry 566, each compound with the reactant/product
+        type M-CSA assigns it. Join verified on chemistry, not inferred from EC: M-CSA entry 566''s reactant
+        set (CHEBI:15378, CHEBI:57945, CHEBI:57991) equals Rhea side 15797_R exactly, and its product
+        set (CHEBI:57540, CHEBI:57977) equals side 15797_L exactly. EC agreement bounded the candidates
+        but was not sufficient on its own. NOTE: M-CSA curates this reaction in the direction opposite
+        to Rhea''s left-hand side — M-CSA''s reactants are Rhea''s 15797_R. Both are correct: a Rhea master
+        reaction is undirected, and M-CSA records the physiological direction. The disagreement is recorded,
+        not reconciled.'
+  - subject: glu96
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:566
+      snippet: electrostatic stabiliser
+      notes: 'M-CSA entry 566 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 6 spectator, 2 reactant. M-CSA states which residues are catalytic and what
+        role each plays, but never which compound a residue acts on, so no residue-to-substrate edge is
+        asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 566''s reactant set (CHEBI:15378,
+        CHEBI:57945, CHEBI:57991) equals Rhea side 15797_R exactly, and its product set (CHEBI:57540,
+        CHEBI:57977) equals side 15797_L exactly. EC agreement bounded the candidates but was not sufficient
+        on its own. NOTE: M-CSA curates this reaction in the direction opposite to Rhea''s left-hand side
+        — M-CSA''s reactants are Rhea''s 15797_R. Both are correct: a Rhea master reaction is undirected,
+        and M-CSA records the physiological direction. The disagreement is recorded, not reconciled.'
+  - subject: tyr97
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:566
+      snippet: electrostatic stabiliser, proton acceptor, proton donor
+      notes: 'M-CSA entry 566 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 6 spectator, 2 reactant. M-CSA states which residues are catalytic and what
+        role each plays, but never which compound a residue acts on, so no residue-to-substrate edge is
+        asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 566''s reactant set (CHEBI:15378,
+        CHEBI:57945, CHEBI:57991) equals Rhea side 15797_R exactly, and its product set (CHEBI:57540,
+        CHEBI:57977) equals side 15797_L exactly. EC agreement bounded the candidates but was not sufficient
+        on its own. NOTE: M-CSA curates this reaction in the direction opposite to Rhea''s left-hand side
+        — M-CSA''s reactants are Rhea''s 15797_R. Both are correct: a Rhea master reaction is undirected,
+        and M-CSA records the physiological direction. The disagreement is recorded, not reconciled.'
+  - subject: glu123
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:566
+      snippet: electrostatic stabiliser
+      notes: 'M-CSA entry 566 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 6 spectator, 2 reactant. M-CSA states which residues are catalytic and what
+        role each plays, but never which compound a residue acts on, so no residue-to-substrate edge is
+        asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 566''s reactant set (CHEBI:15378,
+        CHEBI:57945, CHEBI:57991) equals Rhea side 15797_R exactly, and its product set (CHEBI:57540,
+        CHEBI:57977) equals side 15797_L exactly. EC agreement bounded the candidates but was not sufficient
+        on its own. NOTE: M-CSA curates this reaction in the direction opposite to Rhea''s left-hand side
+        — M-CSA''s reactants are Rhea''s 15797_R. Both are correct: a Rhea master reaction is undirected,
+        and M-CSA records the physiological direction. The disagreement is recorded, not reconciled.'
+  - subject: glu126
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:566
+      snippet: electrostatic stabiliser
+      notes: 'M-CSA entry 566 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 6 spectator, 2 reactant. M-CSA states which residues are catalytic and what
+        role each plays, but never which compound a residue acts on, so no residue-to-substrate edge is
+        asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 566''s reactant set (CHEBI:15378,
+        CHEBI:57945, CHEBI:57991) equals Rhea side 15797_R exactly, and its product set (CHEBI:57540,
+        CHEBI:57977) equals side 15797_L exactly. EC agreement bounded the candidates but was not sufficient
+        on its own. NOTE: M-CSA curates this reaction in the direction opposite to Rhea''s left-hand side
+        — M-CSA''s reactants are Rhea''s 15797_R. Both are correct: a Rhea master reaction is undirected,
+        and M-CSA records the physiological direction. The disagreement is recorded, not reconciled.'
+  - subject: ser170
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:566
+      snippet: electrostatic stabiliser
+      notes: 'M-CSA entry 566 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 6 spectator, 2 reactant. M-CSA states which residues are catalytic and what
+        role each plays, but never which compound a residue acts on, so no residue-to-substrate edge is
+        asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 566''s reactant set (CHEBI:15378,
+        CHEBI:57945, CHEBI:57991) equals Rhea side 15797_R exactly, and its product set (CHEBI:57540,
+        CHEBI:57977) equals side 15797_L exactly. EC agreement bounded the candidates but was not sufficient
+        on its own. NOTE: M-CSA curates this reaction in the direction opposite to Rhea''s left-hand side
+        — M-CSA''s reactants are Rhea''s 15797_R. Both are correct: a Rhea master reaction is undirected,
+        and M-CSA records the physiological direction. The disagreement is recorded, not reconciled.'
+  - subject: arg171
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:566
+      snippet: electrostatic stabiliser
+      notes: 'M-CSA entry 566 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 6 spectator, 2 reactant. M-CSA states which residues are catalytic and what
+        role each plays, but never which compound a residue acts on, so no residue-to-substrate edge is
+        asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 566''s reactant set (CHEBI:15378,
+        CHEBI:57945, CHEBI:57991) equals Rhea side 15797_R exactly, and its product set (CHEBI:57540,
+        CHEBI:57977) equals side 15797_L exactly. EC agreement bounded the candidates but was not sufficient
+        on its own. NOTE: M-CSA curates this reaction in the direction opposite to Rhea''s left-hand side
+        — M-CSA''s reactants are Rhea''s 15797_R. Both are correct: a Rhea master reaction is undirected,
+        and M-CSA records the physiological direction. The disagreement is recorded, not reconciled.'
 curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalytic_residues_mcsa566' (7 evidence-backed edges) joining MCSA:566
+    on exact ChEBI set equality
+  llm_assisted: true
 - timestamp: '2026-07-30T00:00:00Z'
   curator: edison-causal-graphs
   action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;

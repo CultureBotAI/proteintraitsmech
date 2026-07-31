@@ -109,7 +109,129 @@ causal_graphs:
     - reference: RHEA:21736
       snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.3.3"/>
       notes: The rh:ec triple on RHEA:21736 in rhea.rdf. EC 5.4.3.3 is itself a record in this KB.
+- graph_id: catalytic_residues_mcsa737
+  title: Catalytic residues of RHEA:21736 (from MCSA:737)
+  description: 'The catalytic residues that carry out RHEA:21736, joined from M-CSA entry 737. 4 residues,
+    reused verbatim from the MCSA:737 record rather than re-derived. M-CSA annotates each residue''s role
+    (proton donor, electrostatic stabiliser, …) and whether it is a chemical reactant, an interaction
+    partner or a spectator, but does not say which compound a residue acts on — so this graph asserts
+    residue-to-reaction causation, not residue-to-substrate. Join verified on chemistry, not inferred
+    from EC: M-CSA entry 737''s reactant set (CHEBI:57434) equals Rhea side 21736_L exactly, and its product
+    set (CHEBI:57436) equals side 21736_R exactly. EC agreement bounded the candidates but was not sufficient
+    on its own.'
+  nodes:
+  - node_id: activity
+    label: catalysis of (3S)-3,6-diaminohexanoate = (3S,5S)-3,5-diaminohexanoate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:21736
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the reaction these residues carry out. Full
+      equation: (3S)-3,6-diaminohexanoate = (3S,5S)-3,5-diaminohexanoate'
+  - node_id: mcsa
+    label: beta-lysine 5,6-aminomutase
+    node_type: MOTIF
+    grounding: MCSA:737
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the curated catalytic site whose stepwise mechanism
+      this reaction's chemistry is.
+  - node_id: lys144
+    label: catalytic Lys144 (M-CSA/PDB numbering; UniProt position not established)
+    node_type: RESIDUE
+    grounding: UniProtKB:E3PRJ5
+    description: 'M-CSA roles: electron pair acceptor, electron pair donor, nucleofuge, nucleophile. Reused
+      verbatim from the MCSA:737 record''s catalysis graph, where the UniProt position was resolved through
+      SIFTS.'
+  - node_id: tyr263
+    label: catalytic Tyr263 (M-CSA/PDB numbering; UniProt residue 266)
+    node_type: RESIDUE
+    grounding: UniProtKB:E3PRJ5
+    description: 'M-CSA roles: radical stabiliser. Reused verbatim from the MCSA:737 record''s catalysis
+      graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: asp298
+    label: catalytic Asp298 (M-CSA/PDB numbering; UniProt residue 301)
+    node_type: RESIDUE
+    grounding: UniProtKB:E3PRJ5
+    description: 'M-CSA roles: promote homolysis. Reused verbatim from the MCSA:737 record''s catalysis
+      graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: lys370
+    label: catalytic Lys370 (M-CSA/PDB numbering; UniProt residue 373)
+    node_type: RESIDUE
+    grounding: UniProtKB:E3PRJ5
+    description: 'M-CSA roles: promote homolysis. Reused verbatim from the MCSA:737 record''s catalysis
+      graph, where the UniProt position was resolved through SIFTS.'
+  edges:
+  - subject: activity
+    predicate: has its catalytic mechanism curated by
+    predicate_id: skos:closeMatch
+    object: mcsa
+    description: M-CSA entry 737 curates the catalytic mechanism of this reaction.
+    evidence:
+    - reference: MCSA:737
+      snippet: (3S,5S)-3,5-diammoniohexanoate [product]; (3S)-3,6-diammoniohexanoate [reactant]
+      notes: 'The `reaction.compounds` field of M-CSA entry 737, each compound with the reactant/product
+        type M-CSA assigns it. Join verified on chemistry, not inferred from EC: M-CSA entry 737''s reactant
+        set (CHEBI:57434) equals Rhea side 21736_L exactly, and its product set (CHEBI:57436) equals side
+        21736_R exactly. EC agreement bounded the candidates but was not sufficient on its own.'
+  - subject: lys144
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:737
+      snippet: electron pair acceptor, electron pair donor, nucleofuge, nucleophile
+      notes: 'M-CSA entry 737 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 5 spectator, 4 reactant. M-CSA states which residues are catalytic and what
+        role each plays, but never which compound a residue acts on, so no residue-to-substrate edge is
+        asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 737''s reactant set (CHEBI:57434)
+        equals Rhea side 21736_L exactly, and its product set (CHEBI:57436) equals side 21736_R exactly.
+        EC agreement bounded the candidates but was not sufficient on its own.'
+  - subject: tyr263
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:737
+      snippet: radical stabiliser
+      notes: 'M-CSA entry 737 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 5 spectator, 4 reactant. M-CSA states which residues are catalytic and what
+        role each plays, but never which compound a residue acts on, so no residue-to-substrate edge is
+        asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 737''s reactant set (CHEBI:57434)
+        equals Rhea side 21736_L exactly, and its product set (CHEBI:57436) equals side 21736_R exactly.
+        EC agreement bounded the candidates but was not sufficient on its own.'
+  - subject: asp298
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:737
+      snippet: promote homolysis
+      notes: 'M-CSA entry 737 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 5 spectator, 4 reactant. M-CSA states which residues are catalytic and what
+        role each plays, but never which compound a residue acts on, so no residue-to-substrate edge is
+        asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 737''s reactant set (CHEBI:57434)
+        equals Rhea side 21736_L exactly, and its product set (CHEBI:57436) equals side 21736_R exactly.
+        EC agreement bounded the candidates but was not sufficient on its own.'
+  - subject: lys370
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:737
+      snippet: promote homolysis
+      notes: 'M-CSA entry 737 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 5 spectator, 4 reactant. M-CSA states which residues are catalytic and what
+        role each plays, but never which compound a residue acts on, so no residue-to-substrate edge is
+        asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 737''s reactant set (CHEBI:57434)
+        equals Rhea side 21736_L exactly, and its product set (CHEBI:57436) equals side 21736_R exactly.
+        EC agreement bounded the candidates but was not sufficient on its own.'
 curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalytic_residues_mcsa737' (5 evidence-backed edges) joining MCSA:737
+    on exact ChEBI set equality
+  llm_assisted: true
 - timestamp: '2026-07-30T00:00:00Z'
   curator: edison-causal-graphs
   action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;

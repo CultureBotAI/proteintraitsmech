@@ -168,7 +168,199 @@ causal_graphs:
     - reference: RHEA:25245
       snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.1.2.6"/>
       notes: The rh:ec triple on RHEA:25245 in rhea.rdf. EC 3.1.2.6 is itself a record in this KB.
+- graph_id: catalytic_residues_mcsa157
+  title: Catalytic residues of RHEA:25245 (from MCSA:157)
+  description: 'The catalytic residues that carry out RHEA:25245, joined from M-CSA entry 157. 7 residues,
+    reused verbatim from the MCSA:157 record rather than re-derived. M-CSA annotates each residue''s role
+    (proton donor, electrostatic stabiliser, …) and whether it is a chemical reactant, an interaction
+    partner or a spectator, but does not say which compound a residue acts on — so this graph asserts
+    residue-to-reaction causation, not residue-to-substrate. Join verified on chemistry, not inferred
+    from EC: M-CSA entry 157''s reactant set (CHEBI:15377, CHEBI:57474) equals Rhea side 25245_L exactly,
+    and its product set (CHEBI:15378, CHEBI:16004, CHEBI:57925) equals side 25245_R exactly. EC agreement
+    bounded the candidates but was not sufficient on its own.'
+  nodes:
+  - node_id: activity
+    label: catalysis of (R)-S-lactoylglutathione + H2O = (R)-lactate + glutathione + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:25245
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the reaction these residues carry out. Full
+      equation: (R)-S-lactoylglutathione + H2O = (R)-lactate + glutathione + H(+)'
+  - node_id: mcsa
+    label: hydroxyacylglutathione hydrolase
+    node_type: MOTIF
+    grounding: MCSA:157
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the curated catalytic site whose stepwise mechanism
+      this reaction's chemistry is.
+  - node_id: his54
+    label: catalytic His54 (M-CSA/PDB numbering; UniProt residue 102)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q16775
+    description: 'M-CSA roles: metal ligand. Reused verbatim from the MCSA:157 record''s catalysis graph,
+      where the UniProt position was resolved through SIFTS.'
+  - node_id: his56
+    label: catalytic His56 (M-CSA/PDB numbering; UniProt residue 104)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q16775
+    description: 'M-CSA roles: metal ligand. Reused verbatim from the MCSA:157 record''s catalysis graph,
+      where the UniProt position was resolved through SIFTS.'
+  - node_id: asp58
+    label: catalytic Asp58 (M-CSA/PDB numbering; UniProt residue 106)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q16775
+    description: 'M-CSA roles: activator, electrostatic stabiliser, hydrogen bond acceptor, metal ligand,
+      proton acceptor, proton donor. Reused verbatim from the MCSA:157 record''s catalysis graph, where
+      the UniProt position was resolved through SIFTS.'
+  - node_id: his59
+    label: catalytic His59 (M-CSA/PDB numbering; UniProt residue 107)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q16775
+    description: 'M-CSA roles: metal ligand. Reused verbatim from the MCSA:157 record''s catalysis graph,
+      where the UniProt position was resolved through SIFTS.'
+  - node_id: his110
+    label: catalytic His110 (M-CSA/PDB numbering; UniProt residue 158)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q16775
+    description: 'M-CSA roles: metal ligand. Reused verbatim from the MCSA:157 record''s catalysis graph,
+      where the UniProt position was resolved through SIFTS.'
+  - node_id: asp134
+    label: catalytic Asp134 (M-CSA/PDB numbering; UniProt residue 182)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q16775
+    description: 'M-CSA roles: metal ligand. Reused verbatim from the MCSA:157 record''s catalysis graph,
+      where the UniProt position was resolved through SIFTS.'
+  - node_id: his173
+    label: catalytic His173 (M-CSA/PDB numbering; UniProt residue 221)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q16775
+    description: 'M-CSA roles: metal ligand. Reused verbatim from the MCSA:157 record''s catalysis graph,
+      where the UniProt position was resolved through SIFTS.'
+  edges:
+  - subject: activity
+    predicate: has its catalytic mechanism curated by
+    predicate_id: skos:closeMatch
+    object: mcsa
+    description: M-CSA entry 157 curates the catalytic mechanism of this reaction.
+    evidence:
+    - reference: MCSA:157
+      snippet: water [reactant]; (R)-S-lactoylglutathionate(1-) [reactant]; (R)-lactate [product]; glutathionate(1-)
+        [product]; hydron [product]
+      notes: 'The `reaction.compounds` field of M-CSA entry 157, each compound with the reactant/product
+        type M-CSA assigns it. Join verified on chemistry, not inferred from EC: M-CSA entry 157''s reactant
+        set (CHEBI:15377, CHEBI:57474) equals Rhea side 25245_L exactly, and its product set (CHEBI:15378,
+        CHEBI:16004, CHEBI:57925) equals side 25245_R exactly. EC agreement bounded the candidates but
+        was not sufficient on its own.'
+  - subject: his54
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:157
+      snippet: metal ligand
+      notes: 'M-CSA entry 157 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 31 interaction, 3 spectator, 3 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 157''s reactant
+        set (CHEBI:15377, CHEBI:57474) equals Rhea side 25245_L exactly, and its product set (CHEBI:15378,
+        CHEBI:16004, CHEBI:57925) equals side 25245_R exactly. EC agreement bounded the candidates but
+        was not sufficient on its own.'
+  - subject: his56
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:157
+      snippet: metal ligand
+      notes: 'M-CSA entry 157 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 31 interaction, 3 spectator, 3 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 157''s reactant
+        set (CHEBI:15377, CHEBI:57474) equals Rhea side 25245_L exactly, and its product set (CHEBI:15378,
+        CHEBI:16004, CHEBI:57925) equals side 25245_R exactly. EC agreement bounded the candidates but
+        was not sufficient on its own.'
+  - subject: asp58
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:157
+      snippet: activator, electrostatic stabiliser, hydrogen bond acceptor, metal ligand, proton acceptor,
+        proton donor
+      notes: 'M-CSA entry 157 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 31 interaction, 3 spectator, 3 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 157''s reactant
+        set (CHEBI:15377, CHEBI:57474) equals Rhea side 25245_L exactly, and its product set (CHEBI:15378,
+        CHEBI:16004, CHEBI:57925) equals side 25245_R exactly. EC agreement bounded the candidates but
+        was not sufficient on its own.'
+  - subject: his59
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:157
+      snippet: metal ligand
+      notes: 'M-CSA entry 157 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 31 interaction, 3 spectator, 3 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 157''s reactant
+        set (CHEBI:15377, CHEBI:57474) equals Rhea side 25245_L exactly, and its product set (CHEBI:15378,
+        CHEBI:16004, CHEBI:57925) equals side 25245_R exactly. EC agreement bounded the candidates but
+        was not sufficient on its own.'
+  - subject: his110
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:157
+      snippet: metal ligand
+      notes: 'M-CSA entry 157 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 31 interaction, 3 spectator, 3 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 157''s reactant
+        set (CHEBI:15377, CHEBI:57474) equals Rhea side 25245_L exactly, and its product set (CHEBI:15378,
+        CHEBI:16004, CHEBI:57925) equals side 25245_R exactly. EC agreement bounded the candidates but
+        was not sufficient on its own.'
+  - subject: asp134
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:157
+      snippet: metal ligand
+      notes: 'M-CSA entry 157 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 31 interaction, 3 spectator, 3 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 157''s reactant
+        set (CHEBI:15377, CHEBI:57474) equals Rhea side 25245_L exactly, and its product set (CHEBI:15378,
+        CHEBI:16004, CHEBI:57925) equals side 25245_R exactly. EC agreement bounded the candidates but
+        was not sufficient on its own.'
+  - subject: his173
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:157
+      snippet: metal ligand
+      notes: 'M-CSA entry 157 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 31 interaction, 3 spectator, 3 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 157''s reactant
+        set (CHEBI:15377, CHEBI:57474) equals Rhea side 25245_L exactly, and its product set (CHEBI:15378,
+        CHEBI:16004, CHEBI:57925) equals side 25245_R exactly. EC agreement bounded the candidates but
+        was not sufficient on its own.'
 curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalytic_residues_mcsa157' (8 evidence-backed edges) joining MCSA:157
+    on exact ChEBI set equality
+  llm_assisted: true
 - timestamp: '2026-07-30T00:00:00Z'
   curator: edison-causal-graphs
   action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;

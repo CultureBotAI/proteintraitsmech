@@ -219,7 +219,199 @@ causal_graphs:
       notes: Rhea assigns RHEA:21704 to EC 4.1.99.2, and EC 4.1.99.2 maps to exactly one Rhea master reaction
         (RHEA:21704), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
         reactions no exemplar protein is written.
+- graph_id: catalytic_residues_mcsa933
+  title: Catalytic residues of RHEA:21704 (from MCSA:933)
+  description: 'The catalytic residues that carry out RHEA:21704, joined from M-CSA entry 933. 7 residues,
+    reused verbatim from the MCSA:933 record rather than re-derived. M-CSA annotates each residue''s role
+    (proton donor, electrostatic stabiliser, …) and whether it is a chemical reactant, an interaction
+    partner or a spectator, but does not say which compound a residue acts on — so this graph asserts
+    residue-to-reaction causation, not residue-to-substrate. Join verified on chemistry, not inferred
+    from EC: M-CSA entry 933''s reactant set (CHEBI:15377, CHEBI:58315) equals Rhea side 21704_L exactly,
+    and its product set (CHEBI:15361, CHEBI:15882, CHEBI:28938) equals side 21704_R exactly. EC agreement
+    bounded the candidates but was not sufficient on its own.'
+  nodes:
+  - node_id: activity
+    label: catalysis of L-tyrosine + H2O = phenol + pyruvate + NH4(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:21704
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the reaction these residues carry out. Full
+      equation: L-tyrosine + H2O = phenol + pyruvate + NH4(+)'
+  - node_id: mcsa
+    label: tyrosine phenol-lyase
+    node_type: MOTIF
+    grounding: MCSA:933
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the curated catalytic site whose stepwise mechanism
+      this reaction's chemistry is.
+  - node_id: tyr71
+    label: catalytic Tyr71 (M-CSA/PDB numbering; UniProt residue 71)
+    node_type: RESIDUE
+    grounding: UniProtKB:P31013
+    description: 'M-CSA roles: proton acceptor, proton donor. Reused verbatim from the MCSA:933 record''s
+      catalysis graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: phe123
+    label: catalytic Phe123 (M-CSA/PDB numbering; UniProt residue 123)
+    node_type: RESIDUE
+    grounding: UniProtKB:P31013
+    description: 'M-CSA roles: steric role. Reused verbatim from the MCSA:933 record''s catalysis graph,
+      where the UniProt position was resolved through SIFTS.'
+  - node_id: thr124
+    label: catalytic Thr124 (M-CSA/PDB numbering; UniProt residue 124)
+    node_type: RESIDUE
+    grounding: UniProtKB:P31013
+    description: 'M-CSA roles: electrostatic stabiliser. Reused verbatim from the MCSA:933 record''s catalysis
+      graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: asp214
+    label: catalytic Asp214 (M-CSA/PDB numbering; UniProt residue 214)
+    node_type: RESIDUE
+    grounding: UniProtKB:P31013
+    description: 'M-CSA roles: electrostatic stabiliser. Reused verbatim from the MCSA:933 record''s catalysis
+      graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: lys257
+    label: catalytic Lys257 (M-CSA/PDB numbering; UniProt residue 257)
+    node_type: RESIDUE
+    grounding: UniProtKB:P31013
+    description: 'M-CSA roles: covalently attached, electron pair acceptor, electron pair donor, nucleofuge,
+      nucleophile, proton acceptor, proton donor. Reused verbatim from the MCSA:933 record''s catalysis
+      graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: arg381
+    label: catalytic Arg381 (M-CSA/PDB numbering; UniProt residue 381)
+    node_type: RESIDUE
+    grounding: UniProtKB:P31013
+    description: 'M-CSA roles: electrostatic stabiliser. Reused verbatim from the MCSA:933 record''s catalysis
+      graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: phe448
+    label: catalytic Phe448 (M-CSA/PDB numbering; UniProt residue 448)
+    node_type: RESIDUE
+    grounding: UniProtKB:P31013
+    description: 'M-CSA roles: electrostatic stabiliser, ground state destabiliser. Reused verbatim from
+      the MCSA:933 record''s catalysis graph, where the UniProt position was resolved through SIFTS.'
+  edges:
+  - subject: activity
+    predicate: has its catalytic mechanism curated by
+    predicate_id: skos:closeMatch
+    object: mcsa
+    description: M-CSA entry 933 curates the catalytic mechanism of this reaction.
+    evidence:
+    - reference: MCSA:933
+      snippet: water [reactant]; L-tyrosine zwitterion [reactant]; pyruvate [product]; phenol [product];
+        ammonium [product]
+      notes: 'The `reaction.compounds` field of M-CSA entry 933, each compound with the reactant/product
+        type M-CSA assigns it. Join verified on chemistry, not inferred from EC: M-CSA entry 933''s reactant
+        set (CHEBI:15377, CHEBI:58315) equals Rhea side 21704_L exactly, and its product set (CHEBI:15361,
+        CHEBI:15882, CHEBI:28938) equals side 21704_R exactly. EC agreement bounded the candidates but
+        was not sufficient on its own.'
+  - subject: tyr71
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:933
+      snippet: proton acceptor, proton donor
+      notes: 'M-CSA entry 933 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 31 spectator, 10 reactant, 1 interaction. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 933''s reactant
+        set (CHEBI:15377, CHEBI:58315) equals Rhea side 21704_L exactly, and its product set (CHEBI:15361,
+        CHEBI:15882, CHEBI:28938) equals side 21704_R exactly. EC agreement bounded the candidates but
+        was not sufficient on its own.'
+  - subject: phe123
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:933
+      snippet: steric role
+      notes: 'M-CSA entry 933 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 31 spectator, 10 reactant, 1 interaction. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 933''s reactant
+        set (CHEBI:15377, CHEBI:58315) equals Rhea side 21704_L exactly, and its product set (CHEBI:15361,
+        CHEBI:15882, CHEBI:28938) equals side 21704_R exactly. EC agreement bounded the candidates but
+        was not sufficient on its own.'
+  - subject: thr124
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:933
+      snippet: electrostatic stabiliser
+      notes: 'M-CSA entry 933 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 31 spectator, 10 reactant, 1 interaction. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 933''s reactant
+        set (CHEBI:15377, CHEBI:58315) equals Rhea side 21704_L exactly, and its product set (CHEBI:15361,
+        CHEBI:15882, CHEBI:28938) equals side 21704_R exactly. EC agreement bounded the candidates but
+        was not sufficient on its own.'
+  - subject: asp214
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:933
+      snippet: electrostatic stabiliser
+      notes: 'M-CSA entry 933 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 31 spectator, 10 reactant, 1 interaction. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 933''s reactant
+        set (CHEBI:15377, CHEBI:58315) equals Rhea side 21704_L exactly, and its product set (CHEBI:15361,
+        CHEBI:15882, CHEBI:28938) equals side 21704_R exactly. EC agreement bounded the candidates but
+        was not sufficient on its own.'
+  - subject: lys257
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:933
+      snippet: covalently attached, electron pair acceptor, electron pair donor, nucleofuge, nucleophile,
+        proton acceptor, proton donor
+      notes: 'M-CSA entry 933 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 31 spectator, 10 reactant, 1 interaction. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 933''s reactant
+        set (CHEBI:15377, CHEBI:58315) equals Rhea side 21704_L exactly, and its product set (CHEBI:15361,
+        CHEBI:15882, CHEBI:28938) equals side 21704_R exactly. EC agreement bounded the candidates but
+        was not sufficient on its own.'
+  - subject: arg381
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:933
+      snippet: electrostatic stabiliser
+      notes: 'M-CSA entry 933 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 31 spectator, 10 reactant, 1 interaction. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 933''s reactant
+        set (CHEBI:15377, CHEBI:58315) equals Rhea side 21704_L exactly, and its product set (CHEBI:15361,
+        CHEBI:15882, CHEBI:28938) equals side 21704_R exactly. EC agreement bounded the candidates but
+        was not sufficient on its own.'
+  - subject: phe448
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:933
+      snippet: electrostatic stabiliser, ground state destabiliser
+      notes: 'M-CSA entry 933 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 31 spectator, 10 reactant, 1 interaction. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 933''s reactant
+        set (CHEBI:15377, CHEBI:58315) equals Rhea side 21704_L exactly, and its product set (CHEBI:15361,
+        CHEBI:15882, CHEBI:28938) equals side 21704_R exactly. EC agreement bounded the candidates but
+        was not sufficient on its own.'
 curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalytic_residues_mcsa933' (8 evidence-backed edges) joining MCSA:933
+    on exact ChEBI set equality
+  llm_assisted: true
 - timestamp: '2026-07-30T00:00:00Z'
   curator: edison-causal-graphs
   action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from the Rhea RDF release;
