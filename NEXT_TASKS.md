@@ -267,6 +267,28 @@ and may now be the right home for them.
 - **1,063 multi-reaction EC classes show at most 3 of their reactions.** Stated in
   each graph's description — a display cap, not a data limit.
 
+## Broken gates (small, pre-existing, blocking the "final gate" of `ingest-source`)
+
+Both found 2026-07-31 while ingesting PANTHER; **neither is caused by it**, and both
+were confirmed present on `main` (`git stash` + re-run).
+
+- **`just validate-all` over the whole corpus fails on 28 records** — an `xrefs:`
+  value that is not a CURIE. 27 are DOIs (`DOI:10.1016/S0953-7562(96)80057-8`) —
+  every DOI contains `/`, which `^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$`
+  forbids — in `function/pathway/go` (11), `function/localization/go` (10) and
+  `function/molecular_function/go` (6); the 28th is a literal placeholder
+  `CATH:???????` in `structure/homologous_superfamily/cath/1-20-1690-30-*.yaml`.
+  The DOI fix is a seeder-level modelling call: a DOI belongs in
+  `evidence.reference` (whose range accepts it), not in `xrefs`. The CATH one is
+  simply a data bug and should be dropped.
+  **Do not diagnose this with `just validate-all`** — a full sweep is ~2,123
+  linkml-validate batches and takes hours because each failing batch re-runs
+  per-file. A direct text scan of `xrefs:` against the CURIE pattern answers it in
+  under a minute.
+- **`just sources-check` fails on 2 invalid `status` values** in `download.yaml`:
+  `superseded` (ENIGMA trait-onto-map) and `enrichment` (ChEBI). Either add them to
+  the checker's allowed set or re-status those two blocks.
+
 ## Refinements (small, opportunistic)
 
 - **Confirm MCR / APH causal-graph folds** vs the crystal structures before treating
