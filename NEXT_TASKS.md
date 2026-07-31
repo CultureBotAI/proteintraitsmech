@@ -6,7 +6,30 @@ convention:** update an item when work on it starts or ships (mark
 section with enough context to pick it up cold; keep absolute dates. Reconcile
 against merged PRs + `git log` before trusting it.
 
-_Last reconciled: 2026-07-27._
+_Last reconciled: 2026-07-30 (against `git log` + `just audit-graphs`; counts below
+were re-measured, not carried forward)._
+
+---
+
+## Where the mechanism layer stands (2026-07-30)
+
+**Every mechanism-rich source now carries causal graphs.** Rounds 12–16 took the
+corpus from 0 to **39,647 records with graphs · 344,134 nodes · 366,049 edges**,
+audit **0 errors**, **366,049/366,049 edges snippet-cited**.
+
+| source | records w/ graph | round | PR |
+|---|--:|--:|---|
+| Rhea | 18,558 | 16 | #89 *(open)* |
+| ARO / CARD | 7,399 of 7,452 | 14 | #80, #84 |
+| EC | 6,888 of 7,375 | 16 | #89 *(open)* |
+| BioLiP | 5,571 | 15 | #86 |
+| M-CSA | 1,003 | 12–13 | #77, #81, #82 |
+| MetalPDB | 228 | 15 | #87 |
+
+All 5,845 audit warnings are now **ungrounded-node** warnings (5,845 = 344,134 −
+338,289 grounded). There are **zero** missing-snippet and zero missing-`predicate_id`
+warnings left, so `--strict` is now purely a grounding gate — a change from when the
+Refinements note below was written.
 
 ---
 
@@ -15,18 +38,45 @@ _Last reconciled: 2026-07-27._
 _Issue #7 (Swiss-Prot population + multi-trait families) was **closed 2026-07-27**
 after 15 phases; the per-protein-YAML ask was answered with measurements rather
 than deferred (see `research/docs-scalability-audit-1.md`). Issue #5 is all but
-cleared. **Item 1 below is the only substantial thread left.**_
+cleared._
 
-1. **Per-gene curation of the remaining ~1,219 resistance causal-graph drafts.**
-   The family-level promotion is done (6,180 REVIEWED). The tail is genuinely
-   per-gene: `ARO:0000031` gene-variant point mutants (gyrA/rpoB/16S/23S — each a
-   different target protein), efflux subunits, two-component regulators, rRNA
-   mutations, single genes. No shared family config fits — needs per-gene evidence.
-   Tracker: `grep -rl "graph_id: resistance-draft" data/traits/function/resistance/aro/`;
-   `just audit-graphs --strict` lists every snippet-pending edge. Skill:
-   `edison-causal-graphs`; promoter: `promote_family_drafts.py` (`FAMILY_SNIPPETS`).
+1. **Per-gene curation of the remaining 1,219 resistance causal-graph drafts.**
+   Still open — **re-counted 2026-07-30, unchanged at 1,219.** The family-level
+   promotion is done (6,180 REVIEWED). PR #84 made every draft edge *cited* (the
+   corpus is 100% snippet-covered), so these are no longer defective — they are
+   simply still `graph_id: resistance-draft` rather than family-wired graphs.
+   The tail is genuinely per-gene: `ARO:0000031` gene-variant point mutants
+   (gyrA/rpoB/16S/23S — each a different target protein), efflux subunits,
+   two-component regulators, rRNA mutations, single genes. No shared family config
+   fits — needs per-gene evidence.
+   Tracker: `grep -rl "graph_id: resistance-draft" data/traits/function/resistance/aro/`.
+   Skill: `edison-causal-graphs`; promoter: `promote_family_drafts.py`
+   (`FAMILY_SNIPPETS`).
 
-2. **Swiss-Prot trait profiles (issue #7) — phases 1–14 shipped; issue NOT complete.**
+2. **Join Rhea reaction chemistry to the M-CSA catalytic residues that perform it
+   (candidate round 17).** The successor thread now that source coverage is done:
+   the frontier is **depth, not breadth**. Today a Rhea graph says *these substrates
+   become those products* and an M-CSA graph says *these residues do the chemistry*,
+   and nothing connects them — so no graph in the corpus answers "which residue
+   attacks which substrate", which is the question the two sources jointly can.
+
+   **The join is checkable on chemistry, not just inferable through EC** (verified
+   2026-07-30 against `data/raw/mcsa.entries.jsonl`): all 1,003 M-CSA entries carry
+   both `reaction.ec` **and** `reaction.compounds` with `chebi_id` plus a
+   `type: reactant|product` tag. So an M-CSA entry's ChEBI reactant/product sets can
+   be matched directly against a Rhea reaction's `_L`/`_R` sides — a verifiable
+   overlap rather than a name match, and the same shape of internal-redundancy check
+   rounds 15 and 16 both relied on. `scripts/rhea_rdf.py` already exposes the Rhea
+   side (`participants_of`, `lr_child`).
+
+   Note M-CSA states a direction (`reactant`/`product`) where the Rhea master does
+   not; if they disagree, Rhea's directional child is the citable authority for Rhea
+   records and M-CSA's own tag for M-CSA records — do not silently reconcile them.
+   Where the ChEBI sets do not overlap, fall back to EC and apply the round-16
+   soundness rule: only join where the EC class maps to exactly one Rhea reaction
+   (5,136 classes), otherwise a residue cannot be attributed to a specific reaction.
+
+3. **Swiss-Prot trait profiles (issue #7) — phases 1–14 shipped; issue NOT complete.**
    Delivered: protein×trait matrix over 10 proteomes, trait↔GO correlation,
    trait→function decision trees (held-out-organism validated), cross-axis feature
    correlations, residue-frame alignment. See "Recently shipped" and
@@ -78,7 +128,7 @@ cleared. **Item 1 below is the only substantial thread left.**_
    do) rather than minting 570k tiny files. This is the `scalability-check`
    skill's tier D. Nothing else blocks closing #7.
 
-3. **Web design review — dataviz / artifact-design findings (issue #5).**
+4. **Web design review — dataviz / artifact-design findings (issue #5).**
    **Mostly cleared (2026-07-27, PR #68.)** CVD-unsafe palettes fixed via the
    `dataviz` validator: blue↔purple was ΔE 2.6 (protan), green↔teal ΔE 10.8
    (normal vision). Axis pills → reference slots 1–5, worst adjacent CVD ΔE 9.1
@@ -95,18 +145,73 @@ cleared. **Item 1 below is the only substantial thread left.**_
    larger than the mark). The Cayman→teal/amber rebrand stays **deferred by
    request**, and is all that remains on #5.
 
+## Open threads from rounds 15–16 (context, ranked within themselves)
+
+- **METPO records should link to TraitMech, not get graphs here.** The 70 METPO
+  records sitting in `FUNC_ENZYMATIC_ACTIVITY` (acetogenesis, aerobic respiration)
+  were the only enzymatic-activity records round 16 left without graphs, and
+  deliberately: they are metabolic strategies, not protein traits, so their causal
+  graphs belong in the sibling **TraitMech** repo. **The work is an outbound
+  cross-reference**, not local graph authoring. Separately, their categorisation as
+  `FUNC_ENZYMATIC_ACTIVITY` looks wrong — a `review-source-categories` question.
+- **`chemical_participants` cannot express reaction direction (schema question).**
+  All 18,558 Rhea records still say `role: SUBSTRATE_OR_PRODUCT`, which is *correct*
+  for an undirected master reaction — but the round-16 graph now carries the side
+  assignment (cited to Rhea's directional child), so the record's own field is
+  strictly less informative than its graph. Decide whether the seeder gains a
+  directional variant or the field defers to the graph. Do not "fix" the field by
+  copying the graph: the master reaction genuinely has no direction.
+- **BioLiP coverage: 445 records** whose PDB/chain/ligand is absent from the
+  non-redundant `BioLiP_nr.txt`. The full BioLiP release would cover them (round 15).
+- **MetalPDB coverage: 63 records** where no site matched both metal and nuclearity
+  with a protein ligand (round 15).
+- **689 EC records assert no chemistry** because Rhea has no reaction for them, and
+  **487 more got no graph at all** (410 class-level `EC:x.x.x.-` nodes, 77 leaf
+  entries with no reaction, no `DR` protein and no GO mapping). Rhea covers the EC
+  hierarchy incompletely; nothing local fixes this.
+- **1,063 multi-reaction EC classes show at most 3 of their reactions.** Stated in
+  each graph's description — a display cap, not a data limit.
+
 ## Refinements (small, opportunistic)
 
 - **Confirm MCR / APH causal-graph folds** vs the crystal structures before treating
   those REVIEWED graphs as gold (`CATH:3.40.720.10` MCR, `CATH:3.90.1200` APH).
 - **B3-specific MBL domain node**: `CDD:cd07708` exists if a GOB/B3-specific (rather
   than pan-MBL `Pfam:PF00753`) domain node is wanted on GOB-10 / subclass-B3 graphs.
-- **STATE / PHENOTYPE causal nodes are label-only** (no CURIE) — a MONDO/HP/reaction-
-  intermediate grounding could be added; audit reports them as warnings, not errors.
-- **`scripts/audit_causal_graphs.py`** is now the mechanism-layer gate — run
-  `just audit-graphs --strict` in CI if the causal layer should be gated on snippets.
+- **The 5,845 ungrounded causal nodes are the whole warning list** — 4,023 M-CSA
+  STATE nodes (reaction intermediates), 1,817 BioLiP fusion-chain residues (BioLiP
+  names several accessions for a chimeric chain and does not say which half a residue
+  belongs to), 5 hand-curated intermediates. MONDO/HP/reaction-intermediate grounding
+  would close the first group; the BioLiP group needs the source to disambiguate.
+- **`just audit-graphs --strict` is now purely a grounding gate.** Snippet and
+  `predicate_id` coverage both reached 100% in round 16, so turning `--strict` on in
+  CI today would gate solely on the 5,845 ungrounded nodes above. Gating on snippets
+  (the original intent of this note) can be done with plain `just audit-graphs`.
 
 ## Recently shipped (DONE)
+
+- **Causal-graph mechanism layer, rounds 12–16** (2026-07-28 → 2026-07-30, PRs
+  #77, #80–#89) — the mechanism layer went from 6,180 to **39,647** records with
+  graphs and from ~0 to **366,049** cited edges, covering four distinct kinds of
+  mechanism:
+  - **Catalysis — M-CSA, 1,003 records** (rounds 12–13, PRs #77/#81/#82, closes
+    #78/#79): stepwise mechanisms transcribed with residue roles; the last 265
+    entries recovered via `mechanism_text`; residue frames reconciled to UniProt
+    through SIFTS.
+  - **Resistance — CARD/ARO** (round 14, PRs #80/#84): drug edges re-based on
+    CARD's own assertion rather than ours, and every remaining edge given a
+    snippet (corpus reached 100% cited). 1,219 drafts remain drafts — see Next up #1.
+  - **Interaction — BioLiP 5,571 + MetalPDB 228** (round 15, PRs #86/#87): residue-
+    level ligand contacts and metal coordination. Established the rule the later
+    rounds run on — **do not quote your own seeder's text as evidence** — and the
+    practice of verifying against a source's own internal redundancy.
+  - **Transformation — Rhea 18,558 + EC 6,888** (round 16, **PR #89, open**):
+    substrate→product chemistry. Rhea master reactions are undirected, so every
+    input/output edge is cited to Rhea's *directional child*, which is where Rhea
+    itself states which side is consumed. New `scripts/rhea_rdf.py` (stdlib
+    streaming reader for `rhea.rdf.gz`); all 18,558 reactions verified by
+    re-rendering Rhea's own equation string from the parsed participants.
+  Reports: `research/causal-graphs-round{12..16}.md`.
 
 - **Swiss-Prot trait profiles, phases 1–14** (2026-07-21 → 2026-07-27, PRs #29–#33,
   #37, #41, #45, #48, #51, #55, #58, #59, #61, #62). Protein×trait matrix over
